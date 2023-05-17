@@ -331,25 +331,8 @@ export default function LocalCompanyList() {
                     <TableCell align="center">{row.addedBy}</TableCell>
                     <TableCell align="center">{row.subscriptionDate}</TableCell>
                     <TableCell align="center">
-                      <Button
-                        variant="contained"
-                        sx={{
-                          background: theme.palette.success.dark,
-                          '&:hover': { background: theme.palette.success.main }
-                        }}
-                      >
-                        VIEW RERA
-                      </Button>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          background: theme.palette.warning.dark,
-                          '&:hover': { background: theme.palette.warning.main },
-                          color: 'black.900'
-                        }}
-                      >
-                        VIEW LICENSE
-                      </Button>
+                      <Button variant="contained">VIEW RERA</Button>
+                      <Button variant="contained">VIEW LICENSE</Button>
                     </TableCell>
                     <TableCell align="center" sx={{ pr: 8 }}>
                       <Stack direction="row" justifyContent="center" alignItems="center">
