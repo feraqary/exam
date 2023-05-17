@@ -323,7 +323,7 @@ export default function LocalCompanyList() {
                       <CardMedia component="img" image={row.companyLogo} title="image" sx={{ width: 70, height: 'auto' }} />
                     </TableCell>
                     <TableCell>{row.companyName}</TableCell>
-                    <TableCell align="right">{row.companyType}</TableCell>
+                    <TableCell align="center">{row.companyType}</TableCell>
                     <TableCell align="center">{row.RegId}</TableCell>
                     <TableCell align="center"> {row.contactPerson}</TableCell>
                     <TableCell align="center">{row.email}</TableCell>
@@ -332,7 +332,9 @@ export default function LocalCompanyList() {
                     <TableCell align="center">{row.subscriptionDate}</TableCell>
                     <TableCell align="center">
                       <Button variant="contained">VIEW RERA</Button>
-                      <Button variant="contained">VIEW LICENSE</Button>
+                      <Button variant="contained" color="secondary">
+                        VIEW LICENSE
+                      </Button>
                     </TableCell>
                     <TableCell align="center" sx={{ pr: 8 }}>
                       <Stack direction="row" justifyContent="center" alignItems="center">
