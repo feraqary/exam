@@ -47,7 +47,7 @@ const companies = {
           id: 'international',
           title: <FormattedMessage id="International Companies" />,
           type: 'item',
-          url: '/company/international_company_management'
+          url: '/company/int_comp_mng'
         },
         {
           id: 'international',

@@ -264,7 +264,7 @@ const rows = [
 ];
 // =========================||international Company listings ||========================= //
 
-export default function LocalCompanyList() {
+export default function CompanyList() {
   const theme = useTheme();
 
   return (

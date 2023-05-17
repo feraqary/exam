@@ -11,8 +11,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
-  Pagination
+  TableRow
 } from '@mui/material';
 
 // project imports

@@ -7,10 +7,10 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import LocalCompanyList from 'components/widget/Data/local_comp_datatable';
 
-// ===========================|| international Company Managment list||=========================== //
+// ===========================|| Company Managment list||=========================== //
 
-const intCompData = () => (
-  <Page title="International Company List">
+const WidgetData = () => (
+  <Page title="Local Company List">
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <LocalCompanyList />
