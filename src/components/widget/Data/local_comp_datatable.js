@@ -295,12 +295,12 @@ export default function LocalCompanyList() {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ pl: 4 }}>ID</TableCell>
-                  <TableCell>Featured Status</TableCell>
-                  <TableCell>Logo</TableCell>
-                  <TableCell>Company Name</TableCell>
-                  <TableCell>Company Type</TableCell>
-                  <TableCell>REG ID</TableCell>
+                  <TableCell sx={{ pl: 4 }} align="center">ID</TableCell>
+                  <TableCell align="center">Featured Status</TableCell>
+                  <TableCell align="center">Logo</TableCell>
+                  <TableCell align="center">Company Name</TableCell>
+                  <TableCell align="center">Company Type</TableCell>
+                  <TableCell align="center">REG ID</TableCell>
                   <TableCell align="center">Contact Person</TableCell>
                   <TableCell align="center">Email</TableCell>
                   <TableCell align="center">Phone#</TableCell>

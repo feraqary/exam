@@ -14,6 +14,8 @@ import React, { useState } from 'react';
 import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
 import { UploadFile } from '@mui/icons-material';
+import AutocompleteFormManagement from 'components/forms/forms-validation/AutoCompleteFormManagement';
+import AutocompleteFormService from 'components/forms/forms-validation/AutoCompleteFormService';
 
 // ==============================|| Add Company form ||============================== //
 function ColumnsLayouts() {
@@ -22,6 +24,7 @@ function ColumnsLayouts() {
   const [vatimg, changevat] = useState(null);
   const [logoimg, changelogo] = useState(null);
   const [profilepicture, changeprofilepicture] = useState(null);
+  const [companyType, setCompanyType] = useState(null);
 
   const handleInputChange = (event) => {
     setnewimg(URL.createObjectURL(event.target.files[0]));
@@ -36,6 +39,18 @@ function ColumnsLayouts() {
     changeprofilepicture(URL.createObjectURL(event.target.files[0]));
   };
 
+  const subCompanyType = () => {
+    if (companyType === 'Service Company' || companyType === 'Management Company') {
+      return (
+        <Grid item xs={12} lg={10}>
+          <InputLabel required>Sub Company Type</InputLabel>
+          {companyType === 'Service Company' && <AutocompleteFormService />}
+          {companyType == 'Management Company' && <AutocompleteFormManagement />}
+        </Grid>
+      );
+    }
+  };
+
   return (
     <Page title="Add Company">
       <Grid container spacing={gridSpacing}>
@@ -43,8 +58,9 @@ function ColumnsLayouts() {
           <MainCard title="Add Company Details">
             <Grid item xs={12} lg={10}>
               <InputLabel required>Company Type</InputLabel>
-              <AutocompleteForms />
+              <AutocompleteForms companyType={companyType} setCompanyType={setCompanyType} />
             </Grid>
+            {subCompanyType()}
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} lg={6}>
                 <InputLabel required>Company Name</InputLabel>
