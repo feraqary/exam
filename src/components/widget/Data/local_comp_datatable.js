@@ -18,7 +18,6 @@ import {
 import Chip from 'components/ui-component/extended/Chip';
 import { gridSpacing } from 'store/constant';
 import TablePagination from '@mui/material/TablePagination';
-import { useTheme } from '@mui/material/styles';
 import * as React from 'react';
 
 // assets
@@ -265,8 +264,6 @@ const rows = [
 // =========================||Local Company listings ||========================= //
 
 export default function LocalCompanyList() {
-  const theme = useTheme();
-
   const [page, setPage] = React.useState(2);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -295,12 +292,14 @@ export default function LocalCompanyList() {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ pl: 4 }}>ID</TableCell>
-                  <TableCell>Featured Status</TableCell>
-                  <TableCell>Logo</TableCell>
-                  <TableCell>Company Name</TableCell>
-                  <TableCell>Company Type</TableCell>
-                  <TableCell>REG ID</TableCell>
+                  <TableCell sx={{ pl: 4 }} align="center">
+                    ID
+                  </TableCell>
+                  <TableCell align="center">Featured Status</TableCell>
+                  <TableCell align="center">Logo</TableCell>
+                  <TableCell align="center">Company Name</TableCell>
+                  <TableCell align="center">Company Type</TableCell>
+                  <TableCell align="center">REG ID</TableCell>
                   <TableCell align="center">Contact Person</TableCell>
                   <TableCell align="center">Email</TableCell>
                   <TableCell align="center">Phone#</TableCell>

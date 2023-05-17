@@ -50,9 +50,10 @@ const companies = {
           url: '/company/int_comp_mng'
         },
         {
-          id: 'international',
+          id: 'add_company_types',
           title: <FormattedMessage id="Add Company Types" />,
-          type: 'item'
+          type: 'item',
+          url: '/company/add_company_type'
         },
         {
           id: 'company-types',
@@ -60,7 +61,7 @@ const companies = {
           caption: 'Manage Company Types',
           type: 'item',
           icon: icons.IconMessages,
-          url: '/app/chat'
+          url: '/company/manage_type'
         }
       ]
     },

@@ -9,7 +9,7 @@ import LocalCompanyList from 'components/widget/Data/local_comp_datatable';
 
 // ===========================|| Company Managment list||=========================== //
 
-const WidgetData = () => (
+const LocalData = () => (
   <Page title="Local Company List">
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
@@ -19,8 +19,8 @@ const WidgetData = () => (
   </Page>
 );
 
-WidgetData.getLayout = function getLayout(page) {
+LocalData.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default WidgetData;
+export default LocalData;
