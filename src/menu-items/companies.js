@@ -53,7 +53,7 @@ const companies = {
           id: 'add_company_types',
           title: <FormattedMessage id="Add Company Types" />,
           type: 'item',
-          url: '/company/add_company_type'
+          url: '/company/add_comp'
         },
         {
           id: 'company-types',
@@ -75,7 +75,7 @@ const companies = {
           id: 'add-subscription',
           title: <FormattedMessage id="Add Subscriptions" />,
           type: 'item',
-          url: '/app/customer/customer-list',
+          url: '/company/add_subs',
           breadcrumbs: false
         },
         {
