@@ -16,7 +16,7 @@ import * as yup from 'yup';
 // assets
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 
-const roles = ['Broker Company', 'Developer Company', 'Management Company', 'Service Company'];
+const roles = ['Design and Deccor Companies', 'Engineering Consultancy Offices', 'Financial Audit Companiess', 'Auctions Companies'];
 
 const filter = createFilterOptions();
 // const filterSkills = createFilterOptions();
@@ -31,7 +31,7 @@ const validationSchema = yup.object({
 
 // ==============================|| FORM VALIDATION - AUTOCOMPLETE FORMIK  ||============================== //
 
-const AutocompleteForms = ({ companyType, setCompanyType }) => {
+const AutocompleteFormService = () => {
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -54,9 +54,7 @@ const AutocompleteForms = ({ companyType, setCompanyType }) => {
       );
     }
   });
-  const handleCompanyTypeChange = (newValue) => {
-    setCompanyType(newValue);
-  };
+
 
   return (
     <MainCard title="">
@@ -68,7 +66,6 @@ const AutocompleteForms = ({ companyType, setCompanyType }) => {
               value={formik.values.role}
               disableClearable
               onChange={(event, newValue) => {
-               handleCompanyTypeChange(newValue)
                 const jobExist = roles.includes(newValue);
                 if (!jobExist) {
                   const matchData = newValue.match(/"((?:\\.|[^"\\])*)"/);
@@ -133,4 +130,4 @@ const AutocompleteForms = ({ companyType, setCompanyType }) => {
   );
 };
 
-export default AutocompleteForms;
+export default AutocompleteFormService;
