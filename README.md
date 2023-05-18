@@ -1,4 +1,4 @@
-This is a Aqary International Dashboard.
+Aqary International Dashboard.
 
 
 ## Getting Started
