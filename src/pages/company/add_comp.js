@@ -90,9 +90,6 @@ function ColumnsLayouts() {
                 />
 
                 <FormHelperText>Please Upload Company License</FormHelperText>
-                <Grid item xs={12} lg={6}>
-                  <img src={licenseimg} alt="Company License Preview" width="250px" height="250px" />
-                </Grid>
               </Grid>
               <Grid item xs={12} lg={6}>
                 <InputLabel required>License Expiry:</InputLabel>
@@ -142,18 +139,9 @@ function ColumnsLayouts() {
           <MainCard title="Add Billing Information">
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} lg={4}>
-                <InputLabel required>Office Address</InputLabel>
-                <TextField fullWidth placeholder="Enter Office Address" />
-                <FormHelperText>Please enter company Office Address</FormHelperText>
-              </Grid>
-              <Grid item xs={12} lg={4}>
-                <InputLabel required>Billing Reference</InputLabel>
-                <TextField fullWidth placeholder="Enter Billing Reference" />
-                <FormHelperText>Please enter Billing Reference</FormHelperText>
-              </Grid>
-              <Grid item xs={12} lg={4}>
                 <InputLabel required>Country</InputLabel>
                 <TextField fullWidth placeholder="Select Country" />
+                <FormHelperText>Please Select Country</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel>City</InputLabel>
@@ -163,10 +151,22 @@ function ColumnsLayouts() {
               <Grid item xs={12} lg={4}>
                 <InputLabel required>State</InputLabel>
                 <TextField fullWidth placeholder="Select State" />
+                <FormHelperText>Please Select State</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel>Community</InputLabel>
                 <TextField fullWidth placeholder="Select Community" />
+                <FormHelperText>Please Select Community</FormHelperText>
+              </Grid>
+              <Grid item xs={12} lg={4}>
+                <InputLabel required>Office Address</InputLabel>
+                <TextField fullWidth placeholder="Enter Office Address" />
+                <FormHelperText>Please enter company Office Address</FormHelperText>
+              </Grid>
+              <Grid item xs={12} lg={4}>
+                <InputLabel required>Billing Reference</InputLabel>
+                <TextField fullWidth placeholder="Enter Billing Reference" />
+                <FormHelperText>Please enter Billing Reference</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel required>Google Map Link</InputLabel>
@@ -272,7 +272,7 @@ function ColumnsLayouts() {
                 <InputLabel required>Number of Employees</InputLabel>
                 <TextField fullWidth type="number" />
               </Grid>
-              <Grid fullwidth item xs={12} lg={6}>
+              <Grid fullwidth item xs={12} lg={4}>
                 <InputLabel>Subscription Duration</InputLabel>
                 <NativeSelect id="select" fullWidth>
                   <option value="1">1 Month</option>
@@ -287,7 +287,6 @@ function ColumnsLayouts() {
               <Grid item xs={12} lg={4}>
                 <InputLabel>Subscription Start Date</InputLabel>
                 <TextField fullWidth type="date" />
-                yarn Developer
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel>Subscription End Date</InputLabel>
