@@ -16,7 +16,6 @@ import AutocompleteForms from 'components/forms/forms-validation/AutocompleteFor
 import { UploadFile } from '@mui/icons-material';
 import AutocompleteFormManagement from 'components/forms/forms-validation/AutoCompleteFormManagement';
 import AutocompleteFormService from 'components/forms/forms-validation/AutoCompleteFormService';
-import { Stack } from '@mui/system';
 
 // ==============================|| Add Company form ||============================== //
 function ColumnsLayouts() {
@@ -89,6 +88,11 @@ function ColumnsLayouts() {
                   }}
                   onChange={handleInputChange}
                 />
+
+                <FormHelperText>Please Upload Company License</FormHelperText>
+                <Grid item xs={12} lg={6}>
+                  <img src={licenseimg} alt="Company License Preview" width="250px" height="250px" />
+                </Grid>
               </Grid>
               <Grid item xs={12} lg={6}>
                 <InputLabel required>License Expiry:</InputLabel>
@@ -138,9 +142,18 @@ function ColumnsLayouts() {
           <MainCard title="Add Billing Information">
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} lg={4}>
+                <InputLabel required>Office Address</InputLabel>
+                <TextField fullWidth placeholder="Enter Office Address" />
+                <FormHelperText>Please enter company Office Address</FormHelperText>
+              </Grid>
+              <Grid item xs={12} lg={4}>
+                <InputLabel required>Billing Reference</InputLabel>
+                <TextField fullWidth placeholder="Enter Billing Reference" />
+                <FormHelperText>Please enter Billing Reference</FormHelperText>
+              </Grid>
+              <Grid item xs={12} lg={4}>
                 <InputLabel required>Country</InputLabel>
                 <TextField fullWidth placeholder="Select Country" />
-                <FormHelperText>Please Select Country</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel>City</InputLabel>
@@ -150,22 +163,10 @@ function ColumnsLayouts() {
               <Grid item xs={12} lg={4}>
                 <InputLabel required>State</InputLabel>
                 <TextField fullWidth placeholder="Select State" />
-                <FormHelperText>Please Select State</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel>Community</InputLabel>
                 <TextField fullWidth placeholder="Select Community" />
-                <FormHelperText>Please Select Community</FormHelperText>
-              </Grid>
-              <Grid item xs={12} lg={4}>
-                <InputLabel required>Office Address</InputLabel>
-                <TextField fullWidth placeholder="Enter Office Address" />
-                <FormHelperText>Please enter company Office Address</FormHelperText>
-              </Grid>
-              <Grid item xs={12} lg={4}>
-                <InputLabel required>Billing Reference</InputLabel>
-                <TextField fullWidth placeholder="Enter Billing Reference" />
-                <FormHelperText>Please enter Billing Reference</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel required>Google Map Link</InputLabel>
@@ -271,7 +272,7 @@ function ColumnsLayouts() {
                 <InputLabel required>Number of Employees</InputLabel>
                 <TextField fullWidth type="number" />
               </Grid>
-              <Grid fullwidth item xs={12} lg={5}>
+              <Grid fullwidth item xs={12} lg={6}>
                 <InputLabel>Subscription Duration</InputLabel>
                 <NativeSelect id="select" fullWidth>
                   <option value="1">1 Month</option>
@@ -339,6 +340,12 @@ function ColumnsLayouts() {
               </Grid>
             </Grid>
           </MainCard>
+          <Stack direction="row" justifyContent="end" padding={2}>
+            <Button variant="contained">Add Company</Button>
+          </Stack>
+          <Stack direction="row" justifyContent="end" padding={2}>
+            <Button variant="contained">Reset Form</Button>
+          </Stack>
         </Grid>
         <Grid item xs={12} lg={5} spacing={gridSpacing}>
           <Alert icon={false} severity="success" sx={{ color: theme.palette.success.dark }}>
