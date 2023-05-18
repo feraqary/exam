@@ -31,7 +31,7 @@ const validationSchema = yup.object({
 
 // ==============================|| FORM VALIDATION - AUTOCOMPLETE FORMIK  ||============================== //
 
-const AutocompleteForms = ({ companyType, setCompanyType }) => {
+const AutocompleteForms = ({ setCompanyType }) => {
   const dispatch = useDispatch();
 
   const formik = useFormik({

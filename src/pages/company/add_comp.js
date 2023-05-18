@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, createMuiTheme } from '@mui/material';
+import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
