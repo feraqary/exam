@@ -99,22 +99,14 @@ const companies = {
       title: 'Payments',
       type: 'item',
       icon: icons.IconLayoutKanban,
-      url: '/app/kanban/board'
+      url: '/company/'
     },
     {
       id: 'second-phase',
-      title: <FormattedMessage id="Second Phase Upload" />,
+      title: <FormattedMessage id="Company Registration" />,
       type: 'item',
       icon: icons.IconMail,
       url: '/app/mail'
-    },
-    {
-      id: 'blocked',
-      title: <FormattedMessage id="View Blocked Companies" />,
-      type: 'item',
-      url: '/app/calendar',
-      icon: icons.IconCalendar,
-      breadcrumbs: false
     },
     {
       id: 'previliges',
