@@ -9,7 +9,7 @@ import Logo from 'components/ui-component/Logo';
 // ==============================|| MAIN LOGO ||============================== //
 
 const LogoSection = () => (
-  <MuiLink component={Link} href={DASHBOARD_PATH} aria-label="theme logo">
+  <MuiLink component={Link} href={DASHBOARD_PATH} aria-label="aqary logo">
     <Logo />
   </MuiLink>
 );

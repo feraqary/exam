@@ -3,12 +3,14 @@ import project from './project';
 import propertyhub from './property-hub';
 import units from './units';
 import auctions from './auctions';
+import management from './management';
+import exhibition from './exhibition';
 /**
  * import auctions from './auctions';
  * import services from './services';
- * import exhibition from './exhibitions';
+ * 
  * import leads from './leads';
- * import managment from from './managment';
+ 
  * import agents from './agents';
  * import users from './users';
  * import careers from './companies';
@@ -27,7 +29,7 @@ import companies from './companies';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard, project, propertyhub, companies, units, auctions]
+  items: [dashboard, management, project, propertyhub, companies, units, exhibition, auctions]
 };
 
 export default menuItems;

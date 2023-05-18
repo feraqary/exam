@@ -340,7 +340,7 @@ function ColumnsLayouts() {
             </Grid>
           </MainCard>
         </Grid>
-        <Grid item xs={12} lg={5} spacing={gridSpacing}>
+        <Grid item xs={12} lg={5} spacing={gridSpacing} justify-xs-flex-end direction="column" alignItems="flex-end" justify="flex-end">
           <Button variant="contained">Add Company</Button>
         </Grid>
         <Grid item xs={12} lg={5} spacing={gridSpacing}>
