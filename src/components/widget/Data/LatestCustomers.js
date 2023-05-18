@@ -1,78 +1,215 @@
-// material-ui
-import { Button, CardActions, CardMedia, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import React, { useMemo } from 'react';
 
-// third party
-import PerfectScrollbar from 'react-perfect-scrollbar';
+// MRT Imports
+import MaterialReactTable from 'material-react-table';
 
-// project imports
-import MainCard from 'components/ui-component/cards/MainCard';
+// Material-UI Imports
+import { Box, Button, ListItemIcon, MenuItem, Typography } from '@mui/material';
 
-// assets
-const Flag1 = '/assets/images/widget/australia.jpg';
-const Flag2 = '/assets/images/widget/brazil.jpg';
-const Flag3 = '/assets/images/widget/germany.jpg';
-const Flag4 = '/assets/images/widget/uk.jpg';
-const Flag5 = '/assets/images/widget/usa.jpg';
+// Date Picker Imports
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-// table data
-function createData(image, subject, dept, date) {
-  return { image, subject, dept, date };
-}
+// Icons Imports
+import { AccountCircle, Send } from '@mui/icons-material';
 
-const rows = [
-  createData(Flag1, 'Germany', 'Angelina Jolly', '56.23%'),
-  createData(Flag2, 'USA', 'John Deo', '25.23%'),
-  createData(Flag3, 'Australia', 'Jenifer Vintage', '12.45%'),
-  createData(Flag4, 'United Kingdom', 'Lori Moore', '8.65%'),
-  createData(Flag5, 'Brazil', 'Allianz Dacron', '3.56%'),
-  createData(Flag1, 'Australia', 'Jenifer Vintage', '12.45%'),
-  createData(Flag3, 'USA', 'John Deo', '25.23%'),
-  createData(Flag5, 'Australia', 'Jenifer Vintage', '12.45%'),
-  createData(Flag2, 'United Kingdom', 'Lori Moore', '8.65%')
-];
+// Mock Data
+import { data } from './intercomp_data';
 
-// =========================|| DATA WIDGET - LATEST CUSTOMERS CARD ||========================= //
+const Example = () => {
+  const columns = useMemo(
+    () => [
+      {
+        id: 'employee',
+        header: 'Employee',
+        columns: [
+          {
+            accessorFn: (row) => `${row.firstName} ${row.lastName}`,
+            id: 'name',
+            header: 'Name',
+            size: 250,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem'
+                }}
+              >
+                <img alt="avatar" height={30} src={row.original.avatar} loading="lazy" style={{ borderRadius: '50%' }} />
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            )
+          },
+          {
+            accessorKey: 'email',
+            enableClickToCopy: true,
+            header: 'Email',
+            size: 300
+          }
+        ]
+      },
+      {
+        id: 'id',
+        header: 'Job Info',
+        columns: [
+          {
+            accessorKey: 'salary',
+            // filterVariant: 'range', //if not using filter modes feature, use this instead of filterFn
+            filterFn: 'between',
+            header: 'Salary',
+            size: 200,
+            Cell: ({ cell }) => (
+              <Box
+                component="span"
+                sx={(theme) => ({
+                  borderRadius: '0.25rem',
+                  color: '#fff',
+                  maxWidth: '9ch',
+                  p: '0.25rem'
+                })}
+              >
+                {cell.getValue()?.toLocaleString?.('en-US', {
+                  style: 'currency',
+                  currency: 'USD',
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0
+                })}
+              </Box>
+            )
+          },
+          {
+            accessorKey: 'jobTitle',
+            header: 'Job Title',
+            size: 350
+          },
+          {
+            accessorFn: (row) => new Date(row.startDate),
+            id: 'startDate',
+            header: 'Start Date',
+            filterFn: 'lessThanOrEqualTo',
+            sortingFn: 'datetime',
+            Cell: ({ cell }) => cell.getValue()?.toLocaleDateString(),
+            Header: ({ column }) => <em>{column.columnDef.header}</em>,
+            Filter: ({ column }) => (
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  onChange={(newValue) => {
+                    column.setFilterValue(newValue);
+                  }}
+                  slotProps={{
+                    textField: {
+                      helperText: 'Filter Mode: Less Than',
+                      sx: { minWidth: '120px' },
+                      variant: 'standard'
+                    }
+                  }}
+                  value={column.getFilterValue()}
+                />
+              </LocalizationProvider>
+            )
+          }
+        ]
+      }
+    ],
+    []
+  );
 
-const LatestCustomers = () => (
-  <MainCard title="Latest Customers" content={false}>
-    <PerfectScrollbar style={{ height: 345, padding: 0 }}>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ pl: 3 }}>#</TableCell>
-              <TableCell>Country</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell align="right" sx={{ pr: 3 }}>
-                Average
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row, index) => (
-              <TableRow hover key={index}>
-                <TableCell sx={{ pl: 3 }}>
-                  <CardMedia component="img" image={row.image} title="image" sx={{ width: 30, height: 'auto' }} />
-                </TableCell>
-                <TableCell>{row.subject}</TableCell>
-                <TableCell>{row.dept}</TableCell>
-                <TableCell align="right" sx={{ pr: 3 }}>
-                  {row.date}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </PerfectScrollbar>
+  return (
+    <MaterialReactTable
+      columns={columns}
+      data={data}
+      enableColumnFilterModes
+      enableColumnOrdering
+      enableGrouping
+      enablePinning
+      enableRowActions
+      enableRowSelection
+      initialState={{ showColumnFilters: true }}
+      positionToolbarAlertBanner="bottom"
+      renderDetailPanel={({ row }) => (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            alignItems: 'center'
+          }}
+        >
+          <img alt="avatar" height={200} src={row.original.avatar} loading="lazy" style={{ borderRadius: '50%' }} />
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography variant="h4">Signature Catch Phrase:</Typography>
+            <Typography variant="h1">&quot;{row.original.signatureCatchPhrase}&quot;</Typography>
+          </Box>
+        </Box>
+      )}
+      renderRowActionMenuItems={({ closeMenu }) => [
+        <MenuItem
+          key={0}
+          onClick={() => {
+            // View profile logic...
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <AccountCircle />
+          </ListItemIcon>
+          View Profile
+        </MenuItem>,
+        <MenuItem
+          key={1}
+          onClick={() => {
+            // Send email logic...
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <Send />
+          </ListItemIcon>
+          Send Email
+        </MenuItem>
+      ]}
+      renderTopToolbarCustomActions={({ table }) => {
+        const handleDeactivate = () => {
+          table.getSelectedRowModel().flatRows.map((row) => {
+            alert(`deactivating ${row.getValue('name')}`);
+            return null;
+          });
+        };
 
-    <Divider />
-    <CardActions sx={{ justifyContent: 'flex-end' }}>
-      <Button variant="text" size="small">
-        View all Latest Customers
-      </Button>
-    </CardActions>
-  </MainCard>
-);
+        const handleActivate = () => {
+          table.getSelectedRowModel().flatRows.map((row) => {
+            alert(`activating ${row.getValue('name')}`);
+            return null;
+          });
+        };
 
-export default LatestCustomers;
+        const handleContact = () => {
+          table.getSelectedRowModel().flatRows.map((row) => {
+            alert(`contact ${row.getValue('name')}`);
+            return null;
+          });
+        };
+
+        return (
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <Button color="error" disabled={!table.getIsSomeRowsSelected()} onClick={handleDeactivate} variant="contained">
+              Deactivate
+            </Button>
+            <Button color="success" disabled={!table.getIsSomeRowsSelected()} onClick={handleActivate} variant="contained">
+              Activate
+            </Button>
+            <Button color="info" disabled={!table.getIsSomeRowsSelected()} onClick={handleContact} variant="contained">
+              Contact
+            </Button>
+          </div>
+        );
+      }}
+    />
+  );
+};
+
+export default Example;
