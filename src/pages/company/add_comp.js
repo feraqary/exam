@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert } from '@mui/material';
+import { Grid, InputAdornment, TextField, Stack, FormHelperText, NativeSelect, Button, Alert } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -339,12 +339,12 @@ function ColumnsLayouts() {
               </Grid>
             </Grid>
           </MainCard>
-        </Grid>
-        <Grid item xs={12} lg={5} spacing={gridSpacing} justify-xs-flex-end direction="column" alignItems="flex-end" justify="flex-end">
-          <Button variant="contained">Add Company</Button>
-        </Grid>
-        <Grid item xs={12} lg={5} spacing={gridSpacing}>
-          <Button variant="contained">Reset Form</Button>
+          <Stack direction="row" justifyContent="end" padding={1}>
+            <Button variant="contained">Add Company</Button>
+          </Stack>
+          <Stack direction="row" justifyContent="end" padding={1}>
+            <Button variant="contained">Reset Form</Button>
+          </Stack>
         </Grid>
         <Grid item xs={12} lg={5} spacing={gridSpacing}>
           <Alert icon={false} severity="success" sx={{ color: theme.palette.success.dark }}>
