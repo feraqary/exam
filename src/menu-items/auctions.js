@@ -23,38 +23,22 @@ const auctions = {
   type: 'group',
   children: [
     {
-      id: 'util-typography',
-      title: <FormattedMessage id="typography" />,
+      id: 'auction-users',
+      title: <FormattedMessage id="Auction Users" />,
       type: 'item',
       url: '/utils/util-typography',
       icon: icons.IconTypography,
       breadcrumbs: false
     },
     {
-      id: 'util-color',
-      title: <FormattedMessage id="color" />,
-      type: 'item',
-      url: '/utils/util-color',
-      icon: icons.IconPalette,
-      breadcrumbs: false
-    },
-    {
-      id: 'util-shadow',
-      title: <FormattedMessage id="shadow" />,
-      type: 'item',
-      url: '/utils/util-shadow',
-      icon: icons.IconShadow,
-      breadcrumbs: false
-    },
-    {
-      id: 'icons',
-      title: <FormattedMessage id="icons" />,
+      id: 'manage',
+      title: <FormattedMessage id="Manage" />,
       type: 'collapse',
       icon: icons.IconWindmill,
       children: [
         {
-          id: 'tabler-icons',
-          title: <FormattedMessage id="tabler-icons" />,
+          id: 'manage-local-auction',
+          title: <FormattedMessage id="Local Auction" />,
           type: 'item',
           url: 'https://tabler-icons.io/',
           external: true,
@@ -62,27 +46,43 @@ const auctions = {
           breadcrumbs: false
         },
         {
-          id: 'material-icons',
-          title: <FormattedMessage id="material-icons" />,
+          id: 'manage-international-auction',
+          title: <FormattedMessage id="Internationl Auction" />,
           type: 'item',
           url: 'https://mui.com/material-ui/material-icons/#main-content',
           external: true,
           target: true,
           breadcrumbs: false
+        },
+        {
+          id: 'manage-partners',
+          title: <FormattedMessage id="Partners" />,
+          type: 'item',
+          url: 'https://mui.com/material-ui/material-icons/#main-content',
+          external: true,
+          target: true
+        },
+        {
+          id: 'delete-auction',
+          title: <FormattedMessage id="Delete Auction" />,
+          type: 'item',
+          url: 'https://mui.com/material-ui/material-icons/#main-content',
+          external: true,
+          target: true
         }
       ]
     },
     {
-      id: 'util-animation',
-      title: <FormattedMessage id="animation" />,
+      id: 'activities',
+      title: <FormattedMessage id="Activities" />,
       type: 'item',
       url: '/utils/util-animation',
       icon: icons.IconBrandFramer,
       breadcrumbs: false
     },
     {
-      id: 'util-grid',
-      title: <FormattedMessage id="grid" />,
+      id: 'faqs',
+      title: <FormattedMessage id="FAQs" />,
       type: 'item',
       url: '/utils/util-grid',
       icon: icons.IconLayoutGridAdd,
