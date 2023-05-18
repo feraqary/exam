@@ -55,7 +55,6 @@ const AutocompleteFormManagement = () => {
     }
   });
 
-
   return (
     <MainCard title="">
       <form onSubmit={formik.handleSubmit}>

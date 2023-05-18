@@ -68,7 +68,7 @@ const AutocompleteForms = ({ companyType, setCompanyType }) => {
               value={formik.values.role}
               disableClearable
               onChange={(event, newValue) => {
-               handleCompanyTypeChange(newValue)
+                handleCompanyTypeChange(newValue);
                 const jobExist = roles.includes(newValue);
                 if (!jobExist) {
                   const matchData = newValue.match(/"((?:\\.|[^"\\])*)"/);
