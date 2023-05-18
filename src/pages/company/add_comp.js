@@ -45,10 +45,11 @@ function ColumnsLayouts() {
         <Grid item xs={12} lg={10}>
           <InputLabel required>Sub Company Type</InputLabel>
           {companyType === 'Service Company' && <AutocompleteFormService />}
-          {companyType == 'Management Company' && <AutocompleteFormManagement />}
+          {companyType === 'Management Company' && <AutocompleteFormManagement />}
         </Grid>
       );
     }
+    return null;
   };
 
   return (
@@ -58,7 +59,6 @@ function ColumnsLayouts() {
           <MainCard title="Add Company Details">
             <Grid item xs={12} lg={10}>
               <InputLabel required>Company Type</InputLabel>
-              <AutocompleteForms />
               <AutocompleteForms companyType={companyType} setCompanyType={setCompanyType} />
             </Grid>
             {subCompanyType()}
