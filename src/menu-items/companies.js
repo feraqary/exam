@@ -82,14 +82,14 @@ const companies = {
           id: 'active',
           title: <FormattedMessage id="View Active Subscriptions" />,
           type: 'item',
-          url: '/app/customer/order-list',
+          url: '/company/active_subs',
           breadcrumbs: false
         },
         {
           id: 'pending',
           title: <FormattedMessage id="View Pending Subscriptions" />,
           type: 'item',
-          url: '/app/customer/create-invoice',
+          url: '/company/pending_subs',
           breadcrumbs: false
         }
       ]
