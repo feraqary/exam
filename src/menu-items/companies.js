@@ -99,34 +99,28 @@ const companies = {
       title: 'Payments',
       type: 'item',
       icon: icons.IconLayoutKanban,
-      url: '/app/kanban/board'
+      url: '/company/payments'
     },
     {
       id: 'second-phase',
-      title: <FormattedMessage id="Second Phase Upload" />,
+      title: <FormattedMessage id="Company Registration" />,
       type: 'item',
       icon: icons.IconMail,
-      url: '/app/mail'
-    },
-    {
-      id: 'blocked',
-      title: <FormattedMessage id="View Blocked Companies" />,
-      type: 'item',
-      url: '/app/calendar',
-      icon: icons.IconCalendar,
-      breadcrumbs: false
+      url: '/company/company_reg'
     },
     {
       id: 'previliges',
       title: <FormattedMessage id="Company Previliges" />,
       type: 'item',
-      icon: icons.IconNfc
+      icon: icons.IconNfc,
+      url: 'company/previliges'
     },
     {
       id: 'activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
-      icon: icons.IconBasket
+      icon: icons.IconBasket,
+      url: '/company/activities'
     }
   ]
 };

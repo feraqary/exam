@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import newdatatable from 'components/widget/Data/international_comp_datatable';
+import InterComp from 'components/widget/Data/international_comp_datatable';
 
 // ===========================|| International Company Managment list||=========================== //
 
@@ -13,7 +13,7 @@ const IntCompData = () => (
   <Page title="Local Company List">
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <newdatatable />
+        <InterComp />
       </Grid>
     </Grid>
   </Page>

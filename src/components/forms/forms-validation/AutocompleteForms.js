@@ -16,7 +16,7 @@ import * as yup from 'yup';
 // assets
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 
-const roles = ['Broker Company', 'Developer Company', 'Management Company', 'Service Company'];
+const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 
 const filter = createFilterOptions();
 // const filterSkills = createFilterOptions();
