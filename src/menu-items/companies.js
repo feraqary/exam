@@ -53,7 +53,7 @@ const companies = {
           id: 'add_company_types',
           title: <FormattedMessage id="Add Company Types" />,
           type: 'item',
-          url: '/company/add_comp'
+          url: '/company/add_type'
         },
         {
           id: 'company-types',

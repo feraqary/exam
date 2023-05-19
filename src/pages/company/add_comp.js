@@ -8,13 +8,12 @@ import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 // assets
 import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
 import { UploadFile } from '@mui/icons-material';
-import AutocompleteFormManagement from 'components/forms/forms-validation/AutoCompleteFormManagement';
 import AutocompleteFormService from 'components/forms/forms-validation/AutoCompleteFormService';
 
 // ==============================|| Add Company form ||============================== //
@@ -39,18 +38,17 @@ function ColumnsLayouts() {
     changeprofilepicture(URL.createObjectURL(event.target.files[0]));
   };
 
-  const subCompanyType = () => {
+  const subCompanyType = useMemo(() => {
     if (companyType === 'Service Company' || companyType === 'Management Company') {
       return (
         <Grid item xs={12} lg={10}>
-          <InputLabel required>Sub Company Type</InputLabel>
+          <InputLabel required>Service Company Sub Type</InputLabel>
           {companyType === 'Service Company' && <AutocompleteFormService />}
-          {companyType === 'Management Company' && <AutocompleteFormManagement />}
         </Grid>
       );
     }
     return null;
-  };
+  }, [companyType]);
 
   return (
     <Page title="Add Company">
@@ -61,7 +59,7 @@ function ColumnsLayouts() {
               <InputLabel required>Company Type</InputLabel>
               <AutocompleteForms companyType={companyType} setCompanyType={setCompanyType} />
             </Grid>
-            {subCompanyType()}
+            {subCompanyType}
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} lg={6}>
                 <InputLabel required>Company Name</InputLabel>

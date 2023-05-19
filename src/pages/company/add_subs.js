@@ -83,6 +83,10 @@ function Subscription() {
   const [featuredDiscount, setFeaturedDiscount] = useState(null);
   const [premiumDiscount, setPremiumDiscount] = useState(null);
   const [dealOfWeekDiscount, setDealOfWeekDiscount] = useState(null);
+  const [freeStandard, setFreeStandard] = useState(null);
+  const [freeFeatured, setFreeFeatured] = useState(null);
+  const [freePremium, setFreePremium] = useState(null);
+  const [freeDealOfWeek, setFreeDealOfWeek] = useState(null);
 
   const calculateDiscount = (price, discount) => {
     if (discount === null) {
@@ -364,7 +368,18 @@ function Subscription() {
             <Grid container>
               <FormControlLabel control={<Checkbox onChange={handleFreeSubChange} />} label="Add Free Subscription" />
             </Grid>
-            {freeSubChecked && <NumberOfItems />}
+            {freeSubChecked && (
+              <NumberOfItems
+                standard={freeStandard}
+                setStandard={setFreeStandard}
+                featured={freeFeatured}
+                setFeatured={setFreeFeatured}
+                premium={freePremium}
+                setPremium={setFreePremium}
+                dealOfWeek={freeDealOfWeek}
+                setDealOfWeek={setFreeDealOfWeek}
+              />
+            )}
             <CardActions>
               <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
                 <Grid item>
