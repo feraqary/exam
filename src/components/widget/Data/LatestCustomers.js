@@ -15,8 +15,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AccountCircle, Send } from '@mui/icons-material';
 
 // Mock Data
-import { data } from './intercomp_data';
-
 const Example = () => {
   const columns = useMemo(
     () => [
