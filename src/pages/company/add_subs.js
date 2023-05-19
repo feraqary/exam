@@ -111,6 +111,22 @@ function Subscription() {
     }
     return total;
   }, [standard, featured, premium, dealOfWeek]);
+  const totalNumberOfFreeItems = useMemo(() => {
+    let total = 0;
+    if (freeStandard) {
+      total += parseInt(freeStandard, 10);
+    }
+    if (freeFeatured) {
+      total += parseInt(freeFeatured, 10);
+    }
+    if (freePremium) {
+      total += parseInt(freePremium, 10);
+    }
+    if (freeDealOfWeek) {
+      total += parseInt(freeDealOfWeek, 10);
+    }
+    return total;
+  }, [freeStandard, freeFeatured, freePremium, freeDealOfWeek]);
 
   const totalPrice = useMemo(() => {
     let total = 0;
@@ -378,6 +394,7 @@ function Subscription() {
                 setPremium={setFreePremium}
                 dealOfWeek={freeDealOfWeek}
                 setDealOfWeek={setFreeDealOfWeek}
+                numberOfUnits={totalNumberOfFreeItems}
               />
             )}
             <CardActions>

@@ -112,10 +112,10 @@ export const NumberOfItems = ({
             value={dealOfWeek}
             onChange={handleDealOfWeekChange}
           />
-          <FormHelperText>Number of units</FormHelperText>
+          <FormHelperText>Please enter number of units</FormHelperText>
         </Grid>
         <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
-          <InputLabel horizontal>Deal Of Week (40)</InputLabel>
+          <InputLabel horizontal>Number of units</InputLabel>
         </Grid>
         <Grid item xs={12} sm={9} lg={6}>
           <TextField fullWidth value={numberOfUnits} disabled />
