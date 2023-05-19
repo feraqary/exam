@@ -113,7 +113,7 @@ const companies = {
       title: <FormattedMessage id="Company Previliges" />,
       type: 'item',
       icon: icons.IconNfc,
-      url: 'company/previliges'
+      url: '/company/previliges'
     },
     {
       id: 'activities',
