@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, Stack } from '@mui/material';
+import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, Stack, Select, MenuItem } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -335,7 +335,6 @@ function ColumnsLayouts() {
               </Grid>
             </Grid>
           </MainCard>
-          
           <Stack direction="row" justifyContent="end" padding={2}>
             <Button variant="contained">Add Company</Button>
           </Stack>
