@@ -144,12 +144,10 @@ function ColumnsLayouts() {
               <Grid item xs={12} lg={4}>
                 <InputLabel required>Office Address</InputLabel>
                 <TextField fullWidth placeholder="Enter Office Address" />
-                <FormHelperText>Please enter company Office Address</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel required>Billing Reference</InputLabel>
                 <TextField fullWidth placeholder="Enter Billing Reference" />
-                <FormHelperText>Please enter Billing Reference</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel required>Country</InputLabel>
@@ -158,7 +156,6 @@ function ColumnsLayouts() {
               <Grid item xs={12} lg={4}>
                 <InputLabel>City</InputLabel>
                 <TextField fullWidth placeholder="Selecy City" />
-                <FormHelperText>Please Select City</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel required>State</InputLabel>
@@ -287,7 +284,7 @@ function ColumnsLayouts() {
               <Grid item xs={12} lg={4}>
                 <InputLabel>Subscription Start Date</InputLabel>
                 <TextField fullWidth type="date" />
-                yarn Developer
+                Enter Subscription Start Date
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel>Subscription End Date</InputLabel>
