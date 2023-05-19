@@ -99,26 +99,28 @@ const companies = {
       title: 'Payments',
       type: 'item',
       icon: icons.IconLayoutKanban,
-      url: '/company/'
+      url: '/company/payments'
     },
     {
       id: 'second-phase',
       title: <FormattedMessage id="Company Registration" />,
       type: 'item',
       icon: icons.IconMail,
-      url: '/app/mail'
+      url: '/company/company_reg'
     },
     {
       id: 'previliges',
       title: <FormattedMessage id="Company Previliges" />,
       type: 'item',
-      icon: icons.IconNfc
+      icon: icons.IconNfc,
+      url: 'company/previliges'
     },
     {
       id: 'activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
-      icon: icons.IconBasket
+      icon: icons.IconBasket,
+      url: '/company/activities'
     }
   ]
 };
