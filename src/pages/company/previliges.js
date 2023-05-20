@@ -31,7 +31,7 @@ function CompanyType() {
   };
 
   const subCompanyType = useMemo(() => {
-    if ((companyType === 'Service Company' && companyName) || companyType !== 'Service Company') {
+    if ((companyType === 'Service Company' && companyName) || (companyType !== 'Service Company' && companyType)) {
       console.log(companyName);
       return (
         <>
