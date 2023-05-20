@@ -7,10 +7,10 @@ import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
-import Payment from 'components/application/e-commerce/Checkout/Payment';
+import Payments from 'components/application/e-commerce/Checkout/Payment';
 
 // ==============================|| Add Company Type form ||============================== //
-function Payments() {
+function Payment() {
   return (
     <Page title="Payments">
       <Grid container spacing={gridSpacing}>
@@ -23,8 +23,8 @@ function Payments() {
   );
 }
 
-Payments.getLayout = function getLayout(page) {
+Payment.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default Payments;
+export default Payment;
