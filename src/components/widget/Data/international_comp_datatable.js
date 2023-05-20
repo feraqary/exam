@@ -902,10 +902,10 @@ const IntComp = () => {
               Edit
             </Button>
             <Button color="primary" variant="contained" startIcon={<AssignmentIcon />}>
-              Documents
+              View Documents
             </Button>
             <Button variant="contained" color="primary" startIcon={<PreviewIcon />}>
-              Live
+              View Live
             </Button>
             <Button variant="contained" color="primary">
               Multiple
@@ -926,7 +926,7 @@ const IntComp = () => {
     []
   );
 
-  return <MaterialReactTable columns={columns} data={data} />;
+  return <MaterialReactTable columns={columns} data={data} enableDensityToggle={false} initialState={{ density: 'compact' }} />;
 };
 
 export default IntComp;

@@ -56,7 +56,7 @@ function CompanyType() {
                 <TextField
                   type="file"
                   fullWidth
-                  placeholder="Upload Company Logo"
+                  placeholder="Upload Logo"
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -66,10 +66,9 @@ function CompanyType() {
                   }}
                   onChange={handleInputChange}
                 />
-
-                <FormHelperText>Please Upload Company Logo</FormHelperText>
+                <FormHelperText>Please Upload Logo</FormHelperText>
                 <Grid item xs={12} lg={6}>
-                  <img src={licenseimg} alt="Company License Preview" width="250px" height="250px" />
+                  <img src={licenseimg} alt="Logo Preview" width="250px" height="250px" />
                 </Grid>
               </Grid>
               <Divider />
