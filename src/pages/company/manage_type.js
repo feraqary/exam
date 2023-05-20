@@ -3,17 +3,11 @@ import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, 
 
 // project imports
 import Layout from 'layout';
-import { useTheme } from '@mui/material/styles';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
-import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
-
-// assets
-import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
-import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
-import { UploadFile } from '@mui/icons-material';
+import TypeComp from 'components/widget/Data/comp_type';
 
 // ==============================|| Add Company Type form ||============================== //
 function CompanyType() {
@@ -21,7 +15,7 @@ function CompanyType() {
     <Page title=" Company Types">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <MainCard title="Manage Company Type" />
+        <TypeComp />
         </Grid>
       </Grid>
     </Page>
