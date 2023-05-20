@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import MaterialReactTable from 'material-react-table';
 import { Box, Button, Alert } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
 const data = [
   {
@@ -175,8 +176,11 @@ const PendingPayments = () => {
               gap: '1rem'
             }}
           >
-            <Button variant="contained" color="error">
-              Delete Subscription
+            <Button variant="contained" color="warning">
+              Draft
+            </Button>
+            <Button variant="contained" color="primary" startIcon={<EditIcon />}>
+              Edit
             </Button>
           </Box>
         )
