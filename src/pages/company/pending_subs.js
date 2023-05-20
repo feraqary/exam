@@ -3,17 +3,12 @@ import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, 
 
 // project imports
 import Layout from 'layout';
-import { useTheme } from '@mui/material/styles';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
-
-// assets
-import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
-import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
-import { UploadFile } from '@mui/icons-material';
+import PendingSubs from 'components/widget/Data/subscription_mng/pending_sub';
 
 // ==============================|| View Pending Subscriptions ||============================== //
 function subscription() {
@@ -22,6 +17,7 @@ function subscription() {
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <MainCard title="Pending Subscriptions" />
+          <PendingSubs />
         </Grid>
       </Grid>
     </Page>
