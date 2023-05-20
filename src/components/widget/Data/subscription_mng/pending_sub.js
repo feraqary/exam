@@ -1,298 +1,163 @@
 import React, { useMemo } from 'react';
 import MaterialReactTable from 'material-react-table';
 import { Box, Button, Alert } from '@mui/material';
-import { SubscriptionsOutlined } from '@mui/icons-material';
 
 const data = [
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Paid Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Free Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Paid Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Free Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending contract verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Paid Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Free Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending contract verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Paid Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Free Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Free Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Paid Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Free Subscriptions',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Free Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Paid Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30',
+    amount: '2/200',
+    payment_method: '20/50',
+    payment_plan: '280',
+    status: 'Paid Subscription'
   },
   {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Paid Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
-  },
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Free Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
-  },
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Free Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
-  },
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Free Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
-  },
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Paid Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
-  },
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Paid Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
-  },
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Free Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
-  },
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    subs_mode: 'Paid Subscription',
-    added_date: '14-08/2021',
-    subsDate: ' 20/12/2022 - 20/12/2023',
-    status: 'pending verification'
+    companyName: 'Aldar',
+    orderNo: '1/100',
+    date: ' 12/30/2023',
+    amount: '212313',
+    payment_method: 'Card',
+    payment_plan: 'Monthly',
+    status: 'Paid Subscription'
   }
 ];
 
-const PendingSubs = () => {
+const PendingPayments = () => {
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'comp_name',
+        accessorKey: 'companyName',
         header: 'Company Name'
       },
 
       {
-        accessorKey: 'standard',
-        header: 'Standard'
+        accessorKey: 'orderNo',
+        header: 'Order No'
       },
       {
-        accessorKey: 'featured',
-        header: 'Featured'
+        accessorKey: 'date',
+        header: 'Date of Order'
       },
       {
-        accessorKey: 'premium',
-        header: 'Premium'
+        accessorKey: 'amount',
+        header: 'Amount'
       },
       {
-        accessorKey: 'deal_of_week',
-        header: 'Deal of the Week'
+        accessorKey: 'payment_method',
+        header: 'Payment Method'
       },
       {
-        accessorKey: 'total',
-        header: 'Total'
-      },
-      {
-        accessorKey: 'subs_mode',
-        header: 'Subscription Mode'
-      },
-      {
-        accessorKey: 'subsDate',
-        header: 'Subscription Date'
+        accessorKey: 'payment_plan',
+        header: 'Payment Plan'
       },
       {
         accessorKey: 'status',
@@ -310,11 +175,8 @@ const PendingSubs = () => {
               gap: '1rem'
             }}
           >
-            <Button variant="contained" color="primary">
-              View Contract
-            </Button>
-            <Button variant="contained" color="primary">
-              View Profile
+            <Button variant="contained" color="error">
+              Delete Subscription
             </Button>
           </Box>
         )
@@ -326,4 +188,4 @@ const PendingSubs = () => {
   return <MaterialReactTable columns={columns} data={data} />;
 };
 
-export default PendingSubs;
+export default PendingPayments;

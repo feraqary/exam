@@ -9,6 +9,7 @@ import MainCard from 'components/ui-component/cards/MainCard';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
+import CompanyContract from 'components/widget/Data/comp_reg';
 
 // ==============================|| View Company Registration ||============================== //
 function CompanyType() {
@@ -17,6 +18,7 @@ function CompanyType() {
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <MainCard title="View Company Registration Documents" />
+          <CompanyContract />
         </Grid>
       </Grid>
     </Page>
