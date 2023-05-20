@@ -12,7 +12,7 @@ import TypeComp from 'components/widget/Data/comp_type';
 // ==============================|| Manage Company Type ||============================== //
 function CompanyType() {
   return (
-    <Page title=" Managw Company Types">
+    <Page title=" Manage Company Types">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <TypeComp />
