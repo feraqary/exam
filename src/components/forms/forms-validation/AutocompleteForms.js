@@ -16,8 +16,6 @@ import * as yup from 'yup';
 // assets
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 
-const roles = ['Broker Company', 'Developer Company', 'Service Company'];
-
 const filter = createFilterOptions();
 // const filterSkills = createFilterOptions();
 
@@ -31,7 +29,7 @@ const validationSchema = yup.object({
 
 // ==============================|| FORM VALIDATION - AUTOCOMPLETE FORMIK  ||============================== //
 
-const AutocompleteForms = ({ setCompanyType }) => {
+const AutocompleteForms = ({ setCompanyFun, data }) => {
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -54,9 +52,6 @@ const AutocompleteForms = ({ setCompanyType }) => {
       );
     }
   });
-  const handleCompanyTypeChange = (newValue) => {
-    setCompanyType(newValue);
-  };
 
   return (
     <MainCard title="">
@@ -68,8 +63,8 @@ const AutocompleteForms = ({ setCompanyType }) => {
               value={formik.values.role}
               disableClearable
               onChange={(event, newValue) => {
-                handleCompanyTypeChange(newValue);
-                const jobExist = roles.includes(newValue);
+                setCompanyFun(newValue);
+                const jobExist = data.includes(newValue);
                 if (!jobExist) {
                   const matchData = newValue.match(/"((?:\\.|[^"\\])*)"/);
                   formik.setFieldValue('role', matchData && matchData[1]);
@@ -91,10 +86,10 @@ const AutocompleteForms = ({ setCompanyType }) => {
               autoHighlight
               handleHomeEndKeys
               id="free-solo-with-text-demo"
-              options={roles}
+              options={data}
               getOptionLabel={(option) => {
                 let value = option;
-                const jobExist = roles.includes(option);
+                const jobExist = data.includes(option);
                 if (!jobExist) {
                   const matchData = option.match(/"((?:\\.|[^"\\])*)"/);
                   if (matchData && matchData[1]) value = matchData && matchData[1];

@@ -13,10 +13,13 @@ import { UploadFile } from '@mui/icons-material';
 // assets
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
 
+const roles = ['Broker Company', 'Developer Company', 'Service Company'];
+
 // ==============================|| Add Company Type form ||============================== //
 function CompanyType() {
   const [companyType, setCompanyType] = useState(null);
   const [licenseimg, setnewimg] = useState(null);
+  const [companyName, setCompanyName] = useState(null);
   const handleInputChange = (event) => {
     setnewimg(URL.createObjectURL(event.target.files[0]));
   };
@@ -31,6 +34,10 @@ function CompanyType() {
     }
     return null;
   }, [companyType]);
+  const handleCompanyTypeChange = (newValue) => {
+    setCompanyName(null);
+    setCompanyType(newValue);
+  };
   return (
     <Page title="Add Company Types">
       <Grid container spacing={gridSpacing}>
@@ -38,7 +45,7 @@ function CompanyType() {
           <MainCard title="Add Company Type">
             <Grid item xs={12} lg={10}>
               <InputLabel required>Company Type</InputLabel>
-              <AutocompleteForms companyType={companyType} setCompanyType={setCompanyType} />
+              <AutocompleteForms data={roles} setCompanyFun={handleCompanyTypeChange} />
               {subCompanyType}
               <Grid item xs={12} lg={12}>
                 <InputLabel required>Description</InputLabel>

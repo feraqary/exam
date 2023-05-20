@@ -16,6 +16,10 @@ import AutocompleteForms from 'components/forms/forms-validation/AutocompleteFor
 import { UploadFile } from '@mui/icons-material';
 import AutocompleteFormService from 'components/forms/forms-validation/AutoCompleteFormService';
 
+// ==============================|| FIELDS ||============================== //
+const roles = ['Broker Company', 'Developer Company', 'Service Company'];
+const companyNames = ['Business & Investement Company', 'Developer Company', 'Property Company'];
+
 // ==============================|| Add Company form ||============================== //
 function ColumnsLayouts() {
   const theme = useTheme();
@@ -24,6 +28,7 @@ function ColumnsLayouts() {
   const [logoimg, changelogo] = useState(null);
   const [profilepicture, changeprofilepicture] = useState(null);
   const [companyType, setCompanyType] = useState(null);
+  const [companyName, setCompanyName] = useState(null);
 
   const handleInputChange = (event) => {
     setnewimg(URL.createObjectURL(event.target.files[0]));
@@ -36,6 +41,14 @@ function ColumnsLayouts() {
   };
   const handleprofileInputChange = (event) => {
     changeprofilepicture(URL.createObjectURL(event.target.files[0]));
+  };
+
+  const handleCompanyTypeChange = (newValue) => {
+    setCompanyName(null);
+    setCompanyType(newValue);
+  };
+  const handleCompanyNameChange = (newValue) => {
+    setCompanyName(newValue);
   };
 
   const subCompanyType = useMemo(() => {
@@ -57,7 +70,7 @@ function ColumnsLayouts() {
           <MainCard title="Add Company Details">
             <Grid item xs={12} lg={10}>
               <InputLabel required>Company Type</InputLabel>
-              <AutocompleteForms companyType={companyType} setCompanyType={setCompanyType} />
+              <AutocompleteForms setCompanyFun={handleCompanyTypeChange} data={roles} />
             </Grid>
             {subCompanyType}
             <Grid container spacing={2} alignItems="center">
