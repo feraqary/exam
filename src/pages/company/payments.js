@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import Payment from 'components/application/e-commerce/Checkout/Payment';
 
 // ==============================|| Add Company Type form ||============================== //
-function Payment() {
+function Payments() {
   return (
     <Page title="Payments">
       <Grid container spacing={gridSpacing}>
@@ -23,8 +23,8 @@ function Payment() {
   );
 }
 
-Payment.getLayout = function getLayout(page) {
+Payments.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default Payment;
+export default Payments;
