@@ -1,137 +1,138 @@
 import React, { useMemo } from 'react';
 import MaterialReactTable from 'material-react-table';
 import { Box, Button, Alert } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
 const data = [
   {
-    companyName: 'Fine Home Real Estate LLC',
-    subs_mode: 'Paid Subscription',
-    standard: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    companyName: 'Aldar',
+    orderNo: '1100',
+    date: ' 12/30',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
+    orderNo: '1100',
     date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
+    amount: '200',
+    payment_method: 'card',
     payment_plan: '280',
     status: 'Paid Subscription'
   },
   {
     companyName: 'Aldar',
-    orderNo: '1/100',
-    date: ' 12/30',
-    amount: '2/200',
-    payment_method: '20/50',
-    payment_plan: '280',
+    orderNo: '1100',
+    date: ' 12/30/2023',
+    amount: '212313',
+    payment_method: 'Card',
+    payment_plan: 'Monthly',
     status: 'Paid Subscription'
   }
 ];
 
-const PendingSubs = () => {
+const Payments = () => {
   const columns = useMemo(
     () => [
       {
@@ -149,19 +150,19 @@ const PendingSubs = () => {
       },
       {
         accessorKey: 'amount',
-        header: 'A'
+        header: 'Amount'
       },
       {
         accessorKey: 'payment_method',
-        header: 'Deal of the Week'
+        header: 'Payment Method'
       },
       {
         accessorKey: 'payment_plan',
-        header: 'Total'
+        header: 'Payment Plan'
       },
       {
         accessorKey: 'status',
-        header: 'Subscription Mode'
+        header: 'Status'
       },
 
       {
@@ -175,8 +176,11 @@ const PendingSubs = () => {
               gap: '1rem'
             }}
           >
-            <Button variant="contained" color="error">
-              Delete Subscription
+            <Button variant="contained" color="warning">
+              Draft
+            </Button>
+            <Button variant="contained" color="primary" startIcon={<EditIcon />}>
+              Edit
             </Button>
           </Box>
         )
@@ -188,4 +192,4 @@ const PendingSubs = () => {
   return <MaterialReactTable columns={columns} data={data} />;
 };
 
-export default PendingSubs;
+export default Payments;
