@@ -132,7 +132,7 @@ const data = [
   }
 ];
 
-const Payments = () => {
+const Payment = () => {
   const columns = useMemo(
     () => [
       {
@@ -192,4 +192,4 @@ const Payments = () => {
   return <MaterialReactTable columns={columns} data={data} />;
 };
 
-export default Payments;
+export default Payment;
