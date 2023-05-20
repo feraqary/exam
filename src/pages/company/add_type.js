@@ -60,7 +60,7 @@ function CompanyType() {
                   onChange={handleInputChange}
                 />
 
-                <FormHelperText>Please Upload Company License</FormHelperText>
+                <FormHelperText>Please Upload Company Logo</FormHelperText>
                 <Grid item xs={12} lg={6}>
                   <img src={licenseimg} alt="Company License Preview" width="250px" height="250px" />
                 </Grid>
