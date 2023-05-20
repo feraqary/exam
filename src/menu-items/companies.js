@@ -116,11 +116,11 @@ const companies = {
       url: '/company/previliges'
     },
     {
-      id: 'activities',
+      id: 'activity',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBasket,
-      url: '/company/activities'
+      url: '/company/activity'
     }
   ]
 };

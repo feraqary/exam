@@ -9,8 +9,8 @@ import MainCard from 'components/ui-component/cards/MainCard';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
 
-// ==============================|| Add Company Type form ||============================== //
-function CompanyType() {
+// ==============================|| Activity datatable ||============================== //
+function Activities() {
   return (
     <Page title=" Company Section Activities">
       <Grid container spacing={gridSpacing}>
@@ -22,8 +22,8 @@ function CompanyType() {
   );
 }
 
-CompanyType.getLayout = function getLayout(page) {
+Activities.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default CompanyType;
+export default Activities;
