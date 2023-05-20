@@ -9,13 +9,13 @@ import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
 import TypeComp from 'components/widget/Data/comp_type';
 
-// ==============================|| Add Company Type form ||============================== //
+// ==============================|| Manage Company Type ||============================== //
 function CompanyType() {
   return (
-    <Page title=" Company Types">
+    <Page title=" Managw Company Types">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-        <TypeComp />
+          <TypeComp />
         </Grid>
       </Grid>
     </Page>
