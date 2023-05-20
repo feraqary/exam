@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, Stack } from '@mui/material';
+import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, Stack, Select, MenuItem } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -140,14 +140,6 @@ function ColumnsLayouts() {
           <MainCard title="Add Billing Information">
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} lg={4}>
-                <InputLabel required>Office Address</InputLabel>
-                <TextField fullWidth placeholder="Enter Office Address" />
-              </Grid>
-              <Grid item xs={12} lg={4}>
-                <InputLabel required>Billing Reference</InputLabel>
-                <TextField fullWidth placeholder="Enter Billing Reference" />
-              </Grid>
-              <Grid item xs={12} lg={4}>
                 <InputLabel required>Country</InputLabel>
                 <TextField fullWidth placeholder="Select Country" />
               </Grid>
@@ -162,6 +154,14 @@ function ColumnsLayouts() {
               <Grid item xs={12} lg={4}>
                 <InputLabel>Community</InputLabel>
                 <TextField fullWidth placeholder="Select Community" />
+              </Grid>
+              <Grid item xs={12} lg={4}>
+                <InputLabel required>Office Address</InputLabel>
+                <TextField fullWidth placeholder="Enter Office Address" />
+              </Grid>
+              <Grid item xs={12} lg={4}>
+                <InputLabel required>Billing Reference</InputLabel>
+                <TextField fullWidth placeholder="Enter Billing Reference" />
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel required>Google Map Link</InputLabel>

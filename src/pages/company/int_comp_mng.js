@@ -10,7 +10,7 @@ import InterComp from 'components/widget/Data/international_comp_datatable';
 // ===========================|| International Company Managment list||=========================== //
 
 const IntCompData = () => (
-  <Page title="Local Company List">
+  <Page title="International Company List">
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <InterComp />

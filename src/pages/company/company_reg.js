@@ -10,11 +10,6 @@ import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
 
-// assets
-import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
-import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
-import { UploadFile } from '@mui/icons-material';
-
 // ==============================|| View Company Registration ||============================== //
 function CompanyType() {
   return (
