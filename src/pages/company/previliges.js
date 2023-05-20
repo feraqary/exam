@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, createMuiTheme, Stack } from '@mui/material';
+import { Grid, Button, Stack, Divider, CardActions } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -93,6 +93,19 @@ function CompanyType() {
             ) : null}
             <InputLabel required>Permissions</InputLabel>
             {subCompanyType}
+            <Divider />
+            <CardActions>
+              <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
+                <Grid item>
+                  <Button variant="contained" color="secondary">
+                    Submit
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button variant="outlined">Clear</Button>
+                </Grid>
+              </Grid>
+            </CardActions>
           </MainCard>
         </Grid>
       </Grid>
