@@ -16,6 +16,7 @@ const data = [
     status: 'pending verification'
   },
   {
+    comp_name: 'Aldar',
     standard: '1/100',
     featured: ' 12/30',
     premium: '2/200',
