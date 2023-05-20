@@ -45,11 +45,11 @@ function CompanyType() {
                 <TextField fullWidth id="outlined-multiline-flexible" label="Description" multiline rows={5} defaultValue="" />
               </Grid>
               <Grid item xs={12} lg={6} sx={{ mt: 2 }}>
-                <InputLabel required>Upload License</InputLabel>
+                <InputLabel required>Upload Logo</InputLabel>
                 <TextField
                   type="file"
                   fullWidth
-                  placeholder="Upload Company License"
+                  placeholder="Upload Company Logo"
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
