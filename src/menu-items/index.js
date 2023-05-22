@@ -27,6 +27,7 @@ const menuItems = {
   items: [
     dashboard,
     management,
+    companies,
     project,
     reviews,
     pages,
@@ -37,7 +38,6 @@ const menuItems = {
     settings,
     contract,
     propertyhub,
-    companies,
     exchange,
     auctions,
     leads,
