@@ -7,21 +7,21 @@ import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 
-// ==============================|| Add Project ||============================== //
-function AddProject() {
+// ==============================|| Manage Local Project ||============================== //
+function ManageProject() {
   return (
-    <Page title="Add Project">
+    <Page title="Manage Project">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <MainCard title="Add Project" />
+          <MainCard title="Manage Local Project" />
         </Grid>
       </Grid>
     </Page>
   );
 }
 
-AddProject.getLayout = function getLayout(page) {
+ManageProject.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default AddProject;
+export default ManageProject;

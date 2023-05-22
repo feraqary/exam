@@ -41,7 +41,7 @@ const project = {
           id: 'local',
           title: <FormattedMessage id="Local Projects" />,
           type: 'item',
-          url: '/src/pages/project/'
+          url: '/project/manage_project'
         },
         {
           id: 'international',
