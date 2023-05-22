@@ -29,7 +29,7 @@ const project = {
       title: <FormattedMessage id="Add Project" />,
       type: 'item',
       icon: icons.IconUserCheck,
-      url: '/project/project_datatable'
+      url: '/project/add_project'
     },
     {
       id: 'manage-projects',
