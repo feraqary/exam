@@ -82,7 +82,8 @@ const project = {
       id: 'activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
-      icon: icons.IconBasket
+      icon: icons.IconBasket,
+      url: '/project/activities'
     }
   ]
 };

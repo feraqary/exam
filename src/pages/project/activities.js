@@ -6,6 +6,7 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
+import LocalProjectActivities from 'components/widget/Data/project_activities';
 
 // ==============================|| Activities Project ||============================== //
 function Activities() {
@@ -13,7 +14,8 @@ function Activities() {
     <Page title="Activities">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <MainCard title="Activities" />
+          <LocalProjectActivities/>
+          {/* <MainCard title="Activities" /> */}
         </Grid>
       </Grid>
     </Page>
