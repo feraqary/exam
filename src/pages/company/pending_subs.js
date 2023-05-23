@@ -16,8 +16,9 @@ function subscription() {
     <Page title="Pending Subscriptions">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <MainCard title="Pending Subscriptions" />
-          <PendingSubs />
+          <MainCard title="Pending Subscriptions">
+            <PendingSubs />
+          </MainCard>
         </Grid>
       </Grid>
     </Page>

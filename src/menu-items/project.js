@@ -46,7 +46,8 @@ const project = {
         {
           id: 'international',
           title: <FormattedMessage id="International Projects" />,
-          type: 'item'
+          type: 'item',
+          url: '/project/int_project'
         },
         {
           id: 'company-types',
@@ -54,7 +55,7 @@ const project = {
           caption: 'Manage Company Types',
           type: 'item',
           icon: icons.IconMessages,
-          url: '/app/chat'
+          url: '/project/int_project'
         }
       ]
     },

@@ -17,7 +17,6 @@ function CompanyType() {
     <Page title=" Company Registration">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <MainCard title="View Company Registration Documents" />
           <CompanyContract />
         </Grid>
       </Grid>

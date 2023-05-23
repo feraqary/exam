@@ -913,7 +913,7 @@ const IntComp = () => {
             <Button variant="contained" color="primary">
               Report
             </Button>
-            <Button variant="contained" color="error" startIcon={<DeleteIcon />}>
+            <Button variant="contained" color="primary" startIcon={<DeleteIcon />}>
               Block
             </Button>
             <Button variant="contained" color="warning" startIcon={<KeyIcon />}>

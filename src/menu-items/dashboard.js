@@ -13,13 +13,13 @@ const icons = {
 
 const dashboard = {
   id: 'dashboard',
-  title: <FormattedMessage id="Aqary Dashboard" />,
+  title: <FormattedMessage id="dashboard" />,
   icon: icons.IconDashboard,
   type: 'group',
   children: [
     {
-      id: 'Aqary Dashboard',
-      title: <FormattedMessage id="Statistics" />,
+      id: 'aqary-dashboard',
+      title: <FormattedMessage id="statistics" />,
       type: 'item',
       url: '/dashboard/default',
       icon: icons.IconDashboard,
