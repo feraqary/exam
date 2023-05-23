@@ -3,13 +3,11 @@
   "management": "Management",
   "add-user": "Add-user",
   "statistics": "Statistics",
-
   "manage": "Manage",
   "users": "Users",
   "user-roles": "User Roles",
   "department": "Department",
   "delete-user": "Delete user",
-
   "activities": "Activities",
   "companies": "Companies",
   "add-company": "Add Company",
