@@ -7,10 +7,10 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 
 
-// ==============================|| View Deleted Users ||============================== //
-function DeletedUsers() {
+// ==============================|| MANAGE DEPARTMENTS ||============================== //
+function ManageDep() {
   return (
-    <Page title="View Deleted Users">
+    <Page title="Manage Departments">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
 
@@ -19,9 +19,8 @@ function DeletedUsers() {
     </Page>
   );
 }
-
-DeletedUsers.getLayout = function getLayout(page) {
+ManageDep.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default DeletedUsers;
+export default ManageDep;
