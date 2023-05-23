@@ -6,6 +6,7 @@ import KeyIcon from '@mui/icons-material/Key';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PreviewIcon from '@mui/icons-material/Preview';
+import { styled } from '@mui/material/styles';
 
 const data = [
   {
@@ -825,6 +826,41 @@ const data = [
     action: ' edit, multiple'
   }
 ];
+const AqaryButton = styled(Button)({
+  boxShadow: 'none',
+  textTransform: 'none',
+  fontSize: 16,
+  padding: '6px 12px',
+  border: '1px solid',
+  lineHeight: 1.5,
+  backgroundColor: '#436496',
+  borderColor: '#436496',
+  fontFamily: [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    '"Segoe UI"',
+    'Roboto',
+    '"Helvetica Neue"',
+    'Arial',
+    'sans-serif',
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ].join(','),
+  '&:hover': {
+    backgroundColor: '#436496',
+    borderColor: '#0062cc',
+    boxShadow: 'none',
+  },
+  '&:active': {
+    boxShadow: 'none',
+    backgroundColor: '#436496',
+    borderColor: '#005cbf',
+  },
+  '&:focus': {
+    boxShadow: '0 0 0 0.2rem rgba(67 100 150)',
+  },
+});
 
 const IntComp = () => {
   const columns = useMemo(
@@ -898,6 +934,7 @@ const IntComp = () => {
               gap: '1rem'
             }}
           >
+            <AqaryButton variant="contained">Edit </AqaryButton>
             <Button variant="contained" color="primary">
               Edit
             </Button>
@@ -913,10 +950,10 @@ const IntComp = () => {
             <Button variant="contained" color="primary">
               Report
             </Button>
-            <Button variant="contained" color="error" startIcon={<DeleteIcon />}>
+            <Button variant="contained" color="primary" startIcon={<DeleteIcon />}>
               Block
             </Button>
-            <Button variant="contained" color="warning" startIcon={<KeyIcon />}>
+            <Button variant="contained" startIcon={<KeyIcon />}>
               Reset
             </Button>
           </Box>

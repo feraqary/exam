@@ -5,18 +5,15 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import InterComp from 'components/widget/Data/international_comp_datatable';
-import MainCard from 'components/ui-component/cards/MainCard';
+import SharedPro from 'components/widget/Data/shared_pro_datatable';
 
 // ===========================|| International Company Managment list||=========================== //
 
 const IntCompData = () => (
-  <Page title="International Company List">
+  <Page title="Local Project List">
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <MainCard title="International Companies">
-          <InterComp />
-        </MainCard>
+        <SharedPro />
       </Grid>
     </Grid>
   </Page>

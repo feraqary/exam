@@ -139,13 +139,25 @@ const LocalizationSection = () => {
                       }
                     }}
                   >
-                    <ListItemButton selected={language === 'en'} onClick={(event) => handleListItemClick(event, 'en')}>
+                    <ListItemButton selected={language === 'ar'} onClick={(event) => handleListItemClick(event, 'en')}>
                       <ListItemText
                         primary={
                           <Grid container>
                             <Typography color="textPrimary">English</Typography>
                             <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
                               (UK)
+                            </Typography>
+                          </Grid>
+                        }
+                      />
+                    </ListItemButton>
+                    <ListItemButton selected={language === 'en' } onClick={(event) => handleListItemClick(event, 'zh')}>
+                      <ListItemText
+                        primary={
+                          <Grid container>
+                            <Typography color="textPrimary">عربي</Typography>
+                            <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
+                              (Arabic)
                             </Typography>
                           </Grid>
                         }

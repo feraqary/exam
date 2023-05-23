@@ -52,11 +52,11 @@ function CompanyType() {
                 <TextField fullWidth id="outlined-multiline-flexible" label="Description" multiline rows={5} defaultValue="" />
               </Grid>
               <Grid item xs={12} lg={6} sx={{ mt: 2 }}>
-                <InputLabel required>Upload Logo</InputLabel>
+                <InputLabel required>Upload Icon</InputLabel>
                 <TextField
                   type="file"
                   fullWidth
-                  placeholder="Upload Logo"
+                  placeholder="Upload Icon"
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -66,9 +66,9 @@ function CompanyType() {
                   }}
                   onChange={handleInputChange}
                 />
-                <FormHelperText>Please Upload Logo</FormHelperText>
+                <FormHelperText>Please Upload Icon</FormHelperText>
                 <Grid item xs={12} lg={6}>
-                  <img src={licenseimg} alt="Logo Preview" width="250px" height="250px" />
+                  <img src={licenseimg} alt="Icon Preview" width="250px" height="250px" />
                 </Grid>
               </Grid>
               <Divider />

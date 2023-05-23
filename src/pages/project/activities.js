@@ -6,24 +6,24 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
-import React, { useState } from 'react';
-import Payment from 'components/widget/Data/payments';
+import LocalProjectActivities from 'components/widget/Data/project_activities';
 
-// ==============================|| Add Company Type form ||============================== //
-function Payments() {
+// ==============================|| Activities Project ||============================== //
+function Activities() {
   return (
-    <Page title=" Pending Payments">
+    <Page title="Activities">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Payment />
+          <LocalProjectActivities/>
+          {/* <MainCard title="Activities" /> */}
         </Grid>
       </Grid>
     </Page>
   );
 }
 
-Payments.getLayout = function getLayout(page) {
+Activities.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default Payments;
+export default Activities;
