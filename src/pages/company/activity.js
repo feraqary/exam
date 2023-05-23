@@ -8,6 +8,7 @@ import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
+import LocalCompanyActivities from 'components/widget/Data/company_activities';
 
 // ==============================|| Activity datatable ||============================== //
 function Activities() {
@@ -15,7 +16,8 @@ function Activities() {
     <Page title=" Company Section Activities">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <MainCard title="View Activity" />
+          <LocalCompanyActivities />
+          {/* <MainCard title="View Activity" /> */}
         </Grid>
       </Grid>
     </Page>

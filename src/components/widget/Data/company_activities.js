@@ -825,7 +825,7 @@ const data = [
   }
 ];
 
-const LocalProjectActivities = () => {
+const LocalCompanyActivities = () => {
   const columns = useMemo(
     () => [
       {
@@ -835,10 +835,6 @@ const LocalProjectActivities = () => {
       {
         accessorKey: 'date',
         header: 'Date '
-      },
-      {
-        accessorKey: 'name.projectName',
-        header: 'Project Name'
       },
       {
         accessorKey: 'developerCompany',
@@ -855,4 +851,4 @@ const LocalProjectActivities = () => {
   return <MaterialReactTable columns={columns} data={data} enableDensityToggle={false} initialState={{ density: 'compact' }} />;
 };
 
-export default LocalProjectActivities;
+export default LocalCompanyActivities;
