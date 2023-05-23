@@ -1,17 +1,17 @@
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
-
-
-
-
-const BootstrapButton = styled(Button)({
+const AqaryButton = styled(Button)({
     boxShadow: 'none',
     textTransform: 'none',
     fontSize: 16,
     padding: '6px 12px',
     border: '1px solid',
     lineHeight: 1.5,
-    backgroundColor: '#0063cc',
-    borderColor: '#0063cc',
+    backgroundColor: '#436496',
+    borderColor: '#436496',
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -25,17 +25,25 @@ const BootstrapButton = styled(Button)({
       '"Segoe UI Symbol"',
     ].join(','),
     '&:hover': {
-      backgroundColor: '#0069d9',
+      backgroundColor: '#436496',
       borderColor: '#0062cc',
       boxShadow: 'none',
     },
     '&:active': {
       boxShadow: 'none',
-      backgroundColor: '#0062cc',
+      backgroundColor: '#436496',
       borderColor: '#005cbf',
     },
     '&:focus': {
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+      boxShadow: '0 0 0 0.2rem rgba(67 100 150)',
     },
   });
   
+
+  export default function newButton(){
+    return (
+        <Stack spacing={2} direction="row">
+            <AqaryButton variant ="contained" disableRipple></AqaryButton>
+        </Stack>
+    );
+  }
