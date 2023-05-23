@@ -6,6 +6,7 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
+import InterPro from 'components/widget/Data/Inter_pro_datatable';
 
 // ==============================|| Manage International Project ||============================== //
 function ManageProject() {
@@ -13,7 +14,7 @@ function ManageProject() {
     <Page title="Manage Project">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <MainCard title="Manage International Project" />
+          <InterPro />
         </Grid>
       </Grid>
     </Page>
