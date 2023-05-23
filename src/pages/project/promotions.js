@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import InterPro from 'components/widget/Data/Inter_pro_datatable';
+import PromoPro from 'components/widget/Data/promo_datatable';
 
 // ==============================|| Manage International Project ||============================== //
 function ManageProject() {
@@ -13,7 +13,7 @@ function ManageProject() {
     <Page title="Manage Project">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <InterPro />
+          <PromoPro />
         </Grid>
       </Grid>
     </Page>

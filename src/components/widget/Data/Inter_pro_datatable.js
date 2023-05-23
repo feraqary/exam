@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import MaterialReactTable from 'material-react-table';
 import { Box, Button } from '@mui/material';
-import Image from 'next/image';
 import KeyIcon from '@mui/icons-material/Key';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentIcon from '@mui/icons-material/Assignment';

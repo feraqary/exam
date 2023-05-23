@@ -825,7 +825,7 @@ const data = [
   }
 ];
 
-const LocalPro = () => {
+const SharedPro = () => {
   const columns = useMemo(
     () => [
       {
@@ -913,4 +913,4 @@ const LocalPro = () => {
   return <MaterialReactTable columns={columns} data={data} enableDensityToggle={false} initialState={{ density: 'compact' }} />;
 };
 
-export default LocalPro;
+export default SharedPro;

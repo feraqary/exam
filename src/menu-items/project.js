@@ -41,7 +41,7 @@ const project = {
           id: 'local',
           title: <FormattedMessage id="Local Projects" />,
           type: 'item',
-          url: '/project/manage_project'
+          url: '/project/local_project'
         },
         {
           id: 'international',
@@ -50,71 +50,33 @@ const project = {
           url: '/project/int_project'
         },
         {
-          id: 'company-types',
-          title: <FormattedMessage id="Manage Company Types" />,
-          caption: 'Manage Company Types',
+          id: 'shared-projects',
+          title: <FormattedMessage id="Shared Projects" />,
           type: 'item',
-          icon: icons.IconMessages,
-          url: '/project/int_project'
+          url: '/project/shared_project'
         }
       ]
     },
     {
-      id: 'manage-subscriptions',
-      title: <FormattedMessage id=" Manage Subscriptions" />,
-      type: 'collapse',
+      id: 'deleted-projects',
+      title: <FormattedMessage id="Deleted Projects" />,
+      type: 'item',
       icon: icons.IconBasket,
-      children: [
-        {
-          id: 'add-subscription',
-          title: <FormattedMessage id="Add Subscriptions" />,
-          type: 'item',
-          url: '/app/customer/customer-list',
-          breadcrumbs: false
-        },
-        {
-          id: 'active',
-          title: <FormattedMessage id="View Active Subscriptions" />,
-          type: 'item',
-          url: '/app/customer/order-list',
-          breadcrumbs: false
-        },
-        {
-          id: 'pending',
-          title: <FormattedMessage id="View Pending Subscriptions" />,
-          type: 'item',
-          url: '/app/customer/create-invoice',
-          breadcrumbs: false
-        }
-      ]
+      url: '/project/del_project'
     },
     {
-      id: 'payments',
-      title: 'Payments',
+      id: 'promotions',
+      title: 'Promotions',
       type: 'item',
       icon: icons.IconLayoutKanban,
-      url: '/app/kanban/board'
+      url: '/project/promotions'
     },
     {
-      id: 'second-phase',
-      title: <FormattedMessage id="Second Phase Upload" />,
+      id: 'manage-requests',
+      title: <FormattedMessage id="Manage Requests" />,
       type: 'item',
       icon: icons.IconMail,
-      url: '/app/mail'
-    },
-    {
-      id: 'blocked',
-      title: <FormattedMessage id="View Blocked Companies" />,
-      type: 'item',
-      url: '/app/calendar',
-      icon: icons.IconCalendar,
-      breadcrumbs: false
-    },
-    {
-      id: 'previliges',
-      title: <FormattedMessage id="Company Previliges" />,
-      type: 'item',
-      icon: icons.IconNfc
+      url: '/project/manage_requests'
     },
     {
       id: 'activities',
