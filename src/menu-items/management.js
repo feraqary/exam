@@ -23,10 +23,11 @@ const management = {
   type: 'group',
   children: [
     {
-      id: 'add-user',
-      title: <FormattedMessage id="add-user" />,
+      id: 'add_user',
+      title: <FormattedMessage id="Add User" />,
       type: 'item',
-      icon: icons.IconPictureInPicture
+      icon: icons.IconPictureInPicture,
+      url: '/management/add_user'
     },
     {
       id: 'manage-management',
@@ -38,28 +39,28 @@ const management = {
           id: 'manage-users',
           title: <FormattedMessage id="users" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/management/manage_user',
           breadcrumbs: false
         },
         {
           id: 'manage-user-roles',
           title: <FormattedMessage id="user-roles" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/management/user_roles',
           breadcrumbs: false
         },
         {
           id: 'manage-deparment',
           title: <FormattedMessage id="department" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/managament/manage_deparment',
           breadcrumbs: false
         },
         {
           id: 'delete-user',
           title: <FormattedMessage id="delete-user" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/managament/deleted_user',
           breadcrumbs: false
         }
       ]
@@ -68,7 +69,8 @@ const management = {
       id: 'activities',
       title: <FormattedMessage id="activities" />,
       type: 'item',
-      icon: icons.IconBorderAll
+      icon: icons.IconBorderAll,
+      url: ' /managament/activities'
     }
   ]
 };
