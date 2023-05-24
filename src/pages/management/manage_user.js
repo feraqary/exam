@@ -5,16 +5,14 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import UserList from 'pages/management/manage_user';
-
-
+import UserList from './components/manage_user';
 // ==============================|| MANAGE Users ||============================== //
 function ManageUsers() {
   return (
     <Page title="Manage Users">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-        <UserList/>
+          <UserList />
         </Grid>
       </Grid>
     </Page>

@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, Stack, Select, MenuItem } from '@mui/material';
+import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, Divider, CardActions } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -15,10 +15,11 @@ import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
 import { UploadFile } from '@mui/icons-material';
 import AutocompleteFormService from 'components/forms/forms-validation/AutoCompleteFormService';
+import companyTypes from 'components/widget/Data/company_types_data/fetch_company_types';
 
 // ==============================|| FIELDS ||============================== //
-const roles = ['Broker Company', 'Developer Company', 'Service Company'];
-const companyNames = ['Business & Investement Company', 'Developer Company', 'Property Company'];
+
+const fetchCompanyTypes = companyTypes;
 
 // ==============================|| Add Company form ||============================== //
 function ColumnsLayouts() {
@@ -28,7 +29,8 @@ function ColumnsLayouts() {
   const [logoimg, changelogo] = useState(null);
   const [profilepicture, changeprofilepicture] = useState(null);
   const [companyType, setCompanyType] = useState(null);
-  const [companyName, setCompanyName] = useState(null);
+  const [subCompanyType, setSubCompanyType] = useState(null);
+  const [categories, setCategories] = useState(null);
 
   const handleInputChange = (event) => {
     setnewimg(URL.createObjectURL(event.target.files[0]));
@@ -44,24 +46,16 @@ function ColumnsLayouts() {
   };
 
   const handleCompanyTypeChange = (newValue) => {
-    setCompanyName(null);
+    setSubCompanyType(null);
     setCompanyType(newValue);
   };
-  const handleCompanyNameChange = (newValue) => {
-    setCompanyName(newValue);
+  const handleSubCompanyTypeChange = (newValue) => {
+    setSubCompanyType(newValue);
   };
-
-  const subCompanyType = useMemo(() => {
-    if (companyType === 'Service Company' || companyType === 'Management Company') {
-      return (
-        <Grid item xs={12} lg={10}>
-          <InputLabel required>Service Company Sub Type</InputLabel>
-          {companyType === 'Service Company' && <AutocompleteFormService />}
-        </Grid>
-      );
-    }
-    return null;
-  }, [companyType]);
+  const handleCategoriesChange = (newValue) => {
+    setCategories(newValue);
+  };
+  console.log(subCompanyType);
 
   return (
     <Page title="Add Company">
@@ -70,9 +64,14 @@ function ColumnsLayouts() {
           <MainCard title="Add Company Details">
             <Grid item xs={12} lg={10}>
               <InputLabel required>Company Type</InputLabel>
-              <AutocompleteForms setCompanyFun={handleCompanyTypeChange} data={roles} />
+              <AutocompleteForms setCompanyFun={handleCompanyTypeChange} data={fetchCompanyTypes.map((x) => x.type)} />
+              {companyType && fetchCompanyTypes.filter((x) => x.type === companyType)[0].subTypes.length > 0 && (
+                <AutocompleteForms
+                  setCompanyFun={handleSubCompanyTypeChange}
+                  data={fetchCompanyTypes.filter((x) => x.type === companyType).map((y) => y.subTypes.map((z) => z.title.toString()))[0]}
+                />
+              )}
             </Grid>
-            {subCompanyType}
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} lg={6}>
                 <InputLabel required>Company Name</InputLabel>
@@ -101,9 +100,6 @@ function ColumnsLayouts() {
                 />
 
                 <FormHelperText>Please Upload Company License</FormHelperText>
-                <Grid item xs={12} lg={6}>
-                  <img src={licenseimg} alt="Company License Preview" width="250px" height="250px" />
-                </Grid>
               </Grid>
               <Grid item xs={12} lg={6}>
                 <InputLabel required>License Expiry:</InputLabel>
@@ -199,11 +195,6 @@ function ColumnsLayouts() {
           <MainCard title="Company Presentation">
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} lg={4}>
-                <InputLabel required>Company Name</InputLabel>
-                <TextField fullWidth placeholder="Company Name for Listings" />
-                <FormHelperText>Please Enter Company Name to be listed for Listings</FormHelperText>
-              </Grid>
-              <Grid item xs={12} lg={4}>
                 <InputLabel required>Company Website</InputLabel>
                 <TextField fullWidth type="url" />
                 <FormHelperText>Please enter Billing Reference</FormHelperText>
@@ -211,11 +202,12 @@ function ColumnsLayouts() {
               <Grid item xs={12} lg={4}>
                 <InputLabel required>Company Email Address</InputLabel>
                 <TextField fullWidth type="email" />
-                <FormHelperText>Please select your contact</FormHelperText>
+                <FormHelperText>Please select your emial address</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <InputLabel required>Company Contact Number:</InputLabel>
                 <TextField fullWidth placeholder="Enter Contact Number" />
+                <FormHelperText>Please select your contact number</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={8}>
                 <InputLabel>Company Description</InputLabel>
@@ -280,7 +272,7 @@ function ColumnsLayouts() {
                 <InputLabel required>Number of Employees</InputLabel>
                 <TextField fullWidth type="number" />
               </Grid>
-              <Grid fullwidth item xs={12} lg={6}>
+              <Grid fullwidth item xs={12} lg={4}>
                 <InputLabel>Subscription Duration</InputLabel>
                 <NativeSelect id="select" fullWidth>
                   <option value="1">1 Month</option>
@@ -301,10 +293,10 @@ function ColumnsLayouts() {
                 <InputLabel>Subscription End Date</InputLabel>
                 <TextField fullWidth type="date" />
               </Grid>
-              <Grid item xs={12} lg={4}>
+              <Grid item xs={12} lg={8}>
                 <InputLabel required>Upload Profile Picture</InputLabel>
                 <TextField fullWidth type="file" required onChange={handleprofileInputChange} />
-                <Grid item xs={3} lg={8} alignContent="right">
+                <Grid item xs={3} lg={4} alignContent="right">
                   <img src={profilepicture} alt=" Admin Profile Preview" width="250px" height="250px" />
                 </Grid>
               </Grid>
@@ -331,7 +323,7 @@ function ColumnsLayouts() {
                 <TextField fullWidth required />
               </Grid>
               <Grid item xs={12} lg={4}>
-                <InputLabel required>Swift Code</InputLabel>
+                <InputLabel required>Country</InputLabel>
                 <TextField fullWidth required />
               </Grid>
               <Grid item xs={12} lg={4}>
@@ -343,17 +335,24 @@ function ColumnsLayouts() {
                 <TextField fullWidth required />
               </Grid>
               <Grid item xs={12} lg={4}>
-                <InputLabel required>Country</InputLabel>
+                <InputLabel required>Swift Code</InputLabel>
                 <TextField fullWidth required />
               </Grid>
             </Grid>
           </MainCard>
-          <Stack direction="row" justifyContent="end" padding={2}>
-            <Button variant="contained">Add Company</Button>
-          </Stack>
-          <Stack direction="row" justifyContent="end" padding={2}>
-            <Button variant="contained">Reset Form</Button>
-          </Stack>
+          <Divider />
+          <CardActions>
+            <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
+              <Grid item>
+                <Button variant="contained" color="secondary">
+                  Submit
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button variant="outlined">Clear</Button>
+              </Grid>
+            </Grid>
+          </CardActions>
         </Grid>
         <Grid item xs={12} lg={5} spacing={gridSpacing}>
           <Alert icon={false} severity="success" sx={{ color: theme.palette.success.dark }}>

@@ -519,7 +519,7 @@ const UserList = () => {
     () => [
       {
         accessorKey: 'username',
-        header: 'Username'
+        header: 'Name'
       },
       {
         accessorKey: 'role',
@@ -534,33 +534,6 @@ const UserList = () => {
         header: 'Phone'
       },
       {
-        accessorKey: 'department',
-        header: 'Department'
-      },
-      {
-        accessorKey: 'subcommmunity',
-        header: ' Sub-Community'
-      },
-      {
-        accessorKey: 'community',
-        header: 'Community'
-      },
-
-      {
-        accessorKey: 'city',
-        header: 'City'
-      },
-      {
-        accessorKey: 'state',
-        header: 'State'
-      },
-      {
-        accessorKey: 'country',
-        header: 'Country'
-      },
-      { accessorKey: 'phone', header: 'Phone' },
-
-      {
         accessorKey: 'action',
         header: 'Action',
         Cell: ({ renderedCellValue, row }) => (
@@ -571,25 +544,6 @@ const UserList = () => {
               gap: '1rem'
             }}
           >
-            <AqaryButton variant="contained">Edit </AqaryButton>
-            <Button variant="contained" color="primary">
-              Edit
-            </Button>
-            <Button color="primary" variant="contained" startIcon={<AssignmentIcon />}>
-              View Documents
-            </Button>
-            <Button variant="contained" color="primary" startIcon={<PreviewIcon />}>
-              View Live
-            </Button>
-            <Button variant="contained" color="primary">
-              Multiple
-            </Button>
-            <Button variant="contained" color="primary">
-              Report
-            </Button>
-            <Button variant="contained" color="primary" startIcon={<DeleteIcon />}>
-              Block
-            </Button>
             <Button variant="contained" startIcon={<KeyIcon />}>
               Reset
             </Button>

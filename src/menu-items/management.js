@@ -37,31 +37,27 @@ const management = {
       children: [
         {
           id: 'manage-users',
-          title: <FormattedMessage id="users" />,
+          title: <FormattedMessage id="Mangage Users" />,
           type: 'item',
-          url: '/management/manage_user',
-          breadcrumbs: false
+          url: '/management/manage_user'
         },
         {
           id: 'manage-user-roles',
-          title: <FormattedMessage id="user-roles" />,
+          title: <FormattedMessage id="Mangage User Roles" />,
           type: 'item',
-          url: '/management/user_roles',
-          breadcrumbs: false
+          url: '/management/user_roles'
         },
         {
           id: 'manage-deparment',
-          title: <FormattedMessage id="department" />,
+          title: <FormattedMessage id="Mangage Department" />,
           type: 'item',
-          url: '/managament/manage_deparment',
-          breadcrumbs: false
+          url: '/management/manage_department'
         },
         {
-          id: 'delete-user',
-          title: <FormattedMessage id="delete-user" />,
+          id: 'deleted-users',
+          title: <FormattedMessage id="Mangage Deleted Users" />,
           type: 'item',
-          url: '/managament/deleted_user',
-          breadcrumbs: false
+          url: '/management/deleted_users'
         }
       ]
     },
@@ -70,7 +66,7 @@ const management = {
       title: <FormattedMessage id="activities" />,
       type: 'item',
       icon: icons.IconBorderAll,
-      url: ' /managament/activities'
+      url: ' /management/activities'
     }
   ]
 };
