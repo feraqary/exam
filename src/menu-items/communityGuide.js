@@ -32,12 +32,14 @@ const communityGuide = {
         {
           id: 'manage-community',
           title: <FormattedMessage id="Community" />,
-          type: 'item'
+          type: 'item',
+          url: '/community-guide/community'
         },
         {
           id: 'manage-tower-image',
           title: <FormattedMessage id="Tower Image" />,
-          type: 'item'
+          type: 'item',
+          url:'/community-guide/tower'
         }
       ]
     },
@@ -46,14 +48,15 @@ const communityGuide = {
       id: 'change-community-publish-status',
       title: <FormattedMessage id="Change Community Publish Status" />,
       type: 'item',
-      icon: icons.IconBug
+      icon: icons.IconBug,
+      url: '/community-guide/list_community_status'
     },
     {
       id: 'change-tower-status',
       title: <FormattedMessage id="Change Tower Status" />,
       type: 'item',
       icon: icons.IconBellRinging,
-      url: '/pages/landing',
+      url: '/community-guide/list_tower_status',
       target: true
     },
     {
@@ -61,7 +64,7 @@ const communityGuide = {
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconPhoneCall,
-      url: '/pages/landing',
+      url: '/community-guide/activities',
       target: true
     }
   ]
