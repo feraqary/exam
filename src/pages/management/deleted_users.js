@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-
+import ManDeleteUsers from './components/deleted_user';
 
 // ==============================|| View Deleted Users ||============================== //
 function DeletedUsers() {
@@ -13,7 +13,7 @@ function DeletedUsers() {
     <Page title="View Deleted Users">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-
+          <ManDeleteUsers />
         </Grid>
       </Grid>
     </Page>

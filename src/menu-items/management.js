@@ -23,10 +23,11 @@ const management = {
   type: 'group',
   children: [
     {
-      id: 'add-user',
-      title: <FormattedMessage id="add-user" />,
+      id: 'add_user',
+      title: <FormattedMessage id="Add User" />,
       type: 'item',
-      icon: icons.IconPictureInPicture
+      icon: icons.IconPictureInPicture,
+      url: '/management/add_user'
     },
     {
       id: 'manage-management',
@@ -36,31 +37,27 @@ const management = {
       children: [
         {
           id: 'manage-users',
-          title: <FormattedMessage id="users" />,
+          title: <FormattedMessage id="Mangage Users" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/management/manage_user'
         },
         {
           id: 'manage-user-roles',
-          title: <FormattedMessage id="user-roles" />,
+          title: <FormattedMessage id="Mangage User Roles" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/management/user_roles'
         },
         {
           id: 'manage-deparment',
-          title: <FormattedMessage id="department" />,
+          title: <FormattedMessage id="Mangage Department" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/management/manage_department'
         },
         {
-          id: 'delete-user',
-          title: <FormattedMessage id="delete-user" />,
+          id: 'deleted-users',
+          title: <FormattedMessage id="Mangage Deleted Users" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/management/deleted_users'
         }
       ]
     },
@@ -68,7 +65,8 @@ const management = {
       id: 'activities',
       title: <FormattedMessage id="activities" />,
       type: 'item',
-      icon: icons.IconBorderAll
+      icon: icons.IconBorderAll,
+      url: ' /management/activities'
     }
   ]
 };

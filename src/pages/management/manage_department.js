@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-
+import Departement from './components/departement';
 
 // ==============================|| MANAGE DEPARTMENTS ||============================== //
 function ManageDep() {
@@ -13,7 +13,7 @@ function ManageDep() {
     <Page title="Manage Departments">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-
+          <Departement />
         </Grid>
       </Grid>
     </Page>

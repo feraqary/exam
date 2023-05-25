@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-
+import ManUserRoles from './components/user_roles';
 
 // ==============================||User Roles||============================== //
 function UserRoles() {
@@ -13,7 +13,7 @@ function UserRoles() {
     <Page title="User Roles">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-
+          <ManUserRoles />
         </Grid>
       </Grid>
     </Page>

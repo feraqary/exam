@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-
+import UserActivity from 'components/widget/Data/UserActivity';
 
 // ==============================|| Activities Management||============================== //
 function Activities() {
@@ -13,7 +13,7 @@ function Activities() {
     <Page title="Activities">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          {/* <MainCard title="Activities" /> */}
+          <UserActivity />
         </Grid>
       </Grid>
     </Page>
