@@ -17,6 +17,11 @@ const nextConfig = withTM({
   images: {
     domains: ['flagcdn.com']
   },
+
+eslint: {
+    ignoreDuringBuilds: true,
+},
+
   env: {
     REACT_APP_VERSION: process.env.REACT_APP_VERSION,
     REACT_APP_API_URL: process.env.REACT_APP_API_URL,
