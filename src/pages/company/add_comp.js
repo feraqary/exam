@@ -15,11 +15,13 @@ import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
 import { UploadFile } from '@mui/icons-material';
 import AutocompleteFormService from 'components/forms/forms-validation/AutoCompleteFormService';
-import companyTypes from 'components/widget/Data/company_types_data/fetch_company_types';
+import CompanyServices from 'components/widget/Data/company_types_data/fetch_company_types';
+import { useEffect } from 'react';
 
 // ==============================|| FIELDS ||============================== //
 
-const fetchCompanyTypes = companyTypes;
+const fetchCompanyServices = CompanyServices;
+const mainCompanies = ['Broker Company', 'Developer Company', 'Service Company'];
 
 // ==============================|| Add Company form ||============================== //
 function ColumnsLayouts() {
@@ -29,8 +31,8 @@ function ColumnsLayouts() {
   const [logoimg, changelogo] = useState(null);
   const [profilepicture, changeprofilepicture] = useState(null);
   const [companyType, setCompanyType] = useState(null);
-  const [subCompanyType, setSubCompanyType] = useState(null);
-  const [categories, setCategories] = useState(null);
+  const [companyServices, setCompanyServices] = useState(null);
+  const [subServices, setSubServices] = useState(null);
 
   const handleInputChange = (event) => {
     setnewimg(URL.createObjectURL(event.target.files[0]));
@@ -46,16 +48,16 @@ function ColumnsLayouts() {
   };
 
   const handleCompanyTypeChange = (newValue) => {
-    setSubCompanyType(null);
+    setCompanyServices(null);
     setCompanyType(newValue);
   };
-  const handleSubCompanyTypeChange = (newValue) => {
-    setSubCompanyType(newValue);
+  const handleCompanyServicesChange = (newValue) => {
+    setSubServices(null);
+    setCompanyServices(newValue);
   };
-  const handleCategoriesChange = (newValue) => {
-    setCategories(newValue);
+  const handlesubServicesChange = (newValue) => {
+    setSubServices(newValue);
   };
-  console.log(subCompanyType);
 
   return (
     <Page title="Add Company">
@@ -64,11 +66,14 @@ function ColumnsLayouts() {
           <MainCard title="Add Company Details">
             <Grid item xs={12} lg={10}>
               <InputLabel required>Company Type</InputLabel>
-              <AutocompleteForms setCompanyFun={handleCompanyTypeChange} data={fetchCompanyTypes.map((x) => x.type)} />
-              {companyType && fetchCompanyTypes.filter((x) => x.type === companyType)[0].subTypes.length > 0 && (
+              <AutocompleteForms setCompanyFun={handleCompanyTypeChange} data={mainCompanies} />
+              {companyType === 'Service Company' && (
+                <AutocompleteForms setCompanyFun={handleCompanyServicesChange} data={fetchCompanyServices.map((x) => x.type)} />
+              )}
+              {companyServices && (
                 <AutocompleteForms
-                  setCompanyFun={handleSubCompanyTypeChange}
-                  data={fetchCompanyTypes.filter((x) => x.type === companyType).map((y) => y.subTypes.map((z) => z.title.toString()))[0]}
+                  setCompanyFun={handlesubServicesChange}
+                  data={fetchCompanyServices.filter((x) => x.type === companyServices).map((x) => x.subTypes)[0]}
                 />
               )}
             </Grid>
