@@ -27,7 +27,8 @@ const pages = {
       id: 'add-pages',
       title: <FormattedMessage id="Add Pages" />,
       type: 'item',
-      icon: icons.IconKey
+      icon: icons.IconKey,
+      url: '/pages/add-pages'
     },
     {
       id: 'manage',
@@ -38,24 +39,26 @@ const pages = {
         {
           id: 'manage-pages',
           title: <FormattedMessage id="Pages" />,
-          type: 'item'
+          type: 'item',
+          url: '/pages/manage-pages'
         },
         {
           id: 'manage-advertise',
           title: <FormattedMessage id="Advertise" />,
-          type: 'item'
+          type: 'item',
+          url: '/pages/manage-advertise'
         },
         {
           id: 'manage-exchange-contents',
           title: <FormattedMessage id="Exchange Contents" />,
           type: 'item',
-          url: '/pages/landing'
+          url: '/pages/manage-exchange-contents'
         },
         {
           id: 'manage-exhibition-contents',
           title: <FormattedMessage id="Exhibition Contents" />,
           type: 'item',
-          url: '/pages/contact-us'
+          url: '/pages/manage-exhibition-contents'
         },
         {
           id: 'manage-tower-contents',
