@@ -64,13 +64,13 @@ const pages = {
           id: 'manage-tower-contents',
           title: <FormattedMessage id="Tower Contents" />,
           type: 'item',
-          url: '/pages/faqs'
+          url: '/pages/manage-tower-contents'
         },
         {
           id: 'manage-auction-contents',
           title: <FormattedMessage id="Auction Contents" />,
           type: 'item',
-          url: '/pages/privacy-policy'
+          url: '/pages/manage-auction-contents'
         }
       ]
     }

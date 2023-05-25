@@ -1,7 +1,13 @@
 import { Grid } from '@mui/material';
 import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
+import dynamic from 'next/dynamic';
+// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+
+const QuillNoSSRWrapper = dynamic(import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>
+});
 
 const TextEditor = () => {
   const [text, setText] = useState('');
@@ -24,7 +30,7 @@ const TextEditor = () => {
 
   return (
     <Grid>
-      <ReactQuill value={text} modules={modules} formats={formats} onChange={handleChange} />
+      <QuillNoSSRWrapper value={text} modules={modules} formats={formats} onChange={handleChange} />
     </Grid>
   );
 };
