@@ -30,7 +30,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -52,7 +52,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -73,7 +73,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -94,7 +94,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -115,7 +115,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -136,7 +136,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -157,7 +157,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -178,7 +178,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -200,7 +200,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -221,7 +221,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -242,7 +242,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -263,7 +263,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -284,7 +284,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -306,7 +306,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -327,7 +327,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -348,7 +348,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -369,7 +369,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -390,7 +390,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -411,7 +411,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -432,7 +432,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -454,7 +454,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -475,7 +475,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -496,7 +496,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -517,7 +517,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -538,7 +538,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -560,7 +560,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -581,7 +581,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -602,7 +602,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -623,7 +623,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -644,7 +644,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -665,7 +665,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -686,7 +686,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -708,7 +708,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -729,7 +729,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -750,7 +750,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -771,7 +771,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -792,7 +792,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -814,7 +814,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -835,7 +835,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -856,7 +856,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -877,7 +877,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -898,7 +898,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -919,7 +919,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -940,7 +940,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -962,7 +962,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -983,7 +983,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -1004,7 +1004,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 
@@ -1025,7 +1025,7 @@ const data = [
     images:[
         {
             name:'view',
-            url:'/assets/images/company_logo.logo1.png'
+            url:'/assets/images/company_logo/logo1.png'
         }
     ]
 

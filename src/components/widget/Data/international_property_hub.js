@@ -13,7 +13,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 
-
 const data = [
   {
     name: {
@@ -37,8 +36,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -62,8 +60,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -87,8 +84,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -112,8 +108,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -137,8 +132,7 @@ const data = [
     action: ' edit, multiple',
     quality: 75,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -162,8 +156,7 @@ const data = [
     action: ' edit, multiple',
     quality: 100,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -187,8 +180,7 @@ const data = [
     action: ' edit, multiple',
     quality: 55,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -212,8 +204,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -237,8 +228,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -262,8 +252,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -287,8 +276,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -312,8 +300,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -337,8 +324,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -362,8 +348,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -387,8 +372,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -412,8 +396,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -437,8 +420,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -462,8 +444,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -487,8 +468,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -512,8 +492,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -537,8 +516,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -562,8 +540,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -587,8 +564,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -612,8 +588,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -637,8 +612,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -662,8 +636,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -687,8 +660,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -712,8 +684,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -737,8 +708,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -762,8 +732,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -787,8 +756,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -812,8 +780,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -837,8 +804,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -862,8 +828,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -887,8 +852,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -912,8 +876,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -937,8 +900,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -962,8 +924,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -987,8 +948,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1012,8 +972,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1037,8 +996,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1062,8 +1020,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1087,8 +1044,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1112,8 +1068,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1137,8 +1092,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1162,8 +1116,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1187,8 +1140,7 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1212,12 +1164,9 @@ const data = [
     action: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   }
 ];
-
-
 
 const InternationalPropertyHubTable = () => {
   const columns = useMemo(
@@ -1262,33 +1211,31 @@ const InternationalPropertyHubTable = () => {
       {
         accessorKey: 'featured',
         header: 'Featured',
-        Cell: ({cell}) => (
-            <Checkbox checked={cell.getValue()} name='featured' />
-        )
+        Cell: ({ cell }) => <Checkbox checked={cell.getValue()} name="featured" />
       },
       {
         accessorKey: 'quality',
         header: 'Quality Score',
-        Cell: ({cell}) => (
-            <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-                <CircularProgress variant="determinate" value={cell.getValue()} color={cell.getValue() < 50 ? 'error' : 'primary'}/>
-                <Box
-                    sx={{
-                    top: 0,
-                    left: 0,
-                    bottom: 0,
-                    right: 0,
-                    position: 'absolute',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    }}
-                >
-                    <Typography variant="h5" component="div" color="text.secondary">
-                    {`${cell.getValue()}%`}
-                    </Typography>
-                </Box>
+        Cell: ({ cell }) => (
+          <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+            <CircularProgress variant="determinate" value={cell.getValue()} color={cell.getValue() < 50 ? 'error' : 'primary'} />
+            <Box
+              sx={{
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
+                position: 'absolute',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <Typography variant="h5" component="div" color="text.secondary">
+                {`${cell.getValue()}%`}
+              </Typography>
             </Box>
+          </Box>
         )
       },
       {
@@ -1308,7 +1255,7 @@ const InternationalPropertyHubTable = () => {
             <Button color="primary" variant="contained">
               Edit
             </Button>
-            <Button variant="contained" color="primary" >
+            <Button variant="contained" color="primary">
               Copy
             </Button>
             <Button variant="contained" color="primary">
@@ -1317,19 +1264,19 @@ const InternationalPropertyHubTable = () => {
             <Button variant="contained" color="primary">
               Documents
             </Button>
-            <Button variant="contained" color="primary" >
+            <Button variant="contained" color="primary">
               Gallery
             </Button>
-            <Button variant="contained" color="primary" >
+            <Button variant="contained" color="primary">
               Manage Units
             </Button>
-            <Button variant="contained" color="primary" >
+            <Button variant="contained" color="primary">
               Manage Unit Types
             </Button>
-            <Button variant="contained" color="primary" >
+            <Button variant="contained" color="primary">
               Manage Floor Plan
             </Button>
-            <Button variant="contained" color="primary" >
+            <Button variant="contained" color="primary">
               Remove
             </Button>
           </Box>

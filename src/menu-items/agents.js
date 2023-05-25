@@ -38,21 +38,21 @@ const agents = {
           id: 'local-agents',
           title: <FormattedMessage id="Local Agents" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/agent/local',
           breadcrumbs: false
         },
         {
           id: 'international-agents',
           title: <FormattedMessage id="International Agents" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/agent/international',
           breadcrumbs: false
         },
         {
           id: 'delete-agent',
           title: <FormattedMessage id="Delete Agent" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/agent/deleted_agents',
           breadcrumbs: false
         }
       ]
