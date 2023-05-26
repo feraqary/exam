@@ -8,7 +8,7 @@ import { gridSpacing } from 'store/constant';
 import React from 'react';
 
 // assets
-import ManAuction from 'components/widget/Data/manage-auction-contents';
+import ManPostedBlogs from 'components/widget/Data/blog_datatable/manage_posted_blogs';
 
 // ==============================|| FIELDS ||============================== //
 
@@ -18,7 +18,7 @@ function ManageAuctionContents() {
     <Page title="Add Page">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <ManAuction />
+          <ManPostedBlogs />
         </Grid>
       </Grid>
     </Page>

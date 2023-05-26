@@ -27,7 +27,8 @@ const blogs = {
       id: 'add-blog',
       title: <FormattedMessage id="Add Blog" />,
       type: 'item',
-      icon: icons.IconKey
+      icon: icons.IconKey,
+      url: '/blog/add_blog'
     },
     {
       id: 'manage-blogs',
@@ -37,20 +38,21 @@ const blogs = {
       children: [
         {
           id: 'manage-blogs',
-          title: <FormattedMessage id="blogs" />,
-          type: 'item'
+          title: <FormattedMessage id="Manage Blogs" />,
+          type: 'item',
+          url: '/blog/manage_blogs'
         },
         {
           id: 'manage-categories',
           title: <FormattedMessage id="Categories" />,
           type: 'item',
-          url: '/pages/landing'
+          url: '/blog/manage_categories'
         },
         {
-          id: 'delete-blog',
-          title: <FormattedMessage id="Delete Blog" />,
+          id: 'deleted-blog',
+          title: <FormattedMessage id="Deleted Blogs" />,
           type: 'item',
-          url: '/pages/delete-blog'
+          url: '/blog/deleted_blogs'
         }
       ]
     },
@@ -59,7 +61,7 @@ const blogs = {
       title: <FormattedMessage id="Activities" />,
       icon: icons.IconKey,
       type: 'item',
-      url: '/pages/landing'
+      url: '/blog/activities'
     }
   ]
 };
