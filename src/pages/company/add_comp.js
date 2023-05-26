@@ -32,7 +32,7 @@ function ColumnsLayouts() {
   const [companyType, setCompanyType] = useState(null);
   const [companyServices, setCompanyServices] = useState(null);
   const [subServices, setSubServices] = useState(null);
-  const [serviceSeleted, setServiceSeleted] = useState(null);
+  const [serviceSeleted, setServiceSeleted] = useState([]);
 
   const handleInputChange = (event) => {
     setnewimg(URL.createObjectURL(event.target.files[0]));
@@ -61,13 +61,6 @@ function ColumnsLayouts() {
   const handlesubServicesChange = (newValue) => {
     setSubServices(newValue);
   };
-  const handleClick = () => {
-    console.info('You clicked the Chip.');
-  };
-
-  const handleDelete = () => {
-    console.info('You clicked the delete icon.');
-  };
 
   return (
     <Page title="Add Company">
@@ -86,12 +79,6 @@ function ColumnsLayouts() {
                   data={fetchCompanyServices.filter((x) => x.type === companyServices).map((x) => x.subTypes)[0]}
                 />
               )}
-            </Grid>
-            <Grid item xs={12} lg={10}>
-              <TagsInput >
-                
-              </TagsInput>
-
             </Grid>
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} lg={6}>

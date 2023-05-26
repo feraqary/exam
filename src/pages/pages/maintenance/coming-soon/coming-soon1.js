@@ -212,12 +212,12 @@ const ComingSoon1 = () => {
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <Typography variant="h1" component="div">
-                          Berry - The React Admin Template
+                         Aqary International 
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
                         <Typography sx={{ fontSize: '1.125rem' }}>
-                          Presenting Material-UI based React Dashboard Template to build performance centric websites and applications.
+                        Aqary’s purpose is to make home moving easier in the entire world. 
                         </Typography>
                       </Grid>
                     </Grid>
@@ -233,13 +233,13 @@ const ComingSoon1 = () => {
                       <Grid item>
                         <Typography variant="h5" component="div" color="secondary" sx={{ display: 'flex', alignItems: 'center' }}>
                           <FiberManualRecordTwoToneIcon sx={{ mr: 0.625, fontSize: '1rem' }} />
-                          Material UI
+                        MarketplaceI
                         </Typography>
                       </Grid>
                       <Grid item>
                         <Typography variant="h5" component="div" color="secondary" sx={{ display: 'flex', alignItems: 'center' }}>
                           <FiberManualRecordTwoToneIcon sx={{ mr: 0.625, fontSize: '1rem' }} />
-                          Javascript / Typescript
+                       Rent/Sale Properties
                         </Typography>
                       </Grid>
                     </Grid>
