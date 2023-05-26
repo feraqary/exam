@@ -27,7 +27,8 @@ const subscribers = {
       id: 'subscribers-list',
       title: <FormattedMessage id="Subscribers List" />,
       type: 'item',
-      icon: icons.IconKey
+      icon: icons.IconKey,
+      url:'/subscribers/list'
     }
   ]
 };

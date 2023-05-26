@@ -1,17 +1,12 @@
 import React, { useMemo } from 'react';
 import MaterialReactTable from 'material-react-table';
 import { Box, Button } from '@mui/material';
-import KeyIcon from '@mui/icons-material/Key';
-import DeleteIcon from '@mui/icons-material/Delete';
-import VerifiedIcon from '@mui/icons-material/Verified';
-import BlockIcon from '@mui/icons-material/Block';
-import EditIcon from '@mui/icons-material/Edit';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import RestoreIcon from '@mui/icons-material/Restore';
 
 const data = [
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -21,13 +16,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
@@ -37,13 +32,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
@@ -53,13 +48,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
@@ -69,13 +64,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -85,13 +80,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -101,13 +96,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -117,13 +112,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -133,13 +128,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -149,13 +144,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -165,13 +160,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -181,13 +176,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -197,13 +192,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -213,13 +208,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
@@ -229,13 +224,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
@@ -245,13 +240,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
@@ -261,13 +256,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -277,13 +272,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -293,13 +288,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -309,13 +304,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -325,13 +320,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -341,13 +336,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -357,13 +352,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -373,13 +368,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -389,13 +384,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -405,13 +400,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
@@ -421,13 +416,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
@@ -437,13 +432,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
@@ -453,13 +448,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -469,13 +464,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -485,13 +480,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -501,13 +496,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -517,13 +512,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -533,13 +528,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -549,13 +544,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -565,13 +560,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -581,13 +576,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -597,13 +592,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
@@ -613,13 +608,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
@@ -629,13 +624,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
@@ -645,13 +640,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -661,13 +656,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -677,13 +672,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -693,13 +688,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -709,13 +704,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: '3',
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Khidmah',
+      agentname: 'Khidmah',
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -725,13 +720,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: '3',
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Forum',
+      agentname: 'Forum',
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -741,13 +736,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: '3',
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'Dubai Holding',
+      agentname: 'Dubai Holding',
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -757,13 +752,13 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: '3',
     responsiveness: 4,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   },
   {
     name: {
-      username: 'BlueStone',
+      agentname: 'BlueStone',
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -773,14 +768,14 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: '3',
     responsiveness: 2,
-    date: '2-12-2023',
+    phone: '2-12-2023',
     designation: ' uploaded',
-    activity: ' edit, multiple'
+    action: ' edit, multiple'
   }
 ];
 
 
-const AgentActivitiesTable = () => {
+const DeletedAgentsListTable = () => {
   const columns = useMemo(
     () => [
       {
@@ -788,20 +783,37 @@ const AgentActivitiesTable = () => {
         header: 'SI.NO'
       },
       {
-        accessorKey: 'date',
-        header: 'Date',
+        accessorKey: 'companyname',
+        header: 'Company Name'
       },
       {
-          accessorKey: 'name.username',
-          header: 'User'
-     },
-        {
-          accessorKey: 'companyname',
-          header: 'Company'
-        },
+        accessorKey: 'name.agentname',
+        header: 'Agent Name'
+      },
       {
-        accessorKey: 'activity',
-        header: 'Activity'
+        accessorKey: 'phone',
+        header: 'Phone'
+      },
+      {
+        accessorKey: 'email',
+        header: 'Email'
+      },
+      {
+        accessorKey: 'action',
+        header: 'Action',
+        Cell: ({ renderedCellValue, row }) => (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem'
+              }}
+            >
+              <Button variant="contained" color="primary" startIcon={<RestoreIcon />}>
+                Restore
+              </Button>
+            </Box>
+          )
       },
     ],
     []
@@ -810,4 +822,4 @@ const AgentActivitiesTable = () => {
   return <MaterialReactTable columns={columns} data={data} enableDensityToggle={false} initialState={{ density: 'compact' }} />;
 };
 
-export default AgentActivitiesTable;
+export default DeletedAgentsListTable;
