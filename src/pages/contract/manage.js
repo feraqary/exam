@@ -9,23 +9,23 @@ import MainCard from 'components/ui-component/cards/MainCard';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
 
-import DeletedAgentsListTable from 'components/widget/Data/agent/deleted_agents';
+import ManageContractTable from 'components/widget/Data/contract/manage_contract';
 
-// ==============================|| Reviews datatable ||============================== //
-function DeletedAgents() {
+// ==============================|| contract datatable ||============================== //
+function ManageContract() {
   return (
-    <Page title="Agent">
+    <Page title="Contract">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <DeletedAgentsListTable title="Deleted Agents List" />
+          <ManageContractTable title="Manage Contract" />
         </Grid>
       </Grid>
     </Page>
   );
 }
 
-DeletedAgents.getLayout = function getLayout(page) {
+ManageContract.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default DeletedAgents;
+export default ManageContract;
