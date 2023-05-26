@@ -61,7 +61,8 @@ const agents = {
       id: 'activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
-      icon: icons.IconBorderAll
+      icon: icons.IconBorderAll,
+      url: '/agent/activities',
     }
   ]
 };
