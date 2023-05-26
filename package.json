@@ -30,6 +30,7 @@
     "@mui/utils": "^5.11.2",
     "@mui/x-data-grid": "^5.17.18",
     "@mui/x-date-pickers": "^5.0.13",
+    "@react-google-maps/api": "^2.18.1",
     "@reduxjs/toolkit": "^1.9.1",
     "@tabler/icons": "^1.119.0",
     "@tabler/icons-react": "^2.19.0",

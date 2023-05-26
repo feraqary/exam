@@ -14,9 +14,7 @@ import React, { useState, useMemo } from 'react';
 import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
 import { UploadFile } from '@mui/icons-material';
-import AutocompleteFormService from 'components/forms/forms-validation/AutoCompleteFormService';
 import CompanyServices from 'components/widget/Data/company_types_data/fetch_company_types';
-import { useEffect } from 'react';
 
 // ==============================|| FIELDS ||============================== //
 
@@ -29,6 +27,7 @@ function ColumnsLayouts() {
   const [licenseimg, setnewimg] = useState(null);
   const [vatimg, changevat] = useState(null);
   const [logoimg, changelogo] = useState(null);
+  const [coverimg, changecover] = useState(null);
   const [profilepicture, changeprofilepicture] = useState(null);
   const [companyType, setCompanyType] = useState(null);
   const [companyServices, setCompanyServices] = useState(null);
@@ -42,6 +41,9 @@ function ColumnsLayouts() {
   };
   const handlelogoInputChange = (event) => {
     changelogo(URL.createObjectURL(event.target.files[0]));
+  };
+  const handleCoverInputChange = (event) => {
+    changecover(URL.createObjectURL(event.target.files[0]));
   };
   const handleprofileInputChange = (event) => {
     changeprofilepicture(URL.createObjectURL(event.target.files[0]));
@@ -84,6 +86,16 @@ function ColumnsLayouts() {
                 <FormHelperText>Please Enter Official Company Name</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={6}>
+                <InputLabel required>Company Tagline</InputLabel>
+                <TextField fullWidth placeholder="Enter Company Tagline " />
+                <FormHelperText>Please Enter Official Tagline</FormHelperText>
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <InputLabel required>RERA No.</InputLabel>
+                <TextField fullWidth placeholder="Enter RERA No." />
+                <FormHelperText>Please Enter RERA No. </FormHelperText>
+              </Grid>
+              <Grid item xs={12} lg={6}>
                 <InputLabel required>License No.</InputLabel>
                 <TextField fullWidth placeholder="Enter Company License No." />
                 <FormHelperText>Please enter Company License No. </FormHelperText>
@@ -114,7 +126,7 @@ function ColumnsLayouts() {
               <Grid item xs={12} lg={6}>
                 <InputLabel>VAT Number:</InputLabel>
                 <TextField fullWidth placeholder="VAT Number...." InputProps={{}} />
-                <FormHelperText>Please enter your License Expiry Date</FormHelperText>
+                <FormHelperText>Please enter VAT </FormHelperText>
               </Grid>
               <Grid fullwidth item xs={12} lg={6}>
                 <InputLabel required>VAT status</InputLabel>
@@ -204,6 +216,7 @@ function ColumnsLayouts() {
                 <TextField fullWidth type="url" />
                 <FormHelperText>Please enter Billing Reference</FormHelperText>
               </Grid>
+
               <Grid item xs={12} lg={4}>
                 <InputLabel required>Company Email Address</InputLabel>
                 <TextField fullWidth type="email" />
@@ -223,6 +236,13 @@ function ColumnsLayouts() {
                 <TextField fullWidth type="file" accept="application/png" onChange={handlelogoInputChange} />
                 <Grid item xs={3} lg={8} alignContent="right">
                   <img src={logoimg} alt="Company Logo Preview" width="250px" height="250px" />
+                </Grid>
+              </Grid>
+              <Grid item xs={4} lg={8}>
+                <InputLabel required>Cover Image</InputLabel>
+                <TextField fullWidth type="file" accept="application/png" onChange={handleCoverInputChange} />
+                <Grid item xs={3} lg={8} alignContent="right">
+                  <img src={coverimg} alt="Cover Image Preview" width="250px" height="250px" />
                 </Grid>
               </Grid>
             </Grid>
