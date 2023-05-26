@@ -79,10 +79,10 @@ function CompanyType() {
   }, [companyType, companyName]);
 
   return (
-    <Page title="Previliges">
+    <Page title="Priviliges">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <MainCard title="View Company Previliges">
+          <MainCard title="View Company Priviliges">
             <InputLabel required>Company Type</InputLabel>
             <AutocompleteForms setCompanyFun={handleCompanyTypeChange} data={roles} />
             {companyType === 'Service Company' ? (
