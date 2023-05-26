@@ -26,7 +26,9 @@ const leads = {
       id: 'manage-leads',
       title: <FormattedMessage id="Manage Leads" />,
       type: 'item',
-      icon: icons.IconPictureInPicture
+      icon: icons.IconPictureInPicture,
+      url: '/leads/manage_leads'
+
     },
     {
       id: 'requests',
@@ -38,14 +40,14 @@ const leads = {
           id: 'video-requests',
           title: <FormattedMessage id="Video Requests" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/leads/request_video',
           breadcrumbs: false
         },
         {
           id: 'general-requests',
           title: <FormattedMessage id="General Requests" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/leads/general_request',
           breadcrumbs: false
         }
       ]
@@ -54,7 +56,8 @@ const leads = {
       id: 'view-schedules',
       title: <FormattedMessage id="View Schedules" />,
       type: 'item',
-      icon: icons.IconForms
+      icon: icons.IconForms,
+      url: "/leads/schedule_viewing"
     }
   ]
 };

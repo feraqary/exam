@@ -36,11 +36,10 @@ const FooterSection = () => {
               <Grid item xs={12} md={4}>
                 <Stack spacing={{ xs: 2, md: 5 }}>
                   <Typography variant="h4" color={textColor} sx={{ fontWeight: 500 }}>
-                    About Berry
+                    About Aqary International
                   </Typography>
                   <Typography variant="body2" color={textColor}>
-                    Berry React is a dashboard template that utilizes the Material-UI framework and the React JavaScript library. It offers
-                    a range of features and customization options to help you create a powerful and user-friendly admin panel.
+                  As the most-visited real estate website in the world, AQARY and its affiliates offer customers an on-demand experience for selling, buying, renting, and financing with transparency and nearly seamless end-to-end service. AQARY Offers buys and sells homes directly in dozens of markets across the world, allowing sellers control over their timeline. AQARY Home Loans, our affiliate lender, provides our customers with an easy option to get pre-approved and secure financing for their next home purchase.
                   </Typography>
                 </Stack>
               </Grid>
