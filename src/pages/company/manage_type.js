@@ -1,13 +1,12 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, createMuiTheme } from '@mui/material';
+import { Grid } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
-import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
-import TypeComp from 'components/widget/Data/comp_type';
+import TypeComp from 'components/widget/Data/company/comp_type';
 
 // ==============================|| Manage Company Type ||============================== //
 function CompanyType() {

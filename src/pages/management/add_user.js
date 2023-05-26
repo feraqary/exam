@@ -11,11 +11,7 @@ import { gridSpacing } from 'store/constant';
 import React, { useState, useMemo, useEffect } from 'react';
 
 // assets
-import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
-import { UploadFile } from '@mui/icons-material';
-import AutocompleteFormService from 'components/forms/forms-validation/AutoCompleteFormService';
-import companyTypes from 'components/widget/Data/company_types_data/fetch_company_types';
 
 // ==============================|| FIELDS ||============================== //
 

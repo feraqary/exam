@@ -7,7 +7,7 @@ import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
-import Payment from 'components/widget/Data/payments';
+import Payment from 'components/widget/Data/company/payments';
 
 // ==============================|| Add Company Type form ||============================== //
 function Payments() {

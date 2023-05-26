@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, Divider, CardActions } from '@mui/material';
+import { Grid } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -9,7 +9,7 @@ import { gridSpacing } from 'store/constant';
 import React, { useState, useMemo, useEffect } from 'react';
 
 // assets
-import ManExhibition from 'components/widget/Data/manage_exhibition_contents';
+import ManExhibition from 'components/widget/Data/pages/manage_exhibition_contents';
 
 // ==============================|| FIELDS ||============================== //
 

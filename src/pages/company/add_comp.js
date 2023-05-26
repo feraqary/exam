@@ -14,9 +14,7 @@ import React, { useState, useMemo } from 'react';
 import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
 import { UploadFile } from '@mui/icons-material';
-import AutocompleteFormService from 'components/forms/forms-validation/AutoCompleteFormService';
 import CompanyServices from 'components/widget/Data/company_types_data/fetch_company_types';
-import { useEffect } from 'react';
 
 // ==============================|| FIELDS ||============================== //
 

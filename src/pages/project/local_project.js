@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import LocalPro from 'components/widget/Data/local_pro_datatable';
+import LocalPro from 'components/widget/Data/add_project/local_pro_datatable';
 
 // ===========================|| International Company Managment list||=========================== //
 
