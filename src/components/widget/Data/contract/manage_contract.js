@@ -1,5 +1,12 @@
 import React, { useMemo } from 'react';
 import MaterialReactTable from 'material-react-table';
+import { Box, Button } from '@mui/material';
+import KeyIcon from '@mui/icons-material/Key';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import BlockIcon from '@mui/icons-material/Block';
+import DownloadIcon from '@mui/icons-material/Download';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 const data = [
   {
@@ -14,9 +21,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -30,9 +37,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -46,9 +53,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -62,9 +69,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -78,9 +85,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -94,9 +101,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -110,9 +117,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -126,9 +133,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -142,9 +149,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -158,9 +165,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -174,9 +181,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -190,9 +197,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -206,9 +213,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -222,9 +229,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -238,9 +245,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -254,9 +261,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -270,9 +277,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -286,9 +293,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -302,9 +309,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -318,9 +325,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -334,9 +341,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -350,9 +357,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -366,9 +373,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -382,9 +389,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -398,9 +405,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -414,9 +421,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -430,9 +437,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -446,9 +453,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -462,9 +469,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -478,9 +485,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -494,9 +501,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -510,9 +517,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -526,9 +533,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -542,9 +549,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -558,9 +565,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -574,9 +581,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -590,9 +597,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -606,9 +613,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -622,9 +629,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -638,9 +645,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -654,9 +661,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -670,9 +677,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -686,9 +693,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: 3,
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -702,9 +709,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: '3',
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -718,9 +725,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: '3',
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -734,9 +741,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: '3',
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -750,9 +757,9 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: '3',
     responsiveness: 4,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   },
   {
     name: {
@@ -766,14 +773,14 @@ const data = [
     email: 'new@gmail.com',
     processexpertise: '3',
     responsiveness: 2,
-    date: '2-12-2023',
-    designation: ' uploaded',
-    activity: ' edit, multiple'
+    phone: '2-12-2023',
+    status: ' uploaded',
+    action: ' edit, multiple'
   }
 ];
 
 
-const AgentActivitiesTable = () => {
+const ManageContractTable = () => {
   const columns = useMemo(
     () => [
       {
@@ -781,20 +788,32 @@ const AgentActivitiesTable = () => {
         header: 'SI.NO'
       },
       {
-        accessorKey: 'date',
-        header: 'Date',
+        accessorKey: 'companyname',
+        header: 'Company Name'
       },
       {
-          accessorKey: 'name.username',
-          header: 'User'
-     },
-        {
-          accessorKey: 'companyname',
-          header: 'Company'
-        },
+        accessorKey: 'status',
+        header: 'Status',
+      },
       {
-        accessorKey: 'activity',
-        header: 'Activity'
+        accessorKey: 'action',
+        header: 'Action',
+        Cell: ({ renderedCellValue, row }) => (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem'
+              }}
+            >
+              <Button variant="contained" color="primary" startIcon={<RemoveRedEyeIcon/>}>
+               View
+              </Button>
+              <Button variant="contained" color="primary" startIcon={<DownloadIcon />}>
+                Download
+              </Button>
+            </Box>
+          )
       },
     ],
     []
@@ -803,4 +822,4 @@ const AgentActivitiesTable = () => {
   return <MaterialReactTable columns={columns} data={data} enableDensityToggle={false} initialState={{ density: 'compact' }} />;
 };
 
-export default AgentActivitiesTable;
+export default ManageContractTable;
