@@ -32,29 +32,25 @@ const careers = {
           id: 'manage-jobs',
           title: <FormattedMessage id="Jobs" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/career/jobs',
         },
         {
           id: 'manage-categories',
           title: <FormattedMessage id="Categories" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/career/categories',
         },
         {
           id: 'manage-articles',
           title: <FormattedMessage id="Articles" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/career/articles',
         },
         {
           id: 'delete-articles',
-          title: <FormattedMessage id="Delete Articles" />,
+          title: <FormattedMessage id="Deleted Careers" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/career/deleted_careers',
         }
       ]
     },
@@ -62,7 +58,8 @@ const careers = {
       id: 'activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
-      icon: icons.IconBorderAll
+      icon: icons.IconBorderAll,
+      url: '/career/activities',
     }
   ]
 };

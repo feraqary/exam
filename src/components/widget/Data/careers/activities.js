@@ -8,7 +8,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -24,7 +24,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
-    comments: 'US',
+    title: 'US',
     sino: 1,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -40,7 +40,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -56,7 +56,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -72,7 +72,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 4,
     email: 'new@gmail.com',
@@ -88,7 +88,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 4,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -104,7 +104,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -120,7 +120,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -136,7 +136,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'US',
+    title: 'US',
     sino: 1,
     localknowledge: 4,
     email: 'new@gmail.com',
@@ -152,7 +152,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -168,7 +168,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -184,7 +184,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
-    comments: 'USA',
+    title: 'USA',
     sino: 5,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -200,7 +200,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 4,
     email: 'new@gmail.com',
@@ -216,7 +216,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
-    comments: 'US',
+    title: 'US',
     sino: 1,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -232,7 +232,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -248,7 +248,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -264,7 +264,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 4,
     email: 'new@gmail.com',
@@ -280,7 +280,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 4,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -296,7 +296,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -312,7 +312,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -328,7 +328,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'US',
+    title: 'US',
     sino: 1,
     localknowledge: 4,
     email: 'new@gmail.com',
@@ -344,7 +344,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -360,7 +360,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -376,7 +376,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
-    comments: 'USA',
+    title: 'USA',
     sino: 5,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -392,7 +392,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 4,
     email: 'new@gmail.com',
@@ -408,7 +408,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
-    comments: 'US',
+    title: 'US',
     sino: 1,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -424,7 +424,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -440,7 +440,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -456,7 +456,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 4,
     email: 'new@gmail.com',
@@ -472,7 +472,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 4,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -488,7 +488,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -504,7 +504,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -520,7 +520,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'US',
+    title: 'US',
     sino: 1,
     localknowledge: 4,
     email: 'new@gmail.com',
@@ -536,7 +536,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -552,7 +552,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -568,7 +568,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
-    comments: 'USA',
+    title: 'USA',
     sino: 5,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -584,7 +584,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 4,
     email: 'new@gmail.com',
@@ -600,7 +600,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
-    comments: 'US',
+    title: 'US',
     sino: 1,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -616,7 +616,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -632,7 +632,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -648,7 +648,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 4,
     email: 'new@gmail.com',
@@ -664,7 +664,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 4,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -680,7 +680,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 1,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -696,7 +696,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -712,7 +712,7 @@ const data = [
       profile: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
-    comments: 'US',
+    title: 'US',
     sino: 1,
     localknowledge: 4,
     email: 'new@gmail.com',
@@ -728,7 +728,7 @@ const data = [
       profile: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 3,
     email: 'new@gmail.com',
@@ -744,7 +744,7 @@ const data = [
       profile: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
-    comments: 'UAE',
+    title: 'UAE',
     sino: 5,
     localknowledge: 2,
     email: 'new@gmail.com',
@@ -760,7 +760,7 @@ const data = [
       profile: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
-    comments: 'USA',
+    title: 'USA',
     sino: 5,
     localknowledge: 5,
     email: 'new@gmail.com',
@@ -773,7 +773,7 @@ const data = [
 ];
 
 
-const AgentActivitiesTable = () => {
+const CareerActivitiesTable = () => {
   const columns = useMemo(
     () => [
       {
@@ -785,8 +785,8 @@ const AgentActivitiesTable = () => {
         header: 'Date',
       },
       {
-          accessorKey: 'name.username',
-          header: 'User'
+          accessorKey: 'title',
+          header: 'Title',
      },
         {
           accessorKey: 'companyname',
@@ -803,4 +803,4 @@ const AgentActivitiesTable = () => {
   return <MaterialReactTable columns={columns} data={data} enableDensityToggle={false} initialState={{ density: 'compact' }} />;
 };
 
-export default AgentActivitiesTable;
+export default CareerActivitiesTable;

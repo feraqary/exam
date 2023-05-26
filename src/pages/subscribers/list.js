@@ -17,7 +17,7 @@ function SubsribersList() {
     <Page title="Subscribers">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-        <Box
+          <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
@@ -38,7 +38,7 @@ function SubsribersList() {
               PDF
             </Button>
           </Box>
-          <SubscribersListTable title="Subscribers List"/>
+          <SubscribersListTable title="Subscribers List" />
         </Grid>
       </Grid>
     </Page>
