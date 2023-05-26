@@ -109,11 +109,11 @@ const companies = {
       url: '/company/company_reg'
     },
     {
-      id: 'previliges',
-      title: <FormattedMessage id="company-previliges" />,
+      id: 'priviliges',
+      title: <FormattedMessage id="company-priviliges" />,
       type: 'item',
       icon: icons.IconNfc,
-      url: '/company/previliges'
+      url: '/company/priviliges'
     },
     {
       id: 'activity',
