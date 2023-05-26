@@ -8,7 +8,7 @@ import ToDoList from 'components/widget/Data/ToDoList';
 import TrafficSources from 'components/widget/Data/TrafficSources';
 import TeamMembers from 'components/widget/Data/TeamMembers';
 
-import UserActivity from 'components/widget/Data/UserActivity';
+import UserActivity from 'components/widget/Data/managment/UserActivity';
 import LatestMessages from 'components/widget/Data/LatestMessages';
 
 import ProjectTable from 'components/widget/Data/ProjectTable';

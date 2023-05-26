@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import PromoPro from 'components/widget/Data/promo_datatable';
+import PromoPro from 'components/widget/Data/add_project/promo_datatable';
 
 // ==============================|| Manage International Project ||============================== //
 function ManageProject() {

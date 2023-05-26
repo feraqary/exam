@@ -1,52 +1,71 @@
 const CompanyServices = [
   {
-    type: 'Brokerage Company',
+    type: 'Specialized Service Company',
     subTypes: [
-      'Real Estate Brokerage Services',
+      'Fire Fighting & Fire Alarm System',
 
       'Stock Brokerage Services',
 
-      'Insurance Brokerage Services',
+      'Lift Systems',
 
-      'Freight Brokerage Services',
+      'Low current Systems',
 
-      'Mortgage Brokerage Services'
+      'Building Management System'
+    ],
+    subcatergory : [
+      'Design and Maintenance Fire Alarm System',
+      'Fire Risk Assessment System',
+      'Fire Safety and Training System'
+
     ]
   },
   {
-    type: 'Management Company',
+    type: 'Business and Investement',
     subTypes: [
-      'Property Management Services',
+      'Portfolio Management',
 
-      'Association Management Services',
+      'Record Keeping',
 
-      'Facilities Management Services',
+      'Custodial',
 
-      'Project Management Services',
+      'Legal',
 
-      'Hospitality Management Services'
+      'Accounting',
+      'Tax Management Servives'
+    ],
+    subcatergory : [
+      'Investment Advice & Management',
+      'Asset Allocation & Risk Management', 
+      'Fire Safety and Training System'
+
     ]
   },
   {
-    type: 'Maintenance Company',
+    type: 'Car Companies',
     subTypes: [
-      'Building Maintenance Services',
+      'Sales Services',
 
-      'Grounds Maintenance Services',
+      'Service and Repair Services',
 
-      'Equipment Maintenance Services',
+      'Parts and Accessories ',
 
-      'Janitorial & Cleaning Services',
+      'Roadside Assistance',
 
-      'Preventive Maintenance Services',
+      'Car Rental',
 
-      'Emergency Maintenance Services'
+      'Online Services'
+    ],
+    subcatergory : [
+      'Investment Advice & Management',
+      'Asset Allocation & Risk Management', 
+      'Fire Safety and Training System'
+
     ]
   },
   {
-    type: 'Bank & Mortgage Companies',
+    type: 'Smart Home Companies',
     subTypes: [
-      'Banking Services',
+      'Home Automation',
 
       'Investment Services',
 
