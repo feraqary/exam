@@ -6,22 +6,24 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
+import ScheduleViewing from 'components/widget/Data/leads_data/view_schedule';
 
 // ==============================|| Schedule Viewing||============================== //
-function ScheduleViewing() {
+function ScheduleViewingList() {
   return (
     <Page title="Schedule Viewing">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <MainCard title="Schedule Viewing" />
+          <ScheduleViewing/>
         </Grid>
       </Grid>
     </Page>
   );
 }
 
-ScheduleViewing.getLayout = function getLayout(page) {
+ScheduleViewingList.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default ScheduleViewing;
+export default ScheduleViewingList;

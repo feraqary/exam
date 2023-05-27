@@ -1,9 +1,5 @@
 import React, { useMemo } from 'react';
 import MaterialReactTable from 'material-react-table';
-import { Box, Button } from '@mui/material';
-import PreviewIcon from '@mui/icons-material/Preview';
-import { styled } from '@mui/material/styles';
-
 const data = [
   {
     date: '12-12-2022',
