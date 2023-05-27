@@ -4,7 +4,7 @@ import MaterialReactTable from 'material-react-table';
 const data = [
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -16,11 +16,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -28,7 +28,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
@@ -40,11 +40,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -52,7 +52,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
@@ -64,11 +64,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -76,7 +76,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
@@ -88,11 +88,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -100,7 +100,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -112,11 +112,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 75,
     floors: 2430,
@@ -124,7 +124,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -136,11 +136,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 100,
     floors: 2430,
@@ -148,7 +148,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -160,11 +160,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 55,
     floors: 2430,
@@ -172,7 +172,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -184,11 +184,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -196,7 +196,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -208,11 +208,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -220,7 +220,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -232,11 +232,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -244,7 +244,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -256,11 +256,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -268,7 +268,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -280,11 +280,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -292,7 +292,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -304,11 +304,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -316,7 +316,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
@@ -328,11 +328,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -340,7 +340,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
@@ -352,11 +352,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -364,7 +364,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
@@ -376,11 +376,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -388,7 +388,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -400,11 +400,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -412,7 +412,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -424,11 +424,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -436,7 +436,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -448,11 +448,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -460,7 +460,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -472,11 +472,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -484,7 +484,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -496,11 +496,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -508,7 +508,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -520,11 +520,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -532,7 +532,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -544,11 +544,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -556,7 +556,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -568,11 +568,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -580,7 +580,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -592,11 +592,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -604,7 +604,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
@@ -616,11 +616,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -628,7 +628,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
@@ -640,11 +640,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -652,7 +652,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
@@ -664,11 +664,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -676,7 +676,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -688,11 +688,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -700,7 +700,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -712,11 +712,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -724,7 +724,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -736,11 +736,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -748,7 +748,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -760,11 +760,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -772,7 +772,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -784,11 +784,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -796,7 +796,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -808,11 +808,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -820,7 +820,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -832,11 +832,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -844,7 +844,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -856,11 +856,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -868,7 +868,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -880,11 +880,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -892,7 +892,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: '261 Erdman Ford',
@@ -904,11 +904,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -916,7 +916,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Broker Company',
@@ -928,11 +928,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -940,7 +940,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Management Company',
@@ -952,11 +952,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -964,7 +964,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -976,11 +976,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -988,7 +988,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -1000,11 +1000,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -1012,7 +1012,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -1024,11 +1024,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -1036,7 +1036,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -1048,11 +1048,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -1060,7 +1060,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Khidmah',
+      agentName: 'Khidmah',
       companyLogo: '/assets/images/company_logo/logo1.png'
     },
     companyname: 'Developer Company',
@@ -1072,11 +1072,11 @@ const data = [
     propertytype: 'Jamie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -1084,7 +1084,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Forum',
+      agentName: 'Forum',
       companyLogo: '/assets/images/company_logo/logo2.png'
     },
     companyname: 'Broker Company',
@@ -1096,11 +1096,11 @@ const data = [
     propertytype: 'Cercie',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -1108,7 +1108,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'Dubai Holding',
+      agentName: 'Dubai Holding',
       companyLogo: '/assets/images/company_logo/logo3.png'
     },
     companyname: 'Marketing Company',
@@ -1120,11 +1120,11 @@ const data = [
     propertytype: 'Arya Stark',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Winterfell',
+    title: 'Winterfell',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -1132,7 +1132,7 @@ const data = [
   },
   {
     name: {
-      projectName: 'BlueStone',
+      agentName: 'BlueStone',
       companyLogo: '/assets/images/company_logo/logo4.png'
     },
     companyname: 'Developer Company',
@@ -1144,11 +1144,11 @@ const data = [
     propertytype: 'Joffery',
     endis: 'new@gmail.com',
     price: '+0192831-310',
-    propertytitle: 'Lannisters',
+    title: 'Lannisters',
     type: '2-12-2023',
     date: '2-12-2023',
     movedDate: '2-12-2023',
-    lifestyle: ' uploaded',
+    section: ' uploaded',
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
@@ -1156,7 +1156,7 @@ const data = [
   }
 ];
 
-const ActivitiesPropertyHubTable = () => {
+const ActivitiesSettings = () => {
   const columns = useMemo(
     () => [
       {
@@ -1168,12 +1168,20 @@ const ActivitiesPropertyHubTable = () => {
         header: 'Date'
       },
       {
-        accessorKey: 'propertytitle',
-        header: 'Property Title'
+        accessorKey: 'section',
+        header: 'Section'
+      },
+      {
+        accessorKey: 'title',
+        header: 'Title'
       },
       {
         accessorKey: 'companyname',
         header: 'Company Name'
+      },
+      {
+        accessorKey: 'name.agentName',
+        header: 'Agent Name'
       },
       {
         accessorKey: 'activity',
@@ -1186,4 +1194,4 @@ const ActivitiesPropertyHubTable = () => {
   return <MaterialReactTable columns={columns} data={data} enableDensityToggle={false} initialState={{ density: 'compact' }} />;
 };
 
-export default ActivitiesPropertyHubTable;
+export default ActivitiesSettings;
