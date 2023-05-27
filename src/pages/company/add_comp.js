@@ -61,13 +61,6 @@ function ColumnsLayouts() {
   const handlesubServicesChange = (newValue) => {
     setSubServices(newValue);
   };
-  const handleClick = () => {
-    console.info('You clicked the Chip.');
-  };
-
-  const handleDelete = () => {
-    console.info('You clicked the delete icon.');
-  };
 
   return (
     <Page title="Add Company">
@@ -88,10 +81,7 @@ function ColumnsLayouts() {
               )}
             </Grid>
             <Grid item xs={12} lg={10}>
-              <TagsInput >
-                
-              </TagsInput>
-
+              <TagsInput></TagsInput>
             </Grid>
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} lg={6}>
