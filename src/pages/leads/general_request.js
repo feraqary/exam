@@ -6,6 +6,7 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
+import GenRequest from 'components/widget/Data/leads_data/request_gen';
 
 // ==============================|| Leads General Requests||============================== //
 function GeneralRequests() {
@@ -14,6 +15,7 @@ function GeneralRequests() {
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <MainCard title="General Requests" />
+          <GenRequest />
         </Grid>
       </Grid>
     </Page>
