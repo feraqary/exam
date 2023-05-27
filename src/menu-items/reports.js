@@ -40,7 +40,7 @@ const reports = {
       title: <FormattedMessage id="Agents" />,
       type: 'item',
       icon: icons.IconBellRinging,
-      url: '/pages/landing',
+      url: '/reports/agents',
       target: true
     },
     {

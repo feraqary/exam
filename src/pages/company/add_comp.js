@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, Divider, CardActions, Chip } from '@mui/material';
+import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, Divider, CardActions } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -9,7 +9,7 @@ import MainCard from 'components/ui-component/cards/MainCard';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
 import React, { useState, useMemo } from 'react';
-import TagsInput from 'react-tagsinput';
+// import TagsInput from 'react-tagsinput';
 // assets
 import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
