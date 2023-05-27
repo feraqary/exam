@@ -24,7 +24,7 @@ const services = {
   children: [
     {
       id: 'services-location',
-      title: <FormattedMessage id="Add/Edit Services Location" />,
+      title: <FormattedMessage id="Add Services" />,
       type: 'item',
       icon: icons.IconPictureInPicture
     },

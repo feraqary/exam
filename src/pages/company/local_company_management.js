@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import LocalCompanyList from 'components/widget/Data/local_comp_datatable';
+import LocalCompanyList from 'components/widget/Data/company/local_comp_datatable';
 
 // ===========================|| Company Managment list||=========================== //
 

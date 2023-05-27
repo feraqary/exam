@@ -3,7 +3,6 @@ import { Grid, Button, Stack, Divider, CardActions } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
-import { useTheme } from '@mui/material/styles';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
@@ -32,7 +31,6 @@ function CompanyType() {
 
   const subCompanyType = useMemo(() => {
     if ((companyType === 'Service Company' && companyName) || (companyType !== 'Service Company' && companyType)) {
-      console.log(companyName);
       return (
         <>
           <Stack item flexDirection="row" justifyContent="space-around">

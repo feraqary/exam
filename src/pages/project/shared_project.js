@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import SharedPro from 'components/widget/Data/shared_pro_datatable';
+import SharedPro from 'components/widget/Data/add_project/shared_pro_datatable';
 
 // ===========================|| International Company Managment list||=========================== //
 

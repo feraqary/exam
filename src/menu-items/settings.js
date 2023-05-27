@@ -33,61 +33,61 @@ const settings = {
           id: 'xml-feeds',
           title: <FormattedMessage id="XML Feeds" />,
           type: 'item',
-          url: '/settings/xml-feeds'
+          url: '/settings/manage_xml_feeds'
         },
         {
           id: 'amenities',
           title: <FormattedMessage id="Amenities" />,
           type: 'item',
-          url: '/settings/amenities'
+          url: '/settings/manage_amenities'
         },
         {
           id: 'facilities',
           title: <FormattedMessage id="Facilities" />,
           type: 'item',
-          url: '/settings/facilities'
+          url: '/settings/manage_facilities'
         },
         {
           id: 'image-categories',
           title: <FormattedMessage id="Image Categories" />,
           type: 'item',
-          url: '/settings/image-categories'
+          url: '/settings/manage_image_categories'
         },
         {
           id: 'international-content',
-          title: <FormattedMessage id="International Content" />,
+          title: <FormattedMessage id="International Contents" />,
           type: 'item',
-          url: '/settings/international-content'
+          url: '/settings/manage_international_contents'
         },
         {
           id: 'vat/tax',
           title: <FormattedMessage id="VAT/Tax" />,
           type: 'item',
-          url: '/settings/vat/tax'
+          url: '/settings/manage_vat_tax'
         },
         {
           id: 'subscriptions',
           title: <FormattedMessage id="Subscriptions" />,
           type: 'item',
-          url: '/settings/subscriptions'
+          url: '/settings/manage_subscriptions'
         },
         {
           id: 'subscription-cost',
           title: <FormattedMessage id="Subscription Cost" />,
           type: 'item',
-          url: '/settings/subscription-cost'
+          url: '/settings/manage_subscription_costs'
         },
         {
           id: 'menu',
           title: <FormattedMessage id="Menu" />,
           type: 'item',
-          url: '/settings/menu'
+          url: '/settings/manage_menu'
         },
         {
           id: 'menu-country-wise',
           title: <FormattedMessage id="Menu Country Wise" />,
           type: 'item',
-          url: '/settings/menu-country-wise'
+          url: '/settings/manage_menu_country_wise'
         }
       ]
     },

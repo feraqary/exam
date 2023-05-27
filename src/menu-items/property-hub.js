@@ -27,7 +27,7 @@ const propertyhub = {
       title: <FormattedMessage id="Add Property" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
-      url:'/propery_hub/add_property',
+      url: '/propery_hub/add_property'
     },
     {
       id: 'properties',
@@ -39,22 +39,19 @@ const propertyhub = {
           id: 'local-properties',
           title: <FormattedMessage id="Local Properties" />,
           type: 'item',
-          url: '/property_hub/local_properties',
-          breadcrumbs: false
+          url: '/property_hub/local_properties'
         },
         {
           id: 'international-properties',
           title: <FormattedMessage id="International Properties" />,
           type: 'item',
-          url: '/property_hub/international_properties',
-          breadcrumbs: false
+          url: '/property_hub/international_properties'
         },
         {
           id: 'shared-properties',
           title: <FormattedMessage id="Shared Properties" />,
           type: 'item',
-          url: '/property_hub/shared_properties',
-          breadcrumbs: false
+          url: '/property_hub/shared_properties'
         }
       ]
     },
@@ -63,15 +60,14 @@ const propertyhub = {
       title: <FormattedMessage id="Deleted Properties" />,
       type: 'item',
       icon: icons.IconForms,
-      url: '/property_hub/deleted_properties',
-   
+      url: '/property_hub/deleted_properties'
     },
     {
       id: 'activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconForms,
-      url: '/property_hub/activities',
+      url: '/property_hub/activities'
     }
   ]
 };

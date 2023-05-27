@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import LocalProjectActivities from 'components/widget/Data/project_activities';
+import LocalProjectActivities from 'components/widget/Data/add_project/project_activities';
 
 // ==============================|| Activities Project ||============================== //
 function Activities() {

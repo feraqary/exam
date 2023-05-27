@@ -1,18 +1,5 @@
 import React, { useMemo } from 'react';
 import MaterialReactTable from 'material-react-table';
-import { Box, Button } from '@mui/material';
-import KeyIcon from '@mui/icons-material/Key';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import PreviewIcon from '@mui/icons-material/Preview';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import CircularProgress from '@mui/material/CircularProgress';
-import Typography from '@mui/material/Typography';
-import Checkbox from '@mui/material/Checkbox';
-
 
 const data = [
   {
@@ -37,8 +24,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -62,8 +48,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -87,8 +72,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -112,8 +96,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -137,8 +120,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 75,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -162,8 +144,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 100,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -187,8 +168,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 55,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -212,8 +192,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -237,8 +216,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -262,8 +240,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -287,8 +264,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -312,8 +288,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -337,8 +312,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -362,8 +336,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -387,8 +360,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -412,8 +384,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -437,8 +408,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -462,8 +432,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -487,8 +456,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -512,8 +480,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -537,8 +504,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -562,8 +528,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -587,8 +552,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -612,8 +576,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -637,8 +600,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -662,8 +624,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -687,8 +648,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -712,8 +672,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -737,8 +696,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -762,8 +720,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -787,8 +744,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -812,8 +768,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -837,8 +792,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -862,8 +816,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -887,8 +840,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -912,8 +864,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -937,8 +888,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -962,8 +912,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -987,8 +936,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1012,8 +960,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1037,8 +984,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1062,8 +1008,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1087,8 +1032,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1112,8 +1056,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1137,8 +1080,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1162,8 +1104,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1187,8 +1128,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   },
   {
     name: {
@@ -1212,8 +1152,7 @@ const data = [
     activity: ' edit, multiple',
     quality: 25,
     floors: 2430,
-    slno: 4,
-
+    slno: 4
   }
 ];
 
@@ -1239,8 +1178,7 @@ const ActivitiesPropertyHubTable = () => {
       {
         accessorKey: 'activity',
         header: 'Activity'
-      },
-    
+      }
     ],
     []
   );

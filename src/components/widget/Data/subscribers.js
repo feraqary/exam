@@ -10,275 +10,198 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 const data = [
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-        sino: 1,
-    email: 'new@gmail.com',
-  },
-  {
-    
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
+    sino: 1,
+    email: 'new@gmail.com'
+  },
+  {
     sino: 4,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-        sino: 1,
-    email: 'new@gmail.com',
+    sino: 1,
+    email: 'new@gmail.com'
   },
   {
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-        sino: 1,
-    email: 'new@gmail.com',
-  },
-  {
-    
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
+    sino: 1,
+    email: 'new@gmail.com'
+  },
+  {
     sino: 4,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-        sino: 1,
-    email: 'new@gmail.com',
+    sino: 1,
+    email: 'new@gmail.com'
   },
   {
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-        sino: 1,
-    email: 'new@gmail.com',
-  },
-  {
-    
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
+    sino: 1,
+    email: 'new@gmail.com'
+  },
+  {
     sino: 4,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-        sino: 1,
-    email: 'new@gmail.com',
+    sino: 1,
+    email: 'new@gmail.com'
   },
   {
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-        sino: 1,
-    email: 'new@gmail.com',
-  },
-  {
-    
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
+    sino: 1,
+    email: 'new@gmail.com'
+  },
+  {
     sino: 4,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
-    
     sino: 1,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-        sino: 1,
-    email: 'new@gmail.com',
+    sino: 1,
+    email: 'new@gmail.com'
   },
   {
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-    
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   },
   {
-   
-    
     sino: 5,
-    email: 'new@gmail.com',
+    email: 'new@gmail.com'
   }
 ];
-
 
 const SubscribersListTable = () => {
   const columns = useMemo(
@@ -289,7 +212,7 @@ const SubscribersListTable = () => {
       },
       {
         accessorKey: 'email',
-        header: 'Email',
+        header: 'Email'
       }
     ],
     []

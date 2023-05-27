@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import Departement from './components/departement';
+import Departement from '../../components/widget/Data/managment/departement';
 
 // ==============================|| MANAGE DEPARTMENTS ||============================== //
 function ManageDep() {

@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import UserList from './components/manage_user';
+import UserList from '../../components/widget/Data/managment/manage_user';
 // ==============================|| MANAGE Users ||============================== //
 function ManageUsers() {
   return (

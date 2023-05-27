@@ -13,7 +13,7 @@ import { UploadFile } from '@mui/icons-material';
 
 // assets
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
-import TextEditor from '../management/components/text_editor';
+import TextEditor from '../../components/widget/Data/managment/text_editor';
 
 // ==============================|| FIELDS ||============================== //
 

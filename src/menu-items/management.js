@@ -37,25 +37,25 @@ const management = {
       children: [
         {
           id: 'manage-users',
-          title: <FormattedMessage id="Mangage Users" />,
+          title: <FormattedMessage id="Manage Users" />,
           type: 'item',
           url: '/management/manage_user'
         },
         {
           id: 'manage-user-roles',
-          title: <FormattedMessage id="Mangage User Roles" />,
+          title: <FormattedMessage id="Manage User Roles" />,
           type: 'item',
           url: '/management/user_roles'
         },
         {
           id: 'manage-deparment',
-          title: <FormattedMessage id="Mangage Department" />,
+          title: <FormattedMessage id="Manage Department" />,
           type: 'item',
           url: '/management/manage_department'
         },
         {
           id: 'deleted-users',
-          title: <FormattedMessage id="Mangage Deleted Users" />,
+          title: <FormattedMessage id="Manage Deleted Users" />,
           type: 'item',
           url: '/management/deleted_users'
         }

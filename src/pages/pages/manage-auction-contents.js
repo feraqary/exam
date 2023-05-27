@@ -8,7 +8,7 @@ import { gridSpacing } from 'store/constant';
 import React from 'react';
 
 // assets
-import ManAuction from 'components/widget/Data/manage-auction-contents';
+import ManAuction from 'components/widget/Data/pages/manage-auction-contents';
 
 // ==============================|| FIELDS ||============================== //
 

@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import InterComp from 'components/widget/Data/international_comp_datatable';
+import InterComp from 'components/widget/Data/company/international_comp_datatable';
 import MainCard from 'components/ui-component/cards/MainCard';
 
 // ===========================|| International Company Managment list||=========================== //
