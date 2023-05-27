@@ -34,13 +34,16 @@ function AddProject() {
     googleMapsApiKey: 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y'
   });
 
-  const defaultProps = {
+  const defaultMapProps = {
     center: {
       lat: 24.499947,
       lng: 54.404524
     },
     zoom: 13
   };
+
+
+
 
   return (
     <Page title="Add Project">
@@ -50,7 +53,7 @@ function AddProject() {
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} lg={6}>
                 <InputLabel required>Project title</InputLabel>
-                <TextField name="project title" onChange={handleGlobalChange} fullWidth placeholder="Enter Company " />
+                <TextField name="project title" onChange={handleGlobalChange} fullWidth placeholder="Title" />
               </Grid>
               <Grid item xs={12} lg={6}>
                 <InputLabel>Country</InputLabel>
@@ -69,7 +72,7 @@ function AddProject() {
                   <FormControlLabel value="Multiple" control={<Radio />} label="Multiple" />
                 </RadioGroup>
               </Grid>
-              {/* //!fix here, number selctor needed */}
+
               <Grid item xs={12} lg={6}>
                 <InputLabel>No of phases:</InputLabel>
                 <TextField onChange={handleGlobalChange} fullWidth type="number" placeholder=" " />
@@ -83,7 +86,7 @@ function AddProject() {
                   placeholder="hello"
                 />
               </Grid>
-              .
+              
               <Grid item xs={12} lg={6}>
                 <InputLabel>Sub Developer Company</InputLabel>
                 <AutocompleteForms setCompanyFun={handleGlobalChange} name="sub-developer-company" data={countries} placeholder="hello" />
@@ -112,7 +115,7 @@ function AddProject() {
                 <TextField fullWidth placeholder="Place" onChange={handleGlobalChange} name="location-details-place" />
               </Grid>
 
-              <Grid xs={12} lg={6}>
+              <Grid item xs={12} lg={6}>
                 <Grid xs={12} lg={12}>
                   <InputLabel required>City</InputLabel>
                   <AutocompleteForms setCompanyFun={handleGlobalChange} data={countries} name="location-details-city" />
@@ -132,7 +135,7 @@ function AddProject() {
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} lg={6} style={{ height: '16em' }} nowrap alignItems="center">
+              <Grid item xs={12} lg={6} style={{ height: '100%' }} rowSpan={4}  nowrap alignItems="center">
                 {/* API Key for google map
                       AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y */}
 
@@ -146,12 +149,14 @@ function AddProject() {
                       language: 'en'
                     }}
                     mapContainerStyle={{ position: 'relative', height: '15em', width: '100%' }}
-                    center={defaultProps.center}
-                    zoom={defaultProps.zoom}
+                    center={defaultMapProps.center}
+                    zoom={14}
                   >
-                    <Marker position={defaultProps.center} />
+                    <Marker  position={defaultMapProps.center} />
                   </GoogleMap>
                 )}
+
+
               </Grid>
             </Grid>
           </MainCard>
@@ -243,10 +248,34 @@ function AddProject() {
                 <TextField multiline rows={4} placeholder="Description" fullWidth />
               </Grid>
               <Grid item xs={12} lg={12}>
-                <FormGroup>
+                <FormGroup row>
                   <FormControlLabel
-                    control={<Checkbox value={'sasuke'} />}
-                    label="Jiraya"
+                    control={<Checkbox value={'i'} />}
+                    label="I"
+                    onChange={handleGlobalChange}
+                    name="property-details-starting-price"
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value={'am'} />}
+                    label="am"
+                    onChange={handleGlobalChange}
+                    name="property-details-starting-price"
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value={'a'} />}
+                    label="a"
+                    onChange={handleGlobalChange}
+                    name="property-details-starting-price"
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value={'checkbox'} />}
+                    label="checkbox"
+                    onChange={handleGlobalChange}
+                    name="property-details-starting-price"
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value={'option'} />}
+                    label="option"
                     onChange={handleGlobalChange}
                     name="property-details-starting-price"
                   />
