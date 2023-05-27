@@ -6,7 +6,7 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 
-import AgentActivitiesTable from 'components/widget/Data/agent_activities';
+import AgentActivitiesTable from 'components/widget/Data/agent/agent_activities';
 
 // ==============================|| Agen Activities datatable ||============================== //
 function AgentActivities() {
