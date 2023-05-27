@@ -26,7 +26,8 @@ const services = {
       id: 'services-location',
       title: <FormattedMessage id="Add Services" />,
       type: 'item',
-      icon: icons.IconPictureInPicture
+      icon: icons.IconPictureInPicture,
+      url: 'services/add_services'
     },
     {
       id: 'manage',
@@ -38,35 +39,35 @@ const services = {
           id: 'manage-services',
           title: <FormattedMessage id="Services" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/services/manage_services',
           breadcrumbs: false
         },
         {
           id: 'manage-sub-services',
           title: <FormattedMessage id="Sub Services" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/services/sub_services',
           breadcrumbs: false
         },
         {
           id: 'manage-local-companies',
           title: <FormattedMessage id="Local Companies" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/services/local_services',
           breadcrumbs: false
         },
         {
           id: 'manage-international-companies',
           title: <FormattedMessage id="International Companies" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/services/int_services',
           breadcrumbs: false
         },
         {
           id: 'manage-company-gallery',
           title: <FormattedMessage id="Company Gallery" />,
           type: 'item',
-          url: '/exchange/manage-units',
+          url: '/services/company_gallery',
           breadcrumbs: false
         }
       ]
@@ -81,14 +82,14 @@ const services = {
           id: 'service-requests',
           title: <FormattedMessage id="Service Requests" />,
           type: 'item',
-          url: '/exchange/service-requests',
+          url: '/services/service_request',
           breadcrumbs: false
         },
         {
           id: 'valuation-requests',
           title: <FormattedMessage id="Valuation Requests" />,
           type: 'item',
-          url: '/exchange/valuation-requests',
+          url: '/services/valuation',
           breadcrumbs: false
         }
       ]
@@ -97,7 +98,8 @@ const services = {
       id: 'activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
-      icon: icons.IconBorderAll
+      icon: icons.IconBorderAll,
+      url: 'services/service_activities'
     }
   ]
 };
