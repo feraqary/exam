@@ -18,7 +18,7 @@ const pieChartOptions = {
     width: 450,
     height: 450
   },
-  labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+  labels: ['Standard', 'Featured', 'Premium', 'Weekly Deal', 'Queries'],
   legend: {
     show: true,
     fontFamily: `'Roboto', sans-serif`,

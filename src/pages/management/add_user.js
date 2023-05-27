@@ -13,7 +13,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 // assets
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
 
-// ==============================|| FIELDS ||============================== //
+// ==============================|| Add user form ||============================== //
 
 const userRoleData = [
   'Admin',
@@ -45,24 +45,24 @@ function AddUser() {
   }, []);
 
   return (
-    <Page title="Add Company">
+    <Page title="User Details">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <MainCard title="Add Company Details">
+          <MainCard title="Add User Information">
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} lg={6}>
                 <InputLabel required>First Name</InputLabel>
-                <TextField fullWidth placeholder="Enter Company " />
-                <FormHelperText>Please Enter Official First Name</FormHelperText>
+                <TextField fullWidth placeholder="Enter User " />
+                <FormHelperText>Please Enter First Name</FormHelperText>
               </Grid>
               <Grid item xs={12} lg={6}>
                 <InputLabel required>Last Name</InputLabel>
-                <TextField fullWidth placeholder="Enter Company License No." />
-                <FormHelperText>Please Enter Official Last Name </FormHelperText>
+                <TextField fullWidth placeholder="Enter Last Name" />
+                <FormHelperText>Please Enter Last Name </FormHelperText>
               </Grid>
               <Grid item xs={12} lg={6}>
                 <InputLabel required>Email</InputLabel>
-                <TextField fullWidth placeholder="Enter Company License No." />
+                <TextField fullWidth placeholder="Enter Email No." />
                 <FormHelperText>Please Enter Your Email </FormHelperText>
               </Grid>
 
@@ -79,10 +79,10 @@ function AddUser() {
               <Grid item xs={12} lg={6}>
                 <InputLabel required>User Role</InputLabel>
                 <AutocompleteForms setCompanyFun={handleUserRoleChange} data={userRole} />
-                <FormHelperText>{}</FormHelperText>
+                <FormHelperText> Choose User Role </FormHelperText>
               </Grid>
               <Grid item xs={12} lg={6}>
-                <InputLabel required>Departements</InputLabel>
+                <InputLabel required>Departments</InputLabel>
                 <AutocompleteForms setCompanyFun={handleDeparmentChange} data={departement} />
                 <FormHelperText>{}</FormHelperText>
               </Grid>

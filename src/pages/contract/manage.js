@@ -9,25 +9,23 @@ import MainCard from 'components/ui-component/cards/MainCard';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
 
+import ManageContractTable from 'components/widget/Data/contract/manage_contract';
 
-import CareerListTable from 'components/widget/Data/careers/jobs';
-
-
-// ==============================|| Careers datatable ||============================== //
-function CareerList() {
+// ==============================|| contract datatable ||============================== //
+function ManageContract() {
   return (
-    <Page title="Careers">
+    <Page title="Contract">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <CareerListTable title="List of Careers" />
+          <ManageContractTable title="Manage Contract" />
         </Grid>
       </Grid>
     </Page>
   );
 }
 
-CareerList.getLayout = function getLayout(page) {
+ManageContract.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default CareerList;
+export default ManageContract;

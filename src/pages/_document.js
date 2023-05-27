@@ -5,34 +5,34 @@ export default function Document() {
     <Html>
       <Head>
         <meta name="theme-color" content="#2296f3" />
-        <meta name="title" content="Berry - React Material Admin Dashboard Template by CodedThemes" />
+        <meta name="title" content="Aqary International - Aqary Dashboard" />
         <meta
           name="description"
-          content="Start your next React project with Berry admin template. It build with Reactjs, Material-UI, Redux, and Hook for faster web development."
+          content="Aqary International - Aqary Dashboard"
         />
         <meta
           name="keywords"
-          content="react admin template, material-ui react dashboard template, reactjs admin template, reactjs dashboard, react backend template"
+          content="aqary, dashboard"
         />
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://berrydashboard.io/" />
-        <meta property="og:site_name" content="berrydashboard.io" />
-        <meta property="article:publisher" content="https://www.facebook.com/codedthemes" />
-        <meta property="og:title" content="Berry - React Material Dashboard Template" />
+        <meta property="og:url" content="//" />
+        <meta property="og:site_name" content="//" />
+        <meta property="article:publisher" content="//" />
+        <meta property="og:title" content="Aqary International - Aqary Dashboard" />
         <meta
           property="og:description"
-          content="Berry Dashboard is made for the faster web application development built using Material-UI, Reactjs, Redux & Hook API."
+          content=""
         />
-        <meta property="og:image" content="https://berrydashboard.io/og-image/og-facebook.png" />
+        <meta property="og:image" content="//" />
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://berrydashboard.io" />
-        <meta property="twitter:title" content="Berry - React Material Dashboard Template" />
+        <meta property="twitter:url" content="//" />
+        <meta property="twitter:title" content="Aqary International - Aqary Dashboard" />
         <meta
           property="twitter:description"
-          content="Berry Dashboard is made for the faster web application development built using Material-UI, Reactjs, Redux & Hook API."
+          content="Aqary’s purpose is to make home moving easier in the entire world"
         />
-        <meta property="twitter:image" content="https://berrydashboard.io/og-image/og-twitter.png" />
+        <meta property="twitter:image" content="//" />
         <meta name="twitter:creator" content="@codedthemes" />
 
         <link rel="icon" href="/favicon.svg" />

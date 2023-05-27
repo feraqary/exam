@@ -108,7 +108,7 @@ const AutocompleteForms = ({ setCompanyFun, data }) => {
                   name="role"
                   error={formik.touched.role && Boolean(formik.errors.role)}
                   helperText={formik.touched.role && formik.errors.role && formik.errors.role}
-                  placeholder="Choose Company Types"
+                  placeholder="Choose ..."
                   InputProps={{
                     ...params.InputProps,
                     sx: { bgcolor: 'grey.0' },
