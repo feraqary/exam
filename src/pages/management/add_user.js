@@ -13,7 +13,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 // assets
 import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
 
-// ==============================|| FIELDS ||============================== //
+// ==============================|| Add user form ||============================== //
 
 const userRoleData = [
   'Admin',
@@ -62,7 +62,7 @@ function AddUser() {
               </Grid>
               <Grid item xs={12} lg={6}>
                 <InputLabel required>Email</InputLabel>
-                <TextField fullWidth placeholder="Enter Company License No." />
+                <TextField fullWidth placeholder="Enter Email No." />
                 <FormHelperText>Please Enter Your Email </FormHelperText>
               </Grid>
 
@@ -79,7 +79,7 @@ function AddUser() {
               <Grid item xs={12} lg={6}>
                 <InputLabel required>User Role</InputLabel>
                 <AutocompleteForms setCompanyFun={handleUserRoleChange} data={userRole} />
-                <FormHelperText>{}</FormHelperText>
+                <FormHelperText> Choose User Role </FormHelperText>
               </Grid>
               <Grid item xs={12} lg={6}>
                 <InputLabel required>Departments</InputLabel>
