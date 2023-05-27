@@ -27,7 +27,7 @@ const services = {
       title: <FormattedMessage id="Add Services" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
-      url: 'services/add_services'
+      url: '/services/add_services'
     },
     {
       id: 'manage',
