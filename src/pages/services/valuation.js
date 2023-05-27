@@ -22,5 +22,3 @@ Valuation.getLayout = function getLayout(page) {
 };
 
 export default Valuation;
-
-v

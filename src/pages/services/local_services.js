@@ -17,8 +17,8 @@ function LocalServices() {
     </Page>
   );
 }
-AddServices.getLayout = function getLayout(page) {
+LocalServices.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default AddServices;
+export default LocalServices;
