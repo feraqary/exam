@@ -26,9 +26,9 @@ const auctions = {
       id: 'auction-users',
       title: <FormattedMessage id="Auction Users" />,
       type: 'item',
-      url: '/utils/util-typography',
+      url: '/auction/users',
       icon: icons.IconTypography,
-      breadcrumbs: false
+  
     },
     {
       id: 'manage',
@@ -40,35 +40,28 @@ const auctions = {
           id: 'manage-local-auction',
           title: <FormattedMessage id="Local Auction" />,
           type: 'item',
-          url: 'https://tabler-icons.io/',
-          external: true,
-          target: true,
-          breadcrumbs: false
+          url: '/auction/local',
         },
         {
           id: 'manage-international-auction',
           title: <FormattedMessage id="Internationl Auction" />,
           type: 'item',
-          url: 'https://mui.com/material-ui/material-icons/#main-content',
-          external: true,
-          target: true,
-          breadcrumbs: false
+          url: '/auction/international',
+        
         },
         {
           id: 'manage-partners',
           title: <FormattedMessage id="Partners" />,
           type: 'item',
-          url: 'https://mui.com/material-ui/material-icons/#main-content',
-          external: true,
-          target: true
+          url: '/auction/partners',
+    
         },
         {
           id: 'delete-auction',
           title: <FormattedMessage id="Delete Auction" />,
           type: 'item',
-          url: 'https://mui.com/material-ui/material-icons/#main-content',
-          external: true,
-          target: true
+          url: '/auction/deleted_auctions',
+
         }
       ]
     },
@@ -76,17 +69,15 @@ const auctions = {
       id: 'activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
-      url: '/utils/util-animation',
+      url: '/auction/activities',
       icon: icons.IconBrandFramer,
-      breadcrumbs: false
     },
     {
       id: 'faqs',
       title: <FormattedMessage id="FAQs" />,
       type: 'item',
-      url: '/utils/util-grid',
+      url: '/auction/faq',
       icon: icons.IconLayoutGridAdd,
-      breadcrumbs: false
     }
   ]
 };

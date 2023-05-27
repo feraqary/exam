@@ -26,7 +26,8 @@ const agents = {
       id: 'add-agent',
       title: <FormattedMessage id="Add Agent" />,
       type: 'item',
-      icon: icons.IconPictureInPicture
+      icon: icons.IconPictureInPicture,
+      url:'/agent/add_agent'
     },
     {
       id: 'manage-agents',

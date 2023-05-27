@@ -1,5 +1,17 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button,Box, Alert, Divider, Stack, CardActions } from '@mui/material';
+import {
+  Grid,
+  InputAdornment,
+  TextField,
+  FormHelperText,
+  NativeSelect,
+  Button,
+  Box,
+  Alert,
+  Divider,
+  Stack,
+  CardActions
+} from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -73,18 +85,22 @@ function AddContract() {
                 <AutocompleteForms setCompanyFun={handleUserRoleChange} data={userRole} />
                 <FormHelperText>{}</FormHelperText>
               </Grid>
-              <Grid item xs={12} lg={8} >
+              <Grid item xs={12} lg={8}>
                 <InputLabel required>File Upload From</InputLabel>
                 <FormGroup>
-                    <FormControlLabel  control={<Checkbox />} label="File from Web" />
-                    <FormControlLabel  control={<Checkbox />} label="File from Local" />
+                  <FormControlLabel control={<Checkbox />} label="File from Web" />
+                  <FormControlLabel control={<Checkbox />} label="File from Local" />
                 </FormGroup>
               </Grid>
-              <Grid item xs={12} lg={6} mb={4} >
-                <Stack spacing={2} direction="row">
-                    <Button variant="contained">Upload</Button>
-                    <Button variant="contained">Reset</Button>
-                </Stack>
+              <Grid container alignItems="center" justifyContent="flex-end" spacing={2} mb={2}>
+                <Grid item>
+                  <Button variant="contained" color="secondary">
+                    Upload
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button variant="outlined">Reset</Button>
+                </Grid>
               </Grid>
             </Grid>
             <Divider />
