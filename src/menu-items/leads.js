@@ -23,6 +23,14 @@ const leads = {
   type: 'group',
   children: [
     {
+      id: 'add-leads',
+      title: <FormattedMessage id="Add Contact" />,
+      type: 'item',
+      icon: icons.IconPictureInPicture,
+      url: '/leads/add_leads'
+
+    },
+    {
       id: 'manage-leads',
       title: <FormattedMessage id="Manage Leads" />,
       type: 'item',
