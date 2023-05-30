@@ -92,7 +92,7 @@ const settings = {
       ]
     },
     {
-      id: 'activities',
+      id: 'settings-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       url: '/settings/activities',

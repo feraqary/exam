@@ -63,7 +63,7 @@ const propertyhub = {
       url: '/property_hub/deleted_properties'
     },
     {
-      id: 'activities',
+      id: 'property-hub-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconForms,

@@ -116,7 +116,7 @@ const companies = {
       url: '/company/priviliges'
     },
     {
-      id: 'activity',
+      id: 'company-activities',
       title: <FormattedMessage id="activities" />,
       type: 'item',
       icon: icons.IconBasket,

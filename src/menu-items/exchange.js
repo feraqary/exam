@@ -59,7 +59,7 @@ const exchange = {
       url:'/exchange/manage'
     },
     {
-      id: 'activities',
+      id: 'exchange-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,

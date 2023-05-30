@@ -57,7 +57,7 @@ const blogs = {
       ]
     },
     {
-      id: 'activities',
+      id: 'blogs-activities',
       title: <FormattedMessage id="Activities" />,
       icon: icons.IconKey,
       type: 'item',

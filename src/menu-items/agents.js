@@ -59,7 +59,7 @@ const agents = {
       ]
     },
     {
-      id: 'activities',
+      id: 'agent-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,

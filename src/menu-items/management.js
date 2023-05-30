@@ -62,7 +62,7 @@ const management = {
       ]
     },
     {
-      id: 'activities',
+      id: 'management-activities',
       title: <FormattedMessage id="activities" />,
       type: 'item',
       icon: icons.IconBorderAll,

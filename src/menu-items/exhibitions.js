@@ -65,7 +65,7 @@ const exhibitions = {
       ]
     },
     {
-      id: 'activities',
+      id: 'exhibitions-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBorderAll

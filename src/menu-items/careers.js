@@ -55,7 +55,7 @@ const careers = {
       ]
     },
     {
-      id: 'activities',
+      id: 'career-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,

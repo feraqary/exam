@@ -95,7 +95,7 @@ const services = {
       ]
     },
     {
-      id: 'activities',
+      id: 'services-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,

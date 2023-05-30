@@ -79,7 +79,7 @@ const project = {
       url: '/project/manage_requests'
     },
     {
-      id: 'activities',
+      id: 'project-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBasket,

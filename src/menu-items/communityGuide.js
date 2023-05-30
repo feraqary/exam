@@ -60,7 +60,7 @@ const communityGuide = {
       target: true
     },
     {
-      id: 'activities',
+      id: 'community-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconPhoneCall,

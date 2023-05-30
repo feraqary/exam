@@ -19,6 +19,7 @@ import reports from './reports';
 import subscribers from './subscribers';
 import settings from './settings';
 import contract from './contract';
+import units from './units';
 
 // import units from './units';
 // ==============================|| MENU ITEMS ||============================== //
@@ -38,6 +39,7 @@ const menuItems = {
     settings,
     contract,
     propertyhub,
+    units,
     exchange,
     auctions,
     leads,

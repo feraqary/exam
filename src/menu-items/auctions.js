@@ -66,7 +66,7 @@ const auctions = {
       ]
     },
     {
-      id: 'activities',
+      id: 'auction-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       url: '/auction/activities',
