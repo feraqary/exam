@@ -27,105 +27,20 @@ const validationSchema = yup.object({
     .matches(/^[a-z\d\-/#_\s]+$/i, 'Only alphanumerics are allowed')
 });
 
+const options = ['Option 1', 'Option 2'];
+
 // ==============================|| FORM VALIDATION - AUTOCOMPLETE FORMIK  ||============================== //
 
-const AutocompleteForms = ({ setCompanyFun, data }) => {
-  const dispatch = useDispatch();
-
-  const formik = useFormik({
-    initialValues: {
-      role: '',
-      skills: []
-    },
-    validationSchema,
-    onSubmit: () => {
-      dispatch(
-        openSnackbar({
-          open: true,
-          message: 'Submit Success',
-          variant: 'alert',
-          alert: {
-            color: 'success'
-          },
-          close: false
-        })
-      );
-    }
-  });
-
+const AutoCompleteSelector = ({ setCompanyFun, data }) => {
   return (
-    <MainCard title="">
-      <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={gridSpacing}>
-          <Grid item xs={12}>
-            <Autocomplete
-              fullWidth
-              value={formik.values.role}
-              disableClearable
-              onChange={(event, newValue) => {
-                setCompanyFun(newValue);
-                const jobExist = data.includes(newValue);
-                if (!jobExist) {
-                  const matchData = newValue.match(/"((?:\\.|[^"\\])*)"/);
-                  formik.setFieldValue('role', matchData && matchData[1]);
-                } else {
-                  formik.setFieldValue('role', newValue);
-                }
-              }}
-              filterOptions={(options, params) => {
-                const filtered = filter(options, params);
-                const { inputValue } = params;
-                const isExisting = options.some((option) => inputValue === option);
-                if (inputValue !== '' && !isExisting) {
-                  filtered.push(`Add "${inputValue}"`);
-                }
-                return filtered;
-              }}
-              selectOnFocus
-              clearOnBlur
-              autoHighlight
-              handleHomeEndKeys
-              id="free-solo-with-text-demo"
-              options={data}
-              getOptionLabel={(option) => {
-                let value = option;
-                const jobExist = data.includes(option);
-                if (!jobExist) {
-                  const matchData = option.match(/"((?:\\.|[^"\\])*)"/);
-                  if (matchData && matchData[1]) value = matchData && matchData[1];
-                }
-                return value;
-              }}
-              renderOption={(props, option) => (
-                <Box component="li" {...props}>
-                  {option}
-                </Box>
-              )}
-              freeSolo
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  name="role"
-                  error={formik.touched.role && Boolean(formik.errors.role)}
-                  helperText={formik.touched.role && formik.errors.role && formik.errors.role}
-                  placeholder="Choose ..."
-                  InputProps={{
-                    ...params.InputProps,
-                    sx: { bgcolor: 'grey.0' },
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <ArrowDropDown sx={{ color: 'text.primary' }} />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              )}
-            />
-          </Grid>
-        </Grid>
-      </form>
-    </MainCard>
+    <Autocomplete
+      value={options[0]}
+      id="auto-complete"
+      options={options}
+      sx={{ width: 300 }}
+      renderInput={(params) => <TextField {...params} label="Controllable" />}
+    />
   );
 };
 
-export default AutocompleteForms;
+export default AutoCompleteSelector;
