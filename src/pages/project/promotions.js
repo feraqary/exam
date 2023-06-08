@@ -1,19 +1,89 @@
 // material-ui
-import { Grid } from '@mui/material';
+import { Grid, Button, Box } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import PromoPro from 'components/widget/Data/add_project/promo_datatable';
+import Table from 'components/Table/Table';
 
 // ==============================|| Manage International Project ||============================== //
+const ColumnHeaders = [
+  {
+    accessorKey: 'proId',
+    header: 'Project ID '
+  },
+
+  {
+    accessorKey: 'projectName',
+    header: 'Project Name'
+  },
+  {
+    accessorKey: 'expDay',
+    header: 'Expiry Date'
+  },
+  {
+    accessorKey: 'promoType',
+    header: 'Promotion Type'
+  },
+  {
+    accessorKey: 'action',
+    header: 'Action',
+    Cell: ({ renderedCellValue, row }) => (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem'
+        }}
+      >
+        <Button variant="contained" color="primary">
+          Edit
+        </Button>
+        <Button variant="contained" color="error">
+          Remove
+        </Button>
+      </Box>
+    )
+  }
+];
+
+const data = [
+  {
+    projectName: 'Khidmah',
+    promoType: 'Developer Company',
+    expDay: 'US',
+    proId: 'PA2831023',
+    action: ' edit, multiple'
+  },
+  {
+    projectName: 'Forum',
+    promoType: 'Broker Company',
+    expDay: 'UAE',
+    proId: 'PA283102',
+    action: ' edit, multiple'
+  },
+  {
+    projectName: 'Dubai Holding',
+    promoType: 'Marketing Company',
+    expDay: 'UAE',
+    proId: 'PA283102',
+    action: ' edit, multiple'
+  },
+  {
+    projectName: 'BlueStone',
+    promoType: 'Developer Company',
+    expDay: 'USA',
+    proId: 'PA283102',
+    action: ' edit, multiple'
+  }
+];
 function ManageProject() {
   return (
     <Page title="Manage Project">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <PromoPro />
+          <Table data={data} columnHeaders={ColumnHeaders} />
         </Grid>
       </Grid>
     </Page>

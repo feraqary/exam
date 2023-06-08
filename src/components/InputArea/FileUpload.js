@@ -2,14 +2,24 @@
 import { Grid, InputAdornment, TextField } from '@mui/material';
 
 // project imports
-import InputLabel from 'components/ui-component/extended/Form/InputLabel';
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 // import TagsInput from 'react-tagsinput';
 // assets
 import { UploadFile } from '@mui/icons-material';
 import InputLayout from './InputLayout';
+import { forwardRef } from 'react';
 
-const FileUpload = ({ label, type, placeholder, helperText, image, style }) => {
+const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, style, setValue }, ref) => {
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const handleImagePreview = (e) => {
+    setImagePreview(URL.createObjectURL(e.target.files[0]));
+  };
+
+  const handleFileUploadChange = (e) => {
+    setValue(e.target.files[0]);
+  };
+
   return (
     <>
       <InputLayout label={label} helperText={helperText} style={style}>
@@ -24,15 +34,20 @@ const FileUpload = ({ label, type, placeholder, helperText, image, style }) => {
               </InputAdornment>
             )
           }}
+          onChange={(e) => {
+            handleImagePreview(e);
+            handleFileUploadChange(e);
+          }}
+          inputRef={ref}
         />
       </InputLayout>
       {image && (
-        <Grid item xs={3} lg={8} alignContent="right">
-          <img src="" alt={image.alt} width={image.width} height={image.height} />
+        <Grid item xs={3} lg={style.lg} alignContent="right">
+          <img src={imagePreview} alt={image.alt} width={image.width} height={image.height} />
         </Grid>
       )}
     </>
   );
-};
+});
 
 export default FileUpload;

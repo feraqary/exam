@@ -6,7 +6,7 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
-import GenRequest from 'components/widget/Data/leads_data/request_gen';
+import GenRequest from 'components/Data/leads_data/request_gen';
 
 // ==============================|| Leads General Requests||============================== //
 function GeneralRequests() {

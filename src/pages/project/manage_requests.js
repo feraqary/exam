@@ -5,15 +5,73 @@ import { Grid } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import ManRequest from 'components/widget/Data/add_project/man_req_datatable';
+import Table from 'components/Table/Table';
 
 // ==============================|| Manage International Project ||============================== //
+
+const ColumnHeaders = [
+  {
+    accessorKey: 'proId',
+    header: 'Project ID '
+  },
+  {
+    accessorKey: 'projectName',
+    header: 'Project Name'
+  },
+  {
+    accessorKey: 'reqType',
+    header: 'Request type'
+  },
+  {
+    accessorKey: 'reqName',
+    header: 'name'
+  },
+  {
+    accessorKey: 'endis',
+    header: 'Email'
+  },
+  { accessorKey: 'mobile', header: 'Mobile' },
+  {
+    accessorKey: 'date',
+    header: 'Date'
+  }
+];
+
+const data = [
+  {
+    projectName: 'Forum',
+    reqName: 'Broker Company',
+    reqType: 'UAE',
+    proId: 'PA283102',
+    endis: 'new@gmail.com',
+    mobile: '+0192831-310',
+    date: '2-12-2023'
+  },
+  {
+    projectName: 'Dubai Holding',
+    reqName: 'Marketing Company',
+    reqType: 'UAE',
+    proId: 'PA283102',
+    endis: 'new@gmail.com',
+    mobile: '+0192831-310',
+    date: '2-12-2023'
+  },
+  {
+    projectName: 'BlueStone',
+    reqName: 'Developer Company',
+    reqType: 'USA',
+    proId: 'PA283102',
+    endis: 'new@gmail.com',
+    mobile: '+0192831-310',
+    date: '2-12-2023'
+  }
+];
 function ManageProject() {
   return (
     <Page title="Manage Project">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <ManRequest />
+          <Table data={data} columnHeaders={ColumnHeaders} />
         </Grid>
       </Grid>
     </Page>

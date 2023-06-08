@@ -6,25 +6,49 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 
-import TowerStatusTable from 'components/widget/Data/community/tower_status';
-
-
+import Table from 'components/Table/Table';
 
 // ==============================|| Reviews datatable ||============================== //
-function CommunityManageTower() {
+
+const ColumnHeaders = [
+  {
+    accessorKey: 'sino',
+    header: '   SI NO'
+  },
+  {
+    accessorKey: 'communityname',
+    header: 'Community Name'
+  }
+];
+const data = [
+  {
+    communityname: 'Broker Company',
+    sino: 'PA283102'
+  },
+  {
+    communityname: 'Marketing Company',
+    sino: 'PA283102'
+  },
+  {
+    communityname: 'Developer Company',
+    sino: 'PA283102'
+  }
+];
+
+function CommunityManageTowerStatus() {
   return (
-    <Page title="Community Guide">
+    <Page title="Manage Tower Status">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <TowerStatusTable title="Tower Status List" />
+          <Table columnHeaders={ColumnHeaders} data={data} />
         </Grid>
       </Grid>
     </Page>
   );
 }
 
-CommunityManageTower.getLayout = function getLayout(page) {
+CommunityManageTowerStatus.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default CommunityManageTower;
+export default CommunityManageTowerStatus;

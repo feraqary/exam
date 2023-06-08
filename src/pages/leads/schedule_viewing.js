@@ -6,7 +6,7 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
-import ScheduleViewing from 'components/widget/Data/leads_data/view_schedule';
+import ScheduleViewing from 'components/Data/leads_data/view_schedule';
 
 // ==============================|| Schedule Viewing||============================== //
 function ScheduleViewingList() {
@@ -15,7 +15,7 @@ function ScheduleViewingList() {
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <MainCard title="Schedule Viewing" />
-          <ScheduleViewing/>
+          <ScheduleViewing />
         </Grid>
       </Grid>
     </Page>

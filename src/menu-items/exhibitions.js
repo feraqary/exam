@@ -26,7 +26,8 @@ const exhibitions = {
       id: 'add-exhibitions',
       title: <FormattedMessage id="Add Exhibitions" />,
       type: 'item',
-      icon: icons.IconPictureInPicture
+      icon: icons.IconPictureInPicture,
+      url: '/exhibition/add'
     },
     {
       id: 'manage-exhibitions',
@@ -38,29 +39,25 @@ const exhibitions = {
           id: 'manage-local-exhibitions',
           title: <FormattedMessage id="Local Exhibitions" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/exhibition/local'
         },
         {
           id: 'manage-international-exhibitions',
           title: <FormattedMessage id="International Exhibitions" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/exhibition/international'
         },
         {
           id: 'manage-clients',
           title: <FormattedMessage id="Clients" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/exhibition/clients'
         },
         {
           id: 'manage-exhibition-services',
           title: <FormattedMessage id="Exhibition Services" />,
           type: 'item',
-          url: '/exchange/manage-units',
-          breadcrumbs: false
+          url: '/exhibition/services'
         }
       ]
     },
@@ -68,7 +65,8 @@ const exhibitions = {
       id: 'exhibitions-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
-      icon: icons.IconBorderAll
+      icon: icons.IconBorderAll,
+      url: '/exhibition/activities'
     }
   ]
 };

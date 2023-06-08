@@ -1,18 +1,20 @@
 // material-ui
 import { Grid, Button, CardActions } from '@mui/material';
 
-const SubmitButton = () => {
+const SubmitButton = ({ clear, submit }) => {
   return (
     <Grid container justifyContent="flex-end">
       <CardActions>
         <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
           <Grid item>
-            <Button variant="contained" color="secondary">
+            <Button variant="contained" color="secondary" onClick={submit}>
               Submit
             </Button>
           </Grid>
           <Grid item>
-            <Button variant="outlined">Clear</Button>
+            <Button variant="outlined" onClick={clear}>
+              Clear
+            </Button>
           </Grid>
         </Grid>
       </CardActions>

@@ -1,284 +1,498 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, Divider, FormGroup, Checkbox } from '@mui/material';
-
-import InputLabel from 'components/ui-component/extended/Form/InputLabel';
+import { Grid, Checkbox } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
-import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import { useState } from 'react';
 
 //assets
-import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
-import GoogleApiWrapper from 'google-map-react';
 import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import InputText from 'components/InputArea/TextInput';
+import Container from 'components/Elements/Container';
+import SubmitButton from 'components/Elements/SubmitButton';
+import Selector from 'components/InputArea/Selector';
+import CustomizedTabs from 'components/Elements/Tab';
 
-// ==============================|| Add Project ||============================== //
+// ==============================|| Add Units ||============================== //
 function AddUnits() {
-  // this is aglobal handle change that requires both value and of the input its used in to return an object with name: value
-  const [globalValues, setGlobalValues] = useState({});
+  const [globalValues, setGlobalValues] = useState([]);
+  const [long, setlong] = useState(null);
+  const [lat, setlat] = useState(null);
+  const [country, setCountry] = useState('');
+  const [invest, setInvest] = useState(false);
+  const [locationLink, setLocationLink] = useState({
+    latitude: 24.4984312,
+    longitude: 54.4036975
+  });
+  const [numOfPhases, setNumOfPhases] = useState(0);
 
-  const handleGlobalChange = ({ target: { name, value } }) => {
-    setGlobalValues((values) => {
-      return { ...values, [name]: value };
-    });
+  let link =
+    'https://www.google.com/maps/place/Addax+Office+Tower/@24.4984312,54.4036975,18.25z/data=!4m6!3m5!1s0x3e5e67a52a16039b:0x3b49e7595dafcef7!8m2!3d24.4989329!4d54.4031167!16s%2Fg%2F11b722p3r4?entry=ttu';
+
+  const getLongLat = (link) => {
+    const regex = /@([-0-9.]+),([-0-9.]+)/;
+    const match = link.match(regex);
+
+    if (match && match.length === 3) {
+      const latitude = parseFloat(match[1]);
+      const longitude = parseFloat(match[2]);
+      return { latitude, longitude };
+    }
+
+    return null;
   };
 
-  const countries = ['-', 'UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
+  const handleLocation = (e) => {
+    setLocationLink(getLongLat(e.target.value));
+    console.log(e.target.value);
+    console.log(locationLink);
+  };
+
+  const defaultMapProps = {
+    center: {
+      lat: getLongLat(link).latitude,
+      lng: getLongLat(link).longitude
+    },
+    zoom: 12
+  };
+
+  const sugg = {
+    countries: ['UAE', 'Egypt', 'United States of America', 'United Kingdom', 'Sudan'],
+    projdetcity: ['Abudhabi', 'New york', 'London', 'Khartoum', 'Cairo'],
+    brokercomp: [
+      'Yas Real Estate LLC',
+      'Finehome Inter. Real Estate LLc',
+      'Management Real Estate LLC',
+      'My Real Estate LLC',
+      'Hello Real Estate'
+    ],
+    masterdev: ['Al dar', 'EMAAR', 'AQARY', 'FINE HOME', 'VERY FINE HOME'],
+    subdevco: ['LETS DO IT LLC', 'Subdev LLC', 'ABC LLC', 'Dev LLC', 'Maybe LLC'],
+    locCountry: ['Brazil', 'Nigeria', 'Qatar', 'Angola', 'Saudi Arabia'],
+    state: ['Rio', 'Nairobi', 'Doha', 'Luena', 'Jedda'],
+    city: ['Chicago', 'New Jersy', 'Ohio', 'Manchester', 'Lviv'],
+    district: ['Kharkov', 'Denipro', 'Mosscow', 'Doha', 'Riyadh'],
+    community: ['Al reem', "Sa'adyat", 'Yas', 'Al Raha', 'MBZ'],
+    subcomm: ['Al Qurm', 'Al Mushrif', 'Al Wahda', 'Khaldiya', 'Mussafah'],
+    propertystat: ['Upcoming', 'Completed', 'Under Construction', 'Off plan', 'Ready'],
+    propertytype: ['Apartment', 'Building', 'Bungalow', 'Land/Plot', 'Retail'],
+    lifestyle: ['Luxury', 'Ultra Luxury', 'Standard', 'Affordable'],
+    ownership: ['Free Hold', 'GCC citizen', 'Leasehold', 'UAE Citizen', 'Other']
+  };
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y'
   });
 
-  const defaultMapProps = {
-    center: {
-      lat: 24.499947,
-      lng: 54.404524
-    },
-    zoom: 13
-  };
-
   return (
     <Page title="Add Project">
       <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <MainCard title="Project details">
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Project title</InputLabel>
-                <TextField name="project title" onChange={handleGlobalChange} fullWidth placeholder="Title" />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel>Country</InputLabel>
-                <AutocompleteForms setCompanyFun={handleGlobalChange} data={countries} name="project-details-country" />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel>Phase Type</InputLabel>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
-                  name="radio-buttons-group"
-                  row
-                  onChange={handleGlobalChange}
-                >
-                  <FormControlLabel value="Single" control={<Radio />} label="Single" />
-                  <FormControlLabel value="Multiple" control={<Radio />} label="Multiple" />
-                </RadioGroup>
-              </Grid>
+        <Container title="Listing Details" style={{ xs: 12 }}>
+          <Grid container spacing={2} alignItems="center">
+            <AutoCompleteSelector
+              label="Category"
+              placeholder="Select Category"
+              options={sugg.countries}
+              style={{ xs: 12, lg: 4 }}
+              id="categorySelector"
+              value={country}
+              setValue={setCountry}
+              helperText="Please select category"
+            />
+            <AutoCompleteSelector
+              label="Unity Type"
+              placeholder="Select Unity Type"
+              options={sugg.countries}
+              style={{ xs: 12, lg: 4 }}
+              id="unityTypeSelector"
+              value={country}
+              setValue={setCountry}
+              helperText="Please select Unit Type"
+            />
 
-              <Grid item xs={12} lg={6}>
-                <InputLabel>No of phases:</InputLabel>
-                <TextField onChange={handleGlobalChange} fullWidth type="number" placeholder=" " />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel>Master Developer / Management Company</InputLabel>
-                <AutocompleteForms
-                  setCompanyFun={handleGlobalChange}
-                  name="Master-Developer-Management-Company"
-                  data={countries}
-                  placeholder="hello"
-                />
-              </Grid>
+            <AutoCompleteSelector
+              label="Property"
+              placeholder="Select Property"
+              options={sugg.city}
+              style={{ xs: 12, lg: 4 }}
+              id="property-Selector"
+              value={globalValues}
+              setValue={setGlobalValues}
+              helperText="Please select a property"
+            />
 
-              <Grid item xs={12} lg={6}>
-                <InputLabel>Sub Developer Company</InputLabel>
-                <AutocompleteForms setCompanyFun={handleGlobalChange} name="sub-developer-company" data={countries} placeholder="hello" />
-              </Grid>
+            <AutoCompleteSelector
+              label="Company"
+              placeholder="Select Company"
+              options={sugg.masterdev}
+              style={{ xs: 12, lg: 4 }}
+              id="company-Selector"
+              value={globalValues}
+              setValue={setGlobalValues}
+              helperText="Please select a company"
+            />
+
+            <AutoCompleteSelector
+              label="Agent"
+              placeholder="Select Agent"
+              options={sugg.subdevco}
+              style={{ xs: 12, lg: 4 }}
+              id="agent-Selector"
+              value={globalValues}
+              setValue={setGlobalValues}
+              helperText="Please select a agent"
+            />
+
+            <AutoCompleteSelector
+              label="Reference No."
+              placeholder="Select Reference No."
+              options={sugg.subdevco}
+              style={{ xs: 12, lg: 4 }}
+              id="refernce-number-Selector"
+              value={globalValues}
+              setValue={setGlobalValues}
+              helperText="Please select a refernce number"
+            />
+            <AutoCompleteSelector
+              label="ORN Number"
+              placeholder="Select ORN Number"
+              options={sugg.subdevco}
+              style={{ xs: 12, lg: 4 }}
+              id="ORN-number-Selector"
+              value={globalValues}
+              setValue={setGlobalValues}
+              helperText="Please select a ORN number"
+            />
+
+            <InputText
+              label="RERA Expiry Date"
+              placeholder="RERA Expiry Date"
+              helperText="Please enter RERA expiry date"
+              type="date"
+              style={{ xs: 12, lg: 4 }}
+            />
+          </Grid>
+        </Container>
+        <Container title="Location details" style={{ xs: 12 }}>
+          <Grid container spacing={2} alignItems="center">
+            <AutoCompleteSelector
+              label="Country"
+              placeholder="Select Country"
+              id="countrySelector"
+              style={{ xs: 12, lg: 6 }}
+              value={country}
+              setValue={setCountry}
+              options={sugg.countries}
+              helperText="Please select country"
+            />
+            <InputText
+              style={{ xs: 12, lg: 6 }}
+              label="Address"
+              placeholder="Address"
+              helperText="Please enter the location address"
+              type="text"
+            />
+            <AutoCompleteSelector
+              style={{ xs: 12, lg: 6 }}
+              label="State"
+              placeholder="State"
+              type="text"
+              helperText="Please enter the location's state"
+              options={sugg.countries}
+              value={country}
+              setValue={setCountry}
+              id="location-details-state"
+            />
+
+            <InputText
+              label="Place"
+              style={{ xs: 12, lg: 6 }}
+              placeholder="Place"
+              type="text"
+              helperText="Place the enter location's place"
+            />
+
+            <Grid item xs={12} lg={6}>
+              <AutoCompleteSelector
+                label="City"
+                placeholder="City"
+                type="text"
+                helperText="City the enter location's city"
+                options={sugg.city}
+                value={globalValues}
+                setValue={setGlobalValues}
+                id="location-details-city"
+                style={{ xs: 12, lg: 12 }}
+              />
+              <AutoCompleteSelector
+                label="District"
+                placeholder="District"
+                type="text"
+                id="location-details-district"
+                helperText="Please enter the location's district"
+                value={country}
+                setValue={setCountry}
+                options={sugg.countries}
+                style={{ xs: 12, lg: 12 }}
+              />
+              <AutoCompleteSelector
+                label="Community"
+                placeholder="Community"
+                type="text"
+                id="location-details-community"
+                helperText="Please enter the location's community"
+                value={country}
+                setValue={setCountry}
+                options={sugg.countries}
+                style={{ xs: 12, lg: 12 }}
+              />
+              <AutoCompleteSelector
+                label="Sub Community"
+                placeholder="Sub Community"
+                type="text"
+                id="location-details-sub-community"
+                helperText="Please enter the location's sub community"
+                value={country}
+                setValue={setCountry}
+                options={sugg.countries}
+                style={{ xs: 12, lg: 12 }}
+              />
             </Grid>
-          </MainCard>
-        </Grid>
-        <Grid item xs={12}>
-          <MainCard title="Location details">
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Country</InputLabel>
-                <AutocompleteForms setCompanyFun={handleGlobalChange} name="location-details-country" data={countries} />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel>Map Url</InputLabel>
-                <TextField onChange={handleGlobalChange} name="location-details-map-url" fullWidth placeholder="Enter map url " />
-              </Grid>
 
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>State</InputLabel>
-                <AutocompleteForms setCompanyFun={handleGlobalChange} data={countries} name="location-details-state" />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Place</InputLabel>
-                <TextField fullWidth placeholder="Place" onChange={handleGlobalChange} name="location-details-place" />
-              </Grid>
-
-              <Grid item xs={12} lg={6}>
-                <Grid xs={12} lg={12}>
-                  <InputLabel required>City</InputLabel>
-                  <AutocompleteForms setCompanyFun={handleGlobalChange} data={countries} name="location-details-city" />
-                </Grid>
-
-                <Grid xs={12} lg={12}>
-                  <InputLabel required>District</InputLabel>
-                  <AutocompleteForms setCompanyFun={handleGlobalChange} data={countries} name="location-details-district" />
-                </Grid>
-                <Grid xs={12} lg={12}>
-                  <InputLabel required>Community</InputLabel>
-                  <AutocompleteForms setCompanyFun={handleGlobalChange} data={countries} name="location-details-community" />
-                </Grid>
-                <Grid xs={12} lg={12}>
-                  <InputLabel required>Sub Community</InputLabel>
-                  <AutocompleteForms setCompanyFun={handleGlobalChange} data={countries} name="location-details-sub-community" />
-                </Grid>
-              </Grid>
-
-              <Grid item xs={12} lg={6} style={{ height: '100%' }} rowSpan={4} nowrap alignItems="center">
-                {/* API Key for google map
+            <Grid item xs={12} lg={6} style={{ height: '100%' }} rowSpan={4}>
+              {/* API Key for google map
                       AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y */}
 
-                {/* //!fix the height*/}
-                {!isLoaded ? (
-                  <div>loading....</div>
-                ) : (
+              {/* //!fix the height*/}
+              {!isLoaded ? (
+                <div>loading....</div>
+              ) : (
+                <>
                   <GoogleMap
                     bootstrapURLKeys={{
-                      key: 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y',
+                      key: 'YOUR_API_KEY',
                       language: 'en'
                     }}
-                    mapContainerStyle={{ position: 'relative', height: '15em', width: '100%' }}
-                    center={defaultMapProps.center}
-                    zoom={14}
+                    style={{ height: '43vh' }}
+                    mapContainerStyle={{ position: 'relative', height: '40vh', width: '100%' }}
+                    center={lat != null || long != null ? { lat: lat, lng: long } : { lat: 24.4984312, lng: 54.4036975 }}
+                    zoom={13}
                   >
-                    <Marker position={defaultMapProps.center} />
+                    <Marker position={lat != null || long != null ? { lat: lat, lng: long } : { lat: 24.4984312, lng: 54.4036975 }} />
                   </GoogleMap>
-                )}
-              </Grid>
+                </>
+              )}
             </Grid>
-          </MainCard>
-        </Grid>
+          </Grid>
+        </Container>
 
-        <Grid item xs={12}>
-          <MainCard title="Property Details">
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} lg={6}>
-                <InputLabel id="propertyStatus-select-label" required>
-                  Property status
-                </InputLabel>
-                <AutocompleteForms name="property-details-property-status" setCompanyFun={handleGlobalChange} data={countries} />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Property Type</InputLabel>
-                <AutocompleteForms name="property-details-property-type" setCompanyFun={handleGlobalChange} data={countries} />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Life Style</InputLabel>
-                <AutocompleteForms name="property-details-life-style" setCompanyFun={handleGlobalChange} data={countries} />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                {/* //*date */}
-                <InputLabel required>Start Date</InputLabel>
-                <TextField name="property-details-start-date" onChange={handleGlobalChange} fullWidth type="date" />
-              </Grid>
+        <Container title="Unit Details" style={{ xs: 12 }}>
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid container spacing={2} xs={12} lg={8}>
+              <InputText
+                label="Unit No."
+                placeholder="Unit Number"
+                type="number"
+                helperText={<FormControlLabel control={<Checkbox defaultChecked />} label="View for public" />}
+                style={{ xs: 12, lg: 6 }}
+              />
 
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Ownership</InputLabel>
-                <AutocompleteForms name="property-details-ownership" setCompanyFun={handleGlobalChange} data={countries} />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Completion Date</InputLabel>
-                <TextField name="property-details-completion-date" onChange={handleGlobalChange} fullWidth type="date" />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Plot Area (sqft)</InputLabel>
-                <AutocompleteForms name="property-details-plot-area" setCompanyFun={handleGlobalChange} data={countries} />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                {/* //*date */}
-                <InputLabel required>Handover Date</InputLabel>
-                <TextField name="property-details-handover-date" onChange={handleGlobalChange} fullWidth type="date" />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Built up Area (sqft)</InputLabel>
-                <TextField fullWidth type="number" name="property-details-built" />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Starting Price</InputLabel>
-                <TextField onChange={handleGlobalChange} name="property-details-starting-price" fullWidth type="number" />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                {/* //!figure this out */}
-                <InputLabel required>Area Range</InputLabel>
-                <Grid item row style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                  <TextField type="number" />
-                  <span style={{ fontWeight: 'bolder', fontSize: '1.7em' }}>:</span>
-                  <TextField type="number" />
+              <InputText
+                label="Bedrooms"
+                placeholder="Number Of Bedrooms"
+                type="number"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please enter the number of bedrooms"
+              />
+
+              <InputText
+                label="Bathrooms"
+                placeholder="Number of Bathrooms"
+                type="number"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please enter the number of bathrooms"
+              />
+
+              <InputText
+                label="Parking"
+                placeholder="Number of parking space"
+                type="number"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please enter the number of parking space"
+              />
+
+              <AutoCompleteSelector
+                label="Primary View"
+                placeholder="Primary View"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please select the primary view"
+                options={sugg.district}
+                value={globalValues}
+                setValue={setGlobalValues}
+                id="primary-view-selector"
+              />
+
+              <AutoCompleteSelector
+                label="Secondary View"
+                placeholder="Secondary View"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please select the secondary view"
+                options={sugg.district}
+                value={globalValues}
+                setValue={setGlobalValues}
+                id="secondary-view-selector"
+              />
+
+              <InputText
+                label="PlotArea (sqft)"
+                placeholder="Plot Area (sqft)"
+                type="number"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please enter the plot area (sqft)"
+              />
+
+              <InputText
+                label="Price"
+                placeholder="Price"
+                type="number"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please enter the unit price"
+              />
+
+              <InputText
+                label="Built up area (sqft)"
+                placeholder="Built up area (sqft)"
+                type="number"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please enter the unit built up area (sqft)"
+              />
+
+              <InputText
+                label="Service Charge"
+                placeholder="Service Charge"
+                type="number"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please enter the unit service charge"
+              />
+
+              <InputText
+                label="No. of Payments"
+                placeholder="No. of Payments"
+                type="number"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please enter the unit no. of payments"
+              />
+
+              <AutoCompleteSelector
+                label="Rent Type"
+                placeholder="Rent Type"
+                type="number"
+                helperText="Please enter the unit rent type"
+                options={sugg.district}
+                value={globalValues}
+                setValue={setGlobalValues}
+                id="no-of-payments-selector"
+                style={{ xs: 12, lg: 6 }}
+              />
+              <Selector
+                id="furnished-selector"
+                label="Furnished"
+                style={{ xs: 12, lg: 6 }}
+                options={['No', 'Semi Furnished', 'Full Furnished']}
+                helperText="Please select whether the unit is furnished or not"
+              />
+
+              <AutoCompleteSelector
+                label="Ownership"
+                placeholder="Ownership"
+                style={{ xs: 12, lg: 6 }}
+                options={sugg.district}
+                value={globalValues}
+                setValue={setGlobalValues}
+                id="ownership-selector"
+                helperText={
+                  <FormControlLabel
+                    onClick={() => {
+                      setInvest(!invest);
+                    }}
+                    control={<Checkbox defaultChecked />}
+                    label="Investment"
+                  />
+                }
+              />
+
+              <InputText
+                label="Contract Start Date"
+                placeholder="Contract Start Date"
+                type="date"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please enter the contract start date"
+                disabled={!invest ? 'disabled' : null}
+              />
+
+              <InputText
+                label="Contract End Date"
+                placeholder="Contract End Date"
+                type="date"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please enter the contract end date"
+                disabled={!invest ? 'disabled' : null}
+              />
+              <InputText
+                label="Amount"
+                placeholder="Amount"
+                type="number"
+                style={{ xs: 12, lg: 6 }}
+                disabled={!invest ? 'disabled' : null}
+                helperText="Please enter the contract amount"
+              />
+
+              <Selector
+                label="Completion status"
+                style={{ xs: 12, lg: 6 }}
+                helperText="Please enter the completion status"
+                id="completion-status-selector"
+                options={['Up Coming', 'Off Plan', 'Ready', 'Under Construction', 'Up Coming']}
+              />
+            </Grid>
+
+            <CustomizedTabs />
+
+            {/* <Grid container spacing={2} lg={8} xs={12} alignItems="center">
+              <Grid style={{ padding: '16px 0 0 16px' }} container xs={12} lg={12}>
+                <Grid item xs={12} lg={6}>
+                  <InputLabel required>Custom Amenities</InputLabel>
+                  <AutocompleteForms setCompanyFun={handleGlobalChange} data={sugg.district} />
+                </Grid>
+                <Grid item xs={12} lg={6} alignContent="center">
+                  <InputLabel>Choose Type</InputLabel>
+                  <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="female" row onChange={handlePhaseType}>
+                    <FormControlLabel value="Upload" control={<Radio />} label="Upload" />
+                    <FormControlLabel value="Select Existing" control={<Radio />} label="Multiple" />
+                  </RadioGroup>
                 </Grid>
               </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Service Charge</InputLabel>
-                <TextField onChange={handleGlobalChange} name="property-details-service-charge" fullWidth type="number" />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Property title</InputLabel>
-                <TextField onChange={handleGlobalChange} name="property-details-property-title" fullWidth label="Title" />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Property Description</InputLabel>
-                <TextField
-                  multiline
-                  rows={4}
-                  placeholder="Description"
-                  onChange={handleGlobalChange}
-                  name="property-details-property-description"
-                  fullWidth
-                />
-              </Grid>
 
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Arabic title</InputLabel>
-                <TextField fullWidth label="Title" onChange={handleGlobalChange} name="property-details-property-arabic-title" />
+              <Grid style={{ padding: '16px 0 0 16px' }} container xs={12} lg={12}>
+                <Grid item xs={12} lg={6}>
+                  <InputLabel required>Custom Facilities</InputLabel>
+                  <AutocompleteForms setCompanyFun={handleGlobalChange} data={sugg.district} />
+                </Grid>
+                <Grid item xs={12} lg={6} alignContent="center">
+                  <InputLabel>choose Type</InputLabel>
+                  <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="female" row onChange={handlePhaseType}>
+                    <FormControlLabel value="Upload" control={<Radio />} label="Single" />
+                    <FormControlLabel value="Select Existing" control={<Radio />} label="Multiple" />
+                  </RadioGroup>
+                </Grid>
               </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Arabic Description</InputLabel>
-                <TextField multiline rows={4} placeholder="Description" fullWidth />
-              </Grid>
-              <Grid item xs={12} lg={12}>
-                <FormGroup row>
-                  <FormControlLabel
-                    control={<Checkbox value={'i'} />}
-                    label="I"
-                    onChange={handleGlobalChange}
-                    name="property-details-starting-price"
-                  />
-                  <FormControlLabel
-                    control={<Checkbox value={'am'} />}
-                    label="am"
-                    onChange={handleGlobalChange}
-                    name="property-details-starting-price"
-                  />
-                  <FormControlLabel
-                    control={<Checkbox value={'a'} />}
-                    label="a"
-                    onChange={handleGlobalChange}
-                    name="property-details-starting-price"
-                  />
-                  <FormControlLabel
-                    control={<Checkbox value={'checkbox'} />}
-                    label="checkbox"
-                    onChange={handleGlobalChange}
-                    name="property-details-starting-price"
-                  />
-                  <FormControlLabel
-                    control={<Checkbox value={'option'} />}
-                    label="option"
-                    onChange={handleGlobalChange}
-                    name="property-details-starting-price"
-                  />
-                </FormGroup>
-              </Grid>
-            </Grid>
-          </MainCard>
-        </Grid>
+            </Grid> */}
+          </Grid>
+        </Container>
+        <SubmitButton />
       </Grid>
     </Page>
   );

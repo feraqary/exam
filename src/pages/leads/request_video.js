@@ -6,7 +6,7 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
-import RequestVideo from 'components/widget/Data/leads_data/leads_video'
+import RequestVideo from 'components/Data/leads_data/leads_video';
 
 // ==============================|| Request Video||============================== //
 function RequestVideos() {

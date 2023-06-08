@@ -1,17 +1,18 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Alert, Divider, CardActions } from '@mui/material';
+import { Grid, Alert } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
 import { useTheme } from '@mui/material/styles';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
-import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // assets
-import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
+import InputText from 'components/InputArea/TextInput';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import SubmitButton from 'components/Elements/SubmitButton';
 
 // ==============================|| Add user form ||============================== //
 
@@ -30,19 +31,7 @@ const departementRole = ['Sales Manager', 'HR Manager', 'Marketing Manager', 'Fi
 function AddUser() {
   const theme = useTheme();
   const [userRole, setUserRole] = useState([]);
-  const [departement, setDeparment] = useState([]);
-
-  const handleDeparmentChange = (newValue) => {
-    setDeparment(newValue);
-  };
-  const handleUserRoleChange = (newValue) => {
-    setUserRole(newValue);
-  };
-
-  useEffect(() => {
-    setUserRole(userRoleData);
-    setDeparment(departementRole);
-  }, []);
+  const [department, setDepartment] = useState([]);
 
   return (
     <Page title="User Details">
@@ -50,57 +39,63 @@ function AddUser() {
         <Grid item xs={12}>
           <MainCard title="Add User Information">
             <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>First Name</InputLabel>
-                <TextField fullWidth placeholder="Enter User " />
-                <FormHelperText>Please Enter First Name</FormHelperText>
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Last Name</InputLabel>
-                <TextField fullWidth placeholder="Enter Last Name" />
-                <FormHelperText>Please Enter Last Name </FormHelperText>
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Email</InputLabel>
-                <TextField fullWidth placeholder="Enter Email No." />
-                <FormHelperText>Please Enter Your Email </FormHelperText>
-              </Grid>
+              <InputText
+                label="First Name"
+                placeholder="Enter First Name"
+                helperText="Please enter your first name"
+                style={{ xs: 12, lg: 6 }}
+                type="text"
+              />
+              <InputText
+                label="Last Name"
+                placeholder="Enter Last Name"
+                helperText="Please enter your last name"
+                style={{ xs: 12, lg: 6 }}
+                type="text"
+              />
+              <InputText
+                label="Email"
+                placeholder="Enter Email"
+                style={{ xs: 12, lg: 6 }}
+                type="email"
+                helperText="Please enter your email"
+              />
+              <InputText
+                label="Phone Number"
+                placeholder="Enter Phone Number"
+                style={{ xs: 12, lg: 6 }}
+                type="number"
+                helperText="Please enter your phone number"
+              />
+              <InputText
+                label="Password"
+                placeholder="Enter Password"
+                type="password"
+                helperText="Please enter your password"
+                style={{ xs: 12, lg: 6 }}
+              />
 
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Phone Number</InputLabel>
-                <TextField type="text" fullWidth placeholder="Phone Number" InputProps={{}} />
-                <FormHelperText>Please Enter Your Phone Number</FormHelperText>
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel>Password:</InputLabel>
-                <TextField fullWidth placeholder="Password" type="password" InputProps={{}} />
-                <FormHelperText>Please Enter Your Password</FormHelperText>
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>User Role</InputLabel>
-                <AutocompleteForms setCompanyFun={handleUserRoleChange} data={userRole} />
-                <FormHelperText> Choose User Role </FormHelperText>
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel required>Departments</InputLabel>
-                <AutocompleteForms setCompanyFun={handleDeparmentChange} data={departement} />
-                <FormHelperText>{}</FormHelperText>
-              </Grid>
+              <AutoCompleteSelector
+                label="User Role"
+                setValue={setUserRole}
+                value={userRole}
+                id="selector"
+                placeholder="Choose User Role"
+                options={userRoleData}
+                style={{ xs: 12, lg: 6 }}
+              />
+              <AutoCompleteSelector
+                label="Departments"
+                setValue={setDepartment}
+                value={department}
+                id="selector"
+                placeholder="Choose A Department"
+                options={departementRole}
+                style={{ xs: 12, lg: 6 }}
+              />
             </Grid>
-            <Divider />
-            <CardActions>
-              <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
-                <Grid item>
-                  <Button variant="contained" color="secondary">
-                    Submit
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined">Clear</Button>
-                </Grid>
-              </Grid>
-            </CardActions>
           </MainCard>
+          <SubmitButton />
         </Grid>
         <Grid item xs={12} lg={5} spacing={gridSpacing}>
           <Alert icon={false} severity="success" sx={{ color: theme.palette.success.dark }}>

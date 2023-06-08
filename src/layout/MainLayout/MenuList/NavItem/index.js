@@ -117,7 +117,8 @@ const NavItem = ({ item, level, parentId }) => {
                 },
                 bgcolor: 'transparent'
               }
-            })
+            }),
+            wordBreak: 'break-word'
           }}
           selected={isSelected}
           onClick={() => itemHandler(item.id)}
@@ -153,7 +154,7 @@ const NavItem = ({ item, level, parentId }) => {
           {(drawerOpen || (!drawerOpen && level !== 1)) && (
             <ListItemText
               primary={
-                <Typography variant={isSelected ? 'h5' : 'body1'} color="inherit">
+                <Typography variant={isSelected ? 'h5' : 'body1'} color="inherit" sx={{ wordBreak: 'break-word', whiteSpace: 'pre-line' }}>
                   {item.title}
                 </Typography>
               }

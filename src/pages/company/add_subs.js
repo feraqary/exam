@@ -5,7 +5,6 @@ import {
   FormHelperText,
   FormControlLabel,
   Checkbox,
-  Autocomplete,
   Typography,
   TableBody,
   TableContainer,
@@ -24,10 +23,13 @@ import { styled } from '@mui/material/styles';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
-import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
 import React, { useMemo, useState } from 'react';
 import { NumberOfItems } from 'components/Items/numberOfItems';
+import InputText from 'components/InputArea/TextInput';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import Container from 'components/Elements/Container';
+import SubmitButton from 'components/Elements/SubmitButton';
 
 // assets
 const top100Films = [
@@ -87,6 +89,7 @@ function Subscription() {
   const [freeFeatured, setFreeFeatured] = useState(null);
   const [freePremium, setFreePremium] = useState(null);
   const [freeDealOfWeek, setFreeDealOfWeek] = useState(null);
+  const [companyName, setCompanyName] = useState(null);
 
   const calculateDiscount = (price, discount) => {
     if (discount === null) {
@@ -223,197 +226,186 @@ function Subscription() {
     if (!checked) {
       return (
         <>
-          <Grid item xs={12} lg={6}>
-            <InputLabel>Start Date</InputLabel>
-            <TextField fullWidth type="date" />
-            <FormHelperText>Select date</FormHelperText>
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <InputLabel>End Date</InputLabel>
-            <TextField fullWidth type="date" />
-            <FormHelperText>Select date</FormHelperText>
-          </Grid>
+          <InputText
+            label="Start Date"
+            type="date"
+            helperText="Please select the start date"
+            style={{ xs: 12, lg: 6 }}
+            placeholder="Select start date"
+          />
+          <InputText
+            label="End Date"
+            type="date"
+            helperText="Please select the end date"
+            style={{ xs: 12, lg: 6 }}
+            placeholder="Select end date"
+          />
         </>
       );
     }
     return null;
   }, [checked]);
 
+  const CheckboxHelperText = useMemo(() => {
+    return <FormControlLabel control={<Checkbox onChange={handleChange} />} label="Subscription Validity Same As Company Registration" />;
+  }, []);
+
   return (
     <Page title="Add Subscriptions">
       <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <MainCard title="Add Subscriptions Type">
-            <Grid container spacing={2} alignItems="flex-start">
-              <Grid item xs={12} lg={6}>
-                <InputLabel>Company Name</InputLabel>
-                <Autocomplete
-                  disablePortal
-                  options={top100Films}
-                  defaultValue={null}
-                  renderInput={(params) => <TextField {...params} label="" />}
-                />
-                <FormHelperText>Please select company name</FormHelperText>
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <InputLabel>Duration</InputLabel>
-                <TextField fullWidth type="number" />
-                <FormControlLabel
-                  control={<Checkbox onChange={handleChange} />}
-                  label="Subscription Validity Same As Company Registration"
-                />
-              </Grid>
-              {showDate}
-            </Grid>
+        <Container title="Add Subscriptions Type" style={{ xs: 12 }}>
+          <Grid container spacing={2} alignItems="flex-start">
+            <AutoCompleteSelector
+              label="Company Name"
+              options={top100Films}
+              placeholder="Please select the company name"
+              style={{ xs: 12, lg: 6 }}
+              value={companyName}
+              setValue={setCompanyName}
+            />
+            <InputText
+              label="Duration"
+              type="number"
+              helperText={CheckboxHelperText}
+              style={{ xs: 12, lg: 6 }}
+              placeholder="Please enter the duration"
+            />
+            {showDate}
+          </Grid>
 
-            <Grid container spacing={2} alignItems="flex-start">
-              <NumberOfItems
-                standard={standard}
-                setStandard={setStandard}
-                featured={featured}
-                setFeatured={setFeatured}
-                premium={premium}
-                setPremium={setPremium}
-                dealOfWeek={dealOfWeek}
-                setDealOfWeek={setDealOfWeek}
-                numberOfUnits={totalNumberOfItems}
-              />
-              <Grid item xs={12} lg={6}>
-                <Typography variant="h3" component="div" sx={{ mb: 3, mt: 8 }}>
-                  Discounts(%)
-                </Typography>
-                <Grid container spacing={2} xs={12} flexDirection="column">
-                  <Grid item xs={12} sm={9} lg={6}>
-                    <TextField
-                      fullWidth
-                      type="number"
-                      value={standardDiscount}
-                      onChange={(e) => setStandardDiscount(e.target.value)}
-                      // eslint-disable-next-line no-unneeded-ternary
-                      disabled={standard ? false : true}
-                    />
-                    <FormHelperText>Please enter discount amount</FormHelperText>
-                  </Grid>
-                  <Grid item xs={12} sm={9} lg={6}>
-                    <TextField
-                      fullWidth
-                      type="number"
-                      value={featuredDiscount}
-                      onChange={(e) => setFeaturedDiscount(e.target.value)}
-                      // eslint-disable-next-line no-unneeded-ternary
-                      disabled={featured ? false : true}
-                    />
-                    <FormHelperText>Please enter discount amount</FormHelperText>
-                  </Grid>
-                  <Grid item xs={12} sm={9} lg={6}>
-                    <TextField
-                      fullWidth
-                      type="number"
-                      value={premiumDiscount}
-                      onChange={(e) => setPremiumDiscount(e.target.value)}
-                      // eslint-disable-next-line no-unneeded-ternary
-                      disabled={premium ? false : true}
-                    />
-                    <FormHelperText>Please enter discount amount</FormHelperText>
-                  </Grid>
-                  <Grid item xs={12} sm={9} lg={6}>
-                    <TextField
-                      fullWidth
-                      type="number"
-                      value={dealOfWeekDiscount}
-                      onChange={(e) => setDealOfWeekDiscount(e.target.value)}
-                      // eslint-disable-next-line no-unneeded-ternary
-                      disabled={dealOfWeek ? false : true}
-                    />
-                    <FormHelperText>Please enter discount amount</FormHelperText>
-                  </Grid>
+          <Grid container spacing={2} alignItems="flex-start">
+            <NumberOfItems
+              standard={standard}
+              setStandard={setStandard}
+              featured={featured}
+              setFeatured={setFeatured}
+              premium={premium}
+              setPremium={setPremium}
+              dealOfWeek={dealOfWeek}
+              setDealOfWeek={setDealOfWeek}
+              numberOfUnits={totalNumberOfItems}
+            />
+            <Grid item xs={12} lg={6}>
+              <Typography variant="h3" component="div" sx={{ mb: 3, mt: 8 }}>
+                Discounts(%)
+              </Typography>
+              <Grid container spacing={2} xs={12} flexDirection="column">
+                <Grid item xs={12} sm={9} lg={6}>
+                  <TextField
+                    fullWidth
+                    type="number"
+                    value={standardDiscount}
+                    onChange={(e) => setStandardDiscount(e.target.value)}
+                    // eslint-disable-next-line no-unneeded-ternary
+                    disabled={standard ? false : true}
+                  />
+                  <FormHelperText>Please enter discount amount</FormHelperText>
+                </Grid>
+                <Grid item xs={12} sm={9} lg={6}>
+                  <TextField
+                    fullWidth
+                    type="number"
+                    value={featuredDiscount}
+                    onChange={(e) => setFeaturedDiscount(e.target.value)}
+                    // eslint-disable-next-line no-unneeded-ternary
+                    disabled={featured ? false : true}
+                  />
+                  <FormHelperText>Please enter discount amount</FormHelperText>
+                </Grid>
+                <Grid item xs={12} sm={9} lg={6}>
+                  <TextField
+                    fullWidth
+                    type="number"
+                    value={premiumDiscount}
+                    onChange={(e) => setPremiumDiscount(e.target.value)}
+                    // eslint-disable-next-line no-unneeded-ternary
+                    disabled={premium ? false : true}
+                  />
+                  <FormHelperText>Please enter discount amount</FormHelperText>
+                </Grid>
+                <Grid item xs={12} sm={9} lg={6}>
+                  <TextField
+                    fullWidth
+                    type="number"
+                    value={dealOfWeekDiscount}
+                    onChange={(e) => setDealOfWeekDiscount(e.target.value)}
+                    // eslint-disable-next-line no-unneeded-ternary
+                    disabled={dealOfWeek ? false : true}
+                  />
+                  <FormHelperText>Please enter discount amount</FormHelperText>
                 </Grid>
               </Grid>
             </Grid>
-            {checkIfAvailable && (
-              <TableContainer sx={{ mt: 8 }}>
-                <Table sx={{ minWidth: 320 }} aria-label="customized table">
-                  <TableHead>
-                    <TableRow>
-                      <StyledTableCell sx={{ pl: 3 }}>Item</StyledTableCell>
-                      <StyledTableCell align="right">Price</StyledTableCell>
-                      <StyledTableCell align="right">Quantity(g)</StyledTableCell>
-                      <StyledTableCell align="right">Discount</StyledTableCell>
-                      <StyledTableCell sx={{ pr: 3 }} align="right">
-                        Actual Price
-                      </StyledTableCell>
-                      <StyledTableCell sx={{ pr: 3 }} align="right">
-                        Discounted Price
-                      </StyledTableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map(
-                      (row) =>
-                        row.available && (
-                          <StyledTableRow hover key={row.name}>
-                            <StyledTableCell sx={{ pl: 3 }} component="th" scope="row">
-                              {row.name}
-                            </StyledTableCell>
-                            <StyledTableCell align="right">{row.price}</StyledTableCell>
-                            <StyledTableCell align="right">{row.quantity}</StyledTableCell>
-                            <StyledTableCell align="right">{row.discount}</StyledTableCell>
-                            <StyledTableCell sx={{ pr: 3 }} align="right">
-                              {row.actualPrice}
-                            </StyledTableCell>
-                            <StyledTableCell sx={{ pr: 3 }} align="right">
-                              {row.discountedPrice}
-                            </StyledTableCell>
-                          </StyledTableRow>
-                        )
-                    )}
-                    <StyledTableRow>
-                      <StyledTableCell colSpan={4}>Total</StyledTableCell>
-                      <StyledTableCell align="right" sx={{ pr: 3 }}>
-                        {totalPrice}
-                      </StyledTableCell>
-                      <StyledTableCell align="right" sx={{ pr: 3 }}>
-                        {totalDiscount}
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-            <Divider />
-            <Grid container>
-              <FormControlLabel control={<Checkbox onChange={handleFreeSubChange} />} label="Add Free Subscription" />
-            </Grid>
-            {freeSubChecked && (
-              <NumberOfItems
-                standard={freeStandard}
-                setStandard={setFreeStandard}
-                featured={freeFeatured}
-                setFeatured={setFreeFeatured}
-                premium={freePremium}
-                setPremium={setFreePremium}
-                dealOfWeek={freeDealOfWeek}
-                setDealOfWeek={setFreeDealOfWeek}
-                numberOfUnits={totalNumberOfFreeItems}
-              />
-            )}
-            <CardActions>
-              <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
-                <Grid item>
-                  <Button variant="contained" color="secondary">
-                    Submit
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" onClick={clear}>
-                    Clear
-                  </Button>
-                </Grid>
-              </Grid>
-            </CardActions>
-            <Divider />
-          </MainCard>
-        </Grid>
+          </Grid>
+          {checkIfAvailable && (
+            <TableContainer sx={{ mt: 8 }}>
+              <Table sx={{ minWidth: 320 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell sx={{ pl: 3 }}>Item</StyledTableCell>
+                    <StyledTableCell align="right">Price</StyledTableCell>
+                    <StyledTableCell align="right">Quantity(g)</StyledTableCell>
+                    <StyledTableCell align="right">Discount</StyledTableCell>
+                    <StyledTableCell sx={{ pr: 3 }} align="right">
+                      Actual Price
+                    </StyledTableCell>
+                    <StyledTableCell sx={{ pr: 3 }} align="right">
+                      Discounted Price
+                    </StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map(
+                    (row) =>
+                      row.available && (
+                        <StyledTableRow hover key={row.name}>
+                          <StyledTableCell sx={{ pl: 3 }} component="th" scope="row">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">{row.price}</StyledTableCell>
+                          <StyledTableCell align="right">{row.quantity}</StyledTableCell>
+                          <StyledTableCell align="right">{row.discount}</StyledTableCell>
+                          <StyledTableCell sx={{ pr: 3 }} align="right">
+                            {row.actualPrice}
+                          </StyledTableCell>
+                          <StyledTableCell sx={{ pr: 3 }} align="right">
+                            {row.discountedPrice}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      )
+                  )}
+                  <StyledTableRow>
+                    <StyledTableCell colSpan={4}>Total</StyledTableCell>
+                    <StyledTableCell align="right" sx={{ pr: 3 }}>
+                      {totalPrice}
+                    </StyledTableCell>
+                    <StyledTableCell align="right" sx={{ pr: 3 }}>
+                      {totalDiscount}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+          <Divider />
+          <Grid container>
+            <FormControlLabel control={<Checkbox onChange={handleFreeSubChange} />} label="Add Free Subscription" />
+          </Grid>
+          {freeSubChecked && (
+            <NumberOfItems
+              standard={freeStandard}
+              setStandard={setFreeStandard}
+              featured={freeFeatured}
+              setFeatured={setFreeFeatured}
+              premium={freePremium}
+              setPremium={setFreePremium}
+              dealOfWeek={freeDealOfWeek}
+              setDealOfWeek={setFreeDealOfWeek}
+              numberOfUnits={totalNumberOfFreeItems}
+            />
+          )}
+        </Container>
+        <SubmitButton />
       </Grid>
     </Page>
   );

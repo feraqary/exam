@@ -32,15 +32,13 @@ const exchange = {
           id: 'local-units',
           title: <FormattedMessage id="Local Units" />,
           type: 'item',
-          url: '/exchange/local',
-          
+          url: '/exchange/local'
         },
         {
           id: 'international-units',
           title: <FormattedMessage id="International Units" />,
           type: 'item',
-          url: '/exchange/international',
-          
+          url: '/exchange/international'
         }
       ]
     },
@@ -49,21 +47,21 @@ const exchange = {
       title: <FormattedMessage id="Offer Units" />,
       type: 'item',
       icon: icons.IconForms,
-      url:'/exchange/offer'
+      url: '/exchange/offer'
     },
     {
-      id: 'manage-offer-units',
-      title: <FormattedMessage id="Manage Offer Units" />,
+      id: 'manage-offer-categories',
+      title: <FormattedMessage id="Manage Offer Categories" />,
       type: 'item',
       icon: icons.IconForms,
-      url:'/exchange/manage'
+      url: '/exchange/manage'
     },
     {
       id: 'exchange-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,
-      url:'/exchange/activities'
+      url: '/exchange/activities'
     }
   ]
 };

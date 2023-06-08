@@ -6,8 +6,13 @@ import Layout from 'layout';
 import { useTheme } from '@mui/material/styles';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import React, { useState, useMemo } from 'react';
-// import TagsInput from 'react-tagsinput';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+// redux actions import
+
+import { getCountries, getStates, getCities } from 'store/slices/country-section/actions/countries';
+
 // assets
 import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
@@ -15,24 +20,75 @@ import Selector from 'components/InputArea/Selector';
 import Container from 'components/Elements/Container';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
+import CompanyServices from 'components/Data/company_types_data/fetch_company_types';
+import { useEffect } from 'react';
+import { setCity, setCountry } from 'store/slices/country-section/slice/country';
+import { setState } from 'store/slices/country-section/slice/country';
 
 // ==============================|| FIELDS ||============================== //
-
+const options = ['Real Estate Broker Company', 'Real Estate Developer Company', 'Service Company'];
+const fetchCompanyServices = CompanyServices;
 // ==============================|| Add Company form ||============================== //
 function ColumnsLayouts() {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const [companyType, setCompanyType] = useState(null);
+  const [serviceType, setServiceType] = useState(null);
+  const [subServiceType, setSubServiceType] = useState(null);
+
+  useEffect(() => {
+    dispatch(getCountries());
+  }, [dispatch]);
+
+  const { countries, error, loading, states, country, state, city, cities } = useSelector((state) => state.countries);
+
+  const countryChange = (newValue) => {
+    dispatch(setCountry(newValue));
+    dispatch(getStates(newValue?.id));
+    dispatch(setState(null));
+  };
+  const stateChange = (newValue) => {
+    dispatch(getCities(newValue?.id));
+    dispatch(setState(newValue));
+    dispatch(setCity(null));
+  };
+
+  const cityChange = (newValue) => {
+    dispatch(setCity(newValue));
+  };
 
   return (
     <Page title="Add Company">
       <Grid container spacing={gridSpacing}>
         <Container title="Add Compnay Details" style={{ xs: 12 }}>
-          <AutoCompleteSelector style={{ xs: 12, lg: 10, mb: 2 }} label="Select Company Type" id="companyType" />
-          {false && (
-            <>
-              <AutoCompleteSelector style={{ xs: 12, lg: 10, mb: 2 }} label="Sub Company Type" id="subCompanyType" />
-              <AutoCompleteSelector style={{ xs: 12, lg: 10, mb: 2 }} label="Service Type" id="serviceType" />
-            </>
-          )}
+          <AutoCompleteSelector
+            style={{ xs: 12, lg: 10, mb: 2 }}
+            label="Select Company Type"
+            id="companyType"
+            options={options}
+            placeholder="Select Company Type"
+            value={companyType}
+            setValue={setCompanyType}
+          />
+
+          <AutoCompleteSelector
+            style={{ xs: 12, lg: 10, mb: 2 }}
+            label="Sub Company Type"
+            id="subCompanyType"
+            options={fetchCompanyServices.map((x) => x.type)}
+            value={serviceType}
+            setValue={setServiceType}
+          />
+
+          <AutoCompleteSelector
+            style={{ xs: 12, lg: 10, mb: 2 }}
+            label="Service Type"
+            id="serviceType"
+            options={fetchCompanyServices.filter((x) => x.type === serviceType).map((x) => x.subTypes)[0]}
+            value={subServiceType}
+            setValue={setSubServiceType}
+          />
+
           <Grid container spacing={2} alignItems="center">
             <InputText
               label="Company Name"
@@ -82,11 +138,7 @@ function ColumnsLayouts() {
               style={{ xs: 12, lg: 6 }}
               label="VAT status"
               helperText="Please Choose a VAT status"
-              options={[
-                { value: 1, label: 'Active' },
-                { value: 2, label: 'Non-Activ' },
-                { value: 3, label: 'Pending' }
-              ]}
+              options={['Active', 'Non-Activ', 'Pending']}
             />
             <br />
             <FileUpload
@@ -101,20 +153,52 @@ function ColumnsLayouts() {
         </Container>
         <Container title="Add Billing Information" style={{ xs: 12 }}>
           <Grid container spacing={2} alignItems="center">
-            <InputText
-              label="Country"
-              placeholder="Enter the country"
-              helperText="Please enter the country"
-              type="text"
-              style={{ xs: 12, lg: 6 }}
+            <AutoCompleteSelector
+              style={{ xs: 12, lg: 6, mb: 2 }}
+              label="Countries"
+              id="country-selector"
+              options={countries.map((country) => {
+                return { label: country.Country, id: country.ID };
+              })}
+              placeholder="Select a Country"
+              value={country}
+              setValue={setCountry}
+              helperText="Please select a country"
+              loading={loading}
+              func={countryChange}
             />
-            <InputText label="City" placeholder="Enter the city" helperText="Please enter the city" type="text" style={{ xs: 12, lg: 6 }} />
-            <InputText
-              label="State"
-              placeholder="Enter the state"
-              helperText="Please enter the state"
-              type="text"
-              style={{ xs: 12, lg: 6 }}
+
+            <AutoCompleteSelector
+              style={{ xs: 12, lg: 6, mb: 2 }}
+              label="States"
+              id="state-selector"
+              options={states?.map((state) => {
+                return { label: state.State, id: state.ID };
+              })}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              placeholder="Select a State"
+              value={state}
+              setValue={setState}
+              helperText="Please select a state"
+              disabled={country ? false : true}
+              loading={loading}
+              func={stateChange}
+            />
+            <AutoCompleteSelector
+              style={{ xs: 12, lg: 6, mb: 2 }}
+              label="Cites"
+              id="cites-selector"
+              options={cities?.map((city) => {
+                return { label: city.City, id: city.ID };
+              })}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              placeholder="Select a City"
+              value={city}
+              setValue={setCompanyType}
+              disabled={state ? false : true}
+              helperText="Please select a city"
+              loading={loading}
+              func={cityChange}
             />
             <InputText
               label="Community"
@@ -271,13 +355,7 @@ function ColumnsLayouts() {
               style={{ xs: 12, lg: 4 }}
               label="Subscription Duration"
               id="select"
-              options={[
-                { value: 1, label: '1 Month' },
-                { value: 3, label: '3 Months' },
-                { value: 6, label: '6 Months' },
-                { value: 9, label: '9 Months' },
-                { value: 12, label: '12 Months' }
-              ]}
+              options={['1 Month', '3 Months', '6 Months', '9 Months', '12 Months']}
             />
             <InputText
               style={{ xs: 12, lg: 4 }}

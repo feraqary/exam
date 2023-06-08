@@ -39,43 +39,37 @@ const units = {
           id: 'sale-units',
           title: <FormattedMessage id="Sale Units" />,
           type: 'item',
-          url: '/units/sale_units',
-          breadcrumbs: false
+          url: '/units/sale_units'
         },
         {
           id: 'rent-units',
           title: <FormattedMessage id="Rent Units" />,
           type: 'item',
-          url: '/units/rent_units',
-          breadcrumbs: false
+          url: '/units/rent_units'
         },
         {
           id: 'shared-units',
           title: <FormattedMessage id="Shared Units" />,
           type: 'item',
-          url: '/units/shared_units',
-          breadcrumbs: false
+          url: '/units/shared_units'
         },
         {
           id: 'international-units',
           title: <FormattedMessage id="International Units" />,
           type: 'item',
-          url: '/units/international_units',
-          breadcrumbs: false
+          url: '/units/international_units'
         },
         {
           id: 'rejected-units',
           title: <FormattedMessage id="Rejected Units" />,
           type: 'item',
-          url: '/units/rejected_units',
-          breadcrumbs: false
+          url: '/units/rejected_units'
         },
         {
           id: 'deleted-units',
           title: <FormattedMessage id="Deleted Units" />,
           type: 'item',
-          url: '/units/deleted_units',
-          breadcrumbs: false
+          url: '/units/deleted_units'
         }
       ]
     },

@@ -1,92 +1,162 @@
 // material-ui
-import { Grid, TextField, InputAdornment, FormHelperText, CardActions, Divider, Button } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 // project imports
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
-import MainCard from 'components/ui-component/cards/MainCard';
-import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
-import React, { useMemo, useState } from 'react';
-import AutocompleteFormService from 'components/forms/forms-validation/AutoCompleteFormService';
-import { UploadFile } from '@mui/icons-material';
+import React, { useMemo, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 // assets
-import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
+import InputText from 'components/InputArea/TextInput';
+import FileUpload from 'components/InputArea/FileUpload';
+import SubmitButton from 'components/Elements/SubmitButton';
+import Container from 'components/Elements/Container';
+import { createCompanyType } from 'store/slices/company-section/action/company';
+import Lottie from 'react-lottie';
+import animationData from '../../components/assets/JSON/98194-loading.JSON';
 
-const roles = ['Broker Company', 'Developer Company', 'Service Company'];
+const roles = [
+  { label: 'Broker Company', id: 1 },
+  { label: 'Developer Company', id: 2 },
+  { label: 'Service Company', id: 3 }
+];
 
 // ==============================|| Add Company Type form ||============================== //
+
+const LoaderComponent = () => {
+  return (
+    <Grid
+      item
+      sx={{
+        height: '100vh',
+        width: '100vw',
+        background: 'white',
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: '2000',
+        backdropFilter: 'blur(20px)',
+        opacity: '0.5'
+      }}
+    >
+      <Lottie options={{ animationData: animationData }} height={200} width={200} />
+    </Grid>
+  );
+};
+
 function CompanyType() {
   const [companyType, setCompanyType] = useState(null);
-  const [licenseimg, setnewimg] = useState(null);
   const [companyName, setCompanyName] = useState(null);
-  const handleInputChange = (event) => {
-    setnewimg(URL.createObjectURL(event.target.files[0]));
-  };
-  const subCompanyType = useMemo(() => {
-    if (companyType === 'Service Company' || companyType === 'Management Company') {
-      return (
-        <Grid item xs={12} lg={12}>
-          <InputLabel required>Service Company Sub Type</InputLabel>
-          {companyType === 'Service Company' && <AutocompleteFormService />}
-        </Grid>
-      );
-    }
-    return null;
-  }, [companyType]);
+  const [description, setDescription] = useState(null);
+  const [logoImage, setLogoImage] = useState(null);
+  const [iconImage, setIconImage] = useState(null);
+
+  const logoRef = useRef(null);
+  const iconRef = useRef(null);
+
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.companies);
+
   const handleCompanyTypeChange = (newValue) => {
-    setCompanyName(null);
     setCompanyType(newValue);
   };
+
+  const clearFields = () => {
+    setCompanyType(null);
+    setCompanyName('');
+    setDescription('');
+    setLogoImage(null);
+    setIconImage(null);
+
+    if (logoRef.current) {
+      logoRef.current.value = null;
+    }
+    if (iconRef.current) {
+      iconRef.current.value = null;
+    }
+  };
+
+  const submitForm = () => {
+    const formData = new FormData();
+    formData.append('main_company_type_id', companyType.id);
+    formData.append('title', companyName);
+    formData.append('image_url', logoImage);
+    formData.append('icon_url', iconImage);
+    formData.append('description', description);
+    dispatch(createCompanyType(formData));
+  };
+
+  // if (loading) return <Lottie options={{ animationData: animationData }} height={200} width={200} />;
+
   return (
     <Page title="Add Company Types">
       <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <MainCard title="Add Company Type">
-            <Grid item xs={12} lg={10}>
-              <InputLabel required>Company Type</InputLabel>
-              <AutocompleteForms data={roles} setCompanyFun={handleCompanyTypeChange} />
-              {subCompanyType}
-              <Grid item xs={12} lg={12}>
-                <InputLabel required>Description</InputLabel>
-                <TextField fullWidth id="outlined-multiline-flexible" label="Description" multiline rows={5} defaultValue="" />
-              </Grid>
-              <Grid item xs={12} lg={6} sx={{ mt: 2 }}>
-                <InputLabel required>Upload Icon</InputLabel>
-                <TextField
-                  type="file"
-                  fullWidth
-                  placeholder="Upload Icon"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <UploadFile />
-                      </InputAdornment>
-                    )
-                  }}
-                  onChange={handleInputChange}
-                />
-                <FormHelperText>Please Upload Icon</FormHelperText>
-                <Grid item xs={12} lg={6}>
-                  <img src={licenseimg} alt="Icon Preview" width="250px" height="250px" />
-                </Grid>
-              </Grid>
-              <Divider />
-              <CardActions>
-                <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
-                  <Grid item>
-                    <Button variant="contained" color="secondary">
-                      Submit
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button variant="outlined">Clear</Button>
-                  </Grid>
-                </Grid>
-              </CardActions>
-            </Grid>
-          </MainCard>
-        </Grid>
+        <Container title="Add Company Type" style={{ xs: 12 }}>
+          {loading && <LoaderComponent />}
+
+          <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
+            <AutoCompleteSelector
+              style={{ xs: 12, lg: 8 }}
+              label="Company Type"
+              placeholder="Company Type"
+              options={roles}
+              id="compnType"
+              value={companyType}
+              setValue={setCompanyType}
+              func={handleCompanyTypeChange}
+              loading={false}
+              error={null}
+            />
+
+            <InputText
+              label="Service Name"
+              placeholder="Enter Service Name"
+              helperText="Please enter service name"
+              style={{ xs: 12, lg: 8 }}
+              type="text"
+              value={companyName}
+              setValue={setCompanyName}
+            />
+            <InputText
+              label="Description"
+              placeholder="Enter Description"
+              style={{ xs: 12, lg: 8 }}
+              type="text"
+              multiline
+              rows={5}
+              id="outlined-multiline-flexible"
+              value={description}
+              setValue={setDescription}
+            />
+
+            <FileUpload
+              label="Upload Logo"
+              style={{ xs: 12, lg: 8 }}
+              placeholder="Upload Logo"
+              type="file"
+              helperText="Please upload your logo"
+              image={{ alt: 'Logo Preview', width: '250px', height: '250px' }}
+              setValue={setLogoImage}
+              ref={logoRef}
+            />
+            <FileUpload
+              label="Upload Icon"
+              style={{ xs: 12, lg: 8 }}
+              placeholder="Upload Icon"
+              type="file"
+              helperText="Please upload your icon"
+              image={{ alt: 'Icon Preview', width: '250px', height: '250px' }}
+              setValue={setIconImage}
+              ref={iconRef}
+            />
+          </Grid>
+        </Container>
+        <SubmitButton clear={clearFields} submit={submitForm} />
       </Grid>
     </Page>
   );

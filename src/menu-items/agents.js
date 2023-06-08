@@ -27,7 +27,7 @@ const agents = {
       title: <FormattedMessage id="Add Agent" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
-      url:'/agent/add_agent'
+      url: '/agent/add_agent'
     },
     {
       id: 'manage-agents',
@@ -50,8 +50,8 @@ const agents = {
           breadcrumbs: false
         },
         {
-          id: 'delete-agent',
-          title: <FormattedMessage id="Delete Agent" />,
+          id: 'deleted-agent',
+          title: <FormattedMessage id="Deleted Agent" />,
           type: 'item',
           url: '/agent/deleted_agents',
           breadcrumbs: false
@@ -63,7 +63,7 @@ const agents = {
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,
-      url: '/agent/activities',
+      url: '/agent/activities'
     }
   ]
 };

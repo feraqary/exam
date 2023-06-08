@@ -12,4 +12,11 @@ axiosServices.interceptors.response.use(
   (error) => Promise.reject((error.response && error.response.data) || 'Wrong Services')
 );
 
+export const api = axios.create({ baseURL: process.env.REACT_AQARY_API_URL });
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject((error.response && error.response.data) || 'Wrong Services')
+);
+
 export default axiosServices;

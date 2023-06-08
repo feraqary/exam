@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, Button, Stack, Divider, CardActions } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -10,27 +10,20 @@ import { gridSpacing } from 'store/constant';
 import React, { useState, useMemo } from 'react';
 
 // assets
-import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
 import CheckedList from 'components/checkedList/checkedList';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import SubmitButton from 'components/Elements/SubmitButton';
 
 const roles = ['Broker Company', 'Developer Company', 'Service Company'];
-const companyNames = ['Business & Investement Company', 'Developer Company', 'Property Company'];
+const serviceTypeData = ['Business & Investement Company', 'Developer Company', 'Property Company'];
 
 // ==============================||Company Previliges Datatable ||============================== //
 function CompanyType() {
   const [companyType, setCompanyType] = useState(null);
-  const [companyName, setCompanyName] = useState(null);
-
-  const handleCompanyTypeChange = (newValue) => {
-    setCompanyName(null);
-    setCompanyType(newValue);
-  };
-  const handleCompanyNameChange = (newValue) => {
-    setCompanyName(newValue);
-  };
+  const [serviceType, setServiceType] = useState(null);
 
   const subCompanyType = useMemo(() => {
-    if ((companyType === 'Service Company' && companyName) || (companyType !== 'Service Company' && companyType)) {
+    if ((companyType === 'Service Company' && serviceType) || (companyType !== 'Service Company' && companyType)) {
       return (
         <>
           <Stack item flexDirection="row" justifyContent="space-around">
@@ -74,37 +67,42 @@ function CompanyType() {
       );
     }
     return null;
-  }, [companyType, companyName]);
+  }, [companyType, serviceType]);
 
   return (
     <Page title="Priviliges">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <MainCard title="View Company Priviliges">
-            <InputLabel required>Company Type</InputLabel>
-            <AutocompleteForms setCompanyFun={handleCompanyTypeChange} data={roles} />
-            {companyType === 'Service Company' ? (
-              <>
-                <InputLabel required>Company Name</InputLabel>
-                <AutocompleteForms setCompanyFun={handleCompanyNameChange} data={companyNames} />
-              </>
-            ) : null}
-            <InputLabel required>Permissions</InputLabel>
-            {subCompanyType}
-            <Divider />
-            <CardActions>
-              <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
-                <Grid item>
-                  <Button variant="contained" color="secondary">
-                    Submit
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined">Clear</Button>
-                </Grid>
-              </Grid>
-            </CardActions>
+            <Grid container flexDirection="column" gap={3} justifyContent="center">
+              <AutoCompleteSelector
+                label="Company Type"
+                value={companyType}
+                setValue={setCompanyType}
+                options={roles}
+                style={{ xs: 12, lg: 8 }}
+                id="selector"
+                placeholder="Please select a company type"
+              />
+
+              {companyType === 'Service Company' ? (
+                <>
+                  <AutoCompleteSelector
+                    label="Service Type"
+                    value={serviceType}
+                    setValue={setServiceType}
+                    options={serviceTypeData}
+                    style={{ xs: 12, lg: 8 }}
+                    id="selector"
+                    placeholder="Please select a Service type"
+                  />
+                </>
+              ) : null}
+              <InputLabel required>Permissions</InputLabel>
+              {subCompanyType}
+            </Grid>
           </MainCard>
+          <SubmitButton />
         </Grid>
       </Grid>
     </Page>

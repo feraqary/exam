@@ -9,7 +9,6 @@ import InstantFeedback from 'components/forms/forms-validation/InstantFeedback';
 import RadioGroupForms from 'components/forms/forms-validation/RadioGroupForms';
 import CheckboxForms from 'components/forms/forms-validation/CheckboxForms';
 import SelectForms from 'components/forms/forms-validation/SelectForms';
-import AutocompleteForms from 'components/forms/forms-validation/AutocompleteForms';
 import { gridSpacing } from 'store/constant';
 
 // ==============================|| FORMS VALIDATION - FORMIK ||============================== //
@@ -32,9 +31,7 @@ const FormsValidation = () => (
       <Grid item xs={12} md={6}>
         <SelectForms />
       </Grid>
-      <Grid item xs={12} md={6}>
-        <AutocompleteForms />
-      </Grid>
+      <Grid item xs={12} md={6}></Grid>
     </Grid>
   </Page>
 );

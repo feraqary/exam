@@ -6,23 +6,84 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 
-import ManageOfferTable from 'components/widget/Data/exchange/manage_offer_units';
+import Table from 'components/Table/Table';
 
 // ==============================|| Reviews datatable ||============================== //
-function ManageOfferUnits() {
+
+const data = [
+  {
+    refID: 'PA2831023',
+    title: 25
+  },
+  {
+    refID: 'PA2831023',
+    title: 25
+  },
+  {
+    refID: 'PA2831023',
+    title: 25
+  },
+  {
+    refID: 'PA2831023',
+    title: 25
+  },
+  {
+    refID: 'PB192323',
+    title: 25
+  },
+  {
+    refID: 'PA2831023',
+    title: 25
+  },
+  {
+    refID: 'PA283102',
+    title: 25
+  },
+  {
+    refID: 'PA2831023',
+    title: 25
+  },
+  {
+    refID: 'PA283102',
+    title: 25
+  },
+  {
+    refID: 'PA283102',
+    title: 25
+  },
+  {
+    refID: 'PA283102',
+    title: 25
+  }
+];
+const ColumnHeaders = [
+  {
+    accessorKey: 'refID',
+    header: 'RefId'
+  },
+  {
+    accessorKey: 'title',
+    header: 'Title',
+    Cell: ({ cell }) => {
+      return <div>{cell.getValue()}% offer</div>;
+    }
+  }
+];
+
+function ManageOfferCategories() {
   return (
-    <Page title="Manage Offers">
+    <Page title="Manage Offers Categories">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <ManageOfferTable title="Manage Offer Units" />
+          <Table data={data} columnHeaders={ColumnHeaders} />
         </Grid>
       </Grid>
     </Page>
   );
 }
 
-ManageOfferUnits.getLayout = function getLayout(page) {
+ManageOfferCategories.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default ManageOfferUnits;
+export default ManageOfferCategories;

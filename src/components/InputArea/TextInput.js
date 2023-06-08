@@ -5,10 +5,13 @@ import { TextField } from '@mui/material';
 import React, { useState, useMemo } from 'react';
 import InputLayout from './InputLayout';
 
-const InputText = ({ label, placeholder, helperText, style, type }) => {
+const InputText = ({ label, placeholder, helperText, style, type, value, setValue, ...rest }) => {
+  const handleInputChange = (e) => {
+    setValue(e.target.value);
+  };
   return (
     <InputLayout label={label} helperText={helperText} style={style}>
-      <TextField fullWidth placeholder={placeholder} type={type} />
+      <TextField fullWidth placeholder={placeholder} type={type} {...rest} value={value} onChange={(e) => handleInputChange(e)} />
     </InputLayout>
   );
 };

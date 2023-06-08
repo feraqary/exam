@@ -289,7 +289,7 @@ const NavCollapse = ({ menu, level, parentId }) => {
             {openMini || open ? (
               collapseIcon
             ) : (
-              <IconChevronDown stroke={1.5} size="16px" style={{ marginTop: 'auto', marginBottom: 'auto' }} />
+              <IconChevronDown stroke={1.5} size="16px" style={{ marginTop: 'auto', marginBottom: 'auto', marginLeft: '50px' }} />
             )}
 
             {!drawerOpen && (

@@ -54,15 +54,14 @@ const project = {
           title: <FormattedMessage id="Shared Projects" />,
           type: 'item',
           url: '/project/shared_project'
+        },
+        {
+          id: 'deleted-projects',
+          title: <FormattedMessage id="Deleted Projects" />,
+          type: 'item',
+          url: '/project/del_project'
         }
       ]
-    },
-    {
-      id: 'deleted-projects',
-      title: <FormattedMessage id="Deleted Projects" />,
-      type: 'item',
-      icon: icons.IconBasket,
-      url: '/project/del_project'
     },
     {
       id: 'promotions',

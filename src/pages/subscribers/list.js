@@ -1,44 +1,67 @@
 // material-ui
-import { Grid, InputAdornment, TextField, FormHelperText, NativeSelect, Button, Box, Alert, createMuiTheme } from '@mui/material';
+import { Grid } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
-import { useTheme } from '@mui/material/styles';
 import Page from 'components/ui-component/Page';
-import MainCard from 'components/ui-component/cards/MainCard';
-import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
 
-import SubscribersListTable from 'components/widget/Data/subscribers';
+import Table from 'components/Table/Table';
 
 // ==============================|| Subscribers datatable ||============================== //
+
+const ColumnHeaders = [
+  {
+    accessorKey: 'sino',
+    header: 'SI.NO'
+  },
+  {
+    accessorKey: 'email',
+    header: 'Email'
+  }
+];
+
+const data = [
+  {
+    sino: 1,
+    email: 'new@gmail.com'
+  },
+  {
+    sino: 4,
+    email: 'new@gmail.com'
+  },
+  {
+    sino: 1,
+    email: 'new@gmail.com'
+  },
+  {
+    sino: 5,
+    email: 'new@gmail.com'
+  },
+  {
+    sino: 1,
+    email: 'new@gmail.com'
+  },
+  {
+    sino: 5,
+    email: 'new@gmail.com'
+  },
+  {
+    sino: 5,
+    email: 'new@gmail.com'
+  },
+  {
+    sino: 5,
+    email: 'new@gmail.com'
+  }
+];
+
 function SubsribersList() {
   return (
     <Page title="Subscribers">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem'
-            }}
-            mb={2}
-          >
-            <Button variant="contained" color="primary">
-              Excel
-            </Button>
-            <Button color="primary" variant="contained">
-              Copy
-            </Button>
-            <Button variant="contained" color="primary">
-              CSV
-            </Button>
-            <Button variant="contained" color="primary">
-              PDF
-            </Button>
-          </Box>
-          <SubscribersListTable title="Subscribers List" />
+          <Table data={data} columnHeaders={ColumnHeaders} />
         </Grid>
       </Grid>
     </Page>

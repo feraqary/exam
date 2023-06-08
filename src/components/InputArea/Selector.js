@@ -12,7 +12,7 @@ const Selector = ({ id, style, label, options, helperText }) => {
     <InputLayout style={style} helperText={helperText} label={label}>
       <NativeSelect id={id} fullWidth>
         {options.map((option) => {
-          return <option value={option.value}>{option.label}</option>;
+          return <option value={option}>{option}</option>;
         })}
       </NativeSelect>
     </InputLayout>

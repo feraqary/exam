@@ -38,6 +38,24 @@ const companies = {
       icon: icons.IconUserCheck,
       children: [
         {
+          id: 'add_company_types',
+          title: <FormattedMessage id="add-types" />,
+          type: 'item',
+          url: '/company/add_type'
+        },
+        {
+          id: 'add_main_services',
+          title: <FormattedMessage id="Add Main Services" />,
+          type: 'item',
+          url: '/company/add_main_services'
+        },
+        {
+          id: 'add_services',
+          title: <FormattedMessage id="Add Services" />,
+          type: 'item',
+          url: '/company/add_services'
+        },
+        {
           id: 'local',
           title: <FormattedMessage id="local-companies" />,
           type: 'item',
@@ -50,17 +68,27 @@ const companies = {
           url: '/company/int_comp_mng'
         },
         {
-          id: 'add_company_types',
-          title: <FormattedMessage id="add-types" />,
+          id: 'featured-companies',
+          title: <FormattedMessage id="Featured Companies" />,
           type: 'item',
-          url: '/company/add_type'
+          url: '/company/featured'
+        },
+        {
+          id: 'blocked-companies',
+          title: <FormattedMessage id="Blocked Companies" />,
+          type: 'item',
+          url: '/company/blocked'
+        },
+        {
+          id: 'second-phase-upload',
+          title: <FormattedMessage id="Second Phase Upload" />,
+          type: 'item',
+          url: '/company/second_phase_upload'
         },
         {
           id: 'company-types',
           title: <FormattedMessage id="manage-types" />,
-          caption: 'Manage Company Types',
           type: 'item',
-          icon: icons.IconMessages,
           url: '/company/manage_type'
         }
       ]
@@ -75,22 +103,19 @@ const companies = {
           id: 'add-subscription',
           title: <FormattedMessage id="add-subscriptions" />,
           type: 'item',
-          url: '/company/add_subs',
-          breadcrumbs: false
+          url: '/company/add_subs'
         },
         {
           id: 'active',
           title: <FormattedMessage id="view-active" />,
           type: 'item',
-          url: '/company/active_subs',
-          breadcrumbs: false
+          url: '/company/active_subs'
         },
         {
           id: 'pending',
           title: <FormattedMessage id="view-pending" />,
           type: 'item',
-          url: '/company/pending_subs',
-          breadcrumbs: false
+          url: '/company/pending_subs'
         }
       ]
     },
