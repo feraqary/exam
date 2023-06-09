@@ -22,7 +22,7 @@ const DateTime = () => {
 
   return (
     <Page title="Datetime">
-      <MainCard title="Date & Time" secondary={<SecondaryAction link="https://next.material-ui.com/components/date-time-picker/" />}>
+      <MainCard  title="Date & Time" secondary={<SecondaryAction link="https://next.material-ui.com/components/date-time-picker/" />}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} md={6}>
             <SubCard title="Basic Datetime Picker">

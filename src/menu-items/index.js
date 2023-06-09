@@ -20,12 +20,14 @@ import subscribers from './subscribers';
 import settings from './settings';
 import contract from './contract';
 import units from './units';
-
+import banners from './banners_ads';
+import contact from './contact';
 // import units from './units';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
   items: [
+    banners,
     dashboard,
     management,
     companies,
@@ -42,6 +44,7 @@ const menuItems = {
     units,
     exchange,
     auctions,
+    contact,
     leads,
     agents,
     users,
