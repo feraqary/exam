@@ -3,6 +3,7 @@ import { Box, Grid } from '@mui/material';
 
 // project imports
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import 'react-toastify/dist/ReactToastify.css';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
@@ -14,8 +15,7 @@ import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
 import { createCompanyType } from 'store/slices/company-section/action/company';
-import Lottie from 'react-lottie';
-import animationData from '../../components/assets/JSON/98194-loading.JSON';
+import { ToastContainer } from 'react-toastify';
 
 const roles = [
   { label: 'Broker Company', id: 1 },
@@ -25,36 +25,14 @@ const roles = [
 
 // ==============================|| Add Company Type form ||============================== //
 
-const LoaderComponent = () => {
-  return (
-    <Grid
-      item
-      sx={{
-        height: '100vh',
-        width: '100vw',
-        background: 'white',
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: '2000',
-        backdropFilter: 'blur(20px)',
-        opacity: '0.5'
-      }}
-    >
-      <Lottie options={{ animationData: animationData }} height={200} width={200} />
-    </Grid>
-  );
-};
-
 function CompanyType() {
   const [companyType, setCompanyType] = useState(null);
   const [companyName, setCompanyName] = useState(null);
   const [description, setDescription] = useState(null);
   const [logoImage, setLogoImage] = useState(null);
   const [iconImage, setIconImage] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [iconPreview, setIconPreview] = useState(null);
 
   const logoRef = useRef(null);
   const iconRef = useRef(null);
@@ -72,6 +50,8 @@ function CompanyType() {
     setDescription('');
     setLogoImage(null);
     setIconImage(null);
+    setLogoPreview(null);
+    setIconPreview(null);
 
     if (logoRef.current) {
       logoRef.current.value = null;
@@ -83,22 +63,20 @@ function CompanyType() {
 
   const submitForm = () => {
     const formData = new FormData();
-    formData.append('main_company_type_id', companyType.id);
+    formData.append('main_company_type_id', companyType?.id);
     formData.append('title', companyName);
     formData.append('image_url', logoImage);
     formData.append('icon_url', iconImage);
     formData.append('description', description);
     dispatch(createCompanyType(formData));
+    clearFields();
   };
-
-  // if (loading) return <Lottie options={{ animationData: animationData }} height={200} width={200} />;
 
   return (
     <Page title="Add Company Types">
+      <ToastContainer />
       <Grid container spacing={gridSpacing}>
         <Container title="Add Company Type" style={{ xs: 12 }}>
-          {loading && <LoaderComponent />}
-
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
             <AutoCompleteSelector
               style={{ xs: 12, lg: 8 }}
@@ -143,6 +121,8 @@ function CompanyType() {
               image={{ alt: 'Logo Preview', width: '250px', height: '250px' }}
               setValue={setLogoImage}
               ref={logoRef}
+              imagePreview={logoPreview}
+              setImagePreview={setLogoPreview}
             />
             <FileUpload
               label="Upload Icon"
@@ -153,6 +133,8 @@ function CompanyType() {
               image={{ alt: 'Icon Preview', width: '250px', height: '250px' }}
               setValue={setIconImage}
               ref={iconRef}
+              imagePreview={iconPreview}
+              setImagePreview={setIconPreview}
             />
           </Grid>
         </Container>

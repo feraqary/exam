@@ -24,11 +24,10 @@ const leads = {
   children: [
     {
       id: 'add-leads',
-      title: <FormattedMessage id="Add Contact" />,
+      title: <FormattedMessage id="Add Leads" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/leads/add_leads'
-
     },
     {
       id: 'manage-leads',
@@ -36,7 +35,6 @@ const leads = {
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/leads/manage_leads'
-
     },
     {
       id: 'requests',
@@ -48,15 +46,13 @@ const leads = {
           id: 'video-requests',
           title: <FormattedMessage id="Video Requests" />,
           type: 'item',
-          url: '/leads/request_video',
-          breadcrumbs: false
+          url: '/leads/request_video'
         },
         {
           id: 'general-requests',
           title: <FormattedMessage id="General Requests" />,
           type: 'item',
-          url: '/leads/general_request',
-          breadcrumbs: false
+          url: '/leads/general_request'
         }
       ]
     },
@@ -65,7 +61,7 @@ const leads = {
       title: <FormattedMessage id="View Schedules" />,
       type: 'item',
       icon: icons.IconForms,
-      url: "/leads/schedule_viewing"
+      url: '/leads/schedule_viewing'
     }
   ]
 };

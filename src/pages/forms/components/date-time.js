@@ -9,7 +9,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
-import CustomDateTime from 'components/forms/components/DateTime/CustomDateTime';
+// import CustomDateTime from 'components/forms/components/DateTime/CustomDateTime';
 import MainCard from 'components/ui-component/cards/MainCard';
 import SubCard from 'components/ui-component/cards/SubCard';
 import SecondaryAction from 'components/ui-component/cards/CardSecondaryAction';
@@ -54,9 +54,7 @@ const DateTime = () => {
             </SubCard>
           </Grid>
           <Grid item xs={12} md={6}>
-            <SubCard title="Mobile Mode">
-              <CustomDateTime />
-            </SubCard>
+            <SubCard title="Mobile Mode">{/* <CustomDateTime /> */}</SubCard>
           </Grid>
         </Grid>
       </MainCard>
