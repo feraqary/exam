@@ -19,11 +19,17 @@ import Container from 'components/Elements/Container';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import Success from 'components/Elements/Success';
 
 const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 
 // ==============================|| Add Company Type form ||============================== //
 function MainService() {
+  const [logoImage, setLogoImage] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [iconImage, setIconImage] = useState(null);
+  const [iconPreview, setIconPreview] = useState(null);
+
   const dispatch = useDispatch();
   const { companies, loading, error, company } = useSelector((state) => state.companies);
 
@@ -32,7 +38,6 @@ function MainService() {
   }, [dispatch]);
 
   const handleCompanyTypeChanage = (newValue) => {
-    // console.log(newValue);
     dispatch(setCompany(newValue));
   };
 
@@ -90,6 +95,7 @@ function MainService() {
           </Grid>
         </Container>
         <SubmitButton />
+        <Success />
       </Grid>
     </Page>
   );
