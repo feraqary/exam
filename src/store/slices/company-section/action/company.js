@@ -34,6 +34,19 @@ export const getAllMainServices = createAsyncThunk('company/getAllMainServices',
   }
 });
 
+export const getMainServices = createAsyncThunk('service/getMainServiceById', async (company_id, { rejectWithValue }) => {
+  try {
+    if (!company_id) {
+      return [];
+    }
+    const response = await api.get(`${baseurl}/api/services/getmainservice/${company_id}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.error);
+  }
+});
+
 
 export const createCompany = createAsyncThunk('company/createCompany', async (formData, { rejectWithValue }) => {
   try {

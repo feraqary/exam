@@ -28,9 +28,22 @@ import CompanyServices from 'components/Data/company_types_data/fetch_company_ty
 import { useEffect } from 'react';
 import { setCity, setCountry } from 'store/slices/country-section/slice/country';
 import { setState } from 'store/slices/country-section/slice/country';
+import { setMainService, setCompany, getMainServices } from 'store/slices/company-section/slice/company';
+
+
 
 // ==============================|| FIELDS ||============================== //
-const options = ['Real Estate Broker Company', 'Real Estate Developer Company', 'Service Company'];
+// const options = ['Real Estate Broker Company', 'Real Estate Developer Company', 'Service Company'];
+
+
+
+
+const CompanyType = [
+  {label:'Real Estate Broker Company', id:1},
+  {label:'Real Estate Developer Company', id:2},
+  {label:'Service Company', id:3}
+]
+
 const fetchCompanyServices = CompanyServices;
 // ==============================|| Add Company form ||============================== //
 function ColumnsLayouts() {
@@ -41,6 +54,22 @@ function ColumnsLayouts() {
   const [companyType, setCompanyType] = useState(null);
   const [serviceType, setServiceType] = useState(null);
   const [subServiceType, setSubServiceType] = useState(null);
+
+  const [companyName, setcompanyName] = useState(null);
+  const [companyTagline, setcompanyTagline] = useState(null);
+  const [reraNo,setreraNo] = useState(null);
+  const [lisenceNo,setlisenceNo] = useState(null);
+  const [uploadLisence, setuploadLisence] = useState(null);
+  const [lisenceExpiry,setlisenceExpiry] = useState(null);
+  const [vatNumber,setvatNumber] = useState(null);
+  const [vatStatus,setvatStatus] = useState(null);
+  const [vat,setvat] = useState(null);
+
+
+  const [address, setAddress] = useState('Abu Dhabi');
+  // const [Countrytomap, setCountry] = useState('');
+  // const [Statetomap, setState] = useState('');
+
 
   useEffect(() => {
     dispatch(getCountries());
@@ -58,31 +87,35 @@ function ColumnsLayouts() {
     dispatch(setState(newValue));
     dispatch(setCity(null));
   };
-
   const cityChange = (newValue) => {
     dispatch(setCity(newValue));
   };
+
+  const companyTypeChange = (newValue) => {
+    dispatch(setCompany(newValue));
+    dispatch(getMainServices(companyType?.id))
+    dispatch(setMainService(companyType))
+  }
+  
   const onSubmit = () => {
     dispatch(setCity(newValue));
-  };
-
-  const [address, setAddress] = useState('Abu Dhabi');
-  const [Countrytomap, setCountry] = useState('');
-  const [Statetomap, setState] = useState('');
+  }
+  
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
       <Page title="Add Company">
         <Grid container spacing={gridSpacing}>
-          <Container title="Add Compnay Details" style={{ xs: 12 }}>
+          <Container title="Add Company Details" style={{ xs: 12 }}>
             <AutoCompleteSelector
               style={{ xs: 12, lg: 10, mb: 2 }}
               label="Select Company Type"
               id="companyType"
-              options={options}
+              options={CompanyType}
               placeholder="Select Company Type"
               value={companyType}
               setValue={setCompanyType}
+              func={companyTypeChange}
             />
 
             <AutoCompleteSelector
@@ -167,11 +200,11 @@ function ColumnsLayouts() {
           </Container>
           <Container title="Add Billing Information" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
-              {/* <AutoCompleteSelector
+              <AutoCompleteSelector
                 style={{ xs: 12, lg: 6, mb: 2 }}
                 label="Countries"
                 id="country-selector"
-                options={countries.map((country) => {
+                options={countries?.map((country) => {
                   return { label: country.Country, id: country.ID };
                 })}
                 placeholder="Select a Country"
@@ -180,7 +213,7 @@ function ColumnsLayouts() {
                 helperText="Please select a country"
                 loading={loading}
                 func={countryChange}
-              /> */}
+              />
 
               <AutoCompleteSelector
                 style={{ xs: 12, lg: 6, mb: 2 }}
@@ -198,6 +231,7 @@ function ColumnsLayouts() {
                 loading={loading}
                 func={stateChange}
               />
+
               <AutoCompleteSelector
                 style={{ xs: 12, lg: 6, mb: 2 }}
                 label="Cites"
@@ -269,9 +303,7 @@ function ColumnsLayouts() {
                     <MapAutocomplete placeHolder onChangeAddress={setAddress} country={setCountry} state={setState} value="uae" />
                     <FormHelperText>Please enter place address</FormHelperText>
                   </Grid>
-                  <Grid item xs={12} lg={12}>
-                    <Map locationAddress={address} />
-                  </Grid>
+                    <Map locationAddress={address}  xs={12} lg={12}/>
                 </Grid>
               </Grid>
             </Container>

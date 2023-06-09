@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createCompanyType, getAllCompanyTypes, getAllMainServices, createCompany } from '../action/company';
+import { createCompanyType, getAllCompanyTypes, getAllMainServices, createCompany, getMainServices } from '../action/company';
 import { toast } from 'react-toastify';
 
 
@@ -62,7 +62,7 @@ const slice = createSlice({
           theme: 'dark'
         });
       })
-
+      // get all company types=================================================================================================
       .addCase(getAllCompanyTypes.pending, (state) => {
         state.loading = true;
         state.companies = [];
@@ -78,7 +78,7 @@ const slice = createSlice({
         state.error = action.error;
         state.companies = [];
       })
-
+      // get all main services=================================================================================================
       .addCase(getAllMainServices.pending, (state) => {
         state.loading = true;
         state.mainServices = [];
@@ -94,9 +94,26 @@ const slice = createSlice({
         state.error = action.error;
         state.mainServices = [];
       })
+      // get main services=================================================================================================
+      .addCase(getMainServices.pending, (state) => {
+        console.log(state)
+        state.loading = true;
+        state.mainService = [];
+        state.error = null;
+      })
+      .addCase(getMainServices.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.mainService = action.payload.data;
+      })
+      .addCase(getMainServices.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+        state.mainService = [];
+      })
 
 
-      // create company
+
       .addCase(createCompany.pending, (state) => {
         state.loading = true;
         state.companies = [];

@@ -8,6 +8,9 @@ import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import { useState } from 'react';
+import MapAutocomplete from 'components/map/maps-autocomplete';
+import { LoadScript } from '@react-google-maps/api';
+import Map from 'components/map/google-map';
 
 //assets
 import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
@@ -22,12 +25,15 @@ const cities = ['UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
 function AddProject() {
   // this is aglobal handle change that requires both value and of the input its used in to return an object with name: value
   const [globalValues, setGlobalValues] = useState({});
-  const [country, setCountry] = useState(null);
   const [city, setCity] = useState(null);
   const [developerCompany, setDeveloperCompany] = useState(null);
   const [subDeveloperCompany, setSubDeveloperCompany] = useState(null);
   const [long, setlong] = useState(null);
   const [lat, setlat] = useState(null);
+  
+  const [address, setAddress] = useState('Abu Dhabi');
+  const [country, setCountry] = useState('');
+  const [state, setState] = useState('');
 
   const handleGlobalChange = ({ target: { name, value } }) => {
     setGlobalValues((values) => {
@@ -35,20 +41,12 @@ function AddProject() {
     });
   };
 
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y'
-  });
 
-  const defaultMapProps = {
-    center: {
-      lat: 24.499947,
-      lng: 54.404524
-    },
-    zoom: 13
-  };
+
 
   return (
-    <Page title="Add Project">
+    <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
+      <Page title="Add Project">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <MainCard title="Project details">
@@ -125,7 +123,7 @@ function AddProject() {
               />
               <InputText
                 style={{ xs: 12, lg: 6 }}
-                label="Address"
+                label="Map URL"
                 placeholder="Address"
                 helperText="Please enter the location address"
                 type="text"
@@ -142,13 +140,11 @@ function AddProject() {
                 id="location-details-state"
               />
 
-              <InputText
-                label="Place"
-                style={{ xs: 12, lg: 6 }}
-                placeholder="Place"
-                type="text"
-                helperText="Place the enter location's place"
-              />
+                <Grid item xs={12} lg={6}>
+                  <InputLabel required>Place</InputLabel>
+                  <MapAutocomplete placeHolder onChangeAddress={setAddress} country={setCountry} state={setState} value="uae" />
+                  <FormHelperText>Please enter place address</FormHelperText>
+                </Grid>
 
               <Grid item xs={12} lg={6}>
                 <AutoCompleteSelector
@@ -197,30 +193,9 @@ function AddProject() {
                 />
               </Grid>
 
-              <Grid item xs={12} lg={6} style={{ height: '100%' }} rowSpan={4}>
-                {/* API Key for google map
-                      AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y */}
-
-                {/* //!fix the height*/}
-                {!isLoaded ? (
-                  <div>loading....</div>
-                ) : (
-                  <>
-                    <GoogleMap
-                      bootstrapURLKeys={{
-                        key: 'YOUR_API_KEY',
-                        language: 'en'
-                      }}
-                      style={{ height: '43vh' }}
-                      mapContainerStyle={{ position: 'relative', height: '40vh', width: '100%' }}
-                      center={lat != null || long != null ? { lat: lat, lng: long } : { lat: 24.4984312, lng: 54.4036975 }}
-                      zoom={13}
-                    >
-                      <Marker position={lat != null || long != null ? { lat: lat, lng: long } : { lat: 24.4984312, lng: 54.4036975 }} />
-                    </GoogleMap>
-                  </>
-                )}
-              </Grid>
+              {/* <Grid item xs={12} lg={6}> */}
+                <Map locationAddress={address} xs={12} lg={6}/>
+              {/* </Grid> */}
             </Grid>
           </MainCard>
         </Grid>
@@ -376,7 +351,8 @@ function AddProject() {
         </Grid>
       </Grid>
     </Page>
-  );
+    </LoadScript>
+  )
 }
 
 AddProject.getLayout = function getLayout(page) {
