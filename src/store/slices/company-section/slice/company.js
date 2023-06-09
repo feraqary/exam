@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createCompanyType, getAllCompanyTypes, getAllMainServices } from '../action/company';
+import { createCompanyType, getAllCompanyTypes, getAllMainServices, createCompany } from '../action/company';
 
 const initialState = {
   services: [],
@@ -21,7 +21,7 @@ const slice = createSlice({
     },
     setMainService: (state, action) => {
       state.mainService = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -71,7 +71,25 @@ const slice = createSlice({
         state.loading = false;
         state.error = action.error;
         state.mainServices = [];
-      });
+      })
+
+
+      // create company
+      .addCase(createCompany.pending, (state) => {
+        state.loading = true;
+        state.companies = [];
+        state.error = null;
+      })
+      .addCase(createCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.companies = [...state.companies, action.payload.data];
+      })
+      .addCase(createCompany.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+        state.companies = [];
+      })
   }
 });
 

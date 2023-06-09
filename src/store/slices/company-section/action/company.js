@@ -33,3 +33,14 @@ export const getAllMainServices = createAsyncThunk('company/getAllMainServices',
     return rejectWithValue(error);
   }
 });
+
+
+export const createCompany = createAsyncThunk('company/createCompany', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await api.post(`${baseurl}/api/services/createCompany`,formData, config);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return rejectWithValue(error);
+  }
+});
