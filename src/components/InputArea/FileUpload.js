@@ -9,9 +9,7 @@ import { UploadFile } from '@mui/icons-material';
 import InputLayout from './InputLayout';
 import { forwardRef } from 'react';
 
-const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, style, setValue }, ref) => {
-  const [imagePreview, setImagePreview] = useState(null);
-
+const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, style, setValue, imagePreview, setImagePreview }, ref) => {
   const handleImagePreview = (e) => {
     setImagePreview(URL.createObjectURL(e.target.files[0]));
   };

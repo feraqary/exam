@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createCompanyType, getAllCompanyTypes, getAllMainServices, createCompany } from '../action/company';
+import { toast } from 'react-toastify';
+
 
 const initialState = {
   services: [],
@@ -34,11 +36,31 @@ const slice = createSlice({
         state.loading = false;
         state.error = null;
         state.companies = [...state.companies, action.payload.data];
+        toast.success('Added Successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark'
+        });
       })
       .addCase(createCompanyType.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error;
         state.companies = [];
+        toast.error('Something went Wrong', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark'
+        });
       })
 
       .addCase(getAllCompanyTypes.pending, (state) => {

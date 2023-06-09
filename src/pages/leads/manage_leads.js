@@ -6,20 +6,15 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
-import ApexPieChart from 'components/forms/chart/Apexchart/ApexPieChart';
 
 // ==============================|| Manage Leads Requests||============================== //
 function ManageLeads() {
   return (
     <Page title="Manage Leads">
       <Grid container spacing={gridSpacing}>
-      <Grid item xs={12} md={6} lg={6}>
-        <MainCard title="Relative Leads Per Listing">
-          <ApexPieChart />
-        </MainCard>
-      </Grid>
-     
-      
+        <Grid item xs={12} md={6} lg={6}>
+          <MainCard title="Relative Leads Per Listing"></MainCard>
+        </Grid>
       </Grid>
     </Page>
   );
