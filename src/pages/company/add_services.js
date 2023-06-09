@@ -5,23 +5,33 @@ import { Grid } from '@mui/material';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
-import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
 // assets
 import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
-import { getAllMainServices } from 'store/slices/company-section/action/company';
+import { createService, getAllMainServices } from 'store/slices/company-section/action/company';
 import { setMainService } from 'store/slices/company-section/slice/company';
+import { ToastContainer } from 'react-toastify';
 const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 
 // ==============================|| Add Company Type form ||============================== //
 function Service() {
-  const [companyType, setCompanyType] = useState(null);
   const dispatch = useDispatch();
+  const [service, setService] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [logoImage, setLogoImage] = useState(null);
+  const [iconImage, setIconImage] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [iconPreview, setIconPreview] = useState(null);
+
+  const logoRef = useRef(null);
+  const iconRef = useRef(null);
+
   const { mainServices, loading, error, mainService } = useSelector((state) => state.companies);
 
   useEffect(() => {
@@ -32,9 +42,40 @@ function Service() {
     dispatch(setMainService(newValue));
   };
 
+  const clearFields = () => {
+    dispatch(setMainService(null));
+    setService('');
+    setDescription('');
+    setLogoImage(null);
+    setIconImage(null);
+    setLogoPreview(null);
+    setIconPreview(null);
+
+    if (logoRef.current) {
+      logoRef.current.value = null;
+    }
+    if (iconRef.current) {
+      iconRef.current.value = null;
+    }
+  };
+
+  const submitForm = () => {
+    const formData = new FormData();
+    formData.append('title', service);
+    formData.append('main_services_id', mainService?.id);
+    formData.append('description', description);
+    formData.append('icon_url', logoImage);
+    formData.append('image_url', iconImage);
+    dispatch(createService(formData));
+    if (!error) {
+      clearFields();
+    }
+  };
+
   return (
     <Page title="Add Sub Services">
       <Grid container spacing={gridSpacing}>
+        <ToastContainer />
         <Container title="Add Sub Services" style={{ xs: 12 }}>
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
             <AutoCompleteSelector
@@ -46,7 +87,6 @@ function Service() {
               })}
               id="compnType"
               value={mainService}
-              setValue={setCompanyType}
               helperText="Please select a main service"
               func={handleMainServiceChange}
             />
@@ -57,6 +97,8 @@ function Service() {
               helperText="Please enter service name"
               style={{ xs: 12, lg: 8 }}
               type="text"
+              value={service}
+              setValue={setService}
             />
             <InputText
               label="Description"
@@ -66,6 +108,8 @@ function Service() {
               multiline
               rows={5}
               id="outlined-multiline-flexible"
+              value={description}
+              setValue={setDescription}
             />
 
             <FileUpload
@@ -75,6 +119,10 @@ function Service() {
               type="file"
               helperText="Please upload your logo"
               image={{ alt: 'Logo Preview', width: '250px', height: '250px' }}
+              ref={logoRef}
+              imagePreview={logoPreview}
+              setImagePreview={setLogoPreview}
+              setValue={setLogoImage}
             />
             <FileUpload
               label="Upload Icon"
@@ -83,10 +131,14 @@ function Service() {
               type="file"
               helperText="Please upload your Icon"
               image={{ alt: 'Icon Preview', width: '250px', height: '250px' }}
+              ref={iconRef}
+              imagePreview={iconPreview}
+              setImagePreview={setIconPreview}
+              setValue={setIconImage}
             />
           </Grid>
         </Container>
-        <SubmitButton />
+        <SubmitButton submit={submitForm} clear={clearFields} />
       </Grid>
     </Page>
   );

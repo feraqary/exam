@@ -12,7 +12,6 @@ import Map from 'components/map/google-map';
 import MapAutocomplete from 'components/map/maps-autocomplete';
 import { LoadScript } from '@react-google-maps/api';
 
-
 // redux actions import
 
 import { getCountries, getStates, getCities } from 'store/slices/country-section/actions/countries';
@@ -34,8 +33,6 @@ const options = ['Real Estate Broker Company', 'Real Estate Developer Company', 
 const fetchCompanyServices = CompanyServices;
 // ==============================|| Add Company form ||============================== //
 function ColumnsLayouts() {
-
-
   const theme = useTheme();
   const dispatch = useDispatch();
   const [companyType, setCompanyType] = useState(null);
@@ -67,8 +64,6 @@ function ColumnsLayouts() {
   };
 
   const [address, setAddress] = useState('Abu Dhabi');
-  const [Countrytomap, setCountry] = useState('');
-  const [Statetomap, setState] = useState('');
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
@@ -167,11 +162,11 @@ function ColumnsLayouts() {
           </Container>
           <Container title="Add Billing Information" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
-              {/* <AutoCompleteSelector
+              <AutoCompleteSelector
                 style={{ xs: 12, lg: 6, mb: 2 }}
                 label="Countries"
                 id="country-selector"
-                options={countries.map((country) => {
+                options={countries?.map((country) => {
                   return { label: country.Country, id: country.ID };
                 })}
                 placeholder="Select a Country"
@@ -180,7 +175,7 @@ function ColumnsLayouts() {
                 helperText="Please select a country"
                 loading={loading}
                 func={countryChange}
-              /> */}
+              />
 
               <AutoCompleteSelector
                 style={{ xs: 12, lg: 6, mb: 2 }}
@@ -247,36 +242,33 @@ function ColumnsLayouts() {
 
           <Container title="Company Presentation" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
-                <Grid container spacing={2} alignItems="center">
-
-
-                  <InputText
-                    label="Google Map Link"
-                    placeholder="Google Map URL"
-                    helperText="Please enter Google Map URL for Company Location"
-                    // InputProps={{
-                    //   endAdornment: (
-                    //     <InputAdornment position="end">
-                    //       <LinkTwoToneIcon />
-                    //     </InputAdornment>
-                    //   )
-                    // }}
-                    type="text"
-                    style={{ xs: 12, lg: 6 }}
-                  />
-                  <Grid item xs={12} lg={6}>
-                    <InputLabel required>Place</InputLabel>
-                    <MapAutocomplete placeHolder onChangeAddress={setAddress} country={setCountry} state={setState} value="uae" />
-                    <FormHelperText>Please enter place address</FormHelperText>
-                  </Grid>
-                  <Grid item xs={12} lg={12}>
-                    <Map locationAddress={address} />
-                  </Grid>
+              <Grid container spacing={2} alignItems="center">
+                <InputText
+                  label="Google Map Link"
+                  placeholder="Google Map URL"
+                  helperText="Please enter Google Map URL for Company Location"
+                  // InputProps={{
+                  //   endAdornment: (
+                  //     <InputAdornment position="end">
+                  //       <LinkTwoToneIcon />
+                  //     </InputAdornment>
+                  //   )
+                  // }}
+                  type="text"
+                  style={{ xs: 12, lg: 6 }}
+                />
+                <Grid item xs={12} lg={6}>
+                  <InputLabel required>Place</InputLabel>
+                  <MapAutocomplete placeHolder onChangeAddress={setAddress} country={setCountry} state={setState} value="uae" />
+                  <FormHelperText>Please enter place address</FormHelperText>
+                </Grid>
+                <Grid item xs={12} lg={12}>
+                  <Map locationAddress={address} />
                 </Grid>
               </Grid>
-            </Container>
+            </Grid>
+          </Container>
 
-          
           <Container title="Company Presentation" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
               <InputText
