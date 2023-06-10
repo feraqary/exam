@@ -7,13 +7,14 @@ import {
   createCompany,
   createMainService,
   createService,
-  getMainServices
 } from '../action/company';
 
 import { toast } from 'react-toastify';
 
 const initialState = {
   companies: [],
+  localCompanies: [],
+  internationalCompanies: [],
   companyTypes: [],
   mainServices: [],
   services: [],
@@ -63,9 +64,9 @@ const slice = createSlice({
       })
       .addCase(createCompanyType.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error;
+        state.error = action.payload.error;
         state.companyTypes = state.companyTypes;
-        toast.error('Something went Wrong', {
+        toast.error(`${state.error}`, {
           position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
@@ -89,7 +90,7 @@ const slice = createSlice({
       })
       .addCase(getAllCompanyTypes.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error;
+        state.error = action.payload.error;
         state.companyTypes = [];
       })
 
@@ -119,8 +120,8 @@ const slice = createSlice({
       .addCase(createMainService.rejected, (state, action) => {
         state.loading = false;
         state.mainServices = state.mainServices;
-        state.error = action.error;
-        toast.error('Something went Wrong', {
+        state.error = action.payload.error;
+        toast.error(`${state.error}`, {
           position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
@@ -144,7 +145,7 @@ const slice = createSlice({
       })
       .addCase(getAllMainServices.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error;
+        state.error = action.payload.error;
         state.mainServices = [];
       })
       // get main services=================================================================================================
@@ -177,7 +178,7 @@ const slice = createSlice({
       })
       .addCase(createCompany.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error;
+        state.error = action.payload.error;
         state.companies = [];
       })
       // create service
@@ -206,9 +207,9 @@ const slice = createSlice({
 
       .addCase(createService.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error;
+        state.error = action.payload.error;
         state.services = state.services;
-        toast.error('Something went Wrong', {
+        toast.error(`${state.error}`, {
           position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
@@ -218,6 +219,38 @@ const slice = createSlice({
           progress: undefined,
           theme: 'dark'
         });
+      })
+
+      .addCase(getLocalCompanies.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.localCompanies = state.localCompanies;
+      })
+      .addCase(getLocalCompanies.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.localCompanies = [...state.localCompanies, action.payload.data];
+      })
+      .addCase(getLocalCompanies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
+        state.localCompanies = state.localCompanies;
+      })
+
+      .addCase(getInternationalCompanies.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.localCompanies = state.localCompanies;
+      })
+      .addCase(getInternationalCompanies.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.internationalCompanies = [...state.internationalCompanies, action.payload.data];
+      })
+      .addCase(getInternationalCompanies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
+        state.internationalCompanies = state.internationalCompanies;
       });
   }
 });

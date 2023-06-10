@@ -76,3 +76,21 @@ export const createService = createAsyncThunk('company/createService', async (fo
     return rejectWithValue(error);
   }
 });
+
+export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getLocalCompanies?page_no=1&page_size=10&country=uae`);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
+
+export const getInternationalCompanies = createAsyncThunk('company/getInternationalCompanies', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=10&country=uae`);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});

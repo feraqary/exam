@@ -12,6 +12,9 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { AqaryButton } from 'components/Elements/AqaryButton';
+import { useEffect } from 'react';
+import { getLocalCompanies } from 'store/slices/company-section/action/company';
+import { useDispatch } from 'react-redux';
 
 // ===========================|| International Company Managment list||=========================== //
 
@@ -164,18 +167,24 @@ const ColumnHeaders = [
   }
 ];
 
-const IntCompData = () => (
-  <Page title="Local Company List">
-    <Grid container spacing={gridSpacing}>
-      <Grid item xs={12}>
-        <Table columnHeaders={ColumnHeaders} data={data} />
+const localCompanies = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getLocalCompanies());
+  }, []);
+  return (
+    <Page title="Local Company List">
+      <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Table columnHeaders={ColumnHeaders} data={data} />
+        </Grid>
       </Grid>
-    </Grid>
-  </Page>
-);
+    </Page>
+  );
+};
 
-IntCompData.getLayout = function getLayout(page) {
+localCompanies.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default IntCompData;
+export default localCompanies;
