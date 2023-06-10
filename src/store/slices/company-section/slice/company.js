@@ -7,6 +7,9 @@ import {
   createCompany,
   createMainService,
   createService,
+  getLocalCompanies,
+  getInternationalCompanies,
+  getAllServices
 } from '../action/company';
 
 import { toast } from 'react-toastify';
@@ -21,6 +24,66 @@ const initialState = {
   companyType: null,
   service: null,
   company: null,
+  companyInformation: {
+    companyDetails: {
+      companyType: null,
+      subCompanyType: null,
+      mainService: null,
+      service: '',
+      companyName: '',
+      companyTagline: '',
+      reraNo: '',
+      licenseNo: '',
+      licenseImage: '',
+      licenseExpiry: '',
+      vatNo: '',
+      vatStatus: '',
+      vatImage: ''
+    },
+    billingAddressInformation: {
+      country: '',
+      state: '',
+      city: '',
+      community: '',
+      officeAddress: '',
+      billingReference: ''
+    },
+    companyLocation: {
+      mapUrl: '',
+      place: '',
+      state: '',
+      country: '',
+      lat: '',
+      long: ''
+    },
+    socialMedia: {
+      facebook: '',
+      twitter: '',
+      instagram: '',
+      linkedin: ''
+    },
+    adminContactInformation: {
+      firstName: '',
+      lastName: '',
+      emailAddress: '',
+      phoneNumber: '',
+      numberOfEmployees: '',
+      subscriptionDuration: '',
+      subscriptionStartDate: '',
+      subscriptionEndDate: '',
+      profileImage: ''
+    },
+    bankAccountDetails: {
+      accountNumber: '',
+      accountName: '',
+      ibanNumber: '',
+      currency: '',
+      country: '',
+      bankName: '',
+      bankBranch: '',
+      swiftCode: ''
+    }
+  },
   mainService: null,
   loading: false,
   error: null
@@ -38,6 +101,18 @@ const slice = createSlice({
     },
     setCompanyType: (state, action) => {
       state.companyType = action.payload;
+    },
+    setMainCompanyType: (state, action) => {
+      state.companyInformation.companyDetails.companyType = action.payload;
+    },
+    setSubCompanyType: (state, action) => {
+      state.companyInformation.companyDetails.subCompanyType = action.payload;
+    },
+    setCompanyMainService: (state, action) => {
+      state.companyInformation.companyDetails.mainService = action.payload;
+    },
+    setCompanyService: (state, action) => {
+      state.companyInformation.companyDetails.service = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -150,7 +225,7 @@ const slice = createSlice({
       })
       // get main services=================================================================================================
       .addCase(getMainServices.pending, (state) => {
-        console.log(state)
+        console.log(state);
         state.loading = true;
         state.mainService = [];
         state.error = null;
@@ -229,7 +304,7 @@ const slice = createSlice({
       .addCase(getLocalCompanies.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.localCompanies = [...state.localCompanies, action.payload.data];
+        state.localCompanies = [...action.payload.data];
       })
       .addCase(getLocalCompanies.rejected, (state, action) => {
         state.loading = false;
@@ -245,16 +320,40 @@ const slice = createSlice({
       .addCase(getInternationalCompanies.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.internationalCompanies = [...state.internationalCompanies, action.payload.data];
+        state.internationalCompanies = [...action.payload.data];
       })
       .addCase(getInternationalCompanies.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
         state.internationalCompanies = state.internationalCompanies;
+      })
+      .addCase(getAllServices.pending, (state) => {
+        state.loading = true;
+        state.services = state.services;
+        state.error = null;
+      })
+      .addCase(getAllServices.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.loading = false;
+        state.services = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getAllServices.rejected, (state, action) => {
+        state.loading = false;
+        state.services = state.services;
+        state.error = action.payload.error;
       });
   }
 });
 
 export default slice.reducer;
 
-export const { setCompany, setMainService, setCompanyType } = slice.actions;
+export const {
+  setCompany,
+  setMainService,
+  setCompanyType,
+  setMainCompanyType,
+  setSubCompanyType,
+  setCompanyMainService,
+  setCompanyService
+} = slice.actions;

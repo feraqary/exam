@@ -27,6 +27,55 @@ const slice = createSlice({
       state.city = action.payload;
     }
   },
+<<<<<<< HEAD
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCountries.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.countries = state.countries;
+      })
+      .addCase(getCountries.fulfilled, (state, action) => {
+        state.loading = false;
+        state.countries = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getCountries.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.countries = state.countries;
+      })
+      .addCase(getStates.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.states = state.states;
+      })
+      .addCase(getStates.fulfilled, (state, action) => {
+        state.loading = false;
+        state.states = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getStates.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.states = state.states;
+      })
+      .addCase(getCities.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+        state.cities = state.cities;
+      })
+      .addCase(getCities.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cities = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getCities.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.cities = state.cities;
+      });
+=======
 
   
   extraReducers:(builder) => {
@@ -145,6 +194,7 @@ const slice = createSlice({
     })
 
 
+>>>>>>> ff1d668f7f747b9f601b4aa003da52e8329d46b2
   }
 });
 

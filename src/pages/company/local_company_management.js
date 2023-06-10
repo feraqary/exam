@@ -15,123 +15,66 @@ import { AqaryButton } from 'components/Elements/AqaryButton';
 import { useEffect } from 'react';
 import { getLocalCompanies } from 'store/slices/company-section/action/company';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // ===========================|| International Company Managment list||=========================== //
 
-const data = [
-  {
-    si_num: '1',
-    name: {
-      companyName: 'Khidmah',
-      companyLogo: '/assets/images/company_logo/logo1.png'
-    },
-    companyType: 'Developer Company',
-    state: 'ABU DHABI',
-    country: 'UAE',
-    regId: 'PA2831023',
-    contactPerson: 'Jamie',
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    addedBy: 'Lannisters',
-    subsDate: '2-12-2023',
-    documents: ' uploaded',
-    action: ' edit, multiple',
-    feature: 'Standard',
-    reference: 'Marketing User',
-    subscriptionDate: '2-12-2023'
-  },
-  {
-    si_num: '2',
-    name: {
-      companyName: 'Forum',
-      companyLogo: '/assets/images/company_logo/logo2.png'
-    },
-    companyType: '261 Erdman Ford',
-    state: 'OHIO',
-    country: 'US',
-    regId: 'PA2831023',
-    contactPerson: 'Cercie',
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    addedBy: 'Lannisters',
-    subsDate: '2-12-2023',
-    documents: ' uploaded',
-    action: ' edit, multiple',
-    feature: 'Premium',
-    reference: 'Marketing User',
-    subscriptionDate: '2-12-2023'
-  }
-];
-
 const ColumnHeaders = [
   {
-    accessorKey: 'si_num',
-    header: 'SI Number'
-  },
-  {
-    accessorKey: 'feature',
-    header: 'Featured',
-    Cell: ({ renderedCellValue, row }) => <Chip label={row.original.feature} color="primary" variant="outlined" />
-  },
-  {
-    accessorKey: 'name.companyName',
+    accessorKey: 'CompanyName',
     header: 'Company Name'
   },
   {
-    accessorKey: 'name.companyLogo',
+    accessorKey: 'companyLogo',
     header: 'Company Logo',
-    Cell: ({ renderedCellValue, row }) => (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem'
-        }}
-      >
-        <Image src={row.original.name.companyLogo} width={60} height={30} />
-      </Box>
-    )
+    Cell: ({ renderedCellValue, row }) => {
+      return (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem'
+          }}
+        >
+          <Image src={`http://20.203.31.58/upload/${row.original.CompanyLogo}`} width={60} height={30} />
+        </Box>
+      );
+    }
   },
   {
-    accessorKey: 'regId',
-    header: ' Registration ID '
+    accessorKey: 'LicenseNO',
+    header: 'Liscense Number'
   },
   {
-    accessorKey: 'state',
+    accessorKey: 'State',
     header: ' State '
   },
   {
-    accessorKey: 'companyType',
+    accessorKey: 'CompanyType',
     header: ' Company Type'
   },
   {
-    accessorKey: 'country',
+    accessorKey: 'Country',
     header: ' Country'
   },
   {
-    accessorKey: 'contactPerson',
-    header: ' Contact Person'
-  },
-  {
-    accessorKey: 'subsDate',
+    accessorKey: 'SubscriptionStartDate',
     header: ' Subscription Date'
   },
 
   {
-    accessorKey: 'addedBy',
+    accessorKey: 'AddedBy',
     header: 'Added By'
   },
   {
-    accessorKey: 'contactPerson',
+    accessorKey: 'ContactPerson',
     header: 'Contact Person'
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'Email',
     header: 'Email'
   },
-  { accessorKey: 'phone', header: 'Phone' },
-  { accessorKey: 'reference', header: 'Reference' },
-  { accessorKey: 'subscriptionDate', header: 'Subscription Date' },
+  { accessorKey: 'Phone', header: 'Phone' },
   {
     accessorKey: 'action',
     header: 'Action',
@@ -169,6 +112,7 @@ const ColumnHeaders = [
 
 const localCompanies = () => {
   const dispatch = useDispatch();
+  const { loading, error, localCompanies } = useSelector((state) => state.companies);
   useEffect(() => {
     dispatch(getLocalCompanies());
   }, []);
@@ -176,7 +120,7 @@ const localCompanies = () => {
     <Page title="Local Company List">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table columnHeaders={ColumnHeaders} data={localCompanies} loading={loading} />
         </Grid>
       </Grid>
     </Page>

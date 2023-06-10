@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, Alert, InputLabel, FormHelperText } from '@mui/material';
+import { Grid, Alert } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -27,6 +27,23 @@ import CompanyServices from 'components/Data/company_types_data/fetch_company_ty
 import { useEffect } from 'react';
 import { setCity, setCountry } from 'store/slices/country-section/slice/country';
 import { setState } from 'store/slices/country-section/slice/country';
+<<<<<<< HEAD
+import InputLayout from 'components/InputArea/InputLayout';
+import {
+  setCompanyMainService,
+  setCompanyService,
+  setMainCompanyType,
+  setSubCompanyType
+} from 'store/slices/company-section/slice/company';
+import { getAllCompanyTypes, getAllMainServices, getAllServices } from 'store/slices/company-section/action/company';
+
+// ==============================|| FIELDS ||============================== //
+const options = [
+  { label: 'Real Estate Broker Company', id: 1 },
+  { label: 'Real Estate Developer Company', id: 2 },
+  { label: 'Service Company', id: 3 }
+];
+=======
 import { setMainService, setCompany, getMainServices } from 'store/slices/company-section/slice/company';
 
 
@@ -43,14 +60,12 @@ const CompanyType = [
   {label:'Service Company', id:3}
 ]
 
+>>>>>>> ff1d668f7f747b9f601b4aa003da52e8329d46b2
 const fetchCompanyServices = CompanyServices;
 // ==============================|| Add Company form ||============================== //
 function ColumnsLayouts() {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [companyType, setCompanyType] = useState(null);
-  const [serviceType, setServiceType] = useState(null);
-  const [subServiceType, setSubServiceType] = useState(null);
 
   const [companyName, setcompanyName] = useState(null);
   const [companyTagline, setcompanyTagline] = useState(null);
@@ -73,12 +88,21 @@ function ColumnsLayouts() {
   }, [dispatch]);
 
   const { countries, error, loading, states, country, state, city, cities } = useSelector((state) => state.countries);
+  const {
+    companyInformation,
+    error: companyError,
+    loading: companyLoading,
+    companyTypes,
+    mainServices,
+    services
+  } = useSelector((state) => state.companies);
 
   const countryChange = (newValue) => {
     dispatch(setCountry(newValue));
     dispatch(getStates(newValue?.id));
     dispatch(setState(null));
   };
+
   const stateChange = (newValue) => {
     dispatch(getCities(newValue?.id));
     dispatch(setState(newValue));
@@ -87,6 +111,8 @@ function ColumnsLayouts() {
   const cityChange = (newValue) => {
     dispatch(setCity(newValue));
   };
+<<<<<<< HEAD
+=======
 
   const companyTypeChange = (newValue) => {
     dispatch(setCompany(newValue));
@@ -96,6 +122,7 @@ function ColumnsLayouts() {
   
   const onSubmit = () => {
     dispatch(setCity(newValue));
+>>>>>>> ff1d668f7f747b9f601b4aa003da52e8329d46b2
 
   }
 
@@ -104,6 +131,40 @@ function ColumnsLayouts() {
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
       <Page title="Add Company">
         <Grid container spacing={gridSpacing}>
+<<<<<<< HEAD
+          <Container title="Add Compnay Details" style={{ xs: 12 }}>
+            <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
+              <AutoCompleteSelector
+                style={{ xs: 12, lg: 10, mb: 2 }}
+                label="Company Type"
+                id="companyType"
+                options={options}
+                placeholder="Select Company Type"
+                value={companyInformation.companyDetails.companyType}
+                func={(newValue) => {
+                  dispatch(setMainCompanyType(newValue));
+                  dispatch(getAllCompanyTypes(newValue?.id));
+                  dispatch(setSubCompanyType(null));
+                }}
+              />
+              {companyInformation.companyDetails.companyType && (
+                <AutoCompleteSelector
+                  style={{ xs: 12, lg: 10, mb: 2 }}
+                  label="Sub Company Type"
+                  id="subCompanyType"
+                  placeholder="Select Sub Company Type"
+                  options={companyTypes?.map((company) => {
+                    return { label: company.title, ...company };
+                  })}
+                  value={companyInformation.companyDetails.subCompanyType}
+                  func={(newValue) => {
+                    dispatch(setSubCompanyType(newValue));
+                    dispatch(getAllMainServices(newValue?.id));
+                    dispatch(setCompanyMainService(null));
+                  }}
+                />
+              )}
+=======
           <Container title="Add Company Details" style={{ xs: 12 }}>
             <AutoCompleteSelector
               style={{ xs: 12, lg: 10, mb: 2 }}
@@ -115,24 +176,41 @@ function ColumnsLayouts() {
               setValue={setCompanyType}
               func={companyTypeChange}
             />
+>>>>>>> ff1d668f7f747b9f601b4aa003da52e8329d46b2
 
-            <AutoCompleteSelector
-              style={{ xs: 12, lg: 10, mb: 2 }}
-              label="Sub Company Type"
-              id="subCompanyType"
-              options={fetchCompanyServices.map((x) => x.type)}
-              value={serviceType}
-              setValue={setServiceType}
-            />
-
-            <AutoCompleteSelector
-              style={{ xs: 12, lg: 10, mb: 2 }}
-              label="Service Type"
-              id="serviceType"
-              options={fetchCompanyServices.filter((x) => x.type === serviceType).map((x) => x.subTypes)[0]}
-              value={subServiceType}
-              setValue={setSubServiceType}
-            />
+              {companyInformation.companyDetails.subCompanyType && (
+                <AutoCompleteSelector
+                  style={{ xs: 12, lg: 10, mb: 2 }}
+                  label="Main Service Type"
+                  id="mainServiceType"
+                  placeholder="Select Main Service Type"
+                  options={mainServices.map((service) => {
+                    return { label: service.title, ...service };
+                  })}
+                  value={companyInformation.companyDetails.mainService}
+                  func={(newValue) => {
+                    dispatch(setCompanyMainService(newValue));
+                    dispatch(getAllServices(newValue?.id));
+                    dispatch(setCompanyService(null));
+                  }}
+                />
+              )}
+              {companyInformation.companyDetails.mainService && (
+                <AutoCompleteSelector
+                  style={{ xs: 12, lg: 10, mb: 2 }}
+                  label="Service Type"
+                  id="serviceType"
+                  placeholder="Select Service Type"
+                  options={services.map((service) => {
+                    return { label: service.title, ...service };
+                  })}
+                  value={companyInformation.companyDetails.service}
+                  func={(newValue) => {
+                    dispatch(setCompanyService(newValue));
+                  }}
+                />
+              )}
+            </Grid>
 
             <Grid container spacing={2} alignItems="center">
               <InputText
@@ -240,7 +318,6 @@ function ColumnsLayouts() {
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 placeholder="Select a City"
                 value={city}
-                setValue={setCompanyType}
                 disabled={state ? false : true}
                 helperText="Please select a city"
                 loading={loading}
@@ -277,8 +354,23 @@ function ColumnsLayouts() {
             </Grid>
           </Container>
 
-          <Container title="Company Presentation" style={{ xs: 12 }}>
+          <Container title="Company Location" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
+<<<<<<< HEAD
+              <Grid container spacing={2} alignItems="center">
+                <InputText
+                  label="Google Map Link"
+                  placeholder="Google Map URL"
+                  helperText="Please enter Google Map URL for Company Location"
+                  type="text"
+                  style={{ xs: 12, lg: 6 }}
+                />
+                <InputLayout style={{ xs: 12, lg: 6 }} label="Place" helperText="Please enter the address name">
+                  <MapAutocomplete placeHolder onChangeAddress={setAddress} country={setCountry} state={setState} value="uae" />
+                </InputLayout>
+                <Grid item xs={12} lg={12}>
+                  <Map locationAddress={address} />
+=======
                 <Grid container spacing={2} alignItems="center">
 
 
@@ -302,6 +394,7 @@ function ColumnsLayouts() {
                     <FormHelperText>Please enter place address</FormHelperText>
                   </Grid>
                     <Map locationAddress={address}  xs={12} lg={12}/>
+>>>>>>> ff1d668f7f747b9f601b4aa003da52e8329d46b2
                 </Grid>
               </Grid>
           </Container>
