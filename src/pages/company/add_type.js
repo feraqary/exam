@@ -34,6 +34,8 @@ function CompanyType() {
   const [logoPreview, setLogoPreview] = useState(null);
   const [iconPreview, setIconPreview] = useState(null);
 
+  console.log(logoImage);
+
   const logoRef = useRef(null);
   const iconRef = useRef(null);
 

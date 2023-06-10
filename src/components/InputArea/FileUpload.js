@@ -3,7 +3,8 @@ import { Grid, InputAdornment, TextField } from '@mui/material';
 
 // project imports
 import React, { useState } from 'react';
-// import TagsInput from 'react-tagsinput';
+import { toast } from 'react-toastify';
+
 // assets
 import { UploadFile } from '@mui/icons-material';
 import InputLayout from './InputLayout';
@@ -11,12 +12,62 @@ import { forwardRef } from 'react';
 
 const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, style, setValue, imagePreview, setImagePreview }, ref) => {
   const handleImagePreview = (e) => {
-    setImagePreview(URL.createObjectURL(e.target.files[0]));
+    const file = e.target.files[0];
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+    img.onload = () => {
+      const width = img.width;
+      const height = img.height;
+      URL.revokeObjectURL(img.src);
+
+      if (width > 1920 || height > 1080) {
+        setValue(null);
+        toast.error(`image file must be 1920x1080`, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark'
+        });
+      } else if (file.size / 1024 > 10) {
+        setValue(null);
+        toast.error(`file size must not exceed 10MB`, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark'
+        });
+      } else {
+        setImagePreview(URL.createObjectURL(file));
+        setValue(file);
+      }
+    };
   };
 
-  const handleFileUploadChange = (e) => {
-    setValue(e.target.files[0]);
-  };
+  // const handleFileUploadChange = (e) => {
+  //   const file = e.target.files[0];
+  //   const imageSize = file.size / 1024;
+  //   if (imageSize > 10) {
+  //     toast.error(`file size must not exceed 10MB`, {
+  //       position: 'top-right',
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: 'dark'
+  //     });
+  //   }
+  //   setValue(file);
+  // };
 
   return (
     <>
@@ -34,7 +85,7 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, st
           }}
           onChange={(e) => {
             handleImagePreview(e);
-            handleFileUploadChange(e);
+            // handleFileUploadChange(e);
           }}
           inputRef={ref}
         />

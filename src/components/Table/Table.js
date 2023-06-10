@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
 import { MaterialReactTable } from 'material-react-table';
 
-const Table = ({ columnHeaders, data }) => {
-  const columns = useMemo(() => columnHeaders, []);
+const Table = ({ columnHeaders, data, loading }) => {
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <MaterialReactTable
-      columns={columns}
+      columns={columnHeaders}
       data={data}
       enableDensityToggle={false}
       initialState={{ density: 'compact' }}
