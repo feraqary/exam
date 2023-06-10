@@ -277,7 +277,7 @@ const ComingSoon1 = () => {
                           <Grid item xs={12}>
                             <Grid container justifyContent="flex-end" spacing={1}>
                               <Grid item>
-                                <ButtonBase component={Link} href="#" aria-label="blog" target="_blank">
+                                <ButtonBase component={Link} href="https://blog.berrydashboard.io/" aria-label="blog" target="_blank">
                                   <Avatar
                                     sx={{
                                       ...theme.typography.commonAvatar,

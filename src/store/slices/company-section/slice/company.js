@@ -9,7 +9,8 @@ import {
   createService,
   getLocalCompanies,
   getInternationalCompanies,
-  getAllServices
+  getAllServices,
+  getMainServices
 } from '../action/company';
 
 import { toast } from 'react-toastify';
