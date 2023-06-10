@@ -11,7 +11,10 @@ import PersonOutlineTwoToneIcon from '@mui/icons-material/PersonOutlineTwoTone';
 import PanoramaTwoToneIcon from '@mui/icons-material/PanoramaTwoTone';
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import RecentActorsTwoToneIcon from '@mui/icons-material/RecentActorsTwoTone';
+import FeedIcon from '@mui/icons-material/Feed';
+import PeopleIcon from '@mui/icons-material/People';
 import Posts from './posts/posts';
+import Explore from './explore/explore';
 // tab content customize
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -72,7 +75,8 @@ export default function MainTabs() {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
-            paddingTop:'50px',
+            paddingTop:'40px',
+            width:"100%"
 
           },
           '& a.Mui-selected': {
@@ -84,8 +88,8 @@ export default function MainTabs() {
           }
         }}
       >
-        <Tab component={Link} href="#" icon={<PersonOutlineTwoToneIcon sx={{ fontSize: '1.3rem' }} />} label="Posts" {...a11yProps(0)} />
-        <Tab component={Link} href="#" icon={<RecentActorsTwoToneIcon sx={{ fontSize: '1.3rem' }} />} label="followers" {...a11yProps(1)} />
+        <Tab component={Link} href="#" icon={<FeedIcon sx={{ fontSize: '1.3rem' }} />} label="Feed" {...a11yProps(0)} />
+        <Tab component={Link} href="#" icon={<PeopleIcon sx={{ fontSize: '1.3rem' }} />} label="Explore" {...a11yProps(1)} />
         <Tab
           component={Link}
           href="#"
@@ -104,12 +108,11 @@ export default function MainTabs() {
         />
         <Tab component={Link} href="#" icon={<PanoramaTwoToneIcon sx={{ fontSize: '1.3rem' }} />} label="Gallery" {...a11yProps(3)} />
       </Tabs>
-      <TabPanel value={value} /*style={{height:"90vh"}}*/ index={0}>
+      <TabPanel value={value} index={0}>
         <Posts/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Anim pariah&apos;s cliche reprehended, enid elusion high life accusals terry richardson ad squid. 3 wolf moon official auth, non
-        cuspidate skateboard dolor brunch. Food truck quinoa nescient labarum elusion.
+        <Explore/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         Nihil anim keffiyeh helvetic, craft beer laborer wes anderson cred mesclun sapient ea provident. Ad vegan exceptive butcher vice
