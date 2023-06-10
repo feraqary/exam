@@ -16,7 +16,7 @@ import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
 import { createCompanyType } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
-
+import { setCompany } from 'store/slices/company-section/slice/company';
 const roles = [
   { label: 'Broker Company', id: 1 },
   { label: 'Developer Company', id: 2 },
