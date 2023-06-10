@@ -98,9 +98,6 @@ function ColumnsLayouts() {
     dispatch(setCity(newValue));
 
   }
-  
-
-  const [address, setAddress] = useState('Abu Dhabi');
 
 
   return (
@@ -307,7 +304,6 @@ function ColumnsLayouts() {
                     <Map locationAddress={address}  xs={12} lg={12}/>
                 </Grid>
               </Grid>
-            </Grid>
           </Container>
 
           <Container title="Company Presentation" style={{ xs: 12 }}>
