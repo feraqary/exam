@@ -22,12 +22,14 @@ import contract from './contract';
 import units from './units';
 import banners from './banners_ads';
 import contact from './contact';
+import app from './app';
 // import units from './units';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
   items: [
     banners,
+    app,
     dashboard,
     management,
     companies,
