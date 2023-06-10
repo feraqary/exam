@@ -8,7 +8,7 @@ import React, { useState, useMemo } from 'react';
 const InputLayout = ({ label, helperText, style, children }) => {
   return (
     <Grid item xs={style.xs} lg={style.lg}>
-      <InputLabel required>{label}</InputLabel>
+      <InputLabel>{label}</InputLabel>
       {children}
       <FormHelperText>{helperText}</FormHelperText>
     </Grid>
