@@ -18,9 +18,10 @@ import { useTheme } from '@mui/material/styles';
 import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+// import SubmitButton from 'components/Elements/SubmitButton';
 import SubmitButton from 'components/Elements/SubmitButton';
 
-import MultipleFileUpload from 'components/InputArea/MultipleFileUploader';
+// import MultipleFileUpload from 'components/InputArea/MultipleFileUploader';
 // import { Typography } from '@mui/joy';
 
 // ==============================|| Posts ||============================== //
@@ -54,8 +55,6 @@ function Posts() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    
     setPicture('');
     setVideo('');
     setDescription('');
@@ -74,7 +73,7 @@ function Posts() {
               label="Select Type"
               id="selector"
               placeholder="Choose Property Type"
-              options={userRoleData}
+              options={departementRole}
               style={{ xs: 12, lg: 12 }}
             />
             <InputText
@@ -119,3 +118,5 @@ Posts.getLayout = function getLayout(page) {
 };
 
 export default Posts;
+
+ 
