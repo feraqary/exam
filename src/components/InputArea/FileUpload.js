@@ -81,7 +81,8 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, st
               <InputAdornment position="end">
                 <UploadFile />
               </InputAdornment>
-            )
+            ),
+            multiline: true
           }}
           onChange={(e) => {
             handleImagePreview(e);
