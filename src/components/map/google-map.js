@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { useLoadScript, GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
-
+import { Grid } from '@mui/material';
 import axios from 'axios';
 
 
@@ -8,7 +8,7 @@ import axios from 'axios';
 
 
 
-export default function Map ({locationAddress}){
+export default function Map ({locationAddress, xs,lg}){
     // console.log(`locationAddress: ${locationAddress}`)
     const [lat, setlat] = useState(null);
     const [long, setlong] = useState(null);
@@ -58,16 +58,15 @@ export default function Map ({locationAddress}){
         )
     }else{
         return(
-            <>
+            <Grid item xs={xs} lg={lg}>
                 <GoogleMap
-                style={{ height: '42vh' }}
-                mapContainerStyle={{ position: 'relative', height: '25vh', width: '100%' }}
+                mapContainerStyle={{ position: 'relative', height: '27vh', width: '100%' }}
                 center={lat != null || long != null ? { lat: lat, lng: long } : { lat: 24.4984312, lng: 54.4036975 }}
                 zoom={13}
                 >
                     <Marker position={lat != null || long != null ? { lat: lat, lng: long } : { lat: 24.4984312, lng: 54.4036975 }} />
                 </GoogleMap>
-            </>
+            </Grid>
         )
     }
 }
