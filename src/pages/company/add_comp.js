@@ -12,7 +12,6 @@ import Map from 'components/map/google-map';
 import MapAutocomplete from 'components/map/maps-autocomplete';
 import { LoadScript } from '@react-google-maps/api';
 
-
 // redux actions import
 
 import { getCountries, getStates, getCities } from 'store/slices/country-section/actions/countries';
@@ -47,8 +46,6 @@ const CompanyType = [
 const fetchCompanyServices = CompanyServices;
 // ==============================|| Add Company form ||============================== //
 function ColumnsLayouts() {
-
-
   const theme = useTheme();
   const dispatch = useDispatch();
   const [companyType, setCompanyType] = useState(null);
@@ -99,8 +96,12 @@ function ColumnsLayouts() {
   
   const onSubmit = () => {
     dispatch(setCity(newValue));
+
   }
   
+
+  const [address, setAddress] = useState('Abu Dhabi');
+
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
@@ -306,9 +307,9 @@ function ColumnsLayouts() {
                     <Map locationAddress={address}  xs={12} lg={12}/>
                 </Grid>
               </Grid>
-            </Container>
+            </Grid>
+          </Container>
 
-          
           <Container title="Company Presentation" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
               <InputText
