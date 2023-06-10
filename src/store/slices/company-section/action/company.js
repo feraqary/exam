@@ -6,9 +6,17 @@ const config = {
 };
 
 export const createCompanyType = createAsyncThunk('company/createCompanyType', async (formData, { rejectWithValue }) => {
-  console.log(formData);
   try {
     const response = await api.post(`${baseurl}/api/services/createCompanyType`, formData, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.error);
+  }
+});
+
+export const createMainService = createAsyncThunk('company/createMainService', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await api.post(`${baseurl}/api/services/createmainservices`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.error);
@@ -34,6 +42,7 @@ export const getAllMainServices = createAsyncThunk('company/getAllMainServices',
   }
 });
 
+
 export const getMainServices = createAsyncThunk('service/getMainServiceById', async (company_id, { rejectWithValue }) => {
   try {
     if (!company_id) {
@@ -48,12 +57,22 @@ export const getMainServices = createAsyncThunk('service/getMainServiceById', as
 });
 
 
+
 export const createCompany = createAsyncThunk('company/createCompany', async (formData, { rejectWithValue }) => {
   try {
-    const response = await api.post(`${baseurl}/api/services/createCompany`,formData, config);
+    const response = await api.post(`${baseurl}/api/services/createCompany`, formData, config);
     return response.data;
   } catch (error) {
     console.log(error);
+    return rejectWithValue(error);
+  }
+});
+
+export const createService = createAsyncThunk('company/createService', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await api.post(`${baseurl}/api/services/createservices`, formData, config);
+    return response.data;
+  } catch (error) {
     return rejectWithValue(error);
   }
 });
