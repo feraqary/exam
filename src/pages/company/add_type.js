@@ -1,5 +1,5 @@
 // material-ui
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 
 // project imports
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
@@ -11,12 +11,11 @@ import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // assets
 import InputText from 'components/InputArea/TextInput';
-import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
 import { createCompanyType } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
-import { setCompany } from 'store/slices/company-section/slice/company';
+import FileUpload from 'components/InputArea/FileUpload';
 const roles = [
   { label: 'Broker Company', id: 1 },
   { label: 'Developer Company', id: 2 },
@@ -33,8 +32,6 @@ function CompanyType() {
   const [iconImage, setIconImage] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
   const [iconPreview, setIconPreview] = useState(null);
-
-  console.log(logoImage);
 
   const logoRef = useRef(null);
   const iconRef = useRef(null);

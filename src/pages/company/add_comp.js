@@ -321,11 +321,10 @@ function ColumnsLayouts() {
                   type="text"
                   style={{ xs: 12, lg: 6 }}
                 />
-                <Grid item xs={12} lg={6}>
-                  <InputLabel required>Place</InputLabel>
+
+                <InputLayout label="Place" helperText="Please enter place address" style={{ xs: 12, lg: 6 }}>
                   <MapAutocomplete placeHolder onChangeAddress={setAddress} country={setCountry} state={setState} value="uae" />
-                  <FormHelperText>Please enter place address</FormHelperText>
-                </Grid>
+                </InputLayout>
                 <Map locationAddress={address} xs={12} lg={12} />
               </Grid>
             </Grid>

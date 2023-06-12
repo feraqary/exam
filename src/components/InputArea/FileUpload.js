@@ -73,7 +73,8 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, st
     <>
       <InputLayout label={label} helperText={helperText} style={style}>
         <TextField
-          type={type}
+          required
+          type="file"
           fullWidth
           placeholder={placeholder}
           InputProps={{
@@ -84,10 +85,7 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, st
             ),
             multiline: true
           }}
-          onChange={(e) => {
-            handleImagePreview(e);
-            // handleFileUploadChange(e);
-          }}
+          onChange={(e) => handleImagePreview(e)}
           inputRef={ref}
         />
       </InputLayout>
