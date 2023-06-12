@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getCountries, getStates, getCities } from '../actions/countries';
-import { toast } from 'react-toastify';
 
 const initialState = {
   error: null,
