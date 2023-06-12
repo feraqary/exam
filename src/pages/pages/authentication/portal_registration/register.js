@@ -1,40 +1,58 @@
-import Link from 'Link';
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
-import { Button, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import Link from 'Link';
 
 // project imports
 import LAYOUT from 'constant';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
+import AuthRegister from 'components/authentication/auth-forms/AuthRegister';
 import AuthWrapper1 from 'components/authentication/AuthWrapper1';
 import AuthCardWrapper from 'components/authentication/AuthCardWrapper';
 import Logo from 'components/ui-component/Logo';
-import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import BackgroundPattern1 from 'components/ui-component/cards/BackgroundPattern1';
 import AuthSlider from 'components/ui-component/cards/AuthSlider';
 
 // assets
-const AuthBlueCard = '/assets/images/auth/auth-mail-blue-card.svg';
+const AuthBlueCard = '/assets/images/auth/auth-signup-blue-card.svg';
+const AuthWhiteCard = '/assets/images/auth/auth-signup-white-card.svg';
 
 // styles
-const BlueWrapper = styled('span')(({ theme }) => ({
+const PurpleWrapper = styled('span')(({ theme }) => ({
+  '&:after': {
+    content: '""',
+    position: 'absolute',
+    top: '45%',
+    left: '35%',
+    width: 260,
+    backgroundSize: 380,
+    height: 290,
+    backgroundImage: `url(${AuthWhiteCard})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    animation: '15s wings ease-in-out infinite',
+    [theme.breakpoints.down('xl')]: {
+      left: '25%',
+      top: '50%'
+    }
+  },
   '&:before': {
     content: '""',
     position: 'absolute',
-    top: '25%',
-    left: '18%',
-    width: 455,
-    height: 430,
+    top: '12%',
+    left: '25%',
+    width: 360,
+    height: 350,
+    backgroundSize: 460,
     backgroundImage: `url(${AuthBlueCard})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     animation: '15s wings ease-in-out infinite',
     animationDelay: '1s',
     [theme.breakpoints.down('xl')]: {
-      top: '20%',
-      left: '6%',
-      backgroundSize: 450
+      top: '10%',
+      left: '15%'
     }
   }
 }));
@@ -42,27 +60,27 @@ const BlueWrapper = styled('span')(({ theme }) => ({
 // carousel items
 const items = [
   {
-    title: 'Powerful and easy to use multipurpose theme.',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'Aqary International ',
+    description: 'The Purpose of Aqary International is to make home moving easier in the entire world. '
   },
   {
-    title: 'Power of React with Material UI',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'AQARY Group is Reimagining Real Estate to make it easier to unlock life’s next chapter.',
+    description: 'As the most-visited real estate website in the world, AQARY and its affiliates offer customers an on-demand experience for selling, buying, renting, and financing with transparency and nearly seamless end-to-end service. AQARY Offers buys and sells homes directly in dozens of markets across the world, allowing sellers control over their timeline. AQARY Home Loans, our affiliate lender, provides our customers with an easy option to get pre-approved and secure financing for their next home purchase.'
   },
   {
-    title: 'Power of React with Material UI',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'Our Aim is to Create a more Efficient Housing Marketplace and make Home Moving Easier.    ',
+    description: 'Our ambition is to be the place, and the encyclopedia that consumers and customers turn to as their property portal of choice, and to deliver that objective, Aqary needs to be a business in which people want to work, invest, and with which people want to partner.'
   }
 ];
 
-// ==============================|| check mail ||============================== //
+// ===============================|| Portal - REGISTER ||=============================== //
 
-const CheckMail = () => {
+const Register = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Page title="Check Mail">
+    <Page title="Register">
       <AuthWrapper1>
         <Grid container justifyContent="space-between" alignItems="center" sx={{ minHeight: '100vh' }}>
           <Grid item container justifyContent="center" md={6} lg={7} sx={{ my: 3 }}>
@@ -78,10 +96,10 @@ const CheckMail = () => {
                     <Grid item>
                       <Stack justifyContent={matchDownSM ? 'center' : 'flex-start'} textAlign={matchDownSM ? 'center' : 'inherit'}>
                         <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
-                          Check Mail
+                          Sign up
                         </Typography>
                         <Typography color="textPrimary" gutterBottom variant="h4">
-                          Avoid getting locked out.
+                          Enter credentials to continue
                         </Typography>
                       </Stack>
                     </Grid>
@@ -93,18 +111,22 @@ const CheckMail = () => {
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                  <Stack direction="row" justifyContent={matchDownSM ? 'center' : 'flex-start'}>
-                    <Typography variant="caption" fontSize="16px" textAlign={matchDownSM ? 'center' : 'inherit'}>
-                      We have sent a password recover instructions to your email.
-                    </Typography>
-                  </Stack>
+                  <AuthRegister />
                 </Grid>
                 <Grid item xs={12}>
-                  <AnimateButton>
-                    <Button disableElevation fullWidth size="large" type="submit" variant="contained" color="secondary">
-                      Open Mail
-                    </Button>
-                  </AnimateButton>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid item container direction="column" alignItems="flex-end" xs={12}>
+                    <Typography
+                      component={Link}
+                      href="/pages/authentication/auth1/login"
+                      variant="subtitle1"
+                      sx={{ textDecoration: 'none' }}
+                    >
+                      Already have an account?
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             </AuthCardWrapper>
@@ -114,7 +136,7 @@ const CheckMail = () => {
               <Grid item container alignItems="flex-end" justifyContent="center" spacing={3}>
                 <Grid item xs={12}>
                   <span />
-                  <BlueWrapper />
+                  <PurpleWrapper />
                 </Grid>
                 <Grid item xs={12}>
                   <Grid item container justifyContent="center" sx={{ pb: 8 }}>
@@ -132,8 +154,8 @@ const CheckMail = () => {
   );
 };
 
-CheckMail.getLayout = function getLayout(page) {
+Register.getLayout = function getLayout(page) {
   return <Layout variant={LAYOUT.minimal}>{page}</Layout>;
 };
 
-export default CheckMail;
+export default Register;
