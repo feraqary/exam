@@ -113,17 +113,6 @@ function CompanyType() {
               value={description}
               setValue={setDescription}
             />
-             <InputText
-              label="Description"
-              placeholder="Enter Description"
-              style={{ xs: 12, lg: 8 }}
-              type="text"
-              multiline
-              rows={5}
-              id="outlined-multiline-flexible"
-              value={description}
-              setValue={setDescription}
-            />
             <FileUpload
               label="Upload Logo"
               style={{ xs: 12, lg: 8 }}
