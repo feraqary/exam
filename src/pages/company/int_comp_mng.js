@@ -12,66 +12,20 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { AqaryButton } from 'components/Elements/AqaryButton';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getInternationalCompanies } from 'store/slices/company-section/action/company';
+import { useSelector } from 'react-redux';
 
 // ===========================|| International Company Managment list||=========================== //
 
-const data = [
-  {
-    si_num: '1',
-    name: {
-      companyName: 'Khidmah',
-      companyLogo: '/assets/images/company_logo/logo1.png'
-    },
-    companyType: 'Developer Company',
-    state: 'ABU DHABI',
-    country: 'UAE',
-    regId: 'PA2831023',
-    contactPerson: 'Jamie',
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    addedBy: 'Lannisters',
-    subsDate: '2-12-2023',
-    documents: ' uploaded',
-    action: ' edit, multiple',
-    feature: 'Standard'
-  },
-  {
-    si_num: '2',
-    name: {
-      companyName: 'Forum',
-      companyLogo: '/assets/images/company_logo/logo2.png'
-    },
-    companyType: '261 Erdman Ford',
-    state: 'OHIO',
-    country: 'US',
-    regId: 'PA2831023',
-    contactPerson: 'Cercie',
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    addedBy: 'Lannisters',
-    subsDate: '2-12-2023',
-    documents: ' uploaded',
-    action: ' edit, multiple',
-    feature: 'Premium'
-  }
-];
-
 const ColumnHeaders = [
   {
-    accessorKey: 'si_num',
-    header: 'SI Number'
-  },
-  {
-    accessorKey: 'feature',
-    header: 'Featured',
-    Cell: ({ renderedCellValue, row }) => <Chip label={row.original.feature} color="primary" variant="outlined" />
-  },
-  {
-    accessorKey: 'name.companyName',
+    accessorKey: 'CompanyName',
     header: 'Company Name'
   },
   {
-    accessorKey: 'name.companyLogo',
+    accessorKey: 'companyLogo',
     header: 'Company Logo',
     Cell: ({ renderedCellValue, row }) => (
       <Box
@@ -81,49 +35,44 @@ const ColumnHeaders = [
           gap: '1rem'
         }}
       >
-        <Image src={row.original.name.companyLogo} width={60} height={30} />
+        <Image src={`http://20.203.31.58/upload/${row.original.CompanyLogo}`} width={60} height={30} />
       </Box>
     )
   },
   {
-    accessorKey: 'regId',
-    header: ' Registration ID '
+    accessorKey: 'LicenseNO',
+    header: 'Liscense Number'
   },
   {
-    accessorKey: 'state',
+    accessorKey: 'State',
     header: ' State '
   },
   {
-    accessorKey: 'companyType',
+    accessorKey: 'CompanyType',
     header: ' Company Type'
   },
   {
-    accessorKey: 'country',
+    accessorKey: 'Country',
     header: ' Country'
   },
   {
-    accessorKey: 'contactPerson',
-    header: ' Contact Person'
-  },
-  {
-    accessorKey: 'subsDate',
+    accessorKey: 'SubscriptionStartDate',
     header: ' Subscription Date'
   },
 
   {
-    accessorKey: 'addedBy',
+    accessorKey: 'AddedBy',
     header: 'Added By'
   },
   {
-    accessorKey: 'contactPerson',
+    accessorKey: 'ContactPerson',
     header: 'Contact Person'
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'Email',
     header: 'Email'
   },
-  { accessorKey: 'phone', header: 'Phone' },
-
+  { accessorKey: 'Phone', header: 'Phone' },
   {
     accessorKey: 'action',
     header: 'Action',
@@ -159,15 +108,22 @@ const ColumnHeaders = [
   }
 ];
 
-const IntCompData = () => (
-  <Page title="International Company List">
-    <Grid container spacing={gridSpacing}>
-      <Grid item xs={12}>
-        <Table columnHeaders={ColumnHeaders} data={data} />
+const IntCompData = () => {
+  const dispatch = useDispatch();
+  const { loading, error, internationalCompanies } = useSelector((state) => state.companies);
+  useEffect(() => {
+    dispatch(getInternationalCompanies());
+  }, []);
+  return (
+    <Page title="International Company List">
+      <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Table columnHeaders={ColumnHeaders} data={internationalCompanies} />
+        </Grid>
       </Grid>
-    </Grid>
-  </Page>
-);
+    </Page>
+  );
+};
 
 IntCompData.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;

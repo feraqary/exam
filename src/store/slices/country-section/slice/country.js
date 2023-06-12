@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getCountries, getStates, getCities } from '../actions/countries';
-import { toast } from 'react-toastify';
 
 const initialState = {
   error: null,
@@ -27,124 +26,53 @@ const slice = createSlice({
       state.city = action.payload;
     }
   },
-
-  
-  extraReducers:(builder) => {
+  extraReducers: (builder) => {
     builder
       .addCase(getCountries.pending, (state) => {
         state.loading = true;
-        state.companies = [];
         state.error = null;
+        state.countries = state.countries;
       })
       .addCase(getCountries.fulfilled, (state, action) => {
         state.loading = false;
+        state.countries = action.payload.data;
         state.error = null;
-        state.companies = [...state.companies, action.payload.data];
-        toast.success('Added Successfully', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
       })
       .addCase(getCountries.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error;
-        state.companies = [];
-        toast.error('Something went Wrong', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
+        state.error = action.payload;
+        state.countries = state.countries;
       })
-
-
-
-
-
-    .addCase(getStates.pending, (state) => {
-      state.loading = true;
-      state.companies = [];
-      state.error = null;
-    })
-    .addCase(getStates.fulfilled, (state, action) => {
-      state.loading = false;
-      state.error = null;
-      state.companies = [...state.companies, action.payload.data];
-      toast.success('Added Successfully', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
+      .addCase(getStates.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.states = state.states;
+      })
+      .addCase(getStates.fulfilled, (state, action) => {
+        state.loading = false;
+        state.states = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getStates.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.states = state.states;
+      })
+      .addCase(getCities.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+        state.cities = state.cities;
+      })
+      .addCase(getCities.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cities = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getCities.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.cities = state.cities;
       });
-    })
-    .addCase(getStates.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error;
-      state.companies = [];
-      toast.error('Something went Wrong', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      });
-    })
-
-
-    .addCase(getCities.pending, (state) => {
-      state.loading = true;
-      state.companies = [];
-      state.error = null;
-    })
-    .addCase(getCities.fulfilled, (state, action) => {
-      state.loading = false;
-      state.error = null;
-      state.companies = [...state.companies, action.payload.data];
-      toast.success('Added Successfully', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      });
-    })
-    .addCase(getCities.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error;
-      state.companies = [];
-      toast.error('Something went Wrong', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      });
-    })
-
-
   }
 });
 
@@ -156,50 +84,49 @@ export const { setCountry, setState, setCity } = slice.actions;
 
 // ----------------------------------------------------------------------
 
+// [getCountries.pending]: (state) => {
+//   state.loading = true;
+//   state.error = null;
+//   state.countries = [];
+// },
+// [getCountries.fulfilled]: (state, action) => {
+//   state.loading = false;
+//   state.countries = action.payload.data;
+//   state.error = null;
+// },
+// [getCountries.rejected]: (state, action) => {
+//   state.loading = false;
+//   state.error = action.payload;
+//   state.countries = [];
+// },
 
-    // [getCountries.pending]: (state) => {
-    //   state.loading = true;
-    //   state.error = null;
-    //   state.countries = [];
-    // },
-    // [getCountries.fulfilled]: (state, action) => {
-    //   state.loading = false;
-    //   state.countries = action.payload.data;
-    //   state.error = null;
-    // },
-    // [getCountries.rejected]: (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload;
-    //   state.countries = [];
-    // },
-
-    // [getStates.pending]: (state) => {
-    //   state.loading = true;
-    //   state.error = null;
-    //   state.states = [];
-    // },
-    // [getStates.fulfilled]: (state, action) => {
-    //   state.loading = false;
-    //   state.states = action.payload.data;
-    //   state.error = null;
-    // },
-    // [getStates.rejected]: (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload;
-    //   state.states = [];
-    // },
-    // [getCities.pending]: (state, action) => {
-    //   state.loading = true;
-    //   state.error = null;
-    //   state.cities = [];
-    // },
-    // [getCities.fulfilled]: (state, action) => {
-    //   state.loading = false;
-    //   state.cities = action.payload.data;
-    //   state.error = null;
-    // },
-    // [getCities.rejected]: (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload;
-    //   state.cities = [];
-    // }
+// [getStates.pending]: (state) => {
+//   state.loading = true;
+//   state.error = null;
+//   state.states = [];
+// },
+// [getStates.fulfilled]: (state, action) => {
+//   state.loading = false;
+//   state.states = action.payload.data;
+//   state.error = null;
+// },
+// [getStates.rejected]: (state, action) => {
+//   state.loading = false;
+//   state.error = action.payload;
+//   state.states = [];
+// },
+// [getCities.pending]: (state, action) => {
+//   state.loading = true;
+//   state.error = null;
+//   state.cities = [];
+// },
+// [getCities.fulfilled]: (state, action) => {
+//   state.loading = false;
+//   state.cities = action.payload.data;
+//   state.error = null;
+// },
+// [getCities.rejected]: (state, action) => {
+//   state.loading = false;
+//   state.error = action.payload;
+//   state.cities = [];
+// }

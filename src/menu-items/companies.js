@@ -44,6 +44,12 @@ const companies = {
           url: '/company/add_type'
         },
         {
+          id: 'company-types',
+          title: <FormattedMessage id="manage-types" />,
+          type: 'item',
+          url: '/company/manage_type'
+        },
+        {
           id: 'add_main_services',
           title: <FormattedMessage id="Add Main Services" />,
           type: 'item',
@@ -78,18 +84,6 @@ const companies = {
           title: <FormattedMessage id="Blocked Companies" />,
           type: 'item',
           url: '/company/blocked'
-        },
-        {
-          id: 'second-phase-upload',
-          title: <FormattedMessage id="Second Phase Upload" />,
-          type: 'item',
-          url: '/company/second_phase_upload'
-        },
-        {
-          id: 'company-types',
-          title: <FormattedMessage id="manage-types" />,
-          type: 'item',
-          url: '/company/manage_type'
         }
       ]
     },
