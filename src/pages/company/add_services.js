@@ -17,9 +17,11 @@ import Container from 'components/Elements/Container';
 import { createService, getAllMainServices } from 'store/slices/company-section/action/company';
 import { setMainService } from 'store/slices/company-section/slice/company';
 import { ToastContainer } from 'react-toastify';
+import { updateServices } from 'store/slices/services/action/services';
 const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 
 // ==============================|| Add Company Type form ||============================== //
+
 function Service() {
   const dispatch = useDispatch();
   const [service, setService] = useState(null);
@@ -34,8 +36,20 @@ function Service() {
 
   const { mainServices, loading, error, mainService } = useSelector((state) => state.companies);
 
+  let dataToUpdate = {
+    title: null,
+    description: [],
+    icon_url: [],
+    image_url: [],
+    loading: false,
+    error: null
+  };
+
+  
   useEffect(() => {
     dispatch(getAllMainServices());
+    dispatch(updateServices(dataToUpdate));
+    console.log(error);
   }, [dispatch]);
 
   const handleMainServiceChange = (newValue) => {

@@ -136,7 +136,6 @@ function Explore() {
       </Container>
       <Container style={{ xs: 12, lg: 12 }} title={'360 Videos'}>
         <Grid container spacing={2} alignItems="center" justifyContent="center">
-          
           <Carousel list={itemData}/>
         </Grid>
       </Container>

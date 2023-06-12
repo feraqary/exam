@@ -33,14 +33,8 @@ function Carousel({ list }) {
   return (
     <Box
       sx={{
-        maxWidth: '70%',
+        maxWidth: '100%',
         flexGrow: 1,
-        margin: 'auto',
-        justifyContent: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-        borderRadius: 5,
-        boxShadow: '0px 7px 10px -5px rgba(0,0,0,0.75);'
       }}
     >
       <Paper
@@ -54,32 +48,35 @@ function Carousel({ list }) {
           bgcolor: 'background.default',
           width: '70%'
         }}
-      >
-        <Typography
-          variant="h1"
-          sx={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            padding: 10,
-            zIndex: 10,
-            width: '100%',
-            background: 'linear-gradient(#000000, rgba(0,0,0,.01));',
-            color: 'white',
-            borderRadius: '5'
-          }}
-        >
-          {list[activeStep].title}
-        </Typography>
-      </Paper>
+      ></Paper>
       <AutoPlaySwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
+        
       >
         {list.map((step, index) => (
-          <div key={step.title}>
+          <div
+            key={step.title}
+            style={{ width: '80%',boxShadow: '0px 7px 10px -5px rgba(0,0,0,0.75);', margin: '0 auto', position: 'relative', overflow: 'hidden', borderRadius:25}}
+          >
+            <Typography
+              variant="h1"
+              sx={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                padding: 10,
+                zIndex: 10,
+                width: '100%',
+                background: 'linear-gradient(#000000, rgba(0,0,0,.01));',
+                color: 'white',
+                borderRadius: '5'
+              }}
+            >
+              {list[activeStep].title}
+            </Typography>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
@@ -89,9 +86,8 @@ function Carousel({ list }) {
                   maxWidth: '100%',
                   overflow: 'hidden',
                   width: '100%',
-                  //   margin: '0 auto',
                   objectFit: 'cover',
-                  borderRadius: 5
+
                 }}
                 src={step.img}
                 alt={step.title}

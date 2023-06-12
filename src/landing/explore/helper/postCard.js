@@ -40,6 +40,8 @@ import Tooltip from '@mui/material/Tooltip';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 
+import Grid from '@mui/material';
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -143,6 +145,10 @@ export default function PostCard({ pfp, postimg, title, discription, discription
     setExpanded(!expanded);
   };
 
+  const handleCommentClick = () => {
+    setComment(!comment);
+  };
+
   return (
     <Card sx={{ maxWidth: 720, margin: 'auto', boxShadow: '0px 8px 17px -8px rgba(0,0,0,0.4)' }}>
       <CardHeader
@@ -179,9 +185,7 @@ export default function PostCard({ pfp, postimg, title, discription, discription
           <Tooltip title="comment">
             <IconButton
               aria-label="comment"
-              onClick={() => {
-                setComment(!comment);
-              }}
+              onClick={handleCommentClick}
             >
               <ModeCommentIcon />
             </IconButton>
@@ -223,10 +227,26 @@ export default function PostCard({ pfp, postimg, title, discription, discription
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
-      <Collapse expand={comment} timeout="auto" unmountOnExit>
+      <Collapse in={comment} timeout="auto" unmountOnExit>
         <CardContent>
 
-          <Typography>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</Typography>
+          <Typography variant='h4'>farid_019:</Typography><Typography>This house looks nice </Typography>
+        </CardContent>
+        <CardContent>
+
+          <Typography variant='h4'>Samya2009:</Typography><Typography>nice house </Typography>
+        </CardContent>
+        <CardContent>
+
+          <Typography variant='h4'>hanya:2321:</Typography><Typography>i want to buy </Typography>
+        </CardContent>
+        <CardContent>
+
+          <Typography variant='h4'>simon2312:</Typography><Typography>Take my money!!!!! </Typography>
+        </CardContent>
+        <CardContent>
+
+          <Typography variant='h4'>usman1231:</Typography><Typography>How much? </Typography>
         </CardContent>
       </Collapse>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
