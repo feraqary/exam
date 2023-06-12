@@ -99,6 +99,7 @@
     "react-select-country-list": "^2.2.3",
     "react-slick": "^0.29.0",
     "react-spring": "^9.6.1",
+    "react-swipeable-views": "^0.14.0",
     "react-syntax-highlighter": "^15.5.0",
     "react-tag-input": "^6.8.1",
     "react-tagsinput": "^3.20.1",

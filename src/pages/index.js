@@ -9,7 +9,7 @@ import HeaderSection from 'components/landingpage/HeaderSection';
 
 import Customization from 'layout/Customization';
 import AppBar from 'components/ui-component/extended/AppBar';
-import Tabs from 'frontend_pages/Tabs';
+import Tabs from '../pages/pages/frontend_pages/Tabs';
 const HeaderWrapper = styled('div')(({ theme }) => ({
   paddingTop: 30,
   overflowX: 'hidden',
@@ -31,8 +31,8 @@ const Landing = () => {
       {/* 1. header and hero section */}
       <HeaderWrapper id="home">
         <AppBar />
-        {/* <HeaderSection /> */}
-        <Tabs/>
+        <HeaderSection />
+        {/* <Tabs/> */}
         
       </HeaderWrapper>
 
