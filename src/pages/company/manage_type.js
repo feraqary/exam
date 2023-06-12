@@ -23,6 +23,22 @@ const data = [
   },
   {
     name: {
+      companyTypeName: 'Sub-Developer Company',
+      companyTypeLogo: '/assets/images/company_logo/logo1.png'
+    },
+    description:
+      'Developer company is one that is focused on delivering value to software developers/software engineers. A developer company doesnt just aim to be a great business and increase revenue, but also be a pillar of the software community'
+  },
+  {
+    name: {
+      companyTypeName: 'Developer Company',
+      companyTypeLogo: '/assets/images/company_logo/logo1.png'
+    },
+    description:
+      'Developer company is one that is focused on delivering value to software developers/software engineers. A developer company doesnt just aim to be a great business and increase revenue, but also be a pillar of the software community'
+  },
+  {
+    name: {
       companyTypeName: 'Broker Company',
       companyTypeLogo: '/assets/images/company_logo/logo2.png'
     },
@@ -35,6 +51,14 @@ const data = [
       companyTypeLogo: '/assets/images/company_logo/logo3.png'
     },
     description: 'Management company is set up to manage a group of properties, a unit trust, an investment fund'
+  },
+  {
+    name: {
+      companyTypeName: 'Sub-Developer Company',
+      companyTypeLogo: '/assets/images/company_logo/logo1.png'
+    },
+    description:
+      'Developer company is one that is focused on delivering value to software developers/software engineers. A developer company doesnt just aim to be a great business and increase revenue, but also be a pillar of the software community'
   },
   {
     name: {
