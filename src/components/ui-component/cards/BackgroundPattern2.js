@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
 // assets
-const AuthPattern = '/assets/images/auth/img-a2-grid.svg';
+const AuthPattern = '/assets/images/logo';
 const AuthPatternDark = '/assets/images/auth/img-a2-grid-dark.svg';
 
 // ===========================|| BACKGROUND GRID PATTERN 2 ||=========================== //
