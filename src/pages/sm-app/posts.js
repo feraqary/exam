@@ -1,8 +1,6 @@
-// material-ui imports
 import { Grid, Button, Typography, Alert } from '@mui/material';
 import * as React from 'react';
 
-// project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
@@ -11,8 +9,6 @@ import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
-
-// ==============================|| Posts ||============================== //
 
 const mainServiceTypes = ['Sell', 'Rent', 'Property Hub', 'Project', 'Exchange', 'Career'];
 const departementRole = [
@@ -57,26 +53,54 @@ function Posts() {
     setFileUploads(updatedFileUploads);
   };
 
+  const validateFileType = (file, acceptedTypes) => {
+    const fileType = file.type;
+    const allowedTypes = acceptedTypes.join(',');
+    return allowedTypes.includes(fileType);
+  };
+
+  const handleFileUpload = (id, file) => {
+    if (id === 1) {
+      const acceptedTypes = ['image/jpeg', 'image/png'];
+      if (!validateFileType(file, acceptedTypes)) {
+     
+        console.log('Please upload only JPEG or PNG files.');
+        return;
+      }
+ 
+      console.log('Processing photo upload:', file);
+    } else {
+      const acceptedTypes = ['video/mp4'];
+      if (!validateFileType(file, acceptedTypes)) {
+    
+        console.log('Please upload only MP4 files.');
+        return;
+      }
+    
+      console.log('Processing video upload:', file);
+    }
+  };
+
   return (
     <Page title="User Details">
       <Grid container spacing={2}>
         <Grid item xs={12} spacing={4}>
           <MainCard title="Add Post">
             <Grid container spacing={2} alignItems="center">
-                <AutoCompleteSelector
-                  label="Select Action"
-                  id="selector"
-                  placeholder="Select Main Action"
-                  options={mainServiceTypes}
-                  style={{ xs: 12, lg: 12 }}
-                />
-                <AutoCompleteSelector
-                  label="Select Service Type"
-                  id="selector"
-                  placeholder="Choose Property Type"
-                  options={departementRole}
-                  style={{ xs: 12, lg: 12 }}
-                />
+              <AutoCompleteSelector
+                label="Select Action"
+                id="selector"
+                placeholder="Select Main Action"
+                options={mainServiceTypes}
+                style={{ xs: 12, lg: 12 }}
+              />
+              <AutoCompleteSelector
+                label="Select Service Type"
+                id="selector"
+                placeholder="Choose Property Type"
+                options={departementRole}
+                style={{ xs: 12, lg: 12 }}
+              />
               <InputText
                 label="Description"
                 placeholder="Enter detailed description"
@@ -92,6 +116,8 @@ function Posts() {
                 placeholder="Upload Company Video"
                 helperText="Please Upload Company Video"
                 style={{ xs: 12, lg: 12 }}
+                onChange={(e) => handleFileUpload(0, e.target.files[0])}
+                accept="video/mp4"
               />
               {fileUploads.map((fileUpload) => (
                 <React.Fragment key={fileUpload.id}>
@@ -101,6 +127,8 @@ function Posts() {
                     placeholder={fileUpload.placeholder}
                     helperText={fileUpload.helperText}
                     style={{ xs: 8, lg: 6 }}
+                    onChange={(e) => handleFileUpload(fileUpload.id, e.target.files[0])}
+                    accept="image/jpeg, image/png"
                   />
                   <Grid item xs={4} md={2}>
                     <Button
@@ -119,6 +147,8 @@ function Posts() {
                 placeholder="Upload Company Video"
                 helperText="Please Upload Company Photo"
                 style={{ xs: 12, lg: 6 }}
+                onChange={(e) => handleFileUpload(1, e.target.files[0])}
+                accept="image/jpeg, image/png"
               />
               <Grid item xs={4} md={2}>
                 <Button size="large" variant="contained" onClick={handleAddFileUpload}>
