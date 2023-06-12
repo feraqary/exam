@@ -38,6 +38,7 @@ import { TextField, InputAdornment } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Tooltip from '@mui/material/Tooltip';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import ModeCommentIcon from '@mui/icons-material/ModeComment';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -133,6 +134,7 @@ const Share = ({ open, onClose, handleClose, postimg }) => {
 
 export default function PostCard({ pfp, postimg, title, discription, discription2, likes, comments, setclose, type}) {
   const [expanded, setExpanded] = useState(false);
+  const [comment, setComment] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [saved, setSaved] = useState(false);
   const [liked, setLiked] = useState(false);
@@ -174,6 +176,16 @@ export default function PostCard({ pfp, postimg, title, discription, discription
             <FavoriteIcon />
           </IconButton>
         </Tooltip>
+          <Tooltip title="comment">
+            <IconButton
+              aria-label="comment"
+              onClick={() => {
+                setComment(!comment);
+              }}
+            >
+              <ModeCommentIcon />
+            </IconButton>
+          </Tooltip>
 
         <Tooltip title="Save">
           <IconButton
@@ -197,6 +209,7 @@ export default function PostCard({ pfp, postimg, title, discription, discription
             <ShareIcon />
           </IconButton>
         </Tooltip>
+
         <Share
           open={shareOpen}
           onClose={() => {
@@ -204,10 +217,18 @@ export default function PostCard({ pfp, postimg, title, discription, discription
           }}
           handleClose={setShareOpen}
         />
+
+
         <ExpandMore expand={expanded} onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more">
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
+      <Collapse expand={comment} timeout="auto" unmountOnExit>
+        <CardContent>
+
+          <Typography>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</Typography>
+        </CardContent>
+      </Collapse>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>{discription2}</Typography>
