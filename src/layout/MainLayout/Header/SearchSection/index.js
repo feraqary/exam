@@ -3,14 +3,14 @@ import { useState } from 'react';
 
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
-import { Avatar, Box, Card, Grid, InputAdornment, OutlinedInput, Popper } from '@mui/material';
+import { Avatar, Box, Card, Grid, InputAdornment, OutlinedInput, Popper, Autocomplete,TextField, Button, Checkbox, createFilterOptions} from '@mui/material';
 
 // third-party
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
 
 // project imports
 import Transitions from 'components/ui-component/extended/Transitions';
-
+import searchOptions from "./SearchOptions"
 // assets
 import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons';
 import { shouldForwardProp } from '@mui/system';
@@ -56,11 +56,13 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(({ theme }) => (
   }
 }));
 
+
 // ==============================|| SEARCH INPUT - MOBILE||============================== //
 
 const MobileSearch = ({ value, setValue, popupState }) => {
   const theme = useTheme();
-
+  
+  
   return (
     <OutlineInputStyle
       id="input-search-header"
@@ -72,6 +74,7 @@ const MobileSearch = ({ value, setValue, popupState }) => {
           <IconSearch stroke={1.5} size="16px" color={theme.palette.grey[500]} />
         </InputAdornment>
       }
+
       endAdornment={
         <InputAdornment position="end">
           <HeaderAvatarStyle variant="rounded">
@@ -92,6 +95,7 @@ const MobileSearch = ({ value, setValue, popupState }) => {
               }}
               {...bindToggle(popupState)}
             >
+              
               <IconX stroke={1.5} size="20px" />
             </Avatar>
           </Box>
@@ -114,6 +118,12 @@ MobileSearch.propTypes = {
 const SearchSection = () => {
   const theme = useTheme();
   const [value, setValue] = useState('');
+
+  const filterOptions = createFilterOptions({
+    limit:3,
+  });
+
+
 
   return (
     <>
@@ -155,27 +165,25 @@ const SearchSection = () => {
           )}
         </PopupState>
       </Box>
+
       <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-        <OutlineInputStyle
-          id="input-search-header"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Search"
-          startAdornment={
-            <InputAdornment position="start">
-              <IconSearch stroke={1.5} size="16px" color={theme.palette.grey[500]} />
-            </InputAdornment>
-          }
-          endAdornment={
-            <InputAdornment position="end">
-              <HeaderAvatarStyle variant="rounded">
-                <IconAdjustmentsHorizontal stroke={1.5} size="20px" />
-              </HeaderAvatarStyle>
-            </InputAdornment>
-          }
-          aria-describedby="search-helper-text"
-          inputProps={{ 'aria-label': 'weight' }}
-        />
+        
+        <Autocomplete
+              id="checkboxes-tags-demo"
+              options={searchOptions}
+              filterOptions={filterOptions}      
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Button href={option.url} fullWidth style={{justifyContent: "flex-start"}} variant="text" >{option.label}</Button>
+                </li>
+              )}
+              style={{ width: 500, padding:"0 0 0 16px" }}
+              renderInput={(params) => (
+                <TextField {...params} label="Search" placeholder="Search" />
+              )}
+            />
+
+      
       </Box>
     </>
   );
