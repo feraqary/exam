@@ -27,7 +27,6 @@ const slice = createSlice({
       state.city = action.payload;
     }
   },
-<<<<<<< HEAD
   extraReducers: (builder) => {
     builder
       .addCase(getCountries.pending, (state) => {
@@ -75,126 +74,6 @@ const slice = createSlice({
         state.error = action.payload;
         state.cities = state.cities;
       });
-=======
-
-  
-  extraReducers:(builder) => {
-    builder
-      .addCase(getCountries.pending, (state) => {
-        state.loading = true;
-        state.companies = [];
-        state.error = null;
-      })
-      .addCase(getCountries.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        state.companies = [...state.companies, action.payload.data];
-        toast.success('Added Successfully', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
-      })
-      .addCase(getCountries.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error;
-        state.companies = [];
-        toast.error('Something went Wrong', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
-      })
-
-
-
-
-
-    .addCase(getStates.pending, (state) => {
-      state.loading = true;
-      state.companies = [];
-      state.error = null;
-    })
-    .addCase(getStates.fulfilled, (state, action) => {
-      state.loading = false;
-      state.error = null;
-      state.companies = [...state.companies, action.payload.data];
-      toast.success('Added Successfully', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      });
-    })
-    .addCase(getStates.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error;
-      state.companies = [];
-      toast.error('Something went Wrong', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      });
-    })
-
-
-    .addCase(getCities.pending, (state) => {
-      state.loading = true;
-      state.companies = [];
-      state.error = null;
-    })
-    .addCase(getCities.fulfilled, (state, action) => {
-      state.loading = false;
-      state.error = null;
-      state.companies = [...state.companies, action.payload.data];
-      toast.success('Added Successfully', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      });
-    })
-    .addCase(getCities.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error;
-      state.companies = [];
-      toast.error('Something went Wrong', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      });
-    })
-
-
->>>>>>> ff1d668f7f747b9f601b4aa003da52e8329d46b2
   }
 });
 
@@ -206,50 +85,49 @@ export const { setCountry, setState, setCity } = slice.actions;
 
 // ----------------------------------------------------------------------
 
+// [getCountries.pending]: (state) => {
+//   state.loading = true;
+//   state.error = null;
+//   state.countries = [];
+// },
+// [getCountries.fulfilled]: (state, action) => {
+//   state.loading = false;
+//   state.countries = action.payload.data;
+//   state.error = null;
+// },
+// [getCountries.rejected]: (state, action) => {
+//   state.loading = false;
+//   state.error = action.payload;
+//   state.countries = [];
+// },
 
-    // [getCountries.pending]: (state) => {
-    //   state.loading = true;
-    //   state.error = null;
-    //   state.countries = [];
-    // },
-    // [getCountries.fulfilled]: (state, action) => {
-    //   state.loading = false;
-    //   state.countries = action.payload.data;
-    //   state.error = null;
-    // },
-    // [getCountries.rejected]: (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload;
-    //   state.countries = [];
-    // },
-
-    // [getStates.pending]: (state) => {
-    //   state.loading = true;
-    //   state.error = null;
-    //   state.states = [];
-    // },
-    // [getStates.fulfilled]: (state, action) => {
-    //   state.loading = false;
-    //   state.states = action.payload.data;
-    //   state.error = null;
-    // },
-    // [getStates.rejected]: (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload;
-    //   state.states = [];
-    // },
-    // [getCities.pending]: (state, action) => {
-    //   state.loading = true;
-    //   state.error = null;
-    //   state.cities = [];
-    // },
-    // [getCities.fulfilled]: (state, action) => {
-    //   state.loading = false;
-    //   state.cities = action.payload.data;
-    //   state.error = null;
-    // },
-    // [getCities.rejected]: (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload;
-    //   state.cities = [];
-    // }
+// [getStates.pending]: (state) => {
+//   state.loading = true;
+//   state.error = null;
+//   state.states = [];
+// },
+// [getStates.fulfilled]: (state, action) => {
+//   state.loading = false;
+//   state.states = action.payload.data;
+//   state.error = null;
+// },
+// [getStates.rejected]: (state, action) => {
+//   state.loading = false;
+//   state.error = action.payload;
+//   state.states = [];
+// },
+// [getCities.pending]: (state, action) => {
+//   state.loading = true;
+//   state.error = null;
+//   state.cities = [];
+// },
+// [getCities.fulfilled]: (state, action) => {
+//   state.loading = false;
+//   state.cities = action.payload.data;
+//   state.error = null;
+// },
+// [getCities.rejected]: (state, action) => {
+//   state.loading = false;
+//   state.error = action.payload;
+//   state.cities = [];
+// }
