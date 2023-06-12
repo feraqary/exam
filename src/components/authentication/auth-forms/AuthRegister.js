@@ -176,6 +176,9 @@ const JWTRegister = ({ ...others }) => {
                 func={countryChange}
               />
               </Grid>
+              <Grid item xs={12} sm={6}>
+                
+                </Grid>
             </Grid>
             <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
               <InputLabel htmlFor="outlined-adornment-email-register">Email Address / Username</InputLabel>
