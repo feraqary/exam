@@ -74,7 +74,7 @@ const AppBar = ({ ...others }) => {
               <Button color="inherit" component={Link} href="#">
                 Home
               </Button>
-              <Button color="inherit" component={Link} href="#">
+              <Button color="inherit" component={Link} href="/pages/media_posts/Tabs">
                 Social Media
               </Button>
               <Button color="inherit" component={Link} href="login" target="_blank">

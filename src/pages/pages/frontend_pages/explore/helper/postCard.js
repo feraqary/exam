@@ -150,7 +150,7 @@ export default function PostCard({ pfp, postimg, title, discription, discription
   };
 
   return (
-    <Card sx={{ maxWidth: 720, margin: 'auto', boxShadow: '0px 8px 17px -8px rgba(0,0,0,0.4)' }}>
+    <Card sx={{ maxWidth: 720, margin: 'auto', boxShadow: '0px 8px 17px -8px rgba(0,0,0,0.4)'}}>
       <CardHeader
         avatar={<Avatar alt="User 1" src={pfp} />}
         action={
@@ -228,23 +228,22 @@ export default function PostCard({ pfp, postimg, title, discription, discription
         </ExpandMore>
       </CardActions>
       <Collapse in={comment} timeout="auto" unmountOnExit>
-        <CardContent>
-
+        <CardContent style={{borderTop:'1px solid grey'}}>
           <Typography variant='h4'>farid_019:</Typography><Typography>This house looks nice </Typography>
         </CardContent>
-        <CardContent>
+        <CardContent style={{borderTop:'1px solid grey'}}>
 
           <Typography variant='h4'>Samya2009:</Typography><Typography>nice house </Typography>
         </CardContent>
-        <CardContent>
+        <CardContent style={{borderTop:'1px solid grey'}}>
 
           <Typography variant='h4'>hanya:2321:</Typography><Typography>i want to buy </Typography>
         </CardContent>
-        <CardContent>
+        <CardContent style={{borderTop:'1px solid grey'}}>
 
           <Typography variant='h4'>simon2312:</Typography><Typography>Take my money!!!!! </Typography>
         </CardContent>
-        <CardContent>
+        <CardContent style={{borderTop:'1px solid grey'}}>
 
           <Typography variant='h4'>usman1231:</Typography><Typography>How much? </Typography>
         </CardContent>
