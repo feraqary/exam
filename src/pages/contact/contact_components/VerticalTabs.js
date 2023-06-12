@@ -9,15 +9,6 @@ import { Box, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
 import useConfig from 'hooks/useConfig';
 import { gridSpacing } from 'store/constant';
 import SubCard from 'components/ui-component/cards/SubCard';
-
-// assets
-import PersonOutlineTwoToneIcon from '@mui/icons-material/PersonOutlineTwoTone';
-import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
-import CreditCardTwoToneIcon from '@mui/icons-material/CreditCardTwoTone';
-import VpnKeyTwoToneIcon from '@mui/icons-material/VpnKeyTwoTone';
-
-
-
 //components
 import GenInfo from './gen_info';
 import Leads from './leads';
