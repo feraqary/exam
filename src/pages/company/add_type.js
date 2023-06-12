@@ -97,7 +97,9 @@ function CompanyType() {
               style={{ xs: 12, lg: 8 }}
               type="text"
               value={companyName}
-              setValue={setCompanyName}
+              setV
+              
+  //new change in the comment
             />
             <InputText
               label="Description"
@@ -110,7 +112,6 @@ function CompanyType() {
               value={description}
               setValue={setDescription}
             />
-
             <FileUpload
               label="Upload Logo"
               style={{ xs: 12, lg: 8 }}
