@@ -113,11 +113,6 @@ function Posts() {
                   </Grid>
                 </React.Fragment>
               ))}
-              <Grid item xs={4} md={2}>
-                <Button size="large" variant="contained" onClick={handleAddFileUpload}>
-                  Add
-                </Button>
-              </Grid>
               <FileUpload
                 label="Upload Photo"
                 type="file"
@@ -125,6 +120,11 @@ function Posts() {
                 helperText="Please Upload Company Photo"
                 style={{ xs: 12, lg: 6 }}
               />
+              <Grid item xs={4} md={2}>
+                <Button size="large" variant="contained" onClick={handleAddFileUpload}>
+                  Add
+                </Button>
+              </Grid>
             </Grid>
           </MainCard>
           <SubmitButton />
