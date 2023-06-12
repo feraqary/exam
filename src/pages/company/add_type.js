@@ -111,7 +111,7 @@ function CompanyType() {
               value={description}
               setValue={setDescription}
             />
-
+//change
             <FileUpload
               label="Upload Logo"
               style={{ xs: 12, lg: 8 }}
