@@ -32,6 +32,15 @@ export const getAllCompanyTypes = createAsyncThunk('company/getAllCompanyTypes',
     console.log(rejectWithValue(error));
   }
 });
+export const updateCompanyType = createAsyncThunk('company/updateCompanyType', async (company_idl,formData, { rejectWithValue }) => {
+  try {
+    const response = await api.put(`${baseurl}/api/services/updatecompanytype/${company_id}`,formData, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error);
+    console.log(rejectWithValue(error));
+  }
+});
 export const getAllMainServices = createAsyncThunk('company/getAllMainServices', async (_, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/services/getallmainservices`);

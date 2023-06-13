@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // assets
 import InputText from 'components/InputArea/TextInput';
@@ -16,6 +16,10 @@ import Container from 'components/Elements/Container';
 import { createCompanyType } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
 import FileUpload from 'components/InputArea/FileUpload';
+import { updateCompanyType } from 'store/slices/company-section/action/company';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { update } from 'lodash';
 
 const roles = [
   { label: 'Broker Company', id: 1 },
@@ -25,17 +29,19 @@ const roles = [
 
 // ==============================|| Add Company Type form ||============================== //
 
-function EditType({compType, serviceName, desc, logoImg, iconImg}) {
-  const [companyType, setCompanyType] = useState(compType);
+function EditType({ compType, serviceName, desc, logoImg, imgUrl, id,setClose, open }) {
+    const foundObject = roles.find(role => role.id === compType);
+  const [companyType, setCompanyType] = useState(foundObject.label);
   const [companyName, setCompanyName] = useState(serviceName);
   const [description, setDescription] = useState(desc);
   const [logoImage, setLogoImage] = useState(logoImg);
-  const [iconImage, setIconImage] = useState(iconImg);
+  const [iconImage, setIconImage] = useState(imgUrl);
   const [logoPreview, setLogoPreview] = useState(logoImg);
-  const [iconPreview, setIconPreview] = useState(iconImg);
+  const [iconPreview, setIconPreview] = useState(imgUrl);
 
   const logoRef = useRef(null);
   const iconRef = useRef(null);
+
 
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.companies);
@@ -63,12 +69,12 @@ function EditType({compType, serviceName, desc, logoImg, iconImg}) {
 
   const submitForm = () => {
     const formData = new FormData();
-    formData.append('main_company_type_id', companyType?.id);
     formData.append('title', companyName);
-    formData.append('image_url', logoImage);
-    formData.append('icon_url', iconImage);
     formData.append('description', description);
-    dispatch(createCompanyType(formData));
+    formData.append('icon_url', iconImage);
+    formData.append('image_url', logoImage);
+    formData.append('main_company_type_id', companyType?.id);
+    dispatch(updateCompanyType(id,formData));
     clearFields();
   };
 
@@ -76,6 +82,9 @@ function EditType({compType, serviceName, desc, logoImg, iconImg}) {
     <Page title="Add Company Types">
       <ToastContainer />
       <Grid container spacing={gridSpacing}>
+        <IconButton aria-label="close" sx={{ position: 'absolute', right: 30, top: 30 }}>
+          <CloseIcon />
+        </IconButton>
         <Container title="Add Company Type" style={{ xs: 12 }}>
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
             <AutoCompleteSelector
@@ -98,9 +107,10 @@ function EditType({compType, serviceName, desc, logoImg, iconImg}) {
               style={{ xs: 12, lg: 8 }}
               type="text"
               value={companyName}
-              setV
-              
-  //new change in the comment
+              setValue={setCompanyName}
+
+
+              //new change in the comment
             />
             <InputText
               label="Description"
@@ -145,8 +155,8 @@ function EditType({compType, serviceName, desc, logoImg, iconImg}) {
   );
 }
 
-CompanyType.getLayout = function getLayout(page) {
+EditType.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default CompanyType;
+export default EditType;

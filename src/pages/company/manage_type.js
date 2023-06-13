@@ -9,11 +9,11 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAllCompanyTypes } from 'store/slices/company-section/action/company';
 import { useSelector } from 'react-redux';
-
+import EditType from './edit_type';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -29,11 +29,7 @@ import Switch from '@mui/material/Switch';
 
 // ===========================|| International Company Managment list||=========================== //
 
-
-
 // const isTrue = (bool) =>{  return bool}
-
-const [open, setOpen] = useState(false);
 
 const ColumnHeaders = [
   {
@@ -47,7 +43,7 @@ const ColumnHeaders = [
           gap: '1rem'
         }}
       >
-         <Image src={`http://20.203.31.58/upload/${row.original.image_url}`} width={60} height={30} />
+        <Image src={`http://20.203.31.58/upload/${row.original.image_url}`} width={60} height={30} />
       </Box>
     )
   },
@@ -68,93 +64,93 @@ const ColumnHeaders = [
   {
     accessorKey: 'action',
     header: 'Action',
-    Cell: ({ renderedCellValue, row }) => (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem'
-        }}
-      >
-        <Button variant="contained" onClick={setOpen(!open)} color="primary" startIcon={<EditIcon />}>
-          Edit
-        </Button>
-        <Button variant="contained" color="error" startIcon={<DeleteIcon />}>
-          Block
-        </Button>
-      </Box>
-    )
+    Cell: ({ renderedCellValue, row }) => {
+      const [open, setOpen] = useState(false);
+
+      const [compType, setCompType] = useState(0);
+      const [logoImg, setLogoImg] = useState(null);
+      const [imgUrl, setImgUrl] = useState('');
+      const [id, setId] = useState('');
+      const [title, setTitle] = useState('');
+      const [desc, setDesc] = useState('');
+
+      // console.table({ compType: compType, logoImg: logoImg, imgUrl: imgUrl, id: id, title: title, desc: desc });
+
+      const handleClickOpen = (id) => {
+        setCompType(row.original.main_company_type_id);
+        setLogoImg(row.original.icon_url);
+        setImgUrl(row.original.image_url);
+        setId(id);
+        setTitle(row.original.title);
+        setDesc(row.original.description);
+
+        setOpen(true);
+      };
+
+      const handleClose = () => {
+        setOpen(false);
+      };
+
+      console.log(row.original);
+      return (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem'
+          }}
+        >
+          <Button variant="contained" onClick={() => handleClickOpen(row.original.id)} color="primary" startIcon={<EditIcon />}>
+            Edit
+          </Button>
+          <Button variant="contained" color="error" startIcon={<DeleteIcon />}>
+            Block
+          </Button>
+
+          <Dialog
+            // fullWidth={fullWidth}
+            maxWidth={'lg'}
+            open={open}
+            onClose={handleClose}
+          >
+            <DialogContent>
+              <DialogContentText>
+                <EditType setClose={setOpen} id={id} compType={compType} imgUrl={imgUrl} logoImg={logoImg} serviceName={title} desc={desc} open={open} />
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
+        </Box>
+      );
+    }
   }
 ];
 
 const companyType = () => {
-  const { companyTypes } = useSelector(state => state.companies)
-  console.log(companyTypes) 
+  const { companyTypes } = useSelector((state) => state.companies);
+  console.log(companyTypes);
 
-  // const [compName,setCompName] = useState(companyTypes[0].title)
-  // const [compType,setCompType] = useState(companyTypes[0].description)
-  // const [logoImg,setLogoImg] = useState(companyTypes[0].companyTypeLogo)
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(getAllCompanyTypes())
-    console.log(dispatch(getAllCompanyTypes()))
-  },[dispatch])
+  useEffect(() => {
+    dispatch(getAllCompanyTypes());
+    console.log(dispatch(getAllCompanyTypes()));
+  }, [dispatch]);
 
-
-  const [open, setOpen] = useState(false);
-  const [fullWidth, setFullWidth] = useState(true);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-
-  return(
-
-  <Page title="International Company List">
-    <Grid container spacing={gridSpacing}>
-      <Grid item xs={12}>
-        <Table columnHeaders={ColumnHeaders} data={companyTypes} />
+  return (
+    <Page title="International Company List">
+      <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Table columnHeaders={ColumnHeaders} data={companyTypes} />
+        </Grid>
       </Grid>
-
-      <Dialog
-        fullWidth={fullWidth}
-        maxWidth={'lg'}
-        open={open}
-        onClose={handleClose}
-      >
-         <DialogContent>
-            <DialogContentText>
-              You can set my maximum width and whether to adapt or not.
-            </DialogContentText>
-          </DialogContent>
-        </Dialog>
-    </Grid>
-  </Page>
-)};
+    </Page>
+  );
+};
 
 companyType.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
 export default companyType;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const data = [
 //   {
