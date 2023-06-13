@@ -8,40 +8,38 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 // assets
 import DateRangeIcon from '@mui/icons-material/DateRange';
+import InputLayout from './InputLayout';
 
 // ==============================|| CUSTOM DATETIME ||============================== //
 
-const CustomDateTime = () => {
-  const [value, setValue] = React.useState(new Date('2019-01-01'));
-
+const CustomDateTime = ({ style, label, helperText, value, setValue }) => {
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <MobileDatePicker
-        value={value}
-        onChange={(newValue) => {
-          setValue(newValue);
-        }}
-        // label="Basic Datetime Picker"
-        onError={console.log}
-        minDate={new Date('2018-01-01')}
-        inputFormat="yyyy/MM/dd"
-        mask="___/__/__"
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            fullWidth
-            margin="normal"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <DateRangeIcon />
-                </InputAdornment>
-              )
-            }}
-          />
-        )}
-      />
-    </LocalizationProvider>
+    <InputLayout label={label} style={{ xs: style.x, lg: style.lg }} helperText={helperText}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <MobileDatePicker
+          value={value}
+          onChange={(newValue) => {
+            setValue(newValue);
+          }}
+          label="Please pick a date"
+          inputFormat="yyyy/MM/dd"
+          mask="___/__/__"
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <DateRangeIcon />
+                  </InputAdornment>
+                )
+              }}
+            />
+          )}
+        />
+      </LocalizationProvider>
+    </InputLayout>
   );
 };
 

@@ -11,29 +11,76 @@ import InputLayout from './InputLayout';
 import { forwardRef } from 'react';
 
 const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, style, setValue, imagePreview, setImagePreview }, ref) => {
-  const handleImagePreview = (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
-    img.onload = () => {
-      const width = img.width;
-      const height = img.height;
-      URL.revokeObjectURL(img.src);
+    const fileTypes = type?.split(',');
 
-      if (width > 1920 || height > 1080) {
+    if (!fileTypes.includes(file?.type.split('/')[1])) {
+      setValue(null);
+      ref.current.value = null;
+      toast.error(`image file must a ${fileTypes.join(' | ')} format`, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark'
+      });
+    }
+
+    if (file.type.split('/')[1] !== 'pdf') {
+      const img = new Image();
+      img.src = file ? URL.createObjectURL(file) : null;
+
+      img.onload = () => {
+        const width = img.width;
+        const height = img.height;
+        URL.revokeObjectURL(img.src);
+
+        if (width > 1920 || height > 1080) {
+          setValue(null);
+          ref.current.value = null;
+          if (image) setImagePreview(null);
+          toast.error(`image file must be 1920x1080`, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark'
+          });
+        } else if (file.size / 1024 > 100) {
+          setValue(null);
+          ref.current.value = null;
+          if (image) setImagePreview(null);
+          toast.error(`file size must not exceed 10MB`, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark'
+          });
+        } else {
+          if (image) {
+            setImagePreview(URL.createObjectURL(file));
+          }
+          setValue(file);
+        }
+      };
+    }
+
+    if (file.type.split('/')[1] === 'pdf') {
+      if (file.size / 1024 > 100) {
+        ref.current.value = null;
         setValue(null);
-        toast.error(`image file must be 1920x1080`, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
-      } else if (file.size / 1024 > 10) {
-        setValue(null);
+        if (image) setImagePreview(null);
         toast.error(`file size must not exceed 10MB`, {
           position: 'top-right',
           autoClose: 5000,
@@ -45,29 +92,10 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, st
           theme: 'dark'
         });
       } else {
-        setImagePreview(URL.createObjectURL(file));
         setValue(file);
       }
-    };
+    }
   };
-
-  // const handleFileUploadChange = (e) => {
-  //   const file = e.target.files[0];
-  //   const imageSize = file.size / 1024;
-  //   if (imageSize > 10) {
-  //     toast.error(`file size must not exceed 10MB`, {
-  //       position: 'top-right',
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: 'dark'
-  //     });
-  //   }
-  //   setValue(file);
-  // };
 
   return (
     <>
@@ -84,7 +112,7 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, st
               </InputAdornment>
             )
           }}
-          onChange={(e) => handleImagePreview(e)}
+          onChange={(e) => handleImageChange(e)}
           inputRef={ref}
         />
       </InputLayout>

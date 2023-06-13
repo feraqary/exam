@@ -115,7 +115,7 @@ function CompanyType() {
               label="Upload Logo"
               style={{ xs: 12, lg: 8 }}
               placeholder="Upload Logo"
-              type="file"
+              type="png,jpeg,jpg"
               helperText="Please upload your logo"
               image={{ alt: 'Logo Preview', width: '250px', height: '250px' }}
               setValue={setLogoImage}
@@ -127,7 +127,7 @@ function CompanyType() {
               label="Upload Icon"
               style={{ xs: 12, lg: 8 }}
               placeholder="Upload Icon"
-              type="file"
+              type="png,jpeg,jpg"
               helperText="Please upload your icon"
               image={{ alt: 'Icon Preview', width: '250px', height: '250px' }}
               setValue={setIconImage}

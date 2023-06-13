@@ -49,7 +49,6 @@ export const getAllServices = createAsyncThunk('company/getAllServices', async (
   }
 });
 
-
 export const getMainServices = createAsyncThunk('service/getMainServiceById', async (company_id, { rejectWithValue }) => {
   try {
     if (!company_id) {
@@ -60,17 +59,6 @@ export const getMainServices = createAsyncThunk('service/getMainServiceById', as
     return response.data;
   } catch (error) {
     return rejectWithValue(error.error);
-  }
-});
-
-
-
-export const createCompany = createAsyncThunk('company/createCompany', async (formData, { rejectWithValue }) => {
-  try {
-    const response = await api.post(`${baseurl}/api/services/createCompany`, formData, config);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error);
   }
 });
 
@@ -95,6 +83,15 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
 export const getInternationalCompanies = createAsyncThunk('company/getInternationalCompanies', async (_, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=10&country=uae`);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
+
+export const createCompany = createAsyncThunk('company/createCompany', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await api.post(`${baseurl}/api/dashboard/createCompany`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);

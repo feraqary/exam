@@ -7,12 +7,13 @@ import React, { useState, useMemo } from 'react';
 // assets
 import InputLayout from './InputLayout';
 
-const Selector = ({ id, style, label, options, helperText }) => {
+const Selector = ({ id, style, label, options, helperText, value, setValue }) => {
   return (
     <InputLayout style={style} helperText={helperText} label={label}>
-      <NativeSelect id={id} fullWidth>
-        {options.map((option) => {
-          return <option value={option}>{option}</option>;
+      <NativeSelect id={id} fullWidth value={value} onChange={(e) => setValue(e.target.value)}>
+        <option value="">None</option>
+        {options.map((i, option) => {
+          return <option value={option}>{i}</option>;
         })}
       </NativeSelect>
     </InputLayout>
