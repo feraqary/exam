@@ -9,11 +9,11 @@ import { toast } from 'react-toastify';
 import { UploadFile } from '@mui/icons-material';
 import InputLayout from './InputLayout';
 import { forwardRef } from 'react';
+import { words } from 'lodash';
 
 const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, style, setValue, imagePreview, setImagePreview }, ref) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    const fileTypes = type?.split(',');
 
     if (!fileTypes.includes(file?.type.split('/')[1])) {
       setValue(null);

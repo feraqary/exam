@@ -1,6 +1,5 @@
 import { api } from 'utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-const baseurl = 'http://20.203.31.58';
 const config = {
   headers: { 'Content-Type': 'multipart/form-data' }
 };

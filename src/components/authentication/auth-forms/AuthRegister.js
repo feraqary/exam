@@ -24,6 +24,9 @@ import {
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { useSelector } from 'react-redux';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import {setCountry } from 'store/slices/country-section/slice/country';
 
 // project imports
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
@@ -60,12 +63,16 @@ const JWTRegister = ({ ...others }) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  const countryChange = (newValue) => {
+    dispatch(setCountry(newValue));
+  };
 
   const changePassword = (value) => {
     const temp = strengthIndicator(value);
     setStrength(temp);
     setLevel(strengthColor(temp));
   };
+  const { countries, loading, country } = useSelector((state) => state.countries);
 
   useEffect(() => {
     changePassword('123456');
@@ -154,6 +161,24 @@ const JWTRegister = ({ ...others }) => {
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
+              <Grid item xs={12} sm={6}>
+              <AutoCompleteSelector
+              fullWidth
+                style={{ xs: 12, lg: 12, mb: 2 }}
+                id="country-selector"
+                options={countries?.map((country) => {
+                  return { label: country.Country, id: country.ID };
+                })}
+                placeholder="Select a Country"
+                value={country}
+                setValue={setCountry}
+                loading={loading}
+                func={countryChange}
+              />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                
+                </Grid>
             </Grid>
             <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
               <InputLabel htmlFor="outlined-adornment-email-register">Email Address / Username</InputLabel>

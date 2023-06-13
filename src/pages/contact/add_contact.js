@@ -42,7 +42,6 @@ import SubmitButton from 'components/Elements/SubmitButton';
 function Add_contact() {
   const Dummy = ['this', 'is', 'a', 'dummy'];
   const [managed, setManaged] = useState('');
-  const [Class, setClass] = useState('');
   const [value, setvalue] = useState();
   const [Email, setEmail] = useState(true);
   const [personName, setPersonName] = useState([]);
