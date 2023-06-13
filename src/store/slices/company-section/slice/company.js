@@ -31,21 +31,16 @@ const initialState = {
       companyType: null,
       subCompanyType: null,
       mainService: null,
-      service: '',
+      service: null,
       companyName: '',
       companyTagline: '',
       reraNo: '',
       licenseNo: '',
-      licenseImage: '',
       licenseExpiry: '',
       vatNo: '',
-      vatStatus: '',
-      vatImage: ''
+      vatStatus: ''
     },
     billingAddressInformation: {
-      country: '',
-      state: '',
-      city: '',
       community: '',
       officeAddress: '',
       billingReference: ''
@@ -72,8 +67,7 @@ const initialState = {
       numberOfEmployees: '',
       subscriptionDuration: '',
       subscriptionStartDate: '',
-      subscriptionEndDate: '',
-      profileImage: ''
+      subscriptionEndDate: ''
     },
     bankAccountDetails: {
       accountNumber: '',
@@ -84,6 +78,13 @@ const initialState = {
       bankName: '',
       bankBranch: '',
       swiftCode: ''
+    },
+
+    companyPresentation: {
+      companyWebsite: '',
+      companyEmail: '',
+      companyContactNumber: '',
+      companyDescription: ''
     }
   },
   mainService: null,
@@ -115,6 +116,125 @@ const slice = createSlice({
     },
     setCompanyService: (state, action) => {
       state.companyInformation.companyDetails.service = action.payload;
+    },
+    setCompanyName: (state, action) => {
+      console.log(action);
+      state.companyInformation.companyDetails.companyName = action.payload;
+    },
+    setCompanyTagline: (state, action) => {
+      state.companyInformation.companyDetails.companyTagline = action.payload;
+    },
+    setCompanyReraNo: (state, action) => {
+      state.companyInformation.companyDetails.reraNo = action.payload;
+    },
+    setCompanyLicenseNo: (state, action) => {
+      state.companyInformation.companyDetails.licenseNo = action.payload;
+    },
+    setCompanyLicenseExpiry: (state, action) => {
+      state.companyInformation.companyDetails.licenseExpiry = action.payload;
+    },
+    setCompanyVatNo: (state, action) => {
+      state.companyInformation.companyDetails.vatNo = action.payload;
+    },
+    setCompanyVatStatus: (state, action) => {
+      state.companyInformation.companyDetails.vatStatus = action.payload;
+    },
+    setCompanyCommunity: (state, action) => {
+      state.companyInformation.billingAddressInformation.community = action.payload;
+    },
+    setCompanyOfficeAddress: (state, action) => {
+      state.companyInformation.billingAddressInformation.officeAddress = action.payload;
+    },
+    setCompanyBillingReference: (state, action) => {
+      state.companyInformation.billingAddressInformation.billingReference = action.payload;
+    },
+    setCompanyLocationMapUrl: (state, action) => {
+      state.companyInformation.companyLocation.mapUrl = action.payload;
+    },
+
+    setCompanyLocationPlace: (state, action) => {
+      state.companyInformation.companyLocation.place = action.payload;
+    },
+    setCompanyLocationState: (state, action) => {
+      state.companyInformation.companyLocation.state = action.payload;
+    },
+    setCompanyLocationCountry: (state, action) => {
+      state.companyInformation.companyLocation.country = action.payload;
+    },
+    setCompanyLocationLat: (state, action) => {
+      state.companyInformation.companyLocation.lat = action.payload;
+    },
+    setCompanyLocationLong: (state, action) => {
+      state.companyInformation.companyLocation.long = action.payload;
+    },
+    setCompanySocialMediaFacebook: (state, action) => {
+      state.companyInformation.socialMedia.facebook = action.payload;
+    },
+    setCompanySocialMediaTwitter: (state, action) => {
+      state.companyInformation.socialMedia.twitter = action.payload;
+    },
+    setCompanySocialMediaInstagram: (state, action) => {
+      state.companyInformation.socialMedia.instagram = action.payload;
+    },
+    setCompanySocialMediaLinkedIn: (state, action) => {
+      state.companyInformation.socialMedia.linkedin = action.payload;
+    },
+    setCompanyPresentationCompanyWebsite: (state, action) => {
+      state.companyInformation.companyPresentation.companyWebsite = action.payload;
+    },
+    setCompanyPresentationCompanyEmail: (state, action) => {
+      state.companyInformation.companyPresentation.companyEmail = action.payload;
+    },
+    setCompanyPresentationCompanyContactNumber: (state, action) => {
+      state.companyInformation.companyPresentation.companyContactNumber = action.payload;
+    },
+    setCompanyPresentationCompanyDescription: (state, action) => {
+      state.companyInformation.companyPresentation.companyDescription = action.payload;
+    },
+    setCompanyAdminContactInformationFirstName: (state, action) => {
+      state.companyInformation.adminContactInformation.firstName = action.payload;
+    },
+    setCompanyAdminContactInformationLastName: (state, action) => {
+      state.companyInformation.adminContactInformation.lastName = action.payload;
+    },
+    setCompanyAdminContactInformationEmailAddress: (state, action) => {
+      state.companyInformation.adminContactInformation.emailAddress = action.payload;
+    },
+    setCompanyAdminContactInfromationPhoneNumber: (state, action) => {
+      state.companyInformation.adminContactInformation.phoneNumber = action.payload;
+    },
+    setCompanyAdminContactInformationSubscriptionDuration: (state, action) => {
+      state.companyInformation.adminContactInformation.subscriptionDuration = action.payload;
+    },
+    setCompanyAdminContactInformationSubscriptionDurationStartDate: (state, action) => {
+      state.companyInformation.adminContactInformation.subscriptionStartDate = action.payload;
+    },
+    setCompanyAdminContactInformationSubscriptionDurationEndDate: (state, action) => {
+      state.companyInformation.adminContactInformation.subscriptionEndDate = action.payload;
+    },
+    setCompanyBankAccountDetailsAccountNumber: (state, action) => {
+      state.companyInformation.bankAccountDetails.accountNumber = action.payload;
+    },
+    setCompanyBankAccountDetailsAccountName: (state, action) => {
+      state.companyInformation.bankAccountDetails.accountNumber = action.payload;
+    },
+    setCompanyBankAccountDetailsIbanNumber: (state, action) => {
+      state.companyInformation.bankAccountDetails.ibanNumber = action.payload;
+    },
+    setCompanyBankAccountDetailsCurrency: (state, action) => {
+      state.companyInformation.bankAccountDetails.currency = action.payload;
+    },
+    setCompanyBankAccountDetailsCountry: (state, action) => {
+      state.companyInformation.bankAccountDetails.country = action.payload;
+    },
+    setCompanyBankAccountDetailsBankName: (state, action) => {
+      state.companyInformation.bankAccountDetails.bankName = action.payload;
+    },
+    setCompanyBankAccountDetailsBankBranch: (state, action) => {
+      state.companyInformation.bankAccountDetails.bankBranch = action.payload;
+    },
+    setCompanyBankAccountDetailsSwiftCode: (state, action) => {
+      state.companyInformation.bankAccountDetails.swiftCode = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -157,7 +277,7 @@ const slice = createSlice({
       // update company types=================================================================================================
       .addCase(updateCompanyType.pending, (state) => {
         state.loading = true;
-        state.companyTypes = [];
+        state.companyTypes = state.companyTypes;
         state.error = null;
       })
       .addCase(updateCompanyType.fulfilled, (state, action) => {
@@ -168,12 +288,12 @@ const slice = createSlice({
       .addCase(updateCompanyType.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.companyTypes = [];
+        state.companyTypes = state.companyTypes;
       })
       // get all company types=================================================================================================
       .addCase(getAllCompanyTypes.pending, (state) => {
         state.loading = true;
-        state.companyTypes = [];
+        state.companyTypes = state.companyTypes;
         state.error = null;
       })
       .addCase(getAllCompanyTypes.fulfilled, (state, action) => {
@@ -184,7 +304,7 @@ const slice = createSlice({
       .addCase(getAllCompanyTypes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
-         state.companyTypes = [];
+        state.companyTypes = state.companyTypes;
       })
 
       // create main service
@@ -228,7 +348,7 @@ const slice = createSlice({
       // get all main services=================================================================================================
       .addCase(getAllMainServices.pending, (state) => {
         state.loading = true;
-        state.mainServices = [];
+        state.mainServices = state.mainServices;
         state.error = null;
       })
       .addCase(getAllMainServices.fulfilled, (state, action) => {
@@ -239,13 +359,13 @@ const slice = createSlice({
       .addCase(getAllMainServices.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
-        state.mainServices = [];
+        state.mainServices = state.mainServices;
       })
       // get main services=================================================================================================
       .addCase(getMainServices.pending, (state) => {
         console.log(state);
         state.loading = true;
-        state.mainService = [];
+        state.mainService = state.mainService;
         state.error = null;
       })
       .addCase(getMainServices.fulfilled, (state, action) => {
@@ -256,23 +376,43 @@ const slice = createSlice({
       .addCase(getMainServices.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error;
-        state.mainService = [];
+        state.mainService = state.mainService;
       })
 
       .addCase(createCompany.pending, (state) => {
         state.loading = true;
-        state.companies = [];
+        state.companies = state.companies;
         state.error = null;
       })
       .addCase(createCompany.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.companies = [...state.companies, action.payload.data];
+        toast.success('Company Added Successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark'
+        });
       })
       .addCase(createCompany.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
-        state.companies = [];
+        state.companies = state.companies;
+        toast.error(`${state.error}`, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark'
+        });
       })
       // create service
 
@@ -322,7 +462,7 @@ const slice = createSlice({
       .addCase(getLocalCompanies.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.localCompanies = [...action.payload.data];
+        state.localCompanies = action.payload.data ? [...action.payload.data] : [];
       })
       .addCase(getLocalCompanies.rejected, (state, action) => {
         state.loading = false;
@@ -338,7 +478,7 @@ const slice = createSlice({
       .addCase(getInternationalCompanies.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.internationalCompanies = [...action.payload.data];
+        state.internationalCompanies = action.payload.data ? [...action.payload.data] : [];
       })
       .addCase(getInternationalCompanies.rejected, (state, action) => {
         state.loading = false;
@@ -373,5 +513,44 @@ export const {
   setMainCompanyType,
   setSubCompanyType,
   setCompanyMainService,
-  setCompanyService
+  setCompanyService,
+  setCompanyLicenseExpiry,
+  setCompanyLicenseNo,
+  setCompanyName,
+  setCompanyReraNo,
+  setCompanyTagline,
+  setCompanyVatNo,
+  setCompanyVatStatus,
+  setCompanyCommunity,
+  setCompanyBillingReference,
+  setCompanyOfficeAddress,
+  setCompanyLocationMapUrl,
+  setCompanyLocationCountry,
+  setCompanyLocationState,
+  setCompanyLocationLat,
+  setCompanyLocationLong,
+  setCompanyLocationPlace,
+  setCompanySocialMediaFacebook,
+  setCompanySocialMediaInstagram,
+  setCompanySocialMediaLinkedIn,
+  setCompanySocialMediaTwitter,
+  setCompanyPresentationCompanyWebsite,
+  setCompanyPresentationCompanyContactNumber,
+  setCompanyPresentationCompanyDescription,
+  setCompanyPresentationCompanyEmail,
+  setCompanyAdminContactInformationEmailAddress,
+  setCompanyAdminContactInformationFirstName,
+  setCompanyAdminContactInformationLastName,
+  setCompanyAdminContactInformationSubscriptionDuration,
+  setCompanyAdminContactInformationSubscriptionDurationEndDate,
+  setCompanyAdminContactInformationSubscriptionDurationStartDate,
+  setCompanyAdminContactInfromationPhoneNumber,
+  setCompanyBankAccountDetailsAccountName,
+  setCompanyBankAccountDetailsAccountNumber,
+  setCompanyBankAccountDetailsBankBranch,
+  setCompanyBankAccountDetailsBankName,
+  setCompanyBankAccountDetailsCountry,
+  setCompanyBankAccountDetailsCurrency,
+  setCompanyBankAccountDetailsIbanNumber,
+  setCompanyBankAccountDetailsSwiftCode
 } = slice.actions;

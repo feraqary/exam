@@ -29,19 +29,23 @@ const roles = [
 
 // ==============================|| Add Company Type form ||============================== //
 
-function EditType({ compType, serviceName, desc, logoImg, imgUrl, id,setClose, open }) {
-    const foundObject = roles.find(role => role.id === compType);
+function EditType({ compType, serviceName, desc, logoImg, imgUrl, id, setClose, open }) {
+  const foundObject = roles.find((role) => role.id === compType);
+
   const [companyType, setCompanyType] = useState(foundObject.label);
   const [companyName, setCompanyName] = useState(serviceName);
   const [description, setDescription] = useState(desc);
-  const [logoImage, setLogoImage] = useState(logoImg);
-  const [iconImage, setIconImage] = useState(imgUrl);
-  const [logoPreview, setLogoPreview] = useState(logoImg);
-  const [iconPreview, setIconPreview] = useState(imgUrl);
+  const [logoImage, setLogoImage] = useState(null);
+  const [iconImage, setIconImage] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [iconPreview, setIconPreview] = useState(null);
+//   const [logoImage, setLogoImage] = useState(logoImg);
+//   const [iconImage, setIconImage] = useState(imgUrl);
+//   const [logoPreview, setLogoPreview] = useState(logoImg);
+//   const [iconPreview, setIconPreview] = useState(imgUrl);
 
   const logoRef = useRef(null);
   const iconRef = useRef(null);
-
 
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.companies);
@@ -67,6 +71,7 @@ function EditType({ compType, serviceName, desc, logoImg, imgUrl, id,setClose, o
     }
   };
 
+
   const submitForm = () => {
     const formData = new FormData();
     formData.append('title', companyName);
@@ -74,7 +79,12 @@ function EditType({ compType, serviceName, desc, logoImg, imgUrl, id,setClose, o
     formData.append('icon_url', iconImage);
     formData.append('image_url', logoImage);
     formData.append('main_company_type_id', companyType?.id);
-    dispatch(updateCompanyType(id,formData));
+    console.table({"title": companyName, "description": description, "icon_url": iconImage, "image": logoImage});
+    const data = {
+        company_id: 3, // Replace with the desired company ID
+        formData: formData,
+    };
+    dispatch(updateCompanyType(data));
     clearFields();
   };
 
@@ -109,7 +119,6 @@ function EditType({ compType, serviceName, desc, logoImg, imgUrl, id,setClose, o
               value={companyName}
               setValue={setCompanyName}
 
-
               //new change in the comment
             />
             <InputText
@@ -127,7 +136,7 @@ function EditType({ compType, serviceName, desc, logoImg, imgUrl, id,setClose, o
               label="Upload Logo"
               style={{ xs: 12, lg: 8 }}
               placeholder="Upload Logo"
-              type="file"
+              type="jpg,jpeg,png"
               helperText="Please upload your logo"
               image={{ alt: 'Logo Preview', width: '250px', height: '250px' }}
               setValue={setLogoImage}
@@ -139,7 +148,7 @@ function EditType({ compType, serviceName, desc, logoImg, imgUrl, id,setClose, o
               label="Upload Icon"
               style={{ xs: 12, lg: 8 }}
               placeholder="Upload Icon"
-              type="file"
+              type="jpg,jpeg,png"
               helperText="Please upload your icon"
               image={{ alt: 'Icon Preview', width: '250px', height: '250px' }}
               setValue={setIconImage}

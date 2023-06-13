@@ -32,13 +32,14 @@ export const getAllCompanyTypes = createAsyncThunk('company/getAllCompanyTypes',
     console.log(rejectWithValue(error));
   }
 });
-export const updateCompanyType = createAsyncThunk('company/updateCompanyType', async (company_idl,formData, { rejectWithValue }) => {
+export const updateCompanyType = createAsyncThunk('company/updateCompanyType', async ({company_id,formData} , { rejectWithValue }) => {
   try {
+    console.log(`company id: ${company_id}`)
     const response = await api.put(`${baseurl}/api/services/updatecompanytype/${company_id}`,formData, config);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error);
     console.log(rejectWithValue(error));
+    return rejectWithValue(error.response.data);
   }
 });
 export const getAllMainServices = createAsyncThunk('company/getAllMainServices', async (_, { rejectWithValue }) => {
@@ -59,7 +60,6 @@ export const getAllServices = createAsyncThunk('company/getAllServices', async (
   }
 });
 
-
 export const getMainServices = createAsyncThunk('service/getMainServiceById', async (company_id, { rejectWithValue }) => {
   try {
     if (!company_id) {
@@ -70,17 +70,6 @@ export const getMainServices = createAsyncThunk('service/getMainServiceById', as
     return response.data;
   } catch (error) {
     return rejectWithValue(error.error);
-  }
-});
-
-
-
-export const createCompany = createAsyncThunk('company/createCompany', async (formData, { rejectWithValue }) => {
-  try {
-    const response = await api.post(`${baseurl}/api/services/createCompany`, formData, config);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error);
   }
 });
 
@@ -105,6 +94,15 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
 export const getInternationalCompanies = createAsyncThunk('company/getInternationalCompanies', async (_, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=10&country=uae`);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
+
+export const createCompany = createAsyncThunk('company/createCompany', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await api.post(`${baseurl}/api/dashboard/createCompany`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);

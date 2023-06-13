@@ -62,6 +62,12 @@ const companies = {
           url: '/company/add_services'
         },
         {
+          id: 'Place_holder',
+          title: <FormattedMessage id="PlaceHolder" />,
+          type: 'item',
+          url: '/company/placeHolderName'
+        },
+        {
           id: 'local',
           title: <FormattedMessage id="local-companies" />,
           type: 'item',

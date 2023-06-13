@@ -84,6 +84,7 @@ function Posts() {
               helperText="Please enter detailed description"
               multiline={true}
               rows={7}
+              required={true}
             />
              <FileUpload
                 label="Upload Photo"

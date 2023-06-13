@@ -35,3 +35,15 @@ export const getCities = createAsyncThunk('countries/getCitiesbystate', async (s
     return rejectWithValue(error.error);
   }
 });
+
+export const getCommunities = createAsyncThunk('countries/getCommunities', async (city_id, { rejectWithValue }) => {
+  try {
+    if (!city_id) {
+      return [];
+    }
+    const response = await api.get(`${baseurl}/api/country/getcommunitiesbycity/${city_id}`);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.error);
+  }
+});
