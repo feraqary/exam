@@ -146,7 +146,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
               <Typography
                 variant="subtitle1"
                 component={Link}
-                href={loginProp ? `/pages/authentication/auth${loginProp}/forgot-password` : '/pages/authentication/auth3/forgot-password'}
+                href={loginProp ? `/pages/authentication/portal_registration/forgot-password` : '/pages/authentication/portal_registration/forgot-password'}
                 color="secondary"
                 sx={{ textDecoration: 'none' }}
               >

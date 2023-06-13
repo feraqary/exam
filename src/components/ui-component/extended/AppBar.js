@@ -110,14 +110,6 @@ const AppBar = ({ ...others }) => {
                       <Link style={{ textDecoration: 'none' }} href="/" target="_blank">
                         <ListItemButton component="a">
                           <ListItemIcon>
-                            <IconBook />
-                          </ListItemIcon>
-                          <ListItemText primary="Documentation" />
-                        </ListItemButton>
-                      </Link>
-                      <Link style={{ textDecoration: 'none' }} href="/" target="_blank">
-                        <ListItemButton component="a">
-                          <ListItemIcon>
                             <IconCreditCard />
                           </ListItemIcon>
     
