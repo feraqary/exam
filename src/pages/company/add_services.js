@@ -132,7 +132,7 @@ function Service() {
               label="Upload Logo"
               style={{ xs: 12, lg: 8 }}
               placeholder="Upload Logo"
-              type="file"
+              type="png,jpeg,jpg"
               helperText="Please upload your logo"
               image={{ alt: 'Logo Preview', width: '250px', height: '250px' }}
               ref={logoRef}
@@ -144,7 +144,7 @@ function Service() {
               label="Upload Icon"
               style={{ xs: 12, lg: 8 }}
               placeholder="Upload Icon"
-              type="file"
+              type="png,jpeg,jpg"
               helperText="Please upload your Icon"
               image={{ alt: 'Icon Preview', width: '250px', height: '250px' }}
               ref={iconRef}

@@ -2,7 +2,7 @@
 import { TextField } from '@mui/material';
 
 // project imports
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import InputLayout from './InputLayout';
 
 const InputText = ({ label, placeholder, helperText, style, type, value, setValue, ...rest }) => {

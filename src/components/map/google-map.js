@@ -1,72 +1,71 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react';
 import { useLoadScript, GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 import { Grid } from '@mui/material';
 import axios from 'axios';
 
+export default function Map({ locationAddress, xs, lg }) {
+  const [lat, setlat] = useState(24.4984312);
+  const [long, setlong] = useState(54.4036975);
+  const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
 
+  const handleMapLoad = (map) => {
+    // Set custom cursor for the map container
+    map.setOptions({ draggableCursor: 'pointer' });
 
+    // Optionally, you can also change the cursor when dragging the map
+    window.google.maps.event.addListener(map, 'dragstart', () => {
+      map.setOptions({ draggableCursor: 'grabbing' });
+    });
 
+    window.google.maps.event.addListener(map, 'dragend', () => {
+      map.setOptions({ draggableCursor: 'pointer' });
+    });
+  };
 
-
-export default function Map ({locationAddress, xs,lg}){
-    // console.log(`locationAddress: ${locationAddress}`)
-    const [lat, setlat] = useState(null);
-    const [long, setlong] = useState(null);
-    const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
-
-    const getloc = (add) => {
-    // const url = e;
+  const getloc = (add) => {
+    console.log(add);
     const url = 'https://maps.googleapis.com/maps/api/geocode/json';
-    // const address = 'Wahda mall';
     axios
-        .get(url, {
+      .get(url, {
         params: {
-            address: add,
-            key: apiKey
+          address: add,
+          key: apiKey
         }
-        })
-        .then((response) => {
-        console.log(response.data.results[0]);
+      })
+      .then((response) => {
         setlat(response.data.results[0].geometry.location.lat);
         setlong(response.data.results[0].geometry.location.lng);
-        setFormatedAdd(response.data.results[0].formatted_address);
-        setAdd(formatedAdd.split(' - '));
-        console.log('add: ' + Add);
-        setlocCountry(Add[Add.length - 1]);
-        setState(Add[Add.length - 2]);
-        setCity(Add[Add.length - 2]);
-
-        console.log(formatedAdd);
-        console.log('country: ' + locCountry);
-        console.log('State: ' + state);
-        console.log('City: ' + city);
-        })
-        .catch((error) => {
+      })
+      .catch((error) => {
         console.error(error);
-        });
-    };
+      });
+  };
+  useEffect(() => {
+    getloc(locationAddress);
+  }, [locationAddress]);
 
-    getloc(locationAddress)
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: apiKey
+  });
 
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: apiKey
-    });
-    
-    if(!isLoaded){
-        return(
-            <div>loading....</div>
-        )
-    }else{
-        return(
-            <Grid item xs={xs} lg={lg}>
-                <GoogleMap
-                mapContainerStyle={{ position: 'relative', height: '27vh', width: '100%' }}
-                center={lat != null || long != null ? { lat: lat, lng: long } : { lat: 24.4984312, lng: 54.4036975 }}
-                zoom={13}
-                >
-                    <Marker position={lat != null || long != null ? { lat: lat, lng: long } : { lat: 24.4984312, lng: 54.4036975 }} />
-                </GoogleMap>
-            </Grid>
-        )
-    }
+  if (!isLoaded) {
+    return <div>loading....</div>;
+  } else {
+    return (
+      <Grid item xs={xs} lg={lg}>
+        <GoogleMap
+          mapContainerStyle={{ position: 'relative', height: '27vh', width: '100%' }}
+          center={{ lat: lat, lng: long }}
+          zoom={13}
+          onClick={(e) => {
+            setlat(e.latLng.lat());
+            setlong(e.latLng.lng());
+          }}
+          onLoad={handleMapLoad}
+        >
+          <Marker position={{ lat: lat, lng: long }} />
+        </GoogleMap>
+      </Grid>
+    );
+  }
 }

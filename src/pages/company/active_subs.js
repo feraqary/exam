@@ -4,7 +4,6 @@ import { Grid, Box, Button } from '@mui/material';
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
-import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
 import Table from 'components/Table/Table';
