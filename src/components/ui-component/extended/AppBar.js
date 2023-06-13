@@ -107,7 +107,7 @@ const AppBar = ({ ...others }) => {
                           <ListItemText primary="Dashboard" />
                         </ListItemButton>
                       </Link>
-                      <Link style={{ textDecoration: 'none' }} href="https://codedthemes.gitbook.io/berry" target="_blank">
+                      <Link style={{ textDecoration: 'none' }} href="/" target="_blank">
                         <ListItemButton component="a">
                           <ListItemIcon>
                             <IconBook />
@@ -115,12 +115,12 @@ const AppBar = ({ ...others }) => {
                           <ListItemText primary="Documentation" />
                         </ListItemButton>
                       </Link>
-                      <Link style={{ textDecoration: 'none' }} href="https://links.codedthemes.com/hsqll" target="_blank">
+                      <Link style={{ textDecoration: 'none' }} href="/" target="_blank">
                         <ListItemButton component="a">
                           <ListItemIcon>
                             <IconCreditCard />
                           </ListItemIcon>
-                          <ListItemText primary="Purchase Now" />
+    
                         </ListItemButton>
                       </Link>
                     </List>
