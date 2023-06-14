@@ -121,7 +121,7 @@ const Register = () => {
                     <Typography
                       component={Link}
                       href="/pages/authentication/portal_registration/login"
-                      variant="subtitle1"
+                      variant="user-login"
                       sx={{ textDecoration: 'none' }}
                     >
                       Already have an account?

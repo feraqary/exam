@@ -96,7 +96,7 @@ const JWTRegister = ({ ...others }) => {
           email: '',
           password: '',
           firstName: '',
-          lastName: '',
+          lastName: '', 
           submit: null
         }}
         validationSchema={Yup.object().shape({
@@ -172,6 +172,7 @@ const JWTRegister = ({ ...others }) => {
                 options={countries?.map((country) => {
                   return { label: country.Country, id: country.ID };
                 })}
+                name="country"
                 placeholder="Select a Country"
                 value={country}
                 setValue={setCountry}
@@ -183,8 +184,6 @@ const JWTRegister = ({ ...others }) => {
               <TextField
                       type="file"
                       fullWidth
-                      
-                    
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
