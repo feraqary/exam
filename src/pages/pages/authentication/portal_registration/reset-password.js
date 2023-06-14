@@ -57,7 +57,7 @@ const PurpleWrapper = styled('span')(({ theme }) => ({
 
 // carousel items
 const items = [
-  {{
+  {
     title: 'Aqary International ',
     description: 'The Purpose of Aqary International is to make home moving easier in the entire world. '
   },
