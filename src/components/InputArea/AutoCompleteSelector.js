@@ -8,7 +8,7 @@ import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 
 const AutoCompleteSelector = ({ style, label, id, value, options, placeholder, setValue, helperText, loading, func, error, ...rest }) => {
   return (
-    <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
+    <Grid item xs={style.xs} lg={style.lg}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
         <InputLabel required>{label}</InputLabel>
         <Tooltip title={label}>
@@ -18,6 +18,7 @@ const AutoCompleteSelector = ({ style, label, id, value, options, placeholder, s
         </Tooltip>
       </Grid>
       <Autocomplete
+        {...rest}
         value={value}
         id={id}
         options={options}
@@ -27,7 +28,6 @@ const AutoCompleteSelector = ({ style, label, id, value, options, placeholder, s
           return <TextField {...params} label={placeholder} />;
         }}
         onChange={(event, newValue) => func(newValue)}
-        {...rest}
       />
       <FormHelperText>{helperText}</FormHelperText>
     </Grid>
