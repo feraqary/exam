@@ -16,7 +16,15 @@ import Image from 'next/image';
 
 // redux actions import
 
-import { getCountries, getStates, getCities, getCommunities } from 'store/slices/country-section/actions/countries';
+import {
+  getCountries,
+  getStates,
+  getCities,
+  getCommunities,
+  getSubCommunities,
+  getAllCountries,
+  getAllCurrencies
+} from 'store/slices/country-section/actions/countries';
 
 // assets
 import InputText from 'components/InputArea/TextInput';
@@ -26,7 +34,14 @@ import Container from 'components/Elements/Container';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 import { useEffect } from 'react';
-import { setCity, setCountry, setCommunity } from 'store/slices/country-section/slice/country';
+import {
+  setCity,
+  setCountry,
+  setCommunity,
+  setSubCommunity,
+  setBankCountry,
+  setCurrency
+} from 'store/slices/country-section/slice/country';
 import { setState } from 'store/slices/country-section/slice/country';
 import InputLayout from 'components/InputArea/InputLayout';
 import {
@@ -63,7 +78,6 @@ import {
   setCompanyBankAccountDetailsAccountNumber,
   setCompanyBankAccountDetailsIbanNumber,
   setCompanyBankAccountDetailsCurrency,
-  setCompanyBankAccountDetailsCountry,
   setCompanyBankAccountDetailsBankName,
   setCompanyBankAccountDetailsBankBranch,
   setCompanyBankAccountDetailsSwiftCode
@@ -97,11 +111,28 @@ function ColumnsLayouts() {
 
   useEffect(() => {
     dispatch(getCountries());
+    dispatch(getAllCountries());
+    dispatch(getAllCurrencies());
   }, [dispatch]);
 
-  const { countries, error, loading, states, country, state, city, cities, communities, community } = useSelector(
-    (state) => state.countries
-  );
+  const {
+    countries,
+    error,
+    loading,
+    states,
+    country,
+    state,
+    city,
+    cities,
+    communities,
+    community,
+    bankCountry,
+    bankCountries,
+    subCommunity,
+    subCommunities,
+    currency,
+    currencies
+  } = useSelector((state) => state.countries);
   const {
     companyInformation,
     error: companyError,
@@ -131,6 +162,7 @@ function ColumnsLayouts() {
     const formData = new FormData();
     formData.append('company_types', companyDetails.companyType.id);
     formData.append('main_service_type', companyDetails.mainService.id);
+    formData.append('sub_company_type', companyDetails.subCompanyType.id);
     formData.append('sub_service_type', companyDetails.service.id);
     formData.append('company_name', companyDetails.companyName);
     formData.append('tag_line', companyDetails.companyTagline);
@@ -147,10 +179,10 @@ function ColumnsLayouts() {
     formData.append('billing_country_id', country?.id);
     formData.append('billing_state_id', state?.id);
     formData.append('billing_city_id', city?.id);
-    formData.append('billing_community_id', billingAddressInformation.community);
+    formData.append('billing_community_id', community?.id);
     formData.append('billing_office_address', billingAddressInformation.officeAddress);
     formData.append('billing_reference', billingAddressInformation.billingReference);
-    formData.append('google_map_link', companyLocation.mapUrl);
+    formData.append('google_map_link', companyLocation.mapUrl || 'some link... ..');
     formData.append('website_url', companyPresentation.companyWebsite);
     formData.append('company_email', companyPresentation.companyEmail);
     formData.append('company_contact_number', companyPresentation.companyContactNumber);
@@ -173,8 +205,8 @@ function ColumnsLayouts() {
     formData.append('account_name', bankAccountDetails.accountNumber);
     formData.append('account_number', bankAccountDetails.accountName);
     formData.append('iban', bankAccountDetails.ibanNumber);
-    formData.append('currency_id', bankAccountDetails.currency);
-    formData.append('bank_country_id', bankAccountDetails.country);
+    formData.append('currency_id', currency?.id);
+    formData.append('bank_country_id', bankCountry?.id);
     formData.append('bank_name', bankAccountDetails.bankName);
     formData.append('branch_name', bankAccountDetails.bankBranch);
     formData.append('swift_code', bankAccountDetails.swiftCode);
@@ -189,7 +221,7 @@ function ColumnsLayouts() {
           <Container title="Add Compnay Details" style={{ xs: 12 }}>
             <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
               <AutoCompleteSelector
-                style={{ xs: 12, lg: 10, mb: 2 }}
+                style={{ xs: 12, lg: 10 }}
                 label="Company Type"
                 id="companyType"
                 options={options}
@@ -205,7 +237,7 @@ function ColumnsLayouts() {
               />
               {companyInformation.companyDetails.companyType && (
                 <AutoCompleteSelector
-                  style={{ xs: 12, lg: 10, mb: 2 }}
+                  style={{ xs: 12, lg: 10 }}
                   label="Sub Company Type"
                   id="subCompanyType"
                   placeholder="Select Sub Company Type"
@@ -224,7 +256,7 @@ function ColumnsLayouts() {
 
               {companyInformation.companyDetails.subCompanyType && (
                 <AutoCompleteSelector
-                  style={{ xs: 12, lg: 10, mb: 2 }}
+                  style={{ xs: 12, lg: 10 }}
                   label="Main Service Type"
                   id="mainServiceType"
                   placeholder="Select Main Service Type"
@@ -241,7 +273,7 @@ function ColumnsLayouts() {
               )}
               {companyInformation.companyDetails.mainService && (
                 <AutoCompleteSelector
-                  style={{ xs: 12, lg: 10, mb: 2 }}
+                  style={{ xs: 12, lg: 10 }}
                   label="Service Type"
                   id="serviceType"
                   placeholder="Select Service Type"
@@ -283,6 +315,14 @@ function ColumnsLayouts() {
                 value={companyInformation.companyDetails.reraNo}
                 setValue={(e) => dispatch(setCompanyReraNo(e))}
               />
+              <CustomDateTime style={{ xs: 12, lg: 6 }} label="RERA No. Expiry Date" helperText="Please enter RERA No. Expiry Date" />
+              <FileUpload
+                label="Upload RERA"
+                type="pdf"
+                placeholder="Upload RERA"
+                helperText="Please upload the company RERA"
+                style={{ xs: 12, lg: 6 }}
+              />
               <InputText
                 label="License No."
                 placeholder="Enter Company License No."
@@ -308,6 +348,19 @@ function ColumnsLayouts() {
                 value={companyInformation.companyDetails.licenseExpiry}
                 setValue={(e) => dispatch(setCompanyLicenseExpiry(e))}
               />
+            </Grid>
+          </Container>
+          <Container title="Add Billing Information" style={{ xs: 12 }}>
+            <Grid container spacing={2} alignItems="center">
+              <InputText
+                label="Billing Reference"
+                placeholder="Enter the billing reference"
+                helperText="Please enter the billing reference"
+                type="text"
+                style={{ xs: 12, lg: 6 }}
+                value={companyInformation.billingAddressInformation.billingReference}
+                setValue={(e) => dispatch(setCompanyBillingReference(e))}
+              />
               <InputText
                 label="VAT Number:"
                 placeholder="VAT Number"
@@ -327,6 +380,7 @@ function ColumnsLayouts() {
                 setValue={(e) => dispatch(setCompanyVatStatus(e))}
               />
               <br />
+              <Grid lg={6}></Grid>
               <FileUpload
                 label="Upload VAT"
                 type="png,jpeg,jpg"
@@ -341,10 +395,11 @@ function ColumnsLayouts() {
               />
             </Grid>
           </Container>
-          <Container title="Add Billing Information" style={{ xs: 12 }}>
+
+          <Container title="Company Location" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
               <AutoCompleteSelector
-                style={{ xs: 12, lg: 6, mb: 2 }}
+                style={{ xs: 12, lg: 6 }}
                 label="Countries"
                 id="country-selector"
                 options={countries?.map((country) => {
@@ -365,12 +420,13 @@ function ColumnsLayouts() {
                 func={(newValue) => {
                   dispatch(setCountry(newValue));
                   dispatch(getStates(newValue?.id));
+                  dispatch(setSubCommunity(null));
                   dispatch(setState(null));
                 }}
               />
 
               <AutoCompleteSelector
-                style={{ xs: 12, lg: 6, mb: 2 }}
+                style={{ xs: 12, lg: 6 }}
                 label="States"
                 id="state-selector"
                 options={states?.map((state) => {
@@ -386,12 +442,13 @@ function ColumnsLayouts() {
                 func={(newValue) => {
                   dispatch(getCities(newValue?.id));
                   dispatch(setState(newValue));
+                  dispatch(setSubCommunity(null));
                   dispatch(setCity(null));
                 }}
               />
 
               <AutoCompleteSelector
-                style={{ xs: 12, lg: 6, mb: 2 }}
+                style={{ xs: 12, lg: 6 }}
                 label="Cites"
                 id="cites-selector"
                 options={cities?.map((city) => {
@@ -406,11 +463,12 @@ function ColumnsLayouts() {
                 func={(newValue) => {
                   dispatch(getCommunities(newValue?.id));
                   dispatch(setCity(newValue));
+                  dispatch(setSubCommunity(null));
                   dispatch(setCommunity(null));
                 }}
               />
               <AutoCompleteSelector
-                style={{ xs: 12, lg: 6, mb: 2 }}
+                style={{ xs: 12, lg: 6 }}
                 label="Community"
                 id="community-selector"
                 options={communities?.map((community) => {
@@ -419,11 +477,30 @@ function ColumnsLayouts() {
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 placeholder="Select a Community"
                 value={community}
-                disabled={community ? false : true}
+                disabled={city ? false : true}
                 helperText="Please select a community"
                 loading={loading}
                 func={(newValue) => {
                   dispatch(setCommunity(newValue));
+                  dispatch(getSubCommunities(newValue?.id));
+                  dispatch(setSubCommunity(null));
+                }}
+              />
+              <AutoCompleteSelector
+                style={{ xs: 12, lg: 6 }}
+                label="Sub Community"
+                id="sub-community-selector"
+                options={subCommunities?.map((community) => {
+                  return { label: community.SubCommunity, id: community.ID };
+                })}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                placeholder="Select a Community"
+                value={subCommunity}
+                disabled={community ? false : true}
+                helperText="Please select a community"
+                loading={loading}
+                func={(newValue) => {
+                  dispatch(setSubCommunity(newValue));
                 }}
               />
               <InputText
@@ -436,35 +513,19 @@ function ColumnsLayouts() {
                 setValue={(e) => dispatch(setCompanyOfficeAddress(e))}
               />
               <InputText
-                label="Billing Reference"
-                placeholder="Enter the billing reference"
-                helperText="Please enter the billing reference"
+                label="Google Map Link"
+                placeholder="Google Map URL"
+                helperText="Please enter Google Map URL for Company Location"
                 type="text"
                 style={{ xs: 12, lg: 6 }}
-                value={companyInformation.billingAddressInformation.billingReference}
-                setValue={(e) => dispatch(setCompanyBillingReference(e))}
+                value={companyInformation.companyLocation.mapUrl}
+                setValue={(e) => dispatch(setCompanyLocationMapUrl(e))}
               />
-            </Grid>
-          </Container>
 
-          <Container title="Company Location" style={{ xs: 12 }}>
-            <Grid container spacing={2} alignItems="center">
-              <Grid container spacing={2} alignItems="center">
-                <InputText
-                  label="Google Map Link"
-                  placeholder="Google Map URL"
-                  helperText="Please enter Google Map URL for Company Location"
-                  type="text"
-                  style={{ xs: 12, lg: 6 }}
-                  value={companyInformation.companyLocation.mapUrl}
-                  setValue={(e) => dispatch(setCompanyLocationMapUrl(e))}
-                />
-
-                <InputLayout label="Place" helperText="Please enter place address" style={{ xs: 12, lg: 6 }}>
-                  <MapAutocomplete placeHolder onChangeAddress={setAddress} country={setCountry} state={setState} value="uae" />
-                </InputLayout>
-                <Map locationAddress={address} xs={12} lg={12} />
-              </Grid>
+              <InputLayout label="Place" helperText="Please enter place address" style={{ xs: 12, lg: 6 }}>
+                <MapAutocomplete placeHolder onChangeAddress={setAddress} country={setCountry} state={setState} value="uae" />
+              </InputLayout>
+              <Map locationAddress={address} xs={12} lg={12} mapUrl={companyInformation.companyLocation.mapUrl} />
             </Grid>
           </Container>
 
@@ -687,23 +748,49 @@ function ColumnsLayouts() {
                 value={companyInformation.bankAccountDetails.ibanNumber}
                 setValue={(e) => dispatch(setCompanyBankAccountDetailsIbanNumber(e))}
               />
-              <InputText
+              <AutoCompleteSelector
                 style={{ xs: 12, lg: 4 }}
-                label="Currency"
-                placeholder="Currency"
-                helperText="Please enter currency"
-                type="text"
-                value={companyInformation.bankAccountDetails.currency}
-                setValue={(e) => dispatch(setCompanyBankAccountDetailsCurrency(e))}
+                label="Currencies"
+                id="currency-selector"
+                options={currencies?.map((cur) => {
+                  return { label: cur.Currency, id: cur.ID, code: cur.Code };
+                })}
+                renderOption={(props, option) => (
+                  <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                    {option.label.toUpperCase()} : {option.code}
+                  </Box>
+                )}
+                placeholder="Select a Currency"
+                value={currency}
+                setValue={setCurrency}
+                helperText="Please select a currency"
+                loading={loading}
+                func={(newValue) => {
+                  dispatch(setCurrency(newValue));
+                }}
               />
-              <InputText
+              <AutoCompleteSelector
                 style={{ xs: 12, lg: 4 }}
-                label="Country"
-                placeholder="Country"
-                helperText="Please enter country"
-                type="country"
-                value={companyInformation.bankAccountDetails.country}
-                setValue={(e) => dispatch(setCompanyBankAccountDetailsCountry(e))}
+                label="Countries"
+                id="bank-country-selector"
+                options={bankCountries?.map((country) => {
+                  return { label: country.Country, id: country.ID, flag: country.Flag };
+                })}
+                renderOption={(props, option) => (
+                  <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                    <Image src={`http://20.203.31.58/upload/${option.flag}`} width={30} height={30} style={{ objectFit: 'contain' }} />
+
+                    {option.label}
+                  </Box>
+                )}
+                placeholder="Select a Country"
+                value={bankCountry}
+                setValue={setBankCountry}
+                helperText="Please select a country"
+                loading={loading}
+                func={(newValue) => {
+                  dispatch(setBankCountry(newValue));
+                }}
               />
               <InputText
                 style={{ xs: 12, lg: 4 }}

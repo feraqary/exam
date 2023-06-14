@@ -5,6 +5,7 @@ import { StandaloneSearchBox } from '@react-google-maps/api';
 export default function MapAutocomplete({ onChangeAddress, country, state }) {
   const inputRef = useRef();
   const handlePlaceChanged = () => {
+    console.log('place changed');
     const [place] = inputRef.current.getPlaces();
     if (place) {
       console.log(place.address_components);
