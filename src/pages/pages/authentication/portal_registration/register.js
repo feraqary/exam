@@ -14,6 +14,13 @@ import Logo from 'components/ui-component/Logo';
 import BackgroundPattern1 from 'components/ui-component/cards/BackgroundPattern1';
 import AuthSlider from 'components/ui-component/cards/AuthSlider';
 
+// Importing slices
+// import 
+// {
+//   selec
+// } 
+// from '../../store/slices/user-registration/slices/user-registration';
+
 // assets
 const AuthBlueCard = '/assets/images/auth/auth-signup-blue-card.svg';
 const AuthWhiteCard = '/assets/images/auth/auth-signup-white-card.svg';
@@ -35,7 +42,7 @@ const PurpleWrapper = styled('span')(({ theme }) => ({
     [theme.breakpoints.down('xl')]: {
       left: '25%',
       top: '50%'
-    }
+    } 
   },
   '&:before': {
     content: '""',
@@ -79,6 +86,34 @@ const Register = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
+
+  /// Registration Action 
+  const registerUser = () => {
+		axios
+			.post('20.203.31.58/api/user/register', {
+				first_name: "simon",
+				last_name: "password",
+				country: "Eri",
+				email: "aqary@gmail.com",
+				profile_image_url: "/Users/user/Downloads/1d36e555-6d6a-4a09-ae9d-bdcb12ddfbe4.jpeg",
+				phone_number: "asdf",
+				company_number: "aasdf",
+				whatsapp_number,
+        gender:  1,
+        password: "dreaming",
+        status: 1,
+        user_types_id: 1,
+        roles_id: 1,
+        department: 1,
+        social_login
+			})
+			.then((response) => {
+        console.log(response.data);
+			})
+			.catch((error) => console.log(error));
+	};
+
+
   return (
     <Page title="Register">
       <AuthWrapper1>
@@ -95,7 +130,7 @@ const Register = () => {
                   >
                     <Grid item>
                       <Stack justifyContent={matchDownSM ? 'center' : 'flex-start'} textAlign={matchDownSM ? 'center' : 'inherit'}>
-                        <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
+                        <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'} onClick={registerUser}>
                           Sign up
                         </Typography>
                         <Typography color="textPrimary" gutterBottom variant="h4">
@@ -121,7 +156,7 @@ const Register = () => {
                     <Typography
                       component={Link}
                       href="/pages/authentication/portal_registration/login"
-                      variant="user-login"
+                      variant="subtitle1"
                       sx={{ textDecoration: 'none' }}
                     >
                       Already have an account?
