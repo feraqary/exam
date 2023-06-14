@@ -23,7 +23,6 @@ import {
 
 // project imports
 import Logo from '../Logo';
-
 // assets
 import { IconBook, IconCreditCard, IconDashboard, IconHome2 } from '@tabler/icons';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -74,17 +73,14 @@ const AppBar = ({ ...others }) => {
               <Button color="inherit" component={Link} href="#">
                 Home
               </Button>
-              <Button color="inherit" component={Link} href="#">
+              <Button color="inherit" component={Link} href="/pages/media_posts/Tabs">
                 Social Media
               </Button>
               <Button color="inherit" component={Link} href="login" target="_blank">
                 Dashboard
               </Button>
-              <Button color="inherit" component={Link} href="https://codedthemes.gitbook.io/berry" target="_blank">
-                Documentation
-              </Button>
-              <Button component={Link} href="https://links.codedthemes.com/hsqll" disableElevation variant="contained" color="secondary">
-                Purchase Now
+              <Button color="inherit" component={Link} href="/pages/authentication/portal_registration/register" target="_blank">
+              Portal Login 
               </Button>
             </Stack>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
@@ -111,20 +107,12 @@ const AppBar = ({ ...others }) => {
                           <ListItemText primary="Dashboard" />
                         </ListItemButton>
                       </Link>
-                      <Link style={{ textDecoration: 'none' }} href="https://codedthemes.gitbook.io/berry" target="_blank">
-                        <ListItemButton component="a">
-                          <ListItemIcon>
-                            <IconBook />
-                          </ListItemIcon>
-                          <ListItemText primary="Documentation" />
-                        </ListItemButton>
-                      </Link>
-                      <Link style={{ textDecoration: 'none' }} href="https://links.codedthemes.com/hsqll" target="_blank">
+                      <Link style={{ textDecoration: 'none' }} href="/" target="_blank">
                         <ListItemButton component="a">
                           <ListItemIcon>
                             <IconCreditCard />
                           </ListItemIcon>
-                          <ListItemText primary="Purchase Now" />
+    
                         </ListItemButton>
                       </Link>
                     </List>

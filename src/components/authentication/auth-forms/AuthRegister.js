@@ -4,6 +4,7 @@ import Link from 'Link';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
+import Selector from 'components/InputArea/Selector';
 import {
   Box,
   Button,
@@ -18,12 +19,17 @@ import {
   OutlinedInput,
   TextField,
   Typography,
+  FileUpload,
   useMediaQuery
 } from '@mui/material';
+import { UploadFile } from '@mui/icons-material';
 
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { useSelector } from 'react-redux';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import {setCountry } from 'store/slices/country-section/slice/country';
 
 // project imports
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
@@ -60,12 +66,16 @@ const JWTRegister = ({ ...others }) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  const countryChange = (newValue) => {
+    dispatch(setCountry(newValue));
+  };
 
   const changePassword = (value) => {
     const temp = strengthIndicator(value);
     setStrength(temp);
     setLevel(strengthColor(temp));
   };
+  const { countries, loading, country } = useSelector((state) => state.countries);
 
   useEffect(() => {
     changePassword('123456');
@@ -154,6 +164,99 @@ const JWTRegister = ({ ...others }) => {
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
+              <Grid item xs={12} sm={6}>
+              <AutoCompleteSelector
+              fullWidth
+                style={{ xs: 12, lg: 12, mb: 2 }}
+                id="country-selector"
+                options={countries?.map((country) => {
+                  return { label: country.Country, id: country.ID };
+                })}
+                placeholder="Select a Country"
+                value={country}
+                setValue={setCountry}
+                loading={loading}
+                func={countryChange}
+              />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+              <TextField
+                      type="file"
+                      fullWidth
+                      
+                    
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <UploadFile />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="Company Number"
+                  name="compNumber"
+                  value={values.compNumber}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  sx={{ ...theme.typography.customInput }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="Phone Number"
+                  name="phoneNumber"
+                  value={values.phoneNumber}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  sx={{ ...theme.typography.customInput }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="Whatsapp Number"
+                  name="whatsNumber"
+                  value={values.whatsNumber}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  sx={{ ...theme.typography.customInput }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+              <Selector
+                id="gender"
+                label = "Select Gender:"
+                placeholder="Select Gender"
+                options={['Male', 'Female']}
+                style={{ xs: 12, lg: 12}}
+              />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+              <Selector
+                id="compStatus"
+                label = "User Type:"
+                placeholder="Choose Company Type"
+                options={['Company', 'Individual']}
+                style={{ xs: 12, lg: 12}}
+              />
+              </Grid>
+
+                  <Grid item xs={12} sm={6}>
+              <Selector
+                id="compStatus"
+                label = "Select Company Status:"
+                placeholder="Select Company Status:"
+                options={['Active', 'Non-Active']}
+                style={{ xs: 12, lg: 12}}
+              />
+              </Grid>
+            
             </Grid>
             <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
               <InputLabel htmlFor="outlined-adornment-email-register">Email Address / Username</InputLabel>
@@ -201,12 +304,49 @@ const JWTRegister = ({ ...others }) => {
                 }
                 inputProps={{}}
               />
+              
               {touched.password && errors.password && (
                 <FormHelperText error id="standard-weight-helper-text-password-register">
                   {errors.password}
                 </FormHelperText>
               )}
             </FormControl>
+            <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
+              <InputLabel htmlFor="outlined-adornment-password-register">Confirm Password</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password-register"
+                type={showPassword ? 'text' : 'password'}
+                value={values.password}
+                name="password"
+                label="Confirm Password"
+                onBlur={handleBlur}
+                onChange={(e) => {
+                  handleChange(e);
+                  changePassword(e.target.value);
+                }}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                      size="large"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                inputProps={{}}
+              />
+              
+              {touched.password && errors.password && (
+                <FormHelperText error id="standard-weight-helper-text-password-register">
+                  {errors.password}
+                </FormHelperText>
+              )}
+            </FormControl>
+
 
             {strength !== 0 && (
               <FormControl fullWidth>
@@ -224,6 +364,9 @@ const JWTRegister = ({ ...others }) => {
                 </Box>
               </FormControl>
             )}
+
+
+             
 
             <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
