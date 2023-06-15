@@ -5,7 +5,7 @@ import Link from 'Link';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Box, Chip, Grid, Tab, Tabs, Typography } from '@mui/material';
-import InputText from 'components/InputArea/TextInput';
+import InputText from 'components/widgets/TextInput';
 
 // tab content
 function TabPanel({ children, value, index, ...other }) {

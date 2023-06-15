@@ -18,14 +18,14 @@ import Avatar from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import Container from 'components/Elements/Container';
-import TextInput from 'components/InputArea/TextInput';
+import TextInput from 'components/widgets/TextInput';
 import T60card from './helper/T60card';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import DialogContent from '@mui/material/DialogContent';
 import Dialog from '@mui/material/Dialog';
 import PostCard from './helper/postCard';
-import Carousel from "./helper/carousel";
+import Carousel from './helper/carousel';
 // import pic from "./images/1.jpg"
 // ==============================|| Posts||============================== //
 
@@ -136,7 +136,7 @@ function Explore() {
       </Container>
       <Container style={{ xs: 12, lg: 12 }} title={'360 Videos'}>
         <Grid container spacing={2} alignItems="center" justifyContent="center">
-          <Carousel list={itemData}/>
+          <Carousel list={itemData} />
         </Grid>
       </Container>
       <Container style={{ xs: 12, lg: 12 }} title={'Images'}>
@@ -181,8 +181,6 @@ function Explore() {
                 );
               }
             })}
-
-
           </ImageList>
         </Grid>
         <Dialog maxWidth={'md'} open={open} onClose={handleClose}>

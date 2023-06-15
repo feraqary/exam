@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconClipboardCheck, IconPictureInPicture, IconForms, IconBorderAll, IconChartDots, IconStairsUp } from '@tabler/icons';
-
+import { GitBranch } from 'tabler-icons-react';
 // constant
 const icons = {
   IconClipboardCheck,
@@ -19,7 +19,7 @@ const icons = {
 const leads = {
   id: 'leads',
   title: <FormattedMessage id="leads" />,
-  icon: icons.IconPictureInPicture,
+  icon: <GitBranch size={22} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
@@ -36,25 +36,18 @@ const leads = {
       icon: icons.IconPictureInPicture,
       url: '/leads/manage_leads'
     },
+
     {
-      id: 'requests',
-      title: <FormattedMessage id="Requests" />,
-      type: 'collapse',
-      icon: icons.IconForms,
-      children: [
-        {
-          id: 'video-requests',
-          title: <FormattedMessage id="Video Requests" />,
-          type: 'item',
-          url: '/leads/request_video'
-        },
-        {
-          id: 'general-requests',
-          title: <FormattedMessage id="General Requests" />,
-          type: 'item',
-          url: '/leads/general_request'
-        }
-      ]
+      id: 'video-requests',
+      title: <FormattedMessage id="Video Requests" />,
+      type: 'item',
+      url: '/leads/request_video'
+    },
+    {
+      id: 'general-requests',
+      title: <FormattedMessage id="General Requests" />,
+      type: 'item',
+      url: '/leads/general_request'
     },
     {
       id: 'view-schedules',

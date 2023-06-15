@@ -26,8 +26,8 @@ import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import React, { useMemo, useState } from 'react';
 import { NumberOfItems } from 'components/Items/numberOfItems';
-import InputText from 'components/InputArea/TextInput';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import InputText from 'components/widgets/TextInput';
+import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
 import Container from 'components/Elements/Container';
 import SubmitButton from 'components/Elements/SubmitButton';
 

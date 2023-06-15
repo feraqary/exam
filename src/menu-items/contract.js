@@ -1,6 +1,6 @@
 // third-party
 import { FormattedMessage } from 'react-intl';
-
+import { WritingSign } from 'tabler-icons-react';
 // assets
 import { IconKey, IconReceipt2, IconBug, IconBellRinging, IconPhoneCall, IconQuestionMark, IconShieldLock } from '@tabler/icons';
 
@@ -20,7 +20,7 @@ const icons = {
 const contract = {
   id: 'contract',
   title: <FormattedMessage id="Contract" />,
-  icon: icons.IconKey,
+  icon: <WritingSign size={23} strokeWidth={1.5} style={{ marginRight: '10px' }} color={'black'} />,
   type: 'group',
   children: [
     {
@@ -28,14 +28,14 @@ const contract = {
       title: <FormattedMessage id="Add Contract" />,
       type: 'item',
       icon: icons.IconKey,
-      url:'/contract/add'
+      url: '/contract/add'
     },
     {
       id: 'manage-contract',
       title: <FormattedMessage id="Manage Contract" />,
       type: 'item',
       icon: icons.IconKey,
-      url:'/contract/manage'
+      url: '/contract/manage'
     }
   ]
 };

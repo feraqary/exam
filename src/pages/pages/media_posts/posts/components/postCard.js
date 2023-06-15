@@ -154,11 +154,7 @@ export default function PostCard({ pfp, postimg, title, discription, discription
       />
       <CardMedia component="img" height="450" image={postimg} alt="home" />
 
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {discription}
-        </Typography>
-      </CardContent>
+     
       <CardActions disableSpacing>
         <Tooltip title="Like">
           <IconButton
@@ -204,10 +200,17 @@ export default function PostCard({ pfp, postimg, title, discription, discription
           }}
           handleClose={setShareOpen}
         />
+        
         <ExpandMore expand={expanded} onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more">
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
+
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          {discription}
+        </Typography>
+      </CardContent>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>{discription2}</Typography>

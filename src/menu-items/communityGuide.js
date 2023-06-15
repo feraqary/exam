@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconKey, IconReceipt2, IconBug, IconBellRinging, IconPhoneCall, IconQuestionMark, IconShieldLock } from '@tabler/icons';
+import { MessageChatbot } from 'tabler-icons-react';
 
 // constant
 const icons = {
@@ -20,28 +21,20 @@ const icons = {
 const communityGuide = {
   id: 'community-guide',
   title: <FormattedMessage id="community guide" />,
-  icon: icons.IconKey,
+  icon: <MessageChatbot size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
-      id: 'manage',
-      title: <FormattedMessage id="Manage" />,
-      type: 'collapse',
-      icon: icons.IconKey,
-      children: [
-        {
-          id: 'manage-community',
-          title: <FormattedMessage id="Community" />,
-          type: 'item',
-          url: '/community-guide/community'
-        },
-        {
-          id: 'manage-tower-image',
-          title: <FormattedMessage id="Tower Image" />,
-          type: 'item',
-          url:'/community-guide/tower'
-        }
-      ]
+      id: 'manage-community',
+      title: <FormattedMessage id="Community" />,
+      type: 'item',
+      url: '/community-guide/community'
+    },
+    {
+      id: 'manage-tower-image',
+      title: <FormattedMessage id="Tower Image" />,
+      type: 'item',
+      url: '/community-guide/tower'
     },
 
     {

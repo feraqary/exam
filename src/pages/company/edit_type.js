@@ -2,7 +2,7 @@
 import { Grid } from '@mui/material';
 
 // project imports
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -10,12 +10,12 @@ import { gridSpacing } from 'store/constant';
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // assets
-import InputText from 'components/InputArea/TextInput';
+import InputText from 'components/widgets/TextInput';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
 import { createCompanyType } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
-import FileUpload from 'components/InputArea/FileUpload';
+import FileUpload from 'components/widgets/FileUpload';
 import { updateCompanyType } from 'store/slices/company-section/action/company';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -39,10 +39,10 @@ function EditType({ compType, serviceName, desc, logoImg, imgUrl, id, setClose, 
   const [iconImage, setIconImage] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
   const [iconPreview, setIconPreview] = useState(null);
-//   const [logoImage, setLogoImage] = useState(logoImg);
-//   const [iconImage, setIconImage] = useState(imgUrl);
-//   const [logoPreview, setLogoPreview] = useState(logoImg);
-//   const [iconPreview, setIconPreview] = useState(imgUrl);
+  //   const [logoImage, setLogoImage] = useState(logoImg);
+  //   const [iconImage, setIconImage] = useState(imgUrl);
+  //   const [logoPreview, setLogoPreview] = useState(logoImg);
+  //   const [iconPreview, setIconPreview] = useState(imgUrl);
 
   const logoRef = useRef(null);
   const iconRef = useRef(null);
@@ -71,7 +71,6 @@ function EditType({ compType, serviceName, desc, logoImg, imgUrl, id, setClose, 
     }
   };
 
-
   const submitForm = () => {
     const formData = new FormData();
     formData.append('title', companyName);
@@ -79,10 +78,10 @@ function EditType({ compType, serviceName, desc, logoImg, imgUrl, id, setClose, 
     formData.append('icon_url', iconImage);
     formData.append('image_url', logoImage);
     formData.append('main_company_type_id', companyType?.id);
-    console.table({"title": companyName, "description": description, "icon_url": iconImage, "image": logoImage});
+    console.table({ title: companyName, description: description, icon_url: iconImage, image: logoImage });
     const data = {
-        company_id: 3, // Replace with the desired company ID
-        formData: formData,
+      company_id: 3, // Replace with the desired company ID
+      formData: formData
     };
     dispatch(updateCompanyType(data));
     clearFields();

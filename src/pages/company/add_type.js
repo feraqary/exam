@@ -2,7 +2,7 @@
 import { Grid } from '@mui/material';
 
 // project imports
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -10,12 +10,12 @@ import { gridSpacing } from 'store/constant';
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // assets
-import InputText from 'components/InputArea/TextInput';
+import InputText from 'components/widgets/TextInput';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
 import { createCompanyType } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
-import FileUpload from 'components/InputArea/FileUpload';
+import FileUpload from 'components/widgets/FileUpload';
 const roles = [
   { label: 'Broker Company', id: 1 },
   { label: 'Developer Company', id: 2 },
@@ -98,8 +98,8 @@ function CompanyType() {
               type="text"
               value={companyName}
               setV
-              
-  //new change in the comment
+
+              //new change in the comment
             />
             <InputText
               label="Description"

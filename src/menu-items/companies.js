@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconApps, IconUserCheck, IconBasket, IconMessages, IconLayoutKanban, IconMail, IconCalendar, IconNfc } from '@tabler/icons';
-
+import { Building } from 'tabler-icons-react';
 // constant
 const icons = {
   IconApps,
@@ -21,7 +21,7 @@ const icons = {
 const companies = {
   id: 'companies',
   title: <FormattedMessage id="companies" />,
-  icon: icons.IconApps,
+  icon: <Building size={23} strokeWidth={1.5} color={'black'} style={{ marginRight: '10px' }} />,
   type: 'group',
   children: [
     {
@@ -31,93 +31,79 @@ const companies = {
       url: '/company/add_comp',
       icon: icons.IconUserCheck
     },
+
     {
-      id: 'manage-companies',
-      title: <FormattedMessage id="manage-companies" />,
-      type: 'collapse',
-      icon: icons.IconUserCheck,
-      children: [
-        {
-          id: 'add_company_types',
-          title: <FormattedMessage id="add-types" />,
-          type: 'item',
-          url: '/company/add_type'
-        },
-        {
-          id: 'company-types',
-          title: <FormattedMessage id="manage-types" />,
-          type: 'item',
-          url: '/company/manage_type'
-        },
-        {
-          id: 'add_main_services',
-          title: <FormattedMessage id="Add Main Services" />,
-          type: 'item',
-          url: '/company/add_main_services'
-        },
-        {
-          id: 'add_services',
-          title: <FormattedMessage id="Add Services" />,
-          type: 'item',
-          url: '/company/add_services'
-        },
-        {
-          id: 'Place_holder',
-          title: <FormattedMessage id="PlaceHolder" />,
-          type: 'item',
-          url: '/company/placeHolderName'
-        },
-        {
-          id: 'local',
-          title: <FormattedMessage id="local-companies" />,
-          type: 'item',
-          url: '/company/local_company_management'
-        },
-        {
-          id: 'international',
-          title: <FormattedMessage id="int-companies" />,
-          type: 'item',
-          url: '/company/int_comp_mng'
-        },
-        {
-          id: 'featured-companies',
-          title: <FormattedMessage id="Featured Companies" />,
-          type: 'item',
-          url: '/company/featured'
-        },
-        {
-          id: 'blocked-companies',
-          title: <FormattedMessage id="Blocked Companies" />,
-          type: 'item',
-          url: '/company/blocked'
-        }
-      ]
+      id: 'add_company_types',
+      title: <FormattedMessage id="add-types" />,
+      type: 'item',
+      url: '/company/add_type'
     },
     {
-      id: 'manage-subscriptions',
-      title: <FormattedMessage id="manage-subscriptions" />,
-      type: 'collapse',
-      icon: icons.IconBasket,
-      children: [
-        {
-          id: 'add-subscription',
-          title: <FormattedMessage id="add-subscriptions" />,
-          type: 'item',
-          url: '/company/add_subs'
-        },
-        {
-          id: 'active',
-          title: <FormattedMessage id="view-active" />,
-          type: 'item',
-          url: '/company/active_subs'
-        },
-        {
-          id: 'pending',
-          title: <FormattedMessage id="view-pending" />,
-          type: 'item',
-          url: '/company/pending_subs'
-        }
-      ]
+      id: 'company-types',
+      title: <FormattedMessage id="manage-types" />,
+      type: 'item',
+      url: '/company/manage_type'
+    },
+    {
+      id: 'add_main_services',
+      title: <FormattedMessage id="Add Main Services" />,
+      type: 'item',
+      url: '/company/add_main_services'
+    },
+    {
+      id: 'add_services',
+      title: <FormattedMessage id="Add Services" />,
+      type: 'item',
+      url: '/company/add_services'
+    },
+    {
+      id: 'Place_holder',
+      title: <FormattedMessage id="PlaceHolder" />,
+      type: 'item',
+      url: '/company/placeHolderName'
+    },
+    {
+      id: 'local',
+      title: <FormattedMessage id="local-companies" />,
+      type: 'item',
+      url: '/company/local_company_management'
+    },
+    {
+      id: 'international',
+      title: <FormattedMessage id="int-companies" />,
+      type: 'item',
+      url: '/company/int_comp_mng'
+    },
+    {
+      id: 'featured-companies',
+      title: <FormattedMessage id="Featured Companies" />,
+      type: 'item',
+      url: '/company/featured'
+    },
+    {
+      id: 'blocked-companies',
+      title: <FormattedMessage id="Blocked Companies" />,
+      type: 'item',
+      url: '/company/blocked'
+    },
+
+    {
+      id: 'add-subscription',
+      title: <FormattedMessage id="add-subscriptions" />,
+      type: 'item',
+      url: '/company/add_subs'
+    },
+    {
+      id: 'active',
+      title: <FormattedMessage id="view-active" />,
+      type: 'item',
+      url: '/company/active_subs'
+    },
+    {
+      id: 'pending',
+      title: <FormattedMessage id="view-pending" />,
+      type: 'item',
+      url: '/company/pending_subs'
     },
     {
       id: 'payments',

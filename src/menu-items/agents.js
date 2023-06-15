@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconClipboardCheck, IconPictureInPicture, IconForms, IconBorderAll, IconChartDots, IconStairsUp } from '@tabler/icons';
-
+import { User } from 'tabler-icons-react';
 // constant
 const icons = {
   IconClipboardCheck,
@@ -19,7 +19,7 @@ const icons = {
 const agents = {
   id: 'agents',
   title: <FormattedMessage id="agents" />,
-  icon: icons.IconPictureInPicture,
+  icon: <User size={23} strokeWidth={1.5} style={{ marginRight: '10px' }} color={'black'} />,
   type: 'group',
   children: [
     {
@@ -29,34 +29,27 @@ const agents = {
       icon: icons.IconPictureInPicture,
       url: '/agent/add_agent'
     },
+
     {
-      id: 'manage-agents',
-      title: <FormattedMessage id="Manage Agents" />,
-      type: 'collapse',
-      icon: icons.IconForms,
-      children: [
-        {
-          id: 'local-agents',
-          title: <FormattedMessage id="Local Agents" />,
-          type: 'item',
-          url: '/agent/local',
-          breadcrumbs: false
-        },
-        {
-          id: 'international-agents',
-          title: <FormattedMessage id="International Agents" />,
-          type: 'item',
-          url: '/agent/international',
-          breadcrumbs: false
-        },
-        {
-          id: 'deleted-agent',
-          title: <FormattedMessage id="Deleted Agent" />,
-          type: 'item',
-          url: '/agent/deleted_agents',
-          breadcrumbs: false
-        }
-      ]
+      id: 'local-agents',
+      title: <FormattedMessage id="Manage Local Agents" />,
+      type: 'item',
+      url: '/agent/local',
+      breadcrumbs: false
+    },
+    {
+      id: 'international-agents',
+      title: <FormattedMessage id="Manage International Agents" />,
+      type: 'item',
+      url: '/agent/international',
+      breadcrumbs: false
+    },
+    {
+      id: 'deleted-agent',
+      title: <FormattedMessage id="Manage Deleted Agent" />,
+      type: 'item',
+      url: '/agent/deleted_agents',
+      breadcrumbs: false
     },
     {
       id: 'agent-activities',

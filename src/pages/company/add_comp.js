@@ -19,16 +19,16 @@ import Image from 'next/image';
 import { getCountries, getStates, getCities, getCommunities } from 'store/slices/country-section/actions/countries';
 
 // assets
-import InputText from 'components/InputArea/TextInput';
-import FileUpload from 'components/InputArea/FileUpload';
-import Selector from 'components/InputArea/Selector';
+import InputText from 'components/widgets/TextInput';
+import FileUpload from 'components/widgets/FileUpload';
+import Selector from 'components/widgets/Selector';
 import Container from 'components/Elements/Container';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 import { useEffect } from 'react';
 import { setCity, setCountry, setCommunity } from 'store/slices/country-section/slice/country';
 import { setState } from 'store/slices/country-section/slice/country';
-import InputLayout from 'components/InputArea/InputLayout';
+import InputLayout from 'components/widgets/InputLayout';
 import {
   setCompanyAdminContactInformationEmailAddress,
   setCompanyAdminContactInformationFirstName,
@@ -69,7 +69,7 @@ import {
   setCompanyBankAccountDetailsSwiftCode
 } from 'store/slices/company-section/slice/company';
 import { createCompany, getAllCompanyTypes, getAllMainServices, getAllServices } from 'store/slices/company-section/action/company';
-import CustomDateTime from 'components/InputArea/CustomDateTime';
+import CustomDateTime from 'components/widgets/CustomDateTime';
 import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
 

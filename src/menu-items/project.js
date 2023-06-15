@@ -1,6 +1,6 @@
 // third-party
 import { FormattedMessage } from 'react-intl';
-
+import { BuildingEstate } from 'tabler-icons-react';
 // assets
 import { IconApps, IconUserCheck, IconBasket, IconMessages, IconLayoutKanban, IconMail, IconCalendar, IconNfc } from '@tabler/icons';
 
@@ -21,7 +21,7 @@ const icons = {
 const project = {
   id: 'Project',
   title: <FormattedMessage id="Project" />,
-  icon: icons.IconApps,
+  icon: <BuildingEstate size={23} strokeWidth={1.5} color={'black'} style={{ marginRight: '10px' }} />,
   type: 'group',
   children: [
     {

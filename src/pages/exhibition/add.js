@@ -9,9 +9,9 @@ import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
 import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
 import Container from 'components/Elements/Container';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
-import InputText from 'components/InputArea/TextInput';
-import FileUpload from 'components/InputArea/FileUpload';
+import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
+import InputText from 'components/widgets/TextInput';
+import FileUpload from 'components/widgets/FileUpload';
 
 // ==============================|| Google Map ||============================== //
 

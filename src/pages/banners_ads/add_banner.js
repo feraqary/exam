@@ -12,11 +12,11 @@ import React, { useState, useMemo } from 'react';
 import { UploadFile } from '@mui/icons-material';
 // import CompanyServices from 'components/widget/Data/company_types_data/fetch_company_types';
 import Container from 'components/Elements/Container';
-import InputText from 'components/InputArea/TextInput';
-import FileUpload from 'components/InputArea/FileUpload';
-import Selector from 'components/InputArea/Selector';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
-import InputDateTime from 'components/InputArea/InputDate';
+import InputText from 'components/widgets/TextInput';
+import FileUpload from 'components/widgets/FileUpload';
+import Selector from 'components/widgets/Selector';
+import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
+import InputDateTime from 'components/widgets/InputDate';
 import SubmitButton from 'components/Elements/SubmitButton';
 // ==============================|| FIELDS ||============================== //
 

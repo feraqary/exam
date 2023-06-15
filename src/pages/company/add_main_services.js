@@ -2,7 +2,7 @@
 import { Grid } from '@mui/material';
 
 // project imports
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
@@ -12,8 +12,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { setCompanyType, setMainService } from 'store/slices/company-section/slice/company';
 
 // assets
-import InputText from 'components/InputArea/TextInput';
-import FileUpload from 'components/InputArea/FileUpload';
+import InputText from 'components/widgets/TextInput';
+import FileUpload from 'components/widgets/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
 import { useEffect } from 'react';

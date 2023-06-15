@@ -15,7 +15,7 @@ import Checkbox from '@mui/material/Checkbox';
 // assets
 import Container from 'components/Elements/Container';
 import SubmitButton from 'components/Elements/SubmitButton';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
 
 // ==============================|| FIELDS ||============================== //
 

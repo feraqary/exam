@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 <<<<<<<< HEAD:src/pages/pages/frontend_pages/user_registration/register.js
+=======
+>>>>>>> b739c5acc8d732185af5d136d7b796be5dab73c5
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
 import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
@@ -160,6 +163,7 @@ Register.getLayout = function getLayout(page) {
 };
 
 export default Register;
+<<<<<<< HEAD
 ========
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
@@ -323,3 +327,5 @@ Register.getLayout = function getLayout(page) {
 
 export default Register;
 >>>>>>>> 3a3b8917de172e2d566cf19163d1b66e3a3df961:src/pages/pages/authentication/portal_registration/register.js
+=======
+>>>>>>> b739c5acc8d732185af5d136d7b796be5dab73c5

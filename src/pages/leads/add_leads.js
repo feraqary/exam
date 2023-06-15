@@ -26,9 +26,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import Container from 'components/Elements/Container';
-import Selector from 'components/InputArea/Selector';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
-import InputText from 'components/InputArea/TextInput';
+import Selector from 'components/widgets/Selector';
+import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
+import InputText from 'components/widgets/TextInput';
 import SubmitButton from 'components/Elements/SubmitButton';
 // ==============================|| Add Contact||============================== //
 function add_leads() {

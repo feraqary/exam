@@ -11,7 +11,7 @@ import React, { useState, useMemo } from 'react';
 
 // assets
 import CheckedList from 'components/checkedList/checkedList';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 
 const roles = ['Broker Company', 'Developer Company', 'Service Company'];
