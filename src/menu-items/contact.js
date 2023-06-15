@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconClipboardCheck, IconPictureInPicture, IconForms, IconBorderAll, IconChartDots, IconStairsUp } from '@tabler/icons';
-
+import { Friends } from 'tabler-icons-react';
 // constant
 const icons = {
   IconClipboardCheck,
@@ -19,7 +19,7 @@ const icons = {
 const contact = {
   id: 'contact',
   title: <FormattedMessage id="contact" />,
-  icon: icons.IconPictureInPicture,
+  icon: <Friends size={22} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
@@ -28,7 +28,6 @@ const contact = {
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/contact/add_contact'
-
     },
     {
       id: 'manage-contact',
@@ -36,8 +35,7 @@ const contact = {
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/contact/manage_contacts'
-    },
-
+    }
   ]
 };
 

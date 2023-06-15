@@ -150,7 +150,7 @@ export default function PostCard({ pfp, postimg, title, discription, discription
   };
 
   return (
-    <Card sx={{ maxWidth: 720, margin: 'auto', boxShadow: '0px 8px 17px -8px rgba(0,0,0,0.4)'}}>
+    <Card sx={{ maxWidth: 720, margin: 'auto'}}>
       <CardHeader
         avatar={<Avatar alt="User 1" src={pfp} />}
         action={
@@ -162,11 +162,7 @@ export default function PostCard({ pfp, postimg, title, discription, discription
       />
       <CardMedia component="img" height="450" image={postimg} alt="home" />
 
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {discription}
-        </Typography>
-      </CardContent>
+
       <CardActions disableSpacing>
         <Tooltip title="Like">
           <IconButton
@@ -248,6 +244,11 @@ export default function PostCard({ pfp, postimg, title, discription, discription
           <Typography variant='h4'>usman1231:</Typography><Typography>How much? </Typography>
         </CardContent>
       </Collapse>
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          {discription}
+        </Typography>
+      </CardContent>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>{discription2}</Typography>

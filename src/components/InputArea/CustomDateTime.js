@@ -28,6 +28,7 @@ const CustomDateTime = ({ style, label, helperText, value, setValue }) => {
             <TextField
               {...params}
               fullWidth
+              error={false}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

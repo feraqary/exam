@@ -89,8 +89,8 @@ import { useRef } from 'react';
 
 // ==============================|| FIELDS ||============================== //
 const options = [
-  { label: 'Real Estate Broker Company', id: 1 },
-  { label: 'Real Estate Developer Company', id: 2 },
+  { label: 'Broker Company', id: 1 },
+  { label: 'Developer Company', id: 2 },
   { label: 'Service Company', id: 3 }
 ];
 // ==============================|| Add Company form ||============================== //
@@ -108,7 +108,7 @@ function ColumnsLayouts() {
   const [companyCoverPreview, setCompanyCoverPreview] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
   const [profilePreview, setProfilePreview] = useState(null);
-
+  const [disabled, setDisabled] = useState(false);
   useEffect(() => {
     dispatch(getCountries());
     dispatch(getAllCountries());
@@ -157,6 +157,12 @@ function ColumnsLayouts() {
   const companyLogoRef = useRef(null);
   const companyCoverRef = useRef(null);
   const profileRef = useRef(null);
+
+  useEffect(() => {
+    if (!lisenceFile || !vatImage || !companyLogo || !companyCoverImage || !profileImage) {
+      setDisabled(true);
+    }
+  }, [lisenceFile, vatImage, companyLogo, companyCoverImage, profileImage]);
 
   const submitForm = () => {
     const formData = new FormData();
@@ -256,8 +262,9 @@ function ColumnsLayouts() {
 
               {companyInformation.companyDetails.subCompanyType && (
                 <AutoCompleteSelector
-                  style={{ xs: 12, lg: 10 }}
-                  label="Main Service Type"
+                  style={{ xs: 12, lg: 10, mb: 2 }}
+                  label="Service Type"
+
                   id="mainServiceType"
                   placeholder="Select Main Service Type"
                   options={mainServices.map((service) => {
@@ -273,8 +280,9 @@ function ColumnsLayouts() {
               )}
               {companyInformation.companyDetails.mainService && (
                 <AutoCompleteSelector
-                  style={{ xs: 12, lg: 10 }}
-                  label="Service Type"
+
+                  style={{ xs: 12, lg: 10, mb: 2 }}
+                  label="Sub-Service Type"
                   id="serviceType"
                   placeholder="Select Service Type"
                   options={services.map((service) => {
@@ -821,7 +829,7 @@ function ColumnsLayouts() {
               />
             </Grid>
           </Container>
-          <SubmitButton submit={submitForm} />
+          <SubmitButton submit={submitForm} disabled={disabled} />
         </Grid>
       </Page>
     </LoadScript>

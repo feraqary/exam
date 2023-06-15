@@ -1,6 +1,6 @@
 // third-party
 import { FormattedMessage } from 'react-intl';
-
+import { AddressBook } from 'tabler-icons-react';
 // assets
 import { IconKey, IconReceipt2, IconBug, IconBellRinging, IconPhoneCall, IconQuestionMark, IconShieldLock } from '@tabler/icons';
 
@@ -20,7 +20,7 @@ const icons = {
 const subscribers = {
   id: 'subscribers',
   title: <FormattedMessage id="Subscribes" />,
-  icon: icons.IconKey,
+  icon: <AddressBook size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
@@ -28,7 +28,7 @@ const subscribers = {
       title: <FormattedMessage id="Subscribers List" />,
       type: 'item',
       icon: icons.IconKey,
-      url:'/subscribers/list'
+      url: '/subscribers/list'
     }
   ]
 };

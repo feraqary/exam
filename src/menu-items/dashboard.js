@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconDashboard, IconDeviceAnalytics } from '@tabler/icons';
+import { LayoutDashboard } from 'tabler-icons-react';
 
 const icons = {
   IconDashboard,
@@ -14,7 +15,7 @@ const icons = {
 const dashboard = {
   id: 'dashboard',
   title: <FormattedMessage id="dashboard" />,
-  icon: icons.IconDashboard,
+  icon: <LayoutDashboard size={23} strokeWidth={1.5} color={'black'} style={{ marginRight: '10px' }} />,
   type: 'group',
   children: [
     {

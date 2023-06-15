@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconClipboardCheck, IconPictureInPicture, IconForms, IconBorderAll, IconChartDots, IconStairsUp } from '@tabler/icons';
-
+import { BuildingCommunity } from 'tabler-icons-react';
 // constant
 const icons = {
   IconClipboardCheck,
@@ -19,7 +19,7 @@ const icons = {
 const units = {
   id: 'units',
   title: <FormattedMessage id="units" />,
-  icon: icons.IconPictureInPicture,
+  icon: <BuildingCommunity size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
@@ -30,48 +30,40 @@ const units = {
       url: '/units/add_unit'
     },
     {
-      id: 'manage-units',
-      title: <FormattedMessage id="Manage Units" />,
-      type: 'collapse',
-      icon: icons.IconForms,
-      children: [
-        {
-          id: 'sale-units',
-          title: <FormattedMessage id="Sale Units" />,
-          type: 'item',
-          url: '/units/sale_units'
-        },
-        {
-          id: 'rent-units',
-          title: <FormattedMessage id="Rent Units" />,
-          type: 'item',
-          url: '/units/rent_units'
-        },
-        {
-          id: 'shared-units',
-          title: <FormattedMessage id="Shared Units" />,
-          type: 'item',
-          url: '/units/shared_units'
-        },
-        {
-          id: 'international-units',
-          title: <FormattedMessage id="International Units" />,
-          type: 'item',
-          url: '/units/international_units'
-        },
-        {
-          id: 'rejected-units',
-          title: <FormattedMessage id="Rejected Units" />,
-          type: 'item',
-          url: '/units/rejected_units'
-        },
-        {
-          id: 'deleted-units',
-          title: <FormattedMessage id="Deleted Units" />,
-          type: 'item',
-          url: '/units/deleted_units'
-        }
-      ]
+      id: 'sale-units',
+      title: <FormattedMessage id="Sale Units" />,
+      type: 'item',
+      url: '/units/sale_units'
+    },
+    {
+      id: 'rent-units',
+      title: <FormattedMessage id="Rent Units" />,
+      type: 'item',
+      url: '/units/rent_units'
+    },
+    {
+      id: 'shared-units',
+      title: <FormattedMessage id="Shared Units" />,
+      type: 'item',
+      url: '/units/shared_units'
+    },
+    {
+      id: 'international-units',
+      title: <FormattedMessage id="International Units" />,
+      type: 'item',
+      url: '/units/international_units'
+    },
+    {
+      id: 'rejected-units',
+      title: <FormattedMessage id="Rejected Units" />,
+      type: 'item',
+      url: '/units/rejected_units'
+    },
+    {
+      id: 'deleted-units',
+      title: <FormattedMessage id="Deleted Units" />,
+      type: 'item',
+      url: '/units/deleted_units'
     },
     {
       id: 'unit-activities',

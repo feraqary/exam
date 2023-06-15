@@ -75,7 +75,7 @@ function MainService() {
   };
 
   return (
-    <Page title="Add Main Services">
+    <Page title="Add Services">
       <Grid container spacing={gridSpacing}>
         <ToastContainer />
         <Container title="Add Main Services" style={{ xs: 12 }}>

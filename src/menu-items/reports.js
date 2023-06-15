@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconKey, IconReceipt2, IconBug, IconBellRinging, IconPhoneCall, IconQuestionMark, IconShieldLock } from '@tabler/icons';
-
+import { ReportAnalytics } from 'tabler-icons-react';
 // constant
 const icons = {
   IconKey,
@@ -20,7 +20,7 @@ const icons = {
 const reports = {
   id: 'reports',
   title: <FormattedMessage id="reports" />,
-  icon: icons.IconKey,
+  icon: <ReportAnalytics size={23} strokeWidth={1.5} style={{ marginRight: '10px' }} color={'black'} />,
   type: 'group',
   children: [
     {
