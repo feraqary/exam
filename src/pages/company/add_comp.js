@@ -75,8 +75,8 @@ import { useRef } from 'react';
 
 // ==============================|| FIELDS ||============================== //
 const options = [
-  { label: 'Real Estate Broker Company', id: 1 },
-  { label: 'Real Estate Developer Company', id: 2 },
+  { label: 'Broker Company', id: 1 },
+  { label: 'Developer Company', id: 2 },
   { label: 'Service Company', id: 3 }
 ];
 // ==============================|| Add Company form ||============================== //
@@ -99,11 +99,6 @@ function ColumnsLayouts() {
     dispatch(getCountries());
   }, [dispatch]);
 
-
-
-
-
-  
   const { countries, error, loading, states, country, state, city, cities, communities, community } = useSelector(
     (state) => state.countries
   );
@@ -131,8 +126,6 @@ function ColumnsLayouts() {
   const companyLogoRef = useRef(null);
   const companyCoverRef = useRef(null);
   const profileRef = useRef(null);
-
-  
 
   useEffect(() => {
     if (!lisenceFile || !vatImage || !companyLogo || !companyCoverImage || !profileImage) {
@@ -238,7 +231,7 @@ function ColumnsLayouts() {
               {companyInformation.companyDetails.subCompanyType && (
                 <AutoCompleteSelector
                   style={{ xs: 12, lg: 10, mb: 2 }}
-                  label="Main Service Type"
+                  label="Service Type"
                   id="mainServiceType"
                   placeholder="Select Main Service Type"
                   options={mainServices.map((service) => {
@@ -255,7 +248,7 @@ function ColumnsLayouts() {
               {companyInformation.companyDetails.mainService && (
                 <AutoCompleteSelector
                   style={{ xs: 12, lg: 10, mb: 2 }}
-                  label="Service Type"
+                  label="Sub-Service Type"
                   id="serviceType"
                   placeholder="Select Service Type"
                   options={services.map((service) => {

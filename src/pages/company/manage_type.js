@@ -115,7 +115,16 @@ const ColumnHeaders = [
           >
             <DialogContent>
               <DialogContentText>
-                <EditType setClose={setOpen} id={id} compType={compType} imgUrl={imgUrl} logoImg={logoImg} serviceName={title} desc={desc} open={open} />
+                <EditType
+                  setClose={setOpen}
+                  id={id}
+                  compType={compType}
+                  imgUrl={imgUrl}
+                  logoImg={logoImg}
+                  serviceName={title}
+                  desc={desc}
+                  open={open}
+                />
               </DialogContentText>
             </DialogContent>
           </Dialog>

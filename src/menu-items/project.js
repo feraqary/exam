@@ -2,7 +2,21 @@
 import { FormattedMessage } from 'react-intl';
 import { BuildingEstate } from 'tabler-icons-react';
 // assets
-import { IconApps, IconUserCheck,IconTrashX, IconHomeShare,IconPin,IconMapPin,IconBasket, IconMessages, IconLayoutKanban, IconMail, IconCalendar, IconNfc } from '@tabler/icons';
+import {
+  IconApps,
+  IconUserCheck,
+  IconTrashX,
+  IconHomeShare,
+  IconPin,
+  IconMapPin,
+  IconBasket,
+  IconMessages,
+  IconLayoutKanban,
+  IconMail,
+  IconCalendar,
+  IconNfc,
+  HomeShare
+} from '@tabler/icons';
 
 // constant
 const icons = {

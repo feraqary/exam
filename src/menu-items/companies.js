@@ -51,21 +51,21 @@ const companies = {
     },
     {
       id: 'company-types',
-      title: <FormattedMessage id="manage-types" />,
+      title: <FormattedMessage id="Manage Company Sub Types" />,
       type: 'item',
       icon: icons.IconLayoutGrid,
       url: '/company/manage_type'
     },
     {
       id: 'add_main_services',
-      title: <FormattedMessage id="Add Main Services" />,
+      title: <FormattedMessage id="Add Services" />,
       type: 'item',
       icon:IconClipboardPlus,
       url: '/company/add_main_services'
     },
     {
       id: 'add_services',
-      title: <FormattedMessage id="Add Services" />,
+      title: <FormattedMessage id="Add Sub-Services" />,
       type: 'item',
       icon: icons.IconClipboardPlus,
       url: '/company/add_services'
