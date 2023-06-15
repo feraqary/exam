@@ -35,6 +35,7 @@ const banners = {
     {
       id: 'banners',
       title: <FormattedMessage id="Manage Banners" />,
+      icon: icons.IconCreditCard,
       type: 'item',
       url: '/banners_ads/banners',
       breadcrumbs: false
@@ -44,6 +45,7 @@ const banners = {
       title: <FormattedMessage id="Manage Company Videos" />,
       type: 'item',
       url: '/banners_ads/company_videos',
+      icon: icons.IconVideo,
       breadcrumbs: false
     },
     {
@@ -51,6 +53,7 @@ const banners = {
       title: <FormattedMessage id="Manage Project Videos" />,
       type: 'item',
       url: '/banners_ads/project_videos',
+      icon: icons.IconVideo,
       breadcrumbs: false
     },
     {
@@ -58,6 +61,7 @@ const banners = {
       title: <FormattedMessage id="Manage Tower Videos" />,
       type: 'item',
       url: '/banners_ads/tower_videos',
+      icon: icons.IconVideo,
       breadcrumbs: false
     },
     {
@@ -65,6 +69,7 @@ const banners = {
       title: <FormattedMessage id="Manage Deleted Banners" />,
       type: 'item',
       url: '/banners_ads/deleted_banners',
+      icon: icons.IconTrash,
       breadcrumbs: false
     },
     {

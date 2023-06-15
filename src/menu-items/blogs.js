@@ -2,7 +2,7 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconKey, IconReceipt2, IconBug, IconBellRinging, IconPhoneCall, IconQuestionMark, IconShieldLock } from '@tabler/icons';
+import { IconKey, IconReceipt2,IconScriptX, IconBorderAll,IconBug,IconTextCaption, IconClipboardText,IconBellRinging, IconPhoneCall, IconQuestionMark, IconShieldLock } from '@tabler/icons';
 import { Book } from 'tabler-icons-react';
 
 // constant
@@ -13,7 +13,11 @@ const icons = {
   IconBellRinging,
   IconPhoneCall,
   IconQuestionMark,
-  IconShieldLock
+  IconShieldLock,
+  IconClipboardText,
+  IconTextCaption,
+  IconScriptX,
+  IconBorderAll
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
@@ -36,24 +40,27 @@ const blogs = {
       id: 'manage-blogs',
       title: <FormattedMessage id="Manage Blogs" />,
       type: 'item',
+      icon: icons.IconClipboardText,
       url: '/blog/manage_blogs'
     },
     {
       id: 'manage-categories',
       title: <FormattedMessage id="Categories" />,
       type: 'item',
+      icon: icons.IconTextCaption,
       url: '/blog/manage_categories'
     },
     {
       id: 'deleted-blog',
       title: <FormattedMessage id="Deleted Blogs" />,
       type: 'item',
+      icon: icons.IconScriptX,
       url: '/blog/deleted_blogs'
     },
     {
       id: 'blogs-activities',
       title: <FormattedMessage id="Activities" />,
-      icon: icons.IconKey,
+      icon: icons.IconBorderAll,
       type: 'item',
       url: '/blog/activities'
     }

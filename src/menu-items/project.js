@@ -2,7 +2,7 @@
 import { FormattedMessage } from 'react-intl';
 import { BuildingEstate } from 'tabler-icons-react';
 // assets
-import { IconApps, IconUserCheck, IconBasket, IconMessages, IconLayoutKanban, IconMail, IconCalendar, IconNfc } from '@tabler/icons';
+import { IconApps, IconUserCheck,IconTrashX, IconHomeShare,IconPin,IconMapPin,IconBasket, IconMessages, IconLayoutKanban, IconMail, IconCalendar, IconNfc } from '@tabler/icons';
 
 // constant
 const icons = {
@@ -13,7 +13,11 @@ const icons = {
   IconLayoutKanban,
   IconMail,
   IconCalendar,
-  IconNfc
+  IconNfc,
+  IconPin,
+  IconMapPin,
+  IconHomeShare,
+  IconTrashX
 };
 
 // ==============================|| Project MENU ITEMS ||============================== //
@@ -32,36 +36,32 @@ const project = {
       url: '/project/add_project'
     },
     {
-      id: 'manage-projects',
-      title: <FormattedMessage id="Manage Projects" />,
-      type: 'collapse',
-      icon: icons.IconUserCheck,
-      children: [
-        {
-          id: 'local',
-          title: <FormattedMessage id="Local Projects" />,
-          type: 'item',
-          url: '/project/local_project'
-        },
-        {
-          id: 'international',
-          title: <FormattedMessage id="International Projects" />,
-          type: 'item',
-          url: '/project/int_project'
-        },
-        {
-          id: 'shared-projects',
-          title: <FormattedMessage id="Shared Projects" />,
-          type: 'item',
-          url: '/project/shared_project'
-        },
-        {
-          id: 'deleted-projects',
-          title: <FormattedMessage id="Deleted Projects" />,
-          type: 'item',
-          url: '/project/del_project'
-        }
-      ]
+      id: 'local',
+      title: <FormattedMessage id="Local Projects" />,
+      type: 'item',
+      icon: icons.IconPin,
+      url: '/project/local_project'
+    },
+    {
+      id: 'international',
+      title: <FormattedMessage id="International Projects" />,
+      type: 'item',
+      icon: icons.IconMapPin,
+      url: '/project/int_project'
+    },
+    {
+      id: 'shared-projects',
+      title: <FormattedMessage id="Shared Projects" />,
+      type: 'item',
+      icon: icons.IconHomeShare,
+      url: '/project/shared_project'
+    },
+    {
+      id: 'deleted-projects',
+      title: <FormattedMessage id="Deleted Projects" />,
+      type: 'item',
+      icon: icons.IconTrashX,
+      url: '/project/del_project'
     },
     {
       id: 'promotions',

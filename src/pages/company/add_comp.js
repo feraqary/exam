@@ -94,11 +94,16 @@ function ColumnsLayouts() {
   const [companyCoverPreview, setCompanyCoverPreview] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
   const [profilePreview, setProfilePreview] = useState(null);
-
+  const [disabled, setDisabled] = useState(false);
   useEffect(() => {
     dispatch(getCountries());
   }, [dispatch]);
 
+
+
+
+
+  
   const { countries, error, loading, states, country, state, city, cities, communities, community } = useSelector(
     (state) => state.countries
   );
@@ -126,6 +131,14 @@ function ColumnsLayouts() {
   const companyLogoRef = useRef(null);
   const companyCoverRef = useRef(null);
   const profileRef = useRef(null);
+
+  
+
+  useEffect(() => {
+    if (!lisenceFile || !vatImage || !companyLogo || !companyCoverImage || !profileImage) {
+      setDisabled(true);
+    }
+  }, [lisenceFile, vatImage, companyLogo, companyCoverImage, profileImage]);
 
   const submitForm = () => {
     const formData = new FormData();
@@ -734,7 +747,7 @@ function ColumnsLayouts() {
               />
             </Grid>
           </Container>
-          <SubmitButton submit={submitForm} />
+          <SubmitButton submit={submitForm} disabled={disabled} />
         </Grid>
       </Page>
     </LoadScript>
