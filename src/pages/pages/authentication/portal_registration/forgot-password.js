@@ -42,16 +42,16 @@ const PurpleWrapper = styled('span')(({ theme }) => ({
 // carousel items
 const items = [
   {
-    title: 'Powerful and easy to use multipurpose theme.',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'Aqary International ',
+    description: 'The Purpose of Aqary International is to make home moving easier in the entire world. '
   },
   {
-    title: 'Power of React with Material UI',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'AQARY Group is Reimagining Real Estate to make it easier to unlock life’s next chapter.',
+    description: 'As the most-visited real estate website in the world, AQARY and its affiliates offer customers an on-demand experience for selling, buying, renting, and financing with transparency and nearly seamless end-to-end service. AQARY Offers buys and sells homes directly in dozens of markets across the world, allowing sellers control over their timeline. AQARY Home Loans, our affiliate lender, provides our customers with an easy option to get pre-approved and secure financing for their next home purchase.'
   },
   {
-    title: 'Power of React with Material UI',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'Our Aim is to Create a more Efficient Housing Marketplace and make Home Moving Easier.    ',
+    description: 'Our ambition is to be the place, and the encyclopedia that consumers and customers turn to as their property portal of choice, and to deliver that objective, Aqary needs to be a business in which people want to work, invest, and with which people want to partner.'
   }
 ];
 
@@ -109,7 +109,7 @@ const ForgotPassword = () => {
                   <Grid item container direction="column" alignItems="flex-end" xs={12}>
                     <Typography
                       component={Link}
-                      href="/pages/authentication/auth1/register"
+                      href="/pages/authentication/portal_registation/register"
                       variant="subtitle1"
                       sx={{ textDecoration: 'none' }}
                     >

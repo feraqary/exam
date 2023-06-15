@@ -22,24 +22,21 @@ import SubmitButton from 'components/Elements/SubmitButton';
 // ==============================|| Add Project ||============================== //
 const countries = ['UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
 const cities = ['UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
+const propertyTypeData = ['UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
 function AddProject() {
   // this is aglobal handle change that requires both value and of the input its used in to return an object with name: value
-  const [globalValues, setGlobalValues] = useState({});
   const [city, setCity] = useState(null);
   const [developerCompany, setDeveloperCompany] = useState(null);
   const [subDeveloperCompany, setSubDeveloperCompany] = useState(null);
+
   const [long, setlong] = useState(null);
   const [lat, setlat] = useState(null);
+
 
   const [address, setAddress] = useState('Abu Dhabi');
   const [country, setCountry] = useState('');
   const [state, setState] = useState('');
 
-  const handleGlobalChange = ({ target: { name, value } }) => {
-    setGlobalValues((values) => {
-      return { ...values, [name]: value };
-    });
-  };
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
@@ -211,14 +208,18 @@ function AddProject() {
                   helperText="Please select property status"
                 />
                 <AutoCompleteSelector
+                  multiple
                   label="Property Type"
                   placeholder="Select Property Type"
-                  options={countries}
+                  filterSelectedOptions
+                  defaultValue={[]}
+                  options={propertyTypeData}
                   style={{ xs: 12, lg: 4 }}
                   id="propertyTypeSelector"
-                  value={country}
-                  setValue={setCountry}
+                  // value={propertyType}
+                  setValue={setPropertyType}
                   helperText="Please select property type"
+                  func={(newValue) => setPropertyType(newValue)}
                 />
 
                 <AutoCompleteSelector
