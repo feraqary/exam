@@ -18,11 +18,11 @@ import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import CustomDateTime from 'components/forms/components/DateTime/CustomDateTime';
 import Container from 'components/Elements/Container';
-import InputText from 'components/widgets/TextInput';
-import FileUpload from 'components/widgets/FileUpload';
-import Selector from 'components/widgets/Selector';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
-import InputDateTime from 'components/widgets/InputDate';
+import InputText from 'components/InputArea/TextInput';
+import FileUpload from 'components/InputArea/FileUpload';
+import Selector from 'components/InputArea/Selector';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import InputDateTime from 'components/InputArea/InputDate';
 import SubmitButton from 'components/Elements/SubmitButton';
 
 export default function GenInfo() {

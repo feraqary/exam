@@ -9,11 +9,11 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-import InputText from 'components/widgets/TextInput';
-import FileUpload from 'components/widgets/FileUpload';
-import Selector from 'components/widgets/Selector';
+import InputText from 'components/InputArea/TextInput';
+import FileUpload from 'components/InputArea/FileUpload';
+import Selector from 'components/InputArea/Selector';
 import Container from 'components/Elements/Container';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 import CompanyServices from 'components/Data/company_types_data/fetch_company_types';
 

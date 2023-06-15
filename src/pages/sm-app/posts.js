@@ -5,9 +5,9 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { useTheme } from '@mui/material/styles';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
-import InputText from 'components/widgets/TextInput';
-import FileUpload from 'components/widgets/FileUpload';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import InputText from 'components/InputArea/TextInput';
+import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 
 const mainServiceTypes = ['Sell', 'Rent', 'Property Hub', 'Project', 'Exchange', 'Career'];
@@ -63,20 +63,18 @@ function Posts() {
     if (id === 1) {
       const acceptedTypes = ['image/jpeg', 'image/png'];
       if (!validateFileType(file, acceptedTypes)) {
-     
         console.log('Please upload only JPEG or PNG files.');
         return;
       }
- 
+
       console.log('Processing photo upload:', file);
     } else {
       const acceptedTypes = ['video/mp4'];
       if (!validateFileType(file, acceptedTypes)) {
-    
         console.log('Please upload only MP4 files.');
         return;
       }
-    
+
       console.log('Processing video upload:', file);
     }
   };
@@ -131,11 +129,7 @@ function Posts() {
                     accept="image/jpeg, image/png"
                   />
                   <Grid item xs={4} md={2}>
-                    <Button
-                      size="large"
-                      variant="contained"
-                      onClick={() => handleRemoveFileUpload(fileUpload.id)}
-                    >
+                    <Button size="large" variant="contained" onClick={() => handleRemoveFileUpload(fileUpload.id)}>
                       Remove
                     </Button>
                   </Grid>

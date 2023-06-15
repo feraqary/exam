@@ -9,7 +9,7 @@ import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
 // assets
 import Container from 'components/Elements/Container';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 
 const location = ['Abu Dhabi', 'Ajman', 'Al Ain', 'Dubai', 'Fujairah', 'Ras Al Khaimah', 'Sharjah', 'Umm Al Quwain'];

@@ -9,11 +9,11 @@ import { useState } from 'react';
 
 //assets
 import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
-import InputText from 'components/widgets/TextInput';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import InputText from 'components/InputArea/TextInput';
 import Container from 'components/Elements/Container';
 import SubmitButton from 'components/Elements/SubmitButton';
-import Selector from 'components/widgets/Selector';
+import Selector from 'components/InputArea/Selector';
 import CustomizedTabs from 'components/Elements/Tab';
 
 // ==============================|| Add Units ||============================== //

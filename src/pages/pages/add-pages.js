@@ -11,8 +11,8 @@ import React, { useState } from 'react';
 
 // assets
 import TextEditor from '../../components/Data/managment/text_editor';
-import InputText from 'components/widgets/TextInput';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
+import InputText from 'components/InputArea/TextInput';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
 

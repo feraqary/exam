@@ -5,9 +5,9 @@ import { Grid, InputLabel, FormControlLabel, TextField, Checkbox, Button } from 
 // project imports
 import MainCard from 'components/ui-component/cards/MainCard';
 import MaterialReactTable from 'material-react-table';
-import Selector from 'components/widgets/Selector';
-import InputText from 'components/widgets/TextInput';
-import FileUpload from 'components/widgets/FileUpload';
+import Selector from 'components/InputArea/Selector';
+import InputText from 'components/InputArea/TextInput';
+import FileUpload from 'components/InputArea/FileUpload';
 import { useRef } from 'react';
 import Table from 'components/Table/Table';
 

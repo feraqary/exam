@@ -12,9 +12,9 @@ import React, { useState } from 'react';
 // assets
 import TextEditor from '../../components/Data/managment/text_editor';
 import Container from 'components/Elements/Container';
-import InputText from 'components/widgets/TextInput';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
-import FileUpload from 'components/widgets/FileUpload';
+import InputText from 'components/InputArea/TextInput';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 
 // ==============================|| FIELDS ||============================== //

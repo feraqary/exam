@@ -13,9 +13,9 @@ import React, { useState } from 'react';
 import TextEditor from '../../components/Data/managment/text_editor';
 import Container from 'components/Elements/Container';
 import SubmitButton from 'components/Elements/SubmitButton';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
-import InputText from 'components/widgets/TextInput';
-import FileUpload from 'components/widgets/FileUpload';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import InputText from 'components/InputArea/TextInput';
+import FileUpload from 'components/InputArea/FileUpload';
 
 // ==============================|| FIELDS ||============================== //
 

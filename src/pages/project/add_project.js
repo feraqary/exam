@@ -14,9 +14,9 @@ import Map from 'components/map/google-map';
 
 //assets
 import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
-import InputText from 'components/widgets/TextInput';
-import Selector from 'components/widgets/Selector';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
+import InputText from 'components/InputArea/TextInput';
+import Selector from 'components/InputArea/Selector';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 
 // ==============================|| Add Project ||============================== //

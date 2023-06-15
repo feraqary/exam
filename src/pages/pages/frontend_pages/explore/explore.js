@@ -18,7 +18,7 @@ import Avatar from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import Container from 'components/Elements/Container';
-import TextInput from 'components/widgets/TextInput';
+import TextInput from 'components/InputArea/TextInput';
 import T60card from './helper/T60card';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';

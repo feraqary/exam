@@ -9,7 +9,7 @@ import React from 'react';
 // assets
 import CheckedList from 'components/checkedList/checkedList';
 import Container from 'components/Elements/Container';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 
 // ==============================|| FIELDS ||============================== //
 

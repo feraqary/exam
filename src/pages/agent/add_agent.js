@@ -10,10 +10,10 @@ import React, { useState, useMemo } from 'react';
 import CompanyServices from 'components/Data/company_types_data/fetch_company_types';
 import Container from 'components/Elements/Container';
 import SubmitButton from 'components/Elements/SubmitButton';
-import InputText from 'components/widgets/TextInput';
-import FileUpload from 'components/widgets/FileUpload';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
-import Selector from 'components/widgets/Selector';
+import InputText from 'components/InputArea/TextInput';
+import FileUpload from 'components/InputArea/FileUpload';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import Selector from 'components/InputArea/Selector';
 
 // ==============================|| FIELDS ||============================== //
 

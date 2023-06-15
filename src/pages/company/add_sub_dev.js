@@ -19,17 +19,17 @@ import Image from 'next/image';
 import { getCountries, getStates, getCities, getCommunities } from 'store/slices/country-section/actions/countries';
 
 // assets
-import InputText from 'components/widgets/TextInput';
-import FileUpload from 'components/widgets/FileUpload';
-import Selector from 'components/widgets/Selector';
+import InputText from 'components/InputArea/TextInput';
+import FileUpload from 'components/InputArea/FileUpload';
+import Selector from 'components/InputArea/Selector';
 import Container from 'components/Elements/Container';
-import AutoCompleteSelector from 'components/widgets/AutoCompleteSelector';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 import { useEffect } from 'react';
 import { setCity, setCountry, setCommunity } from 'store/slices/country-section/slice/country';
 import { setState } from 'store/slices/country-section/slice/country';
-import InputLayout from 'components/widgets/InputLayout';
-import CustomDateTime from 'components/widgets/CustomDateTime';
+import InputLayout from 'components/InputArea/InputLayout';
+import CustomDateTime from 'components/InputArea/CustomDateTime';
 import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
 
@@ -56,16 +56,11 @@ function ColumnsLayouts() {
   const [profilePreview, setProfilePreview] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
-
-
-
-
   useEffect(() => {
     if (!lisenceFile || !vatImage || !companyLogo || !companyCoverImage || !profileImage) {
       setDisabled(true);
     }
   }, [lisenceFile, vatImage, companyLogo, companyCoverImage, profileImage]);
-
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
