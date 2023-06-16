@@ -17,10 +17,10 @@ import BackgroundPattern1 from 'components/ui-component/cards/BackgroundPattern1
 import AuthSlider from 'components/ui-component/cards/AuthSlider';
 
 // Importing slices
-// import 
+// import
 // {
 //   selec
-// } 
+// }
 // from '../../store/slices/user-registration/slices/user-registration';
 
 // assets
@@ -44,7 +44,7 @@ const PurpleWrapper = styled('span')(({ theme }) => ({
     [theme.breakpoints.down('xl')]: {
       left: '25%',
       top: '50%'
-    } 
+    }
   },
   '&:before': {
     content: '""',
@@ -74,11 +74,13 @@ const items = [
   },
   {
     title: 'AQARY Group is Reimagining Real Estate to make it easier to unlock life’s next chapter.',
-    description: 'As the most-visited real estate website in the world, AQARY and its affiliates offer customers an on-demand experience for selling, buying, renting, and financing with transparency and nearly seamless end-to-end service. AQARY Offers buys and sells homes directly in dozens of markets across the world, allowing sellers control over their timeline. AQARY Home Loans, our affiliate lender, provides our customers with an easy option to get pre-approved and secure financing for their next home purchase.'
+    description:
+      'As the most-visited real estate website in the world, AQARY and its affiliates offer customers an on-demand experience for selling, buying, renting, and financing with transparency and nearly seamless end-to-end service. AQARY Offers buys and sells homes directly in dozens of markets across the world, allowing sellers control over their timeline. AQARY Home Loans, our affiliate lender, provides our customers with an easy option to get pre-approved and secure financing for their next home purchase.'
   },
   {
     title: 'Our Aim is to Create a more Efficient Housing Marketplace and make Home Moving Easier.    ',
-    description: 'Our ambition is to be the place, and the encyclopedia that consumers and customers turn to as their property portal of choice, and to deliver that objective, Aqary needs to be a business in which people want to work, invest, and with which people want to partner.'
+    description:
+      'Our ambition is to be the place, and the encyclopedia that consumers and customers turn to as their property portal of choice, and to deliver that objective, Aqary needs to be a business in which people want to work, invest, and with which people want to partner.'
   }
 ];
 
@@ -88,33 +90,31 @@ const Register = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
-
-  /// Registration Action 
+  /// Registration Action
   const registerUser = () => {
-		axios
-			.post('20.203.31.58/api/user/register', {
-				first_name: "simon",
-				last_name: "password",
-				country: "Eri",
-				email: "aqary@gmail.com",
-				profile_image_url: "/Users/user/Downloads/1d36e555-6d6a-4a09-ae9d-bdcb12ddfbe4.jpeg",
-				phone_number: "asdf",
-				company_number: "aasdf",
-				whatsapp_number,
-        gender:  1,
-        password: "dreaming",
+    axios
+      .post('20.203.31.58/api/user/register', {
+        first_name: 'simon',
+        last_name: 'password',
+        country: 'Eri',
+        email: 'aqary@gmail.com',
+        profile_image_url: '/Users/user/Downloads/1d36e555-6d6a-4a09-ae9d-bdcb12ddfbe4.jpeg',
+        phone_number: 'asdf',
+        company_number: 'aasdf',
+        whatsapp_number,
+        gender: 1,
+        password: 'dreaming',
         status: 1,
         user_types_id: 1,
         roles_id: 1,
         department: 1,
         social_login
-			})
-			.then((response) => {
+      })
+      .then((response) => {
         console.log(response.data);
-			})
-			.catch((error) => console.log(error));
-	};
-
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <Page title="Register">
@@ -132,7 +132,11 @@ const Register = () => {
                   >
                     <Grid item>
                       <Stack justifyContent={matchDownSM ? 'center' : 'flex-start'} textAlign={matchDownSM ? 'center' : 'inherit'}>
-                        <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'} onClick={registerUser}>
+                        <Typography
+                          color={theme.palette.secondary.main}
+                          variant={matchDownSM ? 'h3' : 'h2'}
+                          onClick={registerUser}
+                        >
                           Sign up
                         </Typography>
                         <Typography color="textPrimary" gutterBottom variant="h4">

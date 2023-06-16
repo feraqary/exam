@@ -32,10 +32,11 @@ function CompanyType() {
   const [iconImage, setIconImage] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
   const [iconPreview, setIconPreview] = useState(null);
-
   const logoRef = useRef(null);
   const iconRef = useRef(null);
-
+  console.log(logoImage)
+  
+  
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.companies);
 
