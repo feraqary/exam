@@ -12,7 +12,7 @@ import { Draggable } from 'react-beautiful-dnd';
 // project imports
 import AlertItemDelete from '../Board/AlertItemDelete';
 import { openSnackbar } from 'store/slices/snackbar';
-import { useDispatch, useSelector } from 'sotre';
+import { useDispatch, useSelector } from 'store';
 import { selectItem, deleteItem } from 'store/slices/kanban';
 
 // assets
