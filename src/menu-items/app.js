@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconKey, IconReceipt2, IconBug, IconBellRinging, IconPhoneCall, IconQuestionMark, IconShieldLock } from '@tabler/icons';
-
+import { AlignBoxLeftBottom } from 'tabler-icons-react';
 // constant
 const icons = {
   IconKey,
@@ -20,7 +20,7 @@ const icons = {
 const app = {
   id: 'App',
   title: <FormattedMessage id="App" />,
-  icon: icons.IconKey,
+  icon: <AlignBoxLeftBottom size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {

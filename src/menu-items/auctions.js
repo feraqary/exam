@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconBrandFramer, IconTypography, IconPalette, IconShadow, IconWindmill, IconLayoutGridAdd } from '@tabler/icons';
-
+import { Hammer } from 'tabler-icons-react';
 // constant
 const icons = {
   IconTypography,
@@ -19,7 +19,7 @@ const icons = {
 const auctions = {
   id: 'auctions',
   title: <FormattedMessage id="Auctions" />,
-  icon: icons.IconTypography,
+  icon: <Hammer size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
@@ -29,37 +29,30 @@ const auctions = {
       url: '/auction/users',
       icon: icons.IconTypography
     },
+
     {
-      id: 'manage',
-      title: <FormattedMessage id="Manage" />,
-      type: 'collapse',
-      icon: icons.IconWindmill,
-      children: [
-        {
-          id: 'manage-local-auction',
-          title: <FormattedMessage id="Local Auction" />,
-          type: 'item',
-          url: '/auction/local'
-        },
-        {
-          id: 'manage-international-auction',
-          title: <FormattedMessage id="Internationl Auction" />,
-          type: 'item',
-          url: '/auction/international'
-        },
-        {
-          id: 'manage-partners',
-          title: <FormattedMessage id="Partners" />,
-          type: 'item',
-          url: '/auction/partners'
-        },
-        {
-          id: 'deleted-auction',
-          title: <FormattedMessage id="Deleted Auctions" />,
-          type: 'item',
-          url: '/auction/deleted_auctions'
-        }
-      ]
+      id: 'manage-local-auction',
+      title: <FormattedMessage id="Manage Local Auction" />,
+      type: 'item',
+      url: '/auction/local'
+    },
+    {
+      id: 'manage-international-auction',
+      title: <FormattedMessage id="Manage Internationl Auction" />,
+      type: 'item',
+      url: '/auction/international'
+    },
+    {
+      id: 'manage-partners',
+      title: <FormattedMessage id="Manage Partners" />,
+      type: 'item',
+      url: '/auction/partners'
+    },
+    {
+      id: 'deleted-auction',
+      title: <FormattedMessage id="Manage Deleted Auctions" />,
+      type: 'item',
+      url: '/auction/deleted_auctions'
     },
     {
       id: 'auction-activities',

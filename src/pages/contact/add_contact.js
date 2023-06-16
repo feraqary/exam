@@ -8,7 +8,6 @@ import {
   FormControlLabel,
   OutlinedInput,
   Radio,
-
   FormGroup,
   Checkbox,
   Typography,
@@ -36,7 +35,6 @@ import Selector from 'components/InputArea/Selector';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import InputDateTime from 'components/InputArea/InputDate';
 import SubmitButton from 'components/Elements/SubmitButton';
-
 
 // ==============================|| Add Contact||============================== //
 function Add_contact() {
@@ -98,254 +96,239 @@ function Add_contact() {
   return (
     <Page title="Add Contact">
       <Grid container spacing={gridSpacing}>
-      <Container style={{ xs: 12 }}>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} lg={6}></Grid>
+        <Container style={{ xs: 12 }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} lg={6}></Grid>
 
-              <Grid item xs={12} lg={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    setActive(!Active);
-                  }}
-                >
-                  {Active ? 'Active' : 'Archived'}
-                </Button>
-              </Grid>
+            <Grid item xs={12} lg={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setActive(!Active);
+                }}
+              >
+                {Active ? 'Active' : 'Archived'}
+              </Button>
+            </Grid>
 
-              <Grid item xs={12} lg={6}>
-
-                <Selector label='Company Type' id="salutation-selector" options={["Individual", "Company"]} style={{ xs: 12, lg: 6 }} placeholder="Select Salutation" />
-              </Grid>
-              <Grid item xs={12} lg={6}></Grid>
-
-            <AutoCompleteSelector
-                label="Salutation"
+            <Grid item xs={12} lg={6}>
+              <Selector
+                label="Company Type"
+                id="salutation-selector"
+                options={['Individual', 'Company']}
                 style={{ xs: 12, lg: 6 }}
-                options={["Mr.", "Mrs."]}
-                placeholder="select image"
-                fullWidth
-            />
-                
+                placeholder="Select Salutation"
+              />
+            </Grid>
+            <Grid item xs={12} lg={6}></Grid>
 
-            <InputText
-            label="Name"
-            helperText="Pleas enter first name"
-            placeholder={"enter first name..."}
-            style={{ xs: 12, lg: 6 }}
-            type="text"
-            value={value}
-            setValue={setvalue}
+            <AutoCompleteSelector
+              label="Salutation"
+              style={{ xs: 12, lg: 6 }}
+              options={['Mr.', 'Mrs.']}
+              placeholder="select image"
+              fullWidth
             />
 
+            <InputText
+              label="Name"
+              helperText="Pleas enter first name"
+              placeholder={'enter first name...'}
+              style={{ xs: 12, lg: 6 }}
+              type="text"
+              value={value}
+              setValue={setvalue}
+            />
 
             <InputText
-            label="Family Name"
-            helperText="Pleas enter family name"
-            placeholder={"enter family name..."}
-            style={{ xs: 12, lg: 6 }}
-            type="text"
-            value={value}
-            setValue={setvalue}
+              label="Family Name"
+              helperText="Pleas enter family name"
+              placeholder={'enter family name...'}
+              style={{ xs: 12, lg: 6 }}
+              type="text"
+              value={value}
+              setValue={setvalue}
             />
 
             <AutoCompleteSelector
-            label="Language"
-            style={{ xs: 12, lg: 6 }}
-            options={["Arabic", "English"]}
-            placeholder={"select language..."}
-            helperText={"please choose a language..."}
-            id="add-contact-language"
-            fullWidth
+              label="Language"
+              style={{ xs: 12, lg: 6 }}
+              options={['Arabic', 'English']}
+              placeholder={'select language...'}
+              helperText={'please choose a language...'}
+              id="add-contact-language"
+              fullWidth
             />
 
             <Grid item xs={12} lg={6}>
-            <InputLabel required>Mobile </InputLabel>
-            <MuiPhoneNumber fullWidth variant="outlined" defaultCountry={'ae'} />
-            <FormHelperText>please enter mobile number</FormHelperText>
+              <InputLabel required>Mobile </InputLabel>
+              <MuiPhoneNumber fullWidth variant="outlined" defaultCountry={'ae'} />
+              <FormHelperText>please enter mobile number</FormHelperText>
             </Grid>
 
             <Grid item xs={12} lg={6}>
-            <InputLabel>Landline </InputLabel>
-            <MuiPhoneNumber fullWidth variant="outlined" defaultCountry={'ae'} />
-            <FormHelperText>please enter landline number</FormHelperText>
+              <InputLabel>Landline </InputLabel>
+              <MuiPhoneNumber fullWidth variant="outlined" defaultCountry={'ae'} />
+              <FormHelperText>please enter landline number</FormHelperText>
             </Grid>
-
 
             <AutoCompleteSelector
-            label="Contact preference"
-            style={{ xs: 12, lg: 6 }}
-            options={["Mobile", "Landline", "Email"]}
-            id="add-contact-contact-preference"
-            fullWidth
-            placeholder={"select contact preference..."}
-            helperText={"please choose a contact preference"}
+              label="Contact preference"
+              style={{ xs: 12, lg: 6 }}
+              options={['Mobile', 'Landline', 'Email']}
+              id="add-contact-contact-preference"
+              fullWidth
+              placeholder={'select contact preference...'}
+              helperText={'please choose a contact preference'}
             />
 
-
             <Grid item xs={12} lg={6}>
-            <InputLabel>Fax</InputLabel>
-            <MuiPhoneNumber fullWidth variant="outlined" defaultCountry={'ae'} />
-            <FormHelperText>please enter fax</FormHelperText>
-
+              <InputLabel>Fax</InputLabel>
+              <MuiPhoneNumber fullWidth variant="outlined" defaultCountry={'ae'} />
+              <FormHelperText>please enter fax</FormHelperText>
             </Grid>
-              <Grid item xs={12} lg={6}>
-                {/* <FormGroup row> */}
-                <FormControlLabel
-                  control={<Checkbox value={'i'} />}
-                  label="Client not willing to give Email address"
-                  onChange={() => {
-                    setEmail(!Email);
-                  }}
+            <Grid item xs={12} lg={6}>
+              {/* <FormGroup row> */}
+              <FormControlLabel
+                control={<Checkbox value={'i'} />}
+                label="Client not willing to give Email address"
+                onChange={() => {
+                  setEmail(!Email);
+                }}
+              />
+              {/* </FormGroup> */}
+            </Grid>
+
+            {Email && (
+              <>
+                <InputText
+                  label="Email"
+                  helperText="Pleas enter email address"
+                  style={{ xs: 12, lg: 6 }}
+                  type="text"
+                  value={value}
+                  setValue={setvalue}
+                  placeholder={'enter email address...'}
                 />
-                {/* </FormGroup> */}
-              </Grid>
-
-              {Email && (
-                <>
-                    <InputText
-                    label="Email"
-                    helperText="Pleas enter email address"
-                    style={{ xs: 12, lg: 6 }}
-                    type="text"
-                    value={value}
-                    setValue={setvalue}
-                    placeholder={"enter email address..."}
-
-                    />
-                </>
-              )}
+              </>
+            )}
 
             <InputText
-            label="Remarks"
-            helperText="pleare write your remarks"
-            placeholder={"enter remarks..."}
-            style={{ xs: 12, lg: 6 }}
-            type="text"
-            value={value}
-            setValue={setvalue}
-            multiline
-            rows={2}
-            />  
+              label="Remarks"
+              helperText="pleare write your remarks"
+              placeholder={'enter remarks...'}
+              style={{ xs: 12, lg: 6 }}
+              type="text"
+              value={value}
+              setValue={setvalue}
+              multiline
+              rows={2}
+            />
 
-            <InputDateTime label="Moving Date" style={{xs:12,lg:6}}/>
+            <InputDateTime label="Moving Date" style={{ xs: 12, lg: 6 }} />
 
+            <Grid item xs={12} lg={6}>
+              <InputLabel>Assigned To</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                fullWidth
+                displayEmpty
+                label="Select"
+                multiple
+                value={personName}
+                onChange={handleChange}
+                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                renderValue={(selected) => (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((value) => (
+                      <Chip key={value} label={value} />
+                    ))}
+                  </Box>
+                )}
+                MenuProps={MenuProps}
+              >
+                {names.map((name) => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    // style={getStyles(name, personName, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
 
+            <Grid item xs={12} lg={6}>
+              <InputLabel>Transaction to date</InputLabel>
+              <Typography>1</Typography>
+            </Grid>
 
-              <Grid item xs={12} lg={6}>
-                <InputLabel>Assigned To</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  fullWidth
-                  displayEmpty
-                  label="Select"
-                  
-                  multiple
-                  value={personName}
-                  onChange={handleChange}
-                  input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                  renderValue={(selected) => (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <Chip key={value} label={value} />
-                      ))}
-                    </Box>
-                  )}
-                  MenuProps={MenuProps}
-                >
-                  {names.map((name) => (
-                    <MenuItem
-                      key={name}
-                      value={name}
-                      // style={getStyles(name, personName, theme)}
-                    >
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Grid>
-
-
-
-
-              <Grid item xs={12} lg={6}>
-                <InputLabel>Transaction to date</InputLabel>
-                <Typography>1</Typography>
-              </Grid>
-
-              {/* <Selector label='Managed' onChange={(e) => {
+            {/* <Selector label='Managed' onChange={(e) => {
                     setManaged(e.target.value);
                   }} 
                   id="salutation-selector" options={["yes", "no"]} style={{ xs: 12, lg: 6 }} placeholder="Select Salutation" /> */}
-                
-              <Grid item xs={12} lg={6}>
-                <InputLabel>Managed</InputLabel>
-                <RadioGroup
-                  aria-labelledby="radio-buttons-group-label"
-                  row
-                  onChange={(e) => {
-                    setManaged(e.target.value);
-                  }}
-                >
-                  <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-                  <FormControlLabel value="no" control={<Radio />} label="No" />
-                </RadioGroup>
-              </Grid>
 
-              {managed === 'yes' ? (
-                <>
-                  <AutoCompleteSelector
-                    label="Relationship Manager"
-                    style={{ xs: 12, lg: 6 }}
-                    options={Dummy}
-                    fullWidth
-                    helperText="please enter relationship manager...."
-                    placeholder={"relationship manager..."}
-                    />
-
-                  <AutoCompleteSelector
-                    label="Managed Category"
-                    style={{ xs: 12, lg: 6 }}
-                    options={Dummy}
-                    fullWidth
-                    helperText="please enter manager category...."
-                    placeholder={"manager category..."}
-                    />
-                </>
-              ) : (
-                <></>
-              )}
-            <AutoCompleteSelector
-            label="Shared With"
-            style={{ xs: 12, lg: 6 }}
-            options={names}
-            fullWidth
-            />
-            <InputText
-            label="Ejari Contact Ref. No."
-            helperText="Pleas enter ejari contact ref. no."
-            placeholder="ref. no. ..."
-            style={{ xs: 12, lg: 6 }}
-            type="text"
-            value={value}
-            setValue={setvalue}
-            />
-
-              
-
-              <Grid item xs={12} lg={6}>
-                <FormGroup row>
-                  <FormControlLabel control={<Checkbox value={'i'} />} label="VIP" />
-                  <FormControlLabel control={<Checkbox value={'i'} />} label="Black Listed" />
-                </FormGroup>
-              </Grid>
-              
+            <Grid item xs={12} lg={6}>
+              <InputLabel>Managed</InputLabel>
+              <RadioGroup
+                aria-labelledby="radio-buttons-group-label"
+                row
+                onChange={(e) => {
+                  setManaged(e.target.value);
+                }}
+              >
+                <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+                <FormControlLabel value="no" control={<Radio />} label="No" />
+              </RadioGroup>
             </Grid>
-         </Container>        
-         
+
+            {managed === 'yes' ? (
+              <>
+                <AutoCompleteSelector
+                  label="Relationship Manager"
+                  style={{ xs: 12, lg: 6 }}
+                  options={Dummy}
+                  fullWidth
+                  helperText="please enter relationship manager...."
+                  placeholder={'relationship manager...'}
+                />
+
+                <AutoCompleteSelector
+                  label="Managed Category"
+                  style={{ xs: 12, lg: 6 }}
+                  options={Dummy}
+                  fullWidth
+                  helperText="please enter manager category...."
+                  placeholder={'manager category...'}
+                />
+              </>
+            ) : (
+              <></>
+            )}
+            <AutoCompleteSelector label="Shared With" style={{ xs: 12, lg: 6 }} options={names} fullWidth />
+            <InputText
+              label="Ejari Contact Ref. No."
+              helperText="Pleas enter ejari contact ref. no."
+              placeholder="ref. no. ..."
+              style={{ xs: 12, lg: 6 }}
+              type="text"
+              value={value}
+              setValue={setvalue}
+            />
+
+            <Grid item xs={12} lg={6}>
+              <FormGroup row>
+                <FormControlLabel control={<Checkbox value={'i'} />} label="VIP" />
+                <FormControlLabel control={<Checkbox value={'i'} />} label="Black Listed" />
+              </FormGroup>
+            </Grid>
+          </Grid>
+        </Container>
+
         <Container title="Add Banner Details" style={{ xs: 12 }}>
-            <VerticalTabs />
+          <VerticalTabs />
         </Container>
 
         <Grid item lg={10}></Grid>

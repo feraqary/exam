@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconClipboardCheck, IconPictureInPicture, IconForms, IconBorderAll, IconChartDots, IconStairsUp } from '@tabler/icons';
-
+import { Ticket } from 'tabler-icons-react';
 // constant
 const icons = {
   IconClipboardCheck,
@@ -19,7 +19,7 @@ const icons = {
 const exhibitions = {
   id: 'exhibitions',
   title: <FormattedMessage id="Exhibitions" />,
-  icon: icons.IconPictureInPicture,
+  icon: <Ticket size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
@@ -30,36 +30,28 @@ const exhibitions = {
       url: '/exhibition/add'
     },
     {
-      id: 'manage-exhibitions',
-      title: <FormattedMessage id="Manage" />,
-      type: 'collapse',
-      icon: icons.IconForms,
-      children: [
-        {
-          id: 'manage-local-exhibitions',
-          title: <FormattedMessage id="Local Exhibitions" />,
-          type: 'item',
-          url: '/exhibition/local'
-        },
-        {
-          id: 'manage-international-exhibitions',
-          title: <FormattedMessage id="International Exhibitions" />,
-          type: 'item',
-          url: '/exhibition/international'
-        },
-        {
-          id: 'manage-clients',
-          title: <FormattedMessage id="Clients" />,
-          type: 'item',
-          url: '/exhibition/clients'
-        },
-        {
-          id: 'manage-exhibition-services',
-          title: <FormattedMessage id="Exhibition Services" />,
-          type: 'item',
-          url: '/exhibition/services'
-        }
-      ]
+      id: 'manage-local-exhibitions',
+      title: <FormattedMessage id="Manage Local Exhibitions" />,
+      type: 'item',
+      url: '/exhibition/local'
+    },
+    {
+      id: 'manage-international-exhibitions',
+      title: <FormattedMessage id="Manage International Exhibitions" />,
+      type: 'item',
+      url: '/exhibition/international'
+    },
+    {
+      id: 'manage-clients',
+      title: <FormattedMessage id="Manage Clients" />,
+      type: 'item',
+      url: '/exhibition/clients'
+    },
+    {
+      id: 'manage-exhibition-services',
+      title: <FormattedMessage id="Manage Exhibition Services" />,
+      type: 'item',
+      url: '/exhibition/services'
     },
     {
       id: 'exhibitions-activities',

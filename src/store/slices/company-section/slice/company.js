@@ -10,7 +10,8 @@ import {
   getLocalCompanies,
   getInternationalCompanies,
   getAllServices,
-  getMainServices
+  getMainServices,
+  updateCompanyType
 } from '../action/company';
 
 import { toast } from 'react-toastify';
@@ -272,6 +273,22 @@ const slice = createSlice({
           progress: undefined,
           theme: 'dark'
         });
+      })
+      // update company types=================================================================================================
+      .addCase(updateCompanyType.pending, (state) => {
+        state.loading = true;
+        state.companyTypes = state.companyTypes;
+        state.error = null;
+      })
+      .addCase(updateCompanyType.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.companyTypes = action.payload.data;
+      })
+      .addCase(updateCompanyType.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.companyTypes = state.companyTypes;
       })
       // get all company types=================================================================================================
       .addCase(getAllCompanyTypes.pending, (state) => {

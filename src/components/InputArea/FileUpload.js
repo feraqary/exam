@@ -117,8 +117,10 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, st
         />
       </InputLayout>
       {image && (
-        <Grid item xs={3} lg={style.lg}>
-          <img src={imagePreview} alt={image.alt} width={image.width} height={image.height} />
+        <Grid item xs={3} lg={style.lg}  alignContent="right">
+          {imagePreview ? 
+          <img src={imagePreview} alt={image.alt} width={image.width} height={image.height} />:
+          <img src='/assets/image_preveiw.jpg' alt={image.alt} width={100} height={100} />}
         </Grid>
       )}
     </>

@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 const config = {
   headers: { 'Content-Type': 'multipart/form-data' }
 };
+const baseurl = 'http://20.203.31.58'
 
 export const createCompanyType = createAsyncThunk('company/createCompanyType', async (formData, { rejectWithValue }) => {
   try {
@@ -28,6 +29,17 @@ export const getAllCompanyTypes = createAsyncThunk('company/getAllCompanyTypes',
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
+    console.log(rejectWithValue(error));
+  }
+});
+export const updateCompanyType = createAsyncThunk('company/updateCompanyType', async ({company_id,formData} , { rejectWithValue }) => {
+  try {
+    console.log(`company id: ${company_id}`)
+    const response = await api.put(`${baseurl}/api/services/updatecompanytype/${company_id}`,formData, config);
+    return response.data;
+  } catch (error) {
+    console.log(rejectWithValue(error));
+    return rejectWithValue(error.response.data);
   }
 });
 export const getAllMainServices = createAsyncThunk('company/getAllMainServices', async (_, { rejectWithValue }) => {

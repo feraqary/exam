@@ -98,8 +98,8 @@ function CompanyType() {
               type="text"
               value={companyName}
               setV
-              
-  //new change in the comment
+
+              //new change in the comment
             />
             <InputText
               label="Description"

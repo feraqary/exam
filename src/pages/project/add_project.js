@@ -28,11 +28,15 @@ function AddProject() {
   const [city, setCity] = useState(null);
   const [developerCompany, setDeveloperCompany] = useState(null);
   const [subDeveloperCompany, setSubDeveloperCompany] = useState(null);
-  const [propertyType, setPropertyType] = useState(null);
+
+  const [long, setlong] = useState(null);
+  const [lat, setlat] = useState(null);
+
 
   const [address, setAddress] = useState('Abu Dhabi');
-  const [country, setCountry] = useState('');
+  const [country, setCountry, setPropertyType]= useState('');
   const [state, setState] = useState('');
+
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
