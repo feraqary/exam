@@ -19,17 +19,16 @@ import {
   OutlinedInput,
   TextField,
   Typography,
-  FileUpload,
   useMediaQuery
 } from '@mui/material';
 import { UploadFile } from '@mui/icons-material';
-
+//coder-code: registration FILE
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
-import {setCountry } from 'store/slices/country-section/slice/country';
+import { setCountry } from 'store/slices/country-section/slice/country';
 
 // project imports
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
@@ -43,6 +42,9 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import FileUpload from 'components/InputArea/FileUpload';
+import { createUser } from 'store/slices/user-registration/action/user-registration';
+import { IconDeviceDesktopSearch } from '@tabler/icons-react';
 
 // ===========================|| JWT - REGISTER ||=========================== //
 
@@ -93,11 +95,21 @@ const JWTRegister = ({ ...others }) => {
 
       <Formik
         initialValues={{
-          email: '',
-          password: '',
-          firstName: '',
-          lastName: '', 
-          submit: null
+          firstName: null,
+          lastName: null,
+          country: null,
+          email: null,
+          profile_image_url: null,
+          phoneNumber: null,
+          company_number: null,
+          whatsapp_number: null,
+          gender: 1,
+          password: null,
+          status: null,
+          user_type_id: null,
+          roles_id: null,
+          department: null,
+          social_login: null
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -105,7 +117,9 @@ const JWTRegister = ({ ...others }) => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            await register(values.email, values.password, values.firstName, values.lastName);
+            console.log(values);
+            dispatch(createUser(values));
+            // await register(values.email, values.password, values.firstName, values.lastName);
             if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
@@ -165,36 +179,43 @@ const JWTRegister = ({ ...others }) => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-              <AutoCompleteSelector
-              fullWidth
-                style={{ xs: 12, lg: 12, mb: 2 }}
-                id="country-selector"
-                options={countries?.map((country) => {
-                  return { label: country.Country, id: country.ID };
-                })}
-                name="country"
-                placeholder="Select a Country"
-                value={country}
-                setValue={setCountry}
-                loading={loading}
-                func={countryChange}
-              />
+                <AutoCompleteSelector
+                  fullWidth
+                  style={{ xs: 12, lg: 12, mb: 2 }}
+                  id="country-selector"
+                  options={countries?.map((country) => {
+                    return { label: country.Country, id: country.ID };
+                  })}
+                  name="country"
+                  placeholder="Select a Country"
+                  value={values.country}
+                  setValue={setCountry}
+                  loading={loading}
+                  func={countryChange}
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
-              <TextField
-                      type="file"
-                      fullWidth
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <UploadFile />
-                          </InputAdornment>
-                        )
-                      }}
-                    />
+                {/* <TextField
+                  type="picture"
+                  fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <UploadFile />
+                      </InputAdornment>
+                    )
+                  }}
+                /> */}
 
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                <FileUpload
+                  value={values.img}
+                  label="Insert Profile Image"
+                  type={'img/png/jpg'}
+                  fullWidth
+                  style={{ xs: 12, lg: 12 }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
                   label="Company Number"
@@ -221,41 +242,43 @@ const JWTRegister = ({ ...others }) => {
                   fullWidth
                   label="Whatsapp Number"
                   name="whatsNumber"
-                  value={values.whatsNumber}
+                  value={values.whatsapp_number}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-              <Selector
-                id="gender"
-                label = "Select Gender:"
-                placeholder="Select Gender"
-                options={['Male', 'Female']}
-                style={{ xs: 12, lg: 12}}
-              />
+                <Selector
+                  id="gender"
+                  label="Select Gender:"
+                  placeholder="Select Gender"
+                  options={['Male', 'Female']}
+                  style={{ xs: 12, lg: 12 }}
+                  value={values.gender}
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
-              <Selector
-                id="compStatus"
-                label = "User Type:"
-                placeholder="Choose Company Type"
-                options={['Company', 'Individual']}
-                style={{ xs: 12, lg: 12}}
-              />
+                <Selector
+                  value={values.user_type_id}
+                  id="compStatus"
+                  label="User Type:"
+                  placeholder="Choose Company Type"
+                  options={['Company', 'Individual']}
+                  style={{ xs: 12, lg: 12 }}
+                />
               </Grid>
 
-                  <Grid item xs={12} sm={6}>
-              <Selector
-                id="compStatus"
-                label = "Select Company Status:"
-                placeholder="Select Company Status:"
-                options={['Active', 'Non-Active']}
-                style={{ xs: 12, lg: 12}}
-              />
+              <Grid item xs={12} sm={6}>
+                <Selector
+                  value={values.status}
+                  id="compStatus"
+                  label="Select Company Status:"
+                  placeholder="Select Company Status:"
+                  options={['Active', 'Non-Active']}
+                  style={{ xs: 12, lg: 12 }}
+                />
               </Grid>
-            
             </Grid>
             <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
               <InputLabel htmlFor="outlined-adornment-email-register">Email Address / Username</InputLabel>
@@ -303,7 +326,7 @@ const JWTRegister = ({ ...others }) => {
                 }
                 inputProps={{}}
               />
-              
+
               {touched.password && errors.password && (
                 <FormHelperText error id="standard-weight-helper-text-password-register">
                   {errors.password}
@@ -338,14 +361,13 @@ const JWTRegister = ({ ...others }) => {
                 }
                 inputProps={{}}
               />
-              
+
               {touched.password && errors.password && (
                 <FormHelperText error id="standard-weight-helper-text-password-register">
                   {errors.password}
                 </FormHelperText>
               )}
             </FormControl>
-
 
             {strength !== 0 && (
               <FormControl fullWidth>
@@ -363,9 +385,6 @@ const JWTRegister = ({ ...others }) => {
                 </Box>
               </FormControl>
             )}
-
-
-             
 
             <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
