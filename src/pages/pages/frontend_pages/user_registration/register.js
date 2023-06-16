@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-<<<<<<<< HEAD:src/pages/pages/frontend_pages/user_registration/register.js
+<<<<<<<< HEAD:src/Page/Page/frontend_pages/user_registration/Register.js
 =======
 >>>>>>> b739c5acc8d732185af5d136d7b796be5dab73c5
 // material-ui
