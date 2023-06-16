@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { cloneElement, useState } from 'react';
+import React, { cloneElement, useState } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -18,14 +18,23 @@ import {
   Stack,
   Toolbar,
   Typography,
-  useScrollTrigger
+  useScrollTrigger,
+  Tooltip,
+  DialogTitle,
+  Slide,
+  DialogContent,
+  DialogActions,
+  Dialog
 } from '@mui/material';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CloseIcon from '@mui/icons-material/Close';
 // project imports
 import Logo from '../Logo';
+import Login from '../../../pages/pages/authentication/portal_registration/login';
 // assets
 import { IconBook, IconCreditCard, IconDashboard, IconHome2 } from '@tabler/icons';
 import MenuIcon from '@mui/icons-material/Menu';
+// import { Login } from 'tabler-icons-react';
 
 function ElevationScroll({ children, window }) {
   const theme = useTheme();
@@ -50,15 +59,27 @@ ElevationScroll.propTypes = {
 };
 
 // ==============================|| MINIMAL LAYOUT APP BAR ||============================== //
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const AppBar = ({ ...others }) => {
   const [drawerToggle, setDrawerToggle] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const drawerToggler = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setDrawerToggle(open);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -73,15 +94,38 @@ const AppBar = ({ ...others }) => {
               <Button color="inherit" component={Link} href="#">
                 Home
               </Button>
-              <Button color="inherit" component={Link} href="/pages/media_posts/Tabs">
+              <Button color="inherit" component={Link} href="/pages/media_posts/Tabs" target="_blank">
                 Social Media
               </Button>
-              <Button color="inherit" component={Link} href="login" target="_blank">
+              <Button color="inherit" component={Link} href="login">
                 Dashboard
               </Button>
               <Button color="inherit" component={Link} href="/pages/authentication/portal_registration/register" target="_blank">
-              Portal Login 
+                Portal Login
               </Button>
+              <Tooltip title="Log In">
+                <IconButton color="inherit" target="_blank" onClick={handleClickOpen}>
+                  <AccountCircleIcon />
+                </IconButton>
+              </Tooltip>
+
+              {/* login pop up*/}
+              <Dialog open={open} TransitionComponent={Transition} onClose={handleClose} fullScreen>
+                <DialogActions sx={{display:"flex", justifyContent:"flex-start"}} >
+                  <Tooltip title="close">
+                    <IconButton color="inherit" target="_blank" onClick={handleClose}>
+                      <CloseIcon />
+                    </IconButton>
+                  </Tooltip>
+                </DialogActions>
+                <DialogContent>
+                  <Login closePopUp={setOpen} />
+                </DialogContent>
+              </Dialog>
+
+
+
+
             </Stack>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
               <IconButton color="inherit" onClick={drawerToggler(true)} size="large">
@@ -112,7 +156,6 @@ const AppBar = ({ ...others }) => {
                           <ListItemIcon>
                             <IconCreditCard />
                           </ListItemIcon>
-    
                         </ListItemButton>
                       </Link>
                     </List>

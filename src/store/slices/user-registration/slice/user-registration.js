@@ -1,22 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createUser } from '../action/user-registration';
-
+import { createUser,userLogIn } from '../action/user-registration';
+import { toast } from 'react-toastify';
 const initialState = {
-  first_name: '',
-  last_name: '',
-  country: '',
-  email: '',
-  profile_image_url: '',
-  phone_number: '',
-  company_number: '',
-  whatsapp_number: '',
+  first_name: null,
+  last_name: null,
+  country: null,
+  // state: null,
+  // city: null,
+  // community: null,
+  email: null,
+  profile_image_url: null,
+  phone_number: null,
+  company_number: null,
+  // whatsapp_number: null,
   gender: 1,
-  password: '',
+  password: null,
   status: 1,
   user_types_id: 1,
   roles_id: 1,
   department: 1,
-  social_login: 1
+  social_login: 'google'
 };
 
 const signupSlice = createSlice({
@@ -70,42 +73,50 @@ const signupSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-	builder
-	.addCase(createUser.pending, (state) => {
-	  state.loading = true;
-	  state.companyTypes = state.companyTypes;
-	  state.error = null;
-	})
-	.addCase(createUser.fulfilled, (state, action) => {
-	  state.loading = false;
-	  state.error = null;
-	  state.companyTypes = action.payload;
-	  toast.success('Added Successfully', {
-		position: 'top-right',
-		autoClose: 5000,
-		hideProgressBar: false,
-		closeOnClick: true,
-		pauseOnHover: true,
-		draggable: true,
-		progress: undefined,
-		theme: 'dark'
-	  });
-	})
-	.addCase(createUser.rejected, (state, action) => {
-	  state.loading = false;
-	  state.error = action.payload.error;
-	  state.companyTypes = state.companyTypes;
-	  toast.error(`${state.error}`, {
-		position: 'top-right',
-		autoClose: 5000,
-		hideProgressBar: false,
-		closeOnClick: true,
-		pauseOnHover: true,
-		draggable: true,
-		progress: undefined,
-		theme: 'dark'
-	  });
-	})
+    builder
+      .addCase(createUser.pending, (state) => {
+        state.loading = true;
+        state.users = state.register;
+        state.error = null;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.users = action.payload.data;
+        console.log("action:");
+        console.log(action.payload , "data");
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
+        console.log(action.payload.error);
+        state.users = state.register;
+      })
+
+
+      .addCase(userLogIn.pending, (state) => {
+        state.loading = true;
+        state.users = state.register;
+        state.error = null;
+      })
+      .addCase(userLogIn.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.users = action.payload.data;
+        console.log("action:");
+        console.log(action.payload , "data");
+      })
+      .addCase(userLogIn.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
+        console.log(action.payload.error);
+        state.users = state.register;
+      })
+
+
+
+
+
   }
 });
 

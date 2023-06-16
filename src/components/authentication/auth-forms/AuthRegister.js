@@ -25,10 +25,10 @@ import { UploadFile } from '@mui/icons-material';
 //coder-code: registration FILE
 // third party
 import * as Yup from 'yup';
-import { Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { useSelector } from 'react-redux';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
-import { setCountry } from 'store/slices/country-section/slice/country';
+// import { setCountry } from 'store/slices/country-section/slice/country';
 
 // project imports
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
@@ -46,6 +46,23 @@ import FileUpload from 'components/InputArea/FileUpload';
 import { createUser } from 'store/slices/user-registration/action/user-registration';
 import { IconDeviceDesktopSearch } from '@tabler/icons-react';
 
+import {
+  setFirst_name,
+  setLast_name,
+  setCountry,
+  setEmail,
+  setProfile_image_url,
+  setPhone_number,
+  setCompany_number,
+  setWhatsapp_number,
+  setGender,
+  setPassword,
+  setStatus,
+  setUser_types_id,
+  setRoles_id,
+  setDepartment,
+  setSocial_login
+} from 'store/slices/user-registration/slice/user-registration';
 // ===========================|| JWT - REGISTER ||=========================== //
 
 const JWTRegister = ({ ...others }) => {
@@ -95,21 +112,24 @@ const JWTRegister = ({ ...others }) => {
 
       <Formik
         initialValues={{
-          firstName: null,
-          lastName: null,
+          first_name: null,
+          last_name: null,
           country: null,
+          // state: null,
+          // city: null,
+          // community: null,
           email: null,
           profile_image_url: null,
-          phoneNumber: null,
+          phone_number: null,
           company_number: null,
-          whatsapp_number: null,
+          // whatsapp_number: null,
           gender: 1,
           password: null,
-          status: null,
-          user_type_id: null,
-          roles_id: null,
-          department: null,
-          social_login: null
+          status: 1,
+          user_types_id: 1,
+          roles_id: 1,
+          department: 1,
+          social_login: 'google'
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -117,8 +137,28 @@ const JWTRegister = ({ ...others }) => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            console.log(values);
-            dispatch(createUser(values));
+            // console.log(values);
+            const formData = new FormData();
+            formData.append('first_name', values.first_name);
+            formData.append('last_name', values.last_name);
+            formData.append('country', values.country);
+            // formData.append('state', values.state);
+            // formData.append('city', values.city);
+            // formData.append('community', values.community);
+            formData.append('email', values.email);
+            formData.append('profile_image_url', values.profile_image_url);
+            formData.append('phone_number', values.phone_number);
+            formData.append('company_number', values.company_number);
+            // formData.append('whatsapp_number', values.whatsapp_number);
+            formData.append('gender', values.gender);
+            formData.append('password', values.password);
+            formData.append('status', values.status);
+            formData.append('user_types_id', values.user_types_id);
+            formData.append('roles_id', values.roles_id);
+            formData.append('department', values.department);
+            formData.append('social_login', values.social_login);
+
+            dispatch(createUser(formData));
             // await register(values.email, values.password, values.firstName, values.lastName);
             if (scriptedRef.current) {
               setStatus({ success: true });
@@ -136,7 +176,7 @@ const JWTRegister = ({ ...others }) => {
               );
 
               setTimeout(() => {
-                router.push('/login');
+                router.push('/pages/autthentication/portal_registration/login.js');
               }, 1500);
             }
           } catch (err) {
@@ -159,7 +199,7 @@ const JWTRegister = ({ ...others }) => {
                   margin="normal"
                   name="firstName"
                   type="text"
-                  value={values.firstName}
+                  value={values.first_name}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   sx={{ ...theme.typography.customInput }}
@@ -172,7 +212,7 @@ const JWTRegister = ({ ...others }) => {
                   margin="normal"
                   name="lastName"
                   type="text"
-                  value={values.lastName}
+                  value={values.last_name}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   sx={{ ...theme.typography.customInput }}
@@ -189,38 +229,20 @@ const JWTRegister = ({ ...others }) => {
                   name="country"
                   placeholder="Select a Country"
                   value={values.country}
-                  setValue={setCountry}
+                  // setValue={setCountry}
+                  onChange={handleChange}
                   loading={loading}
-                  func={countryChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                {/* <TextField
-                  type="picture"
-                  fullWidth
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <UploadFile />
-                      </InputAdornment>
-                    )
-                  }}
-                /> */}
-
-                <FileUpload
-                  value={values.img}
-                  label="Insert Profile Image"
-                  type={'img/png/jpg'}
-                  fullWidth
-                  style={{ xs: 12, lg: 12 }}
-                />
+                <FileUpload type="jpg, img, jpeg, png" name="profile_image_url" style={{ xs: 12, lg: 12 }} setValue={handleChange} />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
                   label="Company Number"
                   name="compNumber"
-                  value={values.compNumber}
+                  value={values.company_number}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   sx={{ ...theme.typography.customInput }}
@@ -231,7 +253,7 @@ const JWTRegister = ({ ...others }) => {
                   fullWidth
                   label="Phone Number"
                   name="phoneNumber"
-                  value={values.phoneNumber}
+                  value={values.phone_number}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   sx={{ ...theme.typography.customInput }}
@@ -256,16 +278,18 @@ const JWTRegister = ({ ...others }) => {
                   options={['Male', 'Female']}
                   style={{ xs: 12, lg: 12 }}
                   value={values.gender}
+                  setValue={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Selector
-                  value={values.user_type_id}
+                  value={values.user_types_id}
                   id="compStatus"
                   label="User Type:"
                   placeholder="Choose Company Type"
                   options={['Company', 'Individual']}
                   style={{ xs: 12, lg: 12 }}
+                  setValue={handleChange}
                 />
               </Grid>
 
@@ -277,6 +301,7 @@ const JWTRegister = ({ ...others }) => {
                   placeholder="Select Company Status:"
                   options={['Active', 'Non-Active']}
                   style={{ xs: 12, lg: 12 }}
+                  setValue={handleChange}
                 />
               </Grid>
             </Grid>
@@ -309,7 +334,6 @@ const JWTRegister = ({ ...others }) => {
                 onBlur={handleBlur}
                 onChange={(e) => {
                   handleChange(e);
-                  changePassword(e.target.value);
                 }}
                 endAdornment={
                   <InputAdornment position="end">
@@ -342,10 +366,7 @@ const JWTRegister = ({ ...others }) => {
                 name="password"
                 label="Confirm Password"
                 onBlur={handleBlur}
-                onChange={(e) => {
-                  handleChange(e);
-                  changePassword(e.target.value);
-                }}
+                onChange={handleChange}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -395,7 +416,7 @@ const JWTRegister = ({ ...others }) => {
                   label={
                     <Typography variant="subtitle1">
                       Agree with &nbsp;
-                      <Typography variant="subtitle1" component={Link} href="/">
+                      <Typography variant="subtitle1" component={'a'} href="/">
                         Terms & Condition.
                       </Typography>
                     </Typography>

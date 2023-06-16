@@ -113,7 +113,6 @@ const AuthResetPassword = ({ ...others }) => {
                     edge="end"
                     size="large"
                   >
-                }
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>

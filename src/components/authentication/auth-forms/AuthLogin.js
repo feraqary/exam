@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Link from 'Link';
-
+import { useRouter } from 'next/router';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -18,26 +18,26 @@ import {
   OutlinedInput,
   Typography
 } from '@mui/material';
-
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
-
+import { userLogIn } from 'store/slices/user-registration/action/user-registration';
 import useAuth from 'hooks/useAuth';
 import useScriptRef from 'hooks/useScriptRef';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useDispatch } from 'react-redux';
 
 // ===============================|| JWT LOGIN ||=============================== //
 
-const JWTLogin = ({ loginProp, ...others }) => {
+const JWTLogin = ({ loginProp, closePopUp,page, ...others }) => {
   const theme = useTheme();
-
+  const [route, setRoute] = useState(null);
   const { login } = useAuth();
   const scriptedRef = useScriptRef();
 
@@ -52,10 +52,13 @@ const JWTLogin = ({ loginProp, ...others }) => {
     event.preventDefault();
   };
 
+  const router = useRouter();
+  const dispatch = useDispatch()
+  // const reroute =
   return (
     <Formik
       initialValues={{
-        email: 'aqary@finehomeint.com',
+        email: 'info@codedthemes.com',
         password: '123456',
         submit: null
       }}
@@ -65,12 +68,23 @@ const JWTLogin = ({ loginProp, ...others }) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
+          const formData = new FormData();
+            formData.append('email', values.email);
+            formData.append('password', values.password);
+            formData.append('social_login', 'googles');
+
+            dispatch(userLogIn(formData));
           await login(values.email, values.password);
 
           if (scriptedRef.current) {
             setStatus({ success: true });
             setSubmitting(false);
           }
+          closePopUp(false)
+          setTimeout(() => {
+            router.push(page == 'dashboard' ? '/dashboard/default' : '/')
+            // router.push('/dashboard/default');
+          }, 1500);
         } catch (err) {
           console.error(err);
           if (scriptedRef.current) {
@@ -146,7 +160,11 @@ const JWTLogin = ({ loginProp, ...others }) => {
               <Typography
                 variant="subtitle1"
                 component={Link}
-                href={loginProp ? `/pages/authentication/portal_registration/forgot-password` : '/pages/authentication/portal_registration/forgot-password'}
+                href={
+                  loginProp
+                    ? `/pages/authentication/portal_registration/forgot-password`
+                    : '/pages/authentication/portal_registration/forgot-password'
+                }
                 color="secondary"
                 sx={{ textDecoration: 'none' }}
               >
@@ -162,7 +180,17 @@ const JWTLogin = ({ loginProp, ...others }) => {
           )}
           <Box sx={{ mt: 2 }}>
             <AnimateButton>
-              <Button color="secondary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
+              <Button
+                color="secondary"
+                disabled={isSubmitting}
+                onClick={() => {
+                  console.log(page);
+                }}
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+              >
                 Sign In
               </Button>
             </AnimateButton>
