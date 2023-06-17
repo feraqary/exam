@@ -116,7 +116,8 @@ const NavItem = ({ expand,item, level, parentId }) => {
                   },
                   bgcolor: 'transparent'
                 }
-              })
+              }),
+              whiteSpace:'break-spaces'
             }}
             selected={isSelected}
             onClick={() => itemHandler(item.id)}
@@ -204,18 +205,19 @@ const NavItem = ({ expand,item, level, parentId }) => {
 
             <ListItemText
               primary={
-                <Typography variant={isSelected ? 'h5' : 'body1'} color="inherit">
+                <Typography variant={isSelected ? 'h5' : 'body1'}   color="inherit">
                   
                   {item.title}
                 </Typography>
               }
               secondary={
                 item.caption && (
-                  <Typography variant="caption" sx={{ ...theme.typography.subMenuCaption }} display="block" gutterBottom>
+                  <Typography variant="caption" sx={{ ...theme.typography.subMenuCaption }} display="block"  gutterBottom>
                     {item.caption}
                   </Typography>
                 )
               }
+              
             />
 
             {item.chip && (

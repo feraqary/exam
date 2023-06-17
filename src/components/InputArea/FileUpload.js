@@ -14,6 +14,19 @@ import { words } from 'lodash';
 const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, style, setValue, imagePreview, setImagePreview }, ref) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    const fileTypes = type?.split(',')
+    if(file?.type.split('/')[0] !== 'image'){
+      toast.error('upload images only', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark'
+    });
+    }
 
     if (!fileTypes.includes(file?.type.split('/')[1])) {
       setValue(null);
