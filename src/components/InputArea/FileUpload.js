@@ -12,6 +12,7 @@ import { forwardRef } from 'react';
 import { words } from 'lodash';
 
 const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, style, setValue, imagePreview, setImagePreview }, ref) => {
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const fileTypes = type?.split(',')
@@ -27,21 +28,7 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, st
         theme: 'dark'
     });
     }
-
-    if (!fileTypes.includes(file?.type.split('/')[1])) {
-      setValue(null);
-      ref.current.value = null;
-      toast.error(`image file must a ${fileTypes.join(' | ')} format`, {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      });
-    }
+   
 
     if (file.type.split('/')[1] !== 'pdf') {
       const img = new Image();
@@ -130,10 +117,12 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, st
         />
       </InputLayout>
       {image && (
-        <Grid item xs={3} lg={style.lg}  alignContent="right">
-          {imagePreview ? 
-          <img src={imagePreview} alt={image.alt} width={image.width} height={image.height} />:
-          <img src='/assets/image_preveiw.jpg' alt={image.alt} width={100} height={100} />}
+        <Grid item xs={3} lg={style.lg} alignContent="right">
+          {imagePreview ? (
+            <img src={imagePreview} alt={image.alt} width={image.width} height={image.height} />
+          ) : (
+            <img src="/assets/image_preveiw.jpg" alt={image.alt} width={100} height={100} />
+          )}
         </Grid>
       )}
     </>

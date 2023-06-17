@@ -35,6 +35,7 @@ function AddProject() {
 
   const [address, setAddress] = useState('Abu Dhabi');
   const [country, setCountry, setPropertyType] = useState('');
+
   const [state, setState] = useState('');
 
 
