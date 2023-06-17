@@ -1,5 +1,4 @@
 
-
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
 import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
@@ -134,6 +133,7 @@ const Register = () => {
                       <Stack justifyContent={matchDownSM ? 'center' : 'flex-start'} textAlign={matchDownSM ? 'center' : 'inherit'}>
                         <Typography
                           color={theme.palette.secondary.main}
+                          gutterBottom
                           variant={matchDownSM ? 'h3' : 'h2'}
                           onClick={registerUser}
                         >

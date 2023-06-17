@@ -111,7 +111,7 @@ const MenuCard = () => {
               primary={
                 <Typography
                   variant="subtitle1"
-                  sx={{ color: theme.palette.mode === 'dark' ? theme.palette.dark.light : theme.palette.primary[800] }}
+                  sx={{ color: theme.palette.mode === 'dark' ? theme.palette.dark.light : theme.palette.primary[800]}}
                 >
                   Get Extra Space
                 </Typography>
