@@ -112,6 +112,7 @@ function CompanyType() {
               id="outlined-multiline-flexible"
               value={description}
               setValue={setDescription}
+              description
             />
             <FileUpload
               label="Upload Logo"

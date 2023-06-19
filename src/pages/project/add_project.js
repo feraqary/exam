@@ -332,6 +332,7 @@ function AddProject() {
                   rows={4}
                   name="property-details-property-description"
                   fullWidth
+                  description
                 />
                 <InputText
                   style={{ xs: 12, lg: 4 }}
@@ -343,6 +344,7 @@ function AddProject() {
                   rows={4}
                   name="property-details-arabic-property-description"
                   fullWidth
+                  description
                 />
               </Grid>
             </MainCard>
