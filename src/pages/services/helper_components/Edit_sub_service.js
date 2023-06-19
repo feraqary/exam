@@ -25,29 +25,10 @@ const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 function Edit_Service({ desc, iconUrl, id, main_services_id, title, FormFor }) {
   const dispatch = useDispatch();
 
-  const [companyType, setcompanyType] = useState(null);
-  const [serviceType, setServiceType] = useState(title);
-  const [service, setService] = useState(null);
-  const [description, setDescription] = useState(desc);
-  const [logoImage, setLogoImage] = useState(iconUrl);
-  const [iconImage, setIconImage] = useState(null);
 
-  const [logoPreview, setLogoPreview] = useState(null);
-  const [iconPreview, setIconPreview] = useState(null);
-
-  const logoRef = useRef(null);
-  const iconRef = useRef(null);
 
   const { mainServices, loading, error, mainService } = useSelector((state) => state.companies);
-
-  let dataToUpdate = {
-    title: '',
-    description: '',
-    icon_url: '',
-    image_url: '',
-    loading: false,
-    error: null
-  };
+  const []
 
   useEffect(() => {
     dispatch(getAllMainServices());
