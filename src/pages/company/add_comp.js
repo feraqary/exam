@@ -158,14 +158,16 @@ function ColumnsLayouts() {
   const companyCoverRef = useRef(null);
   const profileRef = useRef(null);
 
-  useEffect(() => {
-    if (!lisenceFile || !vatImage || !companyLogo || !companyCoverImage || !profileImage) {
-      setDisabled(true);
-    }
-  }, [lisenceFile, vatImage, companyLogo, companyCoverImage, profileImage]);
+  // useEffect(() => {
+  //   if (!lisenceFile || !vatImage || !companyLogo || !companyCoverImage || !profileImage) {
+  //     setDisabled(true);
+  //   }
+  // }, [lisenceFile, vatImage, companyLogo, companyCoverImage, profileImage]);
 
   const submitForm = () => {
     const formData = new FormData();
+
+    formData.append('user_email', "aaaa");
     formData.append('company_types', companyDetails.companyType.id);
     formData.append('main_service_type', companyDetails.mainService.id);
     formData.append('sub_company_type', companyDetails.subCompanyType.id);
@@ -216,6 +218,7 @@ function ColumnsLayouts() {
     formData.append('bank_name', bankAccountDetails.bankName);
     formData.append('branch_name', bankAccountDetails.bankBranch);
     formData.append('swift_code', bankAccountDetails.swiftCode);
+    console.log("data",formData)
     dispatch(createCompany(formData));
   };
 
@@ -321,6 +324,7 @@ function ColumnsLayouts() {
           <Container title="" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
               <InputText
+
                   label="RERA No."
                   placeholder="Enter RERA No."
                   helperText="Please Enter RERA No."
@@ -342,12 +346,14 @@ function ColumnsLayouts() {
           <Container title="" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
             <InputText
+
                 label="License No."
                 placeholder="Enter Company License No."
                 helperText="Please enter Company License No."
                 style={{ xs: 12, lg: 6 }}
                 type="text"
-                value={companyInformation.companyDetails.lisenceNo}
+                value={"250014"}
+                // value={companyInformation.companyDetails.lisenceNo}
                 setValue={(e) => dispatch(setCompanyLicenseNo(e))}
               />
               <FileUpload
@@ -653,13 +659,13 @@ function ColumnsLayouts() {
                 value={companyInformation.adminContactInformation.phoneNumber}
                 setValue={(e) => dispatch(setCompanyAdminContactInfromationPhoneNumber(e))}
               />
-              <InputText
+              {/* <InputText
                 style={{ xs: 12, lg: 4 }}
                 label="Number of Employees"
                 placeholder="Number of Employees"
                 helperText="Please enter Number of Employees"
                 type="text"
-              />
+              /> */}
               <Selector
                 helperText="Please choose your purchased subscription duration"
                 style={{ xs: 12, lg: 4 }}

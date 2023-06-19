@@ -6,35 +6,55 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllUserRoles } from 'store/slices/Management_/action/users';
+import { useEffect } from'react';
 // ==============================||User Roles||============================== //
 const data = [
   {
-    user_role: 'Legal Admin',
-    si_numeric: '11'
+    user_id: '1',
+    role: 'admin',
+    code: 'ad',
   },
   {
-    user_role: 'Legal Admin',
-    si_numeric: '12'
-  }
+    user_id: '5',
+    role: 'admin',
+    code: 'ad',
+  },
+  {
+    user_id: '12',
+    role: 'admin',
+    code: 'ad',
+  },
 ];
 
 const ColumnHeaders = [
   {
-    accessorKey: 'si_numeric',
-    header: 'SI.NO'
+    accessorKey: 'ID',
+    header: 'User ID'
   },
   {
-    accessorKey: 'user_role',
+    accessorKey: 'Role',
     header: 'Role '
+  },
+  {
+    accessorKey: 'Code',
+    header: 'Code'
   }
 ];
 function UserRoles() {
+
+  const dispatch = useDispatch();
+  const { loading, error, users } = useSelector((state) => state.usermanagement);
+  useEffect(() => {
+    dispatch(getAllUserRoles());
+    console.log("from page ",users);
+  }, []);
   return (
     <Page title="User Roles">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table columnHeaders={ColumnHeaders} data={users} />
         </Grid>
       </Grid>
     </Page>

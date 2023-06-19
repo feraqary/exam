@@ -11,10 +11,12 @@ import {
   getInternationalCompanies,
   getAllServices,
   getMainServices,
-  updateCompanyType
+  updateCompanyType,
+  updateSubService
 } from '../action/company';
 
 import { toast } from 'react-toastify';
+import { updateService } from 'store/slices/services/action/services';
 
 const initialState = {
   companies: [],
@@ -388,31 +390,31 @@ const slice = createSlice({
         state.loading = false;
         state.error = null;
         state.companies = [...state.companies, action.payload.data];
-        toast.success('Company Added Successfully', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
+        // toast.success('Company Added Successfully', {
+        //   position: 'top-right',
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: 'dark'
+        // });
       })
       .addCase(createCompany.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
         state.companies = state.companies;
-        toast.error(`${state.error}`, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
+        // toast.error(`${state.error}`, {
+        //   position: 'top-right',
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: 'dark'
+        // });
       })
       // create service
 
@@ -485,6 +487,9 @@ const slice = createSlice({
         state.error = action.payload.error;
         state.internationalCompanies = state.internationalCompanies;
       })
+
+
+
       .addCase(getAllServices.pending, (state) => {
         state.loading = true;
         state.services = state.services;
@@ -497,6 +502,28 @@ const slice = createSlice({
         state.error = null;
       })
       .addCase(getAllServices.rejected, (state, action) => {
+        state.loading = false;
+        state.services = state.services;
+        state.error = action.payload.error;
+      }) 
+
+
+
+
+      .addCase(updateSubService.pending, (state) => {
+        state.loading = true;
+        state.services = state.services;
+        state.error = null;
+      })
+      
+      .addCase(updateSubService.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.loading = false;
+        state.services = action.payload.data;
+        state.error = null;
+      })
+
+      .addCase(updateSubService.rejected, (state, action) => {
         state.loading = false;
         state.services = state.services;
         state.error = action.payload.error;

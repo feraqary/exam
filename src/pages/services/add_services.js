@@ -12,7 +12,7 @@ import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
-
+import { createServices } from 'store/slices/services/action/services';
 const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 
 // ==============================|| Add Company Type form ||============================== //

@@ -65,14 +65,14 @@ const companies = {
     },
     {
       id: 'add_services',
-      title: <FormattedMessage id="Add Sub-Services" />,
+      title: <FormattedMessage id="Add Sub Services" />,
       type: 'item',
       icon: icons.IconClipboardPlus,
       url: '/company/add_services'
     },
     {
       id: 'Place_holder',
-      title: <FormattedMessage id="PlaceHolder" />,
+      title: <FormattedMessage id="All Companies" />,
       type: 'item',
       icon: icons.IconLayoutGrid,
       url: '/company/placeHolderName'

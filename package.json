@@ -64,6 +64,7 @@
     "material-ui-phone-number": "^3.0.0",
     "material-ui-popup-state": "^5.0.4",
     "next": "^13.4.4",
+    "next-auth": "^4.22.1",
     "next-transpile-modules": "10.0.0",
     "ngx-quill": "^22.0.0",
     "ngx-tags-input": "^2.0.1",
