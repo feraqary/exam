@@ -22,12 +22,16 @@ const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 
 // ==============================|| Add Company Type form ||============================== //
 
-function Service() {
+function Edit_Service({ desc, iconUrl, id, main_services_id, title, FormFor }) {
   const dispatch = useDispatch();
+
+  const [companyType, setcompanyType] = useState(null);
+  const [serviceType, setServiceType] = useState(title);
   const [service, setService] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [logoImage, setLogoImage] = useState(null);
+  const [description, setDescription] = useState(desc);
+  const [logoImage, setLogoImage] = useState(iconUrl);
   const [iconImage, setIconImage] = useState(null);
+
   const [logoPreview, setLogoPreview] = useState(null);
   const [iconPreview, setIconPreview] = useState(null);
 
@@ -48,6 +52,7 @@ function Service() {
   useEffect(() => {
     dispatch(getAllMainServices());
     dispatch(updateService());
+    console.log('title: ', title);
   }, [dispatch]);
 
   const handleMainServiceChange = (newValue) => {
@@ -60,6 +65,7 @@ function Service() {
 
   const clearFields = () => {
     dispatch(setMainService(null));
+    setServiceType('');
     setService('');
     setDescription('');
     setLogoImage(null);
@@ -75,46 +81,46 @@ function Service() {
     }
   };
 
-  const submitForm = () => {
+  const submitSubForm = () => {
     const formData = new FormData();
-    formData.append('title', service);
+    formData.append('title', serviceType);
     formData.append('main_services_id', mainService?.id);
     formData.append('description', description);
     formData.append('icon_url', logoImage);
     formData.append('image_url', iconImage);
-
-    const updateForm = new FormData()
-
-    updateForm.append('title', service);
-    updateForm.append('main_services_id', mainService?.id);
-    updateForm.append('description', description);
-    updateForm.append('icon_url', logoImage);
-    updateForm.append('image_url', iconImage);
-    dispatch(updateSubService(updateSubService()));
-    dispatch(createService(formData));
+    if (!error) {
+      clearFields();
+    }
+  };
+  const submitSerForm = () => {
+    const formData = new FormData();
     if (!error) {
       clearFields();
     }
   };
 
   return (
-    <Page title="Add Sub Services">
+    <Page>
       <Grid container spacing={gridSpacing}>
         <ToastContainer />
         <Container style={{ xs: 12 }}>
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
-            <AutoCompleteSelector
-              style={{ xs: 12, lg: 8 }}
-              label="Services"
-              placeholder="Services"
-              options={mainServices.map((service) => {
-                return { label: service.title, ...service };
-              })}
-              id="compnType"
-              value={mainService}
-              helperText="Please select a service"
-              func={handleMainServiceChange}
-            />
+            {FormFor == 'sub' ? (
+              <AutoCompleteSelector
+                style={{ xs: 12, lg: 8 }}
+                label="Services"
+                placeholder="Services"
+                options={mainServices.map((service) => {
+                  return { label: service.title, ...service };
+                })}
+                id="compnType"
+                value={serviceType}
+                helperText="Please select a service"
+                func={handleMainServiceChange}
+              />
+            ) : (
+              <>MAIN SERVICE</>
+            )}
 
             <InputText
               label="Service Name"
@@ -163,14 +169,14 @@ function Service() {
             />
           </Grid>
         </Container>
-        <SubmitButton submit={submitForm} clear={clearFields} />
+        <SubmitButton submit={FormFor == 'sub' ? submitSubForm : FormFor == 'service'} clear={clearFields} />
       </Grid>
     </Page>
   );
 }
 
-Service.getLayout = function getLayout(page) {
+Edit_Service.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default Service;
+export default Edit_Service;

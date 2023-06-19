@@ -15,6 +15,7 @@ import searchOptions from "./SearchOptions"
 import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons';
 import { shouldForwardProp } from '@mui/system';
 
+
 // styles
 const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
   zIndex: 1100,
@@ -120,7 +121,7 @@ const SearchSection = () => {
   const [value, setValue] = useState('');
 
   const filterOptions = createFilterOptions({
-    limit:3,
+    limit:5,
   });
 
 

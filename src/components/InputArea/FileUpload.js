@@ -6,12 +6,12 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 // assets
-import { UploadFile } from '@mui/icons-material';
+import { HelpRounded, UploadFile } from '@mui/icons-material';
 import InputLayout from './InputLayout';
 import { forwardRef } from 'react';
 import { words } from 'lodash';
 
-const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, style, setValue, imagePreview, setImagePreview }, ref) => {
+const FileUpload = forwardRef(({ label, type, placeholder, helperInfo ,helperText, image, style, setValue, imagePreview, setImagePreview }, ref) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -100,7 +100,7 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, st
 
   return (
     <>
-      <InputLayout label={label} helperText={helperText} style={style}>
+      <InputLayout label={label} helperInfo={helperInfo} helperText={helperText} style={style}>
         <TextField
           required
           type="file"

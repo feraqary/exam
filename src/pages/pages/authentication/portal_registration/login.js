@@ -69,23 +69,19 @@ const items = [
 
 // ================================|| AUTH1 - LOGIN ||================================ //
 
-const Login = ({page,closePopUp}) => {
+const Login = ({ page, closePopUp }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Page title="Login">
       <AuthWrapper1>
-        <Grid container alignItems="center" justifyContent={"center"} sx={{ minHeight: '100vh', overflow:"hidden"}}>
-          <Grid item container justifyContent="center" md={6} lg={7} sx={{ my: 3 }}>
+        <Grid container alignItems="center" justifyContent={'center'} sx={{ minHeight: '100vh', overflow: 'hidden' }}>
+          <Grid item container justifyContent="center" md={12} lg={12} sx={{ my: 3 }}>
             <AuthCardWrapper>
-              <Grid container spacing={2} justifyContent="center">
+              <Grid container spacing={2}  justifyContent="center">
                 <Grid item xs={12}>
-                  <Grid
-                    container
-                    alignItems={matchDownSM ? 'center' : 'center'}
-                    justifyContent={'center'}
-                  >
+                  <Grid container alignItems={matchDownSM ? 'center' : 'center'}  justifyContent={'center'}>
                     <Grid item>
                       <Stack justifyContent={'center'} textAlign={matchDownSM ? 'center' : 'inherit'}>
                         <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>

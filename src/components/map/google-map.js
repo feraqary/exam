@@ -47,14 +47,14 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
     getloc(locationAddress);
   }, [locationAddress]);
 
-  useEffect(() => {
-    const parsedUrl = mapUrl ? mapUrl.split('@')[1].split(',') : MAP_URL.split('@')[1].split(',');
-    const latitude = parsedUrl[0];
-    const longitude = parsedUrl[1];
+  // useEffect(() => {
+  //   const parsedUrl = mapUrl ? mapUrl.split('@')[1].split(',') : MAP_URL.split('@')[1].split(',');
+  //   const latitude = parsedUrl[0];
+  //   const longitude = parsedUrl[1];
 
-    setlat(latitude);
-    setlong(longitude);
-  }, [mapUrl]);
+  //   setlat(latitude);
+  //   setlong(longitude);
+  // }, [mapUrl]);
 
   useEffect(() => {
     console.log('dat');

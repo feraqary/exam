@@ -158,14 +158,16 @@ function ColumnsLayouts() {
   const companyCoverRef = useRef(null);
   const profileRef = useRef(null);
 
-  useEffect(() => {
-    if (!lisenceFile || !vatImage || !companyLogo || !companyCoverImage || !profileImage) {
-      setDisabled(true);
-    }
-  }, [lisenceFile, vatImage, companyLogo, companyCoverImage, profileImage]);
+  // useEffect(() => {
+  //   if (!lisenceFile || !vatImage || !companyLogo || !companyCoverImage || !profileImage) {
+  //     setDisabled(true);
+  //   }
+  // }, [lisenceFile, vatImage, companyLogo, companyCoverImage, profileImage]);
 
   const submitForm = () => {
     const formData = new FormData();
+
+    formData.append('user_email', "aaaa");
     formData.append('company_types', companyDetails.companyType.id);
     formData.append('main_service_type', companyDetails.mainService.id);
     formData.append('sub_company_type', companyDetails.subCompanyType.id);
@@ -216,6 +218,7 @@ function ColumnsLayouts() {
     formData.append('bank_name', bankAccountDetails.bankName);
     formData.append('branch_name', bankAccountDetails.bankBranch);
     formData.append('swift_code', bankAccountDetails.swiftCode);
+    console.log("data",formData)
     dispatch(createCompany(formData));
   };
 
@@ -323,21 +326,23 @@ function ColumnsLayouts() {
                 value={companyInformation.companyDetails.reraNo}
                 setValue={(e) => dispatch(setCompanyReraNo(e))}
               />
-              <CustomDateTime style={{ xs: 12, lg: 6 }} label="RERA No. Expiry Date" helperText="Please enter RERA No. Expiry Date" />
-              <FileUpload
+              {/* <CustomDateTime style={{ xs: 12, lg: 6 }} setValue={} label="RERA No. Expiry Date" helperText="Please enter RERA No. Expiry Date" /> */}
+              {/* <FileUpload
                 label="Upload RERA"
-                type="pdf"
+                type="pdf , pdf"
                 placeholder="Upload RERA"
                 helperText="Please upload the company RERA"
                 style={{ xs: 12, lg: 6 }}
-              />
+                setValue={companyInformation.companyDetails.rera}
+              /> */}
               <InputText
                 label="License No."
                 placeholder="Enter Company License No."
                 helperText="Please enter Company License No."
                 style={{ xs: 12, lg: 6 }}
                 type="text"
-                value={companyInformation.companyDetails.lisenceNo}
+                value={"250014"}
+                // value={companyInformation.companyDetails.lisenceNo}
                 setValue={(e) => dispatch(setCompanyLicenseNo(e))}
               />
               <FileUpload
@@ -682,13 +687,13 @@ function ColumnsLayouts() {
                 value={companyInformation.adminContactInformation.phoneNumber}
                 setValue={(e) => dispatch(setCompanyAdminContactInfromationPhoneNumber(e))}
               />
-              <InputText
+              {/* <InputText
                 style={{ xs: 12, lg: 4 }}
                 label="Number of Employees"
                 placeholder="Number of Employees"
                 helperText="Please enter Number of Employees"
                 type="text"
-              />
+              /> */}
               <Selector
                 helperText="Please choose your purchased subscription duration"
                 style={{ xs: 12, lg: 4 }}

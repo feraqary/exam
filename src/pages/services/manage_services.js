@@ -47,25 +47,27 @@ const ColumnHeaders = [
   {
     accessorKey: 'action',
     header: 'Action',
-    Cell: ({ renderedCellValue, row }) => (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem'
-        }}
-      >
-        <Button variant="contained" color="primary">
-          View Service
-        </Button>
-        <Button variant="contained" color="primary">
-          Edit Service
-        </Button>
-        <Button variant="contained" color="error">
-          Delete
-        </Button>
-      </Box>
-    )
+    Cell: ({ renderedCellValue, row }) => {
+      return (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem'
+          }}
+        >
+          <Button variant="contained" color="primary">
+            View Service
+          </Button>
+          <Button variant="contained" color="primary">
+            Edit Service
+          </Button>
+          <Button variant="contained" color="error">
+            Delete
+          </Button>
+        </Box>
+      );
+    }
   }
 ];
 
@@ -149,7 +151,9 @@ function ManageServices() {
     <Page title="Manage Services">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
+          
           <Table data={data} columnHeaders={ColumnHeaders} />
+
         </Grid>
       </Grid>
     </Page>
