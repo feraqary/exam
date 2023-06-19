@@ -1,6 +1,6 @@
 // In dataSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-const baseurl = 'http://localhost:8080';
+const baseurl = 'http://20.203.31.58/';
 
 // ... existing code
 

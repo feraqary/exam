@@ -1,7 +1,7 @@
 import { api } from 'utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 const config = {
-  headers: { 'Content-Type': 'multipart/form-data' }
+  headers: { 'Content-Type': 'multipart/form-data', "Authorization": "Bearer v2.local.R5OYUzjy4beHYOvF6fCv1iRN6SrfyLnDPsOE_-ICa-HygXGpVVe4OlOqQjv7w5OSrM7w-KjI0YJ-53DT7dmIcT_4_KNlxmxrFZp6OgWsRuWYMdIbQlojowB5jNCRBBWFuZiYwdKMa5CNJZvHY-6EEe8FYWqFuwATEay3o-Jhm_k_aFZ8P1b66ckrt6mMJNm2YmHZxx2s_R-bxC5ExftFJzPJu98Kc9CkzkaPzgJIh7uMXNuNUEm25Q9jNB30qFY36ZHpDTuzy4HDhogFxQ.bnVsbA" }
 };
 const baseurl = 'http://20.203.31.58'
 
@@ -84,7 +84,7 @@ export const createService = createAsyncThunk('company/createService', async (fo
 
 export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getLocalCompanies?page_no=1&page_size=10&country=uae`);
+    const response = await api.get(`${baseurl}/api/dashboard/getLocalCompanies?page_no=1&page_size=10&country=pakistan22`);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
@@ -93,7 +93,7 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
 
 export const getInternationalCompanies = createAsyncThunk('company/getInternationalCompanies', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=10&country=uae`);
+    const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=100&country=pakistan22`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
