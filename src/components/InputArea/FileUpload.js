@@ -15,11 +15,9 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperInfo ,helperTex
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    const fileTypes = type?.split(',');
-    if (!fileTypes.includes(file?.type.split('/')[1])) {
-      setValue(null);
-      ref.current.value = null;
-      toast.error(`image file must a ${fileTypes.join(' | ')} format`, {
+    const fileTypes = type?.split(',')
+    if(file?.type.split('/')[0] !== 'image'){
+      toast.error('upload images only', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -28,8 +26,9 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperInfo ,helperTex
         draggable: true,
         progress: undefined,
         theme: 'dark'
-      });
+    });
     }
+   
 
     if (file.type.split('/')[1] !== 'pdf') {
       const img = new Image();

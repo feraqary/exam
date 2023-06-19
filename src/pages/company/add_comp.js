@@ -227,7 +227,7 @@ function ColumnsLayouts() {
       <Page title="Add Company">
         <ToastContainer />
         <Grid container spacing={gridSpacing}>
-          <Container title="Add Compnay Details" style={{ xs: 12 }}>
+          <Container title="Add Company Details" style={{ xs: 12 }}>
             <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
               <AutoCompleteSelector
                 style={{ xs: 12, lg: 10 }}
@@ -318,24 +318,35 @@ function ColumnsLayouts() {
                 value={companyInformation.companyDetails.companyTagline}
                 setValue={(e) => dispatch(setCompanyTagline(e))}
               />
+            </Grid>
+          </Container>
+
+          <Container title="" style={{ xs: 12 }}>
+            <Grid container spacing={2} alignItems="center">
               <InputText
-                label="RERA No."
-                placeholder="Enter RERA No."
-                helperText="Please Enter RERA No."
-                style={{ xs: 12, lg: 6 }}
-                value={companyInformation.companyDetails.reraNo}
-                setValue={(e) => dispatch(setCompanyReraNo(e))}
-              />
-              {/* <CustomDateTime style={{ xs: 12, lg: 6 }} setValue={} label="RERA No. Expiry Date" helperText="Please enter RERA No. Expiry Date" /> */}
-              {/* <FileUpload
-                label="Upload RERA"
-                type="pdf , pdf"
-                placeholder="Upload RERA"
-                helperText="Please upload the company RERA"
-                style={{ xs: 12, lg: 6 }}
-                setValue={companyInformation.companyDetails.rera}
-              /> */}
-              <InputText
+
+                  label="RERA No."
+                  placeholder="Enter RERA No."
+                  helperText="Please Enter RERA No."
+                  style={{ xs: 12, lg: 6 }}
+                  value={companyInformation.companyDetails.reraNo}
+                  setValue={(e) => dispatch(setCompanyReraNo(e))}
+                />
+                <CustomDateTime style={{ xs: 12, lg: 6 }} label="RERA No. Expiry Date" helperText="Please enter RERA No. Expiry Date" />
+                <FileUpload
+                  label="Upload RERA"
+                  type="pdf"
+                  placeholder="Upload RERA"
+                  helperText="Please upload the company RERA"
+                  style={{ xs: 12, lg: 6 }}
+                />
+            </Grid>
+          </Container>
+
+          <Container title="" style={{ xs: 12 }}>
+            <Grid container spacing={2} alignItems="center">
+            <InputText
+
                 label="License No."
                 placeholder="Enter Company License No."
                 helperText="Please enter Company License No."
@@ -363,6 +374,7 @@ function ColumnsLayouts() {
               />
             </Grid>
           </Container>
+
           <Container title="Add Billing Information" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
               <InputText
@@ -609,46 +621,6 @@ function ColumnsLayouts() {
               />
             </Grid>
           </Container>
-          <Container style={{ xs: 12 }} title="Social Media">
-            <Grid container spacing={2} alignItems="center">
-              <InputText
-                label="Facebook"
-                type="url"
-                placeholder="Enter Company Facebook Profile"
-                helperText="Please enter company facebook profile"
-                style={{ xs: 12, lg: 6 }}
-                value={companyInformation.socialMedia.facebook}
-                setValue={(e) => dispatch(setCompanySocialMediaFacebook(e))}
-              />
-              <InputText
-                label="Instagram"
-                type="url"
-                placeholder="Enter Company Instagram Profile"
-                helperText="Please enter company instagram profile"
-                style={{ xs: 12, lg: 6 }}
-                value={companyInformation.socialMedia.instagram}
-                setValue={(e) => dispatch(setCompanySocialMediaInstagram(e))}
-              />
-              <InputText
-                label="LinkedIn"
-                type="url"
-                placeholder="Enter Company LinkedIn Profile"
-                helperText="Please enter company linkedIn profile"
-                style={{ xs: 12, lg: 6 }}
-                value={companyInformation.socialMedia.linkedin}
-                setValue={(e) => dispatch(setCompanySocialMediaLinkedIn(e))}
-              />
-              <InputText
-                label="Twitter"
-                type="url"
-                placeholder="Enter Company Twitter Profile"
-                helperText="Please enter company twitter profile"
-                style={{ xs: 12, lg: 6 }}
-                value={companyInformation.socialMedia.twitter}
-                setValue={(e) => dispatch(setCompanySocialMediaTwitter(e))}
-              />
-            </Grid>
-          </Container>
           <Container title="Company Admin Contact Details" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
               <InputText
@@ -831,6 +803,47 @@ function ColumnsLayouts() {
                 type="text"
                 value={companyInformation.bankAccountDetails.swiftCode}
                 setValue={(e) => dispatch(setCompanyBankAccountDetailsSwiftCode(e))}
+              />
+            </Grid>
+          </Container>
+
+          <Container style={{ xs: 12 }} title="Social Media">
+            <Grid container spacing={2} alignItems="center">
+              <InputText
+                label="Facebook"
+                type="url"
+                placeholder="Enter Company Facebook Profile"
+                helperText="Please enter company facebook profile"
+                style={{ xs: 12, lg: 6 }}
+                value={companyInformation.socialMedia.facebook}
+                setValue={(e) => dispatch(setCompanySocialMediaFacebook(e))}
+              />
+              <InputText
+                label="Instagram"
+                type="url"
+                placeholder="Enter Company Instagram Profile"
+                helperText="Please enter company instagram profile"
+                style={{ xs: 12, lg: 6 }}
+                value={companyInformation.socialMedia.instagram}
+                setValue={(e) => dispatch(setCompanySocialMediaInstagram(e))}
+              />
+              <InputText
+                label="LinkedIn"
+                type="url"
+                placeholder="Enter Company LinkedIn Profile"
+                helperText="Please enter company linkedIn profile"
+                style={{ xs: 12, lg: 6 }}
+                value={companyInformation.socialMedia.linkedin}
+                setValue={(e) => dispatch(setCompanySocialMediaLinkedIn(e))}
+              />
+              <InputText
+                label="Twitter"
+                type="url"
+                placeholder="Enter Company Twitter Profile"
+                helperText="Please enter company twitter profile"
+                style={{ xs: 12, lg: 6 }}
+                value={companyInformation.socialMedia.twitter}
+                setValue={(e) => dispatch(setCompanySocialMediaTwitter(e))}
               />
             </Grid>
           </Container>
