@@ -25,10 +25,8 @@ const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 function Edit_Service({ desc, iconUrl, id, main_services_id, title, FormFor }) {
   const dispatch = useDispatch();
 
-
-
   const { mainServices, loading, error, mainService } = useSelector((state) => state.companies);
-  const []
+  const [serviceType, setServiceType] = useState('');
 
   useEffect(() => {
     dispatch(getAllMainServices());
