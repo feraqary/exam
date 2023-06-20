@@ -21,6 +21,12 @@ import { getAllMainServices } from 'store/slices/company-section/action/company'
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import company from 'store/slices/company-section/slice/company';
+import { ToastContainer } from 'react-toastify';
+import Container from 'components/Elements/Container';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import InputText from 'components/InputArea/TextInput';
+import FileUpload from 'components/InputArea/FileUpload';
+import SubmitButton from 'components/Elements/SubmitButton';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -105,21 +111,90 @@ function ManageServices() {
   
   
     return (
-      <div>
-        <Dialog
-          open={open}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleClose}
-          aria-describedby="alert-dialog-slide-description"
-        >
-          Test
-          <DialogActions>
-            <Button onClick={handleClose}>Disagree</Button>
-            <Button onClick={handleClose}>Agree</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      <Dialog
+            open={open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-describedby="alert-dialog-slide-description"
+            maxWidth={{xs: 12, lg: 6}}
+          >
+                <Page title="Manage Services" >
+                  <Grid container spacing={gridSpacing} xs={12}>
+                    <ToastContainer />
+                    <Container style={{ xs: 12 }}>
+                      <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
+                          <AutoCompleteSelector
+                            style={{ xs: 12, lg: 8 }}
+                            label="Company Type"
+                            placeholder="Company Type"
+                            options={mainServices.map((service) => {
+                              return { label: service.title, ...service };
+                            })}
+                            id="compnType"
+                            // value={serviceType}
+                            helperText="Company Type"
+                            // func={handleMainServiceChange}
+                          />
+
+                        <InputText
+                          label="Service Name"
+                          placeholder="Services Name"
+                          helperText="Please Services Name"
+                          style={{ xs: 12, lg: 8 }}
+                          type="text"
+                          // value={service}
+                          // setValue={setService}
+                        />
+
+                        <FileUpload
+                          label="Upload Logo"
+                          style={{ xs: 12, lg: 8 }}
+                          placeholder="Upload Logo"
+                          type="png,jpeg,jpg"
+                          helperText="Please upload your logo"
+                          image={{ alt: 'Logo Preview', width: '250px', height: '250px' }}
+                          // ref={logoRef}
+                          // imagePreview={logoPreview}
+                          // setImagePreview={setLogoPreview}
+                          // setValue={setLogoImage}
+                        />
+
+                        <InputText
+                          label="Description"
+                          placeholder="Enter Description"
+                          style={{ xs: 12, lg: 8 }}
+                          type="text"
+                          multiline
+                          rows={5}
+                          id="outlined-multiline-flexible"
+                          description
+                          // value={description}
+                          // setValue={setDescription}
+                        />
+
+                        <FileUpload
+                          label="Upload Icon"
+                          style={{ xs: 12, lg: 8 }}
+                          placeholder="Upload Icon"
+                          type="png,jpeg,jpg"
+                          helperText="Please upload your Icon"
+                          image={{ alt: 'Icon Preview', width: '250px', height: '250px' }}
+                          // ref={iconRef}
+                          // imagePreview={iconPreview}
+                          // setImagePreview={setIconPreview}
+                          // setValue={setIconImage}
+                        />
+                      </Grid>
+                    </Container>
+                    <SubmitButton submit={
+                      ()=> handleClose()
+                    } clear={()=>{
+                      ()=> handleClose()
+                    }} />
+                  </Grid>
+            </Page>
+          </Dialog>
     );
   }
 
