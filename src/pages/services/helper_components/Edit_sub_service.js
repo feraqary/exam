@@ -22,29 +22,37 @@ const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 
 // ==============================|| Add Company Type form ||============================== //
 
-function Edit_Service({ desc, iconUrl, id, main_services_id, title }) {
+function Edit_Service({ desc, iconUrl, id, main_services_id,imageUrl, title, close }) {
   const dispatch = useDispatch();
+
 
   const { mainServices, loading, error, mainService } = useSelector((state) => state.companies);
 
-  const [service, setService] = useState(title);
-  const [description, setDescription] = useState(desc);
-  const [logoImage, setLogoImage] = useState(iconUrl);
-  const [iconImage, setIconImage] = useState(iconUrl);
-  const [logoPreview, setLogoPreview] = useState(iconUrl);
-  const [iconPreview, setIconPreview] = useState(iconUrl);
+  const [service, setService] = useState(null);
+  const [serviceName, setServiceName] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [logoImage, setLogoImage] = useState(null);
+  const [iconImage, setIconImage] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [iconPreview, setIconPreview] = useState(null);
 
   const logoRef = useRef(null);
   const iconRef = useRef(null);
 
   useEffect(() => {
     dispatch(getAllMainServices());
-    console.log('title: ', title);
+    setService(title);
+    setDescription(desc);
+    setLogoImage(imageUrl);
+    setIconImage(iconUrl);
+    setLogoPreview(imageUrl);
+    setIconPreview(iconUrl);
   }, []);
 
   const handleMainServiceChange = (newValue) => {
     dispatch(setMainService(newValue));
-    setService(newValue);
+    console.log("titlesss: ", newValue.title);
+    setService(newValue.title);
   };
 
   const clearFields = () => {
@@ -69,10 +77,11 @@ function Edit_Service({ desc, iconUrl, id, main_services_id, title }) {
     formData.append('title', service);
     formData.append('description', description);
     formData.append('icon_url', logoImage);
-    formData.append('image_url', logoImage);
+    formData.append('image_url', iconImage);
     formData.append('main_services_id', main_services_id);
     dispatch(updateSubService({ id, formData }));
     console.log('f_Data', formData);
+    close(false)
     if (!error) {
       clearFields();
     }
@@ -95,6 +104,7 @@ function Edit_Service({ desc, iconUrl, id, main_services_id, title }) {
               value={service}
               helperText="Please select a service"
               func={handleMainServiceChange}
+
             />
 
             <InputText
@@ -103,8 +113,8 @@ function Edit_Service({ desc, iconUrl, id, main_services_id, title }) {
               helperText="Please enter service name"
               style={{ xs: 12, lg: 8 }}
               type="text"
-              value={service}
-              setValue={setService}
+              value={serviceName} 
+              setValue={setServiceName}
             />
             <InputText
               label="Description"

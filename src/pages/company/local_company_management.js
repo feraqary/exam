@@ -1,6 +1,6 @@
 // material-ui
-import { Chip, Grid } from '@mui/material';
-import { Box, Button } from '@mui/material';
+// import { Chip, Grid } from '@mui/material';
+// import { Box, Button } from '@mui/material';
 import Image from 'next/image';
 import KeyIcon from '@mui/icons-material/Key';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -16,13 +16,18 @@ import { useEffect } from 'react';
 import { getLocalCompanies } from 'store/slices/company-section/action/company';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { Dialog, DialogContent, DialogActions } from '@mui/material';
-import Slide from '@mui/material/Slide';
+// import { Dialog, DialogContent, DialogActions } from '@mui/material';
+// import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
+import React,{ useState } from 'react';
+import { Grid, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material';
+import ColumnsLayouts from './add_comp';
 // ===========================|| International Company Managment list||=========================== //
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 const ColumnHeaders = [
   {
     accessorKey: 'CompanyName',
@@ -83,7 +88,7 @@ const ColumnHeaders = [
     accessorKey: 'action',
     header: 'Action',
     Cell: ({ renderedCellValue, row }) => {
-      const [open, setOpen] = React.useState(false);
+      const [open, setOpen] = useState(false);
 
       const handleClickOpen = () => {
         setOpen(true);
