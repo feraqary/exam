@@ -43,17 +43,17 @@ const ColumnHeaders = [
   },
   {
     accessorKey: 'CompanyType',
-    header: ' Company Type' 
+    header: ' Company Type'
   },
   {
     accessorKey: 'description',
     header: ' Description'
-  },
+  }
 ];
 
 const PlaceHolder = () => {
   return (
-    <Page title="Local Company List">
+    <Page title="All Companies">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <Table columnHeaders={ColumnHeaders} data={[]} />

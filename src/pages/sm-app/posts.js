@@ -107,6 +107,7 @@ function Posts() {
                 helperText="Please enter detailed description"
                 multiline={true}
                 rows={7}
+                description
               />
               <FileUpload
                 label="Upload Video"
