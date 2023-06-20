@@ -60,6 +60,7 @@ function CompanyType() {
               helperText="Please enter the service description"
               multiline
               rows={5}
+              description
             />
             <FileUpload
               label="Upload Logo"

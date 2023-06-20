@@ -1,4 +1,5 @@
 // In dataSlice.js
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -7,13 +8,15 @@ const token =
 const config = {
   headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
 };
+
 const baseurl = 'http://20.203.31.58';
 
 // ... existing code
 
-export const updateService = createAsyncThunk('services/updateServices', async ({ updatedData, unique_id }, { rejectWithValue }) => {
+
+export const updateService = createAsyncThunk('services/updateServices',     async ( serviceId,{  updatedData }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`http://localhost:8080/api/services/updateservice/${unique_id}`, updatedData);
+    const response = await axios.put(`${baseurl}/api/services/updateservice/${serviceId}`, updatedData);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);

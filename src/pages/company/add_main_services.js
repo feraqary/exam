@@ -113,6 +113,7 @@ function MainService() {
               id="outlined-multiline-flexible"
               value={description}
               setValue={setDescription}
+              description
             />
 
             <FileUpload

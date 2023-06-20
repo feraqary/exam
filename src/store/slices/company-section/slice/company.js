@@ -475,7 +475,7 @@ const slice = createSlice({
       .addCase(getInternationalCompanies.pending, (state) => {
         state.loading = true;
         state.error = null;
-        state.localCompanies = state.localCompanies;
+        state.internationalCompanies = state.localCompanies;
       })
       .addCase(getInternationalCompanies.fulfilled, (state, action) => {
         state.loading = false;
