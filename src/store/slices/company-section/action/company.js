@@ -113,11 +113,12 @@ export const createCompany = createAsyncThunk('company/createCompany', async (fo
     return rejectWithValue(error);
   }
 });
-export const updateSubService = createAsyncThunk('subService/subservice', async ({id, formData}, { rejectWithValue }) => {
-  console.log('fired');
+export const updateSubService = createAsyncThunk('subService/Updatesubservice', async ( {id,formData}, { rejectWithValue }) => {
   try {
-    const response = await api.post(`${baseurl}/api/services/updateservice/${id}`, formData, config);
-    console.log(response.data);
+    const response = await api.put(`${baseurl}/api/services/updateservice/${id}`, formData, config);
+    console.log("response",response.data);
+    console.log("id",id);
+    console.log('formData',formData);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);

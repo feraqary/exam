@@ -26,10 +26,10 @@ const ColumnHeaders = [
     accessorKey: 'title',
     header: 'Sub Service Name'
   },
-  // {
-  //   accessorKey: 'description',
-  //   header: 'Discription'
-  // },
+  {
+    accessorKey: 'description',
+    header: 'Discription'
+  },
   {
     accessorKey: 'icon_url',
     header: 'Icon',
@@ -54,9 +54,11 @@ const ColumnHeaders = [
     Cell: ({ renderedCellValue, row }) => {
       const [open, setOpen] = useState(false);
 
+      console.log(renderedCellValue, row);
+
       const handleClickOpen = () => {
         setOpen(true);
-        console.log(row);
+        console.log(row.original);
       };
 
       const handleClose = () => {
@@ -88,9 +90,8 @@ const ColumnHeaders = [
                 desc={row.original.description}
                 iconUrl={row.original.icon_url}
                 id={row.original.id}
-                main_services_id={row.main_services_id}
+                main_services_id={row.original.main_services_id}
                 title={row.original.title}
-                FormFor={'sub'}
               />
             </DialogContent>
           </Dialog>

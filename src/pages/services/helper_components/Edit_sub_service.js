@@ -22,29 +22,33 @@ const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 
 // ==============================|| Add Company Type form ||============================== //
 
-function Edit_Service({ desc, iconUrl, id, main_services_id, title, FormFor }) {
+function Edit_Service({ desc, iconUrl, id, main_services_id, title }) {
   const dispatch = useDispatch();
 
   const { mainServices, loading, error, mainService } = useSelector((state) => state.companies);
-  const [serviceType, setServiceType] = useState('');
+
+  const [service, setService] = useState(title);
+  const [description, setDescription] = useState(desc);
+  const [logoImage, setLogoImage] = useState(iconUrl);
+  const [iconImage, setIconImage] = useState(iconUrl);
+  const [logoPreview, setLogoPreview] = useState(iconUrl);
+  const [iconPreview, setIconPreview] = useState(iconUrl);
+
+  const logoRef = useRef(null);
+  const iconRef = useRef(null);
 
   useEffect(() => {
     dispatch(getAllMainServices());
-    dispatch(updateService());
     console.log('title: ', title);
-  }, [dispatch]);
+  }, []);
 
   const handleMainServiceChange = (newValue) => {
     dispatch(setMainService(newValue));
-  };
-
-  const handleDeleteService = (id) => {
-    dispatch(deleteService('100'));
+    setService(newValue);
   };
 
   const clearFields = () => {
     dispatch(setMainService(null));
-    setServiceType('');
     setService('');
     setDescription('');
     setLogoImage(null);
@@ -62,17 +66,13 @@ function Edit_Service({ desc, iconUrl, id, main_services_id, title, FormFor }) {
 
   const submitSubForm = () => {
     const formData = new FormData();
-    formData.append('title', serviceType);
-    formData.append('main_services_id', mainService?.id);
+    formData.append('title', service);
     formData.append('description', description);
     formData.append('icon_url', logoImage);
-    formData.append('image_url', iconImage);
-    if (!error) {
-      clearFields();
-    }
-  };
-  const submitSerForm = () => {
-    const formData = new FormData();
+    formData.append('image_url', logoImage);
+    formData.append('main_services_id', main_services_id);
+    dispatch(updateSubService({ id, formData }));
+    console.log('f_Data', formData);
     if (!error) {
       clearFields();
     }
@@ -84,22 +84,18 @@ function Edit_Service({ desc, iconUrl, id, main_services_id, title, FormFor }) {
         <ToastContainer />
         <Container style={{ xs: 12 }}>
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
-            {FormFor == 'sub' ? (
-              <AutoCompleteSelector
-                style={{ xs: 12, lg: 8 }}
-                label="Services"
-                placeholder="Services"
-                options={mainServices.map((service) => {
-                  return { label: service.title, ...service };
-                })}
-                id="compnType"
-                value={serviceType}
-                helperText="Please select a service"
-                func={handleMainServiceChange}
-              />
-            ) : (
-              <>MAIN SERVICE</>
-            )}
+            <AutoCompleteSelector
+              style={{ xs: 12, lg: 8 }}
+              label="Services"
+              placeholder="Services"
+              options={mainServices.map((service) => {
+                return { label: service.title, ...service };
+              })}
+              id="compnType"
+              value={service}
+              helperText="Please select a service"
+              func={handleMainServiceChange}
+            />
 
             <InputText
               label="Service Name"
@@ -116,6 +112,7 @@ function Edit_Service({ desc, iconUrl, id, main_services_id, title, FormFor }) {
               style={{ xs: 12, lg: 8 }}
               type="text"
               multiline
+              description
               rows={5}
               id="outlined-multiline-flexible"
               value={description}
@@ -148,7 +145,7 @@ function Edit_Service({ desc, iconUrl, id, main_services_id, title, FormFor }) {
             />
           </Grid>
         </Container>
-        <SubmitButton submit={FormFor == 'sub' ? submitSubForm : FormFor == 'service'} clear={clearFields} />
+        <SubmitButton submit={submitSubForm} clear={clearFields} />
       </Grid>
     </Page>
   );

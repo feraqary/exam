@@ -151,9 +151,7 @@ function ManageServices() {
     <Page title="Manage Services">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          
           <Table data={data} columnHeaders={ColumnHeaders} />
-
         </Grid>
       </Grid>
     </Page>
