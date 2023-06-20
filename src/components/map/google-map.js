@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
 import { Grid } from '@mui/material';
 import axios from 'axios';
+import { useFormikContext } from 'formik';
 
 const MAP_URL =
   'https://www.google.com/maps/place/Abu+Dhabi/@24.3870541,54.3938156,11z/data=!3m1!4b1!4m6!3m5!1s0x3e5e440f723ef2b9:0xc7cc2e9341971108!8m2!3d24.453884!4d54.3773438!16zL20vMGd4ag?entry=ttu';
@@ -10,6 +11,7 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
   const [lat, setlat] = useState(24.4984312);
   const [long, setlong] = useState(54.4036975);
   const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
+  const { setFieldValue, values } = useFormikContext();
 
   const handleMapLoad = (map) => {
     // Set custom cursor for the map container
@@ -35,8 +37,8 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
         }
       })
       .then((response) => {
-        setlat(response.data.results[0].geometry.location.lat);
-        setlong(response.data.results[0].geometry.location.lng);
+        setFieldValue('lat', response.data.results[0].geometry.location.lat);
+        setFieldValue('long', response.data.results[0].geometry.location.lng);
       })
       .catch((error) => {
         console.log('error', error);
@@ -47,18 +49,9 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
     getloc(locationAddress);
   }, [locationAddress]);
 
-  // useEffect(() => {
-  //   const parsedUrl = mapUrl ? mapUrl.split('@')[1].split(',') : MAP_URL.split('@')[1].split(',');
-  //   const latitude = parsedUrl[0];
-  //   const longitude = parsedUrl[1];
 
-  //   setlat(latitude);
-  //   setlong(longitude);
-  // }, [mapUrl]);
+  useEffect(() => {}, [lat, long]);
 
-  useEffect(() => {
-    console.log('dat');
-  }, [lat, long]);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey
   });
@@ -70,15 +63,15 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
       <Grid item xs={xs} lg={lg}>
         <GoogleMap
           mapContainerStyle={{ position: 'relative', height: '27vh', width: '100%' }}
-          center={{ lat: lat, lng: long }}
+          center={{ lat: values.lat, lng: values.long }}
           zoom={11}
           onClick={(e) => {
-            setlat(e.latLng.lat());
-            setlong(e.latLng.lng());
+            setFieldValue('lat', e.latLng.lat());
+            setFieldValue('long', e.latLng.lng());
           }}
           onLoad={handleMapLoad}
         >
-          <Marker position={{ lat: lat, lng: long }} />
+          <Marker position={{ lat: values.lat, lng: values.long }} />
         </GoogleMap>
       </Grid>
     );

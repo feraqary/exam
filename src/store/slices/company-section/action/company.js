@@ -4,9 +4,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
   'v2.local.5Y_Uhdj_pMf333G2uvCFzBy8Ddg4fAs3qqHGoeKw2Euv3_ni9gtnf0P6_n_f-G_8tiUwUxCSrPEecVxpOFDvzxDvwbHhChHQcZd6_fkpaOMQ2GpIb3rTwM3giRJ1gMbhd8Q6XqXZRbFF271NZd_n5XLmsRu7Vd4iMKlnzWt-GSy5M-6YutivP4lIvigvEUWlQB7rviogx0kUGDHDHiiAOFZXQbmIE0wBrTiHASH64_qtkcgSXgcBq-A6DOdzuRZ8KDR6J1upzoe5bMgrdFdFv1Q.bnVsbA';
 const config = {
-
-  headers: { 'Content-Type': 'multipart/form-data', "Authorization": "Bearer v2.local.R5OYUzjy4beHYOvF6fCv1iRN6SrfyLnDPsOE_-ICa-HygXGpVVe4OlOqQjv7w5OSrM7w-KjI0YJ-53DT7dmIcT_4_KNlxmxrFZp6OgWsRuWYMdIbQlojowB5jNCRBBWFuZiYwdKMa5CNJZvHY-6EEe8FYWqFuwATEay3o-Jhm_k_aFZ8P1b66ckrt6mMJNm2YmHZxx2s_R-bxC5ExftFJzPJu98Kc9CkzkaPzgJIh7uMXNuNUEm25Q9jNB30qFY36ZHpDTuzy4HDhogFxQ.bnVsbA" }
-
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    Authorization:
+      'Bearer v2.local.5Y_Uhdj_pMf333G2uvCFzBy8Ddg4fAs3qqHGoeKw2Euv3_ni9gtnf0P6_n_f-G_8tiUwUxCSrPEecVxpOFDvzxDvwbHhChHQcZd6_fkpaOMQ2GpIb3rTwM3giRJ1gMbhd8Q6XqXZRbFF271NZd_n5XLmsRu7Vd4iMKlnzWt-GSy5M-6YutivP4lIvigvEUWlQB7rviogx0kUGDHDHiiAOFZXQbmIE0wBrTiHASH64_qtkcgSXgcBq-A6DOdzuRZ8KDR6J1upzoe5bMgrdFdFv1Q.bnVsbA'
+  }
 };
 const baseurl = 'http://20.203.31.58';
 
@@ -83,7 +85,7 @@ export const createService = createAsyncThunk('company/createServices', async (f
     const response = await api.post(`${baseurl}/api/services/createservices`, formData, config);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error);
+    return rejectWithValue(error.error);
   }
 });
 
@@ -94,7 +96,7 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
 
     return response.data;
   } catch (error) {
-    return rejectWithValue(error);
+    return rejectWithValue(error.error);
   }
 });
 
@@ -127,6 +129,6 @@ export const updateSubService = createAsyncThunk('subService/Updatesubservice', 
     console.log('formData',formData);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error);
+    return rejectWithValue(error.error);
   }
 });

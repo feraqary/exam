@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, TextField, FormHelperText } from '@mui/material';
+import { Grid, TextField, FormHelperText, Button } from '@mui/material';
 
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 // project imports
@@ -13,7 +13,6 @@ import { LoadScript } from '@react-google-maps/api';
 import Map from 'components/map/google-map';
 
 //assets
-import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
 import InputText from 'components/InputArea/TextInput';
 import Selector from 'components/InputArea/Selector';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
@@ -23,20 +22,62 @@ import SubmitButton from 'components/Elements/SubmitButton';
 const countries = ['UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
 const cities = ['UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
 const propertyTypeData = ['UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
+
+const DynamicInput = () => {
+  return (
+    <>
+      <InputText label="Phase Name" placeholder="Phase Name" helperText="Please enter phase name" style={{ xs: 12, lg: 4 }} type="text" />
+      <InputText
+        label="Number of Properties"
+        placeholder="Number of Properties"
+        helperText="Please enter number of properties"
+        style={{ xs: 12, lg: 4 }}
+        type="text"
+      />
+      <InputText
+        label="Location Address"
+        placeholder="Location Map URL"
+        helperText="Please enter the location address map url"
+        type="text"
+        style={{ xs: 12, lg: 4 }}
+      />
+    </>
+  );
+};
+
 function AddProject() {
   // this is aglobal handle change that requires both value and of the input its used in to return an object with name: value
   const [city, setCity] = useState(null);
   const [developerCompany, setDeveloperCompany] = useState(null);
   const [subDeveloperCompany, setSubDeveloperCompany] = useState(null);
 
+  const [propertyType, setPropertyType] = useState(null);
+  const [phaseType, setPhaseType] = useState('Single');
+  const [phases, setPhases] = useState([{ phaseName: '', numberOfPhases: 0, mapUrl: '' }]);
+
+
   const [long, setlong] = useState(null);
   const [lat, setlat] = useState(null);
+
 
 
   const [address, setAddress] = useState('Abu Dhabi');
   const [country, setCountry, setPropertyType] = useState('');
 
   const [state, setState] = useState('');
+
+
+  const addComponent = () => {
+    const phase = { phaseName: '', numberOfPhases: 0, mapUrl: '' };
+
+    setPhases((prev) => [...prev, phase]);
+  };
+
+  const addPhases = () => {
+    return phases.map((phase, index) => {
+      return <DynamicInput key={index} />;
+    });
+  };
 
 
   return (
@@ -99,7 +140,22 @@ function AddProject() {
                   placeholder="Select Phase Type"
                   options={['Single', 'Multiple']}
                   style={{ xs: 12, lg: 4 }}
+                  value={phaseType}
+                  setValue={(e) => setPhaseType(e)}
                 />
+                {/* <InputText
+                  label="Number of Phases"
+                  placeholder="Number of Phases"
+                  helperText="Please enter Number of Phases"
+                  style={{ xs: 12, lg: 4 }}
+                  type="text"
+                /> */}
+                {addPhases()}
+                <Grid container justifyContent="center" style={{ xs: 12, lg: 12, marginTop: 20 }}>
+                  <Button variant="outlined" style={{ width: '10%' }} onClick={() => addComponent()}>
+                    Add More
+                  </Button>
+                </Grid>
               </Grid>
             </MainCard>
           </Grid>

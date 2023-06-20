@@ -1,23 +1,29 @@
 // material-ui
 import { TextField } from '@mui/material';
+import { useField } from 'formik';
 
 // project imports
 import React from 'react';
 import InputLayout from './InputLayout';
 
 
+const InputText = ({ label, placeholder, helperText, style, type, required, ...rest }) => {
+  const [field, meta] = useField(rest);
 
-const InputText = ({ label, placeholder, helperText, style, type, value, setValue, description, ...rest }) => {
-
-  // Customize desciption inputs only to be extendable based on [description] property
-  const des = {"& textarea":{resize: description && "both", width: "100% !important"} }
-
-  const handleInputChange = (e) => {
-    setValue(e.target.value);
-  };
   return (
-    <InputLayout label={label} helperText={helperText} style={style}>
-      <TextField fullWidth placeholder={placeholder} type={type} sx={des} {...rest} value={value} onChange={(e) => handleInputChange(e)} />
+    <InputLayout label={label} helperText={helperText} style={style} metaError={meta.error} metaTouched={meta.touched} required={required}>
+      <TextField
+        id={rest.id}
+        name={rest.name}
+        fullWidth
+        placeholder={placeholder}
+        type={type}
+        {...rest}
+        {...field}
+        sx={{ borderColor: 'red' }}
+        error={meta.error && meta.touched ? true : false}
+      />
+
     </InputLayout>
   );
 };
