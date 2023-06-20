@@ -7,7 +7,6 @@ import { useField, useFormikContext } from 'formik';
 
 // ==============================|| FORM VALIDATION - AUTOCOMPLETE FORMIK  ||============================== //
 
-
 const AutoCompleteSelector = ({ style, label, id, name, options, placeholder, func, helperText, ...rest }) => {
   const [field, meta] = useField(rest);
   const { touched, values, setFieldValue } = useFormikContext();
@@ -15,15 +14,12 @@ const AutoCompleteSelector = ({ style, label, id, name, options, placeholder, fu
   return (
     <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
-        {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
-
-        {helperInfo ? 
-          <Tooltip title={label}>
-            <IconButton>
-              <InfoIcon fontSize="small" />
-            </IconButton>
-          </Tooltip> : <></>
-        }
+        <InputLabel required>{label}</InputLabel>
+        <Tooltip title={label}>
+          <IconButton>
+            <InfoIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
       </Grid>
       <Autocomplete
         {...rest}

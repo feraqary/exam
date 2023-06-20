@@ -29,16 +29,12 @@ const roles = [
 // ==============================|| Add Company Type form ||============================== //
 
 function CompanyType() {
-
   const FILE_SIZE = 1;
   const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
-
   const logoRef = useRef(null);
   const iconRef = useRef(null);
-  console.log(logoImage)
-  
-  
+
   const dispatch = useDispatch();
 
   return (
