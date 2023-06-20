@@ -29,9 +29,7 @@ import { Form, Formik } from 'formik';
 import { useSelector } from 'react-redux';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 
-import { setCountry } from 'store/slices/country-section/slice/country';
-
-
+// import { setCountry } from 'store/slices/country-section/slice/country';
 
 // project imports
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
@@ -115,7 +113,6 @@ const JWTRegister = ({ ...others }) => {
 
       <Formik
         initialValues={{
-
           first_name: null,
           last_name: null,
           country: null,
@@ -232,7 +229,6 @@ const JWTRegister = ({ ...others }) => {
                   })}
                   name="country"
                   placeholder="Select a Country"
-
                   value={values.country}
                   // setValue={setCountry}
                   onChange={handleChange}
@@ -241,7 +237,6 @@ const JWTRegister = ({ ...others }) => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FileUpload type="jpg,img,jpeg,png" name="profile_image_url" style={{ xs: 12, lg: 12 }} setValue={handleChange} />
-
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -283,40 +278,31 @@ const JWTRegister = ({ ...others }) => {
                   placeholder="Select Gender"
                   options={['Male', 'Female']}
                   style={{ xs: 12, lg: 12 }}
-
                   value={values.gender}
                   setValue={handleChange}
-
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Selector
-
                   value={values.user_types_id}
-
                   id="compStatus"
                   label="User Type:"
                   placeholder="Choose Company Type"
                   options={['Company', 'Individual']}
                   style={{ xs: 12, lg: 12 }}
-
                   setValue={handleChange}
                 />
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <Selector
-
                   value={values.status}
-
                   id="compStatus"
                   label="Select Company Status:"
                   placeholder="Select Company Status:"
                   options={['Active', 'Non-Active']}
                   style={{ xs: 12, lg: 12 }}
-
                   setValue={handleChange}
-
                 />
               </Grid>
             </Grid>

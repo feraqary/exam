@@ -55,17 +55,13 @@ function AddProject() {
   const [phaseType, setPhaseType] = useState('Single');
   const [phases, setPhases] = useState([{ phaseName: '', numberOfPhases: 0, mapUrl: '' }]);
 
-
   const [long, setlong] = useState(null);
   const [lat, setlat] = useState(null);
 
-
-
   const [address, setAddress] = useState('Abu Dhabi');
-  const [country, setCountry, setPropertyType] = useState('');
+  const [country, setCountry] = useState('');
 
   const [state, setState] = useState('');
-
 
   const addComponent = () => {
     const phase = { phaseName: '', numberOfPhases: 0, mapUrl: '' };
@@ -78,7 +74,6 @@ function AddProject() {
       return <DynamicInput key={index} />;
     });
   };
-
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>

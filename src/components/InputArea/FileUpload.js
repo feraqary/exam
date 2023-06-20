@@ -8,13 +8,11 @@ import InputLayout from './InputLayout';
 
 import { useField } from 'formik';
 
-
 const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, setFieldValue, id, required, ...rest }, ref) => {
   const [field, meta] = useField(rest);
 
   return (
     <>
-
       <InputLayout
         label={label}
         helperText={helperText}
@@ -23,7 +21,6 @@ const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, s
         metaTouched={meta.touched}
         required={required}
       >
-
         <TextField
           {...field}
           required={required}
@@ -48,10 +45,14 @@ const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, s
         />
       </InputLayout>
       {image && (
-
         <Grid item xs={3} lg={style.lg} alignContent="right">
-          {imagePreview ? (
-            <img  src={field.value && !meta.error && URL.createObjectURL(field.value)} alt={image.alt} width={image.width} height={image.height} />
+          {field.value ? (
+            <img
+              src={field.value && !meta.error && URL.createObjectURL(field.value)}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+            />
           ) : (
             <img src="/assets/image_preveiw.jpg" alt={image.alt} width={100} height={100} />
           )}
