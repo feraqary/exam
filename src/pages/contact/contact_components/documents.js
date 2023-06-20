@@ -83,7 +83,7 @@ export default function Documents() {
               <FormControlLabel control={<Checkbox value={'i'} />} label="Mark as Private" labelPlacement="start" />
             </Grid>
 
-            <FileUpload label="Upload Document" type='file' style={{ xs: 12, lg: 8 }} helperText="please upload document..."/>
+            <FileUpload label="Upload Document" type="file" style={{ xs: 12, lg: 8 }} helperText="please upload document..." />
 
             <Grid item xs={12} lg={6}>
               <Button variant="contained">Add</Button>

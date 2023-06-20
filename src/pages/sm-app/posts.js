@@ -63,20 +63,18 @@ function Posts() {
     if (id === 1) {
       const acceptedTypes = ['image/jpeg', 'image/png'];
       if (!validateFileType(file, acceptedTypes)) {
-     
         console.log('Please upload only JPEG or PNG files.');
         return;
       }
- 
+
       console.log('Processing photo upload:', file);
     } else {
       const acceptedTypes = ['video/mp4'];
       if (!validateFileType(file, acceptedTypes)) {
-    
         console.log('Please upload only MP4 files.');
         return;
       }
-    
+
       console.log('Processing video upload:', file);
     }
   };
@@ -109,6 +107,7 @@ function Posts() {
                 helperText="Please enter detailed description"
                 multiline={true}
                 rows={7}
+                description
               />
               <FileUpload
                 label="Upload Video"
@@ -131,11 +130,7 @@ function Posts() {
                     accept="image/jpeg, image/png"
                   />
                   <Grid item xs={4} md={2}>
-                    <Button
-                      size="large"
-                      variant="contained"
-                      onClick={() => handleRemoveFileUpload(fileUpload.id)}
-                    >
+                    <Button size="large" variant="contained" onClick={() => handleRemoveFileUpload(fileUpload.id)}>
                       Remove
                     </Button>
                   </Grid>

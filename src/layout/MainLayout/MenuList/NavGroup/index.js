@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-
+import Button from '@mui/material/Button';
+import Collapse, { Tooltip } from '@mui/material';
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import {
@@ -17,7 +18,7 @@ import {
   Typography,
   useMediaQuery
 } from '@mui/material';
-
+import { ChevronDown } from 'tabler-icons-react';
 // third-party
 import { FormattedMessage } from 'react-intl';
 
@@ -57,6 +58,8 @@ const PopperStyled = styled(Popper)(({ theme }) => ({
 // ==============================|| SIDEBAR MENU LIST GROUP ||============================== //
 
 const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
+  
+
   const theme = useTheme();
 
   const { pathname } = useRouter();
@@ -124,14 +127,14 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
 
   const Icon = currentItem?.icon;
   const itemIcon = currentItem?.icon ? <Icon stroke={1.5} size="20px" /> : null;
-
+  const [expand, setExpand] = useState(false);
   // menu list collapse & items
   const items = currentItem.children?.map((menu) => {
     switch (menu.type) {
       case 'collapse':
-        return <NavCollapse key={menu.id} menu={menu} level={1} parentId={currentItem.id} />;
+        return <NavCollapse expand={expand} key={menu.id} menu={menu} level={1} parentId={currentItem.id} />;
       case 'item':
-        return <NavItem key={menu.id} item={menu} level={1} parentId={currentItem.id} />;
+        return <NavItem expand={expand} key={menu.id} item={menu} level={1} parentId={currentItem.id} />;
       default:
         return (
           <Typography key={menu.id} variant="h6" color="error" align="center">
@@ -151,7 +154,7 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
       {itemRem.elements?.map((menu) => {
         switch (menu.type) {
           case 'collapse':
-            return <NavCollapse key={menu.id} menu={menu} level={1} parentId={currentItem.id} />;
+            return <NavCollapse key={menu.id} menu={menu} sideBarIcon={currentItem.icon} level={1} parentId={currentItem.id} />;
           case 'item':
             return <NavItem key={menu.id} item={menu} level={1} parentId={currentItem.id} />;
           default:
@@ -166,24 +169,59 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
   ));
 
   const popperId = openMini ? `group-pop-${item.id}` : undefined;
-
+  const DropDownIconStyle = {
+    position: 'absolute',
+    right: 0,
+    transform: expand ? 'rotate(180deg)' : 'rotate(0deg)'
+  };
   return (
     <>
       {layout === LAYOUT_CONST.VERTICAL_LAYOUT || (layout === LAYOUT_CONST.HORIZONTAL_LAYOUT && matchDownMd) ? (
         <>
           <List
-            disablePadding={!drawerOpen}
+            // disablePadding={!drawerOpen}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column'
+              // justifyContent:'space-between'
+            }}
             subheader={
-              currentItem.title &&
-              drawerOpen && (
-                <Typography variant="caption" sx={{ ...theme.typography.menuCaption }} display="block" gutterBottom>
+              currentItem.title && drawerOpen ? (
+                <Button
+                  variant="text"
+                  onClick={() => {
+                    setExpand(!expand);
+                  }}
+                  fullWidth
+                  sx={{ ...theme.typography.menuCaption, justifyContent: 'flex-start' }}
+                  gutterBottom
+                >
+                  {/* "coder-code: section_title" */}
+                  {currentItem.icon}
                   {currentItem.title}
+                  <ChevronDown size={22} strokeWidth={1} style={DropDownIconStyle} color={'grey'} />
                   {currentItem.caption && (
-                    <Typography variant="caption" sx={{ ...theme.typography.subMenuCaption }} display="block" gutterBottom>
+                    <Typography variant="caption" sx={{ ...theme.typography.subMenuCaption }} gutterBottom>
                       {currentItem.caption}
                     </Typography>
                   )}
-                </Typography>
+                </Button>
+              ) : (
+                <Tooltip title={currentItem.title} placement='right'>
+                  <Button
+                    variant="text"
+                    size="lg"
+                    sx={{
+                      padding: '13px',
+                      '&:hover': {
+                        bgcolor: theme.palette.mode === 'dark' ? theme.palette.secondary.main + 25 : 'secondary.light'
+                      }
+                    }}
+                    onClick={() => dispatch(openDrawer(!drawerOpen))}
+                  >
+                    {currentItem.icon}
+                  </Button>
+                </Tooltip>
               )
             }
           >

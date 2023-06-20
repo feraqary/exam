@@ -2,8 +2,18 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconClipboardCheck, IconPictureInPicture, IconForms, IconBorderAll, IconChartDots, IconStairsUp } from '@tabler/icons';
-
+import {
+  IconClipboardCheck,
+  IconPictureInPicture,
+  IconPin,
+  IconMapPin,
+  IconForms,
+  IconBorderAll,
+  IconChartDots,
+  IconStairsUp,
+  IconHomeShare
+} from '@tabler/icons';
+import { BuildingSkyscraper } from 'tabler-icons-react';
 // constant
 const icons = {
   IconClipboardCheck,
@@ -11,7 +21,10 @@ const icons = {
   IconForms,
   IconBorderAll,
   IconChartDots,
-  IconStairsUp
+  IconStairsUp,
+  IconPin,
+  IconMapPin,
+  IconHomeShare 
 };
 
 // ==============================|| UI FORMS MENU ITEMS ||============================== //
@@ -19,7 +32,7 @@ const icons = {
 const propertyhub = {
   id: 'ui-forms',
   title: <FormattedMessage id="Property Hub" />,
-  icon: icons.IconPictureInPicture,
+  icon: <BuildingSkyscraper size={23} strokeWidth={1.5} style={{ marginRight: '10px' }} color={'black'} />,
   type: 'group',
   children: [
     {
@@ -29,31 +42,28 @@ const propertyhub = {
       icon: icons.IconPictureInPicture,
       url: '/propery_hub/add_property'
     },
+
     {
-      id: 'properties',
-      title: <FormattedMessage id="Manage Properties" />,
-      type: 'collapse',
-      icon: icons.IconForms,
-      children: [
-        {
-          id: 'local-properties',
-          title: <FormattedMessage id="Local Properties" />,
-          type: 'item',
-          url: '/property_hub/local_properties'
-        },
-        {
-          id: 'international-properties',
-          title: <FormattedMessage id="International Properties" />,
-          type: 'item',
-          url: '/property_hub/international_properties'
-        },
-        {
-          id: 'shared-properties',
-          title: <FormattedMessage id="Shared Properties" />,
-          type: 'item',
-          url: '/property_hub/shared_properties'
-        }
-      ]
+      id: 'local-properties',
+      title: <FormattedMessage id="Local Properties" />,
+      type: 'item',
+      icon: icons.IconPin,
+      url: '/property_hub/local_properties'
+      
+    },
+    {
+      id: 'international-properties',
+      title: <FormattedMessage id="International Properties" />,
+      type: 'item',
+      icon: icons.IconMapPin,
+      url: '/property_hub/international_properties'
+    },
+    {
+      id: 'shared-properties',
+      title: <FormattedMessage id="Shared Properties" />,
+      type: 'item',
+      icon: icons.IconHomeShare,
+      url: '/property_hub/shared_properties'
     },
     {
       id: 'deleted-properties',

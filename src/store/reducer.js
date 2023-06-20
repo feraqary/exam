@@ -17,7 +17,9 @@ import kanbanReducer from './slices/kanban';
 import menuReducer from './slices/menu';
 import countriesReducer from './slices/country-section/slice/country';
 import companiesReducer from './slices/company-section/slice/company';
-import serviceUpdate  from './slices/services/slice/services';
+import serviceUpdate from './slices/services/slice/services';
+import signupSlice from './slices/user-registration/slice/user-registration'; 
+import userManagement from './slices/Management_/slice/users'
 // ==============================|| COMBINE REDUCER ||============================== //
 
 const reducer = combineReducers({
@@ -41,7 +43,9 @@ const reducer = combineReducers({
   menu: menuReducer,
   countries: countriesReducer,
   companies: companiesReducer,
-  serviceUpdate: serviceUpdate
+  serviceUpdate: serviceUpdate,
+  signUp: signupSlice,
+  usermanagement: userManagement
 });
 
 //Reducer

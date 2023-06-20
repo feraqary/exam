@@ -49,7 +49,9 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
     getloc(locationAddress);
   }, [locationAddress]);
 
+
   useEffect(() => {}, [lat, long]);
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey
   });

@@ -40,7 +40,9 @@ const CustomDateTime = ({ style, label, helperText, value, setValue, required, n
             <TextField
               {...params}
               fullWidth
+
               error={touched[`${name}`] && meta.error[`${name}`]}
+
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

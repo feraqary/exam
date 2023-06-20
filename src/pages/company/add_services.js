@@ -14,9 +14,11 @@ import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
+
 import { createService, getAllMainServices } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
 import { Formik } from 'formik';
+
 
 // ==============================|| Add Company Type form ||============================== //
 
@@ -35,11 +37,12 @@ function Service() {
     dispatch(getAllMainServices());
   }, [dispatch]);
 
+
   return (
     <Page title="Add Sub Services">
       <Grid container spacing={gridSpacing}>
         <ToastContainer />
-        <Container title="Add Sub Services" style={{ xs: 12 }}>
+        <Container style={{ xs: 12 }}>
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
             <Formik
               initialValues={{
@@ -153,6 +156,7 @@ function Service() {
                 </Grid>
               )}
             </Formik>
+
           </Grid>
         </Container>
       </Grid>

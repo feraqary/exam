@@ -47,8 +47,8 @@ import PhoneInput from 'components/InputArea/PhoneInput';
 
 // ==============================|| FIELDS ||============================== //
 const options = [
-  { label: 'Real Estate Broker Company', id: 1 },
-  { label: 'Real Estate Developer Company', id: 2 },
+  { label: 'Broker Company', id: 1 },
+  { label: 'Developer Company', id: 2 },
   { label: 'Service Company', id: 3 }
 ];
 
@@ -59,7 +59,7 @@ function ColumnsLayouts() {
   const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
   const [address, setAddress] = useState('Abu Dhabi');
   const [profilePreview, setProfilePreview] = useState(null);
-
+  const [disabled, setDisabled] = useState(false);
   useEffect(() => {
     dispatch(getCountries());
     dispatch(getAllCountries());
@@ -84,6 +84,7 @@ function ColumnsLayouts() {
   const companyCoverRef = useRef(null);
   const profileRef = useRef(null);
   const reraRef = useRef(null);
+
 
   const submitForm = (values) => {
     const formData = new FormData();
@@ -140,6 +141,7 @@ function ColumnsLayouts() {
     formData.append('swift_code', values.swiftCode);
     formData.append('rera_file_url', values.reraFile);
     formData.append('rera_expiry', values.reraExpiryDate);
+
     dispatch(createCompany(formData));
   };
 
@@ -148,6 +150,7 @@ function ColumnsLayouts() {
       <Page title="Add Company">
         <ToastContainer />
         <Grid container spacing={gridSpacing}>
+
           <Formik
             initialValues={{
               companyType: '',
@@ -546,6 +549,7 @@ function ColumnsLayouts() {
                             style={{ objectFit: 'contain' }}
                           />
 
+
                           {option.label}
                         </Box>
                       )}
@@ -713,6 +717,7 @@ function ColumnsLayouts() {
                       id="companyDescription"
                       required={true}
                     />
+
 
                     <FileUpload
                       label="Company logo"

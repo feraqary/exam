@@ -14,6 +14,13 @@ import Logo from 'components/ui-component/Logo';
 import BackgroundPattern1 from 'components/ui-component/cards/BackgroundPattern1';
 import AuthSlider from 'components/ui-component/cards/AuthSlider';
 
+// Importing slices
+// import
+// {
+//   selec
+// }
+// from '../../store/slices/user-registration/slices/user-registration';
+
 // assets
 const AuthBlueCard = '/assets/images/auth/auth-signup-blue-card.svg';
 const AuthWhiteCard = '/assets/images/auth/auth-signup-white-card.svg';
@@ -60,46 +67,57 @@ const PurpleWrapper = styled('span')(({ theme }) => ({
 // carousel items
 const items = [
   {
-    title: 'Powerful and easy to use multipurpose theme.',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'Aqary International ',
+    description: 'The Purpose of Aqary International is to make home moving easier in the entire world. '
   },
   {
-    title: 'Power of React with Material UI',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'AQARY Group is Reimagining Real Estate to make it easier to unlock life’s next chapter.',
+    description:
+      'As the most-visited real estate website in the world, AQARY and its affiliates offer customers an on-demand experience for selling, buying, renting, and financing with transparency and nearly seamless end-to-end service. AQARY Offers buys and sells homes directly in dozens of markets across the world, allowing sellers control over their timeline. AQARY Home Loans, our affiliate lender, provides our customers with an easy option to get pre-approved and secure financing for their next home purchase.'
   },
   {
-    title: 'Power of React with Material UI',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'Our Aim is to Create a more Efficient Housing Marketplace and make Home Moving Easier.    ',
+    description:
+      'Our ambition is to be the place, and the encyclopedia that consumers and customers turn to as their property portal of choice, and to deliver that objective, Aqary needs to be a business in which people want to work, invest, and with which people want to partner.'
   }
 ];
 
-// ===============================|| AUTH1 - REGISTER ||=============================== //
+// ===============================|| Portal - REGISTER ||=============================== //
 
 const Register = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
+  /// Registration Action
+  const registerUser = () => {
+    axios
+      .post('20.203.31.58/api/user/register', {
+        first_name: 'simon',
+        last_name: 'password',
+        country: 'Eri',
+        email: 'aqary@gmail.com',
+        profile_image_url: '/Users/user/Downloads/1d36e555-6d6a-4a09-ae9d-bdcb12ddfbe4.jpeg',
+        phone_number: 'asdf',
+        company_number: 'aasdf',
+        whatsapp_number,
+        gender: 1,
+        password: 'dreaming',
+        status: 1,
+        user_types_id: 1,
+        roles_id: 1,
+        department: 1,
+        social_login
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <Page title="Register">
       <AuthWrapper1>
         <Grid container justifyContent="space-between" alignItems="center" sx={{ minHeight: '100vh' }}>
-          <Grid item md={6} lg={5} sx={{ position: 'relative', alignSelf: 'stretch', display: { xs: 'none', md: 'block' } }}>
-            <BackgroundPattern1>
-              <Grid item container alignItems="flex-end" justifyContent="center" spacing={3}>
-                <Grid item xs={12}>
-                  <span />
-                  <PurpleWrapper />
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid item container justifyContent="center" sx={{ pb: 8 }}>
-                    <Grid item xs={10} lg={8} sx={{ '& .slick-list': { pb: 2 } }}>
-                      <AuthSlider items={items} />
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </BackgroundPattern1>
-          </Grid>
           <Grid item container justifyContent="center" md={6} lg={7} sx={{ my: 3 }}>
             <AuthCardWrapper>
               <Grid container spacing={2} justifyContent="center">
@@ -112,7 +130,12 @@ const Register = () => {
                   >
                     <Grid item>
                       <Stack justifyContent={matchDownSM ? 'center' : 'flex-start'} textAlign={matchDownSM ? 'center' : 'inherit'}>
-                        <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
+                        <Typography
+                          color={theme.palette.secondary.main}
+                          gutterBottom
+                          variant={matchDownSM ? 'h3' : 'h2'}
+                          onClick={registerUser}
+                        >
                           Sign up
                         </Typography>
                         <Typography color="textPrimary" gutterBottom variant="h4">
@@ -137,7 +160,7 @@ const Register = () => {
                   <Grid item container direction="column" alignItems="flex-end" xs={12}>
                     <Typography
                       component={Link}
-                      href="/pages/authentication/auth1/login"
+                      href="/pages/authentication/portal_registration/login"
                       variant="subtitle1"
                       sx={{ textDecoration: 'none' }}
                     >

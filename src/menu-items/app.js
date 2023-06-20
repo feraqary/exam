@@ -2,8 +2,8 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconKey, IconReceipt2, IconBug, IconBellRinging, IconPhoneCall, IconQuestionMark, IconShieldLock } from '@tabler/icons';
-
+import { IconKey, IconReceipt2, IconBug, IconBellRinging, IconPhoneCall, IconQuestionMark, IconShieldLock, IconFile, IconSettings } from '@tabler/icons';
+import { AlignBoxLeftBottom } from 'tabler-icons-react';
 // constant
 const icons = {
   IconKey,
@@ -12,7 +12,9 @@ const icons = {
   IconBellRinging,
   IconPhoneCall,
   IconQuestionMark,
-  IconShieldLock
+  IconShieldLock,
+  IconFile,
+  IconSettings
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
@@ -20,7 +22,7 @@ const icons = {
 const app = {
   id: 'App',
   title: <FormattedMessage id="App" />,
-  icon: icons.IconKey,
+  icon: <AlignBoxLeftBottom size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
@@ -29,6 +31,20 @@ const app = {
       type: 'item',
       icon: icons.IconKey,
       url: '/sm-app/posts'
+    },
+    {
+      id: 'Documents',
+      title: <FormattedMessage id="Documents" />,
+      type: 'item',
+      icon: icons.IconFile,
+      url: '/company/documents'
+    },
+    {
+      id: 'ManageDocuments',
+      title: <FormattedMessage id="Manage documents" />,
+      type: 'item',
+      icon: icons.IconSettings,
+      url: '/company/documents/manage_documents'
     }
   ]
 };

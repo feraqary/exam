@@ -6,6 +6,7 @@ import { useField } from 'formik';
 import React from 'react';
 import InputLayout from './InputLayout';
 
+
 const InputText = ({ label, placeholder, helperText, style, type, required, ...rest }) => {
   const [field, meta] = useField(rest);
 
@@ -22,6 +23,7 @@ const InputText = ({ label, placeholder, helperText, style, type, required, ...r
         sx={{ borderColor: 'red' }}
         error={meta.error && meta.touched ? true : false}
       />
+
     </InputLayout>
   );
 };

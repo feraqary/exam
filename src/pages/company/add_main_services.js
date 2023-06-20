@@ -36,11 +36,12 @@ function MainService() {
     dispatch(getAllCompanyTypes());
   }, [dispatch]);
 
+
   return (
-    <Page title="Add Main Services">
+    <Page title="Add Services">
       <Grid container spacing={gridSpacing}>
         <ToastContainer />
-        <Container title="Add Main Services" style={{ xs: 12 }}>
+        <Container style={{ xs: 12 }}>
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
             <Formik
               initialValues={{
@@ -71,6 +72,7 @@ function MainService() {
                   )
                   .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type))
               })}
+
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 const formData = new FormData();
                 formData.append('company_types_id', values.subCompanyType.id);

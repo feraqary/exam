@@ -50,12 +50,22 @@ function AddProject() {
   const [city, setCity] = useState(null);
   const [developerCompany, setDeveloperCompany] = useState(null);
   const [subDeveloperCompany, setSubDeveloperCompany] = useState(null);
+
   const [propertyType, setPropertyType] = useState(null);
   const [phaseType, setPhaseType] = useState('Single');
   const [phases, setPhases] = useState([{ phaseName: '', numberOfPhases: 0, mapUrl: '' }]);
+
+
+  const [long, setlong] = useState(null);
+  const [lat, setlat] = useState(null);
+
+
+
   const [address, setAddress] = useState('Abu Dhabi');
-  const [country, setCountry] = useState('');
+  const [country, setCountry, setPropertyType] = useState('');
+
   const [state, setState] = useState('');
+
 
   const addComponent = () => {
     const phase = { phaseName: '', numberOfPhases: 0, mapUrl: '' };
@@ -68,6 +78,7 @@ function AddProject() {
       return <DynamicInput key={index} />;
     });
   };
+
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
@@ -377,6 +388,7 @@ function AddProject() {
                   rows={4}
                   name="property-details-property-description"
                   fullWidth
+                  description
                 />
                 <InputText
                   style={{ xs: 12, lg: 4 }}
@@ -388,6 +400,7 @@ function AddProject() {
                   rows={4}
                   name="property-details-arabic-property-description"
                   fullWidth
+                  description
                 />
               </Grid>
             </MainCard>
