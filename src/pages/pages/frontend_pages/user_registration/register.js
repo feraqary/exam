@@ -83,6 +83,23 @@ const Register = () => {
     <Page title="Register">
       <AuthWrapper1>
         <Grid container justifyContent="space-between" alignItems="center" sx={{ minHeight: '100vh' }}>
+          <Grid item md={6} lg={5} sx={{ position: 'relative', alignSelf: 'stretch', display: { xs: 'none', md: 'block' } }}>
+            <BackgroundPattern1>
+              <Grid item container alignItems="flex-end" justifyContent="center" spacing={3}>
+                <Grid item xs={12}>
+                  <span />
+                  <PurpleWrapper />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid item container justifyContent="center" sx={{ pb: 8 }}>
+                    <Grid item xs={10} lg={8} sx={{ '& .slick-list': { pb: 2 } }}>
+                      <AuthSlider items={items} />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </BackgroundPattern1>
+          </Grid>
           <Grid item container justifyContent="center" md={6} lg={7} sx={{ my: 3 }}>
             <AuthCardWrapper>
               <Grid container spacing={2} justifyContent="center">

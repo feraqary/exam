@@ -285,6 +285,7 @@ const slice = createSlice({
         state.companyTypes = action.payload.data;
       })
       .addCase(getAllCompanyTypes.rejected, (state, action) => {
+        console.log(action);
         state.loading = false;
         state.error = action.payload.error;
         state.companyTypes = state.companyTypes;

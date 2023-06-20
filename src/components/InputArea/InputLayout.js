@@ -6,11 +6,11 @@ import InfoIcon from '@mui/icons-material/Info';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import React, { useState, useMemo } from 'react';
 
-const InputLayout = ({ label, helperText, style, children }) => {
+const InputLayout = ({ label, helperText, style, required, metaError, metaTouched, children }) => {
   return (
     <Grid item xs={style.xs} lg={style.lg}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
-        <InputLabel required>{label}</InputLabel>
+        <InputLabel required={required}>{label}</InputLabel>
         <Tooltip title={helperText}>
           <IconButton>
             <InfoIcon fontSize="small" />
@@ -18,7 +18,11 @@ const InputLayout = ({ label, helperText, style, children }) => {
         </Tooltip>
       </Grid>
       {children}
-      <FormHelperText>{helperText}</FormHelperText>
+      {metaError && metaTouched ? (
+        <FormHelperText sx={{ color: 'red' }}>{metaError}</FormHelperText>
+      ) : (
+        <FormHelperText>{helperText}</FormHelperText>
+      )}
     </Grid>
   );
 };
