@@ -18,19 +18,22 @@ const AutoCompleteSelector = ({
   helperText,
   loading,
   func,
+  helperInfo,
   error,
   ...rest
 }) => {
   return (
-
     <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
         {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
-        <Tooltip title={label}>
-          <IconButton>
-            <InfoIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
+
+        {helperInfo ? 
+          <Tooltip title={label}>
+            <IconButton>
+              <InfoIcon fontSize="small" />
+            </IconButton>
+          </Tooltip> : <></>
+        }
       </Grid>
       <Autocomplete
         {...rest}

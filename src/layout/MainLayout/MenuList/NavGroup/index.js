@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Button from '@mui/material/Button';
-import Collapse from '@mui/material';
+import Collapse, { Tooltip } from '@mui/material';
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import {
@@ -207,19 +207,21 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
                   )}
                 </Button>
               ) : (
-                <Button
-                  variant="text"
-                  size="lg"
-                  sx={{
-                    padding: '13px',
-                    '&:hover': {
-                      bgcolor: theme.palette.mode === 'dark' ? theme.palette.secondary.main + 25 : 'secondary.light'
-                    }
-                  }}
-                  onClick={() => dispatch(openDrawer(!drawerOpen))}
-                >
-                  {currentItem.icon}
-                </Button>
+                <Tooltip title={currentItem.title} placement='right'>
+                  <Button
+                    variant="text"
+                    size="lg"
+                    sx={{
+                      padding: '13px',
+                      '&:hover': {
+                        bgcolor: theme.palette.mode === 'dark' ? theme.palette.secondary.main + 25 : 'secondary.light'
+                      }
+                    }}
+                    onClick={() => dispatch(openDrawer(!drawerOpen))}
+                  >
+                    {currentItem.icon}
+                  </Button>
+                </Tooltip>
               )
             }
           >

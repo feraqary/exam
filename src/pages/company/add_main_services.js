@@ -70,6 +70,7 @@ function MainService() {
     formData.append('icon_url', iconImage);
     formData.append('company_types_id', companyType?.id);
     formData.append('description', description);
+    console.log('consoled: ', formData)
     dispatch(createMainService(formData));
     clearFields();
   };
@@ -78,7 +79,7 @@ function MainService() {
     <Page title="Add Services">
       <Grid container spacing={gridSpacing}>
         <ToastContainer />
-        <Container title="Add Main Services" style={{ xs: 12 }}>
+        <Container style={{ xs: 12 }}>
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
             <AutoCompleteSelector
               style={{ xs: 12, lg: 8 }}

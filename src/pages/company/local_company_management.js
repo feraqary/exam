@@ -16,6 +16,10 @@ import { useEffect } from 'react';
 import { getLocalCompanies } from 'store/slices/company-section/action/company';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { Dialog, DialogContent, DialogActions } from '@mui/material';
+import Slide from '@mui/material/Slide';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 // ===========================|| International Company Managment list||=========================== //
 
@@ -78,7 +82,20 @@ const ColumnHeaders = [
   {
     accessorKey: 'action',
     header: 'Action',
-    Cell: ({ renderedCellValue, row }) => (
+    Cell: ({ renderedCellValue, row }) => {
+      const [open, setOpen] = React.useState(false);
+
+      const handleClickOpen = () => {
+        setOpen(true);
+      };
+
+      const handleClose = () => {
+        setOpen(false);
+      };
+
+      
+      
+      return(
       <Box
         sx={{
           display: 'flex',
@@ -87,6 +104,9 @@ const ColumnHeaders = [
         }}
       >
         <AqaryButton variant="contained">Edit </AqaryButton>
+        <Button variant="contained" color="primary" onClick={handleClickOpen} startIcon={<PreviewIcon />}>
+            Add sub-company
+        </Button>
         <Button color="primary" variant="contained" startIcon={<AssignmentIcon />}>
           View Documents
         </Button>
@@ -105,8 +125,19 @@ const ColumnHeaders = [
         <Button variant="contained" startIcon={<KeyIcon />}>
           Reset
         </Button>
+
+        <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+            <DialogActions sx={{justifyContent:"flex-start"}} onClick={handleClose}>
+              <IconButton>
+                <CloseIcon />
+              </IconButton>
+            </DialogActions>
+            <DialogContent>
+              <ColumnsLayouts />
+            </DialogContent>
+          </Dialog>
       </Box>
-    )
+    )}
   }
 ];
 
