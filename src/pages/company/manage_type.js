@@ -55,7 +55,7 @@ const ColumnHeaders = [
     accessorKey: 'title',
     header: 'Company Type'
   },
-
+  
   {
     accessorKey: 'description',
     header: 'Description'

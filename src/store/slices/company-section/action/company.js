@@ -35,7 +35,7 @@ export const getAllCompanyTypes = createAsyncThunk('company/getAllCompanyTypes',
 export const updateCompanyType = createAsyncThunk('company/updateCompanyType', async ({company_id,formData} , { rejectWithValue }) => {
   try {
     console.log(`company id: ${company_id}`)
-    const response = await api.put(`${baseurl}/api/services/updatecompanytype/${company_id}`,formData, config);
+    const response = await api.put(`${baseurl}/api/services/updateCompanyType/${company_id}`,formData, config);
     return response.data;
   } catch (error) {
     console.log(rejectWithValue(error));
