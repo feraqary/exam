@@ -488,8 +488,6 @@ const slice = createSlice({
         state.internationalCompanies = state.internationalCompanies;
       })
 
-
-
       .addCase(getAllServices.pending, (state) => {
         state.loading = true;
         state.services = state.services;
@@ -505,21 +503,23 @@ const slice = createSlice({
         state.loading = false;
         state.services = state.services;
         state.error = action.payload.error;
-      }) 
-
-
-
+      })
 
       .addCase(updateSubService.pending, (state) => {
         state.loading = true;
         state.services = state.services;
         state.error = null;
       })
-      
+
       .addCase(updateSubService.fulfilled, (state, action) => {
-        console.log(action.payload);
+        console.log('payload', action.payload);
         state.loading = false;
-        state.services = action.payload.data;
+        state.services = state.services.map((item) => {
+          if (item.id === action.payload.data.id && item.main_services_id === action.payload.data.main_services_id) {
+            return action.payload.data;
+          }
+          return item;
+        });
         state.error = null;
       })
 
