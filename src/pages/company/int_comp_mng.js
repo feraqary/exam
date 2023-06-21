@@ -14,7 +14,7 @@ import Table from 'components/Table/Table';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getInternationalCompanies } from 'store/slices/company-section/action/company';
+import { getInternationalCompanies, updateCompanyStatus } from 'store/slices/company-section/action/company';
 import { useSelector } from 'react-redux';
 import ColumnsLayouts from './add_comp';
 import { Dialog, DialogContent, DialogActions } from '@mui/material';
@@ -22,7 +22,7 @@ import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
+import UpdateCompany from './helper/UpdateCompany';
 // ===========================|| International Company Managment list||=========================== //
 
 const data = [
@@ -94,7 +94,7 @@ const ColumnHeaders = [
     header: 'Contact Person'
   },
   {
-    accessorKey: 'Email', 
+    accessorKey: 'Email',
     header: 'Email'
   },
   { accessorKey: 'Phone', header: 'Phone' },
@@ -103,13 +103,46 @@ const ColumnHeaders = [
     header: 'Action',
     Cell: ({ renderedCellValue, row }) => {
       const [open, setOpen] = React.useState(false);
+      const [editOpen, setEditOpen] = React.useState(false);
       const [Blocked, setBlocked] = React.useState(false);
+      const [status, setStatus] = React.useState(4);
+      const [id, setId] = React.useState();
+      const [MainType, setMainType] = React.useState(null);
+
+      const dispatch = useDispatch();
+
+      const handleEditOpen = (e) => {
+        setEditOpen(true);
+        console.log(row.original);
+        setId(row.original.ID);
+        console.log('e', e.target);
+        setMainType(row.original.CompanyMainType);
+      };
+      const handleEditClose = () => {
+        setEditOpen(false);
+      };
       const handleClickOpen = () => {
         setOpen(true);
+        console.log(row.original);
+        setId(row.original.ID);
       };
 
       const handleClose = () => {
         setOpen(false);
+      };
+      const handleBlock = () => {
+        setBlocked(!Blocked);
+        setStatus(Blocked ? '5' : '4');
+
+        console.log('status', status);
+
+        const formData = new FormData();
+
+        formData.append('company_id', row.original.CompanyMainType);
+        formData.append('status', status);
+        formData.append('company_type', 2);
+
+        dispatch(updateCompanyStatus(formData));
       };
 
       return (
@@ -120,7 +153,9 @@ const ColumnHeaders = [
             gap: '1rem'
           }}
         >
-          <AqaryButton variant="contained">Edit </AqaryButton>
+          <AqaryButton variant="contained" onClick={handleEditOpen}>
+            Edit{' '}
+          </AqaryButton>
           <Button variant="contained" color="primary" onClick={handleClickOpen} startIcon={<PreviewIcon />}>
             Add sub-company
           </Button>
@@ -136,41 +171,34 @@ const ColumnHeaders = [
           <Button variant="contained" color="primary">
             Report
           </Button>
-          {Blocked ? (
-            <Button
-              variant="contained"
-              onClick={() => {
-                setBlocked(!Blocked);
-              }}
-              color="success"
-              startIcon={<DeleteForeverIcon />}
-            >
-              Unblock
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              onClick={() => {
-                setBlocked(!Blocked);
-              }}
-              color="error"
-              startIcon={<DeleteIcon />}
-            >
-              Block
-            </Button>
-          )}
+
+          <Button variant="contained" onClick={handleBlock} color="error" startIcon={<DeleteIcon />}>
+            Block
+          </Button>
+
           <Button variant="contained" startIcon={<KeyIcon />}>
             Reset
           </Button>
 
-          <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-            <DialogActions sx={{justifyContent:"flex-start"}} onClick={handleClose}>
+          <Dialog fullScreen open={editOpen} onClose={handleEditClose} TransitionComponent={Transition}>
+            <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleEditClose}>
               <IconButton>
                 <CloseIcon />
               </IconButton>
             </DialogActions>
             <DialogContent>
-              <ColumnsLayouts />
+              <UpdateCompany title={'Edit Company Details'} id={id} CompanyMainType={MainType} formfor={'update'} />
+            </DialogContent>
+          </Dialog>
+
+          <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+            <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
+              <IconButton>
+                <CloseIcon />
+              </IconButton>
+            </DialogActions>
+            <DialogContent>
+              <UpdateCompany title={'Sub Company Details'} formfor={'sub'} />
             </DialogContent>
           </Dialog>
         </Box>
@@ -189,7 +217,7 @@ const IntCompData = () => {
     <Page title="International Company List">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table columnHeaders={ColumnHeaders} data={internationalCompanies} />
         </Grid>
       </Grid>
     </Page>

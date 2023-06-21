@@ -23,7 +23,8 @@ import {
   getCommunities,
   getSubCommunities,
   getAllCountries,
-  getAllCurrencies
+  getAllCurrencies,
+  updateCompany
 } from 'store/slices/country-section/actions/countries';
 
 // assets
@@ -102,6 +103,7 @@ function ColumnsLayouts() {
   const [lisenceFile, setLisenceFile] = useState(null);
   const [vatImage, setVatImage] = useState(null);
   const [vatPreview, setVatPreview] = useState(null);
+  const [reraExDate, setReraExDate] = useState(null);
   const [companyLogo, setCompanyLogo] = useState(null);
   const [companyLogoPreview, setCompanyLogoPreview] = useState(null);
   const [companyCoverImage, setCompanyCoverImage] = useState(null);
@@ -167,7 +169,7 @@ function ColumnsLayouts() {
   const submitForm = () => {
     const formData = new FormData();
 
-    formData.append('user_email', "aaaa");
+    formData.append('user_email', 'aaaa');
     formData.append('company_types', companyDetails.companyType.id);
     formData.append('main_service_type', companyDetails.mainService.id);
     formData.append('sub_company_type', companyDetails.subCompanyType.id);
@@ -218,7 +220,7 @@ function ColumnsLayouts() {
     formData.append('bank_name', bankAccountDetails.bankName);
     formData.append('branch_name', bankAccountDetails.bankBranch);
     formData.append('swift_code', bankAccountDetails.swiftCode);
-    console.log("data",formData)
+    console.log('data', formData);
     dispatch(createCompany(formData));
   };
 
@@ -267,7 +269,6 @@ function ColumnsLayouts() {
                 <AutoCompleteSelector
                   style={{ xs: 12, lg: 10, mb: 2 }}
                   label="Service Type"
-
                   id="mainServiceType"
                   placeholder="Select Main Service Type"
                   options={mainServices.map((service) => {
@@ -283,7 +284,6 @@ function ColumnsLayouts() {
               )}
               {companyInformation.companyDetails.mainService && (
                 <AutoCompleteSelector
-
                   style={{ xs: 12, lg: 10, mb: 2 }}
                   label="Sub-Service Type"
                   id="serviceType"
@@ -324,35 +324,38 @@ function ColumnsLayouts() {
           <Container title="" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
               <InputText
-
-                  label="RERA No."
-                  placeholder="Enter RERA No."
-                  helperText="Please Enter RERA No."
-                  style={{ xs: 12, lg: 6 }}
-                  value={companyInformation.companyDetails.reraNo}
-                  setValue={(e) => dispatch(setCompanyReraNo(e))}
-                />
-                <CustomDateTime style={{ xs: 12, lg: 6 }} label="RERA No. Expiry Date" helperText="Please enter RERA No. Expiry Date" />
-                <FileUpload
-                  label="Upload RERA"
-                  type="pdf"
-                  placeholder="Upload RERA"
-                  helperText="Please upload the company RERA"
-                  style={{ xs: 12, lg: 6 }}
-                />
+                label="RERA No."
+                placeholder="Enter RERA No."
+                helperText="Please Enter RERA No."
+                style={{ xs: 12, lg: 6 }}
+                value={companyInformation.companyDetails.reraNo}
+                setValue={(e) => dispatch(setCompanyReraNo(e))}
+              />
+              <CustomDateTime
+                setValue={setReraExDate}
+                style={{ xs: 12, lg: 6 }}
+                label="RERA No. Expiry Date"
+                helperText="Please enter RERA No. Expiry Date"
+              />
+              <FileUpload
+                label="Upload RERA"
+                type="pdf"
+                placeholder="Upload RERA"
+                helperText="Please upload the company RERA"
+                style={{ xs: 12, lg: 6 }}
+              />
             </Grid>
           </Container>
 
           <Container title="" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
-            <InputText
-
+              <InputText
                 label="License No."
                 placeholder="Enter Company License No."
                 helperText="Please enter Company License No."
                 style={{ xs: 12, lg: 6 }}
                 type="text"
-                value={"250014"}
+                value={'250014'}
                 // value={companyInformation.companyDetails.lisenceNo}
                 setValue={(e) => dispatch(setCompanyLicenseNo(e))}
               />

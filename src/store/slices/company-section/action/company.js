@@ -96,7 +96,7 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
 
 export const getInternationalCompanies = createAsyncThunk('company/getInternationalCompanies', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=10&country=pakistan`, config);
+    const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=100&country=united arab emirates`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
@@ -107,6 +107,16 @@ export const createCompany = createAsyncThunk('company/createCompany', async (fo
   console.log('fired');
   try {
     const response = await api.post(`${baseurl}/api/dashboard/createCompany`, formData, config);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
+export const updateCompany = createAsyncThunk('company/UpdateCompany', async (formData, { rejectWithValue }) => {
+  console.log('fired');
+  try {
+    const response = await api.put(`${baseurl}/api/dashboard/updateCompany`, formData, config);
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -125,15 +135,6 @@ export const updateSubService = createAsyncThunk('subService/Updatesubservice', 
   }
 });
 
-export const createServices = createAsyncThunk('services/createServices', async ({ formData }, { rejectWithValue }) => {
-  try {
-    const response = await axios.put(`${baseurl}/api/services/createservices/100`, formData);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
-  }
-});
-
 export const deleteService = createAsyncThunk('services/deleteService', async (serviceId, { rejectWithValue }) => {
   try {
     await axios.delete(`${baseurl}/api/services/deleteservice/${serviceId}`);
@@ -143,4 +144,11 @@ export const deleteService = createAsyncThunk('services/deleteService', async (s
   }
 });
 
-
+export const updateCompanyStatus = createAsyncThunk('companies/status', async (formData , { rejectWithValue }) => {
+  try {
+    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
