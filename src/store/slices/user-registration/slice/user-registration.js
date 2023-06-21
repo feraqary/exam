@@ -112,7 +112,7 @@ const signupSlice = createSlice({
       .addCase(createUserRole.pending, (state) => {
         state.loading = true;
         state.error = null;
-        state.users = state.register;
+        // state.users = state.register;
       })
       .addCase(createUserRole.fulfilled, (state, action) => {
         state.loading = false;
@@ -122,7 +122,7 @@ const signupSlice = createSlice({
       .addCase(createUserRole.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
-        state.users = state.register;
+        // state.users = state.register;
       })
 
       .addCase(getAllDepartments.pending, (state) => {

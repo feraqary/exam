@@ -58,6 +58,8 @@ const submitForm = () => {
   formData.append('password', password);
   formData.append('roles_id', userRole);
   formData.append('department', department);
+
+  dispatch(createUserRole(formData))
 }
 
   return (
