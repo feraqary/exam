@@ -65,25 +65,34 @@ const ColumnHeaders = [
         }}
       >
         <Button variant="contained" color="primary">
+          Verify
+        </Button>
+        <Button variant="contained" color="primary">
           Edit
         </Button>
         <Button color="primary" variant="contained">
-          View Documents
+          Manage Documents
         </Button>
         <Button variant="contained" color="primary">
           View Live
         </Button>
         <Button variant="contained" color="primary">
-          Multiple
+        Listing Properties
         </Button>
         <Button variant="contained" color="primary">
-          Report
+          Featured
+        </Button>
+        <Button variant="contained" color="primary">
+          Add Promotion
         </Button>
         <Button variant="contained" color="error">
-          Block
+         Remove
         </Button>
         <Button variant="contained" color="warning">
-          Reset
+          Block
+        </Button>
+        <Button variant="contained" color="primary">
+          Rating
         </Button>
       </Box>
     )
