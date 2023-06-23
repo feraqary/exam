@@ -12,8 +12,15 @@ import {
   getAllServices,
   getMainServices,
   updateCompanyType,
+
   updateSubService,
   DeleteSubService
+
+
+  getFeaturedCompany,
+  getBlockedCompany
+
+
 } from '../action/company';
 
 import { toast } from 'react-toastify';
@@ -25,7 +32,9 @@ const initialState = {
   internationalCompanies: [],
   companyTypes: [],
   mainServices: [],
+  features: [],
   services: [],
+  blocks: [],
   companyType: null,
   service: null,
   company: null,
@@ -477,7 +486,9 @@ const slice = createSlice({
       .addCase(getInternationalCompanies.pending, (state) => {
         state.loading = true;
         state.error = null;
+
         state.internationalCompanies = state.localCompanies;
+
       })
       .addCase(getInternationalCompanies.fulfilled, (state, action) => {
         state.loading = false;
@@ -506,6 +517,40 @@ const slice = createSlice({
         state.error = action.payload.error;
       })
 
+
+      //get company features
+      .addCase(getFeaturedCompany.pending, (state) => {
+        state.loading = true;
+        state.features = state.features;
+        state.error = null;
+      })
+      .addCase(getFeaturedCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.features = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getFeaturedCompany.rejected, (state, action) => {
+        state.loading = false;
+        state.features = state.features;
+        state.error = action.payload.error;
+      })
+
+      //get Blocked Company
+      .addCase(getBlockedCompany.pending, (state) => {
+        state.loading = true;
+        state.blocks = state.blocks;
+        state.error = null;
+      })
+      .addCase(getBlockedCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.blocks = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getBlockedCompany.rejected, (state, action) => {
+        state.loading = false;
+        state.blocks = state.blocks;
+        state.error = action.payload.error;
+      })
       .addCase(updateSubService.pending, (state) => {
         state.loading = true;
         state.services = state.services;
@@ -561,6 +606,7 @@ const slice = createSlice({
         state.deleting = false;
         state.error = action.payload;
       });
+
   }
 });
 
