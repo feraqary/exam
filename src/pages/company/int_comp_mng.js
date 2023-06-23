@@ -153,9 +153,7 @@ const ColumnHeaders = [
             gap: '1rem'
           }}
         >
-          <AqaryButton variant="contained" onClick={handleEditOpen}>
-            Edit{' '}
-          </AqaryButton>
+          <AqaryButton variant="contained">Edit </AqaryButton>
           <Button variant="contained" color="primary" onClick={handleClickOpen} startIcon={<PreviewIcon />}>
             Add sub-company
           </Button>

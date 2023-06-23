@@ -28,7 +28,7 @@ export const createMainService = createAsyncThunk('company/createMainService', a
 
 export const getAllCompanyTypes = createAsyncThunk('company/getAllCompanyTypes', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/services/getAllCompanyTypes`);
+    const response = await api.get(`${baseurl}/api/services/getAllCompanyTypes`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
@@ -96,7 +96,10 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
 
 export const getInternationalCompanies = createAsyncThunk('company/getInternationalCompanies', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=100&country=united arab emirates`, config);
+    const response = await api.get(
+      `${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=100&country=united arab emirates`,
+      config
+    );
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
@@ -134,6 +137,15 @@ export const updateSubService = createAsyncThunk('subService/Updatesubservice', 
     return rejectWithValue(error);
   }
 });
+export const updateMainService = createAsyncThunk('subService/Updateservice', async ({ id, formData }, { rejectWithValue }) => {
+  try {
+    const response = await api.put(`${baseurl}/api/services/updatemainservice/${id}`, formData, config);
+    console.log('response', response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
 
 export const deleteService = createAsyncThunk('services/deleteService', async (serviceId, { rejectWithValue }) => {
   try {
@@ -144,7 +156,16 @@ export const deleteService = createAsyncThunk('services/deleteService', async (s
   }
 });
 
-export const updateCompanyStatus = createAsyncThunk('companies/status', async (formData , { rejectWithValue }) => {
+export const deleteMainService = createAsyncThunk('services/deleteMainService', async (serviceId, { rejectWithValue }) => {
+  try {
+    await axios.delete(`${baseurl}/api/services/deletemainservice/${serviceId}`);
+    return serviceId;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const updateCompanyStatus = createAsyncThunk('companies/status', async (formData, { rejectWithValue }) => {
   try {
     const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
     return response.data;

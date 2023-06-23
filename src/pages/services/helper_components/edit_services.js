@@ -2,79 +2,77 @@
 import { Grid } from '@mui/material';
 
 // project imports
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import React, { useRef, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useMemo, useState, useRef } from 'react';
 // assets
+import Container from 'components/Elements/Container';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
-import Container from 'components/Elements/Container';
-import { createService, getAllMainServices, updateSubService } from 'store/slices/company-section/action/company';
-import { setMainService } from 'store/slices/company-section/slice/company';
-import { ToastContainer } from 'react-toastify';
-import { updateService, deleteService, createServices } from 'store/slices/services/action/services';
-const roles = ['Broker Company', 'Developer Company', 'Service Company'];
+import { createServices } from 'store/slices/services/action/services';
+import { updateMainService } from 'store/slices/company-section/action/company';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+
+const roles = ['Broker Company', 'Developer Company', 'Service Company'];
+
 // ==============================|| Add Company Type form ||============================== //
-
-function Edit_Sub_Service({ desc, id, title, close }) {
-  const dispatch = useDispatch();
-
-  const { mainServices, loading, error, mainService ,services_id} = useSelector((state) => state.companies);
-
-  const [service, setService] = useState(null);
+function Edit_service({ comp_id,  id, description,  service_name,  }) {
+  const [compType, setCompType] = useState(null);
+  const [desc, setDesc] = useState(null);
   const [serviceName, setServiceName] = useState(null);
-  const [des, setDesc] = useState(null);
 
-  useEffect(() => {
-  dispatch(getAllMainServices());
-  }, []);
+  const dispatch = useDispatch();
+  // useEffect(() => {
+    // setCompType(roles[comp_type]);
+    // setDesc(description);
+    // setServiceName(service_name);
+  //   setSerialNo(serial_no);
+  //   seticonUrl(icon_url);
+  //   setimgUrl(img_url);
+  //   seticonPre(iconPre);
+  //   setimgPre(imgPre);
+  // }, []);
 
-  const handleMainServiceChange = (newValue) => {
-    dispatch(setMainService(newValue));
-    console.log('titlesss: ', newValue.title);
-    setService(newValue.title);
+
+  const handleCompanyTypeChange = (newValue) => {
+    setCompType(newValue);
   };
 
-
-
-  const submitSubForm = (values) => {
-    const formData = new FormData();
-    formData.append('title', values.serviceTitle.title);
-    formData.append('description', values.desc);
-    formData.append('icon_url', values.iconUrl);
-    formData.append('image_url', values.imgUrl);
-    formData.append('main_services_id', 1);
-
-    console.log(services_id)
-    dispatch(updateSubService({ id, formData }));
-    close(false);
-  };
-
-  const img_Ref = useRef(null);
-  const icon_Ref = useRef(null);
+  const imgRef = useRef(null);
+  const iconRef = useRef(null);
 
   const FILE_SIZE = 1;
   const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
+
+  const handleSubmit = (values) => {
+    console.log('values :', values);
+    const formData = new FormData();
+    formData.append('title', values.serviceName);
+    formData.append('description', values.desc);
+    formData.append('icon_url', values.iconUrl);
+    formData.append('image_url', values.imgUrl);
+    formData.append('company_types_id', comp_id);
+    dispatch(updateMainService({ id, formData }));
+  };
   return (
     <Formik
       initialValues={{
-        serviceTitle: title,
-        service_name: null,
-        desc: desc,
+        compType: roles[compType],
+        serviceName: service_name,
+        desc: description,
         iconUrl: null,
         imgUrl: null
       }}
       validationSchema={Yup.object({
-        serviceTitle: Yup.object().typeError().required('Mandatory selection'),
-        service_name: Yup.string().trim().required('Please provide a valid service name'),
-        desc: Yup.string().required('Please provide a description'),
+        compType: Yup.string().required('Company Type is required'),
+        serviceName: Yup.string().required('Please provide a valid service name'),
+        desc: Yup.string().required('Description is required'),
         iconUrl: Yup.mixed()
           .required('Please provide a logo image')
           .test(
@@ -83,8 +81,8 @@ function Edit_Sub_Service({ desc, id, title, close }) {
             (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
           )
           .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type)),
-        imgUrl: Yup.mixed()
-          .required('Please provide an logo image')
+          imgUrl: Yup.mixed()
+          .required('Please provide an image')
           .test(
             'FILE_SIZE',
             'Uploaded file is too big. File size must not exceed 1MB',
@@ -92,53 +90,52 @@ function Edit_Sub_Service({ desc, id, title, close }) {
           )
           .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type))
       })}
-      onSubmit={(values) => submitSubForm(values)}
+      onSubmit={(values) => handleSubmit(values)}
     >
       {(props) => (
         <Page>
           <Grid container spacing={gridSpacing}>
-            <ToastContainer />
             <Container style={{ xs: 12 }}>
-              <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
+              <Grid container spacing={2} xs={12} lg={12} justifyContent="center">
                 <AutoCompleteSelector
-                  label="Services"
-                  style={{ xs: 12, lg: 8 }}
-                  placeholder="Services"
-                  options={mainServices.map((service) => {
-                    return { label: service.title, ...service };
-                  })}
-                  helperText="Please select a service"
-                  id="serviceTitle"
-                  name="serviceTitle"
+                  label="Company Type"
+                  style={{ xs: 12, lg: 7 }}
+                  placeholder="Company Types"
+                  options={roles}
+                  helperText="Please Select Company Type"
+                  func={handleCompanyTypeChange}
+                  id="compType"
+                  name="compType"
                   setFieldValue={props.setFieldValue}
                   required={true}
                 />
 
                 <InputText
+                  label="Service Type Name"
+                  type="text"
+                  placeholder="Service Type Name"
                   style={{ xs: 12, lg: 7 }}
-                  label="Service Name"
+                  helperText="Please enter the service name"
                   value={serviceName}
                   setValue={setServiceName}
-                  helperText="Please enter the service name"
-                  placeholder="Service Name"
-                  name="service_name"
-                  id="service_name"
-                  type="text"
-                  // {...Field}
+                  name="serviceName"
+                  id="serviceName"
+                  {...Field}
                   required={true}
                 />
+
                 <InputText
                   label="Description"
-                  placeholder="Service Description"
-                  helperText="Please enter the service description"
-                  setValue={setDesc}
-                  value={desc}
-                  id="desc"
-                  name="desc"
                   type="text"
+                  placeholder="Service Description"
                   style={{ xs: 12, lg: 7 }}
+                  helperText="Please enter the service description"
                   multiline
                   rows={5}
+                  value={desc}
+                  setValue={setDesc}
+                  id="desc"
+                  name="desc"
                   required={true}
                 />
 
@@ -152,8 +149,9 @@ function Edit_Sub_Service({ desc, id, title, close }) {
                   setFieldValue={props.setFieldValue}
                   helperText="Please upload your logo"
                   image={{ alt: 'Logo Preview', width: '250px', height: '250px' }}
-                  ref={icon_Ref}
+                  ref={iconRef}
                 />
+
                 <FileUpload
                   id="imgUrl"
                   name="imgUrl"
@@ -164,7 +162,7 @@ function Edit_Sub_Service({ desc, id, title, close }) {
                   setFieldValue={props.setFieldValue}
                   helperText="Please upload service image"
                   image={{ alt: 'image Preview', width: '250px', height: '250px' }}
-                  ref={img_Ref}
+                  ref={imgRef}
                 />
               </Grid>
             </Container>
@@ -176,8 +174,8 @@ function Edit_Sub_Service({ desc, id, title, close }) {
   );
 }
 
-Edit_Sub_Service.getLayout = function getLayout(page) {
+Edit_service.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default Edit_Sub_Service;
+export default Edit_service;

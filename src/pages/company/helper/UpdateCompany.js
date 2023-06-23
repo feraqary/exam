@@ -23,8 +23,7 @@ import {
   getCommunities,
   getSubCommunities,
   getAllCountries,
-  getAllCurrencies,
-  
+  getAllCurrencies
 } from 'store/slices/country-section/actions/countries';
 
 // assets
@@ -84,7 +83,13 @@ import {
   setCompanyBankAccountDetailsSwiftCode,
   setMainService
 } from 'store/slices/company-section/slice/company';
-import { createCompany, getAllCompanyTypes, getAllMainServices, getAllServices,updateCompany } from 'store/slices/company-section/action/company';
+import {
+  createCompany,
+  getAllCompanyTypes,
+  getAllMainServices,
+  getAllServices,
+  updateCompany
+} from 'store/slices/company-section/action/company';
 import CustomDateTime from 'components/InputArea/CustomDateTime';
 import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
@@ -96,28 +101,46 @@ const options = [
   { label: 'Service Company', id: 3 }
 ];
 // ==============================|| Add Company form ||============================== //
-function UpdateCompany({ title, formfor, id, CompanyMainType}) {
+function UpdateCompany({ title, formfor, id }) {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const [address, setAddress] = useState('Abu Dhabi');
-  const [lisenceFile, setLisenceFile] = useState(null);
-  const [vatImage, setVatImage] = useState(null);
-  const [vatPreview, setVatPreview] = useState(null);
-  const [reraExDate, setReraExDate] = useState(null);
-  const [companyLogo, setCompanyLogo] = useState(null);
-  const [companyLogoPreview, setCompanyLogoPreview] = useState(null);
-  const [companyCoverImage, setCompanyCoverImage] = useState(null);
-  const [companyCoverPreview, setCompanyCoverPreview] = useState(null);
-  const [profileImage, setProfileImage] = useState(null);
-  const [profilePreview, setProfilePreview] = useState(null);
-  const [disabled, setDisabled] = useState(false);
-  const [mainService, setmainService] = useState(CompanyMainType);
+    const [CompanyType, setCompanyType] = useState(null);
+    const [companyName, setCompanyName] = useState(null);
+    const [companyTagline, setCompanyTagline] = useState(null);
+    const [rera_no, setRera_no] = useState(null);
+    const [reraExDate, setReraExDate] = useState(null);
+    const [reraImg, setReraImg] = useState(null);
+    const [lisenceNo, setLisenceNo] = useState(null);
+    const [licenseImg, setLicenseImg] = useState(null);
+    const [licenseExpiry, setLicenseExpiry] = useState(null);
+
+    const [billingRef, setBillingRef] = useState(null);
+    const [vat_No, setVatNo] = useState(null);
+    const [vat_status, setVatStatus] = useState(null);
+    const [vat_img, setVatImg] = useState(null);
+
+    const [country_, setCountry] = useState(null);
+    const [state_, setState] = useState(null);
+
+//   const [address, setAddress] = useState('Abu Dhabi');
+//   const [lisenceFile, setLisenceFile] = useState(null);
+//   const [vatImage, setVatImage] = useState(null);
+//   const [vatPreview, setVatPreview] = useState(null);
+//   const [reraExDate, setReraExDate] = useState(null);
+//   const [companyLogo, setCompanyLogo] = useState(null);
+//   const [companyLogoPreview, setCompanyLogoPreview] = useState(null);
+//   const [companyCoverImage, setCompanyCoverImage] = useState(null);
+//   const [companyCoverPreview, setCompanyCoverPreview] = useState(null);
+//   const [profileImage, setProfileImage] = useState(null);
+//   const [profilePreview, setProfilePreview] = useState(null);
+//   const [disabled, setDisabled] = useState(false);
+//   const [mainService, setmainService] = useState(null);
+
   useEffect(() => {
     dispatch(getCountries());
     dispatch(getAllCountries());
     dispatch(getAllCurrencies());
-    console.log("id: ", id)
   }, [dispatch]);
 
   const {
@@ -175,56 +198,56 @@ function UpdateCompany({ title, formfor, id, CompanyMainType}) {
     formData.append('user_email', 'aaaa');
     formData.append('company_types', companyDetails.companyType.id);
     formData.append('id', id);
-    formData.append('main_service_type', mainService);
-    formData.append('sub_company_type', companyDetails.subCompanyType.id);
-    formData.append('sub_service_type', companyDetails.service.id);
-    formData.append('main_service_type', companyDetails.service.id);
-    formData.append('company_name', companyDetails.companyName);
-    formData.append('tag_line', companyDetails.companyTagline);
-    formData.append('rera_no', companyDetails.reraNo);
-    formData.append('commercial_license_no', companyDetails.licenseNo);
-    formData.append('commercial_license_file_url', lisenceFile);
-    formData.append('commercial_license_expiry', companyDetails.licenseExpiry);
-    formData.append('vat_no', companyDetails.vatNo);
-    formData.append('vat_status', companyDetails.vatStatus);
-    formData.append('vat_file_url', vatImage);
-    formData.append('lat', '3.0');
-    formData.append('lng', '3.5');
-    formData.append('no_of_employees', adminContactInformation.numberOfEmployees);
-    formData.append('billing_country_id', country?.id);
-    formData.append('billing_state_id', state?.id);
-    formData.append('billing_city_id', city?.id);
-    formData.append('billing_community_id', community?.id);
-    formData.append('billing_office_address', billingAddressInformation.officeAddress);
-    formData.append('billing_reference', billingAddressInformation.billingReference);
-    formData.append('google_map_link', companyLocation.mapUrl || 'some link... ..');
-    formData.append('website_url', companyPresentation.companyWebsite);
-    formData.append('company_email', companyPresentation.companyEmail);
-    formData.append('company_contact_number', companyPresentation.companyContactNumber);
-    formData.append('company_whatsapp_number', companyPresentation.companyContactNumber);
-    formData.append('company_description', companyPresentation.companyDescription);
-    formData.append('logo_url', companyLogo);
-    formData.append('cover_image_url', companyCoverImage);
-    formData.append('facebook_profile_url', socialMedia.facebook);
-    formData.append('instagram_profile_url', socialMedia.twitter);
-    formData.append('linkedin_profile_url', socialMedia.instagram);
-    formData.append('twitter_profile_url', socialMedia.linkedin);
-    formData.append('first_name', adminContactInformation.firstName);
-    formData.append('last_name', adminContactInformation.lastName);
-    formData.append('user_email', adminContactInformation.emailAddress);
-    formData.append('user_phone_number', adminContactInformation.phoneNumber);
-    formData.append('user_profile_picture', profileImage);
-    formData.append('subscription_duration', adminContactInformation.subscriptionDuration);
-    formData.append('subscription_start_date', adminContactInformation.subscriptionStartDate);
-    formData.append('subscription_end_date', adminContactInformation.subscriptionEndDate);
-    formData.append('account_name', bankAccountDetails.accountNumber);
-    formData.append('account_number', bankAccountDetails.accountName);
-    formData.append('iban', bankAccountDetails.ibanNumber);
-    formData.append('currency_id', currency?.id);
-    formData.append('bank_country_id', bankCountry?.id);
-    formData.append('bank_name', bankAccountDetails.bankName);
-    formData.append('branch_name', bankAccountDetails.bankBranch);
-    formData.append('swift_code', bankAccountDetails.swiftCode);
+    formData.append('main_service_type', id);
+    // formData.append('sub_company_type', companyDetails.subCompanyType.id);
+    // formData.append('sub_service_type', companyDetails.service.id);
+    // formData.append('main_service_type', companyDetails.service.id);
+    // formData.append('company_name', companyDetails.companyName);
+    // formData.append('tag_line', companyDetails.companyTagline);
+    // formData.append('rera_no', companyDetails.reraNo);
+    // formData.append('commercial_license_no', companyDetails.licenseNo);
+    // formData.append('commercial_license_file_url', lisenceFile);
+    // formData.append('commercial_license_expiry', companyDetails.licenseExpiry);
+    // formData.append('vat_no', companyDetails.vatNo);
+    // formData.append('vat_status', companyDetails.vatStatus);
+    // formData.append('vat_file_url', vatImage);
+    // formData.append('lat', '3.0');
+    // formData.append('lng', '3.5');
+    // formData.append('no_of_employees', adminContactInformation.numberOfEmployees);
+    // formData.append('billing_country_id', country?.id);
+    // formData.append('billing_state_id', state?.id);
+    // formData.append('billing_city_id', city?.id);
+    // formData.append('billing_community_id', community?.id);
+    // formData.append('billing_office_address', billingAddressInformation.officeAddress);
+    // formData.append('billing_reference', billingAddressInformation.billingReference);
+    // formData.append('google_map_link', companyLocation.mapUrl || 'some link... ..');
+    // formData.append('website_url', companyPresentation.companyWebsite);
+    // formData.append('company_email', companyPresentation.companyEmail);
+    // formData.append('company_contact_number', companyPresentation.companyContactNumber);
+    // formData.append('company_whatsapp_number', companyPresentation.companyContactNumber);
+    // formData.append('company_description', companyPresentation.companyDescription);
+    // formData.append('logo_url', companyLogo);
+    // formData.append('cover_image_url', companyCoverImage);
+    // formData.append('facebook_profile_url', socialMedia.facebook);
+    // formData.append('instagram_profile_url', socialMedia.twitter);
+    // formData.append('linkedin_profile_url', socialMedia.instagram);
+    // formData.append('twitter_profile_url', socialMedia.linkedin);
+    // formData.append('first_name', adminContactInformation.firstName);
+    // formData.append('last_name', adminContactInformation.lastName);
+    // formData.append('user_email', adminContactInformation.emailAddress);
+    // formData.append('user_phone_number', adminContactInformation.phoneNumber);
+    // formData.append('user_profile_picture', profileImage);
+    // formData.append('subscription_duration', adminContactInformation.subscriptionDuration);
+    // formData.append('subscription_start_date', adminContactInformation.subscriptionStartDate);
+    // formData.append('subscription_end_date', adminContactInformation.subscriptionEndDate);
+    // formData.append('account_name', bankAccountDetails.accountNumber);
+    // formData.append('account_number', bankAccountDetails.accountName);
+    // formData.append('iban', bankAccountDetails.ibanNumber);
+    // formData.append('currency_id', currency?.id);
+    // formData.append('bank_country_id', bankCountry?.id);
+    // formData.append('bank_name', bankAccountDetails.bankName);
+    // formData.append('branch_name', bankAccountDetails.bankBranch);
+    // formData.append('swift_code', bankAccountDetails.swiftCode);
     console.log('data', formData);
     dispatch(updateCompany(formData));
   };
@@ -338,7 +361,6 @@ function UpdateCompany({ title, formfor, id, CompanyMainType}) {
                 label="RERA No. Expiry Date"
                 helperText="Please enter RERA No. Expiry Date"
                 value={reraExDate}
-               
               />
               <FileUpload
                 label="Upload RERA"

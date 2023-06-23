@@ -6,7 +6,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import React, { useState, useMemo } from 'react';
 
-const InputLayout = ({ label, helperText, style, children, required, helperInfo }) => {
+const InputLayout = ({ label, helperText, style, children, required,metaError, metaTouched, helperInfo }) => {
   return (
     <Grid item xs={style.xs} lg={style.lg}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
@@ -19,7 +19,11 @@ const InputLayout = ({ label, helperText, style, children, required, helperInfo 
         </Tooltip> : <></>}
       </Grid>
       {children}
-      <FormHelperText>{helperText}</FormHelperText>
+      {metaError && metaTouched ? (
+        <FormHelperText sx={{ color: 'red' }}>{metaError}</FormHelperText>
+      ) : (
+        <FormHelperText>{helperText}</FormHelperText>
+      )}
     </Grid>
   );
 };

@@ -135,6 +135,7 @@ function ColumnsLayouts() {
     currency,
     currencies
   } = useSelector((state) => state.countries);
+  
   const {
     companyInformation,
     error: companyError,
