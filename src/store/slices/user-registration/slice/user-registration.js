@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createUser,userLogIn } from '../action/user-registration';
+import { createUser,userLogIn, createUserRole, getAllDepartments, getAllRoles } from '../action/user-registration';
 import { toast } from 'react-toastify';
 const initialState = {
   first_name: null,
@@ -19,7 +19,9 @@ const initialState = {
   user_types_id: 1,
   roles_id: 1,
   department: 1,
-  social_login: 'google'
+  social_login: 'google',
+  roles: [],
+  departments: []
 };
 
 const signupSlice = createSlice({
@@ -83,13 +85,10 @@ const signupSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.users = action.payload.data;
-        console.log("action:");
-        console.log(action.payload , "data");
       })
       .addCase(createUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
-        console.log(action.payload.error);
         state.users = state.register;
       })
 
@@ -103,20 +102,61 @@ const signupSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.users = action.payload.data;
-        console.log("action:");
-        console.log(action.payload , "data");
       })
       .addCase(userLogIn.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
-        console.log(action.payload.error);
         state.users = state.register;
       })
 
+      .addCase(createUserRole.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        // state.users = state.register;
+      })
+      .addCase(createUserRole.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.users = action.payload.data;
+      })
+      .addCase(createUserRole.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
+        // state.users = state.register;
+      })
 
+      .addCase(getAllDepartments.pending, (state) => {
+        state.loading = true;
+        state.departments = state.departments;
+        state.error = null;
+      })
 
+      .addCase(getAllDepartments.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.departments = action.payload.data;
+      })
+      .addCase(getAllDepartments.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
+        state.departments = state.departments;
+      })
 
-
+      .addCase(getAllRoles.pending, (state) => {
+        state.loading = true;
+        state.roles = state.roles;
+        state.error = null;
+      })
+      .addCase(getAllRoles.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.roles = action.payload.data;
+      })
+      .addCase(getAllRoles.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
+        state.roles = state.roles;
+      })
   }
 });
 

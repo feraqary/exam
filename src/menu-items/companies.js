@@ -2,7 +2,26 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconApps,IconLayoutGridAdd,IconPin,IconClock,IconFileX,IconTextPlus,IconChecklist,IconFileStar,IconMapPin,IconLayoutGrid,IconUserCheck, IconClipboardPlus,IconBasket, IconMessages, IconLayoutKanban, IconMail, IconCalendar, IconNfc } from '@tabler/icons';
+import {
+  IconApps,
+  IconLayoutGridAdd,
+  IconPin,
+  IconClock,
+  IconFileX,
+  IconTextPlus,
+  IconChecklist,
+  IconFileStar,
+  IconMapPin,
+  IconLayoutGrid,
+  IconUserCheck,
+  IconClipboardPlus,
+  IconBasket,
+  IconMessages,
+  IconLayoutKanban,
+  IconMail,
+  IconCalendar,
+  IconNfc
+} from '@tabler/icons';
 import { Building } from 'tabler-icons-react';
 // constant
 const icons = {
@@ -41,26 +60,41 @@ const companies = {
       url: '/company/add_comp',
       icon: icons.IconUserCheck
     },
+    {
+      id: 'add-company',
+      title: <FormattedMessage id="Add Sub-Developer Companies" />,
+      type: 'item',
+      url: '/company/add_sub_developer',
+      icon: icons.IconUserCheck
+
+    },
 
     {
       id: 'add_company_types',
-      title: <FormattedMessage id="add-types" />,
+      title: <FormattedMessage id="Add Sub Company Types" />,
       type: 'item',
       icon: icons.IconLayoutGridAdd,
       url: '/company/add_type'
     },
     {
+      id: 'Place_holder',
+      title: <FormattedMessage id="View Company Types" />,
+      type: 'item',
+      icon: icons.IconChecklist,
+      url: '/company/placeHolderName'
+    },
+    {
       id: 'company-types',
-      title: <FormattedMessage id="Manage Company Sub Types" />,
+      title: <FormattedMessage id="Manage Sub-Company Types" />,
       type: 'item',
       icon: icons.IconLayoutGrid,
       url: '/company/manage_type'
     },
     {
       id: 'add_main_services',
-      title: <FormattedMessage id="Add Services" />,
+      title: <FormattedMessage id="Add Main Services" />,
       type: 'item',
-      icon:IconClipboardPlus,
+      icon: IconClipboardPlus,
       url: '/company/add_main_services'
     },
     {
@@ -70,6 +104,7 @@ const companies = {
       icon: icons.IconClipboardPlus,
       url: '/company/add_services'
     },
+<<<<<<< Updated upstream
     {
       id: 'Place_holder',
       title: <FormattedMessage id="All Companies" />,
@@ -77,6 +112,9 @@ const companies = {
       icon: icons.IconLayoutGrid,
       url: '/company/placeHolderName'
     },
+=======
+    
+>>>>>>> Stashed changes
     {
       id: 'local',
       title: <FormattedMessage id="local-companies" />,

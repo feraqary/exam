@@ -13,6 +13,14 @@ import MapAutocomplete from 'components/map/maps-autocomplete';
 import { LoadScript } from '@react-google-maps/api';
 import Image from 'next/image';
 import valid from 'card-validator';
+import {
+  objectValidator,
+  stringValidator,
+  numberValidator,
+  fileValidator,
+  dateValidator,
+  arrayValidator
+} from '../../utils/formik-validations';
 
 // redux actions import
 
@@ -31,7 +39,7 @@ import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
 import Selector from 'components/InputArea/Selector';
 import Container from 'components/Elements/Container';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import AutoCompleteSelector, { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 import { useEffect } from 'react';
 import { setCountry } from 'store/slices/country-section/slice/country';
@@ -52,14 +60,73 @@ const options = [
   { label: 'Service Company', id: 3 }
 ];
 
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 // ==============================|| Add Company form ||============================== //
+const validationSchema = Yup.object({
+  companyType: objectValidator(),
+  subCompanyType: objectValidator(),
+  mainService: objectValidator(),
+  service: arrayValidator('Please select a service', 1),
+  companyName: stringValidator('Please provide a company name'),
+  companyTagline: stringValidator('Please provide a company tagline'),
+  reraNo: stringValidator('Please provide a valid reara number'),
+  reraExpiryDate: dateValidator('Please select an expiration date'),
+  billingReference: stringValidator('please provide a valid bill reference'),
+  vatNo: stringValidator('Please provide a valid vat number'),
+  vatStatus: stringValidator('Please select your vat status'),
+  country: objectValidator(),
+  state: objectValidator(),
+  city: objectValidator(),
+  community: objectValidator(),
+  subCommunity: objectValidator(),
+  officeAddress: stringValidator('Please provide a valid office address'),
+  mapUrl: stringValidator('Please provide a valid map url').url(),
+  place: Yup.array().required('Please provide a valid address or place'),
+  lat: numberValidator('Latitude is missing'),
+  long: numberValidator('Longitude is missing'),
+  companyWebsite: stringValidator('Please provid a valid company website').url(),
+  companyEmailAddress: stringValidator('Please provide a valid company email address').email(),
+  companyContactNumber: stringValidator('Please provide a valid company contact number'),
+  companyDescription: stringValidator('Please provide a company description'),
+  lisenceNo: stringValidator('Please provide a valid liscence number'),
+  lisenceExpiryDate: dateValidator('Please select an expiration date'),
+  facebook: stringValidator('Please provide your facebook profile'),
+  instagram: stringValidator('Please provide your instagram profile'),
+  linkedin: stringValidator('Please provide your linkedin profile'),
+  twitter: stringValidator('Please provide your twitter profile'),
+  firstName: stringValidator('Please provide your first name'),
+  lastName: stringValidator('Please provide your last name'),
+  emailAddress: stringValidator('Please provide a valid email address').email(),
+  phoneNumber: stringValidator('Please provide a valid phone number'),
+  numberOfEmployees: numberValidator('Please enter the number of employees'),
+  subscriptionDuration: stringValidator('Please select a subscription duration'),
+  subscriptionStartDate: dateValidator('Please select a subscription start date'),
+  subscriptionEndDate: dateValidator('Please select a subscription end date'),
+  ibanNumber: stringValidator('Please provide a valid IBAN number'),
+  currency: objectValidator(),
+  accountCountry: objectValidator(),
+  bankName: stringValidator('Please provide a bank name'),
+  bankBranch: stringValidator('Please provide a bank branch'),
+  swiftCode: stringValidator('Please provide a swift code'),
+  cardNumber: Yup.string()
+    .trim()
+    .test('TEST_CREDIT_NUMBER', 'Credit number is invalid', (value) => valid.number(value).isValid),
+
+  cardName: Yup.string()
+    .trim()
+    .test('CREDIT_CARD_NAME', 'Please provide a valid name', (value) => valid.cardholderName(value).isValid),
+
+  adminProfilePicture: fileValidator(SUPPORTED_FORMATS),
+  companyLogo: fileValidator(SUPPORTED_FORMATS),
+  companyCoverImage: fileValidator(SUPPORTED_FORMATS),
+  vatFile: fileValidator(['application/pdf']),
+  reraFile: fileValidator(['application/pdf']),
+  lisenceFile: fileValidator(['application/pdf'])
+});
+
 function ColumnsLayouts() {
   const dispatch = useDispatch();
-  const FILE_SIZE = 1;
-  const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
   const [address, setAddress] = useState('Abu Dhabi');
-  const [profilePreview, setProfilePreview] = useState(null);
-  const [disabled, setDisabled] = useState(false);
   useEffect(() => {
     dispatch(getCountries());
     dispatch(getAllCountries());
@@ -85,13 +152,12 @@ function ColumnsLayouts() {
   const profileRef = useRef(null);
   const reraRef = useRef(null);
 
-
   const submitForm = (values) => {
     const formData = new FormData();
     formData.append('company_types', values.companyType.id);
     formData.append('sub_company_type', values.subCompanyType.id);
     formData.append('main_service_type', values.mainService.id);
-    formData.append('sub_service_type', values.service.id);
+    formData.append('sub_service_type', values.service);
     formData.append('company_name', values.companyName);
     formData.append('tag_line', values.companyTagline);
     formData.append('rera_no', values.reraNo);
@@ -150,20 +216,19 @@ function ColumnsLayouts() {
       <Page title="Add Company">
         <ToastContainer />
         <Grid container spacing={gridSpacing}>
-
           <Formik
             initialValues={{
               companyType: '',
               subCompanyType: '',
               mainService: '',
-              service: '',
+              service: [],
               companyName: '',
               companyTagline: '',
               reraNo: '',
               reraExpiryDate: '', //
               billingReference: '',
               vatNo: '',
-              vatStatus: '',
+              vatStatus: '1',
               country: '',
               state: '',
               city: '',
@@ -217,7 +282,7 @@ function ColumnsLayouts() {
               reraNo: Yup.string().trim().required('Please provide a valid reara number'),
               reraExpiryDate: Yup.date().required('Please select an expiration date'),
               billingReference: Yup.string().trim().required('please provide a valid bill reference'),
-              vatNo: Yup.string().trim().required('Please provide a valid VAT number'),
+              vatNo: Yup.string().trim().required('Please provide a valid vat number'),
               vatStatus: Yup.string().required('Please select your vat status'),
               country: Yup.object().typeError().required('Mandatory selection'),
               state: Yup.object().typeError().required('Mandatory selection'),
@@ -225,7 +290,7 @@ function ColumnsLayouts() {
               community: Yup.object().typeError().required('Mandatory selection'),
               subCommunity: Yup.object().typeError().required('Mandatory selection'),
               officeAddress: Yup.string().trim().required('Please provide a valid office address'),
-              mapUrl: Yup.string().url().trim().required('Please provide a Valid Map URL'),
+              mapUrl: Yup.string().url().trim().required('Please provide a valid map url'),
               place: Yup.array().required('Please provide a valid address or place'),
               lat: Yup.number().required('Latitude is missing'),
               long: Yup.number().required('Longitude is missing'),
@@ -332,7 +397,7 @@ function ColumnsLayouts() {
             {(props) => (
               <>
                 {console.log(props.values)}
-                <Container title="Add Compnay Details" style={{ xs: 12 }}>
+                <Container title="Add Company Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
                     <AutoCompleteSelector
                       style={{ xs: 12, lg: 10 }}
@@ -386,12 +451,12 @@ function ColumnsLayouts() {
                       />
                     )}
                     {props.values.mainService && (
-                      <AutoCompleteSelector
+                      <MultipleAutoCompleteSelector
                         style={{ xs: 12, lg: 10 }}
-                        label="Service Type"
+                        label="Sub Service Type"
                         id="service"
                         name="service"
-                        placeholder="Select Service Type"
+                        placeholder="Select Sub Service Type"
                         options={services.map((service) => {
                           return { label: service.title, ...service };
                         })}
@@ -548,7 +613,6 @@ function ColumnsLayouts() {
                             height={30}
                             style={{ objectFit: 'contain' }}
                           />
-
 
                           {option.label}
                         </Box>
@@ -718,7 +782,6 @@ function ColumnsLayouts() {
                       required={true}
                     />
 
-
                     <FileUpload
                       label="Company logo"
                       placeholder="Enter the company logo"
@@ -877,8 +940,6 @@ function ColumnsLayouts() {
                       helperText="Please enter upload profile picture"
                       image={{ alt: 'Admin Profile Preview', width: '250px', height: '250px' }}
                       ref={profileRef}
-                      imagePreview={profilePreview}
-                      setImagePreview={setProfilePreview}
                     />
                     <Grid item lg="4"></Grid>
                   </Grid>

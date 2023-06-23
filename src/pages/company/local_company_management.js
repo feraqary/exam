@@ -1,11 +1,14 @@
 // material-ui
-import { Chip, Grid } from '@mui/material';
-import { Box, Button } from '@mui/material';
+
+// import { Chip, Grid } from '@mui/material';
+// import { Box, Button } from '@mui/material';
+
 import Image from 'next/image';
-import KeyIcon from '@mui/icons-material/Key';
+import BlockIcon from '@mui/icons-material/Block';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PreviewIcon from '@mui/icons-material/Preview';
+
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -16,13 +19,18 @@ import { useEffect } from 'react';
 import { getLocalCompanies } from 'store/slices/company-section/action/company';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { Dialog, DialogContent, DialogActions } from '@mui/material';
-import Slide from '@mui/material/Slide';
+// import { Dialog, DialogContent, DialogActions } from '@mui/material';
+// import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
+import React,{ useState } from 'react';
+import { Grid, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material';
+import ColumnsLayouts from './add_comp';
 // ===========================|| International Company Managment list||=========================== //
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 const ColumnHeaders = [
   {
     accessorKey: 'CompanyName',
@@ -83,7 +91,7 @@ const ColumnHeaders = [
     accessorKey: 'action',
     header: 'Action',
     Cell: ({ renderedCellValue, row }) => {
-      const [open, setOpen] = React.useState(false);
+      const [open, setOpen] = useState(false);
 
       const handleClickOpen = () => {
         setOpen(true);
@@ -119,11 +127,11 @@ const ColumnHeaders = [
         <Button variant="contained" color="primary">
           Report
         </Button>
-        <Button variant="contained" color="primary" startIcon={<DeleteIcon />}>
+        <Button variant="contained" color="primary" startIcon={<BlockIcon />}>
           Block
         </Button>
-        <Button variant="contained" startIcon={<KeyIcon />}>
-          Reset
+        <Button variant="contained" startIcon={<DeleteIcon />}>
+          Delete
         </Button>
 
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
