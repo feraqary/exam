@@ -1,5 +1,5 @@
 // material-ui
-import { Chip, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Box, Button } from '@mui/material';
 import Image from 'next/image';
 import KeyIcon from '@mui/icons-material/Key';
@@ -25,20 +25,20 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UpdateCompany from './helper/UpdateCompany';
 // ===========================|| International Company Managment list||=========================== //
 
-const data = [
-  {
-    id: 1,
-    CompanyName: 'Aqary',
-    companyLogo: '',
-    LicenseNO: '123456789',
-    State: 'Maharashtra',
-    CompanyType: 'International',
-    Country: 'India',
-    SubscriptionStartDate: '2020-01-01',
-    AddedBy: 'Aqary',
-    ContactPerson: 'Aqary'
-  }
-];
+// const data = [
+//   {
+//     id: 1,
+//     CompanyName: 'Aqary',
+//     companyLogo: '',
+//     LicenseNO: '123456789',
+//     State: 'Maharashtra',
+//     CompanyType: 'International',
+//     Country: 'India',
+//     SubscriptionStartDate: '2020-01-01',
+//     AddedBy: 'Aqary',
+//     ContactPerson: 'Aqary'
+//   }
+// ];
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -60,7 +60,7 @@ const ColumnHeaders = [
           gap: '1rem'
         }}
       >
-        <Image src={`http://20.203.31.58/upload/${row.original.CompanyLogo}`} width={60} height={30} />
+        <Image src={`http://20.203.31.58/upload/${row.original.CompanyLogo}`} width={60} height={30} style={{ objectFit: 'contain' }} />
       </Box>
     )
   },
@@ -178,8 +178,13 @@ const ColumnHeaders = [
             Reset
           </Button>
 
+<<<<<<< HEAD
           <Dialog fullScreen open={editOpen} onClose={handleEditClose} TransitionComponent={Transition}>
             <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleEditClose}>
+=======
+          <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+            <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
+>>>>>>> db71f15e763ee878d5fd9745ffa8c833068015a2
               <IconButton>
                 <CloseIcon />
               </IconButton>
@@ -208,6 +213,7 @@ const ColumnHeaders = [
 const IntCompData = () => {
   const dispatch = useDispatch();
   const { loading, error, internationalCompanies } = useSelector((state) => state.companies);
+
   useEffect(() => {
     dispatch(getInternationalCompanies());
   }, []);

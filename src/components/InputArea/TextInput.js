@@ -10,6 +10,19 @@ const InputText = ({ label, placeholder, helperText, style, type, value, setValu
   const handleInputChange = (e) => {
     setValue(e.target.value);
   };
+/**
+ * A text input component using the TextField from Material-UI.
+ * @param {Object} props - The component props.
+ * @param {string} props.label - The label text for the input.
+ * @param {string} props.placeholder - The placeholder text for the input.
+ * @param {string} props.helperText - The helper text for the input.
+ * @param {Object} props.style - The style object for customizing the input layout.
+ * @param {string} props.type - The type of the input.
+ * @param {boolean} props.required - Indicates if the input is required.
+ * @param {string} props.id - The id attribute of the input.
+ * @param {string} props.name - The name attribute of the input.
+ * @returns {React.Element} The rendered component.
+ */
 
   const [field, meta] = useField(rest);
   return (
