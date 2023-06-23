@@ -18,7 +18,7 @@ import Container from 'components/Elements/Container';
 import { createService, getAllMainServices } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
 import { Formik } from 'formik';
-import { fileValidator, objectValidator, stringValidator } from 'pages/utils/formik-validations';
+import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 
 // ==============================|| Add Company Type form ||============================== //
 

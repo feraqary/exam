@@ -20,7 +20,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import { fileValidator, objectValidator, stringValidator } from 'pages/utils/formik-validations';
+import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 
 // ==============================|| Add Company Type form ||============================== //
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];

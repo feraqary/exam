@@ -19,7 +19,7 @@ import Container from 'components/Elements/Container';
 import { createCompanyType } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
 import FileUpload from 'components/InputArea/FileUpload';
-import { fileValidator, objectValidator, stringValidator } from 'pages/utils/formik-validations';
+import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 
 const roles = [
   { label: 'Broker Company', id: 1 },

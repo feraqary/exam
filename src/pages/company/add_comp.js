@@ -20,7 +20,7 @@ import {
   fileValidator,
   dateValidator,
   arrayValidator
-} from '../../pages/utils/formik-validations';
+} from '../../utils/formik-validations';
 
 // redux actions import
 
