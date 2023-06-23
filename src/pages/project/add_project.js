@@ -32,12 +32,10 @@ function AddProject() {
   const [long, setlong] = useState(null);
   const [lat, setlat] = useState(null);
 
-
   const [address, setAddress] = useState('Abu Dhabi');
   const [country, setCountry, setPropertyType] = useState('');
 
   const [state, setState] = useState('');
-
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
