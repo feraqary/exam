@@ -29,6 +29,7 @@ export const createServices = createAsyncThunk('services/createServices', async 
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
+
 });
 
 export const deleteService = createAsyncThunk('services/deleteService', async (serviceId, { rejectWithValue }) => {
@@ -39,3 +40,4 @@ export const deleteService = createAsyncThunk('services/deleteService', async (s
     return rejectWithValue(error.response.data);
   }
 });
+

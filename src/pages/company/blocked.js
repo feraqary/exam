@@ -7,25 +7,29 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import Table from 'components/Table/Table';
+import { getBlockedCompany } from 'store/slices/company-section/action/company';
 
-// ===========================|| International Company Managment list||=========================== //
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+// ===========================|| Blocked Company list||=========================== //
 
 const ColumnHeaders = [
   {
-    accessorKey: 'sino',
-    header: 'SL.No'
+    accessorKey: 'CompanyMainType',
+    header: 'Company Main Type'
   },
   {
-    accessorKey: 'name.companyName',
+    accessorKey: 'CompanyName',
     header: 'Company Name'
   },
   {
-    accessorKey: 'phone',
-    header: 'Phone'
+    accessorKey: 'Email',
+    header: 'Email'
   },
   {
-    accessorKey: 'email',
-    header: 'Email'
+    accessorKey: 'Phone',
+    header: 'Phone'
   },
   {
     accessorKey: 'action',
@@ -34,144 +38,24 @@ const ColumnHeaders = [
   }
 ];
 
-const data = [
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  }
-];
+const BlockedCompanies = () => {
+  const { blocks } = useSelector((state) => state.companies);
 
-const BlockedCompanies = () => (
-  <Page title="Blocked Companies">
-    <Grid container spacing={gridSpacing}>
-      <Grid item xs={12}>
-        <Table data={data} columnHeaders={ColumnHeaders} />
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getBlockedCompany());
+  }, [dispatch]);
+
+  return (
+    <Page title="Featured Companies">
+      <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Table columnHeaders={ColumnHeaders} data={blocks} />
+        </Grid>
       </Grid>
-    </Grid>
-  </Page>
-);
+    </Page>
+  );
+};
 
 BlockedCompanies.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;

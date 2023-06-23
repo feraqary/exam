@@ -1,5 +1,5 @@
 // material-ui
-import { Chip, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Box, Button } from '@mui/material';
 import Image from 'next/image';
 import KeyIcon from '@mui/icons-material/Key';
@@ -182,6 +182,7 @@ const ColumnHeaders = [
 const IntCompData = () => {
   const dispatch = useDispatch();
   const { loading, error, internationalCompanies } = useSelector((state) => state.companies);
+
   useEffect(() => {
     dispatch(getInternationalCompanies());
   }, []);

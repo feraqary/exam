@@ -1,11 +1,12 @@
 // material-ui
-import { Chip, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Box, Button } from '@mui/material';
 import Image from 'next/image';
-import KeyIcon from '@mui/icons-material/Key';
+import BlockIcon from '@mui/icons-material/Block';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PreviewIcon from '@mui/icons-material/Preview';
+
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -119,11 +120,11 @@ const ColumnHeaders = [
         <Button variant="contained" color="primary">
           Report
         </Button>
-        <Button variant="contained" color="primary" startIcon={<DeleteIcon />}>
+        <Button variant="contained" color="primary" startIcon={<BlockIcon />}>
           Block
         </Button>
-        <Button variant="contained" startIcon={<KeyIcon />}>
-          Reset
+        <Button variant="contained" startIcon={<DeleteIcon />}>
+          Delete
         </Button>
 
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
