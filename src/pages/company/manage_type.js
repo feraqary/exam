@@ -26,7 +26,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Switch from '@mui/material/Switch';
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 // ===========================|| International Company Managment list||=========================== //
 
 // const isTrue = (bool) =>{  return bool}
@@ -73,7 +73,7 @@ const ColumnHeaders = [
       const [id, setId] = useState('');
       const [title, setTitle] = useState('');
       const [desc, setDesc] = useState('');
-
+      const [Blocked, setBlocked] = useState(false);
       // console.table({ compType: compType, logoImg: logoImg, imgUrl: imgUrl, id: id, title: title, desc: desc });
 
       const handleClickOpen = (id) => {
@@ -103,9 +103,30 @@ const ColumnHeaders = [
           <Button variant="contained" onClick={() => handleClickOpen(row.original.id)} color="primary" startIcon={<EditIcon />}>
             Edit
           </Button>
-          <Button variant="contained" color="error" startIcon={<DeleteIcon />}>
-            Block
-          </Button>
+
+          {Blocked ? (
+            <Button
+              variant="contained"
+              onClick={() => {
+                setBlocked(!Blocked);
+              }}
+              color="success"
+              startIcon={<DeleteForeverIcon />}
+            >
+              Unblock
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => {
+                setBlocked(!Blocked);
+              }}
+              color="error"
+              startIcon={<DeleteIcon />}
+            >
+              Block
+            </Button>
+          )}
 
           <Dialog
             // fullWidth={fullWidth}

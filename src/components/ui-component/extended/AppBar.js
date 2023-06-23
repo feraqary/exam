@@ -110,17 +110,17 @@ const AppBar = ({ ...others }) => {
               </Tooltip>
 
               {/* login pop up*/}
-              <Dialog open={open} TransitionComponent={Transition} onClose={handleClose} fullScreen>
-                <DialogActions sx={{display:"flex", justifyContent:"flex-start"}} >
+              <Dialog maxWidth={'lg'} open={open} TransitionComponent={Transition} onClose={handleClose} fullWidth>
+                <DialogActions sx={{justifyContent:"flex-start"}}>
                   <Tooltip title="close">
-                    <IconButton color="inherit" target="_blank" onClick={handleClose}>
+                    <IconButton color="inherit" onClick={handleClose}>
                       <CloseIcon />
                     </IconButton>
                   </Tooltip>
                 </DialogActions>
-                <DialogContent>
+                <DialogContent> 
                   <Login closePopUp={setOpen} />
-                </DialogContent>
+                </DialogContent> 
               </Dialog>
 
 

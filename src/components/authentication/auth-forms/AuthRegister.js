@@ -28,6 +28,7 @@ import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { useSelector } from 'react-redux';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+
 // import { setCountry } from 'store/slices/country-section/slice/country';
 
 // project imports
@@ -142,14 +143,14 @@ const JWTRegister = ({ ...others }) => {
             formData.append('first_name', values.first_name);
             formData.append('last_name', values.last_name);
             formData.append('country', values.country);
-            // formData.append('state', values.state);
-            // formData.append('city', values.city);
-            // formData.append('community', values.community);
+            formData.append('state', values.state);
+            formData.append('city', values.city);
+            formData.append('community', values.community);
             formData.append('email', values.email);
             formData.append('profile_image_url', values.profile_image_url);
             formData.append('phone_number', values.phone_number);
             formData.append('company_number', values.company_number);
-            // formData.append('whatsapp_number', values.whatsapp_number);
+            formData.append('whatsapp_number', values.whatsapp_number);
             formData.append('gender', values.gender);
             formData.append('password', values.password);
             formData.append('status', values.status);
@@ -235,7 +236,7 @@ const JWTRegister = ({ ...others }) => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FileUpload type="jpg, img, jpeg, png" name="profile_image_url" style={{ xs: 12, lg: 12 }} setValue={handleChange} />
+                <FileUpload type="jpg,img,jpeg,png" name="profile_image_url" style={{ xs: 12, lg: 12 }} setValue={handleChange} />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField

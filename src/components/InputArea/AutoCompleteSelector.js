@@ -1,31 +1,20 @@
 // material-ui
-import { Autocomplete, FormHelperText, Grid, TextField, Tooltip, IconButton } from '@mui/material';
+import { Autocomplete, Grid, TextField, Tooltip, IconButton, FormHelperText } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
+import { useField, useFormikContext } from 'formik';
 
 // ==============================|| FORM VALIDATION - AUTOCOMPLETE FORMIK  ||============================== //
 
-const AutoCompleteSelector = ({
-  style,
-  label,
-  id,
-  value,
-  options,
-  placeholder,
-  required,
-  setValue,
-  helperText,
-  loading,
-  func,
-  error,
-  ...rest
-}) => {
-  return (
+const AutoCompleteSelector = ({ style, label, id, name, options, placeholder, func, helperText, ...rest }) => {
+  const [field, meta] = useField(rest);
+  const { touched, values, setFieldValue } = useFormikContext();
 
+  return (
     <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
-        {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
+        <InputLabel required>{label}</InputLabel>
         <Tooltip title={label}>
           <IconButton>
             <InfoIcon fontSize="small" />
@@ -34,19 +23,27 @@ const AutoCompleteSelector = ({
       </Grid>
       <Autocomplete
         {...rest}
-        value={value}
+        {...field}
         id={id}
         options={options}
-        sx={{ width: '100%' }}
-        loading={loading}
-        renderInput={(params) => {
-          return <TextField {...params} label={placeholder} />;
+        onChange={(e, value, reason) => {
+          if (reason === 'clear') {
+            setFieldValue(name, '');
+          } else {
+            setFieldValue(name, value);
+          }
+          if (func) {
+            func(value);
+          }
         }}
-        onChange={(event, newValue) => func(newValue)}
+        value={values[`${name}`]}
+        name={name}
+        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[`${name}`] && !!meta.error[`${name}`]} />}
       />
-      <FormHelperText>{helperText}</FormHelperText>
+      {(helperText && meta.error && meta.touched && <FormHelperText error={true}>{meta.error[`${name}`]}</FormHelperText>) || (
+        <FormHelperText>{helperText}</FormHelperText>
+      )}
     </Grid>
   );
 };
-
 export default AutoCompleteSelector;

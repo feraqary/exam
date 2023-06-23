@@ -1,13 +1,19 @@
 import React, { useState, useRef } from 'react';
 import { TextField } from '@mui/material';
 import { StandaloneSearchBox } from '@react-google-maps/api';
+import { useField, useFormikContext } from 'formik';
 
-export default function MapAutocomplete({ onChangeAddress, country, state }) {
+export default function MapAutocomplete({ onChangeAddress, country, state, metaError, metaTouched, id, name }) {
+  const [field, meta] = useField(name);
+
+  const { setFieldValue } = useFormikContext();
+
   const inputRef = useRef();
   const handlePlaceChanged = () => {
     console.log('place changed');
     const [place] = inputRef.current.getPlaces();
     if (place) {
+      setFieldValue('place', place.address_components);
       console.log(place.address_components);
       if (place.address_components != undefined && place.address_components.length > 0) {
         place.address_components.forEach((addr) => {
@@ -34,6 +40,7 @@ export default function MapAutocomplete({ onChangeAddress, country, state }) {
     <>
       <StandaloneSearchBox onLoad={(ref) => (inputRef.current = ref)} onPlacesChanged={handlePlaceChanged}>
         <TextField
+          error={metaError && metaTouched}
           className="form-control"
           placeholder="Enter Location"
           onChange={

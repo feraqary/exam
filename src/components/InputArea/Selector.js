@@ -6,12 +6,13 @@ import React, { useState, useMemo } from 'react';
 // import TagsInput from 'react-tagsinput';
 // assets
 import InputLayout from './InputLayout';
+import { useField } from 'formik';
 
-const Selector = ({ id, style, label, options, helperText, value, setValue }) => {
+const Selector = ({ style, label, options, helperText, name, id, required }) => {
+  const [field, meta] = useField(name);
   return (
-    <InputLayout style={style} helperText={helperText} label={label}>
-      <NativeSelect id={id} fullWidth value={value} onChange={(e) => setValue(e.target.value)}>
-        <option value="">None</option>
+    <InputLayout style={style} helperText={helperText} label={label} required={required}>
+      <NativeSelect id={id} fullWidth {...field}>
         {options.map((i, option) => {
           return <option value={option}>{i}</option>;
         })}

@@ -1,6 +1,7 @@
 // In dataSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-import { updateService, deleteService } from '../action/services';
+import { updateService, deleteService, createServices } from '../action/services';
+
 
 
 
@@ -49,6 +50,23 @@ const serviceUpdate = createSlice({
         // Perform any additional state updates if necessary
       })
       .addCase(deleteService.rejected, (state, action) => {
+        state.deleting = false;
+        state.error = action.payload;
+      })
+
+
+      .addCase(createServices.pending, (state) => {
+        state.deleting = true;
+        state.error = null;
+      })
+      .addCase(createServices.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.services = [...state.services, action.payload.data];
+        state.error = null;
+        // Perform any additional state updates if necessary
+      })
+      .addCase(createServices.rejected, (state, action) => {
         state.deleting = false;
         state.error = action.payload;
       });

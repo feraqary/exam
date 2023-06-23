@@ -54,7 +54,7 @@ const JWTLogin = ({ loginProp, closePopUp,page, ...others }) => {
 
   const router = useRouter();
   const dispatch = useDispatch()
-  // const reroute =
+
   return (
     <Formik
       initialValues={{
@@ -80,10 +80,10 @@ const JWTLogin = ({ loginProp, closePopUp,page, ...others }) => {
             setStatus({ success: true });
             setSubmitting(false);
           }
-          closePopUp(false)
+
           setTimeout(() => {
             router.push(page == 'dashboard' ? '/dashboard/default' : '/')
-            // router.push('/dashboard/default');
+
           }, 1500);
         } catch (err) {
           console.error(err);

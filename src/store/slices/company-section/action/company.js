@@ -1,9 +1,14 @@
 import { api } from 'utils/axios';
+import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+const token =
+  'v2.local.5Y_Uhdj_pMf333G2uvCFzBy8Ddg4fAs3qqHGoeKw2Euv3_ni9gtnf0P6_n_f-G_8tiUwUxCSrPEecVxpOFDvzxDvwbHhChHQcZd6_fkpaOMQ2GpIb3rTwM3giRJ1gMbhd8Q6XqXZRbFF271NZd_n5XLmsRu7Vd4iMKlnzWt-GSy5M-6YutivP4lIvigvEUWlQB7rviogx0kUGDHDHiiAOFZXQbmIE0wBrTiHASH64_qtkcgSXgcBq-A6DOdzuRZ8KDR6J1upzoe5bMgrdFdFv1Q.bnVsbA';
 const config = {
+
   headers: { 'Content-Type': 'multipart/form-data', "Authorization": "Bearer v2.local.5Y_Uhdj_pMf333G2uvCFzBy8Ddg4fAs3qqHGoeKw2Euv3_ni9gtnf0P6_n_f-G_8tiUwUxCSrPEecVxpOFDvzxDvwbHhChHQcZd6_fkpaOMQ2GpIb3rTwM3giRJ1gMbhd8Q6XqXZRbFF271NZd_n5XLmsRu7Vd4iMKlnzWt-GSy5M-6YutivP4lIvigvEUWlQB7rviogx0kUGDHDHiiAOFZXQbmIE0wBrTiHASH64_qtkcgSXgcBq-A6DOdzuRZ8KDR6J1upzoe5bMgrdFdFv1Q.bnVsbA" }
+
 };
-const baseurl = 'http://20.203.31.58'
+const baseurl = 'http://20.203.31.58';
 
 export const createCompanyType = createAsyncThunk('company/createCompanyType', async (formData, { rejectWithValue }) => {
   try {
@@ -31,10 +36,12 @@ export const getAllCompanyTypes = createAsyncThunk('company/getAllCompanyTypes',
     return rejectWithValue(error);
   }
 });
-export const updateCompanyType = createAsyncThunk('company/updateCompanyType', async ({company_id,formData} , { rejectWithValue }) => {
+export const updateCompanyType = createAsyncThunk('company/updateCompanyType', async ({ company_id, formData }, { rejectWithValue }) => {
   try {
+
     console.log(`company id: ${company_id}`)
     const response = await api.put(`${baseurl}/api/services/updateCompanyType/${company_id}`,formData, config);
+
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -70,27 +77,30 @@ export const getMainServices = createAsyncThunk('service/getMainServiceById', as
   }
 });
 
-export const createService = createAsyncThunk('company/createService', async (formData, { rejectWithValue }) => {
+export const createService = createAsyncThunk('company/createServices', async (formData, { rejectWithValue }) => {
   try {
     const response = await api.post(`${baseurl}/api/services/createservices`, formData, config);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error);
+    return rejectWithValue(error.error);
   }
 });
 
 export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', async (_, { rejectWithValue }) => {
   try {
+
     const response = await api.get(`${baseurl}/api/dashboard/getLocalCompanies?page_no=1&page_size=100&country=pakistan`, config);
+
     return response.data;
   } catch (error) {
-    return rejectWithValue(error);
+    return rejectWithValue(error.error);
   }
 });
 
 export const getInternationalCompanies = createAsyncThunk('company/getInternationalCompanies', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=10&country=uae`);
+    const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=100&country=pakistan`, config);
+
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
@@ -98,13 +108,16 @@ export const getInternationalCompanies = createAsyncThunk('company/getInternatio
 });
 
 export const createCompany = createAsyncThunk('company/createCompany', async (formData, { rejectWithValue }) => {
+  console.log('fired');
   try {
     const response = await api.post(`${baseurl}/api/dashboard/createCompany`, formData, config);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
   }
 });
+
 
 export const getFeaturedCompany = createAsyncThunk('company/featured', async (_, { rejectWithValue }) => {
   try {
@@ -123,3 +136,4 @@ export const getBlockedCompany = createAsyncThunk('company/blocked', async (_, {
     return rejectWithValue(error);
   }
 });
+

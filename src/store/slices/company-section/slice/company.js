@@ -12,11 +12,14 @@ import {
   getAllServices,
   getMainServices,
   updateCompanyType,
+
   getFeaturedCompany,
   getBlockedCompany
+
 } from '../action/company';
 
 import { toast } from 'react-toastify';
+import { updateService } from 'store/slices/services/action/services';
 
 const initialState = {
   companies: [],
@@ -306,6 +309,7 @@ const slice = createSlice({
         state.companyTypes = action.payload.data;
       })
       .addCase(getAllCompanyTypes.rejected, (state, action) => {
+        console.log(action);
         state.loading = false;
         state.error = action.payload.error;
         state.companyTypes = state.companyTypes;
@@ -392,31 +396,31 @@ const slice = createSlice({
         state.loading = false;
         state.error = null;
         state.companies = [...state.companies, action.payload.data];
-        toast.success('Company Added Successfully', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
+        // toast.success('Company Added Successfully', {
+        //   position: 'top-right',
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: 'dark'
+        // });
       })
       .addCase(createCompany.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
         state.companies = state.companies;
-        toast.error(`${state.error}`, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
+        // toast.error(`${state.error}`, {
+        //   position: 'top-right',
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: 'dark'
+        // });
       })
       // create service
 
@@ -477,7 +481,9 @@ const slice = createSlice({
       .addCase(getInternationalCompanies.pending, (state) => {
         state.loading = true;
         state.error = null;
-        state.internationalCompanies = state.internationalCompanies;
+
+        state.internationalCompanies = state.localCompanies;
+
       })
       .addCase(getInternationalCompanies.fulfilled, (state, action) => {
         state.loading = false;
@@ -489,6 +495,7 @@ const slice = createSlice({
         state.error = action.payload.error;
         state.internationalCompanies = state.internationalCompanies;
       })
+
       .addCase(getAllServices.pending, (state) => {
         state.loading = true;
         state.services = state.services;
@@ -505,6 +512,7 @@ const slice = createSlice({
         state.services = state.services;
         state.error = action.payload.error;
       })
+
 
       //get company features
       .addCase(getFeaturedCompany.pending, (state) => {
@@ -539,6 +547,30 @@ const slice = createSlice({
         state.blocks = state.blocks;
         state.error = action.payload.error;
       })
+      .addCase(updateSubService.pending, (state) => {
+        state.loading = true;
+        state.services = state.services;
+        state.error = null;
+      })
+
+      .addCase(updateSubService.fulfilled, (state, action) => {
+        console.log('payload', action.payload);
+        state.loading = false;
+        state.services = state.services.map((item) => {
+          if (item.id === action.payload.data.id && item.main_services_id === action.payload.data.main_services_id) {
+            return action.payload.data;
+          }
+          return item;
+        });
+        state.error = null;
+      })
+
+      .addCase(updateSubService.rejected, (state, action) => {
+        state.loading = false;
+        state.services = state.services;
+        state.error = action.payload.error;
+      });
+
   }
 });
 

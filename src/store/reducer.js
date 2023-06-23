@@ -19,6 +19,7 @@ import countriesReducer from './slices/country-section/slice/country';
 import companiesReducer from './slices/company-section/slice/company';
 import serviceUpdate from './slices/services/slice/services';
 import signupSlice from './slices/user-registration/slice/user-registration'; 
+import userManagement from './slices/Management_/slice/users'
 // ==============================|| COMBINE REDUCER ||============================== //
 
 const reducer = combineReducers({
@@ -43,7 +44,8 @@ const reducer = combineReducers({
   countries: countriesReducer,
   companies: companiesReducer,
   serviceUpdate: serviceUpdate,
-  signUp: signupSlice
+  signUp: signupSlice,
+  usermanagement: userManagement
 });
 
 //Reducer

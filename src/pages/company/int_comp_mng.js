@@ -12,13 +12,37 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { AqaryButton } from 'components/Elements/AqaryButton';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getInternationalCompanies } from 'store/slices/company-section/action/company';
 import { useSelector } from 'react-redux';
-
+import ColumnsLayouts from './add_comp';
+import { Dialog, DialogContent, DialogActions } from '@mui/material';
+import Slide from '@mui/material/Slide';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 // ===========================|| International Company Managment list||=========================== //
+
+const data = [
+  {
+    id: 1,
+    CompanyName: 'Aqary',
+    companyLogo: '',
+    LicenseNO: '123456789',
+    State: 'Maharashtra',
+    CompanyType: 'International',
+    Country: 'India',
+    SubscriptionStartDate: '2020-01-01',
+    AddedBy: 'Aqary',
+    ContactPerson: 'Aqary'
+  }
+];
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const ColumnHeaders = [
   {
@@ -70,42 +94,88 @@ const ColumnHeaders = [
     header: 'Contact Person'
   },
   {
-    accessorKey: 'Email',
+    accessorKey: 'Email', 
     header: 'Email'
   },
   { accessorKey: 'Phone', header: 'Phone' },
   {
     accessorKey: 'action',
     header: 'Action',
-    Cell: ({ renderedCellValue, row }) => (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem'
-        }}
-      >
-        <AqaryButton variant="contained">Edit </AqaryButton>
-        <Button color="primary" variant="contained" startIcon={<AssignmentIcon />}>
-          View Documents
-        </Button>
-        <Button variant="contained" color="primary" startIcon={<PreviewIcon />}>
-          View Live
-        </Button>
-        <Button variant="contained" color="primary">
-          Multiple
-        </Button>
-        <Button variant="contained" color="primary">
-          Report
-        </Button>
-        <Button variant="contained" color="primary" startIcon={<DeleteIcon />}>
-          Block
-        </Button>
-        <Button variant="contained" startIcon={<KeyIcon />}>
-          Reset
-        </Button>
-      </Box>
-    )
+    Cell: ({ renderedCellValue, row }) => {
+      const [open, setOpen] = React.useState(false);
+      const [Blocked, setBlocked] = React.useState(false);
+      const handleClickOpen = () => {
+        setOpen(true);
+      };
+
+      const handleClose = () => {
+        setOpen(false);
+      };
+
+      return (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem'
+          }}
+        >
+          <AqaryButton variant="contained">Edit </AqaryButton>
+          <Button variant="contained" color="primary" onClick={handleClickOpen} startIcon={<PreviewIcon />}>
+            Add sub-company
+          </Button>
+          <Button color="primary" variant="contained" startIcon={<AssignmentIcon />}>
+            View Documents
+          </Button>
+          <Button variant="contained" color="primary" startIcon={<PreviewIcon />}>
+            View Live
+          </Button>
+          <Button variant="contained" color="primary">
+            Multiple
+          </Button>
+          <Button variant="contained" color="primary">
+            Report
+          </Button>
+          {Blocked ? (
+            <Button
+              variant="contained"
+              onClick={() => {
+                setBlocked(!Blocked);
+              }}
+              color="success"
+              startIcon={<DeleteForeverIcon />}
+            >
+              Unblock
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => {
+                setBlocked(!Blocked);
+              }}
+              color="error"
+              startIcon={<DeleteIcon />}
+            >
+              Block
+            </Button>
+          )}
+          <Button variant="contained" startIcon={<KeyIcon />}>
+            Reset
+          </Button>
+
+          <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+            <DialogActions sx={{justifyContent:"flex-start"}} onClick={handleClose}>
+              <IconButton>
+                <CloseIcon />
+              </IconButton>
+            </DialogActions>
+            <DialogContent>
+              <ColumnsLayouts />
+            </DialogContent>
+          </Dialog>
+        </Box>
+      );
+    }
   }
 ];
 
@@ -120,7 +190,7 @@ const IntCompData = () => {
     <Page title="International Company List">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={internationalCompanies} />
+          <Table columnHeaders={ColumnHeaders} data={data} />
         </Grid>
       </Grid>
     </Page>
