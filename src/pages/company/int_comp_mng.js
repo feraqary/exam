@@ -25,20 +25,20 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 // ===========================|| International Company Managment list||=========================== //
 
-const data = [
-  {
-    id: 1,
-    CompanyName: 'Aqary',
-    companyLogo: '',
-    LicenseNO: '123456789',
-    State: 'Maharashtra',
-    CompanyType: 'International',
-    Country: 'India',
-    SubscriptionStartDate: '2020-01-01',
-    AddedBy: 'Aqary',
-    ContactPerson: 'Aqary'
-  }
-];
+// const data = [
+//   {
+//     id: 1,
+//     CompanyName: 'Aqary',
+//     companyLogo: '',
+//     LicenseNO: '123456789',
+//     State: 'Maharashtra',
+//     CompanyType: 'International',
+//     Country: 'India',
+//     SubscriptionStartDate: '2020-01-01',
+//     AddedBy: 'Aqary',
+//     ContactPerson: 'Aqary'
+//   }
+// ];
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -60,7 +60,7 @@ const ColumnHeaders = [
           gap: '1rem'
         }}
       >
-        <Image src={`http://20.203.31.58/upload/${row.original.CompanyLogo}`} width={60} height={30} />
+        <Image src={`http://20.203.31.58/upload/${row.original.CompanyLogo}`} width={60} height={30} style={{ objectFit: 'contain' }} />
       </Box>
     )
   },
@@ -94,7 +94,7 @@ const ColumnHeaders = [
     header: 'Contact Person'
   },
   {
-    accessorKey: 'Email', 
+    accessorKey: 'Email',
     header: 'Email'
   },
   { accessorKey: 'Phone', header: 'Phone' },
@@ -164,7 +164,7 @@ const ColumnHeaders = [
           </Button>
 
           <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-            <DialogActions sx={{justifyContent:"flex-start"}} onClick={handleClose}>
+            <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
               <IconButton>
                 <CloseIcon />
               </IconButton>
@@ -189,7 +189,7 @@ const IntCompData = () => {
     <Page title="International Company List">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table columnHeaders={ColumnHeaders} data={internationalCompanies} />
         </Grid>
       </Grid>
     </Page>

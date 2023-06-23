@@ -7,7 +7,7 @@ import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { createMainService, getAllCompanyTypes } from '../../store/slices/company-section/action/company';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,22 +20,28 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
+import { fileValidator, objectValidator, stringValidator } from 'pages/utils/formik-validations';
 
 // ==============================|| Add Company Type form ||============================== //
-function MainService() {
-  const FILE_SIZE = 1;
-  const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
+const validationSchema = Yup.object({
+  subCompanyType: objectValidator(),
+  mainServiceName: stringValidator('Please provide a valid sub company type'),
+  description: stringValidator('Please provide a description'),
+  logoImage: fileValidator(SUPPORTED_FORMATS),
+  iconImage: fileValidator(SUPPORTED_FORMATS)
+});
+function MainService() {
   const logoRef = useRef(null);
   const iconRef = useRef(null);
 
   const dispatch = useDispatch();
-  const { companyTypes, loading, error, companyType } = useSelector((state) => state.companies);
+  const { companyTypes } = useSelector((state) => state.companies);
 
   useEffect(() => {
     dispatch(getAllCompanyTypes());
   }, [dispatch]);
-
 
   return (
     <Page title="Add Services">
@@ -51,28 +57,7 @@ function MainService() {
                 logoImage: '',
                 iconImage: ''
               }}
-              validationSchema={Yup.object({
-                subCompanyType: Yup.object().typeError().required('Mandatory Selection'),
-                mainServiceName: Yup.string().trim().required('Please provide a valid sub company type'),
-                description: Yup.string().required('Please provide a description'),
-                logoImage: Yup.mixed()
-                  .required('Please provide a logo image')
-                  .test(
-                    'FILE_SIZE',
-                    'Uploaded file is too big. File size must not exceed 1MB',
-                    (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                  )
-                  .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type)),
-                iconImage: Yup.mixed()
-                  .required('Please provide an logo image')
-                  .test(
-                    'FILE_SIZE',
-                    'Uploaded file is too big. File size must not exceed 1MB',
-                    (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                  )
-                  .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type))
-              })}
-
+              validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 const formData = new FormData();
                 formData.append('company_types_id', values.subCompanyType.id);
@@ -82,11 +67,9 @@ function MainService() {
                 formData.append('icon_url', values.iconImage);
                 dispatch(createMainService(formData));
                 setSubmitting(false);
-                logoRef.current.value = '';
-                iconRef.current.value = '';
                 resetForm();
               }}
-              onReset={(values) => {
+              onReset={(_) => {
                 logoRef.current.value = '';
                 iconRef.current.value = '';
               }}
