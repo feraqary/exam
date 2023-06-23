@@ -81,7 +81,7 @@ export const createService = createAsyncThunk('company/createServices', async (f
     const response = await api.post(`${baseurl}/api/services/createservices`, formData, config);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error);
+    return rejectWithValue(error.error);
   }
 });
 
@@ -90,7 +90,7 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
     const response = await api.get(`${baseurl}/api/dashboard/getLocalCompanies?page_no=1&page_size=10&country=pakistan`, config);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error);
+    return rejectWithValue(error.error);
   }
 });
 
@@ -123,7 +123,7 @@ export const updateCompany = createAsyncThunk('company/UpdateCompany', async (fo
     console.log(response.data);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error);
+    return rejectWithValue(error.error);
   }
 });
 export const updateSubService = createAsyncThunk('subService/Updatesubservice', async ({ id, formData }, { rejectWithValue }) => {

@@ -41,6 +41,14 @@ const companies = {
       url: '/company/add_comp',
       icon: icons.IconUserCheck
     },
+    {
+      id: 'add-company',
+      title: <FormattedMessage id="Add Sub-Developer Companies" />,
+      type: 'item',
+      url: '/company/add_sub_developer',
+      icon: icons.IconUserCheck
+
+    },
 
     {
       id: 'add_company_types',
@@ -50,8 +58,15 @@ const companies = {
       url: '/company/add_type'
     },
     {
+      id: 'Place_holder',
+      title: <FormattedMessage id="View Company Types" />,
+      type: 'item',
+      icon: icons.IconChecklist,
+      url: '/company/placeHolderName'
+    },
+    {
       id: 'company-types',
-      title: <FormattedMessage id="Manage Company Sub Types" />,
+      title: <FormattedMessage id="Manage Sub-Company Types" />,
       type: 'item',
       icon: icons.IconLayoutGrid,
       url: '/company/manage_type'

@@ -37,7 +37,7 @@ const ColumnHeaders = [
     header: 'Icon',
     Cell: ({ cell }) => (
       <Box display="flex" alignItems="center">
-        <Image src={`http://20.203.31.58/${cell.row.original.icon_url}`} width={60} height={30} style={{ objectFit: 'contain' }} />
+        <Image src={`http://20.203.31.58/upload/${cell.row.original.icon_url}`} width={60} height={30} style={{ objectFit: 'contain' }} />
       </Box>
     )
   },
@@ -46,7 +46,7 @@ const ColumnHeaders = [
     header: 'Image',
     Cell: ({ cell }) => (
       <Box display="flex" alignItems="center">
-        <Image src={`http://20.203.31.58/${cell.row.original.image_url}`} width={60} height={30} style={{ objectFit: 'contain' }} />
+        <Image src={`http://20.203.31.58/upload/${cell.row.original.image_url}`} width={60} height={30} style={{ objectFit: 'contain' }} />
       </Box>
     )
   },
@@ -58,7 +58,7 @@ const ColumnHeaders = [
 
       const handleClickOpen = () => {
         setOpen(true);
-        console.log("sub: ",row.original);
+        console.log('sub: ', row.original);
       };
 
       const handleClose = () => {
@@ -86,7 +86,7 @@ const ColumnHeaders = [
             color="error"
             onClick={() => {
               dispatch(deleteService(row.original.id));
-              console.log(row.original)
+              console.log(row.original);
             }}
           >
             Delete

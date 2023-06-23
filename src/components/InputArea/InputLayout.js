@@ -10,13 +10,12 @@ const InputLayout = ({ label, helperText, style, children, required,metaError, m
   return (
     <Grid item xs={style.xs} lg={style.lg}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
-        {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
-
-        {helperInfo ? <Tooltip title={helperText}>
+        <InputLabel required={required}>{label}</InputLabel>
+        <Tooltip title={helperText}>
           <IconButton>
             <InfoIcon fontSize="small" />
           </IconButton>
-        </Tooltip> : <></>}
+        </Tooltip>
       </Grid>
       {children}
       {metaError && metaTouched ? (

@@ -1,4 +1,5 @@
 // In dataSlice.js
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -7,6 +8,7 @@ const token =
 const config = {
   headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
 };
+
 const baseurl = 'http://20.203.31.58';
 
 // ... existing code
