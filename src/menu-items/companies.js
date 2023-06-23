@@ -2,7 +2,26 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconApps,IconLayoutGridAdd,IconPin,IconClock,IconFileX,IconTextPlus,IconChecklist,IconFileStar,IconMapPin,IconLayoutGrid,IconUserCheck, IconClipboardPlus,IconBasket, IconMessages, IconLayoutKanban, IconMail, IconCalendar, IconNfc } from '@tabler/icons';
+import {
+  IconApps,
+  IconLayoutGridAdd,
+  IconPin,
+  IconClock,
+  IconFileX,
+  IconTextPlus,
+  IconChecklist,
+  IconFileStar,
+  IconMapPin,
+  IconLayoutGrid,
+  IconUserCheck,
+  IconClipboardPlus,
+  IconBasket,
+  IconMessages,
+  IconLayoutKanban,
+  IconMail,
+  IconCalendar,
+  IconNfc
+} from '@tabler/icons';
 import { Building } from 'tabler-icons-react';
 // constant
 const icons = {
@@ -52,7 +71,7 @@ const companies = {
 
     {
       id: 'add_company_types',
-      title: <FormattedMessage id="add-types" />,
+      title: <FormattedMessage id="Add Sub Company Types" />,
       type: 'item',
       icon: icons.IconLayoutGridAdd,
       url: '/company/add_type'
@@ -73,9 +92,9 @@ const companies = {
     },
     {
       id: 'add_main_services',
-      title: <FormattedMessage id="Add Services" />,
+      title: <FormattedMessage id="Add Main Services" />,
       type: 'item',
-      icon:IconClipboardPlus,
+      icon: IconClipboardPlus,
       url: '/company/add_main_services'
     },
     {

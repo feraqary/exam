@@ -13,10 +13,9 @@ const baseurl = 'http://20.203.31.58';
 
 // ... existing code
 
-
-export const updateService = createAsyncThunk('services/updateServices',     async ( serviceId,{  updatedData }, { rejectWithValue }) => {
+export const updateService = createAsyncThunk('services/updateServices', async ({ updatedData, unique_id }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${baseurl}/api/services/updateservice/${serviceId}`, updatedData);
+    const response = await axios.put(`http://${baseurl}/api/services/updateservice/${unique_id}`, updatedData);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -32,6 +31,7 @@ export const createServices = createAsyncThunk('services/createServices', async 
 
 });
 
+
 export const deleteService = createAsyncThunk('services/deleteService', async (serviceId, { rejectWithValue }) => {
   try {
     await axios.delete(`${baseurl}/api/services/deleteservice/${serviceId}`);
@@ -40,4 +40,5 @@ export const deleteService = createAsyncThunk('services/deleteService', async (s
     return rejectWithValue(error.response.data);
   }
 });
+
 

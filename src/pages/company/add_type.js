@@ -19,6 +19,7 @@ import Container from 'components/Elements/Container';
 import { createCompanyType } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
 import FileUpload from 'components/InputArea/FileUpload';
+import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 
 const roles = [
   { label: 'Broker Company', id: 1 },
@@ -26,12 +27,17 @@ const roles = [
   { label: 'Service Company', id: 3 }
 ];
 
-// ==============================|| Add Company Type form ||============================== //
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
+
+const validationSchema = Yup.object({
+  companyType: objectValidator(),
+  subCompanyTypeName: stringValidator('Please provide a valid sub company type'),
+  description: stringValidator('Please provide a description'),
+  logoImage: fileValidator(SUPPORTED_FORMATS),
+  iconImage: fileValidator(SUPPORTED_FORMATS)
+});
 
 function CompanyType() {
-  const FILE_SIZE = 1;
-  const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
-
   const logoRef = useRef(null);
   const iconRef = useRef(null);
 
@@ -51,27 +57,7 @@ function CompanyType() {
                 logoImage: '',
                 iconImage: ''
               }}
-              validationSchema={Yup.object({
-                companyType: Yup.object().typeError().required('Mandatory selection'),
-                subCompanyTypeName: Yup.string().trim().required('Please provide a valid sub company type'),
-                description: Yup.string().required('Please provide a description'),
-                logoImage: Yup.mixed()
-                  .required('Please provide a logo image')
-                  .test(
-                    'FILE_SIZE',
-                    'Uploaded file is too big. File size must not exceed 1MB',
-                    (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                  )
-                  .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type)),
-                iconImage: Yup.mixed()
-                  .required('Please provide an logo image')
-                  .test(
-                    'FILE_SIZE',
-                    'Uploaded file is too big. File size must not exceed 1MB',
-                    (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                  )
-                  .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type))
-              })}
+              validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 const formData = new FormData();
                 formData.append('main_company_type_id', values.companyType.id);
@@ -81,11 +67,9 @@ function CompanyType() {
                 formData.append('description', values.description);
                 dispatch(createCompanyType(formData));
                 setSubmitting(false);
-                logoRef.current.value = '';
-                iconRef.current.value = '';
                 resetForm();
               }}
-              onReset={(values) => {
+              onReset={(_) => {
                 logoRef.current.value = '';
                 iconRef.current.value = '';
               }}

@@ -1,5 +1,4 @@
-import * as React from 'react';
-
+import React from 'react';
 // material-ui
 import { InputAdornment, TextField } from '@mui/material';
 import { LocalizationProvider, MobileDatePicker } from '@mui/x-date-pickers';
@@ -11,7 +10,20 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import InputLayout from './InputLayout';
 import { useField, useFormikContext } from 'formik';
 
-// ==============================|| CUSTOM DATETIME ||============================== //
+/**
+ * A component that provides a custom date-time picker with validation support for Formik forms.
+ * @param {Object} props - The component props.
+ * @param {Object} props.style - The custom styles to apply to the component.
+ * @param {string} props.label - The label for the date-time picker.
+ * @param {string} props.helperText - The helper text to display below the date-time picker.
+ * @param {Date} props.value - The selected date value.
+ * @param {Function} props.setValue - The function to set the selected date value.
+ * @param {boolean} props.required - Indicates if the date-time picker is required.
+ * @param {string} props.name - The name of the field in Formik.
+ * @param {string} props.id - The unique identifier for the date-time picker.
+ * @param {...any} rest - Additional props to be passed to the MobileDatePicker component.
+ * @returns {JSX.Element} The rendered CustomDateTime component.
+ */
 
 const CustomDateTime = ({ style, label, helperText, value, setValue, required, name, id, ...rest }) => {
   const [field, meta] = useField(rest);
@@ -40,9 +52,7 @@ const CustomDateTime = ({ style, label, helperText, value, setValue, required, n
             <TextField
               {...params}
               fullWidth
-
               error={touched[`${name}`] && meta.error[`${name}`]}
-
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

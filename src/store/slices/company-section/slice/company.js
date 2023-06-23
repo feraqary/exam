@@ -13,13 +13,18 @@ import {
   getMainServices,
   updateCompanyType,
 
+  updateSubService,
+  DeleteSubService
+
+
   getFeaturedCompany,
   getBlockedCompany
+
 
 } from '../action/company';
 
 import { toast } from 'react-toastify';
-import { updateService } from 'store/slices/services/action/services';
+import { deleteService, createServices } from 'store/slices/company-section/action/company';
 
 const initialState = {
   companies: [],
@@ -488,7 +493,7 @@ const slice = createSlice({
       .addCase(getInternationalCompanies.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.internationalCompanies = action.payload.data ? [...action.payload.data] : [];
+        state.internationalCompanies = action.payload.data;
       })
       .addCase(getInternationalCompanies.rejected, (state, action) => {
         state.loading = false;
@@ -502,7 +507,6 @@ const slice = createSlice({
         state.error = null;
       })
       .addCase(getAllServices.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.loading = false;
         state.services = action.payload.data;
         state.error = null;
@@ -569,6 +573,38 @@ const slice = createSlice({
         state.loading = false;
         state.services = state.services;
         state.error = action.payload.error;
+      })
+
+      .addCase(deleteService.pending, (state) => {
+        state.deleting = true;
+        state.services = state.services;
+        state.error = null;
+      })
+      .addCase(deleteService.fulfilled, (state, action) => {
+        state.loading = false;
+        state.services = state.services.filter((service) => service.id !== action.payload && service.main_services_id === action.payload);
+        state.deleting = false;
+      })
+      .addCase(deleteService.rejected, (state, action) => {
+        state.deleting = false;
+        state.services = state.services;
+        state.error = action.payload;
+      })
+
+      .addCase(createServices.pending, (state) => {
+        state.deleting = true;
+        state.error = null;
+      })
+      .addCase(createServices.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.services = [...state.services, action.payload.data];
+        state.error = null;
+        // Perform any additional state updates if necessary
+      })
+      .addCase(createServices.rejected, (state, action) => {
+        state.deleting = false;
+        state.error = action.payload;
       });
 
   }
