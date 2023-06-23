@@ -20,25 +20,56 @@ import { useField, useFormikContext } from 'formik';
  * @returns {JSX.Element} The rendered AutoCompleteSelector component.
  */
 
-const AutoCompleteSelector = ({ style, label, id, name, options, placeholder, func, helperText, ...rest }) => {
+const AutoCompleteSelector = ({
+  style,
+  label,
+  id,
+  value,
+  options,
+  placeholder,
+  required,
+  setValue,
+  helperText,
+  loading,
+  func,
+  helperInfo,
+  error,
+  name,
+  ...rest
+}) => {
   const [field, meta] = useField(rest);
   const { touched, values, setFieldValue } = useFormikContext();
 
   return (
     <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
-        <InputLabel required>{label}</InputLabel>
-        <Tooltip title={label}>
-          <IconButton>
-            <InfoIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
+        {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
+
+        {helperInfo ? (
+          <Tooltip title={label}>
+            <IconButton>
+              <InfoIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <></>
+        )}
       </Grid>
       <Autocomplete
         {...rest}
         {...field}
+        // value={value}
         id={id}
         options={options}
+        name={name}
+        value={values[`${name}`]}
+        sx={{ width: '100%' }}
+        loading={loading}
+        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[`${name}`] && !!meta.error[`${name}`]} />}
+        // renderInput={(params) => {
+        //   return <TextField {...params} label={placeholder} />;
+        // }}
+        // onChange={(event, newValue) => func(newValue)}
         onChange={(e, value, reason) => {
           if (reason === 'clear') {
             setFieldValue(name, '');
@@ -49,9 +80,6 @@ const AutoCompleteSelector = ({ style, label, id, name, options, placeholder, fu
             func(value);
           }
         }}
-        value={values[`${name}`]}
-        name={name}
-        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[`${name}`] && !!meta.error[`${name}`]} />}
       />
       {helperText && meta.error && touched[`${name}`] ? (
         <FormHelperText error={true}>{meta.error[`${name}`]}</FormHelperText>

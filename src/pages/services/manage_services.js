@@ -10,72 +10,89 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 
 // project imports
+import React, { useState, useEffect } from 'react';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import Edit_service from './helper_components/edit_services';
+import { getAllMainServices, deleteMainService } from 'store/slices/company-section/action/company';
 // ==============================|| Add Services ||============================== //
-import { useDispatch } from 'react-redux';
-import { getAllMainServices } from 'store/slices/company-section/action/company';
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import company from 'store/slices/company-section/slice/company';
-import { ToastContainer } from 'react-toastify';
-import Container from 'components/Elements/Container';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
-import InputText from 'components/InputArea/TextInput';
-import FileUpload from 'components/InputArea/FileUpload';
-import SubmitButton from 'components/Elements/SubmitButton';
-
-
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const options = ['Broker Company', 'Developer Company', 'Service Company'];
 
-function ManageServices() {
-  const [open, setOpen] = React.useState(false);
+const ColumnHeaders = [
+  {
+    accessorKey: 'id',
+    header: 'Serial No.'
+  },
 
-  const ColumnHeaders = [
-    {
-      accessorKey: 'id',
-      header: 'id'
-    },
-  
-    {
-      accessorKey: 'title',
-      header: 'title'
-    },
-    {
-      accessorKey: 'company_types_id',
-      header: 'company_types_id'
-    },
-    {
-      accessorKey: 'description',
-      header: 'description'
-    },
-    {
-      accessorKey: 'icon_url',
-      header: 'icon_url',
-      Cell: ({ renderedCellValue, row }) => (
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem'
-          }}
-        >
-          <Image src={row.original.service_icon} width={60} height={30} style={{ objectFit: 'contain' }} />
-        </Box>
-      )
-    },
-  
-    {
-      accessorKey: 'action',
-      header: 'Action',
-      Cell: ({ renderedCellValue, row }) => (
+  {
+    accessorKey: 'title',
+    header: 'Service Name'
+  },
+  {
+    accessorKey: 'description',
+    header: 'Description'
+  },
+  {
+    accessorKey: 'icon_url',
+    header: 'Service Icon',
+    Cell: ({ renderedCellValue, row }) => (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem'
+        }}
+      >
+        <Image src={`http://20.203.31.58/upload/${row.original.icon_url}`} width={60} height={30} style={{ objectFit: 'contain' }} />
+      </Box>
+    )
+  },
+
+  {
+    accessorKey: 'image_url',
+    header: 'Service Image',
+    Cell: ({ renderedCellValue, row }) => (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem'
+        }}
+      >
+        <Image src={`http://20.203.31.58/upload/${row.original.image_url}`} width={60} height={30} style={{ objectFit: 'contain' }} />
+      </Box>
+    )
+  },
+
+  {
+    accessorKey: 'action',
+    header: 'Action',
+    Cell: ({ renderedCellValue, row }) => {
+      const [open, setOpen] = useState(false);
+      const dispatch = useDispatch();
+      const handleClickOpen = () => {
+        setOpen(true);
+        console.log(row.original);
+      };
+
+      const handleClose = () => {
+        setOpen(false);
+      };
+      const handleDelete = (e) => {
+        console.log(row.original.id);
+        dispatch(deleteMainService(row.original.id));
+        // location.reload()
+      };
+
+      return (
         <Box
           sx={{
             display: 'flex',
@@ -84,134 +101,43 @@ function ManageServices() {
           }}
         >
           <Button variant="contained" color="primary">
-            View Service
+            View
           </Button>
-          <Button variant="contained" color="primary" onClick={()=>handleUpdateMain(row)}>
-            Edit Service
+          <Button variant="contained" color="primary" onClick={handleClickOpen}>
+            Edit
           </Button>
-          <Button variant="contained" color="error" onClick={()=>console.log("clicked", row.original.id)}>
+
+          <Dialog open={open} TransitionComponent={Transition} keepMounted onClose={handleClose} maxWidth="lg">
+            <DialogTitle>{'Edit Service'}</DialogTitle>
+            <DialogContent>
+              <Edit_service
+                id={row.original.id}
+                comp_id={row.original.company_types_id}
+                description={row.original.description}
+                serial_no={row.original.serial_no}
+                icon_url={row.original.icon_url}
+                service_name={row.original.title}
+                img_url={row.original.image_url}
+                close={setOpen}
+              />
+            </DialogContent>
+          </Dialog>
+          <Button onClick={handleDelete} variant="contained" color="error">
             Delete
           </Button>
         </Box>
       )
     }
-  ];
+  }
+  ]
 
+function ManageServices() {
   const dispatch = useDispatch();
-  const { loading, error, mainServices } = useSelector((state) => state.companies);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
- function AlertDialogSlide() {
-  
-  
-    return (
-      <Dialog
-            open={open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-describedby="alert-dialog-slide-description"
-            maxWidth={{xs: 12, lg: 6}}
-          >
-                <Page title="Manage Services" >
-                  <Grid container spacing={gridSpacing} xs={12}>
-                    <ToastContainer />
-                    <Container style={{ xs: 12 }}>
-                      <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
-                          <AutoCompleteSelector
-                            style={{ xs: 12, lg: 8 }}
-                            label="Company Type"
-                            placeholder="Company Type"
-                            options={mainServices.map((service) => {
-                              return { label: service.title, ...service };
-                            })}
-                            id="compnType"
-                            // value={serviceType}
-                            helperText="Company Type"
-                            // func={handleMainServiceChange}
-                          />
-
-                        <InputText
-                          label="Service Name"
-                          placeholder="Services Name"
-                          helperText="Please Services Name"
-                          style={{ xs: 12, lg: 8 }}
-                          type="text"
-                          // value={service}
-                          // setValue={setService}
-                        />
-
-                        <FileUpload
-                          label="Upload Logo"
-                          style={{ xs: 12, lg: 8 }}
-                          placeholder="Upload Logo"
-                          type="png,jpeg,jpg"
-                          helperText="Please upload your logo"
-                          image={{ alt: 'Logo Preview', width: '250px', height: '250px' }}
-                          // ref={logoRef}
-                          // imagePreview={logoPreview}
-                          // setImagePreview={setLogoPreview}
-                          // setValue={setLogoImage}
-                        />
-
-                        <InputText
-                          label="Description"
-                          placeholder="Enter Description"
-                          style={{ xs: 12, lg: 8 }}
-                          type="text"
-                          multiline
-                          rows={5}
-                          id="outlined-multiline-flexible"
-                          description
-                          // value={description}
-                          // setValue={setDescription}
-                        />
-
-                        <FileUpload
-                          label="Upload Icon"
-                          style={{ xs: 12, lg: 8 }}
-                          placeholder="Upload Icon"
-                          type="png,jpeg,jpg"
-                          helperText="Please upload your Icon"
-                          image={{ alt: 'Icon Preview', width: '250px', height: '250px' }}
-                          // ref={iconRef}
-                          // imagePreview={iconPreview}
-                          // setImagePreview={setIconPreview}
-                          // setValue={setIconImage}
-                        />
-                      </Grid>
-                    </Container>
-                    <SubmitButton submit={
-                      ()=> handleClose()
-                    } clear={()=>{
-                      ()=> handleClose()
-                    }} />
-                  </Grid>
-            </Page>
-          </Dialog>
-    );
-  }
-
-
-  // Handle update services
-  const handleUpdateMain = (row)=>{
-    const servicesID = row.original.id;
-    handleClickOpen();
-
-  }
-
-  
+  const { mainServices } = useSelector((state) => state.companies);
+  // console.log(mainServices);
   useEffect(() => {
     dispatch(getAllMainServices());
   }, []);
-
   return (
     <Page title="Manage Services">
       <Grid container spacing={gridSpacing}>

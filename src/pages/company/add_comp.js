@@ -13,15 +13,7 @@ import MapAutocomplete from 'components/map/maps-autocomplete';
 import { LoadScript } from '@react-google-maps/api';
 import Image from 'next/image';
 import valid from 'card-validator';
-import {
-  objectValidator,
-  stringValidator,
-  numberValidator,
-  fileValidator,
-  dateValidator,
-  arrayValidator
-} from '../../utils/formik-validations';
-
+import { objectValidator, arrayValidator, stringValidator, numberValidator, fileValidator, dateValidator } from 'utils/formik-validations';
 // redux actions import
 
 import {
@@ -31,7 +23,8 @@ import {
   getCommunities,
   getSubCommunities,
   getAllCountries,
-  getAllCurrencies
+  getAllCurrencies,
+  updateCompany
 } from 'store/slices/country-section/actions/countries';
 
 // assets
@@ -212,7 +205,7 @@ function ColumnsLayouts() {
   };
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
+    <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
       <Page title="Add Company">
         <ToastContainer />
         <Grid container spacing={gridSpacing}>

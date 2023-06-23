@@ -104,7 +104,6 @@ const companies = {
       icon: icons.IconClipboardPlus,
       url: '/company/add_services'
     },
-<<<<<<< Updated upstream
     {
       id: 'Place_holder',
       title: <FormattedMessage id="All Companies" />,
@@ -112,9 +111,6 @@ const companies = {
       icon: icons.IconLayoutGrid,
       url: '/company/placeHolderName'
     },
-=======
-    
->>>>>>> Stashed changes
     {
       id: 'local',
       title: <FormattedMessage id="local-companies" />,

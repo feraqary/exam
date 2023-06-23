@@ -14,7 +14,10 @@ import {
   updateCompanyType,
 
   updateSubService,
-  DeleteSubService
+  DeleteSubService,
+  updateCompanyStatus,
+  updateMainService,
+  deleteMainService,
 
 
   getFeaturedCompany,
@@ -24,7 +27,7 @@ import {
 } from '../action/company';
 
 import { toast } from 'react-toastify';
-import { deleteService, createServices } from 'store/slices/company-section/action/company';
+import { deleteService, createServices, updateCompany } from 'store/slices/company-section/action/company';
 
 const initialState = {
   companies: [],
@@ -392,41 +395,63 @@ const slice = createSlice({
         state.mainService = state.mainService;
       })
 
-      .addCase(createCompany.pending, (state) => {
-        state.loading = true;
-        state.companies = state.companies;
-        state.error = null;
-      })
-      .addCase(createCompany.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        state.companies = [...state.companies, action.payload.data];
-        // toast.success('Company Added Successfully', {
-        //   position: 'top-right',
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: 'dark'
-        // });
-      })
-      .addCase(createCompany.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload.error;
-        state.companies = state.companies;
-        // toast.error(`${state.error}`, {
-        //   position: 'top-right',
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: 'dark'
-        // });
-      })
+      // .addCase(createCompany.pending, (state) => {
+      //   state.loading = true;
+      //   state.companies = state.companies;
+      //   state.error = null;
+      // })
+      // .addCase(createCompany.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.error = null;
+      //   state.companies = [...state.companies, action.payload.data];
+      //   // toast.success('Company Added Successfully', {
+      //   //   position: 'top-right',
+      //   //   autoClose: 5000,
+      //   //   hideProgressBar: false,
+      //   //   closeOnClick: true,
+      //   //   pauseOnHover: true,
+      //   //   draggable: true,
+      //   //   progress: undefined,
+      //   //   theme: 'dark'
+      //   // });
+      // })
+      // .addCase(createCompany.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.payload.error;
+      //   state.companies = state.companies;
+      //   // toast.error(`${state.error}`, {
+      //   //   position: 'top-right',
+      //   //   autoClose: 5000,
+      //   //   hideProgressBar: false,
+      //   //   closeOnClick: true,
+      //   //   pauseOnHover: true,
+      //   //   draggable: true,
+      //   //   progress: undefined,
+      //   //   theme: 'dark'
+      //   // });
+      // })
+
+      // .addCase(updateCompany.pending, (state) => {
+      //   state.loading = true;
+      //   state.companies = state.companies;
+      //   state.error = null;
+      // })
+      // .addCase(updateCompany.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.error = null;
+      //   state.companies = state.companies;
+      //   // .map((item) => {
+      //   //   if (item.id === action.payload.data.id) {
+      //   //     return action.payload.data;
+      //   //   }
+      //   //   return item;
+      //   // });
+      // })
+      // .addCase(updateCompany.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.payload.error;
+      //   state.companies = state.companies;
+      // })
       // create service
 
       .addCase(createService.pending, (state) => {
@@ -575,6 +600,30 @@ const slice = createSlice({
         state.error = action.payload.error;
       })
 
+      // ==============================================================
+      .addCase(updateMainService.pending, (state) => {
+        state.loading = true;
+        state.services = state.services;
+        state.error = null;
+      })
+
+      .addCase(updateMainService.fulfilled, (state, action) => {
+        state.loading = false;
+        state.services = state.services.map((item) => {
+          if (item.id === action.payload.data.id && item.main_services_id === action.payload.data.main_services_id) {
+            return action.payload.data;
+          }
+          return item;
+        });
+        state.error = null;
+      })
+
+      .addCase(updateMainService.rejected, (state, action) => {
+        state.loading = false;
+        state.services = state.services;
+        state.error = action.payload.error;
+      })
+
       .addCase(deleteService.pending, (state) => {
         state.deleting = true;
         state.services = state.services;
@@ -582,7 +631,7 @@ const slice = createSlice({
       })
       .addCase(deleteService.fulfilled, (state, action) => {
         state.loading = false;
-        state.services = state.services.filter((service) => service.id !== action.payload && service.main_services_id === action.payload);
+        state.services = state.services.filter((service) => service.id !== action.payload);
         state.deleting = false;
       })
       .addCase(deleteService.rejected, (state, action) => {
@@ -591,19 +640,54 @@ const slice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(createServices.pending, (state) => {
+      //  ======================================================================
+      .addCase(deleteMainService.pending, (state) => {
         state.deleting = true;
+        state.services = state.services;
         state.error = null;
       })
-      .addCase(createServices.fulfilled, (state, action) => {
+      .addCase(deleteMainService.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
-        state.services = [...state.services, action.payload.data];
-        state.error = null;
-        // Perform any additional state updates if necessary
-      })
-      .addCase(createServices.rejected, (state, action) => {
+        state.services =state.services.filter((service) => service.id !== action.payload);
         state.deleting = false;
+      })
+      .addCase(deleteMainService.rejected, (state, action) => {
+        state.deleting = false;
+        state.services = state.services;
+        state.error = action.payload;
+      })
+
+      // .addCase(createServices.pending, (state) => {
+      //   state.deleting = true;
+      //   state.error = null;
+      // })
+
+      // .addCase(createServices.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.error = null;
+      //   state.services = [...state.services, action.payload.data];
+      //   state.error = null;
+      //   // Perform any additional state updates if necessary
+      // })
+      // .addCase(createServices.rejected, (state, action) => {
+      //   state.deleting = false;
+      //   state.error = action.payload;
+      // });
+
+      .addCase(updateCompanyStatus.pending, (state) => {
+        state.deleting = true;
+        state.status = state.status;
+        state.error = null;
+      })
+      .addCase(updateCompanyStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = state.status;
+        console.log('payload', action.payload.data);
+        state.deleting = false;
+      })
+      .addCase(updateCompanyStatus.rejected, (state, action) => {
+        state.deleting = false;
+        state.status = state.status;
         state.error = action.payload;
       });
 
