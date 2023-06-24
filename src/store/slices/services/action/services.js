@@ -28,4 +28,17 @@ export const createServices = createAsyncThunk('services/createServices', async 
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
+
 });
+
+
+export const deleteService = createAsyncThunk('services/deleteService', async (serviceId, { rejectWithValue }) => {
+  try {
+    await axios.delete(`${baseurl}/api/services/deleteservice/${serviceId}`);
+    return serviceId;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+

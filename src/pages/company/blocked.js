@@ -9,13 +9,13 @@ import { AqaryButton } from 'components/Elements/AqaryButton';
 import Table from 'components/Table/Table';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getBlockedCompanies, updateCompanyStatus } from 'store/slices/company-section/action/company';
+import { getBlockedCompanies, restoreCompany } from 'store/slices/company-section/action/company';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
-// ===========================|| International Company Managment list||=========================== //
+// ===========================|| Blocked Company list||=========================== //
 
 const ColumnHeaders = [
   {
@@ -45,7 +45,7 @@ const ColumnHeaders = [
           formData.append('company_id', row.original.ID);
           formData.append('status', 4);
           formData.append('company_type', row.original.CompanyMainType);
-          dispatch(updateCompanyStatus({ formData, id: row.original.ID }));
+          dispatch(restoreCompany({ formData, id: row.original.ID }));
         }}
       >
         Restore

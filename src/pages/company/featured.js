@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { getFeaturedCompanies } from 'store/slices/company-section/action/company';
 import { useSelector } from 'react-redux';
 
-// ===========================|| International Company Managment list||=========================== //
+// ===========================|| featured Company list||=========================== //
 
 const ColumnHeaders = [
   {

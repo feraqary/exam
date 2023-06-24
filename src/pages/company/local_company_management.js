@@ -146,9 +146,6 @@ const ColumnHeaders = [
           >
             Block
           </Button>
-          <Button variant="contained" startIcon={<KeyIcon />}>
-            Reset
-          </Button>
 
           <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
             <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>

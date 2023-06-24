@@ -18,7 +18,8 @@ import {
   updateCompanyRank,
   getBlockedCompanies,
   restoreCompany,
-  blockCompany
+  blockCompany,
+  getBlockedCompany
 } from '../action/company';
 
 import { toast } from 'react-toastify';
@@ -31,6 +32,7 @@ const initialState = {
   internationalCompanies: [],
   companyTypes: [],
   mainServices: [],
+  features: [],
   services: [],
   featuredCompanies: [],
   blockedCompanies: [],
@@ -219,6 +221,7 @@ const slice = createSlice({
       .addCase(getInternationalCompanies.pending, (state) => {
         state.loading = true;
         state.error = null;
+
         state.internationalCompanies = state.localCompanies;
       })
       .addCase(getInternationalCompanies.fulfilled, (state, action) => {
@@ -248,29 +251,45 @@ const slice = createSlice({
         state.error = action.payload.error;
       })
 
-      .addCase(updateSubService.pending, (state) => {
+      //get Blocked Company
+      .addCase(getBlockedCompany.pending, (state) => {
         state.loading = true;
-        state.services = state.services;
+        state.blocks = state.blocks;
         state.error = null;
       })
-
-      .addCase(updateSubService.fulfilled, (state, action) => {
-        console.log('payload', action.payload);
+      .addCase(getBlockedCompany.fulfilled, (state, action) => {
         state.loading = false;
-        state.services = state.services.map((item) => {
-          if (item.id === action.payload.data.id && item.main_services_id === action.payload.data.main_services_id) {
-            return action.payload.data;
-          }
-          return item;
-        });
+        state.blocks = action.payload.data;
         state.error = null;
       })
-
-      .addCase(updateSubService.rejected, (state, action) => {
+      .addCase(getBlockedCompany.rejected, (state, action) => {
         state.loading = false;
-        state.services = state.services;
+        state.blocks = state.blocks;
         state.error = action.payload.error;
       })
+      // .addCase(updateSubService.pending, (state) => {
+      //   state.loading = true;
+      //   state.services = state.services;
+      //   state.error = null;
+      // })
+
+      // .addCase(updateSubService.fulfilled, (state, action) => {
+      //   console.log('payload', action.payload);
+      //   state.loading = false;
+      //   state.services = state.services.map((item) => {
+      //     if (item.id === action.payload.data.id && item.main_services_id === action.payload.data.main_services_id) {
+      //       return action.payload.data;
+      //     }
+      //     return item;
+      //   });
+      //   state.error = null;
+      // })
+
+      // .addCase(updateSubService.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.services = state.services;
+      //   state.error = action.payload.error;
+      // })
 
       .addCase(deleteService.pending, (state) => {
         state.deleting = true;
