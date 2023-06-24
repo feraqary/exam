@@ -14,26 +14,21 @@ import {
   updateCompanyType,
   updateSubService,
   DeleteSubService,
-
   getFeaturedCompanies,
   updateCompanyRank,
   getBlockedCompanies,
   restoreCompany,
   blockCompany,
-
   updateCompanyStatus,
   updateMainService,
-  deleteMainService,
-
+  deleteMainService
 } from '../action/company';
 
 import { toast } from 'react-toastify';
 
-
 import { ToastError, ToastSuccess } from 'utils/toast';
 
 import { deleteService, createServices, updateCompany } from 'store/slices/company-section/action/company';
-
 
 const initialState = {
   companies: [],
@@ -167,7 +162,6 @@ const slice = createSlice({
         state.error = action.error;
         state.mainService = state.mainService;
       })
-
 
       .addCase(createCompany.pending, (state) => {
         state.loading = true;
@@ -320,22 +314,6 @@ const slice = createSlice({
         state.error = action.payload.error;
       })
 
-      //get Blocked Company
-      .addCase(getBlockedCompany.pending, (state) => {
-        state.loading = true;
-        state.blocks = state.blocks;
-        state.error = null;
-      })
-      .addCase(getBlockedCompany.fulfilled, (state, action) => {
-        state.loading = false;
-        state.blocks = action.payload.data;
-        state.error = null;
-      })
-      .addCase(getBlockedCompany.rejected, (state, action) => {
-        state.loading = false;
-        state.blocks = state.blocks;
-        state.error = action.payload.error;
-      })
       // .addCase(updateSubService.pending, (state) => {
       //   state.loading = true;
       //   state.services = state.services;
@@ -436,9 +414,7 @@ const slice = createSlice({
       .addCase(getBlockedCompanies.rejected, (state, action) => {
         state.loading = false;
         state.blockedCompanies = state.blockedCompanies;
-
-
-      //  ======================================================================
+      })
       .addCase(deleteMainService.pending, (state) => {
         state.deleting = true;
         state.services = state.services;
@@ -446,7 +422,7 @@ const slice = createSlice({
       })
       .addCase(deleteMainService.fulfilled, (state, action) => {
         state.loading = false;
-        state.services =state.services.filter((service) => service.id !== action.payload);
+        state.services = state.services.filter((service) => service.id !== action.payload);
         state.deleting = false;
       })
       .addCase(deleteMainService.rejected, (state, action) => {
@@ -504,21 +480,15 @@ const slice = createSlice({
         state.error = action.payload;
         ToastError(state.error);
       })
-      .addCase(blockCompany.pending, (state, action) => {
-        state.loading = true;
-        state.error = null;
-        state.blockedCompanies = state.blockedCompanies;
-      })
+
       .addCase(blockCompany.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        state.blockedCompanies = state.blockedCompanies;
         ToastSuccess('Company Blocked Successfully');
       })
       .addCase(blockCompany.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.blockedCompanies = state.blockedCompanies;
+        // state.blockedCompanies = state.blockedCompanies;
+        ToastError(state.error);
       });
   }
 });

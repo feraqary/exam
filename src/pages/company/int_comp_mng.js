@@ -178,13 +178,8 @@ const ColumnHeaders = [
             Reset
           </Button>
 
-<<<<<<< HEAD
-          <Dialog fullScreen open={editOpen} onClose={handleEditClose} TransitionComponent={Transition}>
-            <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleEditClose}>
-=======
           <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
             <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
->>>>>>> db71f15e763ee878d5fd9745ffa8c833068015a2
               <IconButton>
                 <CloseIcon />
               </IconButton>

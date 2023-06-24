@@ -74,7 +74,7 @@ const validationSchema = Yup.object({
   subCommunity: objectValidator(),
   officeAddress: stringValidator('Please provide a valid office address'),
   mapUrl: stringValidator('Please provide a valid map url').url(),
-  place: Yup.array().required('Please provide a valid address or place'),
+  // place: Yup.array().required('Please provide a valid address or place'),
   lat: numberValidator('Latitude is missing'),
   long: numberValidator('Longitude is missing'),
   companyWebsite: stringValidator('Please provid a valid company website').url(),
@@ -267,111 +267,7 @@ function ColumnsLayouts() {
               companyCoverImage: '',
               adminProfilePicture: ''
             }}
-            validationSchema={Yup.object({
-              companyType: Yup.object().typeError().required('Mandatory selection'),
-              subCompanyType: Yup.object().typeError().required('Mandatory Selection'),
-              mainService: Yup.object().typeError().required('Mandatory selection'),
-              service: Yup.object().typeError().required('Mandatory selection'),
-              companyName: Yup.string().trim().required('Please provide a company name'),
-              companyTagline: Yup.string().trim().required('Please provide a company tagline'),
-              reraNo: Yup.string().trim().required('Please provide a valid reara number'),
-              reraExpiryDate: Yup.date().required('Please select an expiration date'),
-              billingReference: Yup.string().trim().required('please provide a valid bill reference'),
-              vatNo: Yup.string().trim().required('Please provide a valid vat number'),
-              vatStatus: Yup.string().required('Please select your vat status'),
-              country: Yup.object().typeError().required('Mandatory selection'),
-              state: Yup.object().typeError().required('Mandatory selection'),
-              city: Yup.object().typeError().required('Mandatory selection'),
-              community: Yup.object().typeError().required('Mandatory selection'),
-              subCommunity: Yup.object().typeError().required('Mandatory selection'),
-              officeAddress: Yup.string().trim().required('Please provide a valid office address'),
-              mapUrl: Yup.string().url().trim().required('Please provide a valid map url'),
-              place: Yup.array().required('Please provide a valid address or place'),
-              lat: Yup.number().required('Latitude is missing'),
-              long: Yup.number().required('Longitude is missing'),
-              companyWebsite: Yup.string().url().trim().required('Please provid a valid company website'),
-              companyEmailAddress: Yup.string().email().trim().required('Please provide a valid company email address'),
-              companyContactNumber: Yup.string().trim().required('Please provide a valid company contact number'),
-              companyDescription: Yup.string().trim().required('Please provide a company description'),
-              lisenceNo: Yup.string().trim().required('Please provide a valid liscence number'),
-              lisenceExpiryDate: Yup.date().required('Please select an expiration date'),
-              facebook: Yup.string().trim().required('Please provide your facebook profile'),
-              instagram: Yup.string().trim().required('Please provide your instagram profile'),
-              linkedin: Yup.string().trim().required('Please provide your linkedin profile'),
-              twitter: Yup.string().trim().required('Please provide your twitter profile'),
-              firstName: Yup.string().trim().required('Please provide your first name'),
-              lastName: Yup.string().trim().required('Please provide your last name'),
-              emailAddress: Yup.string().trim().email().required('Please provide a valid email address'),
-              phoneNumber: Yup.string().trim().required('Please provide a valid phone number'),
-              numberOfEmployees: Yup.number()
-                .min(0, 'Please provide a valid number. number must be greater than 0')
-                .required('Please enter the number of employees'),
-              subscriptionDuration: Yup.string().trim().required('Please select a subscription duration'),
-              subscriptionStartDate: Yup.date().required('Please select a subscription start date'),
-              subscriptionEndDate: Yup.date().required('Please select a subscription end date'),
-              ibanNumber: Yup.string().trim().required('Please provide a valid IBAN number'),
-              currency: Yup.object().typeError().required('Mandatory selection'),
-              accountCountry: Yup.object().typeError().required('Mandatory selection'),
-              bankName: Yup.string().trim().required('Please provide a bank name'),
-              bankBranch: Yup.string().trim().required('Please provide a bank branch'),
-              swiftCode: Yup.string().trim().required('Please provide a swift code'),
-              cardNumber: Yup.string()
-                .trim()
-                .test('TEST_CREDIT_NUMBER', 'Credit number is invalid', (value) => valid.number(value).isValid),
-
-              cardName: Yup.string()
-                .trim()
-                .test('CREDIT_CARD_NAME', 'Please provide a valid name', (value) => valid.cardholderName(value).isValid),
-
-              adminProfilePicture: Yup.mixed()
-                .required('Please provide a logo image')
-                .test(
-                  'FILE_SIZE',
-                  'Uploaded file is too big. File size must not exceed 1MB',
-                  (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                )
-                .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type)),
-              companyLogo: Yup.mixed()
-                .required('Please provide a logo image')
-                .test(
-                  'FILE_SIZE',
-                  'Uploaded file is too big. File size must not exceed 1MB',
-                  (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                )
-                .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type)),
-              companyCoverImage: Yup.mixed()
-                .required('Please provide a logo image')
-                .test(
-                  'FILE_SIZE',
-                  'Uploaded file is too big. File size must not exceed 1MB',
-                  (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                )
-                .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type)),
-              vatFile: Yup.mixed()
-                .required('Please provide a logo image')
-                .test(
-                  'FILE_SIZE',
-                  'Uploaded file is too big. File size must not exceed 1MB',
-                  (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                )
-                .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type)),
-              reraFile: Yup.mixed()
-                .required('Please provide a logo image')
-                .test(
-                  'FILE_SIZE',
-                  'Uploaded file is too big. File size must not exceed 1MB',
-                  (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                )
-                .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && ['application/pdf'].includes(value.type)),
-              lisenceFile: Yup.mixed()
-                .required('Please provide a logo image')
-                .test(
-                  'FILE_SIZE',
-                  'Uploaded file is too big. File size must not exceed 1MB',
-                  (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                )
-                .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && ['application/pdf'].includes(value.type))
-            })}
+            validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               submitForm(values);
               setSubmitting(false);
