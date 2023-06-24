@@ -102,8 +102,8 @@ function MainService() {
                 <Grid container lg={12} xs={12} justifyContent="center" gap={3}>
                   <AutoCompleteSelector
                     style={{ xs: 12, lg: 8 }}
-                    label="Sub CompanyTypes"
-                    placeholder="Sub CompanyTypes"
+                    label="Choose Sub Company Type"
+                    placeholder="Choose Sub Company Type"
                     options={companyTypes?.map((company) => {
                       return { label: company.title, ...company };
                     })}
@@ -113,8 +113,8 @@ function MainService() {
                   />
 
                   <InputText
-                    label="Main Service Name"
-                    placeholder="Enter Main Service Name"
+                    label="Add Main Service Name"
+                    placeholder="Add Main Service Name"
                     helperText="Please enter main service name"
                     style={{ xs: 12, lg: 8 }}
                     type="text"

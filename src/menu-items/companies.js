@@ -62,6 +62,14 @@ const companies = {
     },
 
     {
+      id: 'add-company',
+      title: <FormattedMessage id="Add Sub-Developer Companies" />,
+      type: 'item',
+      url: '/company/add_sub_developer',
+      icon: icons.IconUserCheck
+    },
+
+    {
       id: 'add_company_types',
       title: <FormattedMessage id="Add Sub-Company Types" />,
       type: 'item',

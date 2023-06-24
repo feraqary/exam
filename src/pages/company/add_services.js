@@ -79,8 +79,8 @@ function Service() {
                 <Grid container lg={12} xs={12} justifyContent="center" gap={3}>
                   <AutoCompleteSelector
                     style={{ xs: 12, lg: 8 }}
-                    label="Main Services"
-                    placeholder="Main Services"
+                    label="Choose Main Services"
+                    placeholder="Choose Main Services"
                     options={mainServices.map((service) => {
                       return { label: service.title, ...service };
                     })}
@@ -90,8 +90,8 @@ function Service() {
                   />
 
                   <InputText
-                    label="Service Name"
-                    placeholder="Enter Service Name"
+                    label="Add Service Name"
+                    placeholder="Add Service Name"
                     helperText="Please enter service name"
                     style={{ xs: 12, lg: 8 }}
                     type="text"
