@@ -3,19 +3,16 @@ import { Grid, Box, Button } from '@mui/material';
 import Image from 'next/image';
 import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 
 // project imports
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import Edit_service from './helper_components/edit_services';
 import { getAllMainServices, deleteMainService } from 'store/slices/company-section/action/company';
@@ -126,10 +123,10 @@ const ColumnHeaders = [
             Delete
           </Button>
         </Box>
-      )
+      );
     }
   }
-  ]
+];
 
 function ManageServices() {
   const dispatch = useDispatch();
