@@ -78,8 +78,8 @@ function CompanyType() {
                 <Grid container lg={12} xs={12} justifyContent="center" gap={3}>
                   <AutoCompleteSelector
                     style={{ xs: 12, lg: 8 }}
-                    label="Company Type"
-                    placeholder="Company Type"
+                    label="Choose Company Type"
+                    placeholder="Choose Company Type"
                     options={roles}
                     id="companyType"
                     name="companyType"
@@ -87,8 +87,8 @@ function CompanyType() {
                   />
 
                   <InputText
-                    label="Company Sub Type Name"
-                    placeholder="Enter Company Sub Type Name"
+                    label="Add Sub Company Type Name"
+                    placeholder="Add Sub Company Type Name"
                     helperText="Please enter company sub type name"
                     style={{ xs: 12, lg: 8 }}
                     type="text"

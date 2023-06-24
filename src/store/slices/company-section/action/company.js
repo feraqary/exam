@@ -1,5 +1,4 @@
 import { api } from 'utils/axios';
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
   'v2.local.5Y_Uhdj_pMf333G2uvCFzBy8Ddg4fAs3qqHGoeKw2Euv3_ni9gtnf0P6_n_f-G_8tiUwUxCSrPEecVxpOFDvzxDvwbHhChHQcZd6_fkpaOMQ2GpIb3rTwM3giRJ1gMbhd8Q6XqXZRbFF271NZd_n5XLmsRu7Vd4iMKlnzWt-GSy5M-6YutivP4lIvigvEUWlQB7rviogx0kUGDHDHiiAOFZXQbmIE0wBrTiHASH64_qtkcgSXgcBq-A6DOdzuRZ8KDR6J1upzoe5bMgrdFdFv1Q.bnVsbA';
@@ -116,28 +115,63 @@ export const createCompany = createAsyncThunk('company/createCompany', async (fo
 export const updateSubService = createAsyncThunk('subService/Updatesubservice', async ({ id, formData }, { rejectWithValue }) => {
   try {
     const response = await api.put(`${baseurl}/api/services/updateservice/${id}`, formData, config);
-    console.log('response', response.data);
-    console.log('id', id);
-    console.log('formData', formData);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.error);
   }
 });
 
-export const createServices = createAsyncThunk('services/createServices', async ({ formData }, { rejectWithValue }) => {
+export const deleteService = createAsyncThunk('services/deleteService', async (serviceId, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${baseurl}/api/services/createservices/100`, formData);
+    await api.delete(`${baseurl}/api/services/deleteservice/${serviceId}`);
+    return serviceId;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const getFeaturedCompanies = createAsyncThunk('companies/getFeaturedCompanies', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByRank/2`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
 });
 
-export const deleteService = createAsyncThunk('services/deleteService', async (serviceId, { rejectWithValue }) => {
+export const updateCompanyRank = createAsyncThunk('companies/updateCompanyRank', async (formData, { rejectWithValue }) => {
   try {
-    await axios.delete(`${baseurl}/api/services/deleteservice/${serviceId}`);
-    return serviceId;
+    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyRank`, formData, config);
+    return response;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const getBlockedCompanies = createAsyncThunk('companies/getBlockedCompanies', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByStatus/5`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const restoreCompany = createAsyncThunk('companies/restoreCompany', async ({ formData, id }, { rejectWithValue }) => {
+  try {
+    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
+    response.data.id = id;
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const blockCompany = createAsyncThunk('companies/blockCompany', async ({ formData, id }, { rejectWithValue }) => {
+  try {
+    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
+    response.data.id = id;
+    return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
   }

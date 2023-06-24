@@ -64,10 +64,7 @@ const AutoCompleteSelector = ({ style, label, id, name, options, placeholder, fu
 
 export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, placeholder, func, helperText, ...rest }) => {
   const [field, meta] = useField(rest);
-  const { touched, values, errors, setFieldValue } = useFormikContext();
-
-  console.log(values);
-
+  const { touched, values, setFieldValue } = useFormikContext();
   return (
     <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
@@ -84,20 +81,23 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
         id={id}
         options={options}
         multiple
-        freesolo
+        getOptionDisabled={(option) => {
+          const selectedValues = values[name];
+          return selectedValues.some((selectedValue) => selectedValue.id === option.id);
+        }}
         limitTags={2}
-        onChange={(e, values, reason) => {
+        onChange={(e, value, reason) => {
           if (reason === 'clear') {
             setFieldValue(name, []);
           } else {
-            setFieldValue(name, values);
+            setFieldValue(name, value);
           }
           if (func) {
-            func(values);
+            func(value);
           }
         }}
         value={values[name]}
-        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[name] && !!meta.error} />}
+        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[name] && meta.error} />}
       />
       {helperText && meta.error && touched[name] ? (
         <FormHelperText error={true}>{meta.error}</FormHelperText>
