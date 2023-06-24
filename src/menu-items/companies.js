@@ -60,18 +60,10 @@ const companies = {
       url: '/company/add_comp',
       icon: icons.IconUserCheck
     },
-    {
-      id: 'add-company',
-      title: <FormattedMessage id="Add Sub-Developer Companies" />,
-      type: 'item',
-      url: '/company/add_sub_developer',
-      icon: icons.IconUserCheck
-
-    },
 
     {
       id: 'add_company_types',
-      title: <FormattedMessage id="Add Sub Company Types" />,
+      title: <FormattedMessage id="Add Sub-Company Types" />,
       type: 'item',
       icon: icons.IconLayoutGridAdd,
       url: '/company/add_type'
@@ -106,7 +98,7 @@ const companies = {
     },
     {
       id: 'Place_holder',
-      title: <FormattedMessage id="All Companies" />,
+      title: <FormattedMessage id="View All Companies" />,
       type: 'item',
       icon: icons.IconLayoutGrid,
       url: '/company/placeHolderName'
@@ -167,13 +159,6 @@ const companies = {
       type: 'item',
       icon: icons.IconLayoutKanban,
       url: '/company/payments'
-    },
-    {
-      id: 'second-phase',
-      title: <FormattedMessage id="reg" />,
-      type: 'item',
-      icon: icons.IconMail,
-      url: '/company/company_reg'
     },
     {
       id: 'priviliges',
