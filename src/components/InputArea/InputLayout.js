@@ -19,7 +19,7 @@ import React from 'react';
  * @returns {JSX.Element} The rendered InputLayout component.
  */
 
-const InputLayout = ({ label, helperText, style, required, metaError, metaTouched, children }) => {
+const InputLayout = ({ label, helperText, style, children, required,metaError, metaTouched, helperInfo }) => {
   return (
     <Grid item xs={style.xs} lg={style.lg}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
