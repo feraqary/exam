@@ -62,14 +62,6 @@ const companies = {
     },
 
     {
-      id: 'add-company',
-      title: <FormattedMessage id="Add Sub-Developer Companies" />,
-      type: 'item',
-      url: '/company/add_sub_developer',
-      icon: icons.IconUserCheck
-    },
-
-    {
       id: 'add_company_types',
       title: <FormattedMessage id="Add Sub-Company Types" />,
       type: 'item',
@@ -90,20 +82,8 @@ const companies = {
       icon: icons.IconLayoutGrid,
       url: '/company/manage_type'
     },
-    {
-      id: 'add_main_services',
-      title: <FormattedMessage id="Add Main Services" />,
-      type: 'item',
-      icon: IconClipboardPlus,
-      url: '/company/add_main_services'
-    },
-    {
-      id: 'add_services',
-      title: <FormattedMessage id="Add Sub Services" />,
-      type: 'item',
-      icon: icons.IconClipboardPlus,
-      url: '/company/add_services'
-    },
+    
+    
     {
       id: 'Place_holder',
       title: <FormattedMessage id="View All Companies" />,
