@@ -66,7 +66,6 @@ const companies = {
       type: 'item',
       url: '/company/add_sub_developer',
       icon: icons.IconUserCheck
-
     },
 
     {

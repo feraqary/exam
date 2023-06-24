@@ -12,22 +12,28 @@ import {
   getAllServices,
   getMainServices,
   updateCompanyType,
-
   updateSubService,
   DeleteSubService,
+
+  getFeaturedCompanies,
+  updateCompanyRank,
+  getBlockedCompanies,
+  restoreCompany,
+  blockCompany,
+
   updateCompanyStatus,
   updateMainService,
   deleteMainService,
 
-
-  getFeaturedCompany,
-  getBlockedCompany
-
-
 } from '../action/company';
 
 import { toast } from 'react-toastify';
+
+
+import { ToastError, ToastSuccess } from 'utils/toast';
+
 import { deleteService, createServices, updateCompany } from 'store/slices/company-section/action/company';
+
 
 const initialState = {
   companies: [],
@@ -37,71 +43,11 @@ const initialState = {
   mainServices: [],
   features: [],
   services: [],
-  blocks: [],
+  featuredCompanies: [],
+  blockedCompanies: [],
   companyType: null,
   service: null,
   company: null,
-  companyInformation: {
-    companyDetails: {
-      companyType: null,
-      subCompanyType: null,
-      mainService: null,
-      service: null,
-      companyName: '',
-      companyTagline: '',
-      reraNo: '',
-      licenseNo: '',
-      licenseExpiry: '',
-      vatNo: '',
-      vatStatus: ''
-    },
-    billingAddressInformation: {
-      community: '',
-      officeAddress: '',
-      billingReference: ''
-    },
-    companyLocation: {
-      mapUrl: '',
-      place: '',
-      state: '',
-      country: '',
-      lat: '',
-      long: ''
-    },
-    socialMedia: {
-      facebook: '',
-      twitter: '',
-      instagram: '',
-      linkedin: ''
-    },
-    adminContactInformation: {
-      firstName: '',
-      lastName: '',
-      emailAddress: '',
-      phoneNumber: '',
-      numberOfEmployees: '',
-      subscriptionDuration: '',
-      subscriptionStartDate: '',
-      subscriptionEndDate: ''
-    },
-    bankAccountDetails: {
-      accountNumber: '',
-      accountName: '',
-      ibanNumber: '',
-      currency: '',
-      country: '',
-      bankName: '',
-      bankBranch: '',
-      swiftCode: ''
-    },
-
-    companyPresentation: {
-      companyWebsite: '',
-      companyEmail: '',
-      companyContactNumber: '',
-      companyDescription: ''
-    }
-  },
   mainService: null,
   loading: false,
   error: null
@@ -110,148 +56,7 @@ const initialState = {
 const slice = createSlice({
   name: 'companies',
   initialState,
-  reducers: {
-    setCompany: (state, action) => {
-      state.company = action.payload;
-    },
-    setMainService: (state, action) => {
-      state.mainService = action.payload;
-    },
-    setCompanyType: (state, action) => {
-      state.companyType = action.payload;
-    },
-    setMainCompanyType: (state, action) => {
-      state.companyInformation.companyDetails.companyType = action.payload;
-    },
-    setSubCompanyType: (state, action) => {
-      state.companyInformation.companyDetails.subCompanyType = action.payload;
-    },
-    setCompanyMainService: (state, action) => {
-      state.companyInformation.companyDetails.mainService = action.payload;
-    },
-    setCompanyService: (state, action) => {
-      state.companyInformation.companyDetails.service = action.payload;
-    },
-    setCompanyName: (state, action) => {
-      console.log(action);
-      state.companyInformation.companyDetails.companyName = action.payload;
-    },
-    setCompanyTagline: (state, action) => {
-      state.companyInformation.companyDetails.companyTagline = action.payload;
-    },
-    setCompanyReraNo: (state, action) => {
-      state.companyInformation.companyDetails.reraNo = action.payload;
-    },
-    setCompanyLicenseNo: (state, action) => {
-      state.companyInformation.companyDetails.licenseNo = action.payload;
-    },
-    setCompanyLicenseExpiry: (state, action) => {
-      state.companyInformation.companyDetails.licenseExpiry = action.payload;
-    },
-    setCompanyVatNo: (state, action) => {
-      state.companyInformation.companyDetails.vatNo = action.payload;
-    },
-    setCompanyVatStatus: (state, action) => {
-      state.companyInformation.companyDetails.vatStatus = action.payload;
-    },
-    setCompanyCommunity: (state, action) => {
-      state.companyInformation.billingAddressInformation.community = action.payload;
-    },
-    setCompanyOfficeAddress: (state, action) => {
-      state.companyInformation.billingAddressInformation.officeAddress = action.payload;
-    },
-    setCompanyBillingReference: (state, action) => {
-      state.companyInformation.billingAddressInformation.billingReference = action.payload;
-    },
-    setCompanyLocationMapUrl: (state, action) => {
-      state.companyInformation.companyLocation.mapUrl = action.payload;
-    },
-
-    setCompanyLocationPlace: (state, action) => {
-      state.companyInformation.companyLocation.place = action.payload;
-    },
-    setCompanyLocationState: (state, action) => {
-      state.companyInformation.companyLocation.state = action.payload;
-    },
-    setCompanyLocationCountry: (state, action) => {
-      state.companyInformation.companyLocation.country = action.payload;
-    },
-    setCompanyLocationLat: (state, action) => {
-      state.companyInformation.companyLocation.lat = action.payload;
-    },
-    setCompanyLocationLong: (state, action) => {
-      state.companyInformation.companyLocation.long = action.payload;
-    },
-    setCompanySocialMediaFacebook: (state, action) => {
-      state.companyInformation.socialMedia.facebook = action.payload;
-    },
-    setCompanySocialMediaTwitter: (state, action) => {
-      state.companyInformation.socialMedia.twitter = action.payload;
-    },
-    setCompanySocialMediaInstagram: (state, action) => {
-      state.companyInformation.socialMedia.instagram = action.payload;
-    },
-    setCompanySocialMediaLinkedIn: (state, action) => {
-      state.companyInformation.socialMedia.linkedin = action.payload;
-    },
-    setCompanyPresentationCompanyWebsite: (state, action) => {
-      state.companyInformation.companyPresentation.companyWebsite = action.payload;
-    },
-    setCompanyPresentationCompanyEmail: (state, action) => {
-      state.companyInformation.companyPresentation.companyEmail = action.payload;
-    },
-    setCompanyPresentationCompanyContactNumber: (state, action) => {
-      state.companyInformation.companyPresentation.companyContactNumber = action.payload;
-    },
-    setCompanyPresentationCompanyDescription: (state, action) => {
-      state.companyInformation.companyPresentation.companyDescription = action.payload;
-    },
-    setCompanyAdminContactInformationFirstName: (state, action) => {
-      state.companyInformation.adminContactInformation.firstName = action.payload;
-    },
-    setCompanyAdminContactInformationLastName: (state, action) => {
-      state.companyInformation.adminContactInformation.lastName = action.payload;
-    },
-    setCompanyAdminContactInformationEmailAddress: (state, action) => {
-      state.companyInformation.adminContactInformation.emailAddress = action.payload;
-    },
-    setCompanyAdminContactInfromationPhoneNumber: (state, action) => {
-      state.companyInformation.adminContactInformation.phoneNumber = action.payload;
-    },
-    setCompanyAdminContactInformationSubscriptionDuration: (state, action) => {
-      state.companyInformation.adminContactInformation.subscriptionDuration = action.payload;
-    },
-    setCompanyAdminContactInformationSubscriptionDurationStartDate: (state, action) => {
-      state.companyInformation.adminContactInformation.subscriptionStartDate = action.payload;
-    },
-    setCompanyAdminContactInformationSubscriptionDurationEndDate: (state, action) => {
-      state.companyInformation.adminContactInformation.subscriptionEndDate = action.payload;
-    },
-    setCompanyBankAccountDetailsAccountNumber: (state, action) => {
-      state.companyInformation.bankAccountDetails.accountNumber = action.payload;
-    },
-    setCompanyBankAccountDetailsAccountName: (state, action) => {
-      state.companyInformation.bankAccountDetails.accountNumber = action.payload;
-    },
-    setCompanyBankAccountDetailsIbanNumber: (state, action) => {
-      state.companyInformation.bankAccountDetails.ibanNumber = action.payload;
-    },
-    setCompanyBankAccountDetailsCurrency: (state, action) => {
-      state.companyInformation.bankAccountDetails.currency = action.payload;
-    },
-    setCompanyBankAccountDetailsCountry: (state, action) => {
-      state.companyInformation.bankAccountDetails.country = action.payload;
-    },
-    setCompanyBankAccountDetailsBankName: (state, action) => {
-      state.companyInformation.bankAccountDetails.bankName = action.payload;
-    },
-    setCompanyBankAccountDetailsBankBranch: (state, action) => {
-      state.companyInformation.bankAccountDetails.bankBranch = action.payload;
-    },
-    setCompanyBankAccountDetailsSwiftCode: (state, action) => {
-      state.companyInformation.bankAccountDetails.swiftCode = action.payload;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(createCompanyType.pending, (state) => {
@@ -263,31 +68,15 @@ const slice = createSlice({
         state.loading = false;
         state.error = null;
         state.companyTypes = [...state.companyTypes, action.payload.data];
-        toast.success('Added Successfully', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
+
+        ToastSuccess('Added Successfully');
       })
       .addCase(createCompanyType.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
         state.companyTypes = state.companyTypes;
-        toast.error(`${state.error}`, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
+
+        ToastError(state.error);
       })
       // update company types=================================================================================================
       .addCase(updateCompanyType.pending, (state) => {
@@ -334,32 +123,16 @@ const slice = createSlice({
         state.loading = false;
         state.mainServices = [...state.mainServices, action.payload.data];
         state.error = null;
-        toast.success('Added Successfully', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
+
+        ToastSuccess('Added Successfully');
       })
 
       .addCase(createMainService.rejected, (state, action) => {
         state.loading = false;
         state.mainServices = state.mainServices;
         state.error = action.payload.error;
-        toast.error(`${state.error}`, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
+
+        ToastError(state.error);
       })
       // get all main services=================================================================================================
       .addCase(getAllMainServices.pending, (state) => {
@@ -393,6 +166,27 @@ const slice = createSlice({
         state.loading = false;
         state.error = action.error;
         state.mainService = state.mainService;
+      })
+
+
+      .addCase(createCompany.pending, (state) => {
+        state.loading = true;
+        state.companies = state.companies;
+        state.error = null;
+      })
+      .addCase(createCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.companies = [...state.companies, action.payload.data];
+
+        ToastSuccess('Company Added Successfully');
+      })
+      .addCase(createCompany.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
+        state.companies = state.companies;
+
+        ToastError(state.error);
       })
 
       // .addCase(createCompany.pending, (state) => {
@@ -452,6 +246,7 @@ const slice = createSlice({
       //   state.error = action.payload.error;
       //   state.companies = state.companies;
       // })
+
       // create service
 
       .addCase(createService.pending, (state) => {
@@ -464,32 +259,16 @@ const slice = createSlice({
         state.loading = false;
         state.error = null;
         state.services = [...state.services, action.payload.data];
-        toast.success('Added Successfully', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
+
+        ToastSuccess('Added Successfully');
       })
 
       .addCase(createService.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
         state.services = state.services;
-        toast.error(`${state.error}`, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
+
+        ToastError(state.error);
       })
 
       .addCase(getLocalCompanies.pending, (state) => {
@@ -513,12 +292,11 @@ const slice = createSlice({
         state.error = null;
 
         state.internationalCompanies = state.localCompanies;
-
       })
       .addCase(getInternationalCompanies.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.internationalCompanies = action.payload.data;
+        state.internationalCompanies = action.payload.data || [];
       })
       .addCase(getInternationalCompanies.rejected, (state, action) => {
         state.loading = false;
@@ -542,24 +320,6 @@ const slice = createSlice({
         state.error = action.payload.error;
       })
 
-
-      //get company features
-      .addCase(getFeaturedCompany.pending, (state) => {
-        state.loading = true;
-        state.features = state.features;
-        state.error = null;
-      })
-      .addCase(getFeaturedCompany.fulfilled, (state, action) => {
-        state.loading = false;
-        state.features = action.payload.data;
-        state.error = null;
-      })
-      .addCase(getFeaturedCompany.rejected, (state, action) => {
-        state.loading = false;
-        state.features = state.features;
-        state.error = action.payload.error;
-      })
-
       //get Blocked Company
       .addCase(getBlockedCompany.pending, (state) => {
         state.loading = true;
@@ -576,29 +336,29 @@ const slice = createSlice({
         state.blocks = state.blocks;
         state.error = action.payload.error;
       })
-      .addCase(updateSubService.pending, (state) => {
-        state.loading = true;
-        state.services = state.services;
-        state.error = null;
-      })
+      // .addCase(updateSubService.pending, (state) => {
+      //   state.loading = true;
+      //   state.services = state.services;
+      //   state.error = null;
+      // })
 
-      .addCase(updateSubService.fulfilled, (state, action) => {
-        console.log('payload', action.payload);
-        state.loading = false;
-        state.services = state.services.map((item) => {
-          if (item.id === action.payload.data.id && item.main_services_id === action.payload.data.main_services_id) {
-            return action.payload.data;
-          }
-          return item;
-        });
-        state.error = null;
-      })
+      // .addCase(updateSubService.fulfilled, (state, action) => {
+      //   console.log('payload', action.payload);
+      //   state.loading = false;
+      //   state.services = state.services.map((item) => {
+      //     if (item.id === action.payload.data.id && item.main_services_id === action.payload.data.main_services_id) {
+      //       return action.payload.data;
+      //     }
+      //     return item;
+      //   });
+      //   state.error = null;
+      // })
 
-      .addCase(updateSubService.rejected, (state, action) => {
-        state.loading = false;
-        state.services = state.services;
-        state.error = action.payload.error;
-      })
+      // .addCase(updateSubService.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.services = state.services;
+      //   state.error = action.payload.error;
+      // })
 
       // ==============================================================
       .addCase(updateMainService.pending, (state) => {
@@ -639,6 +399,44 @@ const slice = createSlice({
         state.services = state.services;
         state.error = action.payload;
       })
+
+      .addCase(getFeaturedCompanies.pending, (state) => {
+        state.loading = true;
+        state.featuredCompanies = state.featuredCompanies;
+        state.error = null;
+      })
+      .addCase(getFeaturedCompanies.fulfilled, (state, action) => {
+        state.loading = false;
+        state.featuredCompanies = action.payload.data || [];
+        state.error = null;
+      })
+      .addCase(getFeaturedCompanies.rejected, (state, action) => {
+        state.loading = false;
+        state.featuredCompanies = state.featuredCompanies;
+        state.error = action.payload;
+      })
+      .addCase(updateCompanyRank.fulfilled, () => {
+        ToastSuccess('Updated Successfully');
+      })
+      .addCase(updateCompanyRank.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        ToastError(state.error);
+      })
+      .addCase(getBlockedCompanies.pending, (state) => {
+        state.loading = true;
+        state.blockedCompanies = state.blockedCompanies;
+        state.error = null;
+      })
+      .addCase(getBlockedCompanies.fulfilled, (state, action) => {
+        state.loading = false;
+        state.blockedCompanies = action.payload.data || [];
+        state.error = null;
+      })
+      .addCase(getBlockedCompanies.rejected, (state, action) => {
+        state.loading = false;
+        state.blockedCompanies = state.blockedCompanies;
+
 
       //  ======================================================================
       .addCase(deleteMainService.pending, (state) => {
@@ -688,59 +486,43 @@ const slice = createSlice({
       .addCase(updateCompanyStatus.rejected, (state, action) => {
         state.deleting = false;
         state.status = state.status;
-        state.error = action.payload;
-      });
 
+        state.error = action.payload;
+      })
+      .addCase(restoreCompany.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(restoreCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.blockedCompanies = state.blockedCompanies.filter((company) => company.ID !== action.payload.id);
+        ToastSuccess('Restored Successfully');
+      })
+      .addCase(restoreCompany.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        ToastError(state.error);
+      })
+      .addCase(blockCompany.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+        state.blockedCompanies = state.blockedCompanies;
+      })
+      .addCase(blockCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.blockedCompanies = state.blockedCompanies;
+        ToastSuccess('Company Blocked Successfully');
+      })
+      .addCase(blockCompany.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.blockedCompanies = state.blockedCompanies;
+      });
   }
 });
 
 export default slice.reducer;
 
-export const {
-  setCompany,
-  setMainService,
-  setCompanyType,
-  setMainCompanyType,
-  setSubCompanyType,
-  setCompanyMainService,
-  setCompanyService,
-  setCompanyLicenseExpiry,
-  setCompanyLicenseNo,
-  setCompanyName,
-  setCompanyReraNo,
-  setCompanyTagline,
-  setCompanyVatNo,
-  setCompanyVatStatus,
-  setCompanyCommunity,
-  setCompanyBillingReference,
-  setCompanyOfficeAddress,
-  setCompanyLocationMapUrl,
-  setCompanyLocationCountry,
-  setCompanyLocationState,
-  setCompanyLocationLat,
-  setCompanyLocationLong,
-  setCompanyLocationPlace,
-  setCompanySocialMediaFacebook,
-  setCompanySocialMediaInstagram,
-  setCompanySocialMediaLinkedIn,
-  setCompanySocialMediaTwitter,
-  setCompanyPresentationCompanyWebsite,
-  setCompanyPresentationCompanyContactNumber,
-  setCompanyPresentationCompanyDescription,
-  setCompanyPresentationCompanyEmail,
-  setCompanyAdminContactInformationEmailAddress,
-  setCompanyAdminContactInformationFirstName,
-  setCompanyAdminContactInformationLastName,
-  setCompanyAdminContactInformationSubscriptionDuration,
-  setCompanyAdminContactInformationSubscriptionDurationEndDate,
-  setCompanyAdminContactInformationSubscriptionDurationStartDate,
-  setCompanyAdminContactInfromationPhoneNumber,
-  setCompanyBankAccountDetailsAccountName,
-  setCompanyBankAccountDetailsAccountNumber,
-  setCompanyBankAccountDetailsBankBranch,
-  setCompanyBankAccountDetailsBankName,
-  setCompanyBankAccountDetailsCountry,
-  setCompanyBankAccountDetailsCurrency,
-  setCompanyBankAccountDetailsIbanNumber,
-  setCompanyBankAccountDetailsSwiftCode
-} = slice.actions;
+export const {} = slice.actions;

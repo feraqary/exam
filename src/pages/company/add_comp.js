@@ -200,7 +200,9 @@ function ColumnsLayouts() {
     formData.append('swift_code', values.swiftCode);
     formData.append('rera_file_url', values.reraFile);
     formData.append('rera_expiry', values.reraExpiryDate);
-
+    values.service.forEach((ser) => {
+      formData.append('sub_service_type[]', ser?.id);
+    });
     dispatch(createCompany(formData));
   };
 
@@ -389,7 +391,6 @@ function ColumnsLayouts() {
           >
             {(props) => (
               <>
-                {console.log(props.values)}
                 <Container title="Add Company Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
                     <AutoCompleteSelector
@@ -579,7 +580,6 @@ function ColumnsLayouts() {
                       placeholder="Upload your VAT"
                       helperText="Please upload your VAT"
                       style={{ xs: 12, lg: 6 }}
-                      image={{ alt: 'VAT Preview', width: '250px', height: '250px' }}
                       ref={vatRef}
                       setFieldValue={props.setFieldValue}
                       id="vatFile"
@@ -727,7 +727,7 @@ function ColumnsLayouts() {
                         metaTouched={props.touched.place}
                       />
                     </InputLayout>
-                    <Map locationAddress={address} xs={12} lg={12} mapUrl={companyInformation.companyLocation.mapUrl} />
+                    <Map locationAddress={address} xs={12} lg={12} mapUrl={props.values.mapUrl} />
                   </Grid>
                 </Container>
 
