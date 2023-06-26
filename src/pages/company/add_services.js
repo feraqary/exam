@@ -6,7 +6,7 @@ import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 // assets
@@ -18,14 +18,21 @@ import Container from 'components/Elements/Container';
 import { createService, getAllMainServices } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
 import { Formik } from 'formik';
-
+import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 
 // ==============================|| Add Company Type form ||============================== //
 
-function Service() {
-  const FILE_SIZE = 1;
-  const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
+const validationSchema = Yup.object({
+  mainService: objectValidator(),
+  serviceName: stringValidator('Please provide a valid service name'),
+  description: stringValidator('Please provide a description'),
+  logoImage: fileValidator(SUPPORTED_FORMATS),
+  iconImage: fileValidator(SUPPORTED_FORMATS)
+});
+
+function Service() {
   const logoRef = useRef(null);
   const iconRef = useRef(null);
 
@@ -36,7 +43,6 @@ function Service() {
   useEffect(() => {
     dispatch(getAllMainServices());
   }, [dispatch]);
-
 
   return (
     <Page title="Add Sub Services">
@@ -52,27 +58,7 @@ function Service() {
                 logoImage: '',
                 iconImage: ''
               }}
-              validationSchema={Yup.object({
-                mainService: Yup.object().typeError().required('Mandatory selection'),
-                serviceName: Yup.string().trim().required('Please provide a valid service name'),
-                description: Yup.string().required('Please provide a description'),
-                logoImage: Yup.mixed()
-                  .required('Please provide a logo image')
-                  .test(
-                    'FILE_SIZE',
-                    'Uploaded file is too big. File size must not exceed 1MB',
-                    (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                  )
-                  .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type)),
-                iconImage: Yup.mixed()
-                  .required('Please provide an logo image')
-                  .test(
-                    'FILE_SIZE',
-                    'Uploaded file is too big. File size must not exceed 1MB',
-                    (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                  )
-                  .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type))
-              })}
+              validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 const formData = new FormData();
                 formData.append('title', values.serviceName);
@@ -82,11 +68,9 @@ function Service() {
                 formData.append('image_url', values.iconImage);
                 dispatch(createService(formData));
                 setSubmitting(false);
-                logoRef.current.value = '';
-                iconRef.current.value = '';
                 resetForm();
               }}
-              onReset={(values) => {
+              onReset={(_) => {
                 logoRef.current.value = '';
                 iconRef.current.value = '';
               }}
@@ -95,8 +79,8 @@ function Service() {
                 <Grid container lg={12} xs={12} justifyContent="center" gap={3}>
                   <AutoCompleteSelector
                     style={{ xs: 12, lg: 8 }}
-                    label="Main Services"
-                    placeholder="Main Services"
+                    label="Choose Main Services"
+                    placeholder="Choose Main Services"
                     options={mainServices.map((service) => {
                       return { label: service.title, ...service };
                     })}
@@ -106,8 +90,8 @@ function Service() {
                   />
 
                   <InputText
-                    label="Service Name"
-                    placeholder="Enter Service Name"
+                    label="Add Service Name"
+                    placeholder="Add Service Name"
                     helperText="Please enter service name"
                     style={{ xs: 12, lg: 8 }}
                     type="text"
@@ -156,7 +140,6 @@ function Service() {
                 </Grid>
               )}
             </Formik>
-
           </Grid>
         </Container>
       </Grid>

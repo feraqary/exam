@@ -9,8 +9,10 @@ import { gridSpacing } from 'store/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from 'components/Table/Table';
 import { getAllServices } from 'store/slices/company-section/action/company';
-import React, { useEffect, useState } from 'react';
-import Edit_Service from './helper_components/Edit_sub_service';
+import React, { useEffect, useState, useRef } from 'react';
+import Edit_Sub_Service from './helper_components/Edit_sub_service';
+import { deleteService } from 'store/slices/company-section/action/company';
+
 // ==============================|| Activities Project ||============================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -20,7 +22,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const ColumnHeaders = [
   {
     accessorKey: 'id',
-    header: '   SI NO'
+    header: 'SI NO'
   },
   {
     accessorKey: 'title',
@@ -35,7 +37,7 @@ const ColumnHeaders = [
     header: 'Icon',
     Cell: ({ cell }) => (
       <Box display="flex" alignItems="center">
-        <Image src={`/${cell.getValue()}`} width={60} height={30} style={{ objectFit: 'contain' }} />
+        <Image src={`http://20.203.31.58/upload/${cell.row.original.icon_url}`} width={60} height={30} style={{ objectFit: 'contain' }} />
       </Box>
     )
   },
@@ -44,7 +46,7 @@ const ColumnHeaders = [
     header: 'Image',
     Cell: ({ cell }) => (
       <Box display="flex" alignItems="center">
-        <Image src={`/${cell.getValue()}`} width={60} height={30} style={{ objectFit: 'contain' }} />
+        <Image src={`http://20.203.31.58/upload/${cell.row.original.image_url}`} width={60} height={30} style={{ objectFit: 'contain' }} />
       </Box>
     )
   },
@@ -54,16 +56,16 @@ const ColumnHeaders = [
     Cell: ({ renderedCellValue, row }) => {
       const [open, setOpen] = useState(false);
 
-      console.log(renderedCellValue, row);
-
       const handleClickOpen = () => {
         setOpen(true);
-        console.log(row.original);
+        console.log('sub: ', row.original);
       };
 
       const handleClose = () => {
         setOpen(false);
       };
+
+      const dispatch = useDispatch();
 
       return (
         <Box
@@ -79,19 +81,28 @@ const ColumnHeaders = [
           <Button variant="contained" onClick={handleClickOpen} color="primary">
             Edit
           </Button>
-          <Button variant="contained" color="error">
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => {
+              dispatch(deleteService(row.original.id));
+              console.log(row.original);
+            }}
+          >
             Delete
           </Button>
 
           <Dialog open={open} TransitionComponent={Transition} keepMounted onClose={handleClose} maxWidth="lg">
             <DialogTitle>{'Edit Sub Service'}</DialogTitle>
             <DialogContent>
-              <Edit_Service
+              <Edit_Sub_Service
                 desc={row.original.description}
                 iconUrl={row.original.icon_url}
+                imageUrl={row.original.image_url}
                 id={row.original.id}
-                main_services_id={row.original.main_services_id}
+                services_id={row.original.main_services_id}
                 title={row.original.title}
+                close={setOpen}
               />
             </DialogContent>
           </Dialog>
@@ -107,8 +118,11 @@ function SubService() {
 
   useEffect(() => {
     dispatch(getAllServices());
-    console.log('services: ', services);
   }, []);
+
+  useEffect(() => {
+    console.log('reload...................');
+  }, [services]);
 
   return (
     <Page title=" Sub Service">

@@ -13,16 +13,13 @@ import {
   Table,
   tableCellClasses,
   TableCell,
-  Divider,
-  CardActions,
-  Button
+  Divider
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
-import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import React, { useMemo, useState } from 'react';
 import { NumberOfItems } from 'components/Items/numberOfItems';

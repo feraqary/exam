@@ -7,12 +7,18 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 
 import Table from 'components/Table/Table';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getFeaturedCompanies } from 'store/slices/company-section/action/company';
+import { useSelector } from 'react-redux';
 
-// ===========================|| International Company Managment list||=========================== //
+// ===========================|| featured Company list||=========================== //
 
 const ColumnHeaders = [
   {
-    accessorKey: 'name.companyLogo',
+    accessorKey: 'ID',
+    header: 'SI.NO',
+    accessorKey: 'CompanyLogo',
     header: 'Company Logo',
     Cell: ({ renderedCellValue, row }) => (
       <Box
@@ -22,53 +28,50 @@ const ColumnHeaders = [
           gap: '1rem'
         }}
       >
-        <Image src={row.original.name.companyLogo} width={60} height={30} style={{ objectFit: 'contain' }} />
+        <Image src={`http://20.203.31.58/upload/${row.original.CompanyLogo}`} width={60} height={30} style={{ objectFit: 'contain' }} />
       </Box>
     )
   },
   {
-    accessorKey: 'name.companyName',
+    accessorKey: 'CompanyName',
     header: 'Company Name'
   },
+
   {
-    accessorKey: 'regId',
-    header: ' Registration ID '
+    accessorKey: 'LicenseNO',
+    header: 'License Number'
   },
   {
-    accessorKey: 'contactPerson',
+    accessorKey: 'ContactPerson',
     header: ' Contact Person'
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'Email',
     header: 'Email'
   },
-  { accessorKey: 'phone', header: 'Phone' },
+  { accessorKey: 'Phone', header: 'Phone' },
   { accessorKey: 'show', header: 'Show in Homepage', Cell: ({ cell }) => <Checkbox /> }
 ];
 
-const data = [
-  {
-    name: {
-      companyName: 'BlueStone',
-      companyLogo: '/assets/images/company_logo/logo4.png'
-    },
-    companyType: 'Developer Company',
-    regId: 'PA283102',
-    contactPerson: 'Joffery',
-    email: 'new@gmail.com',
-    phone: '+0192831-310'
-  }
-];
+const FeaturedCompanies = () => {
+  const dispatch = useDispatch();
 
-const FeaturedCompanies = () => (
-  <Page title="Featured Companies">
-    <Grid container spacing={gridSpacing}>
-      <Grid item xs={12}>
-        <Table data={data} columnHeaders={ColumnHeaders} />
+  const { error, loading, featuredCompanies } = useSelector((state) => state.companies);
+  console.log(featuredCompanies);
+  useEffect(() => {
+    dispatch(getFeaturedCompanies());
+  }, []);
+
+  return (
+    <Page title="Featured Companies">
+      <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Table data={featuredCompanies} columnHeaders={ColumnHeaders} />
+        </Grid>
       </Grid>
-    </Grid>
-  </Page>
-);
+    </Page>
+  );
+};
 
 FeaturedCompanies.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;

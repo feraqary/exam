@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLoadScript, GoogleMap, Marker, DrawingManager, Polygon, useJsApiLoader } from '@react-google-maps/api';
 import { Grid } from '@mui/material';
 import axios from 'axios';
 import { useFormikContext } from 'formik';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import Button from '@mui/material/Button';
 
 const MAP_URL =
   'https://www.google.com/maps/place/Abu+Dhabi/@24.3870541,54.3938156,11z/data=!3m1!4b1!4m6!3m5!1s0x3e5e440f723ef2b9:0xc7cc2e9341971108!8m2!3d24.453884!4d54.3773438!16zL20vMGd4ag?entry=ttu';
@@ -49,12 +51,139 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
     getloc(locationAddress);
   }, [locationAddress]);
 
-
   useEffect(() => {}, [lat, long]);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey
   });
+
+  const mapRef = useRef();
+  const polygonRefs = useRef([]);
+  const activePolygonIndex = useRef();
+  const autocompleteRef = useRef();
+  const drawingManagerRef = useRef();
+
+  const [polygons, setPolygons] = useState([
+    [
+      { lat: 28.630818281028954, lng: 79.80954378826904 },
+      { lat: 28.62362346815063, lng: 79.80272024853515 },
+      { lat: 28.623585797675588, lng: 79.81490820629882 },
+      { lat: 28.630818281028954, lng: 79.80954378826904 }
+    ],
+    [
+      { lat: 28.63130796240949, lng: 79.8170110581665 },
+      { lat: 28.623623468150655, lng: 79.81705397351074 },
+      { lat: 28.623623468150655, lng: 79.82619494183349 },
+      { lat: 28.6313832978037, lng: 79.82619494183349 },
+      { lat: 28.63130796240949, lng: 79.8170110581665 }
+    ]
+  ]);
+
+  const autocompleteStyle = {
+    boxSizing: 'border-box',
+    border: '1px solid transparent',
+    width: '240px',
+    height: '38px',
+    padding: '0 12px',
+    borderRadius: '3px',
+    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
+    fontSize: '14px',
+    outline: 'none',
+    textOverflow: 'ellipses',
+    position: 'absolute',
+    right: '8%',
+    top: '11px',
+    marginLeft: '-120px'
+  };
+
+  const polygonOptions = {
+    fillOpacity: 0.3,
+    fillColor: '#ff0000',
+    strokeColor: '#ff0000',
+    strokeWeight: 2,
+    draggable: true,
+    editable: true
+  };
+
+  const drawingManagerOptions = {
+    polygonOptions: polygonOptions,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: window.google?.maps?.ControlPosition?.TOP_CENTER,
+      drawingModes: [
+        window.google?.maps?.drawing?.OverlayType?.POLYGON,
+        window.google?.maps?.drawing?.OverlayType?.CIRCLE,
+        window.google?.maps?.drawing?.OverlayType?.RECTANGLE
+      ]
+    }
+  };
+
+  const onLoadMap = (map) => {
+    mapRef.current = map;
+  };
+
+  const onLoadPolygon = (polygon, index) => {
+    polygonRefs.current[index] = polygon;
+  };
+
+  const onClickPolygon = (index) => {
+    activePolygonIndex.current = index;
+  };
+
+  const onLoadAutocomplete = (autocomplete) => {
+    autocompleteRef.current = autocomplete;
+  };
+
+  const onPlaceChanged = () => {
+    const { geometry } = autocompleteRef.current.getPlace();
+    const bounds = new window.google.maps.LatLngBounds();
+    if (geometry.viewport) {
+      bounds.union(geometry.viewport);
+    } else {
+      bounds.extend(geometry.location);
+    }
+    mapRef.current.fitBounds(bounds);
+  };
+
+  const onLoadDrawingManager = (drawingManager) => {
+    drawingManagerRef.current = drawingManager;
+  };
+
+  const onOverlayComplete = ($overlayEvent) => {
+    drawingManagerRef.current.setDrawingMode(null);
+    if ($overlayEvent.type === window.google.maps.drawing.OverlayType.POLYGON) {
+      const newPolygon = $overlayEvent.overlay
+        .getPath()
+        .getArray()
+        .map((latLng) => ({ lat: latLng.lat(), lng: latLng.lng() }));
+
+      // start and end point should be same for valid geojson
+      const startPoint = newPolygon[0];
+      newPolygon.push(startPoint);
+      $overlayEvent.overlay?.setMap(null);
+      setPolygons([...polygons, newPolygon]);
+    }
+  };
+
+  const onDeleteDrawing = () => {
+
+    const filtered = polygons.filter((polygon, index) => index !== activePolygonIndex.current);
+    setPolygons(filtered);
+  };
+
+  const onEditPolygon = (index) => {
+    const polygonRef = polygonRefs.current[index];
+    if (polygonRef) {
+      const coordinates = polygonRef
+        .getPath()
+        .getArray()
+        .map((latLng) => ({ lat: latLng.lat(), lng: latLng.lng() }));
+
+      const allPolygons = [...polygons];
+      allPolygons[index] = coordinates;
+      setPolygons(allPolygons);
+    }
+  };
 
   if (!isLoaded) {
     return <div>loading....</div>;
@@ -71,7 +200,40 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
           }}
           onLoad={handleMapLoad}
         >
-          <Marker position={{ lat: values.lat, lng: values.long }} />
+          <DrawingManager onLoad={onLoadDrawingManager} onOverlayComplete={onOverlayComplete} options={drawingManagerOptions} />
+          {polygons.map((iterator, index) => (
+            <Polygon
+              key={index}
+              onLoad={(event) => onLoadPolygon(event, index)}
+              onMouseDown={() => onClickPolygon(index)}
+              onMouseUp={() => onEditPolygon(index)}
+              onDragEnd={() => onEditPolygon(index)}
+              options={polygonOptions}
+              paths={iterator}
+              draggable
+              editable
+            />
+          ))}
+          <Button
+            variant="contained"
+            startIcon={<RemoveCircleIcon />}
+            onClick={onDeleteDrawing}
+            sx={{
+              position: 'absolute',
+              right: '4%',
+              top: '10px',
+              backgroundColor: '#FFFFFF',
+              color: 'black',
+              height:"40px",
+              '&:hover': {
+                backgroundColor: 'rgb(235,235,235)'
+              }
+            }}
+          >
+            Clear Drawings
+          </Button>
+
+          <Marker  position={{ lat: values.lat, lng: values.long }} />
         </GoogleMap>
       </Grid>
     );
