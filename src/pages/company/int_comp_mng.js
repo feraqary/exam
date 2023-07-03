@@ -22,7 +22,7 @@ import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import UpdateCompany from './helper/UpdateCompany';
+import UpdateCompany from './helper/CompanyForm';
 // ===========================|| International Company Managment list||=========================== //
 
 // const data = [
@@ -131,18 +131,19 @@ const ColumnHeaders = [
         setOpen(false);
       };
       const handleBlock = () => {
-        setBlocked(!Blocked);
-        setStatus(Blocked ? '5' : '4');
-
-        console.log('status', status);
+        // setBlocked();
+        console.log('int_company', row.original);
+        console.log('status', '5');
 
         const formData = new FormData();
 
-        formData.append('company_id', row.original.CompanyMainType);
-        formData.append('status', status);
-        formData.append('company_type', 2);
+        formData.append('company_id', row.original.ID);
+        formData.append('status', '5');
+        formData.append('company_type', row.original.CompanyMainType);
 
         dispatch(updateCompanyStatus(formData));
+
+        window.location.reload();
       };
 
       return (
@@ -174,17 +175,8 @@ const ColumnHeaders = [
             Block
           </Button>
 
-          <Button variant="contained" startIcon={<KeyIcon />}>
-            Reset
-          </Button>
-
-<<<<<<< HEAD
           <Dialog fullScreen open={editOpen} onClose={handleEditClose} TransitionComponent={Transition}>
             <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleEditClose}>
-=======
-          <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-            <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
->>>>>>> db71f15e763ee878d5fd9745ffa8c833068015a2
               <IconButton>
                 <CloseIcon />
               </IconButton>

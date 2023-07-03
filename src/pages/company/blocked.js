@@ -7,7 +7,7 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import Table from 'components/Table/Table';
-import { getBlockedCompany } from 'store/slices/company-section/action/company';
+import { getCompanyByStatus, updateCompanyStatus } from 'store/slices/company-section/action/company';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -34,7 +34,29 @@ const ColumnHeaders = [
   {
     accessorKey: 'action',
     header: 'Action',
-    Cell: ({}) => <AqaryButton variant="contained">Restore</AqaryButton>
+    Cell: ({ row }) => {
+      const dispatch = useDispatch();
+
+      return (
+        <AqaryButton
+          variant="contained"
+          onClick={() => {
+            console.log('int_company', row.original);
+            // console.log('status', status);
+
+            const formData = new FormData();
+
+            formData.append('company_id', row.original.ID);
+            formData.append('status', '4');
+            formData.append('company_type', row.original.CompanyMainType);
+            dispatch(updateCompanyStatus(formData));
+            window.location.reload();
+          }}
+        >
+          Restore
+        </AqaryButton>
+      );
+    }
   }
 ];
 
@@ -43,7 +65,7 @@ const BlockedCompanies = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getBlockedCompany());
+    dispatch(getCompanyByStatus(5));
   }, [dispatch]);
 
   return (

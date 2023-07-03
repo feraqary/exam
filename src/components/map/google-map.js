@@ -1,20 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLoadScript, GoogleMap, Marker, DrawingManager, Polygon, useJsApiLoader } from '@react-google-maps/api';
+import { useLoadScript, GoogleMap, Marker, DrawingManager, Polygon,Rectangle,RectangleFunctional, useJsApiLoader } from '@react-google-maps/api';
 import { Grid } from '@mui/material';
 import axios from 'axios';
 import { useFormikContext } from 'formik';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import Button from '@mui/material/Button';
 
-const MAP_URL =
-  'https://www.google.com/maps/place/Abu+Dhabi/@24.3870541,54.3938156,11z/data=!3m1!4b1!4m6!3m5!1s0x3e5e440f723ef2b9:0xc7cc2e9341971108!8m2!3d24.453884!4d54.3773438!16zL20vMGd4ag?entry=ttu';
-
 export default function Map({ locationAddress, xs, lg, mapUrl }) {
   const [lat, setlat] = useState(24.4984312);
   const [long, setlong] = useState(54.4036975);
   const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
   const { setFieldValue, values } = useFormikContext();
-
+  const enable = false
   const handleMapLoad = (map) => {
     // Set custom cursor for the map container
     map.setOptions({ draggableCursor: 'pointer' });
@@ -78,23 +75,6 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
       { lat: 28.63130796240949, lng: 79.8170110581665 }
     ]
   ]);
-
-  const autocompleteStyle = {
-    boxSizing: 'border-box',
-    border: '1px solid transparent',
-    width: '240px',
-    height: '38px',
-    padding: '0 12px',
-    borderRadius: '3px',
-    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
-    fontSize: '14px',
-    outline: 'none',
-    textOverflow: 'ellipses',
-    position: 'absolute',
-    right: '8%',
-    top: '11px',
-    marginLeft: '-120px'
-  };
 
   const polygonOptions = {
     fillOpacity: 0.3,
@@ -166,9 +146,11 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
   };
 
   const onDeleteDrawing = () => {
-
-    const filtered = polygons.filter((polygon, index) => index !== activePolygonIndex.current);
-    setPolygons(filtered);
+    // const filtered = polygons.filter((polygon, index) => index !== activePolygonIndex.current);
+    // setPolygons(filtered);
+    const filteredPolygons = polygons.filter((_, index) => index !== activePolygonIndex.current);
+    setPolygons([]);
+    activePolygonIndex.current = null; // Reset the activePolygonIndex
   };
 
   const onEditPolygon = (index) => {
@@ -198,7 +180,7 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
             setFieldValue('lat', e.latLng.lat());
             setFieldValue('long', e.latLng.lng());
           }}
-          onLoad={handleMapLoad}
+          onLoad={onLoadMap}
         >
           <DrawingManager onLoad={onLoadDrawingManager} onOverlayComplete={onOverlayComplete} options={drawingManagerOptions} />
           {polygons.map((iterator, index) => (
@@ -214,17 +196,23 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
               editable
             />
           ))}
+
+
+
+          
           <Button
             variant="contained"
             startIcon={<RemoveCircleIcon />}
-            onClick={onDeleteDrawing}
+            onClick={() => {
+              onDeleteDrawing();
+            }}
             sx={{
               position: 'absolute',
               right: '4%',
               top: '10px',
               backgroundColor: '#FFFFFF',
               color: 'black',
-              height:"40px",
+              height: '40px',
               '&:hover': {
                 backgroundColor: 'rgb(235,235,235)'
               }
@@ -233,7 +221,7 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
             Clear Drawings
           </Button>
 
-          <Marker  position={{ lat: values.lat, lng: values.long }} />
+          <Marker position={{ lat: values.lat, lng: values.long }} />
         </GoogleMap>
       </Grid>
     );

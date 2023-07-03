@@ -21,8 +21,9 @@ import Snackbar from 'components/ui-component/extended/Snackbar';
 import Loader from 'components/ui-component/Loader';
 import { getMenu } from 'store/slices/menu';
 import { ConfigProvider } from 'contexts/ConfigContext';
-
 import { JWTProvider as AuthProvider } from 'contexts/JWTContext';
+import { SessionProvider } from 'next-auth/react';
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 // import { FirebaseProvider as AuthProvider } from '../contexts/FirebaseContext';
 // import { Auth0Provider as AuthProvider } from '../contexts/Auth0Context';
 // import { AWSCognitoProvider as AuthProvider } from 'contexts/AWSCognitoContext';
@@ -35,7 +36,7 @@ Noop.propTypes = {
 
 // ==============================|| APP ||============================== //
 
-function App({ Component, pageProps }) {
+function App({ Component, pageProps:{session,...pageProps} }) {
   const getLayout = Component.getLayout ?? ((page) => page);
   const [loading, setLoading] = useState(false);
 
@@ -56,10 +57,14 @@ function App({ Component, pageProps }) {
               <Locales>
                 <NavigationScroll>
                   <AuthProvider>
-                    <>
-                      {getLayout(<Component {...pageProps} />)}
-                      <Snackbar />
-                    </>
+                    <UserProvider>
+                      <SessionProvider  session={session}>
+                        <>
+                          {getLayout(<Component {...pageProps} />)}
+                          <Snackbar />
+                        </>
+                      </SessionProvider>
+                    </UserProvider>
                   </AuthProvider>
                 </NavigationScroll>
               </Locales>

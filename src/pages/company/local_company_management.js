@@ -23,9 +23,11 @@ import { useSelector } from 'react-redux';
 // import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import { Grid, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material';
-import ColumnsLayouts from './add_comp';
+import CompanyForm from "./helper/CompanyForm"
+
+import { updateCompanyStatus } from 'store/slices/company-section/action/company';
 // ===========================|| International Company Managment list||=========================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -101,57 +103,72 @@ const ColumnHeaders = [
         setOpen(false);
       };
 
-      
-      
-      return(
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem'
-        }}
-      >
-        <AqaryButton variant="contained">Edit </AqaryButton>
-        <Button variant="contained" color="primary" onClick={handleClickOpen} startIcon={<PreviewIcon />}>
-            Add sub-company
-        </Button>
-        <Button color="primary" variant="contained" startIcon={<AssignmentIcon />}>
-          View Documents
-        </Button>
-        <Button variant="contained" color="primary" startIcon={<PreviewIcon />}>
-          View Live
-        </Button>
-        <Button variant="contained" color="primary">
-          Multiple
-        </Button>
-        <Button variant="contained" color="primary">
-          Report
-        </Button>
-        <Button variant="contained" color="primary" startIcon={<BlockIcon />}>
-          Block
-        </Button>
-        <Button variant="contained" startIcon={<DeleteIcon />}>
-          Delete
-        </Button>
+      const dispatch = useDispatch();
 
-        <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-            <DialogActions sx={{justifyContent:"flex-start"}} onClick={handleClose}>
+      const handleBlock = () => {
+        // setBlocked();
+        console.log('int_company', row.original);
+        console.log('status', '5');
+
+        const formData = new FormData();
+
+        formData.append('company_id', row.original.ID);
+        formData.append('status', '5');
+        formData.append('company_type', row.original.CompanyMainType);
+
+        dispatch(updateCompanyStatus(formData));
+        window.location.reload();
+      };
+
+      return (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem'
+          }}
+        >
+          <AqaryButton variant="contained">Edit </AqaryButton>
+          <Button variant="contained" color="primary" onClick={handleClickOpen} startIcon={<PreviewIcon />}>
+            Add sub-company
+          </Button>
+          <Button color="primary" variant="contained" startIcon={<AssignmentIcon />}>
+            View Documents
+          </Button>
+          <Button variant="contained" color="primary" startIcon={<PreviewIcon />}>
+            View Live
+          </Button>
+          <Button variant="contained" color="primary" onClick={()=>{console.log(row.original)}}>
+            Multiple
+          </Button>
+          <Button variant="contained" color="primary">
+            Report
+          </Button>
+          <Button variant="contained" onClick={handleBlock} color="error" startIcon={<DeleteIcon />}>
+            Block
+          </Button>
+
+          <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+            <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
               <IconButton>
                 <CloseIcon />
               </IconButton>
             </DialogActions>
             <DialogContent>
-              <ColumnsLayouts />
+              <CompanyForm  />
             </DialogContent>
           </Dialog>
-      </Box>
-    )}
+        </Box>
+      );
+    }
   }
 ];
 
 const localCompanies = () => {
   const dispatch = useDispatch();
   const { loading, error, localCompanies } = useSelector((state) => state.companies);
+  console.log('local companies: ', localCompanies);
+
   useEffect(() => {
     dispatch(getLocalCompanies());
   }, []);

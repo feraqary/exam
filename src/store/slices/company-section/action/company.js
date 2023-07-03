@@ -36,9 +36,8 @@ export const getAllCompanyTypes = createAsyncThunk('company/getAllCompanyTypes',
 });
 export const updateCompanyType = createAsyncThunk('company/updateCompanyType', async ({ company_id, formData }, { rejectWithValue }) => {
   try {
-
-    console.log(`company id: ${company_id}`)
-    const response = await api.put(`${baseurl}/api/services/updateCompanyType/${company_id}`,formData, config);
+    console.log(`company id: ${company_id}`);
+    const response = await api.put(`${baseurl}/api/services/updateCompanyType/${company_id}`, formData, config);
 
     return response.data;
   } catch (error) {
@@ -95,10 +94,7 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
 
 export const getInternationalCompanies = createAsyncThunk('company/getInternationalCompanies', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(
-      `${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=100&country=united arab emirates`,
-      config
-    );
+    const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=100&country=pakistan`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
@@ -171,15 +167,15 @@ export const deleteMainService = createAsyncThunk('services/deleteMainService', 
     return rejectWithValue(error.response.data);
   }
 });
-export const getBlockedCompany = createAsyncThunk('company/blocked', async (_, { rejectWithValue }) => {
+
+export const getCompanyByStatus = createAsyncThunk('company/status', async (status, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByStatus/5`, config);
+    const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByStatus/${status}`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
   }
 });
-
 
 export const updateCompanyStatus = createAsyncThunk('companies/status', async (formData, { rejectWithValue }) => {
   try {
