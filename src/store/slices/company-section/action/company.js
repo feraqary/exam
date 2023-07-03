@@ -114,6 +114,7 @@ export const createCompany = createAsyncThunk('company/createCompany', async (fo
   }
 });
 
+
 export const updateSubService = createAsyncThunk('subService/Updatesubservice', async ({ id, formData }, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByRank/2`, config);
