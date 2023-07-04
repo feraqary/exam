@@ -1,14 +1,47 @@
-import { createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import sub_dev_comp from 'pages/company/add_sub_dev';
+// subCompanySlice.js
+import { createSlice } from '@reduxjs/toolkit';
 
-export const subDevCompSlice = createApi ( {
-    reducerPath: 'subDevCompSlice',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://20.203.31.58' }),
-    endpoints: (builder) => ({
-        devCompanies: builder.query<sub_dev_comp[], void> ({
-            query:() => '/sub_dev_comp'
-        })    })
-})
+const subCompanySlice = createSlice({
+  name: 'subCompany',
+  initialState: {
+    subCompanies: [],
+    error: null,
+  },
+  reducers: {
+    fetchSubCompaniesSuccess: (state, action) => {
+      state.subCompanies = action.payload;
+      state.error = null;
+    },
+    fetchSubCompaniesFailure: (state, action) => {
+      state.subCompanies = [];
+      state.error = action.payload;
+    },
+    createSubCompanySuccess: (state, action) => {
+      state.subCompanies.push(action.payload);
+      state.error = null;
+    },
+    createSubCompanyFailure: (state, action) => {
+      state.error = action.payload;
+    },
+    deleteSubCompanySuccess: (state, action) => {
+      state.subCompanies = state.subCompanies.filter(
+        (company) => company.id !== action.payload
+      );
+      state.error = null;
+    },
+    deleteSubCompanyFailure: (state, action) => {
+      state.error = action.payload;
+    },
+  },
+});
 
+export const {
+  fetchSubCompaniesSuccess,
+  fetchSubCompaniesFailure,
+  createSubCompanySuccess,
+  createSubCompanyFailure,
+  deleteSubCompanySuccess,
+  deleteSubCompanyFailure,
+} = subCompanySlice.actions;
 
-export const { usedevCompaniesQuery }  = subDevCompSlice;
+export default subCompanySlice.reducer;
