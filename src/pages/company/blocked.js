@@ -7,6 +7,11 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import Table from 'components/Table/Table';
+
+import { getCompanyByStatus, updateCompanyStatus } from 'store/slices/company-section/action/company';
+
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getBlockedCompanies, restoreCompany } from 'store/slices/company-section/action/company';
@@ -37,20 +42,31 @@ const ColumnHeaders = [
   {
     accessorKey: 'action',
     header: 'Action',
-    Cell: ({ renderedCellValue, row }) => (
-      <AqaryButton
-        variant="contained"
-        onClick={() => {
-          const formData = new FormData();
-          formData.append('company_id', row.original.ID);
-          formData.append('status', 4);
-          formData.append('company_type', row.original.CompanyMainType);
-          dispatch(restoreCompany({ formData, id: row.original.ID }));
-        }}
-      >
-        Restore
-      </AqaryButton>
-    )
+
+    Cell: ({ row }) => {
+      const dispatch = useDispatch();
+
+      return (
+        <AqaryButton
+          variant="contained"
+          onClick={() => {
+            console.log('int_company', row.original);
+            // console.log('status', status);
+
+            const formData = new FormData();
+
+            formData.append('company_id', row.original.ID);
+            formData.append('status', '4');
+            formData.append('company_type', row.original.CompanyMainType);
+            dispatch(updateCompanyStatus(formData));
+            window.location.reload();
+          }}
+        >
+          Restore
+        </AqaryButton>
+      );
+    }
+
   }
 ];
 
@@ -60,8 +76,10 @@ const BlockedCompanies = () => {
   const { loading, error, blockedCompanies } = useSelector((state) => state.companies);
 
   useEffect(() => {
-    dispatch(getBlockedCompanies());
-  }, []);
+
+    dispatch(getCompanyByStatus(5));
+  }, [dispatch]);
+
 
   return (
     <Page title="Blocked Companies">

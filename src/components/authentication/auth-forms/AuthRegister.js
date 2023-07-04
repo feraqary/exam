@@ -64,6 +64,9 @@ import {
   setDepartment,
   setSocial_login
 } from 'store/slices/user-registration/slice/user-registration';
+
+import { useSession, signIn, signOut } from 'next-auth/react';
+import { useState } from 'react';
 // ===========================|| JWT - REGISTER ||=========================== //
 
 const JWTRegister = ({ ...others }) => {
@@ -101,6 +104,18 @@ const JWTRegister = ({ ...others }) => {
     changePassword('123456');
   }, []);
 
+  const { data: session } = useSession();
+  console.log('session', session);
+  const [flNames, setFlNames] = useState([]);
+
+  useEffect(() => {
+    if (session) {
+      // console.log('session', session);
+      setFlNames(session.user.name.split(' '));
+      // console.log('setFlNames', flNames)
+    }
+  }, [session]);
+
   return (
     <>
       <Grid container direction="column" justifyContent="center" spacing={2}>
@@ -119,7 +134,7 @@ const JWTRegister = ({ ...others }) => {
           // state: null,
           // city: null,
           // community: null,
-          email: null,
+          email: session ? session.user.email : null,
           profile_image_url: null,
           phone_number: null,
           company_number: null,
@@ -138,29 +153,53 @@ const JWTRegister = ({ ...others }) => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            // console.log(values);
-            const formData = new FormData();
-            formData.append('first_name', values.first_name);
-            formData.append('last_name', values.last_name);
-            formData.append('country', values.country);
-            formData.append('state', values.state);
-            formData.append('city', values.city);
-            formData.append('community', values.community);
-            formData.append('email', values.email);
-            formData.append('profile_image_url', values.profile_image_url);
-            formData.append('phone_number', values.phone_number);
-            formData.append('company_number', values.company_number);
-            formData.append('whatsapp_number', values.whatsapp_number);
-            formData.append('gender', values.gender);
-            formData.append('password', values.password);
-            formData.append('status', values.status);
-            formData.append('user_types_id', values.user_types_id);
-            formData.append('roles_id', values.roles_id);
-            formData.append('department', values.department);
-            formData.append('social_login', values.social_login);
+            if (session) {
+              const formData = new FormData();
+              formData.append('first_name', flNames[0]);
+              formData.append('last_name', flNames[1]);
+              formData.append('country', values.country);
+              formData.append('state', values.state);
+              formData.append('city', values.city);
+              formData.append('community', values.community);
+              formData.append('email', session.user.email);
+              formData.append('profile_image_url', values.profile_image_url);
+              formData.append('phone_number', values.phone_number);
+              formData.append('company_number', values.company_number);
+              formData.append('whatsapp_number', values.whatsapp_number);
+              formData.append('gender', values.gender);
+              formData.append('password', values.password);
+              formData.append('status', values.status);
+              formData.append('user_types_id', values.user_types_id);
+              formData.append('roles_id', values.roles_id);
+              formData.append('department', values.department);
+              formData.append('social_login', values.social_login);
 
-            dispatch(createUser(formData));
-            // await register(values.email, values.password, values.firstName, values.lastName);
+              dispatch(createUser(formData));
+            } else {
+              console.log(values);
+              const formData = new FormData();
+              formData.append('first_name', values.first_name);
+              formData.append('last_name', values.last_name);
+              formData.append('country', values.country);
+              formData.append('state', values.state);
+              formData.append('city', values.city);
+              formData.append('community', values.community);
+              formData.append('email', values.email);
+              formData.append('profile_image_url', values.profile_image_url);
+              formData.append('phone_number', values.phone_number);
+              formData.append('company_number', values.company_number);
+              formData.append('whatsapp_number', values.whatsapp_number);
+              formData.append('gender', values.gender);
+              formData.append('password', values.password);
+              formData.append('status', values.status);
+              formData.append('user_types_id', values.user_types_id);
+              formData.append('roles_id', values.roles_id);
+              formData.append('department', values.department);
+              formData.append('social_login', values.social_login);
+
+              dispatch(createUser(formData));
+            }
+            await register(values.email, values.password, values.firstName, values.lastName);
             if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
@@ -196,27 +235,29 @@ const JWTRegister = ({ ...others }) => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  label="First Name"
+                  label={session ? null : 'First Name'}
                   margin="normal"
                   name="firstName"
                   type="text"
-                  value={values.first_name}
+                  value={session ? flNames[0] : values.first_name}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   sx={{ ...theme.typography.customInput }}
+                  disabled={session}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  label="Last Name"
+                  label={session ? null : 'Last Name'}
                   margin="normal"
                   name="lastName"
                   type="text"
-                  value={values.last_name}
+                  value={session ? flNames[1] : values.last_name}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   sx={{ ...theme.typography.customInput }}
+                  disabled={session}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -307,15 +348,24 @@ const JWTRegister = ({ ...others }) => {
               </Grid>
             </Grid>
             <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-email-register">Email Address / Username</InputLabel>
+              {session ? (
+                <></>
+              ) : (
+                <>
+                  {' '}
+                  <InputLabel htmlFor="outlined-adornment-email-register">Email Address / Username</InputLabel>{' '}
+                </>
+              )}
+              {/* <InputLabel htmlFor="outlined-adornment-email-register">Email Address / Username</InputLabel> */}
               <OutlinedInput
                 id="outlined-adornment-email-register"
                 type="email"
-                value={values.email}
+                value={session ? session.user.email : values.email}
                 name="email"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 inputProps={{}}
+                disabled={session}
               />
               {touched.email && errors.email && (
                 <FormHelperText error id="standard-weight-helper-text--register">
@@ -323,89 +373,93 @@ const JWTRegister = ({ ...others }) => {
                 </FormHelperText>
               )}
             </FormControl>
+            {session ? (
+              <></>
+            ) : (
+              <>
+                <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
+                  <InputLabel htmlFor="outlined-adornment-password-register">Password</InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password-register"
+                    type={showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    name="password"
+                    label="Password"
+                    onBlur={handleBlur}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          size="large"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    inputProps={{}}
+                  />
 
-            <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-password-register">Password</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password-register"
-                type={showPassword ? 'text' : 'password'}
-                value={values.password}
-                name="password"
-                label="Password"
-                onBlur={handleBlur}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                      size="large"
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                inputProps={{}}
-              />
+                  {touched.password && errors.password && (
+                    <FormHelperText error id="standard-weight-helper-text-password-register">
+                      {errors.password}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+                <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
+                  <InputLabel htmlFor="outlined-adornment-password-register">Confirm Password</InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password-register"
+                    type={showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    name="password"
+                    label="Confirm Password"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          size="large"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    inputProps={{}}
+                  />
 
-              {touched.password && errors.password && (
-                <FormHelperText error id="standard-weight-helper-text-password-register">
-                  {errors.password}
-                </FormHelperText>
-              )}
-            </FormControl>
-            <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-password-register">Confirm Password</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password-register"
-                type={showPassword ? 'text' : 'password'}
-                value={values.password}
-                name="password"
-                label="Confirm Password"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                      size="large"
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                inputProps={{}}
-              />
-
-              {touched.password && errors.password && (
-                <FormHelperText error id="standard-weight-helper-text-password-register">
-                  {errors.password}
-                </FormHelperText>
-              )}
-            </FormControl>
-
-            {strength !== 0 && (
-              <FormControl fullWidth>
-                <Box sx={{ mb: 2 }}>
-                  <Grid container spacing={2} alignItems="center">
-                    <Grid item>
-                      <Box style={{ backgroundColor: level.color }} sx={{ width: 85, height: 8, borderRadius: '7px' }} />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle1" fontSize="0.75rem">
-                        {level.label}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </FormControl>
+                  {touched.password && errors.password && (
+                    <FormHelperText error id="standard-weight-helper-text-password-register">
+                      {errors.password}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+                {strength !== 0 && (
+                  <FormControl fullWidth>
+                    <Box sx={{ mb: 2 }}>
+                      <Grid container spacing={2} alignItems="center">
+                        <Grid item>
+                          <Box style={{ backgroundColor: level.color }} sx={{ width: 85, height: 8, borderRadius: '7px' }} />
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="subtitle1" fontSize="0.75rem">
+                            {level.label}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </FormControl>
+                )}
+              </>
             )}
 
             <Grid container alignItems="center" justifyContent="space-between">
@@ -435,6 +489,57 @@ const JWTRegister = ({ ...others }) => {
               <AnimateButton>
                 <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
                   Sign up
+                </Button>
+              </AnimateButton>
+            </Box>
+            <Box sx={{ mt: 2 }}>
+              <AnimateButton>
+                <Button
+                  disableElevation
+                  onClick={() => {
+                    signIn('google');
+                  }}
+                  disabled={isSubmitting}
+                  fullWidth
+                  size="large"
+                  variant="outlined"
+                  color="secondary"
+                >
+                  Sign up with Google
+                </Button>
+              </AnimateButton>
+            </Box>
+            <Box sx={{ mt: 2 }}>
+              <AnimateButton>
+                <Button
+                  disableElevation
+                  onClick={() => {
+                    signIn('linkedin');
+                  }}
+                  disabled={isSubmitting}
+                  fullWidth
+                  size="large"
+                  variant="outlined"
+                  color="secondary"
+                >
+                  Sign up with LinkedIn
+                </Button>
+              </AnimateButton>
+            </Box>
+            <Box sx={{ mt: 2 }}>
+              <AnimateButton>
+                <Button
+                  disableElevation
+                  onClick={() => {
+                    signIn('twitter');
+                  }}
+                  disabled={isSubmitting}
+                  fullWidth
+                  size="large"
+                  variant="outlined"
+                  color="secondary"
+                >
+                  Sign up with Twitter
                 </Button>
               </AnimateButton>
             </Box>

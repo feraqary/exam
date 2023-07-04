@@ -96,10 +96,7 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
 
 export const getInternationalCompanies = createAsyncThunk('company/getInternationalCompanies', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(
-      `${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=100&country=united arab emirates`,
-      config
-    );
+    const response = await api.get(`${baseurl}/api/dashboard/getInternationalCompanies?page_no=1&page_size=100&country=pakistan`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
@@ -116,6 +113,7 @@ export const createCompany = createAsyncThunk('company/createCompany', async (fo
     return rejectWithValue(error);
   }
 });
+
 
 export const updateSubService = createAsyncThunk('subService/Updatesubservice', async ({ id, formData }, { rejectWithValue }) => {
   try {
@@ -181,9 +179,12 @@ export const deleteMainService = createAsyncThunk('services/deleteMainService', 
     return rejectWithValue(error.response.data);
   }
 });
-export const getBlockedCompanies = createAsyncThunk('companies/getBlockedCompanies', async (_, { rejectWithValue }) => {
+
+
+export const getCompanyByStatus = createAsyncThunk('company/status', async (status, { rejectWithValue }) => {
+
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByStatus/5`, config);
+    const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByStatus/${status}`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -199,6 +200,7 @@ export const restoreCompany = createAsyncThunk('companies/restoreCompany', async
     return rejectWithValue(error.response.data);
   }
 });
+
 
 export const blockCompany = createAsyncThunk('companies/blockCompany', async ({ formData, id }, { rejectWithValue }) => {
   try {
