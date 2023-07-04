@@ -41,7 +41,7 @@
     "apexcharts": "^3.36.3",
     "async-mutex": "^0.4.0",
     "availity-reactstrap-validation": "^2.7.1",
-    "axios": "1.2.1",
+    "axios": "^1.4.0",
     "card-validator": "^8.1.1",
     "chance": "^1.1.9",
     "clsx": "^1.2.1",
