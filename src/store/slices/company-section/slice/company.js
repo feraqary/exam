@@ -16,7 +16,7 @@ import {
   DeleteSubService,
   getFeaturedCompanies,
   updateCompanyRank,
-  getBlockedCompanies,
+  // getBlockedCompanies,
   restoreCompany,
   blockCompany,
   updateCompanyStatus,
@@ -448,20 +448,7 @@ const slice = createSlice({
         state.error = action.payload;
         ToastError(state.error);
       })
-      .addCase(getBlockedCompanies.pending, (state) => {
-        state.loading = true;
-        state.blockedCompanies = state.blockedCompanies;
-        state.error = null;
-      })
-      .addCase(getBlockedCompanies.fulfilled, (state, action) => {
-        state.loading = false;
-        state.blockedCompanies = action.payload.data || [];
-        state.error = null;
-      })
-      .addCase(getBlockedCompanies.rejected, (state, action) => {
-        state.loading = false;
-        state.blockedCompanies = state.blockedCompanies;
-      })
+
       .addCase(deleteMainService.pending, (state) => {
         state.deleting = true;
         state.services = state.services;
