@@ -23,8 +23,7 @@ import {
   getCommunities,
   getSubCommunities,
   getAllCountries,
-  getAllCurrencies,
-  updateCompany
+  getAllCurrencies
 } from 'store/slices/country-section/actions/countries';
 
 // assets
