@@ -495,7 +495,7 @@ const slice = createSlice({
           const updatedServices = state.services.filter((company) => company.company_id !== companyId);
           state.services = updatedServices;
         }
-        state.deleting = false;
+        state.error = false;
       })
       .addCase(updateCompanyStatus.rejected, (state, action) => {
         state.deleting = false;
@@ -523,10 +523,10 @@ const slice = createSlice({
         ToastSuccess('Company Blocked Successfully');
       })
       .addCase(blockCompany.rejected, (state, action) => {
-        state.loading = false;
+        // state.loading = false;
         state.error = action.payload;
         // state.blockedCompanies = state.blockedCompanies;
-        ToastError(state.error);
+        ToastError(action.payload);
       })
       .addCase(getCompanyNames.pending, (state) => {
         state.loading = true;

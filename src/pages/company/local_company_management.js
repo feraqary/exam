@@ -18,11 +18,13 @@ import { useSelector } from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Grid, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material';
-import CompanyForm from "./helper/CompanyForm"
+import CompanyForm from './helper/CompanyForm';
 
 import { updateCompanyStatus } from 'store/slices/company-section/action/company';
+import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 
 // ===========================|| International Company Managment list||=========================== //
 
@@ -108,14 +110,9 @@ const ColumnHeaders = [
         setOpen(false);
       };
 
-
       const dispatch = useDispatch();
 
       const handleBlock = () => {
-        // setBlocked();
-        console.log('int_company', row.original);
-        console.log('status', '5');
-
         const formData = new FormData();
 
         formData.append('company_id', row.original.ID);
@@ -123,9 +120,7 @@ const ColumnHeaders = [
         formData.append('company_type', row.original.CompanyMainType);
 
         dispatch(updateCompanyStatus(formData));
-        window.location.reload();
       };
-
 
       return (
         <Box
@@ -146,16 +141,20 @@ const ColumnHeaders = [
             View Live
           </Button>
 
-          <Button variant="contained" color="primary" onClick={()=>{console.log(row.original)}}>
-
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              // console.log(row.original);
+            }}
+          >
             Multiple
           </Button>
           <Button variant="contained" color="primary">
             Report
           </Button>
 
-          <Button variant="contained" onClick={handleBlock} color="error" startIcon={<DeleteIcon />}>
-
+          <Button variant="contained" onClick={() => handleBlock()} color="error" startIcon={<DeleteIcon />}>
             Block
           </Button>
 
@@ -166,7 +165,7 @@ const ColumnHeaders = [
               </IconButton>
             </DialogActions>
             <DialogContent>
-              <CompanyForm  />
+              <CompanyForm />
             </DialogContent>
           </Dialog>
         </Box>
@@ -178,7 +177,6 @@ const ColumnHeaders = [
 const localCompanies = () => {
   const dispatch = useDispatch();
   const { loading, error, localCompanies } = useSelector((state) => state.companies);
-  console.log('local companies: ', localCompanies);
 
   useEffect(() => {
     dispatch(getLocalCompanies());

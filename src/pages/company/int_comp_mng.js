@@ -23,6 +23,10 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UpdateCompany from './helper/CompanyForm';
+import TableSelectorOption from 'components/InputArea/TableSelectorOption';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // ===========================|| International Company Managment list||=========================== //
 
 // const data = [
@@ -61,6 +65,15 @@ const ColumnHeaders = [
         }}
       >
         <Image src={`http://20.203.31.58/upload/${row.original.CompanyLogo}`} width={60} height={30} style={{ objectFit: 'contain' }} />
+      </Box>
+    )
+  },
+  {
+    accessorKey: 'Status',
+    header: 'Company Status',
+    Cell: ({ renderedCellValue, row }) => (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <TableSelectorOption value={row.original.CompanyRank} companyMainType={row.original.CompanyMainType} id={row.original.ID} />
       </Box>
     )
   },
@@ -175,10 +188,8 @@ const ColumnHeaders = [
             Block
           </Button>
 
-
           <Dialog fullScreen open={editOpen} onClose={handleEditClose} TransitionComponent={Transition}>
             <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleEditClose}>
-
               <IconButton>
                 <CloseIcon />
               </IconButton>
@@ -213,6 +224,7 @@ const IntCompData = () => {
   }, []);
   return (
     <Page title="International Company List">
+      <ToastContainer />
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <Table columnHeaders={ColumnHeaders} data={internationalCompanies} />

@@ -13,10 +13,6 @@ import { getCompanyByStatus, updateCompanyStatus } from 'store/slices/company-se
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getBlockedCompanies, restoreCompany } from 'store/slices/company-section/action/company';
-import { useSelector } from 'react-redux';
-import { dispatch } from 'store';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
@@ -59,14 +55,12 @@ const ColumnHeaders = [
             formData.append('status', '4');
             formData.append('company_type', row.original.CompanyMainType);
             dispatch(updateCompanyStatus(formData));
-            window.location.reload();
           }}
         >
           Restore
         </AqaryButton>
       );
     }
-
   }
 ];
 
@@ -76,10 +70,8 @@ const BlockedCompanies = () => {
   const { loading, error, blockedCompanies } = useSelector((state) => state.companies);
 
   useEffect(() => {
-
     dispatch(getCompanyByStatus(5));
   }, [dispatch]);
-
 
   return (
     <Page title="Blocked Companies">
