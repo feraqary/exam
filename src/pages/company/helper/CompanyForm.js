@@ -101,41 +101,40 @@ const options = [
   { label: 'Service Company', id: 3 }
 ];
 // ==============================|| Add Company form ||============================== //
-function UpdateCompany({ title, formfor, id }) {
+function CompanyForm({ title, formfor, id }) {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-    const [CompanyType, setCompanyType] = useState(null);
-    const [companyName, setCompanyName] = useState(null);
-    const [companyTagline, setCompanyTagline] = useState(null);
-    const [rera_no, setRera_no] = useState(null);
+  const [CompanyType, setCompanyType] = useState(null);
+  const [companyName, setCompanyName] = useState(null);
+  const [companyTagline, setCompanyTagline] = useState(null);
+  const [rera_no, setRera_no] = useState(null);
+  const [reraImg, setReraImg] = useState(null);
+  const [lisenceNo, setLisenceNo] = useState(null);
+  const [licenseImg, setLicenseImg] = useState(null);
+  const [licenseExpiry, setLicenseExpiry] = useState(null);
+
+  const [billingRef, setBillingRef] = useState(null);
+  const [vat_No, setVatNo] = useState(null);
+  const [vat_status, setVatStatus] = useState(null);
+  const [vat_img, setVatImg] = useState(null);
+
+  const [country_, setCountry] = useState(null);
+  const [state_, setState] = useState(null);
+
+    const [address, setAddress] = useState('Abu Dhabi');
+    const [lisenceFile, setLisenceFile] = useState(null);
+    const [vatImage, setVatImage] = useState(null);
+    const [vatPreview, setVatPreview] = useState(null);
     const [reraExDate, setReraExDate] = useState(null);
-    const [reraImg, setReraImg] = useState(null);
-    const [lisenceNo, setLisenceNo] = useState(null);
-    const [licenseImg, setLicenseImg] = useState(null);
-    const [licenseExpiry, setLicenseExpiry] = useState(null);
-
-    const [billingRef, setBillingRef] = useState(null);
-    const [vat_No, setVatNo] = useState(null);
-    const [vat_status, setVatStatus] = useState(null);
-    const [vat_img, setVatImg] = useState(null);
-
-    const [country_, setCountry] = useState(null);
-    const [state_, setState] = useState(null);
-
-//   const [address, setAddress] = useState('Abu Dhabi');
-//   const [lisenceFile, setLisenceFile] = useState(null);
-//   const [vatImage, setVatImage] = useState(null);
-//   const [vatPreview, setVatPreview] = useState(null);
-//   const [reraExDate, setReraExDate] = useState(null);
-//   const [companyLogo, setCompanyLogo] = useState(null);
-//   const [companyLogoPreview, setCompanyLogoPreview] = useState(null);
-//   const [companyCoverImage, setCompanyCoverImage] = useState(null);
-//   const [companyCoverPreview, setCompanyCoverPreview] = useState(null);
-//   const [profileImage, setProfileImage] = useState(null);
-//   const [profilePreview, setProfilePreview] = useState(null);
-//   const [disabled, setDisabled] = useState(false);
-//   const [mainService, setmainService] = useState(null);
+    const [companyLogo, setCompanyLogo] = useState(null);
+    const [companyLogoPreview, setCompanyLogoPreview] = useState(null);
+    const [companyCoverImage, setCompanyCoverImage] = useState(null);
+    const [companyCoverPreview, setCompanyCoverPreview] = useState(null);
+    const [profileImage, setProfileImage] = useState(null);
+    const [profilePreview, setProfilePreview] = useState(null);
+    const [disabled, setDisabled] = useState(false);
+    const [mainService, setmainService] = useState(null);
 
   useEffect(() => {
     dispatch(getCountries());
@@ -883,8 +882,8 @@ function UpdateCompany({ title, formfor, id }) {
   );
 }
 
-UpdateCompany.getLayout = function getLayout(page) {
+CompanyForm.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default UpdateCompany;
+export default CompanyForm;

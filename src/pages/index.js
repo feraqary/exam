@@ -6,7 +6,6 @@ import LAYOUT from 'constant';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import HeaderSection from 'components/landingpage/HeaderSection';
-
 import Customization from 'layout/Customization';
 import AppBar from 'components/ui-component/extended/AppBar';
 import Tabs from '../pages/pages/frontend_pages/Tabs';

@@ -1,11 +1,13 @@
 // material-ui
 import { Grid, Box, Button } from '@mui/material';
 import Image from 'next/image';
+
 import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+
 
 // project imports
 import { useState, useEffect } from 'react';
@@ -16,6 +18,7 @@ import Table from 'components/Table/Table';
 import { useDispatch, useSelector } from 'react-redux';
 import Edit_service from './helper_components/edit_services';
 import { getAllMainServices, deleteMainService } from 'store/slices/company-section/action/company';
+import AlertDialogSlide from 'components/ui-elements/advance/UIDialog/AlertDialogSlide';
 // ==============================|| Add Services ||============================== //
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -142,7 +145,7 @@ function ManageServices() {
           <Table data={mainServices} columnHeaders={ColumnHeaders} />
         </Grid>
       </Grid>
-      {AlertDialogSlide()}
+
     </Page>
   );
 }
