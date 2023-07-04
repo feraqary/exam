@@ -7,14 +7,17 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 
 import Table from 'components/Table/Table';
-import { useDispatch, useSelector } from 'react-redux';
-import { getFeaturedCompany } from 'store/slices/company-section/action/company';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getFeaturedCompanies } from 'store/slices/company-section/action/company';
+import { useSelector } from 'react-redux';
 
 // ===========================|| featured Company list||=========================== //
 
 const ColumnHeaders = [
   {
+    accessorKey: 'ID',
+    header: 'SI.NO',
     accessorKey: 'CompanyLogo',
     header: 'Company Logo',
     Cell: ({ renderedCellValue, row }) => (
@@ -30,16 +33,13 @@ const ColumnHeaders = [
     )
   },
   {
-    accessorKey: 'CompanyMainType',
-    header: 'Company Main Type'
-  },
-  {
     accessorKey: 'CompanyName',
-    header: ' Company Name '
+    header: 'Company Name'
   },
+
   {
     accessorKey: 'LicenseNO',
-    header: ' License Number '
+    header: 'License Number'
   },
   {
     accessorKey: 'ContactPerson',
@@ -49,29 +49,24 @@ const ColumnHeaders = [
     accessorKey: 'Email',
     header: 'Email'
   },
-  { 
-    accessorKey: 'Phone', 
-    header: 'Phone' 
-  },
-  // { 
-  //   accessorKey: 'show', 
-  //   header: 'Show in Homepage', 
-  //   Cell: ({ cell }) => <Checkbox /> }
+  { accessorKey: 'Phone', header: 'Phone' },
+  { accessorKey: 'show', header: 'Show in Homepage', Cell: ({ cell }) => <Checkbox /> }
 ];
 
 const FeaturedCompanies = () => {
-  const { features } = useSelector((state) => state.companies);
-
   const dispatch = useDispatch();
+
+  const { error, loading, featuredCompanies } = useSelector((state) => state.companies);
+  console.log(featuredCompanies);
   useEffect(() => {
-    dispatch(getFeaturedCompany());
-  }, [dispatch]);
+    dispatch(getFeaturedCompanies());
+  }, []);
 
   return (
     <Page title="Featured Companies">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={features} />
+          <Table data={featuredCompanies} columnHeaders={ColumnHeaders} />
         </Grid>
       </Grid>
     </Page>

@@ -55,7 +55,7 @@ const CustomizeSection = () => {
                   width: { xs: '100%', sm: '100%', md: 'calc(100% - 20%)' }
                 }}
               >
-                Berry has made it easy for developers of any skill level to use their product.
+                Aqary International
               </Typography>
             </Grid>
             <Grid item xs={12}>

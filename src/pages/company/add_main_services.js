@@ -57,31 +57,7 @@ function MainService() {
                 logoImage: '',
                 iconImage: ''
               }}
-<<<<<<< HEAD
-              validationSchema={Yup.object({
-                subCompanyType: Yup.object().typeError().required('Mandatory Selection'),
-                mainServiceName: Yup.string().trim().required('Please provide a valid sub company type'),
-                description: Yup.string().required('Please provide a description'),
-                logoImage: Yup.mixed()
-                  .required('Please provide a logo image')
-                  .test(
-                    'FILE_SIZE',
-                    'Uploaded file is too big. File size must not exceed 1MB',
-                    (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                  )
-                  .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type)),
-                iconImage: Yup.mixed()
-                  .required('Please provide an logo image')
-                  .test(
-                    'FILE_SIZE',
-                    'Uploaded file is too big. File size must not exceed 1MB',
-                    (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
-                  )
-                  .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type))
-              })}
-=======
               validationSchema={validationSchema}
->>>>>>> db71f15e763ee878d5fd9745ffa8c833068015a2
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 const formData = new FormData();
                 formData.append('company_types_id', values.subCompanyType.id);
@@ -102,8 +78,8 @@ function MainService() {
                 <Grid container lg={12} xs={12} justifyContent="center" gap={3}>
                   <AutoCompleteSelector
                     style={{ xs: 12, lg: 8 }}
-                    label="Sub CompanyTypes"
-                    placeholder="Sub CompanyTypes"
+                    label="Choose Sub Company Type"
+                    placeholder="Choose Sub Company Type"
                     options={companyTypes?.map((company) => {
                       return { label: company.title, ...company };
                     })}
@@ -113,8 +89,8 @@ function MainService() {
                   />
 
                   <InputText
-                    label="Main Service Name"
-                    placeholder="Enter Main Service Name"
+                    label="Add Main Service Name"
+                    placeholder="Add Main Service Name"
                     helperText="Please enter main service name"
                     style={{ xs: 12, lg: 8 }}
                     type="text"

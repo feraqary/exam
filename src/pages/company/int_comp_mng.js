@@ -175,8 +175,10 @@ const ColumnHeaders = [
             Block
           </Button>
 
+
           <Dialog fullScreen open={editOpen} onClose={handleEditClose} TransitionComponent={Transition}>
             <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleEditClose}>
+
               <IconButton>
                 <CloseIcon />
               </IconButton>
