@@ -5,7 +5,6 @@ import SellIcon from '@mui/icons-material/Sell';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import ApartmentIcon from '@mui/icons-material/Apartment';
-import { ClearIcon } from '@mui/icons-material';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import InputAdornment from '@mui/material/InputAdornment';

@@ -13,7 +13,6 @@ import Map from 'components/map/google-map';
 import MapAutocomplete from 'components/map/maps-autocomplete';
 import { LoadScript } from '@react-google-maps/api';
 import Image from 'next/image';
-import {store} from './store';
 
 // redux actions import
 

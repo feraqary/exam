@@ -225,8 +225,8 @@ function ColumnsLayouts() {
                 label="Select Master Developer Company"
                 id="masterDeveloper"
                 options={mainServices.map((service) => {
-                    return { label: service.title, ...service };
-                  })}
+                  return { label: service.title, ...service };
+                })}
                 placeholder="Select Main Developer Company"
                 func={(newValue) => {
                   dispatch(setMainCompanyType(newValue));
@@ -314,27 +314,27 @@ function ColumnsLayouts() {
           <Container title="" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
               <InputText
-                  label="RERA No."
-                  placeholder="Enter RERA No."
-                  helperText="Please Enter RERA No."
-                  style={{ xs: 12, lg: 6 }}
-                  value={companyInformation.companyDetails.reraNo}
-                  setValue={(e) => dispatch(setCompanyReraNo(e))}
-                />
-                <CustomDateTime style={{ xs: 12, lg: 6 }} label="RERA No. Expiry Date" helperText="Please enter RERA No. Expiry Date" />
-                <FileUpload
-                  label="Upload RERA"
-                  type="pdf"
-                  placeholder="Upload RERA"
-                  helperText="Please upload the company RERA"
-                  style={{ xs: 12, lg: 6 }}
-                />
+                label="RERA No."
+                placeholder="Enter RERA No."
+                helperText="Please Enter RERA No."
+                style={{ xs: 12, lg: 6 }}
+                value={companyInformation.companyDetails.reraNo}
+                setValue={(e) => dispatch(setCompanyReraNo(e))}
+              />
+              <CustomDateTime style={{ xs: 12, lg: 6 }} label="RERA No. Expiry Date" helperText="Please enter RERA No. Expiry Date" />
+              <FileUpload
+                label="Upload RERA"
+                type="pdf"
+                placeholder="Upload RERA"
+                helperText="Please upload the company RERA"
+                style={{ xs: 12, lg: 6 }}
+              />
             </Grid>
           </Container>
 
           <Container title="" style={{ xs: 12 }}>
             <Grid container spacing={2} alignItems="center">
-            <InputText
+              <InputText
                 label="License No."
                 placeholder="Enter Company License No."
                 helperText="Please enter Company License No."
