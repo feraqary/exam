@@ -8,170 +8,90 @@ import { gridSpacing } from 'store/constant';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import Table from 'components/Table/Table';
 
-// ===========================|| International Company Managment list||=========================== //
+import { getCompanyByStatus, updateCompanyStatus } from 'store/slices/company-section/action/company';
+
+import { useDispatch, useSelector } from 'react-redux';
+
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getBlockedCompanies, restoreCompany } from 'store/slices/company-section/action/company';
+import { useSelector } from 'react-redux';
+import { dispatch } from 'store';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
+// ===========================|| Blocked Company list||=========================== //
 
 const ColumnHeaders = [
   {
-    accessorKey: 'sino',
+    accessorKey: 'ID',
     header: 'SL.No'
   },
   {
-    accessorKey: 'name.companyName',
+    accessorKey: 'CompanyName',
     header: 'Company Name'
   },
   {
-    accessorKey: 'phone',
+    accessorKey: 'Phone',
     header: 'Phone'
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'Email',
     header: 'Email'
   },
   {
     accessorKey: 'action',
     header: 'Action',
-    Cell: ({}) => <AqaryButton variant="contained">Restore</AqaryButton>
+
+    Cell: ({ row }) => {
+      const dispatch = useDispatch();
+
+      return (
+        <AqaryButton
+          variant="contained"
+          onClick={() => {
+            console.log('int_company', row.original);
+            // console.log('status', status);
+
+            const formData = new FormData();
+
+            formData.append('company_id', row.original.ID);
+            formData.append('status', '4');
+            formData.append('company_type', row.original.CompanyMainType);
+            dispatch(updateCompanyStatus(formData));
+            window.location.reload();
+          }}
+        >
+          Restore
+        </AqaryButton>
+      );
+    }
+
   }
 ];
 
-const data = [
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  },
-  {
-    name: {
-      companyName: 'Dubai Holding'
-    },
-    email: 'new@gmail.com',
-    phone: '+0192831-310',
-    action: ' edit, multiple',
-    sino: '2'
-  }
-];
+const BlockedCompanies = () => {
+  const dispatch = useDispatch();
 
-const BlockedCompanies = () => (
-  <Page title="Blocked Companies">
-    <Grid container spacing={gridSpacing}>
-      <Grid item xs={12}>
-        <Table data={data} columnHeaders={ColumnHeaders} />
+  const { loading, error, blockedCompanies } = useSelector((state) => state.companies);
+
+  useEffect(() => {
+
+    dispatch(getCompanyByStatus(5));
+  }, [dispatch]);
+
+
+  return (
+    <Page title="Blocked Companies">
+      <ToastContainer />
+      <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Table data={blockedCompanies} columnHeaders={ColumnHeaders} />
+        </Grid>
       </Grid>
-    </Grid>
-  </Page>
-);
+    </Page>
+  );
+};
 
 BlockedCompanies.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;

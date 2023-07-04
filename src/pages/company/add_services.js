@@ -1,12 +1,12 @@
 // material-ui
 import { Grid } from '@mui/material';
-
+import * as Yup from 'yup';
 // project imports
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 // assets
@@ -14,131 +14,134 @@ import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
+
 import { createService, getAllMainServices } from 'store/slices/company-section/action/company';
-import { setMainService } from 'store/slices/company-section/slice/company';
 import { ToastContainer } from 'react-toastify';
-const roles = ['Broker Company', 'Developer Company', 'Service Company'];
+import { Formik } from 'formik';
+import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 
 // ==============================|| Add Company Type form ||============================== //
-function Service() {
-  const dispatch = useDispatch();
-  const [service, setService] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [logoImage, setLogoImage] = useState(null);
-  const [iconImage, setIconImage] = useState(null);
-  const [logoPreview, setLogoPreview] = useState(null);
-  const [iconPreview, setIconPreview] = useState(null);
 
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
+
+const validationSchema = Yup.object({
+  mainService: objectValidator(),
+  serviceName: stringValidator('Please provide a valid service name'),
+  description: stringValidator('Please provide a description'),
+  logoImage: fileValidator(SUPPORTED_FORMATS),
+  iconImage: fileValidator(SUPPORTED_FORMATS)
+});
+
+function Service() {
   const logoRef = useRef(null);
   const iconRef = useRef(null);
 
-  const { mainServices, loading, error, mainService } = useSelector((state) => state.companies);
+  const dispatch = useDispatch();
+
+  const { mainServices } = useSelector((state) => state.companies);
 
   useEffect(() => {
     dispatch(getAllMainServices());
   }, [dispatch]);
 
-  const handleMainServiceChange = (newValue) => {
-    dispatch(setMainService(newValue));
-  };
-
-  const clearFields = () => {
-    dispatch(setMainService(null));
-    setService('');
-    setDescription('');
-    setLogoImage(null);
-    setIconImage(null);
-    setLogoPreview(null);
-    setIconPreview(null);
-
-    if (logoRef.current) {
-      logoRef.current.value = null;
-    }
-    if (iconRef.current) {
-      iconRef.current.value = null;
-    }
-  };
-
-  const submitForm = () => {
-    const formData = new FormData();
-    formData.append('title', service);
-    formData.append('main_services_id', mainService?.id);
-    formData.append('description', description);
-    formData.append('icon_url', logoImage);
-    formData.append('image_url', iconImage);
-    dispatch(createService(formData));
-    if (!error) {
-      clearFields();
-    }
-  };
-
   return (
     <Page title="Add Sub Services">
       <Grid container spacing={gridSpacing}>
         <ToastContainer />
-        <Container title="Add Sub Services" style={{ xs: 12 }}>
+        <Container style={{ xs: 12 }}>
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
-            <AutoCompleteSelector
-              style={{ xs: 12, lg: 8 }}
-              label="Main Services"
-              placeholder="Main Services"
-              options={mainServices.map((service) => {
-                return { label: service.title, ...service };
-              })}
-              id="compnType"
-              value={mainService}
-              helperText="Please select a main service"
-              func={handleMainServiceChange}
-            />
+            <Formik
+              initialValues={{
+                mainService: '',
+                serviceName: '',
+                description: '',
+                logoImage: '',
+                iconImage: ''
+              }}
+              validationSchema={validationSchema}
+              onSubmit={(values, { setSubmitting, resetForm }) => {
+                const formData = new FormData();
+                formData.append('title', values.serviceName);
+                formData.append('main_services_id', values.mainService.id);
+                formData.append('description', values.description);
+                formData.append('icon_url', values.logoImage);
+                formData.append('image_url', values.iconImage);
+                dispatch(createService(formData));
+                setSubmitting(false);
+                resetForm();
+              }}
+              onReset={(_) => {
+                logoRef.current.value = '';
+                iconRef.current.value = '';
+              }}
+            >
+              {(props) => (
+                <Grid container lg={12} xs={12} justifyContent="center" gap={3}>
+                  <AutoCompleteSelector
+                    style={{ xs: 12, lg: 8 }}
+                    label="Choose Main Services"
+                    placeholder="Choose Main Services"
+                    options={mainServices.map((service) => {
+                      return { label: service.title, ...service };
+                    })}
+                    id="mainService"
+                    name="mainService"
+                    setFieldValue={props.setFieldValue}
+                  />
 
-            <InputText
-              label="Service Name"
-              placeholder="Enter Service Name"
-              helperText="Please enter service name"
-              style={{ xs: 12, lg: 8 }}
-              type="text"
-              value={service}
-              setValue={setService}
-            />
-            <InputText
-              label="Description"
-              placeholder="Enter Description"
-              style={{ xs: 12, lg: 8 }}
-              type="text"
-              multiline
-              rows={5}
-              id="outlined-multiline-flexible"
-              value={description}
-              setValue={setDescription}
-            />
+                  <InputText
+                    label="Add Service Name"
+                    placeholder="Add Service Name"
+                    helperText="Please enter service name"
+                    style={{ xs: 12, lg: 8 }}
+                    type="text"
+                    name="serviceName"
+                    id="serviceName"
+                    required={true}
+                  />
+                  <InputText
+                    label="Description"
+                    placeholder="Enter Description"
+                    style={{ xs: 12, lg: 8 }}
+                    type="text"
+                    multiline
+                    rows={5}
+                    id="description"
+                    name="description"
+                    helperText="Please enter the description for the sub compnay type"
+                    required={true}
+                  />
 
-            <FileUpload
-              label="Upload Logo"
-              style={{ xs: 12, lg: 8 }}
-              placeholder="Upload Logo"
-              type="file"
-              helperText="Please upload your logo"
-              image={{ alt: 'Logo Preview', width: '250px', height: '250px' }}
-              ref={logoRef}
-              imagePreview={logoPreview}
-              setImagePreview={setLogoPreview}
-              setValue={setLogoImage}
-            />
-            <FileUpload
-              label="Upload Icon"
-              style={{ xs: 12, lg: 8 }}
-              placeholder="Upload Icon"
-              type="file"
-              helperText="Please upload your Icon"
-              image={{ alt: 'Icon Preview', width: '250px', height: '250px' }}
-              ref={iconRef}
-              imagePreview={iconPreview}
-              setImagePreview={setIconPreview}
-              setValue={setIconImage}
-            />
+                  <FileUpload
+                    id="logoImage"
+                    name="logoImage"
+                    required={true}
+                    label="Upload Logo"
+                    style={{ xs: 12, lg: 8 }}
+                    placeholder="Upload Logo"
+                    setFieldValue={props.setFieldValue}
+                    helperText="Please upload your logo"
+                    image={{ alt: 'Logo Preview', width: '250px', height: '250px' }}
+                    ref={logoRef}
+                  />
+                  <FileUpload
+                    id="iconImage"
+                    name="iconImage"
+                    required={true}
+                    label="Upload Icon"
+                    style={{ xs: 12, lg: 8 }}
+                    placeholder="Upload Icon"
+                    setFieldValue={props.setFieldValue}
+                    helperText="Please upload your icon"
+                    image={{ alt: 'Icon Preview', width: '250px', height: '250px' }}
+                    ref={iconRef}
+                  />
+                  <SubmitButton />
+                </Grid>
+              )}
+            </Formik>
           </Grid>
         </Container>
-        <SubmitButton submit={submitForm} clear={clearFields} />
       </Grid>
     </Page>
   );

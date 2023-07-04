@@ -15,12 +15,20 @@ const withTM = require('next-transpile-modules')([
 const nextConfig = withTM({
   reactStrictMode: false,
   images: {
-    domains: ['flagcdn.com']
+    domains: ['flagcdn.com'],
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '20.203.31.58',
+        port: '',
+        pathname: '/upload/**'
+      }
+    ]
   },
 
-eslint: {
-    ignoreDuringBuilds: true,
-},
+  eslint: {
+    ignoreDuringBuilds: true
+  },
 
   env: {
     REACT_APP_VERSION: process.env.REACT_APP_VERSION,
@@ -38,7 +46,7 @@ eslint: {
     REACT_APP_AWS_APP_CLIENT_ID: process.env.REACT_APP_AWS_APP_CLIENT_ID,
 
     REACT_APP_AUTH0_CLIENT_ID: process.env.REACT_APP_AUTH0_CLIENT_ID,
-    REACT_APP_AUTH0_DOMAIN: process.env.REACT_APP_AUTH0_DOMAIN
+    REACT_APP_AUTH0_DOMAIN: process.env.REACT_APP_AUTH0_DOMAIN,
   }
 });
 

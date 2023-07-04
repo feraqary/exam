@@ -1,82 +1,55 @@
 // material-ui
 import { Grid, InputAdornment, TextField } from '@mui/material';
-
 // project imports
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-
+import React, { forwardRef } from 'react';
 // assets
 import { UploadFile } from '@mui/icons-material';
 import InputLayout from './InputLayout';
-import { forwardRef } from 'react';
 
-const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, style, setValue, imagePreview, setImagePreview }, ref) => {
-  const handleImagePreview = (e) => {
-    const file = e.target.files[0];
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
-    img.onload = () => {
-      const width = img.width;
-      const height = img.height;
-      URL.revokeObjectURL(img.src);
+import { useField } from 'formik';
 
-      if (width > 1920 || height > 1080) {
-        setValue(null);
-        toast.error(`image file must be 1920x1080`, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
-      } else if (file.size / 1024 > 10) {
-        setValue(null);
-        toast.error(`file size must not exceed 10MB`, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark'
-        });
-      } else {
-        setImagePreview(URL.createObjectURL(file));
-        setValue(file);
-      }
-    };
-  };
+/**
+ * A component for uploading files with an associated input field and optional image preview.
+ * @param {Object} props - The component props.
+ * @param {string} props.label - The label for the input field.
+ * @param {string} props.placeholder - The placeholder text for the input field.
+ * @param {string} props.helperText - The helper text to display below the input field.
+ * @param {Object} props.image - The image configuration for the preview.
+ * @param {Object} props.style - The custom styles to apply to the component.
+ * @param {function} props.setFieldValue - A function to set the form field value in Formik.
+ * @param {string} props.id - The unique identifier for the input field.
+ * @param {boolean} props.required - Indicates if the input field is required.
+ * @param {...any} rest - Additional props to be passed to the TextField component.
+ * @param {React.Ref} ref - The ref forwarded to the TextField component.
+ * @returns {JSX.Element} The rendered FileUpload component.
+ */
 
-  // const handleFileUploadChange = (e) => {
-  //   const file = e.target.files[0];
-  //   const imageSize = file.size / 1024;
-  //   if (imageSize > 10) {
-  //     toast.error(`file size must not exceed 10MB`, {
-  //       position: 'top-right',
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: 'dark'
-  //     });
-  //   }
-  //   setValue(file);
-  // };
+const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, setFieldValue, id, required, ...rest }, ref) => {
+  const [field, meta] = useField(rest);
 
   return (
     <>
-      <InputLayout label={label} helperText={helperText} style={style}>
+      <InputLayout
+        label={label}
+        helperText={helperText}
+        style={style}
+        metaError={meta.error}
+        metaTouched={meta.touched}
+        required={required}
+      >
         <TextField
-          required
+          {...field}
+          required={required}
           type="file"
+          id={id}
+          name={field.name}
           fullWidth
           placeholder={placeholder}
+          value={field.value?.logoImage}
+          inputRef={ref}
+          onChange={(e) => {
+            setFieldValue(field.name, e.target.files[0]);
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -84,13 +57,21 @@ const FileUpload = forwardRef(({ label, type, placeholder, helperText, image, st
               </InputAdornment>
             )
           }}
-          onChange={(e) => handleImagePreview(e)}
-          inputRef={ref}
+          error={meta.error && meta.touched}
         />
       </InputLayout>
       {image && (
         <Grid item xs={3} lg={style.lg} alignContent="right">
-          <img src={imagePreview} alt={image.alt} width={image.width} height={image.height} />
+          {field.value ? (
+            <img
+              src={field.value && !meta.error && URL.createObjectURL(field.value)}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+            />
+          ) : (
+            <img src="/assets/image_preveiw.jpg" alt={image.alt} width={100} height={100} />
+          )}
         </Grid>
       )}
     </>

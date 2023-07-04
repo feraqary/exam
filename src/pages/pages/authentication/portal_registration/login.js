@@ -1,7 +1,7 @@
 import Link from 'Link';
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
-import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Divider, Grid, Hidden, Stack, Typography, useMediaQuery } from '@mui/material';
 
 // project imports
 import LAYOUT from 'constant';
@@ -38,6 +38,13 @@ const PurpleWrapper = styled('span')({
     position: 'absolute',
     top: '23%',
     left: '37%',
+    width: 313,
+    backgroundSize:380, 
+    height: 280,
+    backgroundImage: `url(${AuthPurpleCard})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    animation: '15s wings ease-in-out infinite',
     width: 243,
     height: 210,
     backgroundSize: 380,
@@ -52,41 +59,38 @@ const PurpleWrapper = styled('span')({
 // carousel items
 const items = [
   {
-    title: 'Components Based Design System',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'Aqary International ',
+    description: 'The Purpose of Aqary International is to make home moving easier in the entire world. '
   },
   {
-    title: 'Components Based Design System',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'AQARY Group is Reimagining Real Estate to make it easier to unlock life’s next chapter.',
+    description:
+      'As the most-visited real estate website in the world, AQARY and its affiliates offer customers an on-demand experience for selling, buying, renting, and financing with transparency and nearly seamless end-to-end service. AQARY Offers buys and sells homes directly in dozens of markets across the world, allowing sellers control over their timeline. AQARY Home Loans, our affiliate lender, provides our customers with an easy option to get pre-approved and secure financing for their next home purchase.'
   },
   {
-    title: 'Components Based Design System',
-    description: 'Powerful and easy to use multipurpose theme'
+    title: 'Our Aim is to Create a more Efficient Housing Marketplace and make Home Moving Easier.    ',
+    description:
+      'Our ambition is to be the place, and the encyclopedia that consumers and customers turn to as their property portal of choice, and to deliver that objective, Aqary needs to be a business in which people want to work, invest, and with which people want to partner.'
   }
 ];
 
 // ================================|| AUTH1 - LOGIN ||================================ //
 
-const Login = () => {
+const Login = ({ page, closePopUp }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Page title="Login">
       <AuthWrapper1>
-        <Grid container justifyContent="space-between" alignItems="center" sx={{ minHeight: '100vh' }}>
-          <Grid item container justifyContent="center" md={6} lg={7} sx={{ my: 3 }}>
+        <Grid container alignItems="center" justifyContent={'center'} sx={{ minHeight: '100vh', overflow: 'hidden' }}>
+          <Grid item container justifyContent="center" md={12} lg={12} sx={{ my: 3 }}>
             <AuthCardWrapper>
-              <Grid container spacing={2} justifyContent="center">
+              <Grid container spacing={2}  justifyContent="center">
                 <Grid item xs={12}>
-                  <Grid
-                    container
-                    direction={matchDownSM ? 'column-reverse' : 'row'}
-                    alignItems={matchDownSM ? 'center' : 'inherit'}
-                    justifyContent={matchDownSM ? 'center' : 'space-between'}
-                  >
+                  <Grid container alignItems={matchDownSM ? 'center' : 'center'}  justifyContent={'center'}>
                     <Grid item>
-                      <Stack justifyContent={matchDownSM ? 'center' : 'flex-start'} textAlign={matchDownSM ? 'center' : 'inherit'}>
+                      <Stack justifyContent={'center'} textAlign={matchDownSM ? 'center' : 'inherit'}>
                         <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
                           Hi, Welcome Back
                         </Typography>
@@ -103,16 +107,16 @@ const Login = () => {
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                  <AuthLogin loginProp={1} />
+                  <AuthLogin closePopUp={closePopUp} loginProp={1} page={page} />
                 </Grid>
                 <Grid item xs={12}>
                   <Divider />
                 </Grid>
                 <Grid item xs={12}>
-                  <Grid item container direction="column" alignItems="flex-end" xs={12}>
+                  <Grid item container direction="column" alignItems="center" xs={12}>
                     <Typography
                       component={Link}
-                      href="/pages/authentication/auth1/register"
+                      href="/pages/authentication/portal_registration/register"
                       variant="subtitle1"
                       sx={{ textDecoration: 'none' }}
                     >
@@ -122,23 +126,6 @@ const Login = () => {
                 </Grid>
               </Grid>
             </AuthCardWrapper>
-          </Grid>
-          <Grid item md={6} lg={5} sx={{ position: 'relative', alignSelf: 'stretch', display: { xs: 'none', md: 'block' } }}>
-            <BackgroundPattern1>
-              <Grid item container alignItems="flex-end" justifyContent="center" spacing={3}>
-                <Grid item xs={12}>
-                  <span />
-                  <PurpleWrapper />
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid item container justifyContent="center" sx={{ pb: 8 }}>
-                    <Grid item xs={10} lg={8} sx={{ '& .slick-list': { pb: 2 } }}>
-                      <AuthSlider items={items} />
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </BackgroundPattern1>
           </Grid>
         </Grid>
       </AuthWrapper1>

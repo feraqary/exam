@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconClipboardCheck, IconPictureInPicture, IconForms, IconBorderAll, IconChartDots, IconStairsUp } from '@tabler/icons';
-
+import { FileSettings } from 'tabler-icons-react';
 // constant
 const icons = {
   IconClipboardCheck,
@@ -14,84 +14,39 @@ const icons = {
   IconStairsUp
 };
 
-// ==============================|| UI FORMS MENU ITEMS ||============================== //
+// ==============================|| services menu ||============================== //
 
 const services = {
   id: 'services',
   title: <FormattedMessage id="Services" />,
-  icon: icons.IconPictureInPicture,
+  icon: <FileSettings size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
-      id: 'services-location',
-      title: <FormattedMessage id="Add Services" />,
+      id: 'add_main_services',
+      title: <FormattedMessage id="Add Main Services" />,
       type: 'item',
-      icon: icons.IconPictureInPicture,
-      url: '/services/add_services'
+      url: '/company/add_main_services'
+    },
+
+    {
+      id: 'manage-services',
+      title: <FormattedMessage id="Manage Main Services" />,
+      type: 'item',
+      url: '/services/manage_services'
     },
     {
-      id: 'manage',
-      title: <FormattedMessage id="Manage" />,
-      type: 'collapse',
-      icon: icons.IconForms,
-      children: [
-        {
-          id: 'manage-services',
-          title: <FormattedMessage id="Manage Services" />,
-          type: 'item',
-          url: '/services/manage_services'
-        },
-        {
-          id: 'manage-sub-services',
-          title: <FormattedMessage id="Sub Services" />,
-          type: 'item',
-          url: '/services/sub_services'
-        },
-        {
-          id: 'manage-local-companies',
-          title: <FormattedMessage id="Local Companies" />,
-          type: 'item',
-          url: '/services/local_services'
-        },
-        {
-          id: 'manage-international-companies',
-          title: <FormattedMessage id="International Companies" />,
-          type: 'item',
-          url: '/services/int_services'
-        },
-        {
-          id: 'manage-company-gallery',
-          title: <FormattedMessage id="Company Gallery" />,
-          type: 'item',
-          url: '/services/company_gallery'
-        },
-        {
-          id: 'add_service_company_location',
-          title: <FormattedMessage id="Add/Edit Services Location" />,
-          type: 'item',
-          url: '/services/add_service_company_loc'
-        }
-      ]
+      id: 'add_services',
+      title: <FormattedMessage id="Add Sub Services" />,
+      type: 'item',
+      icon: icons.IconClipboardPlus,
+      url: '/company/add_services'
     },
     {
-      id: 'requests',
-      title: <FormattedMessage id="Requests" />,
-      type: 'collapse',
-      icon: icons.IconForms,
-      children: [
-        {
-          id: 'service-requests',
-          title: <FormattedMessage id="Service Requests" />,
-          type: 'item',
-          url: '/services/service_request'
-        },
-        {
-          id: 'valuation-requests',
-          title: <FormattedMessage id="Valuation Requests" />,
-          type: 'item',
-          url: '/services/valuation'
-        }
-      ]
+      id: 'manage-sub-services',
+      title: <FormattedMessage id="Manage Sub Services" />,
+      type: 'item',
+      url: '/services/sub_services'
     },
     {
       id: 'services-activities',

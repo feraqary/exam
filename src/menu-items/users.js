@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 // assets
 import { IconClipboardCheck, IconPictureInPicture, IconForms, IconBorderAll, IconChartDots, IconStairsUp } from '@tabler/icons';
-
+import { Users } from 'tabler-icons-react';
 // constant
 const icons = {
   IconClipboardCheck,
@@ -19,7 +19,7 @@ const icons = {
 const users = {
   id: 'users',
   title: <FormattedMessage id="Users" />,
-  icon: icons.IconPictureInPicture,
+  icon: <Users size={23} strokeWidth={1.5} style={{ marginRight: '10px' }} color={'black'} />,
   type: 'group',
   children: [
     {

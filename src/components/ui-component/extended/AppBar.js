@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { cloneElement, useState } from 'react';
+import React, { cloneElement, useState } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -18,17 +18,42 @@ import {
   Stack,
   Toolbar,
   Typography,
-  useScrollTrigger
+  useScrollTrigger,
+  Tooltip,
+  DialogTitle,
+  Slide,
+  DialogContent,
+  DialogActions,
+  Dialog
 } from '@mui/material';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CloseIcon from '@mui/icons-material/Close';
 // project imports
 import Logo from '../Logo';
+import Login from '../../../pages/pages/authentication/portal_registration/login';
 // assets
 import { IconBook, IconCreditCard, IconDashboard, IconHome2 } from '@tabler/icons';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 function ElevationScroll({ children, window }) {
   const theme = useTheme();
+
+  const { session, error, isLoading } = useSession();
+
+
+  if (isLoading) {
+    console.log('Loading');
+  }
+  if (error) {
+
+    console.log(error);
+  }
+  if (session) {
+    console.log('name', session.user.name), console.log('email', user.session.email);
+  }
+
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -50,9 +75,13 @@ ElevationScroll.propTypes = {
 };
 
 // ==============================|| MINIMAL LAYOUT APP BAR ||============================== //
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const AppBar = ({ ...others }) => {
   const [drawerToggle, setDrawerToggle] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const drawerToggler = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -60,6 +89,16 @@ const AppBar = ({ ...others }) => {
     }
     setDrawerToggle(open);
   };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const { data: session } = useSession();
+
 
   return (
     <ElevationScroll {...others}>
@@ -73,15 +112,44 @@ const AppBar = ({ ...others }) => {
               <Button color="inherit" component={Link} href="#">
                 Home
               </Button>
-              <Button color="inherit" component={Link} href="#">
+              <Button color="inherit" component={Link} href="/pages/media_posts/Tabs" target="_blank">
                 Social Media
               </Button>
-              <Button color="inherit" component={Link} href="login" target="_blank">
+              <Button color="inherit" component={Link} href="login">
                 Dashboard
               </Button>
-              <Button color="inherit" component={Link} href="/pages/authentication/portal_registration/register" target="_blank">
-              Portal Login 
-              </Button>
+              {session ? (
+                <Button color="inherit" onClick={()=>{signOut()}} target="_blank">
+                  Sign Out
+                </Button>
+              ) : (
+                <Button color="inherit" component={Link} href="/pages/authentication/portal_registration/login" target="_blank">
+                  Portal Login
+                </Button>
+              )}
+
+              {/* <a href="/api/auth/login">Login</a>
+              <a href="/api/auth/logout">Logout</a>  */}
+
+              <Tooltip title="Log In">
+                <IconButton color="inherit" target="_blank" onClick={handleClickOpen}>
+                  <AccountCircleIcon />
+                </IconButton>
+              </Tooltip>
+
+              {/* login pop up*/}
+              <Dialog maxWidth={'lg'} open={open} TransitionComponent={Transition} onClose={handleClose} fullWidth>
+                <DialogActions sx={{ justifyContent: 'flex-start' }}>
+                  <Tooltip title="close">
+                    <IconButton color="inherit" onClick={handleClose}>
+                      <CloseIcon />
+                    </IconButton>
+                  </Tooltip>
+                </DialogActions>
+                <DialogContent>
+                  <Login closePopUp={setOpen} />
+                </DialogContent>
+              </Dialog>
             </Stack>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
               <IconButton color="inherit" onClick={drawerToggler(true)} size="large">
@@ -107,20 +175,11 @@ const AppBar = ({ ...others }) => {
                           <ListItemText primary="Dashboard" />
                         </ListItemButton>
                       </Link>
-                      <Link style={{ textDecoration: 'none' }} href="https://codedthemes.gitbook.io/berry" target="_blank">
-                        <ListItemButton component="a">
-                          <ListItemIcon>
-                            <IconBook />
-                          </ListItemIcon>
-                          <ListItemText primary="Documentation" />
-                        </ListItemButton>
-                      </Link>
-                      <Link style={{ textDecoration: 'none' }} href="https://links.codedthemes.com/hsqll" target="_blank">
+                      <Link style={{ textDecoration: 'none' }} href="/" target="_blank">
                         <ListItemButton component="a">
                           <ListItemIcon>
                             <IconCreditCard />
                           </ListItemIcon>
-                          <ListItemText primary="Purchase Now" />
                         </ListItemButton>
                       </Link>
                     </List>

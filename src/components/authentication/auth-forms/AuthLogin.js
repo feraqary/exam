@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'Link';
+import { useRouter } from 'next/router';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -18,32 +19,51 @@ import {
   OutlinedInput,
   Typography
 } from '@mui/material';
-
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
-
+import { userLogIn } from 'store/slices/user-registration/action/user-registration';
 import useAuth from 'hooks/useAuth';
 import useScriptRef from 'hooks/useScriptRef';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
+import { Provider, useDispatch } from 'react-redux';
+import { useSession, signIn, signOut } from 'next-auth/react';
 // ===============================|| JWT LOGIN ||=============================== //
 
-const JWTLogin = ({ loginProp, ...others }) => {
+const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
   const theme = useTheme();
-
+  const [route, setRoute] = useState(null);
   const { login } = useAuth();
   const scriptedRef = useScriptRef();
 
   const [checked, setChecked] = React.useState(true);
 
   const [showPassword, setShowPassword] = React.useState(false);
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { data: session } = useSession();
+
+  console.log('session', session);
+  if (session) {
+    const formData = new FormData();
+    console.log('email: ', session.user.email);
+    formData.append('email', session.user.email);
+    // formData.append('password', '');
+    formData.append('social_login', session.provider);
+    dispatch(userLogIn(formData));
+
+    router.push(page == 'dashboard' ? '/dashboard/default' : '/');
+
+    console.log("logged in")
+  }
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -55,7 +75,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
   return (
     <Formik
       initialValues={{
-        email: 'aqary@finehomeint.com',
+        email: 'info@codedthemes.com',
         password: '123456',
         submit: null
       }}
@@ -65,12 +85,23 @@ const JWTLogin = ({ loginProp, ...others }) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
+          const formData = new FormData();
+          formData.append('email', values.email);
+          formData.append('password', values.password);
+          formData.append('social_login', 'googles');
+
+          dispatch(userLogIn(formData));
+
           await login(values.email, values.password);
 
           if (scriptedRef.current) {
             setStatus({ success: true });
             setSubmitting(false);
           }
+
+          setTimeout(() => {
+            router.push(page == 'dashboard' ? '/dashboard/default' : '/');
+          }, 1500);
         } catch (err) {
           console.error(err);
           if (scriptedRef.current) {
@@ -146,7 +177,11 @@ const JWTLogin = ({ loginProp, ...others }) => {
               <Typography
                 variant="subtitle1"
                 component={Link}
-                href={loginProp ? `/pages/authentication/auth${loginProp}/forgot-password` : '/pages/authentication/auth3/forgot-password'}
+                href={
+                  loginProp
+                    ? `/pages/authentication/portal_registration/forgot-password`
+                    : '/pages/authentication/portal_registration/forgot-password'
+                }
                 color="secondary"
                 sx={{ textDecoration: 'none' }}
               >
@@ -162,8 +197,65 @@ const JWTLogin = ({ loginProp, ...others }) => {
           )}
           <Box sx={{ mt: 2 }}>
             <AnimateButton>
-              <Button color="secondary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
+              <Button
+                color="secondary"
+                disabled={isSubmitting}
+                onClick={() => {
+                  console.log(page);
+                }}
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+              >
                 Sign In
+              </Button>
+            </AnimateButton>
+          </Box>
+          <Box sx={{ mt: 2 }}>
+            <AnimateButton>
+              <Button
+                color="secondary"
+                onClick={() => {
+                  signIn('google');
+                }}
+                fullWidth
+                size="large"
+                variant="outlined"
+              >
+                Sign In With google
+              </Button>
+            </AnimateButton>
+          </Box>
+          <Box sx={{ mt: 2 }}>
+            <AnimateButton>
+              <Button
+                color="secondary"
+                disabled={isSubmitting}
+                onClick={() => {
+                  signIn('linkedin');
+                }}
+                fullWidth
+                size="large"
+                variant="outlined"
+              >
+                Sign In With LinkedIn
+              </Button>
+            </AnimateButton>
+          </Box>
+          <Box sx={{ mt: 2 }}>
+            <AnimateButton>
+              <Button
+                color="secondary"
+                disabled={isSubmitting}
+                onClick={() => {
+                  signIn('twitter');
+                }}
+                fullWidth
+                size="large"
+                variant="outlined"
+              >
+                Sign In With Twitter
               </Button>
             </AnimateButton>
           </Box>

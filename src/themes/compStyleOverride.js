@@ -98,7 +98,7 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
     MuiListItemText: {
       styleOverrides: {
         primary: {
-          color: theme.palette.text.dark
+          color: theme.palette.text.dark,
         }
       }
     },
@@ -133,6 +133,12 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
           background: outlinedFilled ? bgColor : 'transparent',
           padding: '15.5px 14px',
           borderRadius: `${borderRadius}px`,
+          '&[type="file"]':{
+            cursor: 'pointer'
+          },
+          '&::file-selector-button':{
+            display: 'none'
+          },
           '&.MuiInputBase-inputSizeSmall': {
             padding: '10px 14px',
             '&.MuiInputBase-inputAdornedStart': {

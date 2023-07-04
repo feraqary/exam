@@ -1,5 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCountries, getStates, getCities } from '../actions/countries';
+import {
+  getCountries,
+  getStates,
+  getCities,
+  getCommunities,
+  getSubCommunities,
+  getAllCountries,
+  getAllCurrencies
+} from '../actions/countries';
 
 const initialState = {
   error: null,
@@ -9,7 +17,15 @@ const initialState = {
   states: [],
   state: null,
   cities: [],
-  city: null
+  city: null,
+  communities: [],
+  community: null,
+  subCommunities: [],
+  subCommunity: null,
+  bankCountries: [],
+  bankCountry: null,
+  currencies: [],
+  currency: null
 };
 
 const slice = createSlice({
@@ -24,6 +40,19 @@ const slice = createSlice({
     },
     setCity: (state, action) => {
       state.city = action.payload;
+    },
+    setCommunity: (state, action) => {
+      state.community = action.payload;
+    },
+    setSubCommunity: (state, action) => {
+      state.subCommunity = action.payload;
+    },
+    setBankCountry: (state, action) => {
+      console.log(action.payload);
+      state.bankCountry = action.payload;
+    },
+    setCurrency: (state, action) => {
+      state.currency = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -72,6 +101,66 @@ const slice = createSlice({
         state.loading = false;
         state.error = action.payload;
         state.cities = state.cities;
+      })
+      .addCase(getCommunities.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.communities = state.communities;
+      })
+      .addCase(getCommunities.fulfilled, (state, action) => {
+        state.loading = false;
+        state.communities = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getCommunities.rejected, (state, action) => {
+        state.loading = false;
+        state.communities = state.communities;
+        state.error = null;
+      })
+      .addCase(getSubCommunities.pending, (state) => {
+        state.loading = true;
+        state.subCommunities = state.subCommunities;
+        state.error = null;
+      })
+      .addCase(getSubCommunities.fulfilled, (state, action) => {
+        state.loading = false;
+        state.subCommunities = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getSubCommunities.rejected, (state, action) => {
+        state.loading = false;
+        state.subCommunities = state.subCommunities;
+        state.error = action.payload;
+      })
+      .addCase(getAllCountries.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.bankCountries = state.bankCountries;
+      })
+      .addCase(getAllCountries.fulfilled, (state, action) => {
+        state.loading = false;
+        state.bankCountries = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getAllCountries.rejected, (state, action) => {
+        state.loading = false;
+        state.bankCountries = state.bankCountries;
+        state.error = action.payload;
+      })
+      .addCase(getAllCurrencies.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.currencies = state.currencies;
+      })
+      .addCase(getAllCurrencies.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currencies = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getAllCurrencies.rejected, (state, action) => {
+        state.loading = false;
+        state.currencies = state.currencies;
+        state.error = action.payload;
       });
   }
 });
@@ -80,53 +169,4 @@ const slice = createSlice({
 
 export default slice.reducer;
 
-export const { setCountry, setState, setCity } = slice.actions;
-
-// ----------------------------------------------------------------------
-
-// [getCountries.pending]: (state) => {
-//   state.loading = true;
-//   state.error = null;
-//   state.countries = [];
-// },
-// [getCountries.fulfilled]: (state, action) => {
-//   state.loading = false;
-//   state.countries = action.payload.data;
-//   state.error = null;
-// },
-// [getCountries.rejected]: (state, action) => {
-//   state.loading = false;
-//   state.error = action.payload;
-//   state.countries = [];
-// },
-
-// [getStates.pending]: (state) => {
-//   state.loading = true;
-//   state.error = null;
-//   state.states = [];
-// },
-// [getStates.fulfilled]: (state, action) => {
-//   state.loading = false;
-//   state.states = action.payload.data;
-//   state.error = null;
-// },
-// [getStates.rejected]: (state, action) => {
-//   state.loading = false;
-//   state.error = action.payload;
-//   state.states = [];
-// },
-// [getCities.pending]: (state, action) => {
-//   state.loading = true;
-//   state.error = null;
-//   state.cities = [];
-// },
-// [getCities.fulfilled]: (state, action) => {
-//   state.loading = false;
-//   state.cities = action.payload.data;
-//   state.error = null;
-// },
-// [getCities.rejected]: (state, action) => {
-//   state.loading = false;
-//   state.error = action.payload;
-//   state.cities = [];
-// }
+export const { setCountry, setState, setCity, setCommunity, setSubCommunity, setBankCountry, setCurrency } = slice.actions;
