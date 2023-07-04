@@ -5,68 +5,13 @@ import { Grid, Box, Button } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from 'components/Table/Table';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getActiveSubscription } from 'store/slices/company-section/action/company';
 
 // ==============================|| View Active Subscriptions form ||============================== //
-
-const data = [
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    published_units: '35',
-    remaining: '180',
-    subsDate: ' 20/12/2022 - 20/12/2023'
-  },
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    published_units: '35',
-    remaining: '180',
-    subsDate: ' 20/12/2022 - 20/12/2023'
-  },
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    published_units: '35',
-    remaining: '180',
-    subsDate: ' 20/12/2022 - 20/12/2023'
-  },
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    published_units: '35',
-    remaining: '180',
-    subsDate: ' 20/12/2022 - 20/12/2023'
-  },
-  {
-    comp_name: 'Aldar',
-    standard: '1/100',
-    featured: ' 12/30',
-    premium: '2/200',
-    deal_of_week: '20/50',
-    total: '280',
-    published_units: '35',
-    remaining: '180',
-    subsDate: ' 20/12/2022 - 20/12/2023'
-  }
-];
 
 const ColumnHeaders = [
   {
@@ -75,23 +20,23 @@ const ColumnHeaders = [
   },
 
   {
-    accessorKey: 'standard',
+    accessorKey: 'standard_units',
     header: 'Standard'
   },
   {
-    accessorKey: 'featured',
+    accessorKey: 'featured_units',
     header: 'Featured'
   },
   {
-    accessorKey: 'premium',
+    accessorKey: 'premium_units',
     header: 'Premium'
   },
   {
-    accessorKey: 'deal_of_week',
+    accessorKey: 'topdeal_units',
     header: 'Deal of the Week'
   },
   {
-    accessorKey: 'total',
+    accessorKey: 'total_price',
     header: 'Total'
   },
   {
@@ -99,10 +44,13 @@ const ColumnHeaders = [
     header: 'Remaining Units'
   },
   {
-    accessorKey: 'subsDate',
-    header: 'Subscription Date'
+    accessorKey: 'start_date',
+    header: 'Subscription Start Date'
   },
-
+  {
+    accessorKey: 'end_date',
+    header: 'Subscription End Date'
+  },
   {
     accessorKey: 'action',
     header: 'Action',
@@ -125,11 +73,17 @@ const ColumnHeaders = [
   }
 ];
 function ActiveSubscriptions() {
+  const dispatch = useDispatch();
+  const { activeSubscription } = useSelector((state) => state.companies);
+
+  useEffect(() => {
+    dispatch(getActiveSubscription());
+  }, []);
   return (
     <Page title="Active Subscriptions">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table columnHeaders={ColumnHeaders} data={activeSubscription} />
         </Grid>
       </Grid>
     </Page>

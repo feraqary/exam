@@ -46,14 +46,11 @@ const ColumnHeaders = [
         <AqaryButton
           variant="contained"
           onClick={() => {
-            console.log('int_company', row.original);
-            // console.log('status', status);
-
             const formData = new FormData();
-
             formData.append('company_id', row.original.ID);
             formData.append('status', '4');
             formData.append('company_type', row.original.CompanyMainType);
+
             dispatch(updateCompanyStatus(formData));
           }}
         >
@@ -67,7 +64,7 @@ const ColumnHeaders = [
 const BlockedCompanies = () => {
   const dispatch = useDispatch();
 
-  const { loading, error, blockedCompanies } = useSelector((state) => state.companies);
+  const { loading, error, companiesStatus } = useSelector((state) => state.companies);
 
   useEffect(() => {
     dispatch(getCompanyByStatus(5));
@@ -78,7 +75,7 @@ const BlockedCompanies = () => {
       <ToastContainer />
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={blockedCompanies} columnHeaders={ColumnHeaders} />
+          <Table data={companiesStatus} columnHeaders={ColumnHeaders} />
         </Grid>
       </Grid>
     </Page>

@@ -13,12 +13,9 @@ import {
   getMainServices,
   updateCompanyType,
   updateSubService,
-  DeleteSubService,
   getFeaturedCompanies,
   updateCompanyRank,
-  // getBlockedCompanies,
   restoreCompany,
-  blockCompany,
   updateCompanyStatus,
   updateMainService,
   deleteMainService,
@@ -31,11 +28,9 @@ import {
   getCompanyByStatus
 } from '../action/company';
 
-import { toast } from 'react-toastify';
-
 import { ToastError, ToastSuccess } from 'utils/toast';
 
-import { deleteService, createServices, updateCompany } from 'store/slices/company-section/action/company';
+import { deleteService } from 'store/slices/company-section/action/company';
 
 const initialState = {
   companies: [],
@@ -46,7 +41,7 @@ const initialState = {
   features: [],
   services: [],
   featuredCompanies: [],
-  blockedCompanies: [],
+  companiesStatus: [],
   activeSubscription: [],
   pendingSubscription: [],
   companyType: null,
@@ -196,66 +191,6 @@ const slice = createSlice({
         ToastError(state.error);
       })
 
-      // .addCase(createCompany.pending, (state) => {
-      //   state.loading = true;
-      //   state.companies = state.companies;
-      //   state.error = null;
-      // })
-      // .addCase(createCompany.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.error = null;
-      //   state.companies = [...state.companies, action.payload.data];
-      //   // toast.success('Company Added Successfully', {
-      //   //   position: 'top-right',
-      //   //   autoClose: 5000,
-      //   //   hideProgressBar: false,
-      //   //   closeOnClick: true,
-      //   //   pauseOnHover: true,
-      //   //   draggable: true,
-      //   //   progress: undefined,
-      //   //   theme: 'dark'
-      //   // });
-      // })
-      // .addCase(createCompany.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.payload.error;
-      //   state.companies = state.companies;
-      //   // toast.error(`${state.error}`, {
-      //   //   position: 'top-right',
-      //   //   autoClose: 5000,
-      //   //   hideProgressBar: false,
-      //   //   closeOnClick: true,
-      //   //   pauseOnHover: true,
-      //   //   draggable: true,
-      //   //   progress: undefined,
-      //   //   theme: 'dark'
-      //   // });
-      // })
-
-      // .addCase(updateCompany.pending, (state) => {
-      //   state.loading = true;
-      //   state.companies = state.companies;
-      //   state.error = null;
-      // })
-      // .addCase(updateCompany.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.error = null;
-      //   state.companies = state.companies;
-      //   // .map((item) => {
-      //   //   if (item.id === action.payload.data.id) {
-      //   //     return action.payload.data;
-      //   //   }
-      //   //   return item;
-      //   // });
-      // })
-      // .addCase(updateCompany.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.payload.error;
-      //   state.companies = state.companies;
-      // })
-
-      // create service
-
       .addCase(createService.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -348,17 +283,17 @@ const slice = createSlice({
       //get Blocked Company
       .addCase(getCompanyByStatus.pending, (state) => {
         state.loading = true;
-        state.blocks = state.blocks;
+        state.companiesStatus = state.companiesStatus;
         state.error = null;
       })
       .addCase(getCompanyByStatus.fulfilled, (state, action) => {
         state.loading = false;
-        state.blocks = action.payload.data;
+        state.companiesStatus = action.payload.data;
         state.error = null;
       })
       .addCase(getCompanyByStatus.rejected, (state, action) => {
         state.loading = false;
-        state.blocks = state.blocks;
+        state.companiesStatus = state.companiesStatus;
         state.error = action.payload.error;
       })
       .addCase(updateSubService.pending, (state) => {
@@ -378,12 +313,6 @@ const slice = createSlice({
         });
         state.error = null;
       })
-
-      // .addCase(updateSubService.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.services = state.services;
-      //   state.error = action.payload.error;
-      // })
 
       // ==============================================================
       .addCase(updateMainService.pending, (state) => {
@@ -465,43 +394,13 @@ const slice = createSlice({
         state.error = action.payload;
       })
 
-      // .addCase(createServices.pending, (state) => {
-      //   state.deleting = true;
-      //   state.error = null;
-      // })
-
-      // .addCase(createServices.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.error = null;
-      //   state.services = [...state.services, action.payload.data];
-      //   state.error = null;
-      //   // Perform any additional state updates if necessary
-      // })
-      // .addCase(createServices.rejected, (state, action) => {
-      //   state.deleting = false;
-      //   state.error = action.payload;
-      // });
-
-      .addCase(updateCompanyStatus.pending, (state) => {
-        state.deleting = true;
-        state.status = state.status;
-        state.error = null;
-      })
       .addCase(updateCompanyStatus.fulfilled, (state, action) => {
         state.loading = false;
-        state.status = action.payload.data.status; // Update the status in the state
-        if (action.payload.data.status === 'blocked') {
-          const companyId = action.payload.data.company_id;
-          const updatedServices = state.services.filter((company) => company.company_id !== companyId);
-          state.services = updatedServices;
-        }
         state.error = false;
+        ToastSuccess('Status Updated Successfully');
       })
       .addCase(updateCompanyStatus.rejected, (state, action) => {
-        state.deleting = false;
-        state.status = state.status;
-
-        state.error = action.payload;
+        ToastError(action.payload);
       })
       .addCase(restoreCompany.pending, (state) => {
         state.loading = true;
@@ -510,7 +409,7 @@ const slice = createSlice({
       .addCase(restoreCompany.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.blockedCompanies = state.blockedCompanies.filter((company) => company.ID !== action.payload.id);
+        // state.blockedCompanies = state.blockedCompanies.filter((company) => company.ID !== action.payload.id);
         ToastSuccess('Restored Successfully');
       })
       .addCase(restoreCompany.rejected, (state, action) => {
@@ -519,15 +418,6 @@ const slice = createSlice({
         ToastError(state.error);
       })
 
-      .addCase(blockCompany.fulfilled, (state, action) => {
-        ToastSuccess('Company Blocked Successfully');
-      })
-      .addCase(blockCompany.rejected, (state, action) => {
-        // state.loading = false;
-        state.error = action.payload;
-        // state.blockedCompanies = state.blockedCompanies;
-        ToastError(action.payload);
-      })
       .addCase(getCompanyNames.pending, (state) => {
         state.loading = true;
         state.companies = state.companies;
@@ -579,7 +469,7 @@ const slice = createSlice({
       })
       .addCase(getActiveSubscription.fulfilled, (state, action) => {
         state.loading = false;
-        state.activeSubscription = action.payload;
+        state.activeSubscription = action.payload.data || [];
         state.error = null;
       })
       .addCase(getActiveSubscription.rejected, (state, action) => {
@@ -594,7 +484,7 @@ const slice = createSlice({
       })
       .addCase(getPendingSubscription.fulfilled, (state, action) => {
         state.loading = false;
-        state.pendingSubscription = action.payload;
+        state.pendingSubscription = action.payload.data || [];
         state.error = null;
       })
       .addCase(getPendingSubscription.rejected, (state, action) => {

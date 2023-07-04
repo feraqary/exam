@@ -114,7 +114,6 @@ export const createCompany = createAsyncThunk('company/createCompany', async (fo
   }
 });
 
-
 export const updateSubService = createAsyncThunk('subService/Updatesubservice', async ({ id, formData }, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByRank/2`, config);
@@ -180,9 +179,7 @@ export const deleteMainService = createAsyncThunk('services/deleteMainService', 
   }
 });
 
-
 export const getCompanyByStatus = createAsyncThunk('company/status', async (status, { rejectWithValue }) => {
-
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByStatus/${status}`, config);
     return response.data;
@@ -201,7 +198,6 @@ export const restoreCompany = createAsyncThunk('companies/restoreCompany', async
   }
 });
 
-
 export const blockCompany = createAsyncThunk('companies/blockCompany', async ({ formData, id }, { rejectWithValue }) => {
   try {
     const response = await api.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
@@ -214,6 +210,7 @@ export const blockCompany = createAsyncThunk('companies/blockCompany', async ({ 
 
 export const updateCompanyStatus = createAsyncThunk('companies/status', async (formData, { rejectWithValue }) => {
   try {
+    console.log(formData);
     const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
     return response.data;
   } catch (error) {
@@ -257,7 +254,7 @@ export const updateSubscription = createAsyncThunk('companies/updateSubscription
 
 export const getActiveSubscription = createAsyncThunk('companies/getActiveSubscription', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getActiveSubscription?page_no=1&page_size=5`);
+    const response = await api.get(`${baseurl}/api/dashboard/getActiveSubscription?page_no=1&page_size=5`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -266,7 +263,7 @@ export const getActiveSubscription = createAsyncThunk('companies/getActiveSubscr
 
 export const getPendingSubscription = createAsyncThunk('companies/getPendingSubscription', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getPendingSubscription?page_no=1&page_size=5`);
+    const response = await api.get(`${baseurl}/api/dashboard/getPendingSubscription?page_no=1&page_size=5`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);

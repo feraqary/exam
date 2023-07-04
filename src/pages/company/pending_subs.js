@@ -5,8 +5,11 @@ import { Grid, Button, Box } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Table from 'components/Table/Table';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getPendingSubscription } from 'store/slices/company-section/action/company';
 
 // ==============================|| View Pending Subscriptions ||============================== //
 
@@ -59,37 +62,41 @@ const data = [
 
 const ColumnHeaders = [
   {
-    accessorKey: 'companyName',
+    accessorKey: 'CompanyName',
     header: 'Company Name'
   },
 
   {
-    accessorKey: 'standard',
+    accessorKey: 'standard_units',
     header: 'Standard'
   },
   {
-    accessorKey: 'featured',
+    accessorKey: 'featured_units',
     header: 'Featured'
   },
   {
-    accessorKey: 'premium',
+    accessorKey: 'premium_units',
     header: 'Premium'
   },
   {
-    accessorKey: 'deal_of_week',
+    accessorKey: 'topdeal_units',
     header: 'Deal of the Week'
   },
   {
-    accessorKey: 'total',
+    accessorKey: 'total_price',
     header: 'Total'
   },
   {
-    accessorKey: 'added_date',
+    accessorKey: 'created_at',
     header: 'Added Date'
   },
   {
-    accessorKey: 'contract_Start_End_Date',
-    header: 'Contract Start /End Date'
+    accessorKey: 'start_date',
+    header: 'Contract Start'
+  },
+  {
+    accessorKey: 'end_date',
+    header: 'Contract end'
   },
   {
     accessorKey: 'status',
@@ -117,11 +124,17 @@ const ColumnHeaders = [
   }
 ];
 function PendingSubscriptions() {
+  const { pendingSubscription } = useSelector((state) => state.companies);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPendingSubscription());
+  }, []);
   return (
     <Page title="Pending Subscriptions">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table columnHeaders={ColumnHeaders} data={pendingSubscription} />
         </Grid>
       </Grid>
     </Page>
