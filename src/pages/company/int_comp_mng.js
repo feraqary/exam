@@ -22,7 +22,7 @@ import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import UpdateCompany from './helper/UpdateCompany';
+
 // ===========================|| International Company Managment list||=========================== //
 
 // const data = [
