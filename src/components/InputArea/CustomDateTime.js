@@ -39,6 +39,7 @@ const CustomDateTime = ({ style, label, helperText, value, setValue, required, n
     >
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <MobileDatePicker
+          {...rest}
           {...field}
           name={name}
           id={id}
@@ -47,7 +48,7 @@ const CustomDateTime = ({ style, label, helperText, value, setValue, required, n
           onChange={(value) => setFieldValue(name, value)}
           onClose={() => setFieldTouched(name)}
           inputFormat="yyyy/MM/dd"
-          mask="___/__/__"
+          mask="__/__/__"
           renderInput={(params) => (
             <TextField
               {...params}

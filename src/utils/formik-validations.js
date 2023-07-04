@@ -72,18 +72,17 @@ export const stringValidator = (msg, min = null, max = null) => {
  */
 
 export const numberValidator = (msg, min = null, max = null) => {
-  let STRING_VALIDATION = Yup.number();
-  if (min && max) {
-    STRING_VALIDATION = STRING_VALIDATION.min(min, `The value must be more than ${min}`).max(max, `The value must not be less than ${max}`);
+  let NUMBER_VALIDATION = Yup.number();
+  if (min !== null && max !== null) {
+    NUMBER_VALIDATION = NUMBER_VALIDATION.min(min, `The value must be more than ${min}`).max(max, `The value must not be less than ${max}`);
   }
-  if (min && !max) {
-    STRING_VALIDATION = STRING_VALIDATION.min(min, `The value must be more than ${min}`);
+  if (min !== null && !max) {
+    NUMBER_VALIDATION = NUMBER_VALIDATION.min(min, `The value must be more than ${min}`);
   }
-  if (!min && max) {
-    STRING_VALIDATION = STRING_VALIDATION.max(max, `The value must not be more than ${max}`);
+  if (!min && max !== null) {
+    NUMBER_VALIDATION = NUMBER_VALIDATION.max(max, `The value must not be more than ${max}`);
   }
-
-  return STRING_VALIDATION.required(msg);
+  return NUMBER_VALIDATION.required(msg);
 };
 
 /**

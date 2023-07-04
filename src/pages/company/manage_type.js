@@ -16,16 +16,8 @@ import { useSelector } from 'react-redux';
 import EditType from './edit_type';
 
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import Switch from '@mui/material/Switch';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 // ===========================|| International Company Managment list||=========================== //
 
@@ -43,7 +35,7 @@ const ColumnHeaders = [
           gap: '1rem'
         }}
       >
-        <Image src={`http://20.203.31.58/upload/${row.original.image_url}`} width={60} height={30} />
+        <Image src={`http://20.203.31.58/upload/${row.original.image_url}`} width={60} height={30} style={{ objectFit: 'contain' }} />
       </Box>
     )
   },
@@ -55,7 +47,7 @@ const ColumnHeaders = [
     accessorKey: 'title',
     header: 'Company Type'
   },
-  
+
   {
     accessorKey: 'description',
     header: 'Description'
@@ -74,7 +66,6 @@ const ColumnHeaders = [
       const [title, setTitle] = useState('');
       const [desc, setDesc] = useState('');
       const [Blocked, setBlocked] = useState(false);
-      // console.table({ compType: compType, logoImg: logoImg, imgUrl: imgUrl, id: id, title: title, desc: desc });
 
       const handleClickOpen = (id) => {
         setCompType(row.original.main_company_type_id);

@@ -21,7 +21,12 @@ import {
   blockCompany,
   updateCompanyStatus,
   updateMainService,
-  deleteMainService
+  deleteMainService,
+  getCompanyNames,
+  getSubscription,
+  updateSubscription,
+  getActiveSubscription,
+  getPendingSubscription
 } from '../action/company';
 
 import { toast } from 'react-toastify';
@@ -40,6 +45,8 @@ const initialState = {
   services: [],
   featuredCompanies: [],
   blockedCompanies: [],
+  activeSubscription: [],
+  pendingSubscription: [],
   companyType: null,
   service: null,
   company: null,
@@ -51,7 +58,11 @@ const initialState = {
 const slice = createSlice({
   name: 'companies',
   initialState,
-  reducers: {},
+  reducers: {
+    setCompany: (state, action) => {
+      state.company = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createCompanyType.pending, (state) => {
@@ -489,6 +500,80 @@ const slice = createSlice({
         state.error = action.payload;
         // state.blockedCompanies = state.blockedCompanies;
         ToastError(state.error);
+      })
+      .addCase(getCompanyNames.pending, (state) => {
+        state.loading = true;
+        state.companies = state.companies;
+        state.error = null;
+      })
+      .addCase(getCompanyNames.fulfilled, (state, action) => {
+        state.loading = false;
+        state.companies = action.payload.data || [];
+        state.error = null;
+      })
+      .addCase(getCompanyNames.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.companies = state.companies;
+      })
+      .addCase(getSubscription.pending, (state) => {
+        state.company = state.company;
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getSubscription.fulfilled, (state, action) => {
+        state.company = action.payload.data;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(getSubscription.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.companies = state.companies;
+      })
+      .addCase(updateSubscription.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateSubscription.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+        ToastSuccess('Subscription Updated Succesfully');
+      })
+      .addCase(updateSubscription.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        ToastError(action.payload);
+      })
+      .addCase(getActiveSubscription.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.activeSubscription = state.activeSubscription;
+      })
+      .addCase(getActiveSubscription.fulfilled, (state, action) => {
+        state.loading = false;
+        state.activeSubscription = action.payload;
+        state.error = null;
+      })
+      .addCase(getActiveSubscription.rejected, (state, action) => {
+        state.loading = false;
+        state.activeSubscription = state.activeSubscription;
+        state.error = action.payload;
+      })
+      .addCase(getPendingSubscription.pending, (state, action) => {
+        state.loading = true;
+        state.pendingSubscription = state.pendingSubscription;
+        state.error = null;
+      })
+      .addCase(getPendingSubscription.fulfilled, (state, action) => {
+        state.loading = false;
+        state.pendingSubscription = action.payload;
+        state.error = null;
+      })
+      .addCase(getPendingSubscription.rejected, (state, action) => {
+        state.loading = false;
+        state.pendingSubscription = state.pendingSubscription;
+        state.error = action.payload;
       });
   }
 });

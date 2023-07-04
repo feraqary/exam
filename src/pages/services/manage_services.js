@@ -21,8 +21,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const options = ['Broker Company', 'Developer Company', 'Service Company'];
-
 const ColumnHeaders = [
   {
     accessorKey: 'id',

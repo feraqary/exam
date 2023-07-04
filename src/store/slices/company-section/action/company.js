@@ -1,7 +1,7 @@
 import { api } from 'utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
-  'v2.local.HLdQvIv_SYXf36D95kM6JWNI8bWpS08fP3f8457O2j7ZkKLudUjzOWiQZAHkyFU5FI7vDQsNaRsD6ej9EkwXWJm-kbml8dio70-SQKwEiLilEjlDWcPr2AIa4boCWU1TvSji9r3qYqP4i2hYjdKJ9Z_aLie3V5-4Wzh7kNbNyoYtHZfRzySt6OFXpwp7xnR5mwS8UCjhhgv9lA6mCUebj6pqkJMUsUvBupszrEr3x0mK212aiNWRRxCbmBNy5E8jkzkLpVA8VoHbi9iQotqX.bnVsbA';
+  'v2.local.-EpSYI4sdwfM2bYxzJUdHA-_H8ML8JLA7198pCjg3cixgYt8uPuhbwOiZzV59qCynfVY707LHVhGPrjoHfW5FMEAU-cNtnc_ikoXytj6g3heblA4abLuKQMuadnBtNRVRH-EkLbJuUAfBAN0eieBHuTwR4apGAeC8WaX3W3WqxW6J2lFaUr_2WadAkKyMgA4HSjNMaCh9D6rdpQlpR3gl4gGgEnLwUl8yk0bwUlhkV9jpCnRLmgZoCot9PU8kbk220pj_C255e4MznVgfee1.bnVsbA';
 const config = {
   headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
 };
@@ -84,7 +84,10 @@ export const createService = createAsyncThunk('company/createServices', async (f
 
 export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getLocalCompanies?page_no=1&page_size=10&country=pakistan`, config);
+    const response = await api.get(
+      `${baseurl}/api/dashboard/getLocalCompanies?page_no=1&page_size=10&country=united arab emirates`,
+      config
+    );
     return response.data;
   } catch (error) {
     return rejectWithValue(error.error);
@@ -210,6 +213,58 @@ export const blockCompany = createAsyncThunk('companies/blockCompany', async ({ 
 export const updateCompanyStatus = createAsyncThunk('companies/status', async (formData, { rejectWithValue }) => {
   try {
     const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const getCompanyNames = createAsyncThunk('companies/companyNames', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getAllCompanyNames`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const getSubscription = createAsyncThunk(
+  'companies/getSubscription',
+  async ({ id, company_type, is_branch }, { rejectWithValue }) => {
+    try {
+      const response = await api.get(
+        `${baseurl}/api/dashboard/getSubscription?id=${id}&company_type=${company_type}&is_branch=${is_branch}`,
+        config
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateSubscription = createAsyncThunk('companies/updateSubscription', async ({ formData, id }, { rejectWithValue }) => {
+  try {
+    const response = await api.put(`${baseurl}/api/dashboard/updateSubscription/${id}`, formData, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const getActiveSubscription = createAsyncThunk('companies/getActiveSubscription', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getActiveSubscription?page_no=1&page_size=5`);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const getPendingSubscription = createAsyncThunk('companies/getPendingSubscription', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getPendingSubscription?page_no=1&page_size=5`);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);

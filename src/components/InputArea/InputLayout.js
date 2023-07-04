@@ -19,16 +19,18 @@ import React from 'react';
  * @returns {JSX.Element} The rendered InputLayout component.
  */
 
-const InputLayout = ({ label, helperText, style, children, required,metaError, metaTouched, helperInfo }) => {
+const InputLayout = ({ label, helperText, style, children, required, metaError, metaTouched, helperInfo }) => {
   return (
     <Grid item xs={style.xs} lg={style.lg}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
         <InputLabel required={required}>{label}</InputLabel>
-        <Tooltip title={helperText}>
-          <IconButton>
-            <InfoIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
+        {helperInfo && (
+          <Tooltip title={helperText}>
+            <IconButton>
+              <InfoIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        )}
       </Grid>
       {children}
       {metaError && metaTouched ? (

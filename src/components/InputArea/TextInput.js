@@ -6,10 +6,6 @@ import { useField } from 'formik';
 import React from 'react';
 import InputLayout from './InputLayout';
 
-const InputText = ({ label, placeholder, helperText, style, type, value, setValue,required, ...rest }) => {
-  const handleInputChange = (e) => {
-    setValue(e.target.value);
-  };
 /**
  * A text input component using the TextField from Material-UI.
  * @param {Object} props - The component props.
@@ -24,10 +20,12 @@ const InputText = ({ label, placeholder, helperText, style, type, value, setValu
  * @returns {React.Element} The rendered component.
  */
 
+const InputText = ({ label, placeholder, helperText, style, type, value, setValue, required, func, ...rest }) => {
   const [field, meta] = useField(rest);
   return (
-    <InputLayout label={label} helperText={helperText} style={style}  metaError={meta.error} metaTouched={meta.touched} required={required}>
-      <TextField  id={rest.id}
+    <InputLayout label={label} helperText={helperText} style={style} metaError={meta.error} metaTouched={meta.touched} required={required}>
+      <TextField
+        id={rest.id}
         name={rest.name}
         fullWidth
         placeholder={placeholder}
@@ -35,8 +33,15 @@ const InputText = ({ label, placeholder, helperText, style, type, value, setValu
         {...rest}
         {...field}
         sx={{ borderColor: 'red' }}
-        error={meta.error && meta.touched ? true : false} />
-      {/* <TextField fullWidth placeholder={placeholder} type={type} {...rest} value={value} onChange={(e) => handleInputChange(e)} /> */}
+        error={meta.error && meta.touched ? true : false}
+      />
+    </InputLayout>
+  );
+};
+export const NormalInputText = ({ label, placeholder, helperText, style, type, func, value, required, ...rest }) => {
+  return (
+    <InputLayout label={label} helperText={helperText} style={style} required={required}>
+      <TextField fullWidth placeholder={placeholder} type={type} value={value} onChange={(e) => func(e.target.value)} />
     </InputLayout>
   );
 };
