@@ -3,7 +3,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
   'v2.local.-EpSYI4sdwfM2bYxzJUdHA-_H8ML8JLA7198pCjg3cixgYt8uPuhbwOiZzV59qCynfVY707LHVhGPrjoHfW5FMEAU-cNtnc_ikoXytj6g3heblA4abLuKQMuadnBtNRVRH-EkLbJuUAfBAN0eieBHuTwR4apGAeC8WaX3W3WqxW6J2lFaUr_2WadAkKyMgA4HSjNMaCh9D6rdpQlpR3gl4gGgEnLwUl8yk0bwUlhkV9jpCnRLmgZoCot9PU8kbk220pj_C255e4MznVgfee1.bnVsbA';
 const config = {
-  headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    Authorization: `Bearer ${token}`
+  }
 };
 const baseurl = 'http://20.203.31.58';
 
@@ -88,6 +91,15 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
       `${baseurl}/api/dashboard/getLocalCompanies?page_no=1&page_size=10&country=united arab emirates`,
       config
     );
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.error);
+  }
+});
+
+export const getCompanyDocs = createAsyncThunk('company/getCompanyDocs', async ({ companyType, id }, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getCompanyDoc?company_type=${companyType}&id=${id}`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.error);
@@ -221,6 +233,14 @@ export const updateCompanyStatus = createAsyncThunk('companies/status', async (f
 export const getCompanyNames = createAsyncThunk('companies/companyNames', async (_, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getAllCompanyNames`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const updateCompanyDoc = createAsyncThunk('companies/docUpdate', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyDoc`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
