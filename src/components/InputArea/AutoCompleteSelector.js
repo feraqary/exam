@@ -125,7 +125,7 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
           }
         }}
         value={values[name]}
-        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[name] && meta.error} />}
+        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[name] && meta.error[name]} />}
       />
       {helperText && meta.error && touched[name] ? (
         <FormHelperText error={true}>{meta.error}</FormHelperText>

@@ -951,3 +951,4 @@ ColumnsLayouts.getLayout = function getLayout(page) {
 };
 
 export default ColumnsLayouts;
+

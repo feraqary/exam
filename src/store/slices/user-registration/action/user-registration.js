@@ -15,7 +15,7 @@ export const createUser = createAsyncThunk('user/signUp', async (formData, { rej
 });
 export const userLogIn = createAsyncThunk('user/Login', async (formData, { rejectWithValue }) => {
   try {
-    const response = await api.post(`${baseurl}/api/user/login`, formData, config);
+    const response = await api.post(`${baseurl}/api/user/login`, formData);
     console.log(response.data);
     return response.data;
   } catch (error) {

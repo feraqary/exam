@@ -102,6 +102,7 @@ const signupSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.users = action.payload.data;
+        console.log(action);
       })
       .addCase(userLogIn.rejected, (state, action) => {
         state.loading = false;

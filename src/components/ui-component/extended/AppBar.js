@@ -33,11 +33,27 @@ import Logo from '../Logo';
 import Login from '../../../pages/pages/authentication/portal_registration/login';
 // assets
 import { IconBook, IconCreditCard, IconDashboard, IconHome2 } from '@tabler/icons';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import MenuIcon from '@mui/icons-material/Menu';
-// import { Login } from 'tabler-icons-react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 function ElevationScroll({ children, window }) {
   const theme = useTheme();
+
+  const { session, error, isLoading } = useSession();
+
+
+  if (isLoading) {
+    console.log('Loading');
+  }
+  if (error) {
+
+    console.log(error);
+  }
+  if (session) {
+    console.log('name', session.user.name), console.log('email', user.session.email);
+  }
+
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -81,6 +97,8 @@ const AppBar = ({ ...others }) => {
   const handleClose = () => {
     setOpen(false);
   };
+  const { data: session } = useSession();
+
 
   return (
     <ElevationScroll {...others}>
@@ -100,9 +118,19 @@ const AppBar = ({ ...others }) => {
               <Button color="inherit" component={Link} href="login">
                 Dashboard
               </Button>
-              <Button color="inherit" component={Link} href="/pages/authentication/portal_registration/register" target="_blank">
-                Portal Login
-              </Button>
+              {session ? (
+                <Button color="inherit" onClick={()=>{signOut()}} target="_blank">
+                  Sign Out
+                </Button>
+              ) : (
+                <Button color="inherit" component={Link} href="/pages/authentication/portal_registration/login" target="_blank">
+                  Portal Login
+                </Button>
+              )}
+
+              {/* <a href="/api/auth/login">Login</a>
+              <a href="/api/auth/logout">Logout</a>  */}
+
               <Tooltip title="Log In">
                 <IconButton color="inherit" target="_blank" onClick={handleClickOpen}>
                   <AccountCircleIcon />
@@ -111,21 +139,17 @@ const AppBar = ({ ...others }) => {
 
               {/* login pop up*/}
               <Dialog maxWidth={'lg'} open={open} TransitionComponent={Transition} onClose={handleClose} fullWidth>
-                <DialogActions sx={{justifyContent:"flex-start"}}>
+                <DialogActions sx={{ justifyContent: 'flex-start' }}>
                   <Tooltip title="close">
                     <IconButton color="inherit" onClick={handleClose}>
                       <CloseIcon />
                     </IconButton>
                   </Tooltip>
                 </DialogActions>
-                <DialogContent> 
+                <DialogContent>
                   <Login closePopUp={setOpen} />
-                </DialogContent> 
+                </DialogContent>
               </Dialog>
-
-
-
-
             </Stack>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
               <IconButton color="inherit" onClick={drawerToggler(true)} size="large">

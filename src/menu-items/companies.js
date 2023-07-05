@@ -60,6 +60,14 @@ const companies = {
       url: '/company/add_comp',
       icon: icons.IconUserCheck
     },
+    {
+      id: 'add-sub-dev-company',
+      title: <FormattedMessage id="Add Sub-Developer Companies" />,
+      type: 'item',
+      url: '/company/add_sub_developer',
+      icon: icons.IconUserCheck
+
+    },
 
     {
       id: 'add_company_types',
@@ -67,13 +75,6 @@ const companies = {
       type: 'item',
       icon: icons.IconLayoutGridAdd,
       url: '/company/add_type'
-    },
-    {
-      id: 'Place_holder',
-      title: <FormattedMessage id="View Company Types" />,
-      type: 'item',
-      icon: icons.IconChecklist,
-      url: '/company/placeHolderName'
     },
     {
       id: 'company-types',
@@ -84,13 +85,6 @@ const companies = {
     },
     
     
-    {
-      id: 'Place_holder',
-      title: <FormattedMessage id="View All Companies" />,
-      type: 'item',
-      icon: icons.IconLayoutGrid,
-      url: '/company/placeHolderName'
-    },
     {
       id: 'local',
       title: <FormattedMessage id="local-companies" />,
