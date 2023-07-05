@@ -1,14 +1,9 @@
 // material-ui
-
-// import { Chip, Grid } from '@mui/material';
-// import { Box, Button } from '@mui/material';
-
 import Image from 'next/image';
-import BlockIcon from '@mui/icons-material/Block';
+import KeyIcon from '@mui/icons-material/Key';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PreviewIcon from '@mui/icons-material/Preview';
-
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -16,11 +11,10 @@ import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import { useEffect } from 'react';
-import { getLocalCompanies } from 'store/slices/company-section/action/company';
+import { blockCompany, getLocalCompanies } from 'store/slices/company-section/action/company';
 import { useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import { useSelector } from 'react-redux';
-// import { Dialog, DialogContent, DialogActions } from '@mui/material';
-// import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
@@ -200,9 +194,10 @@ const localCompanies = () => {
 
   useEffect(() => {
     dispatch(getLocalCompanies());
-  }, []);
+  }, [dispatch]);
   return (
     <Page title="Local Company List">
+      <ToastContainer />
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <Table columnHeaders={ColumnHeaders} data={localCompanies} loading={loading} />

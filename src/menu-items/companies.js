@@ -71,7 +71,7 @@ const companies = {
 
     {
       id: 'add_company_types',
-      title: <FormattedMessage id="Add Sub Company Types" />,
+      title: <FormattedMessage id="Add Sub-Company Types" />,
       type: 'item',
       icon: icons.IconLayoutGridAdd,
       url: '/company/add_type'
@@ -83,20 +83,8 @@ const companies = {
       icon: icons.IconLayoutGrid,
       url: '/company/manage_type'
     },
-    {
-      id: 'add_main_services',
-      title: <FormattedMessage id="Add Main Services" />,
-      type: 'item',
-      icon: IconClipboardPlus,
-      url: '/company/add_main_services'
-    },
-    {
-      id: 'add_services',
-      title: <FormattedMessage id="Add Sub Services" />,
-      type: 'item',
-      icon: icons.IconClipboardPlus,
-      url: '/company/add_services'
-    },
+    
+    
     {
       id: 'local',
       title: <FormattedMessage id="local-companies" />,
@@ -153,13 +141,6 @@ const companies = {
       type: 'item',
       icon: icons.IconLayoutKanban,
       url: '/company/payments'
-    },
-    {
-      id: 'second-phase',
-      title: <FormattedMessage id="reg" />,
-      type: 'item',
-      icon: icons.IconMail,
-      url: '/company/company_reg'
     },
     {
       id: 'priviliges',

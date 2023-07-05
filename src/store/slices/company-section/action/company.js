@@ -1,5 +1,4 @@
 import { api } from 'utils/axios';
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
   'v2.local.qFaCoB8jNaB0b6Boxn5J19MV8QTi656lRNWJSvp5_c_Ip9LIZ8H_vZBqRmaPDwe8NUxcwinVnPV2F6qEvjyMYxu87PrMSSgeeAqwtHWHEljqJFQBnTnlRq8XikJOGW5q1kGgK-Yp2DFphav3Y4RUuIclJqN21HbthpkPA5oEq1YZTW90Q0S6gYX-eLlv0tW_bftEgJy8NppWF4d4Xf-bV1EH_pqhvy_UNiBaFJ654PHGSTr8ATzmXZPzPt-g3cEmpeqZ_RAoB8uAJi7kyfI.bnVsbA';
@@ -127,6 +126,7 @@ export const createCompany = createAsyncThunk('company/createCompany', async (fo
   }
 });
 
+
 export const updateSubService = createAsyncThunk('subService/Updatesubservice', async ({ id, formData }, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByRank/2`, config);
@@ -138,10 +138,19 @@ export const updateSubService = createAsyncThunk('subService/Updatesubservice', 
 
 export const getFeaturedCompany = createAsyncThunk('company/featured', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByRank/2`, config);
+    const response = await api.put(`${baseurl}/api/services/updateservice/${id}`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
+  }
+});
+
+export const deleteService = createAsyncThunk('services/deleteService', async (serviceId, { rejectWithValue }) => {
+  try {
+    await api.delete(`${baseurl}/api/services/deleteservice/${serviceId}`);
+    return serviceId;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
   }
 });
 
@@ -155,20 +164,20 @@ export const updateMainService = createAsyncThunk('subService/Updateservice', as
   }
 });
 
-export const createServices = createAsyncThunk('services/createServices', async ({ formData }, { rejectWithValue }) => {
+export const getFeaturedCompanies = createAsyncThunk('companies/getFeaturedCompanies', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.put(`${baseurl}/api/services/updatemainservice/${id}`, formData, config);
-    console.log('response', response.data);
+    const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByRank/2`, config);
+
     return response.data;
   } catch (error) {
     return rejectWithValue(error);
   }
 });
 
-export const deleteService = createAsyncThunk('services/deleteService', async (serviceId, { rejectWithValue }) => {
+export const updateCompanyRank = createAsyncThunk('companies/updateCompanyRank', async (formData, { rejectWithValue }) => {
   try {
-    await axios.delete(`${baseurl}/api/services/deleteservice/${serviceId}`);
-    return serviceId;
+    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyRank`, formData, config);
+    return response;
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
@@ -183,12 +192,35 @@ export const deleteMainService = createAsyncThunk('services/deleteMainService', 
   }
 });
 
+
 export const getCompanyByStatus = createAsyncThunk('company/status', async (status, { rejectWithValue }) => {
+
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByStatus/${status}`, config);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error);
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const restoreCompany = createAsyncThunk('companies/restoreCompany', async ({ formData, id }, { rejectWithValue }) => {
+  try {
+    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
+    response.data.id = id;
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+
+export const blockCompany = createAsyncThunk('companies/blockCompany', async ({ formData, id }, { rejectWithValue }) => {
+  try {
+    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
+    response.data.id = id;
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
   }
 });
 

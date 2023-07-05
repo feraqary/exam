@@ -7,33 +7,42 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import Table from 'components/Table/Table';
+
 import { getCompanyByStatus, updateCompanyStatus } from 'store/slices/company-section/action/company';
 
 import { useDispatch, useSelector } from 'react-redux';
+
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getBlockedCompanies, restoreCompany } from 'store/slices/company-section/action/company';
+import { useSelector } from 'react-redux';
+import { dispatch } from 'store';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 // ===========================|| Blocked Company list||=========================== //
 
 const ColumnHeaders = [
   {
-    accessorKey: 'CompanyMainType',
-    header: 'Company Main Type'
+    accessorKey: 'ID',
+    header: 'SL.No'
   },
   {
     accessorKey: 'CompanyName',
     header: 'Company Name'
   },
   {
-    accessorKey: 'Email',
-    header: 'Email'
-  },
-  {
     accessorKey: 'Phone',
     header: 'Phone'
   },
   {
+    accessorKey: 'Email',
+    header: 'Email'
+  },
+  {
     accessorKey: 'action',
     header: 'Action',
+
     Cell: ({ row }) => {
       const dispatch = useDispatch();
 
@@ -57,22 +66,27 @@ const ColumnHeaders = [
         </AqaryButton>
       );
     }
+
   }
 ];
 
 const BlockedCompanies = () => {
-  const { blocks } = useSelector((state) => state.companies);
-
   const dispatch = useDispatch();
+
+  const { loading, error, blockedCompanies } = useSelector((state) => state.companies);
+
   useEffect(() => {
+
     dispatch(getCompanyByStatus(5));
   }, [dispatch]);
 
+
   return (
-    <Page title="Featured Companies">
+    <Page title="Blocked Companies">
+      <ToastContainer />
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={blocks} />
+          <Table data={blockedCompanies} columnHeaders={ColumnHeaders} />
         </Grid>
       </Grid>
     </Page>

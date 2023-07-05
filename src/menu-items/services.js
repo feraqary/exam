@@ -14,7 +14,7 @@ const icons = {
   IconStairsUp
 };
 
-// ==============================|| UI FORMS MENU ITEMS ||============================== //
+// ==============================|| services menu ||============================== //
 
 const services = {
   id: 'services',
@@ -23,61 +23,30 @@ const services = {
   type: 'group',
   children: [
     {
-      id: 'services-location',
-      title: <FormattedMessage id="Add Services" />,
+      id: 'add_main_services',
+      title: <FormattedMessage id="Add Main Services" />,
       type: 'item',
-      icon: icons.IconPictureInPicture,
-      url: '/services/add_services'
+      url: '/company/add_main_services'
     },
 
     {
       id: 'manage-services',
-      title: <FormattedMessage id="Manage Services" />,
+      title: <FormattedMessage id="Manage Main Services" />,
       type: 'item',
       url: '/services/manage_services'
+    },
+    {
+      id: 'add_services',
+      title: <FormattedMessage id="Add Sub Services" />,
+      type: 'item',
+      icon: icons.IconClipboardPlus,
+      url: '/company/add_services'
     },
     {
       id: 'manage-sub-services',
       title: <FormattedMessage id="Manage Sub Services" />,
       type: 'item',
       url: '/services/sub_services'
-    },
-    {
-      id: 'manage-local-companies',
-      title: <FormattedMessage id="Manage Local Companies" />,
-      type: 'item',
-      url: '/services/local_services'
-    },
-    {
-      id: 'manage-international-companies',
-      title: <FormattedMessage id="Manage International Companies" />,
-      type: 'item',
-      url: '/services/int_services'
-    },
-    {
-      id: 'manage-company-gallery',
-      title: <FormattedMessage id="Manage Company Gallery" />,
-      type: 'item',
-      url: '/services/company_gallery'
-    },
-    {
-      id: 'add_service_company_location',
-      title: <FormattedMessage id="Add/Edit Services Location" />,
-      type: 'item',
-      url: '/services/add_service_company_loc'
-    },
-
-    {
-      id: 'service-requests',
-      title: <FormattedMessage id="Service Requests" />,
-      type: 'item',
-      url: '/services/service_request'
-    },
-    {
-      id: 'valuation-requests',
-      title: <FormattedMessage id="Valuation Requests" />,
-      type: 'item',
-      url: '/services/valuation'
     },
     {
       id: 'services-activities',
