@@ -263,7 +263,7 @@ export const getActiveSubscription = createAsyncThunk('companies/getActiveSubscr
 
 export const getPendingSubscription = createAsyncThunk('companies/getPendingSubscription', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getPendingSubscription?page_no=1&page_size=5`, config);
+    const response = await api.get(`${baseurl}/api/dashboard/getPendingSubscription?page_no=1&page_size=35`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { MaterialReactTable } from 'material-react-table';
 
-const Table = ({ columnHeaders, data, loading }) => {
+const Table = ({ columnHeaders, data, loading, pagination, setPagination }) => {
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -27,6 +27,8 @@ const Table = ({ columnHeaders, data, loading }) => {
           borderRadius: '200'
         }
       }}
+      // onPaginationChange={setPagination}
+      // state={{ pagination }}
     />
   );
 };
