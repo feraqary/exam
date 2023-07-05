@@ -622,8 +622,8 @@ function ColumnsLayouts() {
   );
 }
 
-ColumnsLayouts.getLayout = function getLayout(page) {
+sub_dev_comp.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default ColumnsLayouts;
+export default sub_dev_comp;

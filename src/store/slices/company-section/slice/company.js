@@ -281,7 +281,7 @@ const slice = createSlice({
       })
       .addCase(getLocalCompanies.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.error;
+        state.error =null;
         state.localCompanies = state.localCompanies;
       })
 
