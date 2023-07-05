@@ -61,7 +61,7 @@ const companies = {
       icon: icons.IconUserCheck
     },
     {
-      id: 'add-company',
+      id: 'add-sub-dev-company',
       title: <FormattedMessage id="Add Sub-Developer Companies" />,
       type: 'item',
       url: '/company/add_sub_developer',
@@ -75,13 +75,6 @@ const companies = {
       type: 'item',
       icon: icons.IconLayoutGridAdd,
       url: '/company/add_type'
-    },
-    {
-      id: 'Place_holder',
-      title: <FormattedMessage id="View Company Types" />,
-      type: 'item',
-      icon: icons.IconChecklist,
-      url: '/company/placeHolderName'
     },
     {
       id: 'company-types',
@@ -103,13 +96,6 @@ const companies = {
       type: 'item',
       icon: icons.IconClipboardPlus,
       url: '/company/add_services'
-    },
-    {
-      id: 'Place_holder',
-      title: <FormattedMessage id="All Companies" />,
-      type: 'item',
-      icon: icons.IconLayoutGrid,
-      url: '/company/placeHolderName'
     },
     {
       id: 'local',

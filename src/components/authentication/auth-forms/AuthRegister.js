@@ -46,6 +46,9 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FileUpload from 'components/InputArea/FileUpload';
 import { createUser } from 'store/slices/user-registration/action/user-registration';
 import { IconDeviceDesktopSearch } from '@tabler/icons-react';
+import GoogleIcon from '@mui/icons-material/Google';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
 
 import {
   setFirst_name,
@@ -504,6 +507,7 @@ const JWTRegister = ({ ...others }) => {
                   size="large"
                   variant="outlined"
                   color="secondary"
+                  startIcon={<GoogleIcon />}
                 >
                   Sign up with Google
                 </Button>
@@ -521,6 +525,7 @@ const JWTRegister = ({ ...others }) => {
                   size="large"
                   variant="outlined"
                   color="secondary"
+                  startIcon={<LinkedInIcon />}
                 >
                   Sign up with LinkedIn
                 </Button>
@@ -538,6 +543,7 @@ const JWTRegister = ({ ...others }) => {
                   size="large"
                   variant="outlined"
                   color="secondary"
+                  startIcon={<TwitterIcon />}
                 >
                   Sign up with Twitter
                 </Button>

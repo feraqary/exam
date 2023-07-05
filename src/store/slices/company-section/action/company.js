@@ -2,9 +2,12 @@ import { api } from 'utils/axios';
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
-  'v2.local.5Y_Uhdj_pMf333G2uvCFzBy8Ddg4fAs3qqHGoeKw2Euv3_ni9gtnf0P6_n_f-G_8tiUwUxCSrPEecVxpOFDvzxDvwbHhChHQcZd6_fkpaOMQ2GpIb3rTwM3giRJ1gMbhd8Q6XqXZRbFF271NZd_n5XLmsRu7Vd4iMKlnzWt-GSy5M-6YutivP4lIvigvEUWlQB7rviogx0kUGDHDHiiAOFZXQbmIE0wBrTiHASH64_qtkcgSXgcBq-A6DOdzuRZ8KDR6J1upzoe5bMgrdFdFv1Q.bnVsbA';
+  'v2.local.qFaCoB8jNaB0b6Boxn5J19MV8QTi656lRNWJSvp5_c_Ip9LIZ8H_vZBqRmaPDwe8NUxcwinVnPV2F6qEvjyMYxu87PrMSSgeeAqwtHWHEljqJFQBnTnlRq8XikJOGW5q1kGgK-Yp2DFphav3Y4RUuIclJqN21HbthpkPA5oEq1YZTW90Q0S6gYX-eLlv0tW_bftEgJy8NppWF4d4Xf-bV1EH_pqhvy_UNiBaFJ654PHGSTr8ATzmXZPzPt-g3cEmpeqZ_RAoB8uAJi7kyfI.bnVsbA';
 const config = {
-  headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    Authorization: `Bearer ${token}`
+  }
 };
 const baseurl = 'http://20.203.31.58';
 
@@ -85,7 +88,19 @@ export const createService = createAsyncThunk('company/createServices', async (f
 
 export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getLocalCompanies?page_no=1&page_size=10&country=pakistan`, config);
+    const response = await api.get(
+      `${baseurl}/api/dashboard/getLocalCompanies?page_no=1&page_size=10&country=united arab emirates`,
+      config
+    );
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.error);
+  }
+});
+
+export const getCompanyDocs = createAsyncThunk('company/getCompanyDocs', async ({ companyType, id }, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getCompanyDoc?company_type=${companyType}&id=${id}`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.error);
@@ -180,6 +195,23 @@ export const getCompanyByStatus = createAsyncThunk('company/status', async (stat
 export const updateCompanyStatus = createAsyncThunk('companies/status', async (formData, { rejectWithValue }) => {
   try {
     const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const updateCompanyDoc = createAsyncThunk('companies/docUpdate', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyDoc`, formData, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const updateCompany = createAsyncThunk('companies/update_company', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await axios.put(`${baseurl}/api/dashboard/updateCompany`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);

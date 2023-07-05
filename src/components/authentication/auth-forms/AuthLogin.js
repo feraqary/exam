@@ -28,12 +28,15 @@ import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { userLogIn } from 'store/slices/user-registration/action/user-registration';
 import useAuth from 'hooks/useAuth';
 import useScriptRef from 'hooks/useScriptRef';
-
+import GoogleIcon from '@mui/icons-material/Google';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Provider, useDispatch } from 'react-redux';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import Google from 'next-auth/providers/google';
 // ===============================|| JWT LOGIN ||=============================== //
 
 const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
@@ -61,7 +64,7 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
 
     router.push(page == 'dashboard' ? '/dashboard/default' : '/');
 
-    console.log("logged in")
+    console.log('logged in');
   }
 
   const handleClickShowPassword = () => {
@@ -222,6 +225,8 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 fullWidth
                 size="large"
                 variant="outlined"
+                startIcon={<GoogleIcon />}
+                disabled={isSubmitting}
               >
                 Sign In With google
               </Button>
@@ -238,6 +243,7 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 fullWidth
                 size="large"
                 variant="outlined"
+                startIcon={<LinkedInIcon />}
               >
                 Sign In With LinkedIn
               </Button>
@@ -254,6 +260,7 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 fullWidth
                 size="large"
                 variant="outlined"
+                startIcon={<TwitterIcon />}
               >
                 Sign In With Twitter
               </Button>
