@@ -1,7 +1,7 @@
 import { api } from 'utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
-  'v2.local.-EpSYI4sdwfM2bYxzJUdHA-_H8ML8JLA7198pCjg3cixgYt8uPuhbwOiZzV59qCynfVY707LHVhGPrjoHfW5FMEAU-cNtnc_ikoXytj6g3heblA4abLuKQMuadnBtNRVRH-EkLbJuUAfBAN0eieBHuTwR4apGAeC8WaX3W3WqxW6J2lFaUr_2WadAkKyMgA4HSjNMaCh9D6rdpQlpR3gl4gGgEnLwUl8yk0bwUlhkV9jpCnRLmgZoCot9PU8kbk220pj_C255e4MznVgfee1.bnVsbA';
+  'v2.local.vXWFgWR_d-uUdQHOh5JeS8FfXcKprUHqBYSL_n1c_xCIUCmPl_lUhkHicqcFJjt2SYrEk9cakXAn76mH6kglDaj30QDeiLHWZgJzYXYKmTvUX583Rd5bxsLLgSIdD_Q7nGAZIWpuT5FHkCRp-0zP8nZY4VWbBn2YAeNIwLMyDaKQbQc09MQQX6PSPl8Vn5Pss8BKcrII_IBZA0AKNEMPvxYJkfB4UfoL-1XkryhNzLp2e_ky8TezxzyLEQf7tw7qMf5jpuL_VtjprIiQLL8.bnVsbA';
 const config = {
   headers: {
     'Content-Type': 'multipart/form-data',
