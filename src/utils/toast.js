@@ -25,3 +25,16 @@ export const ToastError = (Message = 'Error') => {
     theme: 'dark'
   });
 };
+
+export const ToastLoading = (Message = 'Loading...') => {
+  return toast.loading(Message, {
+    position: 'top-right',
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'dark'
+  });
+};

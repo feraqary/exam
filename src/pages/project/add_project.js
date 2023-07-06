@@ -8,14 +8,14 @@ import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import { useState } from 'react';
-import MapAutocomplete from 'components/map/maps-autocomplete';
+import MapAutocomplete, { NormalMapAutocomplete } from 'components/map/maps-autocomplete';
 import { LoadScript } from '@react-google-maps/api';
-import Map from 'components/map/google-map';
+import Map, { NormalMap } from 'components/map/google-map';
 
 //assets
-import InputText from 'components/InputArea/TextInput';
-import Selector from 'components/InputArea/Selector';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import InputText, { NormalInputText } from 'components/InputArea/TextInput';
+import Selector, { NormalSelector } from 'components/InputArea/Selector';
+import AutoCompleteSelector, { NormalAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 
 // ==============================|| Add Project ||============================== //
@@ -26,15 +26,21 @@ const propertyTypeData = ['UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
 const DynamicInput = () => {
   return (
     <>
-      <InputText label="Phase Name" placeholder="Phase Name" helperText="Please enter phase name" style={{ xs: 12, lg: 4 }} type="text" />
-      <InputText
+      <NormalInputText
+        label="Phase Name"
+        placeholder="Phase Name"
+        helperText="Please enter phase name"
+        style={{ xs: 12, lg: 4 }}
+        type="text"
+      />
+      <NormalInputText
         label="Number of Properties"
         placeholder="Number of Properties"
         helperText="Please enter number of properties"
         style={{ xs: 12, lg: 4 }}
         type="text"
       />
-      <InputText
+      <NormalInputText
         label="Location Address"
         placeholder="Location Map URL"
         helperText="Please enter the location address map url"
@@ -82,14 +88,14 @@ function AddProject() {
           <Grid item xs={12}>
             <MainCard title="Project details">
               <Grid container spacing={2} alignItems="center">
-                <InputText
+                <NormalInputText
                   label="Project Title"
                   placeholder="Project Title"
                   helperText="Please enter project title"
                   style={{ xs: 12, lg: 4 }}
                   type="text"
                 />
-                <AutoCompleteSelector
+                <NormalAutoCompleteSelector
                   label="Country"
                   placeholder="Select Country"
                   options={countries}
@@ -99,7 +105,7 @@ function AddProject() {
                   setValue={setCountry}
                   helperText="Please select country"
                 />
-                <AutoCompleteSelector
+                <NormalAutoCompleteSelector
                   label="City"
                   placeholder="Select City"
                   options={cities}
@@ -109,7 +115,7 @@ function AddProject() {
                   setValue={setCity}
                   helperText="Please select city"
                 />
-                <AutoCompleteSelector
+                <NormalAutoCompleteSelector
                   label="Master Developer"
                   placeholder="Select Master Developer"
                   options={countries}
@@ -119,7 +125,7 @@ function AddProject() {
                   setValue={setDeveloperCompany}
                   helperText="Please select master developer"
                 />
-                <AutoCompleteSelector
+                <NormalAutoCompleteSelector
                   label="Sub Developer Company"
                   placeholder="Select Sub Developer Company"
                   options={countries}
@@ -129,7 +135,7 @@ function AddProject() {
                   setValue={setSubDeveloperCompany}
                   helperText="Please select sub developer company"
                 />
-                <Selector
+                <NormalSelector
                   id="phaseTypeSelector"
                   label="Phase Type"
                   placeholder="Select Phase Type"
@@ -138,7 +144,7 @@ function AddProject() {
                   value={phaseType}
                   setValue={(e) => setPhaseType(e)}
                 />
-                {/* <InputText
+                {/* <NormalInputText
                   label="Number of Phases"
                   placeholder="Number of Phases"
                   helperText="Please enter Number of Phases"
@@ -157,7 +163,7 @@ function AddProject() {
           <Grid item xs={12}>
             <MainCard title="Location details">
               <Grid container spacing={2} alignItems="center">
-                <AutoCompleteSelector
+                <NormalAutoCompleteSelector
                   label="Country"
                   placeholder="Select Country"
                   id="countrySelector"
@@ -167,14 +173,14 @@ function AddProject() {
                   options={countries}
                   helperText="Please select country"
                 />
-                <InputText
+                <NormalInputText
                   style={{ xs: 12, lg: 6 }}
                   label="Map URL"
                   placeholder="Address"
                   helperText="Please enter the location address"
                   type="text"
                 />
-                <AutoCompleteSelector
+                <NormalAutoCompleteSelector
                   style={{ xs: 12, lg: 6 }}
                   label="State"
                   placeholder="State"
@@ -188,12 +194,12 @@ function AddProject() {
 
                 <Grid item xs={12} lg={6}>
                   <InputLabel required>Place</InputLabel>
-                  <MapAutocomplete placeHolder onChangeAddress={setAddress} country={setCountry} state={setState} value="uae" />
+                  <NormalMapAutocomplete placeHolder onChangeAddress={setAddress} country={setCountry} state={setState} value="uae" />
                   <FormHelperText>Please enter place address</FormHelperText>
                 </Grid>
 
                 <Grid item xs={12} lg={6}>
-                  <AutoCompleteSelector
+                  <NormalAutoCompleteSelector
                     label="City"
                     placeholder="City"
                     type="text"
@@ -204,7 +210,7 @@ function AddProject() {
                     id="location-details-city"
                     style={{ xs: 12, lg: 12 }}
                   />
-                  <AutoCompleteSelector
+                  <NormalAutoCompleteSelector
                     label="District"
                     placeholder="District"
                     type="text"
@@ -215,7 +221,7 @@ function AddProject() {
                     options={countries}
                     style={{ xs: 12, lg: 12 }}
                   />
-                  <AutoCompleteSelector
+                  <NormalAutoCompleteSelector
                     label="Community"
                     placeholder="Community"
                     type="text"
@@ -226,7 +232,7 @@ function AddProject() {
                     options={countries}
                     style={{ xs: 12, lg: 12 }}
                   />
-                  <AutoCompleteSelector
+                  <NormalAutoCompleteSelector
                     label="Sub Community"
                     placeholder="Sub Community"
                     type="text"
@@ -240,7 +246,7 @@ function AddProject() {
                 </Grid>
 
                 {/* <Grid item xs={12} lg={6}> */}
-                <Map locationAddress={address} xs={12} lg={6} />
+                <NormalMap locationAddress={address} xs={12} lg={6} />
                 {/* </Grid> */}
               </Grid>
             </MainCard>
@@ -249,7 +255,7 @@ function AddProject() {
           <Grid item xs={12}>
             <MainCard title="Property Details">
               <Grid container spacing={2} alignItems="center">
-                <AutoCompleteSelector
+                <NormalAutoCompleteSelector
                   label="Property Status"
                   placeholder="Select Property Status"
                   options={countries}
@@ -259,7 +265,7 @@ function AddProject() {
                   setValue={setCountry}
                   helperText="Please select property status"
                 />
-                <AutoCompleteSelector
+                <NormalAutoCompleteSelector
                   multiple
                   label="Property Type"
                   placeholder="Select Property Type"
@@ -274,7 +280,7 @@ function AddProject() {
                   func={(newValue) => setPropertyType(newValue)}
                 />
 
-                <AutoCompleteSelector
+                <NormalAutoCompleteSelector
                   label="Life Style"
                   placeholder="Select Life Style"
                   options={countries}
@@ -284,7 +290,7 @@ function AddProject() {
                   setValue={setCountry}
                   helperText="Please select life style"
                 />
-                <AutoCompleteSelector
+                <NormalAutoCompleteSelector
                   label="Ownership"
                   placeholder="Select Ownership"
                   options={countries}
@@ -294,7 +300,7 @@ function AddProject() {
                   setValue={setCountry}
                   helperText="Please select ownership"
                 />
-                <AutoCompleteSelector
+                <NormalAutoCompleteSelector
                   label="Plot Area (sqft)"
                   placeholder="Select Plot Area"
                   options={countries}
@@ -305,7 +311,7 @@ function AddProject() {
                   helperText="Please select plot area"
                 />
 
-                <InputText
+                <NormalInputText
                   style={{ xs: 12, lg: 4 }}
                   label="Built up Area (sqft)"
                   placeholder="Built up Area (sqft)"
@@ -323,49 +329,49 @@ function AddProject() {
                   </Grid>
                   <FormHelperText>Please enter the area range</FormHelperText>
                 </Grid>
-                <InputText
+                <NormalInputText
                   style={{ xs: 12, lg: 4 }}
                   label="Starting Price"
                   placeholder="Starting Price"
                   type="number"
                   helperText="Please enter the starting price"
                 />
-                <InputText
+                <NormalInputText
                   style={{ xs: 12, lg: 4 }}
                   label="Service Charge"
                   placeholder="Service Charge"
                   type="number"
                   helperText="Please enter the service charge"
                 />
-                <InputText
+                <NormalInputText
                   style={{ xs: 12, lg: 4 }}
                   label="Start Date"
                   placeholder="Start Date"
                   type="date"
                   helperText="Please enter the start date"
                 />
-                <InputText
+                <NormalInputText
                   style={{ xs: 12, lg: 4 }}
                   label="Completion Date"
                   placeholder="Completion Date"
                   type="date"
                   helperText="Please enter the completion date "
                 />
-                <InputText
+                <NormalInputText
                   style={{ xs: 12, lg: 4 }}
                   label="Handover Date"
                   placeholder="Handover Date"
                   type="date"
                   helperText="Please enter the handover date"
                 />
-                <InputText
+                <NormalInputText
                   style={{ xs: 12, lg: 4 }}
                   label="Property Title"
                   placeholder="Property Title"
                   helperText="Please enter the property title"
                   type="text"
                 />
-                <InputText
+                <NormalInputText
                   style={{ xs: 12, lg: 4 }}
                   label="Arabic Property Title"
                   placeholder="Arabic Property Title"
@@ -373,7 +379,7 @@ function AddProject() {
                   type="text"
                 />
                 <Grid item xs={12} lg={4}></Grid>
-                <InputText
+                <NormalInputText
                   style={{ xs: 12, lg: 4 }}
                   label="Property Description"
                   placeholder="Property Description"
@@ -385,7 +391,7 @@ function AddProject() {
                   fullWidth
                   description
                 />
-                <InputText
+                <NormalInputText
                   style={{ xs: 12, lg: 4 }}
                   label="Arabic Property Description"
                   placeholder="Arabic Property Description"
@@ -399,7 +405,7 @@ function AddProject() {
                 />
               </Grid>
             </MainCard>
-            <SubmitButton />
+            {/* <SubmitButton /> */}
           </Grid>
         </Grid>
       </Page>
