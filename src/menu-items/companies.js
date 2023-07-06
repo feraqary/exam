@@ -57,16 +57,15 @@ const companies = {
       id: 'add-company',
       title: <FormattedMessage id="add-company" />,
       type: 'item',
-      url: '/company/add_comp',
+      url: '/dashboard/company/add_comp',
       icon: icons.IconUserCheck
     },
     {
       id: 'add-sub-dev-company',
       title: <FormattedMessage id="Add Sub-Developer Companies" />,
       type: 'item',
-      url: '/company/add_sub_developer',
+      url: '/dashboard/company/add_sub_developer',
       icon: icons.IconUserCheck
-
     },
 
     {
@@ -74,44 +73,43 @@ const companies = {
       title: <FormattedMessage id="Add Sub-Company Types" />,
       type: 'item',
       icon: icons.IconLayoutGridAdd,
-      url: '/company/add_type'
+      url: '/dashboard/company/add_type'
     },
     {
       id: 'company-types',
       title: <FormattedMessage id="Manage Sub-Company Types" />,
       type: 'item',
       icon: icons.IconLayoutGrid,
-      url: '/company/manage_type'
+      url: '/dashboard/company/manage_type'
     },
-    
-    
+
     {
       id: 'local',
       title: <FormattedMessage id="local-companies" />,
       type: 'item',
       icon: icons.IconPin,
-      url: '/company/local_company_management'
+      url: '/dashboard/company/local_company_management'
     },
     {
       id: 'international',
       title: <FormattedMessage id="int-companies" />,
       type: 'item',
       icon: icons.IconMapPin,
-      url: '/company/int_comp_mng'
+      url: '/dashboard/company/int_comp_mng'
     },
     {
       id: 'featured-companies',
       title: <FormattedMessage id="Featured Companies" />,
       type: 'item',
       icon: icons.IconFileStar,
-      url: '/company/featured'
+      url: '/dashboard/company/featured'
     },
     {
       id: 'blocked-companies',
       title: <FormattedMessage id="Blocked Companies" />,
       type: 'item',
       icon: icons.IconFileX,
-      url: '/company/blocked'
+      url: '/dashboard/company/blocked'
     },
 
     {
@@ -119,42 +117,42 @@ const companies = {
       title: <FormattedMessage id="add-subscriptions" />,
       type: 'item',
       icon: icons.IconTextPlus,
-      url: '/company/add_subs'
+      url: '/dashboard/company/add_subs'
     },
     {
       id: 'active',
       title: <FormattedMessage id="view-active" />,
       type: 'item',
       icon: icons.IconChecklist,
-      url: '/company/active_subs'
+      url: '/dashboard/company/active_subs'
     },
     {
       id: 'pending',
       title: <FormattedMessage id="view-pending" />,
       type: 'item',
       icon: icons.IconClock,
-      url: '/company/pending_subs'
+      url: '/dashboard/company/pending_subs'
     },
     {
       id: 'payments',
       title: <FormattedMessage id="payments" />,
       type: 'item',
       icon: icons.IconLayoutKanban,
-      url: '/company/payments'
+      url: '/dashboard/company/payments'
     },
     {
       id: 'priviliges',
       title: <FormattedMessage id="company-priviliges" />,
       type: 'item',
       icon: icons.IconNfc,
-      url: '/company/priviliges'
+      url: '/dashboard/company/priviliges'
     },
     {
       id: 'company-activities',
       title: <FormattedMessage id="activities" />,
       type: 'item',
       icon: icons.IconBasket,
-      url: '/company/activity'
+      url: '/dashboard/company/activity'
     }
   ]
 };

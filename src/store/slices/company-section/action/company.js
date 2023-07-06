@@ -193,6 +193,7 @@ export const deleteMainService = createAsyncThunk('services/deleteMainService', 
 
 export const getCompanyByStatus = createAsyncThunk('company/status', async (status, { rejectWithValue }) => {
   try {
+    console.log(status);
     const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByStatus/${status}`, config);
     return response.data;
   } catch (error) {
@@ -220,10 +221,10 @@ export const blockCompany = createAsyncThunk('companies/blockCompany', async ({ 
   }
 });
 
-export const updateCompanyStatus = createAsyncThunk('companies/status', async (formData, { rejectWithValue }) => {
+export const updateCompanyStatus = createAsyncThunk('companies/statusUpdate', async (formData, { rejectWithValue }) => {
   try {
-    console.log(formData);
     const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
+    console.log('fired', response);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);

@@ -23,12 +23,7 @@ import {
   getCommunities,
   getSubCommunities,
   getAllCountries,
-  getAllCurrencies,
-  updateCompany,
-  createCompany,
-  getAllCompanyTypes, 
-  getAllMainServices,
-  getAllServices,
+  getAllCurrencies
 } from 'store/slices/country-section/actions/countries';
 
 // assets
@@ -42,6 +37,8 @@ import { useEffect } from 'react';
 import { setCountry } from 'store/slices/country-section/slice/country';
 import { setState } from 'store/slices/country-section/slice/country';
 import InputLayout from 'components/InputArea/InputLayout';
+
+import { createCompany, getAllCompanyTypes, getAllMainServices, getAllServices } from 'store/slices/company-section/action/company';
 import CustomDateTime from 'components/InputArea/CustomDateTime';
 import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
@@ -76,7 +73,7 @@ const validationSchema = Yup.object({
   subCommunity: objectValidator(),
   officeAddress: stringValidator('Please provide a valid office address'),
   mapUrl: stringValidator('Please provide a valid map url').url(),
-  place: Yup.array().required('Please provide a valid address or place'),
+  // place: Yup.array().required('Please provide a valid address or place'),
   lat: numberValidator('Latitude is missing'),
   long: numberValidator('Longitude is missing'),
   companyWebsite: stringValidator('Please provid a valid company website').url(),
@@ -119,7 +116,7 @@ const validationSchema = Yup.object({
   lisenceFile: fileValidator(['application/pdf'])
 });
 
-function CompanyForm({ title, formfor, id }) {
+function ColumnsLayouts() {
   const dispatch = useDispatch();
   const [address, setAddress] = useState('Abu Dhabi');
   useEffect(() => {
@@ -202,73 +199,15 @@ function CompanyForm({ title, formfor, id }) {
     formData.append('swift_code', values.swiftCode);
     formData.append('rera_file_url', values.reraFile);
     formData.append('rera_expiry', values.reraExpiryDate);
-
+    values.service.forEach((ser) => {
+      formData.append('sub_service_type[]', ser?.id);
+    });
     dispatch(createCompany(formData));
-  };
-
-  const updateForm = () => {
-    const formData = new FormData();
-
-    formData.append('user_email', 'aaaa');
-    formData.append('company_types', companyDetails.companyType.id);
-    formData.append('id', id);
-    formData.append('main_service_type', id);
-    formData.append('sub_company_type', companyDetails.subCompanyType.id);
-    formData.append('sub_service_type', companyDetails.service.id);
-    formData.append('main_service_type', companyDetails.service.id);
-    formData.append('company_name', companyDetails.companyName);
-    formData.append('tag_line', companyDetails.companyTagline);
-    formData.append('rera_no', companyDetails.reraNo);
-    formData.append('commercial_license_no', companyDetails.licenseNo);
-    formData.append('commercial_license_file_url', lisenceFile);
-    formData.append('commercial_license_expiry', companyDetails.licenseExpiry);
-    formData.append('vat_no', companyDetails.vatNo);
-    formData.append('vat_status', companyDetails.vatStatus);
-    formData.append('vat_file_url', vatImage);
-    formData.append('lat', '3.0');
-    formData.append('lng', '3.5');
-    formData.append('no_of_employees', adminContactInformation.numberOfEmployees);
-    formData.append('billing_country_id', country?.id);
-    formData.append('billing_state_id', state?.id);
-    formData.append('billing_city_id', city?.id);
-    formData.append('billing_community_id', community?.id);
-    formData.append('billing_office_address', billingAddressInformation.officeAddress);
-    formData.append('billing_reference', billingAddressInformation.billingReference);
-    formData.append('google_map_link', companyLocation.mapUrl || 'some link... ..');
-    formData.append('website_url', companyPresentation.companyWebsite);
-    formData.append('company_email', companyPresentation.companyEmail);
-    formData.append('company_contact_number', companyPresentation.companyContactNumber);
-    formData.append('company_whatsapp_number', companyPresentation.companyContactNumber);
-    formData.append('company_description', companyPresentation.companyDescription);
-    formData.append('logo_url', companyLogo);
-    formData.append('cover_image_url', companyCoverImage);
-    formData.append('facebook_profile_url', socialMedia.facebook);
-    formData.append('instagram_profile_url', socialMedia.twitter);
-    formData.append('linkedin_profile_url', socialMedia.instagram);
-    formData.append('twitter_profile_url', socialMedia.linkedin);
-    formData.append('first_name', adminContactInformation.firstName);
-    formData.append('last_name', adminContactInformation.lastName);
-    formData.append('user_email', adminContactInformation.emailAddress);
-    formData.append('user_phone_number', adminContactInformation.phoneNumber);
-    formData.append('user_profile_picture', profileImage);
-    formData.append('subscription_duration', adminContactInformation.subscriptionDuration);
-    formData.append('subscription_start_date', adminContactInformation.subscriptionStartDate);
-    formData.append('subscription_end_date', adminContactInformation.subscriptionEndDate);
-    formData.append('account_name', bankAccountDetails.accountNumber);
-    formData.append('account_number', bankAccountDetails.accountName);
-    formData.append('iban', bankAccountDetails.ibanNumber);
-    formData.append('currency_id', currency?.id);
-    formData.append('bank_country_id', bankCountry?.id);
-    formData.append('bank_name', bankAccountDetails.bankName);
-    formData.append('branch_name', bankAccountDetails.bankBranch);
-    formData.append('swift_code', bankAccountDetails.swiftCode);
-    console.log('data', formData);
-    dispatch(updateCompany(formData));
   };
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
-      <Page title={title}>
+      <Page title="Add Company">
         <ToastContainer />
         <Grid container spacing={gridSpacing}>
           <Formik
@@ -347,8 +286,7 @@ function CompanyForm({ title, formfor, id }) {
           >
             {(props) => (
               <>
-                {console.log(props.values)}
-                <Container title={title} style={{ xs: 12 }}>
+                <Container title="Add Company Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
                     <AutoCompleteSelector
                       style={{ xs: 12, lg: 10 }}
@@ -537,7 +475,6 @@ function CompanyForm({ title, formfor, id }) {
                       placeholder="Upload your VAT"
                       helperText="Please upload your VAT"
                       style={{ xs: 12, lg: 6 }}
-                      image={{ alt: 'VAT Preview', width: '250px', height: '250px' }}
                       ref={vatRef}
                       setFieldValue={props.setFieldValue}
                       id="vatFile"
@@ -685,7 +622,7 @@ function CompanyForm({ title, formfor, id }) {
                         metaTouched={props.touched.place}
                       />
                     </InputLayout>
-                    <Map locationAddress={address} xs={12} lg={12} mapUrl={companyInformation.companyLocation.mapUrl} />
+                    <Map locationAddress={address} xs={12} lg={12} mapUrl={props.values.mapUrl} />
                   </Grid>
                 </Container>
 
@@ -1008,8 +945,9 @@ function CompanyForm({ title, formfor, id }) {
   );
 }
 
-CompanyForm.getLayout = function getLayout(page) {
+ColumnsLayouts.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default CompanyForm;
+export default ColumnsLayouts;
+

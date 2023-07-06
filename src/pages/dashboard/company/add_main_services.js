@@ -8,7 +8,7 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import React, { useRef } from 'react';
-import { createMainService, getAllCompanyTypes } from '../../store/slices/company-section/action/company';
+import { createMainService, getAllCompanyTypes } from '../../../store/slices/company-section/action/company';
 import 'react-toastify/dist/ReactToastify.css';
 
 // assets

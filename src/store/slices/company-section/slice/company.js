@@ -233,6 +233,21 @@ const slice = createSlice({
         state.localCompanies = state.localCompanies;
       })
 
+      // .addCase(updateCompanyStatus.pending, (state, action) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+
+      .addCase(updateCompanyStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+        ToastSuccess('Status Updated Successfully');
+      })
+      .addCase(updateCompanyStatus.rejected, (state, action) => {
+        console.log('Status Rejected', action);
+        ToastError(action?.payload);
+      })
+
       .addCase(getInternationalCompanies.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -428,14 +443,6 @@ const slice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(updateCompanyStatus.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = false;
-        ToastSuccess('Status Updated Successfully');
-      })
-      .addCase(updateCompanyStatus.rejected, (state, action) => {
-        ToastError(action.payload);
-      })
       .addCase(restoreCompany.pending, (state) => {
         state.loading = true;
         state.error = null;
