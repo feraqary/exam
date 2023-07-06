@@ -51,8 +51,6 @@ const ColumnHeaders = [
     accessorKey: 'action',
     header: 'Action',
     Cell: ({ renderedCellValue, row }) => {
-
-
       return (
         <Box
           sx={{
@@ -61,7 +59,7 @@ const ColumnHeaders = [
             gap: '1rem'
           }}
         >
-          <Link href={`/company/manage_type/${row.original.id}`}>
+          <Link href={`/dashboard/company/manage_type/${row.original.id}`}>
             <Button variant="contained" color="primary">
               Edit
             </Button>
@@ -98,5 +96,3 @@ companyType.getLayout = function getLayout(page) {
 };
 
 export default companyType;
-
-

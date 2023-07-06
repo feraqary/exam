@@ -60,13 +60,13 @@ const companies = {
       url: '/dashboard/company/add_comp',
       icon: icons.IconUserCheck
     },
-    {
-      id: 'add-sub-dev-company',
-      title: <FormattedMessage id="Add Sub-Developer Companies" />,
-      type: 'item',
-      url: '/dashboard/company/add_sub_developer',
-      icon: icons.IconUserCheck
-    },
+    // {
+    //   id: 'add-sub-dev-company',
+    //   title: <FormattedMessage id="Add Sub-Developer Companies" />,
+    //   type: 'item',
+    //   url: '/dashboard/company/add_sub_developer',
+    //   icon: icons.IconUserCheck
+    // },
     {
       id: 'add_company_types',
       title: <FormattedMessage id="Add Sub-Company Types" />,

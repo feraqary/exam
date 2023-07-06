@@ -14,6 +14,7 @@ import { LoadScript } from '@react-google-maps/api';
 import Image from 'next/image';
 import valid from 'card-validator';
 import { objectValidator, arrayValidator, stringValidator, numberValidator, fileValidator, dateValidator } from 'utils/formik-validations';
+import iban from 'iban';
 // redux actions import
 
 import {
@@ -94,15 +95,17 @@ const validationSchema = Yup.object({
   subscriptionDuration: stringValidator('Please select a subscription duration'),
   subscriptionStartDate: dateValidator('Please select a subscription start date'),
   subscriptionEndDate: dateValidator('Please select a subscription end date'),
-  ibanNumber: stringValidator('Please provide a valid IBAN number'),
+  ibanNumber: Yup.string()
+    .trim()
+    .test('TEST_IBAN_NUMBER', 'iban number is invalid', (value) => {
+      return iban.isValid(value);
+    }),
   currency: objectValidator(),
   accountCountry: objectValidator(),
   bankName: stringValidator('Please provide a bank name'),
   bankBranch: stringValidator('Please provide a bank branch'),
   swiftCode: stringValidator('Please provide a swift code'),
-  cardNumber: Yup.string()
-    .trim()
-    .test('TEST_CREDIT_NUMBER', 'Credit number is invalid', (value) => valid.number(value).isValid),
+  cardNumber: Yup.string().trim().min(6, 'please provide a valid account number').max(15, 'please provide a valid account number'),
 
   cardName: Yup.string()
     .trim()
@@ -950,4 +953,3 @@ ColumnsLayouts.getLayout = function getLayout(page) {
 };
 
 export default ColumnsLayouts;
-

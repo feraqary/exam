@@ -99,13 +99,8 @@ const slice = createSlice({
       })
 
       // update company types=================================================================================================
-      .addCase(updateCompanyType.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
+
       .addCase(updateCompanyType.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
         ToastSuccess('Updated Successfully');
       })
       .addCase(updateCompanyType.rejected, (state, action) => {
