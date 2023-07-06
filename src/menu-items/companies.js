@@ -67,7 +67,6 @@ const companies = {
       url: '/dashboard/company/add_sub_developer',
       icon: icons.IconUserCheck
     },
-
     {
       id: 'add_company_types',
       title: <FormattedMessage id="Add Sub-Company Types" />,
