@@ -38,7 +38,6 @@ export const getAllCompanyTypes = createAsyncThunk('company/getAllCompanyTypes',
 });
 export const updateCompanyType = createAsyncThunk('company/updateCompanyType', async ({ company_id, formData }, { rejectWithValue }) => {
   try {
-    console.log(`company id: ${company_id}`);
     const response = await api.put(`${baseurl}/api/services/updateCompanyType/${company_id}`, formData, config);
 
     return response.data;
@@ -284,6 +283,15 @@ export const getActiveSubscription = createAsyncThunk('companies/getActiveSubscr
 export const getPendingSubscription = createAsyncThunk('companies/getPendingSubscription', async (_, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getPendingSubscription?page_no=1&page_size=35`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const getCompanyType = createAsyncThunk('companies/getCompanyType', async (id, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/services/getCompanyType/${id}`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);

@@ -27,7 +27,8 @@ import {
   getFeaturedCompany,
   getCompanyByStatus,
   getCompanyDocs,
-  updateCompanyDoc
+  updateCompanyDoc,
+  getCompanyType
 } from '../action/company';
 
 import { ToastError, ToastSuccess } from 'utils/toast';
@@ -68,38 +69,49 @@ const slice = createSlice({
     builder
       .addCase(createCompanyType.pending, (state) => {
         state.loading = true;
-        state.companyTypes = state.companyTypes;
         state.error = null;
       })
       .addCase(createCompanyType.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.companyTypes = [...state.companyTypes, action.payload.data];
-
         ToastSuccess('Added Successfully');
       })
       .addCase(createCompanyType.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
-        state.companyTypes = state.companyTypes;
-
         ToastError(state.error);
       })
+
+      .addCase(getCompanyType.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+        state.companyType = state.companyType;
+      })
+      .addCase(getCompanyType.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.companyType = action.payload.data;
+      })
+      .addCase(getCompanyType.rejected, (state, action) => {
+        state.loading = false;
+        state.companyType = state.companyType;
+        state.error = action.payload;
+      })
+
       // update company types=================================================================================================
       .addCase(updateCompanyType.pending, (state) => {
         state.loading = true;
-        state.companyTypes = state.companyTypes;
         state.error = null;
       })
       .addCase(updateCompanyType.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.companyTypes = action.payload.data;
+        ToastSuccess('Updated Successfully');
       })
       .addCase(updateCompanyType.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.companyTypes = state.companyTypes;
+        ToastError(state.error);
       })
       // get all company types=================================================================================================
       .addCase(getAllCompanyTypes.pending, (state) => {
