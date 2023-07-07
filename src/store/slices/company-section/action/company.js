@@ -1,7 +1,7 @@
 import { api } from 'utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
-  'v2.local.-EpSYI4sdwfM2bYxzJUdHA-_H8ML8JLA7198pCjg3cixgYt8uPuhbwOiZzV59qCynfVY707LHVhGPrjoHfW5FMEAU-cNtnc_ikoXytj6g3heblA4abLuKQMuadnBtNRVRH-EkLbJuUAfBAN0eieBHuTwR4apGAeC8WaX3W3WqxW6J2lFaUr_2WadAkKyMgA4HSjNMaCh9D6rdpQlpR3gl4gGgEnLwUl8yk0bwUlhkV9jpCnRLmgZoCot9PU8kbk220pj_C255e4MznVgfee1.bnVsbA';
+  'v2.local.5pCwXoDcbmmYo5qnoYQp6h8UUTXhJK2sc_M4Yt8qJpPozlZEj-UCZJsSFrlXZM9I95F36x_YuQGYKTH1eZ1VNKJcSN1OvfirFc0qza5cyYl3Gx7UD2_msvVbSVEH5cC07LfLowuww55ko5Zpb0fKSRuN1h-d2JTUOg00BZCUVhxBWwuARDdwx3TCxHSBLNdCh2AouT3yvYAvp2Q6RofFDiNdMrbcho-pHLn9VORtwrkivVCjHi3_OKwLwp5IbbsXKBdfL-A4nhLiSRvemLM.bnVsbA';
 const config = {
   headers: {
     'Content-Type': 'multipart/form-data',
@@ -200,35 +200,9 @@ export const getCompanyByStatus = createAsyncThunk('company/status', async (stat
   }
 });
 
-export const restoreCompany = createAsyncThunk('companies/restoreCompany', async ({ formData, id }, { rejectWithValue }) => {
-  try {
-    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
-    response.data.id = id;
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
-  }
-});
 
-export const blockCompany = createAsyncThunk('companies/blockCompany', async ({ formData, id }, { rejectWithValue }) => {
-  try {
-    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
-    response.data.id = id;
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
-  }
-});
 
-export const updateCompanyStatus = createAsyncThunk('companies/statusUpdate', async (formData, { rejectWithValue }) => {
-  try {
-    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
-    console.log('fired', response);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
-  }
-});
+
 
 export const getCompanyNames = createAsyncThunk('companies/companyNames', async (_, { rejectWithValue }) => {
   try {
@@ -241,6 +215,14 @@ export const getCompanyNames = createAsyncThunk('companies/companyNames', async 
 export const updateCompanyDoc = createAsyncThunk('companies/docUpdate', async (formData, { rejectWithValue }) => {
   try {
     const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyDoc`, formData, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const updateCompanyStatus = createAsyncThunk('companies/StatusStatus', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);

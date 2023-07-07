@@ -87,7 +87,7 @@ const companies = {
       title: <FormattedMessage id="local-companies" />,
       type: 'item',
       icon: icons.IconPin,
-      url: '/dashboard/company/local_company_management'
+      url: '/dashboard/company/manage_local_companies'
     },
     {
       id: 'international',

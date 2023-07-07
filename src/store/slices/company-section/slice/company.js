@@ -54,7 +54,8 @@ const initialState = {
   company: null,
   mainService: null,
   loading: false,
-  error: null
+  error: null,
+  status: null
 };
 
 const slice = createSlice({
@@ -232,6 +233,7 @@ const slice = createSlice({
       .addCase(getLocalCompanies.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
+
         state.localCompanies = action.payload.data.filter((item) => item.Status != '5');
       })
       .addCase(getLocalCompanies.rejected, (state, action) => {
@@ -240,19 +242,19 @@ const slice = createSlice({
         state.localCompanies = state.localCompanies;
       })
 
-      // .addCase(updateCompanyStatus.pending, (state, action) => {
-      //   state.loading = true;
-      //   state.error = null;
-      // })
-
+      .addCase(updateCompanyStatus.pending, (state) => {
+        state.status = state.status;
+        state.error = null;
+      })
       .addCase(updateCompanyStatus.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = false;
-        ToastSuccess('Status Updated Successfully');
+        state.status = action.payload;
       })
       .addCase(updateCompanyStatus.rejected, (state, action) => {
-        console.log('Status Rejected', action);
-        ToastError(action?.payload);
+        state.status = state.status;
+        state.error = action.payload;
+        console.log('fired rejected1', state);
+        console.log('fired rejected', action);
       })
 
       .addCase(getInternationalCompanies.pending, (state) => {
@@ -450,21 +452,6 @@ const slice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(restoreCompany.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(restoreCompany.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        // state.blockedCompanies = state.blockedCompanies.filter((company) => company.ID !== action.payload.id);
-        ToastSuccess('Restored Successfully');
-      })
-      .addCase(restoreCompany.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-        ToastError(state.error);
-      })
 
       .addCase(getCompanyNames.pending, (state) => {
         state.loading = true;

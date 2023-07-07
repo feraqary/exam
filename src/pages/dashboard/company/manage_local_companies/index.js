@@ -11,7 +11,7 @@ import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import { useEffect } from 'react';
-import { getLocalCompanies, updateCompanyStatus} from 'store/slices/company-section/action/company';
+import { getLocalCompanies, updateCompanyStatus } from 'store/slices/company-section/action/company';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { useSelector } from 'react-redux';
@@ -19,26 +19,24 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-
-import CompanyForm from './helper/CompanyForm';
-
+import Link from 'next/link';
+import CompanyForm from '../helper/CompanyForm';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 
 import { Grid, Box, Button, Dialog, DialogActions, DialogContent, Slide } from '@mui/material';
-import Documents from './documents';
+import Documents from '../documents';
 // ===========================|| International Company Managment list||=========================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-
 const localCompanies = () => {
   const dispatch = useDispatch();
   const { loading, error, localCompanies } = useSelector((state) => state.companies);
 
   const [docsOpen, setDocsOpen] = useState(false);
-  const [docsCrid, setDocsCrid] = useState({ comp: null, id: null });
+  const [compId, setCompId] = useState({ comp: null, id: null });
 
   const handleDocsOpen = () => {
     setDocsOpen(true);
@@ -118,23 +116,23 @@ const localCompanies = () => {
           setOpen(false);
         };
 
-        const dispatch = useDispatch();
+        // const dispatch = useDispatch();
 
         const handleBlock = () => {
-          // setBlocked();
-          console.log('int_company', row.original.ID);
-          console.log('status', '5');
-          console.log('company_type', row.original.CompanyMainType);
-
+          setCompId({ comp: row.original.CompanyMainType, id: row.original.ID });
           const formData = new FormData();
 
-          formData.append('company_id', row.original.ID);
-          formData.append('status', '5');
-          formData.append('company_type', row.original.CompanyMainType);
+          console.log('row: ', row.original);
 
+          console.log('company_id', compId.id);
+          formData.append('company_id', compId.id);
+
+          console.log('status', 5);
+          formData.append('status', 5);
+
+          console.log('company_type', compId.comp);
+          formData.append('company_type', compId.comp);
           dispatch(updateCompanyStatus(formData));
-          // dispatch(getLocalCompanies());
-          // window.location.reload();
         };
 
         return (
@@ -146,7 +144,10 @@ const localCompanies = () => {
                 gap: '1rem'
               }}
             >
-              <AqaryButton variant="contained">Edit </AqaryButton>
+              <Link href={`/dashboard/company/manage_local_companies/${row.original.ID}`}>
+                <AqaryButton variant="contained">Edit </AqaryButton>
+              </Link>
+
               <Button variant="contained" color="primary" onClick={handleClickOpen} startIcon={<PreviewIcon />}>
                 Add sub-company
               </Button>
@@ -154,8 +155,8 @@ const localCompanies = () => {
                 color="primary"
                 variant="contained"
                 onClick={() => {
-                  handleDocsOpen(), setDocsCrid({ comp: row.original.CompanyMainType, id: row.original.ID });
-                  console.log(docsCrid);
+                  handleDocsOpen(), setCompId({ comp: row.original.CompanyMainType, id: row.original.ID });
+                  console.log(compId);
                 }}
                 startIcon={<AssignmentIcon />}
               >
@@ -164,7 +165,7 @@ const localCompanies = () => {
               <Button variant="contained" color="primary">
                 Report
               </Button>
-              <Button variant="contained" onClick={handleBlock} color="error" startIcon={<DeleteIcon />}>
+              <Button variant="contained" onClick={() => {}} color="error" startIcon={<DeleteIcon />}>
                 Block
               </Button>
 
@@ -204,7 +205,7 @@ const localCompanies = () => {
           </IconButton>
         </DialogActions>
         <DialogContent>
-          <Documents comp={docsCrid.comp} id={docsCrid.id} />
+          <Documents comp={compId.comp} id={compId.id} />
         </DialogContent>
       </Dialog>
     </Page>
