@@ -50,7 +50,7 @@ const DynamicInput = () => {
     </>
   );
 };
-
+//
 function AddProject() {
   // this is aglobal handle change that requires both value and of the input its used in to return an object with name: value
   const [city, setCity] = useState(null);

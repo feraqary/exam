@@ -38,6 +38,7 @@ const InputText = ({ label, placeholder, helperText, style, type, value, setValu
     </InputLayout>
   );
 };
+//
 export const NormalInputText = ({ label, placeholder, helperText, style, type, func, value, required, ...rest }) => {
   return (
     <InputLayout label={label} helperText={helperText} style={style} required={required}>

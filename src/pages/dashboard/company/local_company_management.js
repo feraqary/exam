@@ -11,7 +11,7 @@ import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import { useEffect } from 'react';
-import { getLocalCompanies, updateCompanyStatus} from 'store/slices/company-section/action/company';
+import { getLocalCompanies, updateCompanyStatus } from 'store/slices/company-section/action/company';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { useSelector } from 'react-redux';
@@ -26,19 +26,26 @@ import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 
 import { Grid, Box, Button, Dialog, DialogActions, DialogContent, Slide } from '@mui/material';
 import Documents from './documents';
+import { useGetLocalCompaniesQuery } from 'store/services/company/companyApi';
 // ===========================|| International Company Managment list||=========================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-
 const localCompanies = () => {
   const dispatch = useDispatch();
-  const { loading, error, localCompanies } = useSelector((state) => state.companies);
+  const { loading, localCompanies } = useSelector((state) => state.companies);
 
   const [docsOpen, setDocsOpen] = useState(false);
   const [docsCrid, setDocsCrid] = useState({ comp: null, id: null });
+
+  const { data: localCompaniesData, isError, error, isLoading, isFetching } = useGetLocalCompaniesQuery();
+
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5 //customize the default page size
+  });
 
   const handleDocsOpen = () => {
     setDocsOpen(true);
@@ -186,6 +193,10 @@ const localCompanies = () => {
   ];
 
   useEffect(() => {
+    console.log(pagination.pageIndex, pagination.pageSize);
+  }, [pagination.pageIndex, pagination.pageSize]);
+
+  useEffect(() => {
     dispatch(getLocalCompanies());
   }, [dispatch]);
   return (
@@ -193,7 +204,14 @@ const localCompanies = () => {
       <ToastContainer />
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={localCompanies} loading={loading} />
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={localCompanies}
+            loading={isLoading}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={isFetching}
+          />
         </Grid>
       </Grid>
 
