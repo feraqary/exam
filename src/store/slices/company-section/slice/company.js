@@ -28,7 +28,8 @@ import {
   getCompanyByStatus,
   getCompanyDocs,
   updateCompanyDoc,
-  getCompanyType
+  getCompanyType,
+  getAllDeveloperCompany
 } from '../action/company';
 
 import { ToastError, ToastSuccess } from 'utils/toast';
@@ -37,6 +38,7 @@ import { deleteService } from 'store/slices/company-section/action/company';
 
 const initialState = {
   companies: [],
+  masterDeveloper:[],
   localCompanies: [],
   internationalCompanies: [],
   companyTypes: [],
@@ -68,6 +70,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
       .addCase(createCompanyType.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -125,6 +128,25 @@ const slice = createSlice({
         state.loading = false;
         state.error = action.payload.error;
         state.companyTypes = state.companyTypes;
+      })
+
+
+      // get master developer companies   ===================================================================================
+      .addCase(getAllDeveloperCompany.pending, (state) => {
+        state.loading = true;
+        state.masterDeveloper = state.masterDeveloper;
+        state.error = null;
+      })
+      .addCase(getAllDeveloperCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.masterDeveloper = action.payload.data;
+      })
+      .addCase(getAllDeveloperCompany.rejected, (state, action) => {
+        console.log(action);
+        state.loading = false;
+        state.error = action.payload.error;
+        state.masterDeveloper = state.masterDeveloper;
       })
 
       // create main service

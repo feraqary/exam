@@ -47,56 +47,56 @@ const project = {
       title: <FormattedMessage id="Add Project" />,
       type: 'item',
       icon: icons.IconUserCheck,
-      url: '/project/add_project'
+      url: '/dashboard/project/add_project'
     },
     {
       id: 'local',
       title: <FormattedMessage id="Local Projects" />,
       type: 'item',
       icon: icons.IconPin,
-      url: '/project/local_project'
+      url: '//dashboard/project/local_project'
     },
     {
       id: 'international',
       title: <FormattedMessage id="International Projects" />,
       type: 'item',
       icon: icons.IconMapPin,
-      url: '/project/int_project'
+      url: '/dashboard/project/int_project'
     },
     {
       id: 'shared-projects',
       title: <FormattedMessage id="Shared Projects" />,
       type: 'item',
       icon: icons.IconHomeShare,
-      url: '/project/shared_project'
+      url: '/dashboard/project/shared_project'
     },
     {
       id: 'deleted-projects',
       title: <FormattedMessage id="Deleted Projects" />,
       type: 'item',
       icon: icons.IconTrashX,
-      url: '/project/del_project'
+      url: '/dashboard/project/del_project'
     },
     {
       id: 'promotions',
       title: 'Promotions',
       type: 'item',
       icon: icons.IconLayoutKanban,
-      url: '/project/promotions'
+      url: '/dashboard/project/promotions'
     },
     {
       id: 'manage-requests',
       title: <FormattedMessage id="Manage Requests" />,
       type: 'item',
       icon: icons.IconMail,
-      url: '/project/manage_requests'
+      url: '/dashboard/project/manage_requests'
     },
     {
       id: 'project-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBasket,
-      url: '/project/activities'
+      url: '/dashboard/project/activities'
     }
   ]
 };

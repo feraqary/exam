@@ -200,10 +200,6 @@ export const getCompanyByStatus = createAsyncThunk('company/status', async (stat
   }
 });
 
-
-
-
-
 export const getCompanyNames = createAsyncThunk('companies/companyNames', async (_, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getAllCompanyNames`, config);
@@ -275,6 +271,14 @@ export const getPendingSubscription = createAsyncThunk('companies/getPendingSubs
 export const getCompanyType = createAsyncThunk('companies/getCompanyType', async (id, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/services/getCompanyType/${id}`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const getAllDeveloperCompany = createAsyncThunk('companies/getDeveloperCompany', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getAllDeveloperCompany`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
