@@ -3,11 +3,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch as useAppDispatch, useSelector as useAppSelector } from 'react-redux';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { persistStore } from 'redux-persist';
-import { locationApi } from './slices/location/locationHooks';
+
 
 // project imports
 import rootReducer from './reducer';
-// .concat(locationApi.middleware)
+//
 // ==============================|| REDUX - MAIN STORE ||============================== //
 
 const store = configureStore({

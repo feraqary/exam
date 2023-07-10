@@ -6,7 +6,8 @@ import {
   getCommunities,
   getSubCommunities,
   getAllCountries,
-  getAllCurrencies
+  getAllCurrencies,
+  getStateCity
 } from '../actions/countries';
 
 const initialState = {
@@ -25,7 +26,8 @@ const initialState = {
   bankCountries: [],
   bankCountry: null,
   currencies: [],
-  currency: null
+  currency: null,
+  stateCity: []
 };
 
 const slice = createSlice({
@@ -158,6 +160,22 @@ const slice = createSlice({
         state.error = null;
       })
       .addCase(getAllCurrencies.rejected, (state, action) => {
+        state.loading = false;
+        state.currencies = state.currencies;
+        state.error = action.payload;
+      })
+
+      .addCase(getStateCity.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.currencies = state.currencies;
+      })
+      .addCase(getStateCity.fulfilled, (state, action) => {
+        state.loading = false;
+        state.stateCity = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getStateCity.rejected, (state, action) => {
         state.loading = false;
         state.currencies = state.currencies;
         state.error = action.payload;

@@ -284,3 +284,11 @@ export const getAllDeveloperCompany = createAsyncThunk('companies/getDeveloperCo
     return rejectWithValue(error.response.data);
   }
 });
+export const getSubDevCompany = createAsyncThunk('companies/getSubDeveloperCompany', async ({parentCompanyId, companyType}, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getSubCompanies?parent_company_id=${parentCompanyId}&company_type=${companyType}`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
