@@ -28,7 +28,9 @@ import {
   getCompanyByStatus,
   getCompanyDocs,
   updateCompanyDoc,
-  getCompanyType
+  getCompanyType,
+  getAllDeveloperCompany,
+  getSubDevCompany
 } from '../action/company';
 
 import { ToastError, ToastSuccess } from 'utils/toast';
@@ -37,6 +39,8 @@ import { deleteService } from 'store/slices/company-section/action/company';
 
 const initialState = {
   companies: [],
+  masterDeveloper: [],
+  subdev: [],
   localCompanies: [],
   internationalCompanies: [],
   companyTypes: [],
@@ -68,6 +72,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
       .addCase(createCompanyType.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -452,7 +457,6 @@ const slice = createSlice({
         state.error = action.payload;
       })
 
-
       .addCase(getCompanyNames.pending, (state) => {
         state.loading = true;
         state.companies = state.companies;
@@ -525,6 +529,38 @@ const slice = createSlice({
       .addCase(getPendingSubscription.rejected, (state, action) => {
         state.loading = false;
         state.pendingSubscription = state.pendingSubscription;
+        state.error = action.payload;
+      })
+      // get master developer companies   ===================================================================================
+      .addCase(getAllDeveloperCompany.pending, (state) => {
+        state.loading = true;
+        state.masterDeveloper = state.masterDeveloper;
+        state.error = null;
+      })
+      .addCase(getAllDeveloperCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.masterDeveloper = action.payload.data;
+      })
+      .addCase(getAllDeveloperCompany.rejected, (state, action) => {
+        console.log(action);
+        state.loading = false;
+        state.error = action.payload?.error;
+        state.masterDeveloper = state.masterDeveloper;
+      })
+      .addCase(getSubDevCompany.pending, (state, action) => {
+        state.loading = true;
+        state.subdev = state.subdev;
+        state.error = null;
+      })
+      .addCase(getSubDevCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.subdev = action.payload.data || [];
+        state.error = null;
+      })
+      .addCase(getSubDevCompany.rejected, (state, action) => {
+        state.loading = false;
+        state.subdev = state.subdev;
         state.error = action.payload;
       });
   }

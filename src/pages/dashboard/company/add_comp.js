@@ -883,6 +883,7 @@ function ColumnsLayouts() {
                       placeholder="Select a Currency"
                       helperText="Please select a currency"
                     />
+                    
                     <AutoCompleteSelector
                       style={{ xs: 12, lg: 4 }}
                       label="Countries"

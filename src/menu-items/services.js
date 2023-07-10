@@ -26,34 +26,34 @@ const services = {
       id: 'add_main_services',
       title: <FormattedMessage id="Add Main Services" />,
       type: 'item',
-      url: '/company/add_main_services'
+      url: '/dashboard/company/add_main_services'
     },
 
     {
       id: 'manage-services',
       title: <FormattedMessage id="Manage Main Services" />,
       type: 'item',
-      url: '/services/manage_services'
+      url: '/dashboard/services/manage_services'
     },
     {
       id: 'add_services',
       title: <FormattedMessage id="Add Sub Services" />,
       type: 'item',
       icon: icons.IconClipboardPlus,
-      url: '/company/add_services'
+      url: '/dashboard/company/add_services'
     },
     {
       id: 'manage-sub-services',
       title: <FormattedMessage id="Manage Sub Services" />,
       type: 'item',
-      url: '/services/sub_services'
+      url: '/dashboard/services/sub_services'
     },
     {
       id: 'services-activities',
       title: <FormattedMessage id="Service Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,
-      url: '/services/service_activities'
+      url: '/dashboard/services/service_activities'
     }
   ]
 };

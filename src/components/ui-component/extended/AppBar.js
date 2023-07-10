@@ -30,7 +30,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CloseIcon from '@mui/icons-material/Close';
 // project imports
 import Logo from '../Logo';
-import Login from '../../../pages/pages/authentication/portal_registration/login';
+import Login from '../../../pages/dashboard/pages/authentication/portal_registration/login';
 // assets
 import { IconBook, IconCreditCard, IconDashboard, IconHome2 } from '@tabler/icons';
 import { useUser } from '@auth0/nextjs-auth0/client';
