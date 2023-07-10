@@ -21,7 +21,8 @@ import { ToastContainer } from 'react-toastify';
 import FileUpload from 'components/InputArea/FileUpload';
 import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useGetSubCompanyTypeQuery, useUpdateSubCompanyTypeMutation } from 'store/services/company/companyApi';
+import { ToastSuccess } from 'utils/toast';
 
 const roles = [
   { label: 'Broker Company', id: 1 },
@@ -45,12 +46,17 @@ function CompanyTypeEdit() {
 
   const dispatch = useDispatch();
   const router = useRouter();
-  const { companyType, loading } = useSelector((state) => state.companies);
+  // const { companyType, loading } = useSelector((state) => state.companies);
 
-  useEffect(() => {
-    dispatch(getCompanyType(router.query.id));
-  }, []);
-  if (loading) return;
+  const { data, isError, isFetching, isLoading, error } = useGetSubCompanyTypeQuery(router.query.id);
+  const [updateSubCompanyType, result] = useUpdateSubCompanyTypeMutation();
+
+  if (result.isSuccess) {
+    ToastSuccess('Sub Company Type hase been successfully updated');
+  }
+
+  if (isLoading) return;
+
   return (
     <Page title="Add Company Types">
       <ToastContainer />
@@ -59,9 +65,9 @@ function CompanyTypeEdit() {
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
             <Formik
               initialValues={{
-                companyType: roles[companyType?.main_company_type_id - 1],
-                subCompanyTypeName: companyType?.title,
-                description: companyType?.description,
+                companyType: roles[data?.data?.main_company_type_id - 1],
+                subCompanyTypeName: data?.data?.title,
+                description: data?.data?.description,
                 logoImage: '',
                 iconImage: ''
               }}
@@ -73,7 +79,8 @@ function CompanyTypeEdit() {
                 formData.append('image_url', values.logoImage);
                 formData.append('icon_url', values.iconImage);
                 formData.append('description', values.description);
-                dispatch(updateCompanyType({ formData: formData, company_id: companyType?.id }));
+                // dispatch(updateCompanyType({ formData: formData, company_id: data?.data?.id }));
+                updateSubCompanyType({ formData: formData, id: data?.data?.id });
                 setSubmitting(false);
                 resetForm();
                 router.back();

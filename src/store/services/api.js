@@ -10,7 +10,7 @@ const baseQuery = fetchBaseQuery({
     // By default, if we have a token in the store, let's use that for authenticated requests
 
     headers.set('Authorization', `Bearer ${token}`);
-    headers.set('Content-Type', 'multipart/form-data');
+    // headers.set('Content-Type', 'multipart/form-data');
 
     return headers;
   }

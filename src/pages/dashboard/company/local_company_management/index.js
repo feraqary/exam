@@ -1,6 +1,5 @@
 // material-ui
 import Image from 'next/image';
-import KeyIcon from '@mui/icons-material/Key';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PreviewIcon from '@mui/icons-material/Preview';
@@ -11,22 +10,18 @@ import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import { useEffect } from 'react';
-import { getLocalCompanies, updateCompanyStatus } from 'store/slices/company-section/action/company';
-import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import { useSelector } from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
-import CompanyForm from './helper/CompanyForm';
-
+import CompanyForm from '../helper/CompanyForm';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
-
 import { Grid, Box, Button, Dialog, DialogActions, DialogContent, Slide } from '@mui/material';
-import Documents from './documents';
-import { useGetLocalCompaniesQuery } from 'store/services/company/companyApi';
+import Documents from '../documents';
+import { useGetLocalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
+import { ToastSuccess } from 'utils/toast';
 // ===========================|| International Company Managment list||=========================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -34,18 +29,22 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const localCompanies = () => {
-  const dispatch = useDispatch();
-  const { loading, localCompanies } = useSelector((state) => state.companies);
-
   const [docsOpen, setDocsOpen] = useState(false);
   const [docsCrid, setDocsCrid] = useState({ comp: null, id: null });
 
-  const { data: localCompaniesData, isError, error, isLoading, isFetching } = useGetLocalCompaniesQuery();
-
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 5 //customize the default page size
+    pageSize: 5
   });
+  const { data: localCompaniesData, isError, error, isLoading, isFetching } = useGetLocalCompaniesQuery(pagination);
+
+  const [blockCompany, result] = useUpdateCompanyStatusMutation();
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      ToastSuccess('Company hase been successfully blocked');
+    }
+  }, [result.isSuccess]);
 
   const handleDocsOpen = () => {
     setDocsOpen(true);
@@ -76,6 +75,15 @@ const localCompanies = () => {
           </Box>
         );
       }
+    },
+    {
+      accessorKey: 'Status',
+      header: 'Company Status',
+      Cell: ({ renderedCellValue, row }) => (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <TableSelectorOption value={row.original.CompanyRank} CompanyType={row.original.CompanyType} id={row.original.ID} />
+        </Box>
+      )
     },
     {
       accessorKey: 'LicenseNO',
@@ -125,23 +133,13 @@ const localCompanies = () => {
           setOpen(false);
         };
 
-        const dispatch = useDispatch();
-
         const handleBlock = () => {
-          // setBlocked();
-          console.log('int_company', row.original.ID);
-          console.log('status', '5');
-          console.log('company_type', row.original.CompanyMainType);
-
           const formData = new FormData();
-
           formData.append('company_id', row.original.ID);
           formData.append('status', '5');
-          formData.append('company_type', row.original.CompanyMainType);
+          formData.append('company_type', row.original.CompanyType);
 
-          dispatch(updateCompanyStatus(formData));
-          // dispatch(getLocalCompanies());
-          // window.location.reload();
+          blockCompany(formData);
         };
 
         return (
@@ -162,7 +160,6 @@ const localCompanies = () => {
                 variant="contained"
                 onClick={() => {
                   handleDocsOpen(), setDocsCrid({ comp: row.original.CompanyMainType, id: row.original.ID });
-                  console.log(docsCrid);
                 }}
                 startIcon={<AssignmentIcon />}
               >
@@ -192,13 +189,9 @@ const localCompanies = () => {
     }
   ];
 
-  useEffect(() => {
-    console.log(pagination.pageIndex, pagination.pageSize);
-  }, [pagination.pageIndex, pagination.pageSize]);
+  useEffect(() => {}, [pagination.pageIndex, pagination.pageSize]);
 
-  useEffect(() => {
-    dispatch(getLocalCompanies());
-  }, [dispatch]);
+  if (isLoading) return;
   return (
     <Page title="Local Company List">
       <ToastContainer />
@@ -206,11 +199,12 @@ const localCompanies = () => {
         <Grid item xs={12}>
           <Table
             columnHeaders={ColumnHeaders}
-            data={localCompanies}
+            data={localCompaniesData?.data || []}
             loading={isLoading}
             pagination={pagination}
             setPagination={setPagination}
             isFetching={isFetching}
+            rowCount={localCompaniesData?.Total}
           />
         </Grid>
       </Grid>

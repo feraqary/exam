@@ -14,8 +14,7 @@ import {
   IconLayoutKanban,
   IconMail,
   IconCalendar,
-  IconNfc,
-  HomeShare
+  IconNfc
 } from '@tabler/icons';
 
 // constant
@@ -47,7 +46,8 @@ const project = {
       title: <FormattedMessage id="Add Project" />,
       type: 'item',
       icon: icons.IconUserCheck,
-      url: '/project/add_project'
+      url: '/project/add_project',
+      breadcrumbs: true
     },
     {
       id: 'local',

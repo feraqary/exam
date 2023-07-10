@@ -275,20 +275,12 @@ export function NormalMap({ locationAddress, xs, lg, mapUrl }) {
     getloc(locationAddress);
   }, [locationAddress]);
 
-  // useEffect(() => {
-  //   const parsedUrl = mapUrl ? mapUrl.split('@')[1].split(',') : MAP_URL.split('@')[1].split(',');
-  //   const latitude = parsedUrl[0];
-  //   const longitude = parsedUrl[1];
-
-  //   setlat(latitude);
-  //   setlong(longitude);
-  // }, [mapUrl]);
-
   useEffect(() => {
     console.log('dat');
   }, [lat, long]);
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: apiKey
+    googleMapsApiKey: apiKey,
+    libraries: ['drawing']
   });
 
   if (!isLoaded) {

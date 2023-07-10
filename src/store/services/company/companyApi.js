@@ -3,7 +3,7 @@ import { api } from '../api';
 export const companyApi = api.injectEndpoints({
   endpoints: (builder) => ({
     //CREATE COMPANY TYPE API
-    createCompanyType: builder.mutation({
+    createSubCompanyType: builder.mutation({
       query(formData) {
         return {
           url: 'services/createCompanyType',
@@ -24,44 +24,82 @@ export const companyApi = api.injectEndpoints({
       }
     }),
 
-    //GET LOCAL COMPANIES API
-    getLocalCompanies: builder.query({
-      query(_) {
+    //GET SUB COMPANY TYPES BASED ON COMPANY TYPE API
+    getSubCompanyTypesByCompanyType: builder.query({
+      query(id) {
         return {
-          url: `dashboard/getLocalCompanies?page_no=1&page_size=10&country=united arab emirates`,
+          url: `services/getAllCompanyTypesByType/${id}`,
           method: 'GET'
         };
       }
+    }),
+
+    //GET SUB COMPANY
+    getSubCompanyType: builder.query({
+      query(id) {
+        return {
+          url: `services/getCompanyType/${id}`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    //GET ALL COMPANY TYPES API
+
+    getAllSubCompanyTypes: builder.query({
+      query() {
+        return {
+          url: `services/getAllCompanyTypes`,
+          method: 'GET'
+        };
+      }
+    }),
+    //GET LOCAL COMPANIES API
+    getLocalCompanies: builder.query({
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
+        return {
+          url: `dashboard/getLocalCompanies?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
+          method: 'GET'
+        };
+      },
+      providesTags: ['CompaniesByStatus', 'CompaniesByRank']
     }),
 
     //GET INTERNATIONAL COMPANIES API
     getInternationalCompanies: builder.query({
-      query(_) {
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getInternationalCompanies?page_no=1&page_size=100&country=pakistan`,
+          url: `dashboard/getInternationalCompanies?page_no=${pageIndex + 1}&page_size=${pageSize}&country=pakistan`,
           method: 'GET'
         };
-      }
+      },
+      providesTags: ['CompaniesByStatus']
     }),
 
     //GET COMPANIES BY RANK API
     getCompaniesByRank: builder.query({
-      query(rank) {
+      query({ rank, pagination }) {
+        const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getCompaniesByRank${rank}`,
+          url: `dashboard/getCompaniesByRank/${rank}?page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
-      }
+      },
+      providesTags: ['CompaniesByRank']
     }),
 
     //GET COMPANIES BY STATUS API
     getCompaniesByStatus: builder.query({
-      query(status) {
+      query({ status, pagination }) {
+        const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getCompaniesByStatus${status}`,
+          url: `dashboard/getCompaniesByStatus/${status}?page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
-      }
+      },
+      providesTags: ['CompaniesByStatus']
     }),
 
     //GET COMPANY DOCS API
@@ -95,6 +133,18 @@ export const companyApi = api.injectEndpoints({
       }
     }),
 
+    //UPDATE COMPANY TYPE API
+    updateSubCompanyType: builder.mutation({
+      query(data) {
+        const { id, formData } = data;
+        return {
+          url: `services/updateCompanyType/${id}`,
+          method: 'PUT',
+          body: formData
+        };
+      }
+    }),
+
     //UPDATE COMPANY RANK API
     updateCompanyRank: builder.mutation({
       query(formData) {
@@ -103,18 +153,21 @@ export const companyApi = api.injectEndpoints({
           method: 'PUT',
           body: formData
         };
-      }
+      },
+      invalidatesTags: ['CompaniesByRank']
     }),
 
     //UPDATE COMPANY STATUS API
     updateCompanyStatus: builder.mutation({
       query(formData) {
+        console.log(formData);
         return {
           url: `dashboard/updateCompanyStatus`,
           method: 'PUT',
           body: formData
         };
-      }
+      },
+      invalidatesTags: ['CompaniesByStatus']
     }),
 
     //UPDATE COMPANY DOC API
@@ -138,13 +191,23 @@ export const companyApi = api.injectEndpoints({
           body: formData
         };
       }
+    }),
+
+    //DELETE SUB COMPANY TYPE API
+    deleteSubCompanyType: builder.mutation({
+      query(id) {
+        return {
+          url: `services/deleteCompanyType/${id}`,
+          method: 'DELETE'
+        };
+      }
     })
   })
 });
 
 export const {
   useCreateCompanyMutation,
-  useCreateCompanyTypeMutation,
+  useCreateSubCompanyTypeMutation,
   useGetActiveSubscriptionsQuery,
   useGetCompaniesByRankQuery,
   useGetCompaniesByStatusQuery,
@@ -155,5 +218,10 @@ export const {
   useUpdateCompanyDocMutation,
   useUpdateCompanyRankMutation,
   useUpdateCompanyStatusMutation,
-  useUpdateSubscriptionMutation
+  useUpdateSubscriptionMutation,
+  useDeleteSubCompanyTypeMutation,
+  useGetSubCompanyTypesByCompanyTypeQuery,
+  useGetSubCompanyTypeQuery,
+  useUpdateSubCompanyTypeMutation,
+  useGetAllSubCompanyTypesQuery
 } = companyApi;

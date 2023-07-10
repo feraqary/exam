@@ -58,28 +58,24 @@ const companies = {
       title: <FormattedMessage id="add-company" />,
       type: 'item',
       url: '/dashboard/company/add_comp',
-      icon: icons.IconUserCheck
+      icon: icons.IconUserCheck,
+      breadcrumbs: true
     },
-    // {
-    //   id: 'add-sub-dev-company',
-    //   title: <FormattedMessage id="Add Sub-Developer Companies" />,
-    //   type: 'item',
-    //   url: '/dashboard/company/add_sub_developer',
-    //   icon: icons.IconUserCheck
-    // },
     {
       id: 'add_company_types',
       title: <FormattedMessage id="Add Sub-Company Types" />,
       type: 'item',
       icon: icons.IconLayoutGridAdd,
-      url: '/dashboard/company/add_type'
+      url: '/dashboard/company/add_type',
+      breadcrumbs: true
     },
     {
       id: 'company-types',
       title: <FormattedMessage id="Manage Sub-Company Types" />,
       type: 'item',
       icon: icons.IconLayoutGrid,
-      url: '/dashboard/company/manage_type'
+      url: '/dashboard/company/manage_type',
+      breadcrumbs: true
     },
 
     {
@@ -95,21 +91,24 @@ const companies = {
       title: <FormattedMessage id="int-companies" />,
       type: 'item',
       icon: icons.IconMapPin,
-      url: '/dashboard/company/int_comp_mng'
+      url: '/dashboard/company/int_comp_mng',
+      breadcrumbs: true
     },
     {
       id: 'featured-companies',
       title: <FormattedMessage id="Featured Companies" />,
       type: 'item',
       icon: icons.IconFileStar,
-      url: '/dashboard/company/featured'
+      url: '/dashboard/company/featured',
+      breadcrumbs: true
     },
     {
       id: 'blocked-companies',
       title: <FormattedMessage id="Blocked Companies" />,
       type: 'item',
       icon: icons.IconFileX,
-      url: '/dashboard/company/blocked'
+      url: '/dashboard/company/blocked',
+      breadcrumbs: true
     },
 
     {
@@ -117,14 +116,16 @@ const companies = {
       title: <FormattedMessage id="add-subscriptions" />,
       type: 'item',
       icon: icons.IconTextPlus,
-      url: '/dashboard/company/add_subs'
+      url: '/dashboard/company/add_subs',
+      breadcrumbs: true
     },
     {
       id: 'active',
       title: <FormattedMessage id="view-active" />,
       type: 'item',
       icon: icons.IconChecklist,
-      url: '/dashboard/company/active_subs'
+      url: '/dashboard/company/active_subs',
+      breadcrumbs: true
     },
     {
       id: 'pending',

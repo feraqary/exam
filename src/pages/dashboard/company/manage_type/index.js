@@ -8,10 +8,8 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { getAllCompanyTypes } from 'store/slices/company-section/action/company';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import { useGetAllSubCompanyTypesQuery } from 'store/services/company/companyApi';
 
 // ===========================|| International Company Managment list||=========================== //
 
@@ -33,10 +31,6 @@ const ColumnHeaders = [
       </Box>
     )
   },
-  // {
-  //   accessorKey: 'name.companyName',
-  //   header: 'Company Name'
-  // },
   {
     accessorKey: 'title',
     header: 'Company Type'
@@ -71,20 +65,28 @@ const ColumnHeaders = [
 ];
 
 const companyType = () => {
-  const { companyTypes } = useSelector((state) => state.companies);
-  console.log(companyTypes);
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllCompanyTypes());
-    console.log(dispatch(getAllCompanyTypes()));
-  }, [dispatch]);
+  const { data, isError, error, isLoading, isFetching } = useGetAllSubCompanyTypesQuery(pagination);
+
+  useEffect(() => {}, [pagination.pageIndex, pagination.pageSize]);
 
   return (
     <Page title="International Company List">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={companyTypes} />
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={data?.data || []}
+            loading={isLoading}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={isFetching}
+            rowCount={10}
+          />
         </Grid>
       </Grid>
     </Page>

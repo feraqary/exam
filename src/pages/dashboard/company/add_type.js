@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -20,6 +20,8 @@ import { createCompanyType } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
 import FileUpload from 'components/InputArea/FileUpload';
 import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
+import { useCreateSubCompanyTypeMutation } from 'store/services/company/companyApi';
+import { ToastSuccess } from 'utils/toast';
 
 const roles = [
   { label: 'Broker Company', id: 1 },
@@ -40,6 +42,14 @@ const validationSchema = Yup.object({
 function CompanyType() {
   const logoRef = useRef(null);
   const iconRef = useRef(null);
+
+  const [createCompanySubType, result] = useCreateSubCompanyTypeMutation();
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      ToastSuccess('Company Sub Type has been successfully created');
+    }
+  }, [result.isSuccess]);
 
   const dispatch = useDispatch();
 
@@ -65,7 +75,7 @@ function CompanyType() {
                 formData.append('image_url', values.logoImage);
                 formData.append('icon_url', values.iconImage);
                 formData.append('description', values.description);
-                dispatch(createCompanyType(formData));
+                createCompanySubType(formData);
                 setSubmitting(false);
                 resetForm();
               }}
