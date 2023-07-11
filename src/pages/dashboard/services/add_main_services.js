@@ -18,8 +18,7 @@ import Container from 'components/Elements/Container';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
-import { useGetAllSubCompanyTypesQuery } from 'store/services/company/companyApi';
-import { useCreateMainServiceMutation } from 'store/services/services/serviceApi';
+import { useCreateMainServiceMutation, useGetSubCompanyTypesWithoutPaginationQuery } from 'store/services/services/serviceApi';
 import { ToastSuccess } from 'utils/toast';
 
 // ==============================|| Add Company Type form ||============================== //
@@ -37,7 +36,7 @@ function MainService() {
   const logoRef = useRef(null);
   const iconRef = useRef(null);
 
-  const { data: subCompanyTypes, isLoading, isError, isFetching, error } = useGetAllSubCompanyTypesQuery();
+  const { data: subCompanyTypes, isLoading, isError, isFetching, error } = useGetSubCompanyTypesWithoutPaginationQuery();
 
   const [createMainService, result] = useCreateMainServiceMutation();
 

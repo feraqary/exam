@@ -12,7 +12,6 @@ import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 // import ColumnsLayouts from '../dashboard/company/add_comp';
 import { Dialog, DialogContent, DialogActions } from '@mui/material';
 import Slide from '@mui/material/Slide';
@@ -21,6 +20,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Documents from '../documents';
 import { useGetInternationalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
 import { ToastError, ToastSuccess } from 'utils/toast';
+import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 
 // ===========================|| International Company Managment list||=========================== //
 
@@ -78,6 +78,15 @@ const IntCompData = () => {
           }}
         >
           <Image src={`http://20.203.31.58/upload/${row.original.CompanyLogo}`} width={60} height={30} style={{ objectFit: 'contain' }} />
+        </Box>
+      )
+    },
+    {
+      accessorKey: 'Status',
+      header: 'Company Status',
+      Cell: ({ renderedCellValue, row }) => (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <TableSelectorOption value={row.original.CompanyRank} CompanyType={row.original.CompanyType} id={row.original.ID} />
         </Box>
       )
     },

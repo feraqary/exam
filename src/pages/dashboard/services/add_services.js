@@ -17,7 +17,7 @@ import Container from 'components/Elements/Container';
 import { ToastContainer } from 'react-toastify';
 import { Formik } from 'formik';
 import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
-import { useCreateServiceMutation, useGetAllMainServicesQuery } from 'store/services/services/serviceApi';
+import { useCreateServiceMutation, useGetAllMainServicesWithoutPaginationQuery } from 'store/services/services/serviceApi';
 import { ToastSuccess } from 'utils/toast';
 
 // ==============================|| Add Company Type form ||============================== //
@@ -36,7 +36,7 @@ function Service() {
   const logoRef = useRef(null);
   const iconRef = useRef(null);
 
-  const { data: services, isError, isLoading, isFetching, error } = useGetAllMainServicesQuery();
+  const { data: services, isError, isLoading, isFetching, error } = useGetAllMainServicesWithoutPaginationQuery();
 
   const [createService, result] = useCreateServiceMutation();
 

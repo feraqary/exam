@@ -24,6 +24,35 @@ export const serviceApi = api.injectEndpoints({
       }
     }),
 
+    // GET ALL SUB COMPANY TYPES WITHOUT PAGINATION API
+    getSubCompanyTypesWithoutPagination: builder.query({
+      query() {
+        return {
+          url: `services/getAllCompanyTypesWithoutPagination`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    // GET ALL MAIN SERVICES WITHOUT PAGINATION API
+    getAllMainServicesWithoutPagination: builder.query({
+      query() {
+        return {
+          url: `services/getallmainservicesWithoutPagination`,
+          method: 'GET'
+        };
+      }
+    }),
+    // GET ALL  SERVICES WITHOUT PAGINATION API
+    getAllServicesWithPagination: builder.query({
+      query() {
+        return {
+          url: `services/getallservicesWithoutPagination`,
+          method: 'GET'
+        };
+      }
+    }),
+
     //GET ALL MAIN SERVICE API
     getAllMainServices: builder.query({
       query(pagination) {
@@ -144,5 +173,8 @@ export const {
   useGetMainServiceQuery,
   useGetServiceQuery,
   useUpdateMainServiceMutation,
-  useUpdateServiceMutation
+  useUpdateServiceMutation,
+  useGetAllMainServicesWithoutPaginationQuery,
+  useGetAllServicesWithPaginationQuery,
+  useGetSubCompanyTypesWithoutPaginationQuery
 } = serviceApi;

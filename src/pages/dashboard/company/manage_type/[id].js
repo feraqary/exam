@@ -44,16 +44,10 @@ function CompanyTypeEdit() {
   const logoRef = useRef(null);
   const iconRef = useRef(null);
 
-  const dispatch = useDispatch();
   const router = useRouter();
-  // const { companyType, loading } = useSelector((state) => state.companies);
 
   const { data, isError, isFetching, isLoading, error } = useGetSubCompanyTypeQuery(router.query.id);
   const [updateSubCompanyType, result] = useUpdateSubCompanyTypeMutation();
-
-  if (result.isSuccess) {
-    ToastSuccess('Sub Company Type hase been successfully updated');
-  }
 
   if (isLoading) return;
 
@@ -83,6 +77,9 @@ function CompanyTypeEdit() {
                 updateSubCompanyType({ formData: formData, id: data?.data?.id });
                 setSubmitting(false);
                 resetForm();
+                if (result.isSuccess) {
+                  ToastSuccess('Sub Company Type hase been successfully updated');
+                }
                 router.back();
               }}
               onReset={(_) => {
