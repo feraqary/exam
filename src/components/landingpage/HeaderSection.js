@@ -12,7 +12,7 @@ import AnimateButton from 'components/ui-component/extended/AnimateButton';
 
 // assets
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-
+import MainTabs from '../../pages/dashboard/pages/frontend_pages/Tabs';
 const dashboard = '/assets/images/landing/hero-dashboard.png';
 const widget1 = '/assets/images/landing/hero-widget-1.png';
 const widget2 = '/assets/images/landing/hero-widget-2.png';

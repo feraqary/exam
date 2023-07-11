@@ -28,7 +28,9 @@ import {
   getCompanyByStatus,
   getCompanyDocs,
   updateCompanyDoc,
-  getCompanyType
+  getCompanyType,
+  getAllDeveloperCompany,
+  getSubDevCompany
 } from '../action/company';
 
 import { ToastError, ToastLoading, ToastSuccess } from 'utils/toast';
@@ -37,6 +39,8 @@ import { deleteService } from 'store/slices/company-section/action/company';
 
 const initialState = {
   companies: [],
+  masterDeveloper: [],
+  subdev: [],
   localCompanies: [],
   internationalCompanies: [],
   companyTypes: [],
@@ -54,7 +58,8 @@ const initialState = {
   company: null,
   mainService: null,
   loading: false,
-  error: null
+  error: null,
+  status: null
 };
 
 const slice = createSlice({
@@ -67,6 +72,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
       .addCase(createCompanyType.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -231,6 +237,7 @@ const slice = createSlice({
       .addCase(getLocalCompanies.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
+
         state.localCompanies = action.payload.data.filter((item) => item.Status != '5');
       })
       .addCase(getLocalCompanies.rejected, (state, action) => {
@@ -239,19 +246,19 @@ const slice = createSlice({
         state.localCompanies = state.localCompanies;
       })
 
-      // .addCase(updateCompanyStatus.pending, (state, action) => {
-      //   state.loading = true;
-      //   state.error = null;
-      // })
-
+      .addCase(updateCompanyStatus.pending, (state) => {
+        state.status = state.status;
+        state.error = null;
+      })
       .addCase(updateCompanyStatus.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = false;
-        ToastSuccess('Status Updated Successfully');
+        state.status = action.payload;
       })
       .addCase(updateCompanyStatus.rejected, (state, action) => {
-        console.log('Status Rejected', action);
-        ToastError(action?.payload);
+        state.status = state.status;
+        state.error = action.payload;
+        console.log('fired rejected1', state);
+        console.log('fired rejected', action);
       })
 
       .addCase(getInternationalCompanies.pending, (state) => {
@@ -449,22 +456,6 @@ const slice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(restoreCompany.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(restoreCompany.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        // state.blockedCompanies = state.blockedCompanies.filter((company) => company.ID !== action.payload.id);
-        ToastSuccess('Restored Successfully');
-      })
-      .addCase(restoreCompany.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-        ToastError(state.error);
-      })
-
       .addCase(getCompanyNames.pending, (state) => {
         state.loading = true;
         state.companies = state.companies;
@@ -537,6 +528,38 @@ const slice = createSlice({
       .addCase(getPendingSubscription.rejected, (state, action) => {
         state.loading = false;
         state.pendingSubscription = state.pendingSubscription;
+        state.error = action.payload;
+      })
+      // get master developer companies   ===================================================================================
+      .addCase(getAllDeveloperCompany.pending, (state) => {
+        state.loading = true;
+        state.masterDeveloper = state.masterDeveloper;
+        state.error = null;
+      })
+      .addCase(getAllDeveloperCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.masterDeveloper = action.payload.data;
+      })
+      .addCase(getAllDeveloperCompany.rejected, (state, action) => {
+        console.log(action);
+        state.loading = false;
+        state.error = action.payload?.error;
+        state.masterDeveloper = state.masterDeveloper;
+      })
+      .addCase(getSubDevCompany.pending, (state, action) => {
+        state.loading = true;
+        state.subdev = state.subdev;
+        state.error = null;
+      })
+      .addCase(getSubDevCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.subdev = action.payload.data || [];
+        state.error = null;
+      })
+      .addCase(getSubDevCompany.rejected, (state, action) => {
+        state.loading = false;
+        state.subdev = state.subdev;
         state.error = action.payload;
       });
   }

@@ -71,6 +71,15 @@ export const getAllCountries = createAsyncThunk('countries/getAllCountries', asy
   }
 });
 
+export const getStateCity = createAsyncThunk('countries/getStateCity', async (country_id, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/country/getStateCityByCountry/${country_id}`);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.error);
+  }
+});
+
 export const getAllCurrencies = createAsyncThunk('countries/getAllCurrencies', async (_, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/currency/getAllCurrencies`);

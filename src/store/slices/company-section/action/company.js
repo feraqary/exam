@@ -200,36 +200,6 @@ export const getCompanyByStatus = createAsyncThunk('company/status', async (stat
   }
 });
 
-export const restoreCompany = createAsyncThunk('companies/restoreCompany', async ({ formData, id }, { rejectWithValue }) => {
-  try {
-    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
-    response.data.id = id;
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
-  }
-});
-
-export const blockCompany = createAsyncThunk('companies/blockCompany', async ({ formData, id }, { rejectWithValue }) => {
-  try {
-    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
-    response.data.id = id;
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
-  }
-});
-
-export const updateCompanyStatus = createAsyncThunk('companies/statusUpdate', async (formData, { rejectWithValue }) => {
-  try {
-    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
-    console.log('fired', response);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
-  }
-});
-
 export const getCompanyNames = createAsyncThunk('companies/companyNames', async (_, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getAllCompanyNames`, config);
@@ -241,6 +211,14 @@ export const getCompanyNames = createAsyncThunk('companies/companyNames', async 
 export const updateCompanyDoc = createAsyncThunk('companies/docUpdate', async (formData, { rejectWithValue }) => {
   try {
     const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyDoc`, formData, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const updateCompanyStatus = createAsyncThunk('companies/StatusStatus', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -298,3 +276,25 @@ export const getCompanyType = createAsyncThunk('companies/getCompanyType', async
     return rejectWithValue(error.response.data);
   }
 });
+export const getAllDeveloperCompany = createAsyncThunk('companies/getDeveloperCompany', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getAllDeveloperCompany`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const getSubDevCompany = createAsyncThunk(
+  'companies/getSubDeveloperCompany',
+  async ({ parentCompanyId, companyType }, { rejectWithValue }) => {
+    try {
+      const response = await api.get(
+        `${baseurl}/api/dashboard/getSubCompanies?parent_company_id=${parentCompanyId}&company_type=${companyType}`,
+        config
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

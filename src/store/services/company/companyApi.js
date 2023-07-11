@@ -125,9 +125,10 @@ export const companyApi = api.injectEndpoints({
 
     //GET ACTIVE SUBSCRIPTIONS API
     getActiveSubscriptions: builder.query({
-      query(_) {
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getActiveSubscription?page_no=1&page_size=5`,
+          url: `dashboard/getActiveSubscription?page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
       }
@@ -135,9 +136,10 @@ export const companyApi = api.injectEndpoints({
 
     //GET PENDING SUBSCRIPTIONS API
     getPendingSubscriptions: builder.query({
-      query(_) {
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getPendingSubscription?page_no=1&page_size=35`,
+          url: `dashboard/getPendingSubscription?page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
       }

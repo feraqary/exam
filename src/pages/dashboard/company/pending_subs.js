@@ -7,9 +7,7 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import React, { useEffect, useState } from 'react';
 import Table from 'components/Table/Table';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { getPendingSubscription } from 'store/slices/company-section/action/company';
+import { useGetPendingSubscriptionsQuery } from 'store/services/company/companyApi';
 
 // ==============================|| View Pending Subscriptions ||============================== //
 
@@ -77,22 +75,29 @@ const ColumnHeaders = [
   }
 ];
 function PendingSubscriptions() {
-  const { pagination, setPagination } = useState({
+  const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
 
-  const { pendingSubscription } = useSelector((state) => state.companies);
-  const dispatch = useDispatch();
+  const { data: pendingSubscriptions, isLoading, isError, isFetching, error } = useGetPendingSubscriptionsQuery(pagination);
 
-  useEffect(() => {
-    dispatch(getPendingSubscription(pagination));
-  }, []);
+  useEffect(() => {}, [pagination.pageIndex, pagination.pageSize]);
+
+  if (isLoading) return;
   return (
     <Page title="Pending Subscriptions">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={pendingSubscription} pagination={pagination} setPagination={setPagination} />
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={pendingSubscriptions?.data || []}
+            loading={isLoading}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={isFetching}
+            rowCount={pendingSubscriptions?.Total}
+          />
         </Grid>
       </Grid>
     </Page>

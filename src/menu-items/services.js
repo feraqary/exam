@@ -33,7 +33,7 @@ const services = {
       id: 'manage-services',
       title: <FormattedMessage id="Manage Main Services" />,
       type: 'item',
-      url: '/services/manage_services'
+      url: '/dashboard/services/manage_services'
     },
     {
       id: 'add_services',
@@ -46,14 +46,14 @@ const services = {
       id: 'manage-sub-services',
       title: <FormattedMessage id="Manage Sub Services" />,
       type: 'item',
-      url: '/services/sub_services'
+      url: '/dashboard/services/sub_services'
     },
     {
       id: 'services-activities',
       title: <FormattedMessage id="Service Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,
-      url: '/services/service_activities'
+      url: '/dashboard/services/service_activities'
     }
   ]
 };
