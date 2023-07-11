@@ -119,16 +119,16 @@ const AppBar = ({ ...others }) => {
                 <Button
                   color="inherit"
                   onClick={() => {
-                    signOut();
+                    signOut({ callbackUrl: '/dashboard/pages/authentication/portal_registration/login' });
                   }}
-                  target="_blank"
                 >
                   Sign Out
                 </Button>
               ) : (
-                <Button color="inherit" component={Link} href="/dashboard/pages/authentication/portal_registration/login" target="_blank">
-                  Portal Login
-                </Button>
+                <></>
+                // <Button color="inherit" component={Link} href="/dashboard/pages/authentication/portal_registration/login" target="_blank">
+                //   Portal Login
+                // </Button>
               )}
 
               {/* <a href="/api/auth/login">Login</a>
