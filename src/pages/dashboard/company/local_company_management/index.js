@@ -22,6 +22,7 @@ import { Grid, Box, Button, Dialog, DialogActions, DialogContent, Slide } from '
 import Documents from '../documents';
 import { useGetLocalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
 import { ToastSuccess } from 'utils/toast';
+import Link from 'next/link';
 // ===========================|| International Company Managment list||=========================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -151,7 +152,17 @@ const localCompanies = () => {
                 gap: '1rem'
               }}
             >
-              <AqaryButton variant="contained">Edit </AqaryButton>
+              <Link
+                href={{
+                  pathname: `/dashboard/company/local_company_management/${row.original.ID}`,
+                  query: {
+                    company_type: row.original.CompanyType,
+                    is_branch: row.original.IsBranch
+                  }
+                }}
+              >
+                <AqaryButton variant="contained">Edit </AqaryButton>
+              </Link>
               <Button variant="contained" color="primary" onClick={handleClickOpen} startIcon={<PreviewIcon />}>
                 Add sub-company
               </Button>

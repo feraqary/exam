@@ -78,6 +78,16 @@ export const companyApi = api.injectEndpoints({
       providesTags: ['CompaniesByStatus']
     }),
 
+    // GET A SINGLE COMPANY API
+    getCompany: builder.query({
+      query(data) {
+        const { id, is_branch, company_type } = data;
+        return {
+          url: `dashboard/getCompany?id=${id}&company_type=${company_type}&is_branch=${is_branch}`,
+          method: 'GET'
+        };
+      }
+    }),
     //GET COMPANIES BY RANK API
     getCompaniesByRank: builder.query({
       query({ rank, pagination }) {
@@ -223,5 +233,6 @@ export const {
   useGetSubCompanyTypesByCompanyTypeQuery,
   useGetSubCompanyTypeQuery,
   useUpdateSubCompanyTypeMutation,
-  useGetAllSubCompanyTypesQuery
+  useGetAllSubCompanyTypesQuery,
+  useGetCompanyQuery
 } = companyApi;
