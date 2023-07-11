@@ -17,7 +17,7 @@ const AuthGuard = ({ children }) => {
   const router = useRouter();
   useEffect(() => {
     if (!isLoggedIn) {
-      router.push('/login');
+      router.push('/dashboard/pages/authentication/portal_registration/login');
     }
     // eslint-disable-next-line
   }, [isLoggedIn]);

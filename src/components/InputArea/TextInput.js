@@ -34,6 +34,7 @@ const InputText = ({ label, placeholder, helperText, style, type, value, setValu
         {...field}
         sx={{ borderColor: 'red' }}
         error={meta.error && meta.touched ? true : false}
+        
       />
     </InputLayout>
   );

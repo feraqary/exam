@@ -14,8 +14,9 @@ import axios from 'axios';
 import { useFormikContext } from 'formik';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import Button from '@mui/material/Button';
+import { Height } from '@mui/icons-material';
 
-export default function Map({ locationAddress, xs, lg, mapUrl }) {
+export default function Map({ locationAddress, xs, lg, mapUrl, height }) {
   const [lat, setlat] = useState(24.4984312);
   const [long, setlong] = useState(54.4036975);
   const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
@@ -60,7 +61,8 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
   useEffect(() => {}, [lat, long]);
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: apiKey
+    googleMapsApiKey: apiKey,
+    libraries:['drawing']
   });
 
   const mapRef = useRef();
@@ -87,8 +89,8 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
 
   const polygonOptions = {
     fillOpacity: 0.3,
-    fillColor: '#ff0000',
-    strokeColor: '#ff0000',
+    fillColor: '#90caf9',
+    strokeColor: '#1976d2',
     strokeWeight: 2,
     draggable: true,
     editable: true
@@ -100,9 +102,9 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
     drawingControlOptions: {
       position: window.google?.maps?.ControlPosition?.TOP_CENTER,
       drawingModes: [
-        window.google?.maps?.drawing?.OverlayType?.POLYGON,
-        window.google?.maps?.drawing?.OverlayType?.CIRCLE,
-        window.google?.maps?.drawing?.OverlayType?.RECTANGLE
+        window.google?.maps?.drawing?.OverlayType?.POLYGON
+        // window.google?.maps?.drawing?.OverlayType?.CIRCLE,
+        // window.google?.maps?.drawing?.OverlayType?.RECTANGLE
       ]
     }
   };
@@ -155,9 +157,6 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
   };
 
   const onDeleteDrawing = () => {
-    // const filtered = polygons.filter((polygon, index) => index !== activePolygonIndex.current);
-    // setPolygons(filtered);
-    const filteredPolygons = polygons.filter((_, index) => index !== activePolygonIndex.current);
     setPolygons([]);
     activePolygonIndex.current = null; // Reset the activePolygonIndex
   };
@@ -182,7 +181,7 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
     return (
       <Grid item xs={xs} lg={lg}>
         <GoogleMap
-          mapContainerStyle={{ position: 'relative', height: '27vh', width: '100%' }}
+          mapContainerStyle={{ position: 'relative', height: height, width: '100%' }}
           center={{ lat: values.lat, lng: values.long }}
           zoom={11}
           onClick={(e) => {
@@ -214,9 +213,10 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
             }}
             sx={{
               position: 'absolute',
-              right: '4%',
-              top: '10px',
+              right: '9%',
+              top: '2.6%',
               backgroundColor: '#FFFFFF',
+              borderRaduis:"1px",
               color: 'black',
               height: '40px',
               '&:hover': {

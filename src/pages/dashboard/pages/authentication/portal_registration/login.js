@@ -39,7 +39,7 @@ const PurpleWrapper = styled('span')({
     top: '23%',
     left: '37%',
     width: 313,
-    backgroundSize:380, 
+    backgroundSize: 380,
     height: 280,
     backgroundImage: `url(${AuthPurpleCard})`,
     backgroundRepeat: 'no-repeat',
@@ -86,9 +86,9 @@ const Login = ({ page, closePopUp }) => {
         <Grid container alignItems="center" justifyContent={'center'} sx={{ minHeight: '100vh', overflow: 'hidden' }}>
           <Grid item container justifyContent="center" md={12} lg={12} sx={{ my: 3 }}>
             <AuthCardWrapper>
-              <Grid container spacing={2}  justifyContent="center">
+              <Grid container spacing={2} justifyContent="center">
                 <Grid item xs={12}>
-                  <Grid container alignItems={matchDownSM ? 'center' : 'center'}  justifyContent={'center'}>
+                  <Grid container alignItems={matchDownSM ? 'center' : 'center'} justifyContent={'center'}>
                     <Grid item>
                       <Stack justifyContent={'center'} textAlign={matchDownSM ? 'center' : 'inherit'}>
                         <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
@@ -116,7 +116,7 @@ const Login = ({ page, closePopUp }) => {
                   <Grid item container direction="column" alignItems="center" xs={12}>
                     <Typography
                       component={Link}
-                      href="/pages/authentication/portal_registration/register"
+                      href="/dashboard/pages/authentication/portal_registration/register"
                       variant="subtitle1"
                       sx={{ textDecoration: 'none' }}
                     >

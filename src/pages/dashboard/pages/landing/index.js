@@ -1,3 +1,3 @@
-import PagesLanding from '../../index';
+import PagesLanding from '../../../index';
 // PagesLanding.Layout = 'minimalLayout';
 export default PagesLanding;
