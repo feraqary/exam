@@ -219,7 +219,7 @@ const JWTRegister = ({ ...others }) => {
               );
 
               setTimeout(() => {
-                router.push('/pages/autthentication/portal_registration/login.js');
+                router.push('/dashboard/pages/autthentication/portal_registration/login');
               }, 1500);
             }
           } catch (err) {

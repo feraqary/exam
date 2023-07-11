@@ -30,7 +30,8 @@ import {
   updateCompanyDoc,
   getCompanyType,
   getAllDeveloperCompany,
-  getSubDevCompany
+  getSubDevCompany,
+  getPropertyTypes
 } from '../action/company';
 
 import { ToastError, ToastLoading, ToastSuccess } from 'utils/toast';
@@ -39,6 +40,7 @@ import { deleteService } from 'store/slices/company-section/action/company';
 
 const initialState = {
   companies: [],
+  propertyTypes: [],
   masterDeveloper: [],
   subdev: [],
   localCompanies: [],
@@ -561,7 +563,37 @@ const slice = createSlice({
         state.loading = false;
         state.subdev = state.subdev;
         state.error = action.payload;
-      });
+      })
+      .addCase(getPropertyTypes.pending, (state, action) => {
+        state.loading = true;
+        state.propertyTypes = state.propertyTypes;
+        state.error = null;
+      })
+      .addCase(getPropertyTypes.fulfilled, (state, action) => {
+        state.loading = false;
+        state.propertyTypes = action.payload;
+        state.error = null;
+      })
+      .addCase(getPropertyTypes.rejected, (state, action) => {
+        state.loading = false;
+        state.propertyTypes = state.propertyTypes;
+        state.error = action.payload;
+      })
+      // .addCase(getPropertyTypes.pending, (state, action) => {
+      //   state.loading = true;
+      //   state.propertyTypes = state.propertyTypes;
+      //   state.error = null;
+      // })
+      // .addCase(getPropertyTypes.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.propertyTypes = action.payload;
+      //   state.error = null;
+      // })
+      // .addCase(getPropertyTypes.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.propertyTypes = state.propertyTypes;
+      //   state.error = action.payload;
+      // });
   }
 });
 

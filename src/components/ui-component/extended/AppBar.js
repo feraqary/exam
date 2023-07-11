@@ -112,7 +112,7 @@ const AppBar = ({ ...others }) => {
               <Button color="inherit" component={Link} href="/pages/media_posts/Tabs" target="_blank">
                 Social Media
               </Button>
-              <Button color="inherit" component={Link} href="/dashboard/default">
+              <Button color="inherit" component={Link} href="/dashboard/pages/authentication/portal_registration/login">
                 Dashboard
               </Button>
               {session ? (
@@ -130,9 +130,6 @@ const AppBar = ({ ...others }) => {
                 //   Portal Login
                 // </Button>
               )}
-
-              {/* <a href="/api/auth/login">Login</a>
-              <a href="/api/auth/logout">Logout</a>  */}
 
               <Tooltip title="Log In">
                 <IconButton color="inherit" target="_blank" onClick={handleClickOpen}>

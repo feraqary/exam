@@ -82,9 +82,9 @@ const validationSchema = Yup.object({
   companyDescription: stringValidator('Please provide a company description'),
   lisenceNo: stringValidator('Please provide a valid liscence number'),
   lisenceExpiryDate: dateValidator('Please select an expiration date'),
-  facebook: stringValidator('Please provide your facebook profile'),
-  instagram: stringValidator('Please provide your instagram profile'),
-  linkedin: stringValidator('Please provide your linkedin profile'),
+  // facebook: stringValidator('Please provide your facebook profile'),
+  // instagram: stringValidator('Please provide your instagram profile'),
+  // linkedin: stringValidator('Please provide your linkedin profile'),
   twitter: stringValidator('Please provide your twitter profile'),
   youtube: stringValidator('Please provide your YouTube profile'),
   tiktok: stringValidator('Please provide your TikTok profile'),
@@ -338,6 +338,7 @@ function ColumnsLayouts() {
               instagram: '',
               linkedin: '',
               twitter: '',
+              youtube: '',
               firstName: '',
               lastName: '',
               emailAddress: '',
@@ -729,7 +730,7 @@ function ColumnsLayouts() {
                       />
                       {console.log(props.values)}
                     </InputLayout>
-                    <Map locationAddress={address} xs={12} lg={12} mapUrl={props.values.mapUrl} />
+                    <Map locationAddress={address} height={'27vh'} xs={12} lg={12} mapUrl={props.values.mapUrl} />
                   </Grid>
                 </Container>
 
@@ -820,7 +821,6 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="facebook"
                       id="facebook"
-                      required={false}
                     />
                     <InputText
                       helperInfo
@@ -831,7 +831,6 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="instagram"
                       id="instagram"
-                      required={false}
                     />
                     <InputText
                       helperInfo
@@ -842,7 +841,6 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="linkedin"
                       id="linkedin"
-                      required={false}
                     />
                     <InputText
                       helperInfo
@@ -853,29 +851,15 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="twitter"
                       id="twitter"
-                      required={false}
                     />
                     <InputText
-                      helperInfo
-                      label="YouTube"
+                      label="youtube"
                       type="url"
-                      placeholder="Enter Company YouTube Profile"
-                      helperText="Please enter company YouTube profile"
+                      placeholder="Enter Company youtube Profile"
+                      helperText="Please enter company youtube profile"
                       style={{ xs: 12, lg: 6 }}
                       name="youtube"
                       id="youtube"
-                      required={false}
-                    />
-                    <InputText
-                      helperInfo
-                      label="TikTok"
-                      type="url"
-                      placeholder="Enter Company TikTok Profile"
-                      helperText="Please enter company TikTok profile"
-                      style={{ xs: 12, lg: 6 }}
-                      name="tiktok"
-                      id="tiktok"
-                      required={false}
                     />
                   </Grid>
                 </Container>

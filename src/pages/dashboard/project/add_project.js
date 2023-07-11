@@ -1,7 +1,18 @@
 // material-ui
-import { Grid, TextField, FormHelperText, Button, Box, IconButton } from '@mui/material';
-
-import InputLabel from 'components/ui-component/extended/Form/InputLabel';
+import {
+  Grid,
+  TextField,
+  FormHelperText,
+  Button,
+  Box,
+  IconButton,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  FormControl,
+  FormLabel,
+  InputLabel
+} from '@mui/material';
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -18,9 +29,10 @@ import InputText, { NormalInputText } from 'components/InputArea/TextInput';
 import Selector, { NormalSelector } from 'components/InputArea/Selector';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
-import { Formik } from 'formik';
+import { FastField, Formik } from 'formik';
 import * as Yup from 'yup';
 import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
+
 import {
   getCountries,
   getStates,
@@ -31,14 +43,14 @@ import {
   getAllCurrencies,
   getStateCity
 } from 'store/slices/country-section/actions/countries';
-import { getAllDeveloperCompany, getSubDevCompany } from 'store/slices/company-section/action/company';
+import { getAllDeveloperCompany, getSubDevCompany, getPropertyTypes } from 'store/slices/company-section/action/company';
 import { useDispatch, useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
+import CustomDateTime from 'components/InputArea/CustomDateTime';
 import { useGetCountriesQuery } from 'store/slices/location/locationHooks';
+import { id } from 'date-fns/locale';
+import PopUp from 'components/InputArea/PopUp';
 // ==============================|| Add Project ||============================== //
-const countries = ['UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
-const cities = ['UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
-const propertyTypeData = ['UAE', 'Egypt', 'Sudan', 'Lebanon', 'Saudi Arabia'];
 
 function AddProject() {
   // const { data, isLoading, isFetching, isError, error } = useGetCountriesQuery();
@@ -55,6 +67,8 @@ function AddProject() {
     dispatch(getAllCountries());
     dispatch(getAllCurrencies());
     dispatch(getAllDeveloperCompany());
+    dispatch(getPropertyTypes());
+
     setPhaseType(1);
     console.log(cities);
   }, [dispatch]);
@@ -71,8 +85,10 @@ function AddProject() {
     mainServices,
     services,
     masterDeveloper,
-    subdev
+    subdev,
+    propertyTypes
   } = useSelector((state) => state.companies);
+  console.log('property types: ', propertyTypes);
 
   useEffect(() => {
     console.log(stateCity);
@@ -83,8 +99,8 @@ function AddProject() {
   const [developerCompany, setDeveloperCompany] = useState(null);
   const [subDeveloperCompany, setSubDeveloperCompany] = useState(null);
 
-  const [propertyType, setPropertyType] = useState(null);
-  const [phaseType, setPhaseType] = useState(1 ? 'Single' : 'multiple');
+  const [phaseType, setPhaseType] = useState({ id: 1, type: 'single' });
+  const [phaseTypeSelected, setPhaseTypeSelected] = useState(1);
 
   const [phases, setPhases] = useState([{ phaseName: '', numberOfPhases: 0, mapUrl: '' }]);
 
@@ -134,22 +150,29 @@ function AddProject() {
 
   const validationSchema = Yup.object({
     projectTitle: stringValidator('Please provide a title'),
-    detailsCountrySelect: objectValidator('Please select a country'),
-    detailsCitySelector: objectValidator('please select a city'),
-    masterDeveloperSelector: objectValidator('Please select a company'),
-    subDeveloperCompanySelector: objectValidator('please select a company'),
+    // detailsCountrySelect: objectValidator('Please select a country'),
+    // detailsStateSelector: objectValidator('please select a State'),
+    // masterDeveloperSelector: objectValidator('Please select a company'),
+    // subDeveloperCompanySelector: objectValidator('please select a company'),
     locationCountrySelect: objectValidator('please select a country'),
     mapUrl: stringValidator('Please enter a map url'),
     locationCitySelector: objectValidator('please select a city'),
     locationState: objectValidator('please select a state'),
-    locationDistrict: objectValidator('please select a district'),
-    locationCommunity: objectValidator('please select a community'),
-    locationSubCommunity: objectValidator('please select a sub community')
+    propertyStatus: objectValidator('please enter the property status'),
+    propertyTitle: stringValidator('Please enter the property title'),
+    arabicPropertyTitle: stringValidator('Please enter the arabic title'),
+    propertyDescription: stringValidator('Please enter the property description'),
+    arabicPropertyDescription: stringValidator('Please enter the arabic description')
+    // locationDistrict: objectValidator('please select a district'),
+    // locationCommunity: objectValidator('please select a community'),
+    // locationSubCommunity: objectValidator('please select a sub community')
   });
 
-  const DynamicInput = ({ first }) => {
+  const DynamicInput = ({ first, num }) => {
     const P_TYPE = phases.length != 1 && phases.length > 1 && first != 0;
-    const size = P_TYPE ? 3.82 : 4;
+    const size = P_TYPE ? 3.34 : 3.5;
+    const MAP_SIZE = P_TYPE ? 0.9 : 1.5;
+    const [open, setOpen] = useState(false);
 
     return (
       <>
@@ -167,9 +190,9 @@ function AddProject() {
           placeholder="Number of Properties"
           helperText="Please enter number of properties"
           style={{ xs: 12, lg: size }}
-          type="text"
-          id="numberofProperties"
-          name="numberofProperties"
+          type="number"
+          id="numberofPhases"
+          name="numberofPhases"
         />
         <InputText
           label="Location Address"
@@ -179,18 +202,38 @@ function AddProject() {
           id="locationAddress"
           name="locationAddress"
           style={{ xs: 12, lg: size }}
+          inputProps={<CloseIcon />}
         />
+        <Grid xs={12} lg={MAP_SIZE} justifyContent="center">
+          <Button
+            onClick={() => {
+              setOpen(true);
+            }}
+            variant="outlined"
+            fullWidth
+            sx={{ margin: '19px 0px 0px 8px', height: '48px' }}
+          >
+            Use map
+          </Button>
+        </Grid>
+        <PopUp title="Use the Map" opened={open} setOpen={setOpen} size={'xl'} fullScreen>
+          <Map locationAddress={address} xs={12} lg={12} height={'85vh'} />
+        </PopUp>
         {P_TYPE ? (
           <>
-            <Box textAlign="center" sx={{ margin: '17px 0px 0px 8px' }}>
-              <IconButton lg={3} color="error" size="large" variant="outlined" alignItems="center">
-                <CloseIcon
-                  onClick={() => {
-                    removeComponent();
-                  }}
-                />
-              </IconButton>
-            </Box>
+            <Grid xs={12} lg={1} justifyContent="center" sx={{ marginLeft: '8px', width: '100%' }}>
+              <Button
+                onClick={() => {
+                  removeComponent();
+                }}
+                variant="outlined"
+                // fullWidth
+                color="error"
+                sx={{ margin: '19px 0px 0px 8px', height: '48px' }}
+              >
+                <CloseIcon />
+              </Button>
+            </Grid>
           </>
         ) : (
           <></>
@@ -199,37 +242,48 @@ function AddProject() {
     );
   };
 
-  const addPhases = () => {
+  const addPhases = (num) => {
     return phases.map((phase, index) => {
       return (
         <>
-          <DynamicInput key={index} first={index} />
+          <DynamicInput num={index + 1} key={index} first={index} />
         </>
       );
     });
   };
 
-  const options = [
-    { label: 'Broker Company', id: 1 },
-    { label: 'Developer Company', id: 2 },
-    { label: 'Service Company', id: 3 }
+  const [phasesnum, setPhasesnum] = useState(0);
+  const [facilities, setfacilities] = useState([]);
+  const [floors, setfloors] = useState({ label: '', id: true });
+  const [shared, setShared] = useState(true);
+
+  const isfloors = [
+    { label: 'Apartment', id: true },
+    { label: 'Farm', id: false },
+    { label: 'Compound', id: false }
   ];
+  const handleCheck = (e) => {
+    setfacilities([...facilities, e]);
+  };
+
+  const testing = ['banks', 'rental pool', 'coffee shop', 'parking'];
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places']}>
+    <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
       <Page title="Add Project">
         <>
           <Grid container spacing={gridSpacing}>
             <Formik
               initialValues={{
                 projectTitle: '',
+                brokerCompany: '',
                 detailsCountrySelect: '',
                 detailsCitySelector: '',
                 masterDeveloperSelector: '',
                 subDeveloperCompanySelector: '',
                 phaseType: phaseType,
                 phaseName: '',
-                numberofProperties: '',
+                numberofPhases: '',
                 locationAddress: '',
                 locationCountrySelect: '',
                 mapUrl: '',
@@ -237,20 +291,29 @@ function AddProject() {
                 locationDistrict: '',
                 locationCommunity: '',
                 locationSubCommunity: '',
-
                 propertyStatus: '',
                 propertyType: '',
                 lifeStyleSelector: '',
                 ownershipSelector: '',
-                plotAreaSelector: '',
-                BuiltupAreaSelector: ''
+                plotAreaMin: '',
+                plotAreaMax: '',
+                BuiltupAreaSelector: '',
+                startingPrice: '',
+                serviceCharge: '',
+                projectStartDate: '',
+                projectCompletionDate: '',
+                handoverDate: '',
+                nooffloors: '',
+                noofunits: '',
+                propertyTitle: '',
+                arabicPropertyTitle: '',
+                propertyDescription: '',
+                arabicPropertyDescription: ''
               }}
               validationSchema={validationSchema}
-              onSubmit={(values, { setSubmitting, resetForm }) => {}}
-              // onReset={(_) => {
-              //   logoRef.current.value = '';
-              //   iconRef.current.value = '';
-              // }}
+              onSubmit={(values, { setSubmitting, resetForm }) => {
+                console.log('project values: ', values);
+              }}
             >
               {(props) => (
                 <>
@@ -267,37 +330,67 @@ function AddProject() {
                           id="projectTitle"
                           required={true}
                         />
-                        <AutoCompleteSelector
-                          label="Country"
-                          placeholder="Select Country"
-                          options={countries?.map((country) => {
-                            return { label: country.Country, id: country.ID, flag: country.Flag };
-                          })}
-                          style={{ xs: 12, lg: 4 }}
-                          value={country}
-                          setValue={props.setFieldValue}
-                          helperText="Please select country"
-                          name="detailsCountrySelect"
-                          id="detailsCountrySelect"
-                          func={(newValue) => {
-                            dispatch(getStateCity(newValue.id));
-                            console.log(newValue);
-                          }}
-                        />
 
-                        <AutoCompleteSelector
-                          label="City"
-                          placeholder="Select City"
-                          options={stateCity.map((state) => {
-                            return { label: state.Title, id: state.ID };
-                          })}
-                          style={{ xs: 12, lg: 4 }}
-                          id="detailsCitySelector"
-                          value={city}
-                          setValue={props.setFieldValue}
-                          helperText="Please select city"
-                          name="detailsCitySelector"
+                        <FormControlLabel
+                          sx={4}
+                          lg={4}
+                          onChange={() => {
+                            setShared(!shared);
+                          }}
+                          value={shared}
+                          control={<Checkbox color="primary" />}
+                          label={'Is Shared'}
+                          labelPlacement="start"
+                          style={{ margin: '24px 0px 0px 8px', height: '48px' }}
                         />
+                        <Grid item lg={12}></Grid>
+
+                        {shared && (
+                          <>
+                            <AutoCompleteSelector
+                              label="Broker Company"
+                              placeholder="Select company"
+                              options={countries?.map((country) => {
+                                return { label: country.Country, id: country.ID, flag: country.Flag };
+                              })}
+                              style={{ xs: 12, lg: 4 }}
+                              helperText="Please select a company"
+                              name="brokerCompany"
+                              id="BrokerCompany"
+                              // func={(newValue) => {
+                              //   dispatch(getStateCity(newValue.id));
+                              //   console.log(newValue);
+                              // }}
+                            />
+                            <AutoCompleteSelector
+                              label="Country"
+                              placeholder="Select Country"
+                              options={countries?.map((country) => {
+                                return { label: country.Country, id: country.ID, flag: country.Flag };
+                              })}
+                              style={{ xs: 12, lg: 4 }}
+                              helperText="Please select country"
+                              name="detailsCountrySelect"
+                              id="detailsCountrySelect"
+                              func={(newValue) => {
+                                dispatch(getStateCity(newValue.id));
+                                console.log(newValue);
+                              }}
+                            />
+
+                            <AutoCompleteSelector
+                              label="State"
+                              placeholder="Select State"
+                              options={stateCity.map((state) => {
+                                return { label: state.Title, id: state.ID };
+                              })}
+                              style={{ xs: 12, lg: 4 }}
+                              id="detailsStateSelector"
+                              helperText="Please select city"
+                              name="detailsStateSelector"
+                            />
+                          </>
+                        )}
                         <AutoCompleteSelector
                           label="Master Developer"
                           placeholder="Select Master Developer"
@@ -305,8 +398,6 @@ function AddProject() {
                             return { label: company.company_name, id: company.id };
                           })}
                           style={{ xs: 12, lg: 4 }}
-                          value={developerCompany}
-                          setValue={props.setFieldValue}
                           helperText="Please select master developer company"
                           id="masterDeveloperSelector"
                           name="masterDeveloperSelector"
@@ -323,28 +414,35 @@ function AddProject() {
                           style={{ xs: 12, lg: 4 }}
                           id="subDeveloperCompanySelector"
                           name="subDeveloperCompanySelector"
-                          value={subDeveloperCompany}
-                          setValue={props.setFieldValue}
                           helperText="Please select sub developer company"
                         />
+                        <Grid item lg={18}></Grid>
 
                         <Selector
                           id="phaseTypeSelector"
                           name="phaseTypeSelector"
                           label="Phase Type"
                           placeholder="Select Phase Type"
-                          options={['Single', 'Multiple']}
+                          options={['single', ' multiple']}
                           style={{ xs: 12, lg: 4 }}
-                          value={phaseType}
                           setValue={(e) => {
-                            setPhaseType(e);
+                            console.log(e);
+                            setPhaseTypeSelected(e);
                           }}
                         />
-                        <>{addPhases()}</>
-                        {phaseType == 2 ? (
+                        <Grid item lg={8}></Grid>
+                        {phaseTypeSelected == 2 ? (
                           <>
+                            {addPhases()}
                             <Grid container justifyContent="center" style={{ xs: 12, lg: 12, marginTop: 20 }}>
-                              <Button variant="outlined" style={{ width: '10%' }} onClick={() => addComponent()}>
+                              <Button
+                                variant="outlined"
+                                style={{ width: '10%' }}
+                                onClick={() => {
+                                  setPhasesnum(phasesnum + 1);
+                                  addComponent();
+                                }}
+                              >
                                 Add More
                               </Button>
                             </Grid>
@@ -355,6 +453,7 @@ function AddProject() {
                       </Grid>
                     </MainCard>
                   </Grid>
+
                   <Grid item xs={12}>
                     <MainCard title="Location details">
                       <Grid container spacing={2} alignItems="center">
@@ -364,9 +463,8 @@ function AddProject() {
                           options={countries?.map((country) => {
                             return { label: country.Country, id: country.ID, flag: country.Flag };
                           })}
+                          required
                           style={{ xs: 12, lg: 6 }}
-                          value={country}
-                          setValue={props.setFieldValue}
                           helperText="Please select country"
                           name="locationCountrySelect"
                           id="locationCountrySelect"
@@ -384,6 +482,7 @@ function AddProject() {
                           type="text"
                           id="mapUrl"
                           name="mapUrl"
+                          required
                         />
                         <AutoCompleteSelector
                           style={{ xs: 12, lg: 6 }}
@@ -394,14 +493,13 @@ function AddProject() {
                           options={stateCity.map((state) => {
                             return { label: state.Title, id: state.ID };
                           })}
-                          value={state}
-                          setValue={props.setFieldValue}
                           id="locationState"
                           name="locationState"
+                          required
                         />
 
                         <Grid item xs={12} lg={6}>
-                          <InputLabel required>Place</InputLabel>
+                          <InputLabel>Place</InputLabel>
                           <NormalMapAutocomplete
                             placeHolder
                             onChangeAddress={setAddress}
@@ -421,10 +519,9 @@ function AddProject() {
                             })}
                             style={{ xs: 12, lg: 12 }}
                             id="locationCitySelector"
-                            value={city}
-                            setValue={props.setFieldValue}
                             helperText="Please select city"
                             name="locationCitySelector"
+                            required
                           />
                           <AutoCompleteSelector
                             label="District"
@@ -433,8 +530,6 @@ function AddProject() {
                             id="locationDistrict"
                             name="locationDistrict"
                             helperText="Please enter the location's district"
-                            value={country}
-                            setValue={props.setFieldValue}
                             options={['option 1', 'option 2', 'option 3']}
                             style={{ xs: 12, lg: 12 }}
                           />
@@ -445,8 +540,6 @@ function AddProject() {
                             id="locationCommunity"
                             name="locationCommunity"
                             helperText="Please enter the location's community"
-                            value={country}
-                            setValue={props.setFieldValue}
                             options={['option 1', 'option 2', 'option 3']}
                             style={{ xs: 12, lg: 12 }}
                           />
@@ -457,58 +550,78 @@ function AddProject() {
                             id="locationSubCommunity"
                             name="locationSubCommunity"
                             helperText="Please enter the location's sub community"
-                            value={country}
-                            setValue={props.setFieldValue}
                             options={['option 1', 'option 2', 'option 3']}
                             style={{ xs: 12, lg: 12 }}
                           />
                         </Grid>
 
                         <Grid item xs={12} lg={6}>
-                          <NormalMap locationAddress={address} xs={12} lg={6} />
+                          <Map locationAddress={address} height={'30vh'} xs={12} lg={12} />
                         </Grid>
                       </Grid>
                     </MainCard>
                   </Grid>
-                  {/* {phaseType == 1 ? (
+
+                  {phaseTypeSelected == 1 ? (
                     <>
                       <Grid item xs={12}>
                         <MainCard title="Property Details">
                           <Grid container spacing={2} alignItems="center">
                             <AutoCompleteSelector
                               label="Property Status"
+                              required
                               placeholder="Select Property Status"
                               options={['Upcoming', 'Under Construction', 'Completed', 'Off Plan', 'Ready']}
                               style={{ xs: 12, lg: 4 }}
                               id="propertyStatus"
                               name="propertyStatus"
-                              value={props.values.propertyStatus}
-                              setValue={props.setFieldValue}
                               helperText="Please select property status"
-                            />
-                            <AutoCompleteSelector
-                              // multiple
-                              label="Property Type"
-                              placeholder="Select Property Type"
-                              filterSelectedOptions
-                              options={['apartment', 'villa', 'building', 'bungalow']}
-                              style={{ xs: 12, lg: 4 }}
-                              id="propertyType"
-                              name="propertyType"
-                              value={props.values.propertyType}
-                              setValue={props.setFieldValue}
-                              helperText="Please select property type"
                             />
 
                             <AutoCompleteSelector
+                               label="Property Type"
+                              required
+                              placeholder="Select Property Type"
+                              options={propertyTypes}
+                              getOptionLabel={(property) => property.Title || ''}
+                              style={{ xs: 12, lg: 4 }}
+                              id="propertyType"
+                              name="propertyType"
+                              helperText="Please select property type"
+                            />
+
+                            {floors.id === true ? (
+                              <>
+                                <InputText
+                                  label="No Of Floors"
+                                  placeholder="provide the number of Floors"
+                                  style={{ xs: 12, lg: 4 }}
+                                  type="number"
+                                  id="nooffloors"
+                                  name="nooffloors"
+                                  helperText="Please provide the number of floors"
+                                />
+                                <InputText
+                                  label="No Of Units."
+                                  placeholder="Please provide the number of units"
+                                  style={{ xs: 12, lg: 4 }}
+                                  type="number"
+                                  id="noofunits"
+                                  name="noofunits"
+                                  helperText="Please provide the number of units"
+                                />
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                            <AutoCompleteSelector
                               label="Life Style"
+                              required
                               placeholder="Select Life Style"
                               options={['luxury', 'Ultra Luxury', 'Standard', 'affordable']}
                               style={{ xs: 12, lg: 4 }}
                               id="lifeStyleSelector"
                               name="lifeStyleSelector"
-                              value={props.values.lifeStyleSelector}
-                              setValue={props.setFieldValue}
                               helperText="Please select life style"
                             />
                             <AutoCompleteSelector
@@ -518,8 +631,6 @@ function AddProject() {
                               style={{ xs: 12, lg: 4 }}
                               id="ownershipSelector"
                               name="ownershipSelector"
-                              value={props.values.ownershipSelector}
-                              setValue={props.setFieldValue}
                               helperText="Please select ownership"
                             />
                             <InputText
@@ -529,8 +640,6 @@ function AddProject() {
                               style={{ xs: 12, lg: 4 }}
                               id="plotAreaSelector"
                               name="plotAreaSelector"
-                              value={props.values.plotAreaSelector}
-                              setValue={props.setFieldValue}
                               helperText="Please select plot area"
                             />
 
@@ -542,112 +651,127 @@ function AddProject() {
                               helperText="Please enter built up area (sqft)"
                               id="BuiltupAreaSelector"
                               name="BuiltupAreaSelector"
-                              value={props.values.BuiltupAreaSelector}
-                              setValue={props.setFieldValue}
                             />
 
                             <Grid item xs={12} lg={4}>
-                              <InputLabel required>Area Range</InputLabel>
+                              <InputLabel>Area Range</InputLabel>
                               <Grid item row style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <InputText
                                   label="Plot Area (sqft)"
                                   type="number"
                                   placeholder="Select Plot Area"
-                                  id="plotAreaSelector"
-                                  name="plotAreaSelector"
-                                  value={props.values.plotAreaSelector}
+                                  id="plotAreaMin"
+                                  name="plotAreaMin"
+                                  value={props.values.plotAreaMin}
                                   setValue={props.setFieldValue}
-                                  style={{ width: '45%' }}
+                                  style={{ xs: 12, lg: 5.5 }}
                                   helperText="Please select plot area"
                                 />
                                 <span style={{ fontWeight: 'bolder', fontSize: '1.7em' }}>:</span>
                                 <InputText
                                   label="Plot Area (sqft)"
                                   type="number"
-                                  style={{ width: '45%' }}
+                                  // xs={{ width: '45%' }}
+                                  style={{ xs: 12, lg: 5.5 }}
                                   placeholder="Select Plot Area"
-                                  id="plotAreaSelector"
-                                  name="plotAreaSelector"
-                                  value={props.values.plotAreaSelector}
+                                  id="plotAreaMax"
+                                  name="plotAreaMax"
+                                  value={props.values.plotAreaMax}
                                   setValue={props.setFieldValue}
                                   helperText="Please select plot area"
                                 />
                               </Grid>
                               <FormHelperText>Please enter the area range</FormHelperText>
                             </Grid>
-                            <AutoCompleteSelector
+                            <InputText
                               style={{ xs: 12, lg: 4 }}
                               label="Starting Price"
                               placeholder="Starting Price"
                               type="number"
                               helperText="Please enter the starting price"
+                              id="startingPrice"
+                              name="startingPrice"
                             />
-                            <AutoCompleteSelector
-                              style={{ xs: 12, lg: 4 }}
+
+                            <InputText
                               label="Service Charge"
-                              placeholder="Service Charge"
                               type="number"
-                              helperText="Please enter the service charge"
+                              placeholder="please enter the service charge"
+                              style={{ xs: 12, lg: 4 }}
+                              id="serviceCharge"
+                              name="serviceCharge"
+                              helperText="please enter the service"
                             />
-                            <AutoCompleteSelector
+
+                            <CustomDateTime
                               style={{ xs: 12, lg: 4 }}
                               label="Start Date"
-                              placeholder="Start Date"
-                              type="date"
-                              helperText="Please enter the start date"
+                              helperText="Please enter the project start date"
+                              id="projectStartDate"
+                              name="projectStartDate"
                             />
-                            <AutoCompleteSelector
+                            <CustomDateTime
                               style={{ xs: 12, lg: 4 }}
                               label="Completion Date"
-                              placeholder="Completion Date"
-                              type="date"
-                              helperText="Please enter the completion date "
+                              helperText="Please enter the project completion date"
+                              id="projectCompletionDate"
+                              name="projectCompletionDate"
                             />
-                            <AutoCompleteSelector
+                            <CustomDateTime
                               style={{ xs: 12, lg: 4 }}
                               label="Handover Date"
-                              placeholder="Handover Date"
-                              type="date"
-                              helperText="Please enter the handover date"
+                              helperText="Please enter the project Handover date"
+                              id="handoverDate"
+                              name="handoverDate"
                             />
+                            {/* <Grid xs={12} lg={4}></Grid> */}
                             <InputText
-                              style={{ xs: 12, lg: 4 }}
+                              style={{ xs: 12, lg: 6 }}
                               label="Property Title"
+                              required
                               placeholder="Property Title"
+                              name="propertyTitle"
                               helperText="Please enter the property title"
                               type="text"
+                              id="propertyTitle"
                             />
                             <InputText
-                              style={{ xs: 12, lg: 4 }}
+                              style={{ xs: 12, lg: 6 }}
                               label="Arabic Property Title"
                               placeholder="Arabic Property Title"
                               helperText="Please enter the arabic property title"
                               type="text"
-                              id=""
+                              id="arabicPropertyTitle"
+                              name="arabicPropertyTitle"
+                              required
                             />
-                            <Grid item xs={12} lg={4}></Grid>
+                            {/* <Grid item xs={12} lg={4}></Grid> */}
                             <InputText
-                              style={{ xs: 12, lg: 4 }}
+                              style={{ xs: 12, lg: 6 }}
                               label="Property Description"
                               placeholder="Property Description"
                               type="text"
                               helperText="Please enter the property desciption"
                               multiline
                               rows={4}
-                              name="property-details-property-description"
+                              required
                               fullWidth
                               description
+                              id="propertyDescription"
+                              name="propertyDescription"
                             />
                             <InputText
-                              style={{ xs: 12, lg: 4 }}
+                              style={{ xs: 12, lg: 6 }}
                               label="Arabic Property Description"
                               placeholder="Arabic Property Description"
                               type="text"
                               helperText="Please enter the arabic property desciption"
                               multiline
                               rows={4}
-                              name="property-details-arabic-property-description"
                               fullWidth
+                              required
+                              id="arabicPropertyDescription"
+                              name="arabicPropertyDescription"
                               description
                             />
                           </Grid>
@@ -656,7 +780,34 @@ function AddProject() {
                     </>
                   ) : (
                     <></>
-                  )} */}
+                  )}
+
+                  <Grid item xs={12}>
+                    <MainCard title="Facilities">
+                      <Grid container spacing={2} sx={{ padding: '10px 17px' }} alignItems="center">
+                        {/* {facilities} */}
+                        {testing.map((x, i) => {
+                          return (
+                            <FormControlLabel
+                              onChange={(e) => {
+                                if (e.target.checked == true) {
+                                  console.log(e.target.value);
+                                  setfacilities([...facilities, e.target.value]);
+                                } else {
+                                  const updatedState = facilities.filter((item) => item !== e.target.value);
+                                  setfacilities(updatedState);
+                                }
+                              }}
+                              value={x}
+                              control={<Checkbox color="primary" />}
+                              label={x}
+                              labelPlacement="end"
+                            />
+                          );
+                        })}
+                      </Grid>
+                    </MainCard>
+                  </Grid>
 
                   <SubmitButton />
                 </>

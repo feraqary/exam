@@ -298,3 +298,24 @@ export const getSubDevCompany = createAsyncThunk(
     }
   }
 );
+
+export const getPropertyTypes = createAsyncThunk('projects/getPropertyTypes', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/propertyTypes/getAllPropertyTypes/1`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+
+export const createProject = createAsyncThunk('project/AddProject', async (formData, { rejectWithValue }) => {
+  console.log('fired');
+  try {
+    const response = await api.post(`${baseurl}/api/dashboard/createCompany`, formData, config);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});

@@ -737,7 +737,7 @@ function ColumnsLayouts() {
                         metaTouched={props.touched.place}
                       />
                     </InputLayout>
-                    <Map locationAddress={address} xs={12} lg={12} mapUrl={props.values.mapUrl} />
+                    <Map locationAddress={address} height={'27vh'}  xs={12} lg={12} mapUrl={props.values.mapUrl} />
                   </Grid>
                 </Container>
 

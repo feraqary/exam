@@ -61,8 +61,9 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
     // formData.append('password', '');
     formData.append('social_login', session.provider);
     dispatch(userLogIn(formData));
-
-    router.push(page == 'dashboard' ? '/dashboard/default' : '/');
+    // setTimeout(() => {
+    //   router.push('/dashboard/default');
+    // }, 1500);
 
     console.log('logged in');
   }
@@ -102,9 +103,7 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
             setSubmitting(false);
           }
 
-          setTimeout(() => {
-            router.push(page == 'dashboard' ? '/dashboard/default' : '/');
-          }, 1500);
+          router.push('/dashboard/default');
         } catch (err) {
           console.error(err);
           if (scriptedRef.current) {
@@ -220,7 +219,9 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
               <Button
                 color="secondary"
                 onClick={() => {
-                  signIn('google');
+                  signIn('google', {
+                    callbackUrl: 'http://localhost:3000/dashboard/default'
+                  });
                 }}
                 fullWidth
                 size="large"
@@ -238,7 +239,9 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 color="secondary"
                 disabled={isSubmitting}
                 onClick={() => {
-                  signIn('linkedin');
+                  signIn('linkedin', {
+                    callbackUrl: 'http://localhost:3000/dashboard/default'
+                  });
                 }}
                 fullWidth
                 size="large"
@@ -255,7 +258,9 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 color="secondary"
                 disabled={isSubmitting}
                 onClick={() => {
-                  signIn('twitter');
+                  signIn('twitter', {
+                    callbackUrl: 'http://localhost:3000/dashboard/default'
+                  });
                 }}
                 fullWidth
                 size="large"
