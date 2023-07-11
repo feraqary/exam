@@ -16,7 +16,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
-import CompanyForm from '../helper/CompanyForm';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import { Grid, Box, Button, Dialog, DialogActions, DialogContent, Slide } from '@mui/material';
 import Documents from '../documents';
@@ -189,9 +188,7 @@ const localCompanies = () => {
                     <CloseIcon />
                   </IconButton>
                 </DialogActions>
-                <DialogContent>
-                  <CompanyForm />
-                </DialogContent>
+                <DialogContent></DialogContent>
               </Dialog>
             </Box>
           </>

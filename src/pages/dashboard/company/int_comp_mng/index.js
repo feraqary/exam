@@ -18,7 +18,6 @@ import { Dialog, DialogContent, DialogActions } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import UpdateCompany from '../helper/CompanyForm';
 import Documents from '../documents';
 import { useGetInternationalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
 import { ToastError, ToastSuccess } from 'utils/toast';
@@ -189,9 +188,7 @@ const IntCompData = () => {
                   <CloseIcon />
                 </IconButton>
               </DialogActions>
-              <DialogContent>
-                <UpdateCompany title={'Edit Company Details'} id={id} CompanyMainType={MainType} formfor={'update'} />
-              </DialogContent>
+              <DialogContent></DialogContent>
             </Dialog>
 
             <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -200,9 +197,7 @@ const IntCompData = () => {
                   <CloseIcon />
                 </IconButton>
               </DialogActions>
-              <DialogContent>
-                <UpdateCompany title={'Sub Company Details'} formfor={'sub'} />
-              </DialogContent>
+              <DialogContent></DialogContent>
             </Dialog>
           </Box>
         );
