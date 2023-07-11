@@ -26,9 +26,10 @@ export const serviceApi = api.injectEndpoints({
 
     //GET ALL MAIN SERVICE API
     getAllMainServices: builder.query({
-      query(_) {
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
         return {
-          url: 'services/getallmainservices',
+          url: `services/getallmainservices?page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
       }
@@ -36,9 +37,10 @@ export const serviceApi = api.injectEndpoints({
 
     //GET ALL SERVICES API
     getAllServices: builder.query({
-      query(_) {
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
         return {
-          url: 'services/getallservices',
+          url: `services/getallservices?page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
       }

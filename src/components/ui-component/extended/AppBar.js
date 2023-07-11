@@ -42,12 +42,10 @@ function ElevationScroll({ children, window }) {
 
   const { session, error, isLoading } = useSession();
 
-
   if (isLoading) {
     console.log('Loading');
   }
   if (error) {
-
     console.log(error);
   }
   if (session) {
@@ -99,7 +97,6 @@ const AppBar = ({ ...others }) => {
   };
   const { data: session } = useSession();
 
-
   return (
     <ElevationScroll {...others}>
       <MuiAppBar>
@@ -115,15 +112,21 @@ const AppBar = ({ ...others }) => {
               <Button color="inherit" component={Link} href="/pages/media_posts/Tabs" target="_blank">
                 Social Media
               </Button>
-              <Button color="inherit" component={Link} href="login">
+              <Button color="inherit" component={Link} href="/dashboard/default">
                 Dashboard
               </Button>
               {session ? (
-                <Button color="inherit" onClick={()=>{signOut()}} target="_blank">
+                <Button
+                  color="inherit"
+                  onClick={() => {
+                    signOut();
+                  }}
+                  target="_blank"
+                >
                   Sign Out
                 </Button>
               ) : (
-                <Button color="inherit" component={Link} href="/pages/authentication/portal_registration/login" target="_blank">
+                <Button color="inherit" component={Link} href="/dashboard/pages/authentication/portal_registration/login" target="_blank">
                   Portal Login
                 </Button>
               )}
