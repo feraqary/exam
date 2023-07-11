@@ -14,8 +14,7 @@ import {
   IconLayoutKanban,
   IconMail,
   IconCalendar,
-  IconNfc,
-  HomeShare
+  IconNfc
 } from '@tabler/icons';
 
 // constant

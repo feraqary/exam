@@ -12,6 +12,7 @@ import { getAllServices } from 'store/slices/company-section/action/company';
 import React, { useEffect, useState, useRef } from 'react';
 import Edit_Sub_Service from './helper_components/Edit_sub_service';
 import { deleteService } from 'store/slices/company-section/action/company';
+import { useGetAllServicesQuery } from 'store/services/services/serviceApi';
 
 // ==============================|| Activities Project ||============================== //
 
@@ -113,22 +114,27 @@ const ColumnHeaders = [
 ];
 
 function SubService() {
-  const dispatch = useDispatch();
-  const { services } = useSelector((state) => state.companies);
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+  const { data: services, isLoading, isError, isFetching, error } = useGetAllServicesQuery(pagination);
 
-  useEffect(() => {
-    dispatch(getAllServices());
-  }, []);
-
-  useEffect(() => {
-    console.log('reload...................');
-  }, [services]);
+  useEffect(() => {}, [pagination.pageIndex, pagination.pageSize]);
 
   return (
     <Page title=" Sub Service">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={services} />
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={services?.data || []}
+            loading={isLoading}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={isFetching}
+            rowCount={services?.Total}
+          />
         </Grid>
       </Grid>
     </Page>

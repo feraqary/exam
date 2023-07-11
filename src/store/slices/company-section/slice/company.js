@@ -34,7 +34,7 @@ import {
   getPropertyTypes
 } from '../action/company';
 
-import { ToastError, ToastSuccess } from 'utils/toast';
+import { ToastError, ToastLoading, ToastSuccess } from 'utils/toast';
 
 import { deleteService } from 'store/slices/company-section/action/company';
 
@@ -107,7 +107,6 @@ const slice = createSlice({
       })
 
       // update company types=================================================================================================
-
       .addCase(updateCompanyType.fulfilled, (state, action) => {
         ToastSuccess('Updated Successfully');
       })

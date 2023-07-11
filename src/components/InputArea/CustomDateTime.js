@@ -25,7 +25,7 @@ import { useField, useFormikContext } from 'formik';
  * @returns {JSX.Element} The rendered CustomDateTime component.
  */
 
-const CustomDateTime = ({ style, label, helperText, value, setValue, required, name, id, ...rest }) => {
+const CustomDateTime = ({ style, label, helperText, value, setValue, required, name, id, helperInfo, ...rest }) => {
   const [field, meta] = useField(rest);
   const { touched, values, setFieldValue, setFieldTouched } = useFormikContext();
   return (
@@ -36,6 +36,7 @@ const CustomDateTime = ({ style, label, helperText, value, setValue, required, n
       required={required}
       metaError={meta.error[`${name}`]}
       metaTouched={touched[`${name}`]}
+      helperInfo={helperInfo}
     >
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <MobileDatePicker

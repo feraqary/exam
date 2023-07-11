@@ -45,7 +45,7 @@ const AutoCompleteSelector = ({
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
         {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
 
-        {helperText ? (
+        {helperInfo ? (
           <Tooltip title={label}>
             <IconButton>
               <InfoIcon fontSize="small" />
@@ -145,6 +145,7 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
     </Grid>
   );
 };
+//
 
 export const NormalAutoCompleteSelector = ({
   style,

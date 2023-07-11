@@ -1,7 +1,7 @@
 import { api } from 'utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
-  'v2.local.5pCwXoDcbmmYo5qnoYQp6h8UUTXhJK2sc_M4Yt8qJpPozlZEj-UCZJsSFrlXZM9I95F36x_YuQGYKTH1eZ1VNKJcSN1OvfirFc0qza5cyYl3Gx7UD2_msvVbSVEH5cC07LfLowuww55ko5Zpb0fKSRuN1h-d2JTUOg00BZCUVhxBWwuARDdwx3TCxHSBLNdCh2AouT3yvYAvp2Q6RofFDiNdMrbcho-pHLn9VORtwrkivVCjHi3_OKwLwp5IbbsXKBdfL-A4nhLiSRvemLM.bnVsbA';
+  'v2.local.vXWFgWR_d-uUdQHOh5JeS8FfXcKprUHqBYSL_n1c_xCIUCmPl_lUhkHicqcFJjt2SYrEk9cakXAn76mH6kglDaj30QDeiLHWZgJzYXYKmTvUX583Rd5bxsLLgSIdD_Q7nGAZIWpuT5FHkCRp-0zP8nZY4VWbBn2YAeNIwLMyDaKQbQc09MQQX6PSPl8Vn5Pss8BKcrII_IBZA0AKNEMPvxYJkfB4UfoL-1XkryhNzLp2e_ky8TezxzyLEQf7tw7qMf5jpuL_VtjprIiQLL8.bnVsbA';
 const config = {
   headers: {
     'Content-Type': 'multipart/form-data',

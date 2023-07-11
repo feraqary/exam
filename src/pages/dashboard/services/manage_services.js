@@ -8,7 +8,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 
-
 // project imports
 import { useState, useEffect } from 'react';
 import Layout from 'layout';
@@ -19,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Edit_service from './helper_components/edit_services';
 import { getAllMainServices, deleteMainService } from 'store/slices/company-section/action/company';
 import AlertDialogSlide from 'components/ui-elements/advance/UIDialog/AlertDialogSlide';
+import { useGetAllMainServicesQuery } from 'store/services/services/serviceApi';
 // ==============================|| Add Services ||============================== //
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -130,20 +130,28 @@ const ColumnHeaders = [
 ];
 
 function ManageServices() {
-  const dispatch = useDispatch();
-  const { mainServices } = useSelector((state) => state.companies);
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+  const { data: mainServices, isLoading, isError, isFetching, error } = useGetAllMainServicesQuery(pagination);
   // console.log(mainServices);
-  useEffect(() => {
-    dispatch(getAllMainServices());
-  }, []);
+  useEffect(() => {}, [pagination.pageIndex, pagination.pageSize]);
   return (
     <Page title="Manage Services">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={mainServices} columnHeaders={ColumnHeaders} />
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={mainServices?.data || []}
+            loading={isLoading}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={isFetching}
+            rowCount={mainServices?.Total}
+          />
         </Grid>
       </Grid>
-
     </Page>
   );
 }

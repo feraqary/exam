@@ -20,10 +20,18 @@ import InputLayout from './InputLayout';
  * @returns {React.Element} The rendered component.
  */
 
-const InputText = ({ label, placeholder, helperText, style, type, value, setValue, required, func, ...rest }) => {
+const InputText = ({ label, placeholder, helperText, style, type, value, setValue, required, func, helperInfo, ...rest }) => {
   const [field, meta] = useField(rest);
   return (
-    <InputLayout label={label} helperText={helperText} style={style} metaError={meta.error} metaTouched={meta.touched} required={required}>
+    <InputLayout
+      label={label}
+      helperText={helperText}
+      style={style}
+      metaError={meta.error}
+      metaTouched={meta.touched}
+      required={required}
+      helperInfo={helperInfo}
+    >
       <TextField
         id={rest.id}
         name={rest.name}
@@ -39,6 +47,7 @@ const InputText = ({ label, placeholder, helperText, style, type, value, setValu
     </InputLayout>
   );
 };
+//
 export const NormalInputText = ({ label, placeholder, helperText, style, type, func, value, required, ...rest }) => {
   return (
     <InputLayout label={label} helperText={helperText} style={style} required={required}>

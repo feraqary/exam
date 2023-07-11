@@ -24,7 +24,7 @@ import { useField } from 'formik';
  * @returns {JSX.Element} The rendered FileUpload component.
  */
 
-const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, setFieldValue, id, required, ...rest }, ref) => {
+const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, setFieldValue, id, required, helperInfo, ...rest }, ref) => {
   const [field, meta] = useField(rest);
 
   return (
@@ -36,6 +36,7 @@ const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, s
         metaError={meta.error}
         metaTouched={meta.touched}
         required={required}
+        helperInfo={helperInfo}
       >
         <TextField
           {...field}

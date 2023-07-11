@@ -7,14 +7,11 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import Table from 'components/Table/Table';
-
-import { getCompanyByStatus, updateCompanyStatus } from 'store/slices/company-section/action/company';
-
-import { useDispatch, useSelector } from 'react-redux';
-
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { useGetCompaniesByStatusQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
+import { ToastSuccess } from 'utils/toast';
 
 // ===========================|| Blocked Company list||=========================== //
 
@@ -40,7 +37,13 @@ const ColumnHeaders = [
     header: 'Action',
 
     Cell: ({ row }) => {
-      const dispatch = useDispatch();
+      const [restoreCompany, result] = useUpdateCompanyStatusMutation();
+
+      useEffect(() => {
+        if (result.isSuccess) {
+          ToastSuccess('Company has been restored Successfully');
+        }
+      }, [result.isSuccess]);
 
       return (
         <AqaryButton
@@ -51,7 +54,7 @@ const ColumnHeaders = [
             formData.append('status', '4');
             formData.append('company_type', row.original.CompanyMainType);
 
-            dispatch(updateCompanyStatus(formData));
+            restoreCompany(formData);
           }}
         >
           Restore
@@ -62,20 +65,29 @@ const ColumnHeaders = [
 ];
 
 const BlockedCompanies = () => {
-  const dispatch = useDispatch();
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
 
-  const { loading, error, companiesStatus } = useSelector((state) => state.companies);
+  const { data, error, isLoading, isFetching, isError } = useGetCompaniesByStatusQuery({ status: 5, pagination });
 
-  useEffect(() => {
-    dispatch(getCompanyByStatus(5));
-  }, [dispatch]);
+  useEffect(() => {}, [pagination.pageIndex, pagination.pageSize]);
 
   return (
     <Page title="Blocked Companies">
       <ToastContainer />
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={companiesStatus} columnHeaders={ColumnHeaders} />
+          <Table
+            data={data?.data || []}
+            columnHeaders={ColumnHeaders}
+            loading={isLoading}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={isFetching}
+            rowCount={data?.Total}
+          />
         </Grid>
       </Grid>
     </Page>

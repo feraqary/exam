@@ -7,10 +7,8 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 
 import Table from 'components/Table/Table';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getFeaturedCompanies } from 'store/slices/company-section/action/company';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useGetCompaniesByRankQuery } from 'store/services/company/companyApi';
 
 // ===========================|| featured Company list||=========================== //
 
@@ -54,19 +52,27 @@ const ColumnHeaders = [
 ];
 
 const FeaturedCompanies = () => {
-  const dispatch = useDispatch();
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
 
-  const { error, loading, featuredCompanies } = useSelector((state) => state.companies);
-  console.log(featuredCompanies);
-  useEffect(() => {
-    dispatch(getFeaturedCompanies());
-  }, []);
+  const { data, isError, isLoading, isFetching, error } = useGetCompaniesByRankQuery({ rank: 2, pagination });
+  useEffect(() => {}, [pagination.pageIndex, pagination.pageSize]);
 
   return (
     <Page title="Featured Companies">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={featuredCompanies} columnHeaders={ColumnHeaders} />
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={data?.data || []}
+            loading={isLoading}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={isFetching}
+            rowCount={10}
+          />
         </Grid>
       </Grid>
     </Page>

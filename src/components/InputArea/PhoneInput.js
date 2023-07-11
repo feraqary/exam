@@ -18,7 +18,7 @@ import InputLayout from './InputLayout';
  * @returns {JSX.Element} The rendered PhoneInput component.
  */
 
-const PhoneInput = ({ label, placeholder, helperText, style, type, required, ...rest }) => {
+const PhoneInput = ({ label, placeholder, helperText, style, type, required, helperInfo, ...rest }) => {
   const [field, meta] = useField(rest);
   const { setFieldValue, setFieldTouched } = useFormikContext();
 
@@ -39,6 +39,7 @@ const PhoneInput = ({ label, placeholder, helperText, style, type, required, ...
       metaError={meta?.error}
       metaTouched={meta?.touched}
       required={required}
+      helperInfo = {helperInfo}
     >
       <MuiPhoneNumber
         defaultCountry={'us'}

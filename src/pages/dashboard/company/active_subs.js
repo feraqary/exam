@@ -7,9 +7,7 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import React, { useEffect, useState } from 'react';
 import Table from 'components/Table/Table';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { getActiveSubscription } from 'store/slices/company-section/action/company';
+import { useGetActiveSubscriptionsQuery } from 'store/services/company/companyApi';
 
 // ==============================|| View Active Subscriptions form ||============================== //
 
@@ -73,17 +71,28 @@ const ColumnHeaders = [
   }
 ];
 function ActiveSubscriptions() {
-  const dispatch = useDispatch();
-  const { activeSubscription } = useSelector((state) => state.companies);
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
 
-  useEffect(() => {
-    dispatch(getActiveSubscription());
-  }, []);
+  const { data: activeSubscriptions, isLoading, isError, isFetching, error } = useGetActiveSubscriptionsQuery(pagination);
+
+  useEffect(() => {}, [pagination.pageIndex, pagination.pageSize]);
+  if (isLoading) return;
   return (
     <Page title="Active Subscriptions">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={activeSubscription} />
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={activeSubscriptions?.data || []}
+            loading={isLoading}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={isFetching}
+            rowCount={activeSubscriptions?.Total}
+          />
         </Grid>
       </Grid>
     </Page>

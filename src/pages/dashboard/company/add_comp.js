@@ -17,16 +17,6 @@ import { objectValidator, arrayValidator, stringValidator, numberValidator, file
 import iban from 'iban';
 // redux actions import
 
-import {
-  getCountries,
-  getStates,
-  getCities,
-  getCommunities,
-  getSubCommunities,
-  getAllCountries,
-  getAllCurrencies
-} from 'store/slices/country-section/actions/countries';
-
 // assets
 import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
@@ -39,12 +29,22 @@ import { setCountry } from 'store/slices/country-section/slice/country';
 import { setState } from 'store/slices/country-section/slice/country';
 import InputLayout from 'components/InputArea/InputLayout';
 
-import { createCompany, getAllCompanyTypes, getAllMainServices, getAllServices } from 'store/slices/company-section/action/company';
 import CustomDateTime from 'components/InputArea/CustomDateTime';
 import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
 import { Formik } from 'formik';
 import PhoneInput from 'components/InputArea/PhoneInput';
+import { useCreateCompanyMutation, useGetSubCompanyTypesByCompanyTypeQuery } from 'store/services/company/companyApi';
+import { useGetAllMainServicesBySubCompanyTypeQuery, useGetAllServicesBYMainServiceTypeQuery } from 'store/services/services/serviceApi';
+import {
+  useGetCitiesByStateQuery,
+  useGetCommunitiesByCityQuery,
+  useGetCountriesQuery,
+  useGetCurrenciesQuery,
+  useGetStatesByCountryQuery,
+  useGetSubCommunitiesByCommunityQuery
+} from 'store/services/country/countryApi';
+import { ToastSuccess } from 'utils/toast';
 
 // ==============================|| FIELDS ||============================== //
 const options = [
@@ -61,7 +61,6 @@ const validationSchema = Yup.object({
   mainService: objectValidator(),
   service: arrayValidator('Please select a service', 1),
   companyName: stringValidator('Please provide a company name'),
-  companyTagline: stringValidator('Please provide a company tagline'),
   reraNo: stringValidator('Please provide a valid reara number'),
   reraExpiryDate: dateValidator('Please select an expiration date'),
   billingReference: stringValidator('please provide a valid bill reference'),
@@ -87,6 +86,8 @@ const validationSchema = Yup.object({
   // instagram: stringValidator('Please provide your instagram profile'),
   // linkedin: stringValidator('Please provide your linkedin profile'),
   twitter: stringValidator('Please provide your twitter profile'),
+  youtube: stringValidator('Please provide your YouTube profile'),
+  tiktok: stringValidator('Please provide your TikTok profile'),
   firstName: stringValidator('Please provide your first name'),
   lastName: stringValidator('Please provide your last name'),
   emailAddress: stringValidator('Please provide a valid email address').email(),
@@ -120,17 +121,16 @@ const validationSchema = Yup.object({
 });
 
 function ColumnsLayouts() {
-  const dispatch = useDispatch();
   const [address, setAddress] = useState('Abu Dhabi');
-  useEffect(() => {
-    dispatch(getCountries());
-    dispatch(getAllCountries());
-    dispatch(getAllCurrencies());
-  }, [dispatch]);
+  const [companyId, setCompanyId] = useState(null);
+  const [subCompanyTypeId, setSubCompanyTypeId] = useState(null);
+  const [mainServiceId, setMainServiceId] = useState(null);
 
-  const { countries, error, loading, states, cities, communities, bankCountries, subCommunities, currencies } = useSelector(
-    (state) => state.countries
-  );
+  const [countryId, setCountryId] = useState(null);
+  const [stateId, setStateId] = useState(null);
+  const [cityId, setCityId] = useState(null);
+  const [communityId, setCommunityId] = useState(null);
+
   const {
     companyInformation,
     error: companyError,
@@ -139,6 +139,100 @@ function ColumnsLayouts() {
     mainServices,
     services
   } = useSelector((state) => state.companies);
+
+  const {
+    data: companySubTypes,
+    error: companySubTypeError,
+    isError,
+    isLoading,
+    isFetching
+  } = useGetSubCompanyTypesByCompanyTypeQuery(companyId, {
+    skip: companyId === null || companyId === undefined
+  });
+
+  const {
+    data: mainServicesData,
+    error: mainServicesError,
+    isError: mainServiceIsError,
+    isLoading: mainServiceIsLoading,
+    isFetching: mainServiceIsFetching
+  } = useGetAllMainServicesBySubCompanyTypeQuery(subCompanyTypeId, {
+    skip: subCompanyTypeId === null || subCompanyTypeId === undefined
+  });
+
+  const {
+    data: subServicesData,
+    error: subServicesError,
+    isError: subServicesIsError,
+    isLoading: subServicesIsLoading,
+    isFetching: subServicesIsFetching
+  } = useGetAllServicesBYMainServiceTypeQuery(mainServiceId, {
+    skip: mainServiceId === null || mainServiceId === undefined
+  });
+
+  const {
+    data: countriesData,
+    error: countriesError,
+    isError: countriesIsError,
+    isLoading: countriesIsLoading,
+    isFetching: countriesIsFetching
+  } = useGetCountriesQuery();
+
+  const {
+    data: statesData,
+    error: statesError,
+    isError: statesIsError,
+    isLoading: statesIsLoading,
+    isFetching: statesIsFetching
+  } = useGetStatesByCountryQuery(countryId, {
+    skip: countryId === null || countryId === undefined
+  });
+
+  const {
+    data: citiesData,
+    error: citiesError,
+    isError: citiesIsError,
+    isLoading: citiesIsLoading,
+    isFetching: citiesIsFetching
+  } = useGetCitiesByStateQuery(stateId, {
+    skip: stateId === null || stateId === undefined
+  });
+
+  const {
+    data: communitiesData,
+    error: communitiesError,
+    isError: communitiesIsError,
+    isLoading: communitiesIsLoading,
+    isFetching: communitiesIsFetching
+  } = useGetCommunitiesByCityQuery(cityId, {
+    skip: cityId === null || cityId === undefined
+  });
+
+  const {
+    data: subCommunitiesData,
+    error: subCommunitiesError,
+    isError: subCommunitiesIsError,
+    isLoading: subCommunitiesIsLoading,
+    isFetching: subCommunitiesIsFetching
+  } = useGetSubCommunitiesByCommunityQuery(communityId, {
+    skip: communityId === null || communityId === undefined
+  });
+
+  const {
+    data: currenciesData,
+    error: currenciesError,
+    isError: currenciesIsError,
+    isLoading: currenciesIsLoading,
+    isFetching: currenciesIsFetching
+  } = useGetCurrenciesQuery();
+
+  const [createCompany, result] = useCreateCompanyMutation();
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      ToastSuccess('Company has been created successfully');
+    }
+  }, [result.isSuccess]);
 
   const vatRef = useRef(null);
   const lisenceRef = useRef(null);
@@ -154,7 +248,6 @@ function ColumnsLayouts() {
     formData.append('main_service_type', values.mainService.id);
     formData.append('sub_service_type', values.service);
     formData.append('company_name', values.companyName);
-    formData.append('tag_line', values.companyTagline);
     formData.append('rera_no', values.reraNo);
     formData.append('commercial_license_no', values.lisenceNo);
     formData.append('commercial_license_file_url', values.lisenceFile);
@@ -165,11 +258,11 @@ function ColumnsLayouts() {
     formData.append('lat', values.lat);
     formData.append('lng', values.long);
     formData.append('no_of_employees', values.numberOfEmployees);
-    formData.append('billing_country_id', values.country.id);
-    formData.append('billing_state_id', values.state.id);
-    formData.append('billing_city_id', values.city.id);
-    formData.append('billing_community_id', values.community.id);
-    formData.append('billing_sub_community_id', values.subCommunity.id);
+    formData.append('billing_country_id', values.country.ID);
+    formData.append('billing_state_id', values.state.ID);
+    formData.append('billing_city_id', values.city.ID);
+    formData.append('billing_community_id', values.community.ID);
+    formData.append('billing_sub_community_id', values.subCommunity.ID);
     formData.append('billing_office_address', values.officeAddress);
     formData.append('billing_reference', values.billingReference);
     formData.append('google_map_link', values.mapUrl);
@@ -195,8 +288,8 @@ function ColumnsLayouts() {
     formData.append('account_name', values.cardName);
     formData.append('account_number', values.cardNumber);
     formData.append('iban', values.ibanNumber);
-    formData.append('currency_id', values.currency.id);
-    formData.append('bank_country_id', values.accountCountry.id);
+    formData.append('currency_id', values.currency.ID);
+    formData.append('bank_country_id', values.accountCountry.ID);
     formData.append('bank_name', values.bankName);
     formData.append('branch_name', values.bankBranch);
     formData.append('swift_code', values.swiftCode);
@@ -205,7 +298,7 @@ function ColumnsLayouts() {
     values.service.forEach((ser) => {
       formData.append('sub_service_type[]', ser?.id);
     });
-    dispatch(createCompany(formData));
+    createCompany(formData);
   };
 
   return (
@@ -220,7 +313,6 @@ function ColumnsLayouts() {
               mainService: '',
               service: [],
               companyName: '',
-              companyTagline: '',
               reraNo: '',
               reraExpiryDate: '', //
               billingReference: '',
@@ -293,6 +385,7 @@ function ColumnsLayouts() {
                 <Container title="Add Company Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
                     <AutoCompleteSelector
+                      helperInfo
                       style={{ xs: 12, lg: 10 }}
                       label="Company Type"
                       id="companyType"
@@ -301,46 +394,49 @@ function ColumnsLayouts() {
                       placeholder="Select Company Type"
                       setFieldValue={props.setFieldValue}
                       func={(newValue) => {
-                        dispatch(getAllCompanyTypes(newValue?.id));
+                        setCompanyId(newValue?.id);
                         props.setFieldValue('service', props.initialValues.service);
                         props.setFieldValue('subCompanyType', props.initialValues.subCompanyType);
                         props.setFieldValue('mainService', props.initialValues.mainService);
                       }}
+                      required={true}
                     />
                     {props.values.companyType && (
                       <AutoCompleteSelector
+                        helperInfo
                         style={{ xs: 12, lg: 10 }}
                         label="Sub Company Type"
                         id="subCompanyType"
                         name="subCompanyType"
                         placeholder="Select Sub Company Type"
-                        options={companyTypes?.map((company) => {
-                          return { label: company.title, ...company };
-                        })}
+                        options={companySubTypeError ? [] : companySubTypes?.data || []}
+                        getOptionLabel={(companySubType) => companySubType.title || ''}
                         setFieldValue={props.setFieldValue}
                         func={(newValue) => {
-                          dispatch(getAllMainServices(newValue?.id));
+                          setSubCompanyTypeId(newValue?.id);
                           props.setFieldValue('mainService', props.initialValues.mainService);
                           props.setFieldValue('service', props.initialValues.service);
                         }}
+                        required={true}
                       />
                     )}
 
                     {props.values.subCompanyType && (
                       <AutoCompleteSelector
+                        helperInfo
                         style={{ xs: 12, lg: 10 }}
                         label="Main Service Type"
                         id="mainService"
                         name="mainService"
                         placeholder="Select Main Service Type"
-                        options={mainServices.map((service) => {
-                          return { label: service.title, ...service };
-                        })}
+                        options={mainServiceIsError ? [] : mainServicesData?.data || []}
+                        getOptionLabel={(mainService) => mainService.title || ''}
                         setFieldValue={props.setFieldValue}
                         func={(newValue) => {
-                          dispatch(getAllServices(newValue?.id));
+                          setMainServiceId(newValue?.id);
                           props.setFieldValue('service', props.initialValues.service);
                         }}
+                        required={true}
                       />
                     )}
                     {props.values.mainService && (
@@ -350,9 +446,8 @@ function ColumnsLayouts() {
                         id="service"
                         name="service"
                         placeholder="Select Sub Service Type"
-                        options={services.map((service) => {
-                          return { label: service.title, ...service };
-                        })}
+                        options={subServicesError ? [] : subServicesData?.data || []}
+                        getOptionLabel={(subService) => subService.title || ''}
                         setFieldValue={props.setFieldValue}
                       />
                     )}
@@ -360,6 +455,7 @@ function ColumnsLayouts() {
 
                   <Grid container spacing={2} alignItems="center">
                     <InputText
+                      helperInfo
                       label="Company Name"
                       placeholder="Enter Company Name"
                       helperText="Please Enter Official Company Name"
@@ -370,16 +466,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <InputText
-                      label="Company Tagline"
-                      placeholder="Enter Company Tagline"
-                      helperText="Please Enter Official Tagline"
-                      style={{ xs: 12, lg: 6 }}
-                      type="text"
-                      id="companyTagline"
-                      name="companyTagline"
-                      required={true}
-                    />
-                    <InputText
+                      helperInfo
                       label="RERA No."
                       placeholder="Enter RERA No."
                       helperText="Please Enter RERA No."
@@ -390,6 +477,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <CustomDateTime
+                      helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="RERA No. Expiry Date"
                       helperText="Please enter RERA No. Expiry Date"
@@ -399,6 +487,7 @@ function ColumnsLayouts() {
                       setFieldValue={props.setFieldValue}
                     />
                     <FileUpload
+                      helperInfo
                       label="Upload RERA"
                       placeholder="Upload RERA"
                       helperText="Please upload the company RERA"
@@ -410,6 +499,7 @@ function ColumnsLayouts() {
                       ref={reraRef}
                     />
                     <InputText
+                      helperInfo
                       label="License No."
                       placeholder="Enter Company License No."
                       helperText="Please enter Company License No."
@@ -420,6 +510,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <FileUpload
+                      helperInfo
                       label="Upload License"
                       placeholder="Upload Company License"
                       helperText="Please Upload Company License"
@@ -431,6 +522,7 @@ function ColumnsLayouts() {
                       setFieldValue={props.setFieldValue}
                     />
                     <CustomDateTime
+                      helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="License Expiry Date"
                       helperText="Please enter license expiry date"
@@ -444,6 +536,7 @@ function ColumnsLayouts() {
                 <Container title="Add Billing Information" style={{ xs: 12 }}>
                   <Grid container spacing={2} alignItems="center">
                     <InputText
+                      helperInfo
                       label="Billing Reference"
                       placeholder="Enter the billing reference"
                       helperText="Please enter the billing reference"
@@ -454,6 +547,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <InputText
+                      helperInfo
                       label="VAT Number:"
                       placeholder="VAT Number"
                       helperText="Please enter your VAT number"
@@ -464,6 +558,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <Selector
+                      helperInfo
                       id="vatStatus"
                       name="vatStatus"
                       style={{ xs: 12, lg: 6 }}
@@ -475,6 +570,7 @@ function ColumnsLayouts() {
                     <br />
                     <Grid lg={6}></Grid>
                     <FileUpload
+                      helperInfo
                       label="Upload VAT"
                       placeholder="Upload your VAT"
                       helperText="Please upload your VAT"
@@ -490,102 +586,108 @@ function ColumnsLayouts() {
                 <Container title="Company Location" style={{ xs: 12 }}>
                   <Grid container spacing={2} alignItems="center">
                     <AutoCompleteSelector
+                      helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="Countries"
                       id="country"
                       name="country"
-                      options={countries?.map((country) => {
-                        return { label: country.Country, id: country.ID, flag: country.Flag };
-                      })}
+                      options={countriesError || countriesIsLoading ? [] : countriesData?.data || []}
+                      getOptionLabel={(country) => country.Country || ''}
                       renderOption={(props, option) => (
                         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                           <Image
-                            src={`http://20.203.31.58/upload/${option.flag}`}
+                            src={`http://20.203.31.58/upload/${option.Flag}`}
                             width={30}
                             height={30}
                             style={{ objectFit: 'contain' }}
                           />
 
-                          {option.label}
+                          {option.Country}
                         </Box>
                       )}
                       placeholder="Select a Country"
-                      loading={loading}
+                      loading={countriesIsLoading}
                       func={(newValue) => {
-                        dispatch(getStates(newValue?.id));
+                        setCountryId(newValue?.ID);
                         props.setFieldValue('subCommunity', '');
                         props.setFieldValue('state', '');
                         props.setFieldValue('city', '');
                         props.setFieldValue('community', '');
                         props.setFieldValue('subCommunity', '');
                       }}
+                      required={true}
                     />
 
                     <AutoCompleteSelector
+                      helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="States"
                       id="state"
                       name="state"
-                      options={states?.map((state) => {
-                        return { label: state.State, id: state.ID };
-                      })}
+                      options={statesData?.data || []}
+                      getOptionLabel={(state) => state.State || ''}
                       placeholder="Select a State"
                       disabled={props.values.country ? false : true}
-                      loading={loading}
+                      loading={statesIsLoading}
                       func={(newValue) => {
-                        dispatch(getCities(newValue?.id));
+                        setStateId(newValue?.ID);
                         props.setFieldValue('subCommunity', '');
                         props.setFieldValue('city', '');
                         props.setFieldValue('community', '');
                       }}
+                      required={true}
                     />
 
                     <AutoCompleteSelector
+                      helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="Cites"
                       id="city"
                       name="city"
-                      options={cities?.map((city) => {
-                        return { label: city.City, id: city.ID };
-                      })}
+                      options={citiesData?.data || []}
+                      getOptionLabel={(city) => city.City || ''}
                       placeholder="Select a City"
                       disabled={props.values.state ? false : true}
-                      loading={loading}
+                      loading={citiesIsLoading}
                       func={(newValue) => {
-                        dispatch(getCommunities(newValue?.id));
+                        setCityId(newValue?.ID);
                         props.setFieldValue('subCommunity', '');
                         props.setFieldValue('community', '');
                       }}
+                      required={true}
                     />
                     <AutoCompleteSelector
+                      helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="Communities"
                       id="community"
                       name="community"
-                      options={communities?.map((community) => {
-                        return { label: community.Community, id: community.ID };
-                      })}
+                      options={communitiesData?.data || []}
+                      getOptionLabel={(community) => community.Community || ''}
                       placeholder="Select a Community"
                       disabled={props.values.city ? false : true}
-                      loading={loading}
+                      loading={communitiesIsLoading}
                       func={(newValue) => {
-                        dispatch(getSubCommunities(newValue?.id));
+                        setCommunityId(newValue?.ID);
                         props.setFieldValue('subCommunity', '');
                       }}
+                      required={false}
                     />
                     <AutoCompleteSelector
+                      helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="Sub Communities"
                       id="subCommunity"
                       name="subCommunity"
-                      options={subCommunities?.map((community) => {
-                        return { label: community.SubCommunity, id: community.ID };
-                      })}
+                      options={subCommunitiesData?.data || []}
+                      getOptionLabel={(subCommunity) => subCommunity.SubCommunity || ''}
                       placeholder="Select a Community"
                       disabled={props.values.community ? false : true}
-                      loading={loading}
+                      loading={subCommunitiesIsLoading}
+                      required={false}
                     />
                     <InputText
+                      helperInfo
                       label="Office Address"
                       placeholder="Enter the office address"
                       helperText="Please enter the office address"
@@ -596,6 +698,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <InputText
+                      helperInfo
                       label="Google Map Link"
                       placeholder="Google Map URL"
                       helperText="Please enter Google Map URL for Company Location"
@@ -625,6 +728,7 @@ function ColumnsLayouts() {
                         metaError={props.errors.place}
                         metaTouched={props.touched.place}
                       />
+                      {console.log(props.values)}
                     </InputLayout>
                     <Map locationAddress={address} height={'27vh'} xs={12} lg={12} mapUrl={props.values.mapUrl} />
                   </Grid>
@@ -633,6 +737,7 @@ function ColumnsLayouts() {
                 <Container title="Company Presentation" style={{ xs: 12 }}>
                   <Grid container spacing={2} alignItems="center">
                     <InputText
+                      helperInfo
                       label="Company Website"
                       placeholder="Enter the company website"
                       helperText="Please enter the company website"
@@ -644,6 +749,7 @@ function ColumnsLayouts() {
                     />
 
                     <InputText
+                      helperInfo
                       label="Company Email Address"
                       placeholder="Enter the company email address"
                       helperText="Please enter the company email address"
@@ -655,6 +761,7 @@ function ColumnsLayouts() {
                     />
 
                     <PhoneInput
+                      helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="Company Contact Number"
                       placeholder="Enter the company Contact Number"
@@ -664,6 +771,7 @@ function ColumnsLayouts() {
                     />
 
                     <InputText
+                      helperInfo
                       label="Company Description"
                       placeholder="Enter the company description"
                       helperText="Please enter the company description"
@@ -675,6 +783,7 @@ function ColumnsLayouts() {
                     />
 
                     <FileUpload
+                      helperInfo
                       label="Company logo"
                       placeholder="Enter the company logo"
                       helperText="Please enter the company logo"
@@ -687,6 +796,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <FileUpload
+                      helperInfo
                       label="Company Cover Image"
                       placeholder="Enter the company cover image"
                       helperText="Please enter the company cover image"
@@ -703,6 +813,7 @@ function ColumnsLayouts() {
                 <Container style={{ xs: 12 }} title="Social Media">
                   <Grid container spacing={2} alignItems="center">
                     <InputText
+                      helperInfo
                       label="Facebook"
                       type="url"
                       placeholder="Enter Company Facebook Profile"
@@ -712,6 +823,7 @@ function ColumnsLayouts() {
                       id="facebook"
                     />
                     <InputText
+                      helperInfo
                       label="Instagram"
                       type="url"
                       placeholder="Enter Company Instagram Profile"
@@ -721,6 +833,7 @@ function ColumnsLayouts() {
                       id="instagram"
                     />
                     <InputText
+                      helperInfo
                       label="LinkedIn"
                       type="url"
                       placeholder="Enter Company LinkedIn Profile"
@@ -730,6 +843,7 @@ function ColumnsLayouts() {
                       id="linkedin"
                     />
                     <InputText
+                      helperInfo
                       label="Twitter"
                       type="url"
                       placeholder="Enter Company Twitter Profile"
@@ -752,6 +866,7 @@ function ColumnsLayouts() {
                 <Container title="Company Admin Contact Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} alignItems="center">
                     <InputText
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="First Name"
                       placeholder="Admin First Name"
@@ -762,6 +877,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <InputText
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="Last Name"
                       placeholder="Admin Last Name"
@@ -772,6 +888,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <InputText
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="Email Address"
                       placeholder="Admin Email Address"
@@ -782,6 +899,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <PhoneInput
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="Admin Phone Number"
                       placeholder="Enter the Admin Phone Number"
@@ -790,6 +908,7 @@ function ColumnsLayouts() {
                       id="phoneNumber"
                     />
                     <InputText
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="Number of Employees"
                       placeholder="Number of Employees"
@@ -800,6 +919,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <Selector
+                      helperInfo
                       id="subscriptionDuration"
                       name="subscriptionDuration"
                       helperText="Please choose your purchased subscription duration"
@@ -809,6 +929,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <CustomDateTime
+                      helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="Subscription Start Date"
                       helperText="Please enter subscription start date"
@@ -818,6 +939,7 @@ function ColumnsLayouts() {
                       setFieldValue={props.setFieldValue}
                     />
                     <CustomDateTime
+                      helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="Subscription End Date"
                       helperText="Please enter subscription end date"
@@ -827,6 +949,7 @@ function ColumnsLayouts() {
                       setFieldValue={props.setFieldValue}
                     />
                     <FileUpload
+                      helperInfo
                       setFieldValue={props.setFieldValue}
                       id="adminProfilePicture"
                       name="adminProfilePicture"
@@ -844,6 +967,7 @@ function ColumnsLayouts() {
                 <Container title="Bank Account Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} alignItems="center">
                     <InputText
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="Account Number"
                       placeholder="Account Number"
@@ -854,6 +978,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <InputText
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="Account Name"
                       placeholder="Account Name"
@@ -864,6 +989,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <InputText
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="IBAN Number"
                       placeholder="IBAN Number"
@@ -874,46 +1000,48 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <AutoCompleteSelector
-                      style={{ xs: 12, lg: 4 }}
-                      label="Currencies"
-                      id="currency"
-                      name="currency"
-                      options={currencies?.map((cur) => {
-                        return { label: cur.Currency, id: cur.ID, code: cur.Code };
-                      })}
-                      renderOption={(props, option) => (
-                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                          {option.label.toUpperCase()} : {option.code}
-                        </Box>
-                      )}
-                      placeholder="Select a Currency"
-                      helperText="Please select a currency"
-                    />
-
-                    <AutoCompleteSelector
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="Countries"
                       id="accountCountry"
                       name="accountCountry"
-                      options={bankCountries?.map((country) => {
-                        return { label: country.Country, id: country.ID, flag: country.Flag };
-                      })}
+                      options={countriesError || countriesIsLoading ? [] : countriesData?.data || []}
+                      getOptionLabel={(country) => country.Country || ''}
                       renderOption={(props, option) => (
                         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                           <Image
-                            src={`http://20.203.31.58/upload/${option.flag}`}
+                            src={`http://20.203.31.58/upload/${option.Flag}`}
                             width={30}
                             height={30}
                             style={{ objectFit: 'contain' }}
                           />
 
-                          {option.label}
+                          {option.Country}
                         </Box>
                       )}
                       placeholder="Select a Country"
                       helperText="Please select a country"
+                      required={true}
+                    />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Currencies"
+                      id="currency"
+                      name="currency"
+                      options={currenciesError || currenciesIsLoading ? [] : currenciesData?.data || []}
+                      getOptionLabel={(currency) => currency.Currency || ''}
+                      renderOption={(props, option) => (
+                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                          {option.Currency.toUpperCase()} : {option.Code}
+                        </Box>
+                      )}
+                      placeholder="Select a Currency"
+                      helperText="Please select a currency"
+                      required={true}
                     />
                     <InputText
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="Bank Name"
                       placeholder="Bank Name"
@@ -924,6 +1052,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <InputText
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="Bank Branch"
                       placeholder="Bank Branch"
@@ -934,6 +1063,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                     <InputText
+                      helperInfo
                       style={{ xs: 12, lg: 4 }}
                       label="Swift Code"
                       placeholder="Swift Code"

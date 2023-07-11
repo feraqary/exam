@@ -10,7 +10,6 @@ import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
 
 // assets
-import TextEditor from '../../components/Data/managment/text_editor';
 import InputText from 'components/InputArea/TextInput';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
@@ -48,7 +47,6 @@ function AddPages() {
 
             <Grid item xs={12} lg={8}>
               <InputLabel required>Description</InputLabel>
-              <TextEditor />
             </Grid>
 
             <AutoCompleteSelector

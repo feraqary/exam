@@ -2,7 +2,6 @@
 import { Grid } from '@mui/material';
 import { Box, Button } from '@mui/material';
 import Image from 'next/image';
-import KeyIcon from '@mui/icons-material/Key';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PreviewIcon from '@mui/icons-material/Preview';
@@ -14,41 +13,42 @@ import Table from 'components/Table/Table';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getInternationalCompanies, updateCompanyStatus } from 'store/slices/company-section/action/company';
-import { useSelector } from 'react-redux';
 // import ColumnsLayouts from '../dashboard/company/add_comp';
 import { Dialog, DialogContent, DialogActions } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import UpdateCompany from './helper/CompanyForm';
-import Documents from './documents';
+import Documents from '../documents';
+import { useGetInternationalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
+import { ToastError, ToastSuccess } from 'utils/toast';
 
 // ===========================|| International Company Managment list||=========================== //
-
-// const data = [
-//   {
-//     id: 1,
-//     CompanyName: 'Aqary',
-//     companyLogo: '',
-//     LicenseNO: '123456789',
-//     State: 'Maharashtra',
-//     CompanyType: 'International',
-//     Country: 'India',
-//     SubscriptionStartDate: '2020-01-01',
-//     AddedBy: 'Aqary',
-//     ContactPerson: 'Aqary'
-//   }
-// ];
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const IntCompData = () => {
-  const dispatch = useDispatch();
-  const { loading, error, internationalCompanies } = useSelector((state) => state.companies);
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+
+  const { data: internationalCompaniesData, isError, error, isLoading, isFetching } = useGetInternationalCompaniesQuery(pagination);
+
+  const [blockCompany, result] = useUpdateCompanyStatusMutation();
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      ToastSuccess('Company hase been successfully blocked');
+    }
+  }, [result.isSuccess]);
+
+  useEffect(() => {
+    if (result.isError) {
+      ToastError(result.error);
+    }
+  });
 
   const [docsOpen, setDocsOpen] = useState(false);
   const [docsCrid, setDocsCrid] = useState({ comp: null, id: null });
@@ -121,20 +121,9 @@ const IntCompData = () => {
       Cell: ({ renderedCellValue, row }) => {
         const [open, setOpen] = React.useState(false);
         const [editOpen, setEditOpen] = React.useState(false);
-        const [Blocked, setBlocked] = React.useState(false);
-        const [status, setStatus] = React.useState(4);
         const [id, setId] = React.useState();
         const [MainType, setMainType] = React.useState(null);
 
-        const dispatch = useDispatch();
-
-        const handleEditOpen = (e) => {
-          setEditOpen(true);
-          console.log(row.original);
-          setId(row.original.ID);
-          console.log('e', e.target);
-          setMainType(row.original.CompanyMainType);
-        };
         const handleEditClose = () => {
           setEditOpen(false);
         };
@@ -148,19 +137,12 @@ const IntCompData = () => {
           setOpen(false);
         };
         const handleBlock = () => {
-          // setBlocked();
-          console.log('int_company', row.original);
-          console.log('status', '5');
-
           const formData = new FormData();
-
           formData.append('company_id', row.original.ID);
           formData.append('status', '5');
-          formData.append('company_type', row.original.CompanyMainType);
+          formData.append('company_type', row.original.CompanyType);
 
-          dispatch(updateCompanyStatus(formData));
-
-          // window.location.reload();
+          blockCompany(formData);
         };
 
         return (
@@ -206,9 +188,7 @@ const IntCompData = () => {
                   <CloseIcon />
                 </IconButton>
               </DialogActions>
-              <DialogContent>
-                <UpdateCompany title={'Edit Company Details'} id={id} CompanyMainType={MainType} formfor={'update'} />
-              </DialogContent>
+              <DialogContent></DialogContent>
             </Dialog>
 
             <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -217,23 +197,31 @@ const IntCompData = () => {
                   <CloseIcon />
                 </IconButton>
               </DialogActions>
-              <DialogContent>
-                <UpdateCompany title={'Sub Company Details'} formfor={'sub'} />
-              </DialogContent>
+              <DialogContent></DialogContent>
             </Dialog>
           </Box>
         );
       }
     }
   ];
-  useEffect(() => {
-    dispatch(getInternationalCompanies());
-  }, []);
+
+  useEffect(() => {}, [pagination.pageIndex, pagination.pageSize]);
+
+  if (isLoading) return;
+
   return (
     <Page title="International Company List">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={internationalCompanies} />
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={internationalCompaniesData?.data}
+            loading={isLoading}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={isFetching}
+            rowCount={internationalCompaniesData?.Total}
+          />
         </Grid>
       </Grid>
 

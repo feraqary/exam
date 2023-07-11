@@ -24,11 +24,11 @@ import React, { useState, useMemo } from 'react';
 import InputLayout from './InputLayout';
 import { useField } from 'formik';
 
-const Selector = ({ style, label, options, helperText, name, id, required, value, setValue }) => {
+const Selector = ({ style, label, options, helperText, name, id, required, helperInfo }) => {
   const [field, meta] = useField(name);
   return (
-    <InputLayout style={style} helperText={helperText} label={label} required={required}>
-      <NativeSelect id={id} fullWidth {...field} value={value} onChange={(e) => setValue(e.target.value)}>
+    <InputLayout style={style} helperText={helperText} label={label} required={required} helperInfo={helperInfo}>
+      <NativeSelect id={id} fullWidth {...field}>
         {options.map((option, i) => {
           return <option value={i + 1}>{option}</option>;
         })}
@@ -36,7 +36,7 @@ const Selector = ({ style, label, options, helperText, name, id, required, value
     </InputLayout>
   );
 };
-
+//
 export const NormalSelector = ({ id, style, label, options, helperText, value, setValue }) => {
   return (
     <InputLayout style={style} helperText={helperText} label={label}>

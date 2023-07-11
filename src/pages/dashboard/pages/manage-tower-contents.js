@@ -10,7 +10,6 @@ import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
 
 // assets
-import TextEditor from '../../components/Data/managment/text_editor';
 import Container from 'components/Elements/Container';
 import InputText from 'components/InputArea/TextInput';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
@@ -40,7 +39,6 @@ function ManageTowerContents() {
             />
             <Grid item xs={12} lg={8}>
               <InputLabel required>Description</InputLabel>
-              <TextEditor />
             </Grid>
 
             <AutoCompleteSelector
