@@ -47,12 +47,14 @@ export const companyApi = api.injectEndpoints({
     //GET ALL COMPANY TYPES API
 
     getAllSubCompanyTypes: builder.query({
-      query() {
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
         return {
-          url: `services/getAllCompanyTypes`,
+          url: `services/getAllCompanyTypes?page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
-      }
+      },
+      providesTags: ['subCompanies']
     }),
     //GET LOCAL COMPANIES API
     getLocalCompanies: builder.query({
@@ -75,7 +77,7 @@ export const companyApi = api.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags: ['CompaniesByStatus']
+      providesTags: ['CompaniesByStatus', 'CompaniesByRank']
     }),
 
     // GET A SINGLE COMPANY API
@@ -154,7 +156,8 @@ export const companyApi = api.injectEndpoints({
           method: 'PUT',
           body: formData
         };
-      }
+      },
+      invalidatesTags: ['subCompanies']
     }),
 
     //UPDATE COMPANY RANK API

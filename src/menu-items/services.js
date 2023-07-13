@@ -26,7 +26,7 @@ const services = {
       id: 'add_main_services',
       title: <FormattedMessage id="Add Main Services" />,
       type: 'item',
-      url: '/dashboard/company/add_main_services'
+      url: '/dashboard/services/add_main_services'
     },
 
     {
@@ -40,7 +40,7 @@ const services = {
       title: <FormattedMessage id="Add Sub Services" />,
       type: 'item',
       icon: icons.IconClipboardPlus,
-      url: '/dashboard/company/add_services'
+      url: '/dashboard/services/add_services'
     },
     {
       id: 'manage-sub-services',

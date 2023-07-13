@@ -7,8 +7,7 @@ import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import React, { useRef } from 'react';
-import { createMainService, getAllCompanyTypes } from '../../../store/slices/company-section/action/company';
+import React, { useEffect, useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 // assets
@@ -16,11 +15,11 @@ import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
+import { useCreateMainServiceMutation, useGetSubCompanyTypesWithoutPaginationQuery } from 'store/services/services/serviceApi';
+import { ToastSuccess } from 'utils/toast';
 
 // ==============================|| Add Company Type form ||============================== //
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
@@ -32,16 +31,20 @@ const validationSchema = Yup.object({
   logoImage: fileValidator(SUPPORTED_FORMATS),
   iconImage: fileValidator(SUPPORTED_FORMATS)
 });
+
 function MainService() {
   const logoRef = useRef(null);
   const iconRef = useRef(null);
 
-  const dispatch = useDispatch();
-  const { companyTypes } = useSelector((state) => state.companies);
+  const { data: subCompanyTypes, isLoading, isError, isFetching, error } = useGetSubCompanyTypesWithoutPaginationQuery();
+
+  const [createMainService, result] = useCreateMainServiceMutation();
 
   useEffect(() => {
-    dispatch(getAllCompanyTypes());
-  }, [dispatch]);
+    if (result.isSuccess) {
+      ToastSuccess('Main service has been created successfully');
+    }
+  }, [result.isSuccess]);
 
   return (
     <Page title="Add Services">
@@ -65,7 +68,7 @@ function MainService() {
                 formData.append('description', values.description);
                 formData.append('image_url', values.logoImage);
                 formData.append('icon_url', values.iconImage);
-                dispatch(createMainService(formData));
+                createMainService(formData);
                 setSubmitting(false);
                 resetForm();
               }}
@@ -80,12 +83,12 @@ function MainService() {
                     style={{ xs: 12, lg: 8 }}
                     label="Choose Sub Company Type"
                     placeholder="Choose Sub Company Type"
-                    options={companyTypes?.map((company) => {
-                      return { label: company.title, ...company };
-                    })}
+                    options={error ? [] : subCompanyTypes?.data || []}
+                    getOptionLabel={(subCompanyType) => subCompanyType.title || ''}
                     id="subCompanyType"
                     name="subCompanyType"
                     setFieldValue={props.setFieldValue}
+                    loading={isLoading}
                   />
 
                   <InputText
