@@ -140,6 +140,7 @@ const localCompanies = () => {
           formData.append('company_id', row.original.ID);
           formData.append('status', '5');
           formData.append('company_type', row.original.CompanyType);
+          formData.append('is_branch', row.original.IsBranch);
           blockCompany(formData);
         };
 

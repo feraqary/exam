@@ -64,7 +64,7 @@ export const companyApi = api.injectEndpoints({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getLocalCompanies?page_no=${pageIndex + 1}&page_size=${pageSize}&country=pakistan`,
+          url: `dashboard/getLocalCompanies?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
           method: 'GET'
         };
       },
