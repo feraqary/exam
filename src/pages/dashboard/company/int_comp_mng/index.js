@@ -19,7 +19,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Documents from '../documents';
 import { useGetInternationalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
-import { ToastError, ToastSuccess } from 'utils/toast';
+import { ToastSuccess } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 
 // ===========================|| International Company Managment list||=========================== //
@@ -37,18 +37,12 @@ const IntCompData = () => {
   const { data: internationalCompaniesData, isError, error, isLoading, isFetching } = useGetInternationalCompaniesQuery(pagination);
 
   const [blockCompany, result] = useUpdateCompanyStatusMutation();
-
+  console.log('International ===> ', result);
   useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Company hase been successfully blocked');
     }
   }, [result.isSuccess]);
-
-  useEffect(() => {
-    if (result.isError) {
-      ToastError(result.error);
-    }
-  });
 
   const [docsOpen, setDocsOpen] = useState(false);
   const [docsCrid, setDocsCrid] = useState({ comp: null, id: null });
@@ -150,7 +144,7 @@ const IntCompData = () => {
           formData.append('company_id', row.original.ID);
           formData.append('status', '5');
           formData.append('company_type', row.original.CompanyType);
-
+          formData.append('is_branch', row.original.IsBranch);
           blockCompany(formData);
         };
 
@@ -224,7 +218,7 @@ const IntCompData = () => {
         <Grid item xs={12}>
           <Table
             columnHeaders={ColumnHeaders}
-            data={internationalCompaniesData?.data}
+            data={error ? [] : internationalCompaniesData?.data || []}
             loading={isLoading}
             pagination={pagination}
             setPagination={setPagination}

@@ -13,8 +13,6 @@ import { useGetAllSubCompanyTypesQuery } from 'store/services/company/companyApi
 
 // ===========================|| International Company Managment list||=========================== //
 
-// const isTrue = (bool) =>{  return bool}
-
 const ColumnHeaders = [
   {
     accessorKey: 'image_url',

@@ -73,13 +73,10 @@ function CompanyTypeEdit() {
                 formData.append('image_url', values.logoImage);
                 formData.append('icon_url', values.iconImage);
                 formData.append('description', values.description);
-                // dispatch(updateCompanyType({ formData: formData, company_id: data?.data?.id }));
                 updateSubCompanyType({ formData: formData, id: data?.data?.id });
                 setSubmitting(false);
                 resetForm();
-                if (result.isSuccess) {
-                  ToastSuccess('Sub Company Type hase been successfully updated');
-                }
+                ToastSuccess('Sub Company Type hase been successfully updated');
                 router.back();
               }}
               onReset={(_) => {

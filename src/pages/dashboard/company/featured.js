@@ -66,12 +66,12 @@ const FeaturedCompanies = () => {
         <Grid item xs={12}>
           <Table
             columnHeaders={ColumnHeaders}
-            data={data?.data || []}
+            data={error ? [] : data?.data || []}
             loading={isLoading}
             pagination={pagination}
             setPagination={setPagination}
             isFetching={isFetching}
-            rowCount={10}
+            rowCount={data?.Total}
           />
         </Grid>
       </Grid>
