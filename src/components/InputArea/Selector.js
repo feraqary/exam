@@ -21,8 +21,13 @@ import React, { useState, useMemo } from 'react';
 import InputLayout from './InputLayout';
 import { useField } from 'formik';
 
-const Selector = ({ style, label, options, helperText, name, id, required, helperInfo }) => {
+const Selector = ({ style, label, options, helperText, name, id, required, helperInfo, func }) => {
   const [field, meta] = useField(name);
+
+  
+
+
+
   return (
     <InputLayout style={style} helperText={helperText} label={label} required={required} helperInfo={helperInfo}>
       <NativeSelect id={id} fullWidth {...field}>

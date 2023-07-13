@@ -31,7 +31,7 @@ import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 import { FastField, Formik } from 'formik';
 import * as Yup from 'yup';
-import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
+import { fileValidator, objectValidator, stringValidator, numberValidator } from 'utils/formik-validations';
 
 import {
   getCountries,
@@ -73,7 +73,6 @@ function AddProject() {
     dispatch(getPropertyTypes());
     dispatch(getFacilities());
     dispatch(getCompanyByType());
-    setPhaseType(1);
   }, [dispatch]);
 
   const { countries, loading, states, cities, stateCity, communities, bankCountries, subCommunities, currencies } = useSelector(
@@ -99,9 +98,6 @@ function AddProject() {
   //   console.log(masterDeveloper);
   // }, [stateCity, masterDeveloper]);
   // this is aglobal handle change that requires both value and of the input its used in to return an object with name: value
-  const [city, setCity] = useState(null);
-  const [developerCompany, setDeveloperCompany] = useState(null);
-  const [subDeveloperCompany, setSubDeveloperCompany] = useState(null);
 
   const [phases, setPhases] = useState([{ id: null, phaseName: '', numberOfPhases: 0, mapUrl: '' }]);
 
@@ -110,6 +106,8 @@ function AddProject() {
 
   const [address, setAddress] = useState('Abu Dhabi');
   const [country, setCountry] = useState('');
+
+  const [single, setSingle] = useState(true);
 
   const [state, setState] = useState('');
 
@@ -127,74 +125,32 @@ function AddProject() {
     propertyTitle: stringValidator('Please enter the property title'),
     arabicPropertyTitle: stringValidator('Please enter the arabic title'),
     propertyDescription: stringValidator('Please enter the property description'),
-    arabicPropertyDescription: stringValidator('Please enter the arabic description')
+    arabicPropertyDescription: stringValidator('Please enter the arabic description'),
+    phases: Yup.array().of(
+      Yup.object().shape({
+        phaseName: stringValidator('Please enter the arabic description'),
+        NoOfProperties: numberValidator('ssssssssss'),
+        locationAddress: stringValidator('Please enter the arabic description')
+      })
+    )
     // locationDistrict: objectValidator('please select a district'),
     // locationCommunity: objectValidator('please select a community'),
     // locationSubCommunity: objectValidator('please select a sub community')
   });
 
-  const Add = () => {
-    const { values } = useFormikContext();
-    values.phasenames.push('hello');
-    console.log('values ===> ', values.phasenames);
-    return (
-      <Formik>
-        <AddPhase />
-      </Formik>
-    );
-  };
-
-  const AddPhase = () => {
-    const { setFieldValue, values, isSubmitting, resetForm } = useFormikContext();
-
-    const addPhases = () => {
-      return phases.map((phase, index) => (
-        <DynamicInput value={values} num={index + 1} setFieldValue={() => setFieldValue} key={index} first={index} />
-      ));
-    };
-
-    return <>{addPhases()}</>;
-  };
-
   const [facilitiesSelected, setfacilitiesSelected] = useState([]);
   const [floors, setfloors] = useState({ label: '', id: true });
   const [shared, setShared] = useState(true);
-
-  // const [phaseType, setPhaseType] = useState([
-  //   { id: 1, type: 'single' },
-  //   { id: 2, type: 'multiple' }
-  // ]);
-
-  const isfloors = [
-    { label: 'Apartment', id: true },
-    { label: 'Farm', id: false },
-    { label: 'Compound', id: false }
-  ];
-  const handleCheck = (e) => {
-    setfacilities([...facilities, e]);
-  };
-
-  const [phasesnum, setPhasesnum] = useState(0);
 
   const DynamicInput = ({ num, values, setFieldValues }) => {
     const size = 3.34;
     const MAP_SIZE = 0.9;
     const [open, setOpen] = useState(false);
-    const [lat, setPhaseLat] = useState(24.4979201);
-    const [long, setPhaseLong] = useState(54.4014014);
-    const [poly, setPoly] = useState([]);
-    const [phaseName, setPhaseName] = useState('');
-    const [noOfProperties, setNoOfProperties] = useState('');
-    const [locAdd, setLocAdd] = useState('');
-    // const { setFieldValue, values } = useFormikContext();
 
     useEffect(() => {
-      // setFieldValue('phases.id', phasesnum);
-      console.log(values);
-    });
-    useEffect(() => {
-      // setFieldValue('phases.polygon', poly);
-    }, [poly]);
+      setFieldValues(`phases[${num}].id`, num + 1);
+      setFieldValues('numberofPhases', num + 1);
+    }, []);
 
     return (
       <>
@@ -204,39 +160,31 @@ function AddProject() {
           helperText="Please enter phase name"
           style={{ xs: 12, lg: size }}
           type="text"
-          id="phasenames"
-          name={`phases${[num]}.phaseName`}
-          onChange={() => {
-            setPhaseName(e.target.value);
-          }}
-          value={phaseName}
+          id={`phases[${num}].phaseName`}
+          name={`phases[${num}].phaseName`}
+          required
         />
         <InputText
           label="Number of Properties"
           placeholder="Number of Properties"
           helperText="Please enter number of properties"
           style={{ xs: 12, lg: size }}
-          type="number"
-          id="noofproperties"
-          name="phases.NoOfProperties"
-          onChange={() => {
-            setPhaseName(e.target.value);
-          }}
-          value={noOfProperties}
+          id={`phases[${num}].NoOfProperties`}
+          name={`phases[${num}].NoOfProperties`}
+          required
         />
         <InputText
           label="Location Address"
           placeholder="Location Map URL"
           helperText="Please enter the location address map url"
           type="text"
-          id="locationAddress"
-          name="phases.locationAddress"
+          id={`phases[${num}].locationAddress`}
+          name={`phases[${num}].locationAddress`}
           style={{ xs: 12, lg: size }}
-          onChange={() => {
-            setLocAdd(e.target.value);
-          }}
           inputProps={<CloseIcon />}
+          required
         />
+
         <Grid xs={12} lg={MAP_SIZE} justifyContent="center">
           <Button
             onClick={() => {
@@ -250,29 +198,18 @@ function AddProject() {
           </Button>
         </Grid>
         <PopUp title="Use the Map" opened={open} setOpen={setOpen} size={'xl'} fullWidth>
-          <Map
-            locationAddress={address}
-            phase_lat={lat}
-            phase_long={long}
-            setPhaseLong={setPhaseLong}
-            setPhaseLat={setPhaseLat}
-            xs={12}
-            lg={12}
-            height={'65vh'}
-            forPhase={true}
-            setPoly={setPoly}
-          />
+          <Map locationAddress={address} xs={12} i={num} lg={12} height={'65vh'} forPhase={true} close={setOpen} />
         </PopUp>
         <>
           <Grid xs={12} lg={1} justifyContent="center" sx={{ marginLeft: '8px', width: '100%' }}>
             <Button
               onClick={() => {
-                const updatedValues = [...values.phases];
-                updatedValues.pop(); // Remove the last object from the array
-                setFieldValues('values', updatedValues);
+                const updatedPhases = [...values.phases];
+                updatedPhases.splice(num, 1);
+                setFieldValues('phases', updatedPhases);
+                console.log(values.numberofPhases);
               }}
               variant="outlined"
-              // fullWidth
               color="error"
               sx={{ margin: '19px 0px 0px 8px', height: '48px' }}
             >
@@ -284,14 +221,8 @@ function AddProject() {
     );
   };
 
-  const [phaseType, setPhaseType] = useState([
-    { id: 1, type: 'single' },
-    { id: 2, type: 'multiple' }
-  ]);
-  const [phaseTypeSelected, setPhaseTypeSelected] = useState(1);
-
   const resetComponents = (phaseType) => {
-    if (phaseType == 1) {
+    if (phaseType) {
       setPhases((prev) => {
         // Create a new array containing only the first element
         const newPhases = [prev[0]];
@@ -303,8 +234,8 @@ function AddProject() {
   };
 
   useEffect(() => {
-    resetComponents(phaseType);
-  }, [phaseType]);
+    resetComponents(single);
+  }, [single]);
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
@@ -321,9 +252,9 @@ function AddProject() {
                 detailsCitySelector: '',
                 masterDeveloperSelector: '',
                 subDeveloperCompanySelector: '',
-                phaseType: phaseType,
+                phaseType: single ? 'single' : 'multiple',
                 phases: [{ id: null, phaseName: '', NoOfProperties: null, locationAddress: '', polygonCoords: null }],
-                numberofPhases: null,
+                numberofPhases: 1,
                 isshared: shared,
                 locationAddress: '',
                 locationCountrySelect: '',
@@ -466,26 +397,23 @@ function AddProject() {
                           options={['single', 'multiple']}
                           style={{ xs: 12, lg: 4 }}
                           onChange={(e) => {
-                            setPhaseTypeSelected(e);
+                            e == 1 ? setSingle(true) : setSingle(false), console.log(e);
                           }}
                         />
                         <Grid item lg={8}></Grid>
 
-                        {phaseTypeSelected == 1 ? (
+                        {!single ? (
                           <>
-                            {/* <Add /> */}
-
-                            {Array(props.values.phases.length)
-                              .fill(null)
-                              .map((_, index) => (
-                                <DynamicInput setFieldValues={props.setFieldValue} values={props.values} num={index} key={index} />
-                              ))}
+                            {props.values.phases.map((_, index) => (
+                              <DynamicInput setFieldValues={props.setFieldValue} values={props.values} num={index} key={index} />
+                            ))}
                             <Grid container justifyContent="center" style={{ xs: 12, lg: 12, marginTop: 20 }}>
                               <Button
                                 variant="outlined"
                                 style={{ width: '10%' }}
                                 onClick={() => {
-                                  setPhasesnum(phasesnum + 1);
+                                  props.setFieldValue('numberofPhases', props.values.phases.length);
+
                                   const newPhases = {
                                     id: null,
                                     phaseName: '',
@@ -614,7 +542,7 @@ function AddProject() {
                     </MainCard>
                   </Grid>
 
-                  {phaseTypeSelected == 1 ? (
+                  {single ? (
                     <>
                       <Grid item xs={12}>
                         <MainCard title="Property Details">

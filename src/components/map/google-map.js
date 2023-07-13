@@ -19,7 +19,6 @@ import { border } from '@mui/system';
 
 export default function Map({
   forPhase,
-  setPoly,
   setPhaseLat,
   setPhaseLong,
   phase_long,
@@ -28,10 +27,13 @@ export default function Map({
   xs,
   lg,
   mapUrl,
-  height
+  height,
+  i,
+  close
 }) {
   const [lat, setlat] = useState(24.4984312);
   const [long, setlong] = useState(54.4036975);
+  const [polygonsDrawn, setPolygonsDrawn] = useState();
   const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
   const enable = false;
   const { setFieldValue, values } = useFormikContext();
@@ -168,15 +170,9 @@ export default function Map({
       setPolygons([...polygons, newPolygon]);
     }
   };
-  const [polyToSubmit, setPolyToSubmit] = useState([]);
-
-  useEffect(()=>{
-    console.log(polyToSubmit)
-  },[polyToSubmit])
 
   const onDeleteDrawing = () => {
     setPolygons([]);
-    setPolyToSubmit([]);
     activePolygonIndex.current = null; // Reset the activePolygonIndex
   };
 
@@ -193,10 +189,7 @@ export default function Map({
     }
   };
 
-  const handlePhaseLoc = (lat, lng) => {
-    setPhaseLat(lat);
-    setPhaseLong(lng);
-  };
+
 
   function getPaths(polygon) {
     var polygonBounds = polygon.getPath();
@@ -210,7 +203,6 @@ export default function Map({
     }
     return bounds;
   }
-
   if (!isLoaded) {
     return <div>loading....</div>;
   } else {
@@ -221,27 +213,27 @@ export default function Map({
           center={{ lat: phase_lat && forPhase ? phase_lat : lat, lng: phase_long && forPhase ? phase_long : long }}
           zoom={12}
           onClick={(e) => {
-            if (forPhase) {
-              handlePhaseLoc(e.latLng.lat(), e.latLng.lng());
-            } else {
-              setFieldValue('lat', e.latLng.lat());
-              setFieldValue('long', e.latLng.lng());
+
               setlat(e.latLng.lat());
               setlong(e.latLng.lng());
-            }
+            
           }}
           onLoad={onLoadMap}
         >
-          <Marker position={{ lat: phase_lat ? phase_lat : lat, lng: phase_long ? phase_long : long }} />
-          {/* {forPhase && (
-          )} */}
+          <Marker position={{ lat: lat, lng : long }} />
+          {forPhase && (
             <>
               <DrawingManager
                 onLoad={onLoadDrawingManager}
                 onOverlayComplete={onOverlayComplete}
                 onPolygonComplete={(e) => {
-                  setPolyToSubmit([...polyToSubmit, getPaths(e)]);
-       
+                  setPolygons([...polygons, getPaths(e)]);
+                  if (polygonsDrawn == 1) {
+                    setPolygonsDrawn(0);
+                    setPolygons([]);
+                  } else {
+                    setPolygonsDrawn(1);
+                  }
                 }}
                 options={drawingManagerOptions}
               />
@@ -281,11 +273,18 @@ export default function Map({
                 Clear Drawings
               </Button>
             </>
+          )}
         </GoogleMap>
         {forPhase && (
           <>
             <Grid item xs={12} lg={12} justifyContent={'center'} sx={{ padding: '16px 0 0 0', textAlign: 'center' }}>
-              <Button variant="contained" onClick={() => setPoly([...polyToSubmit])}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setFieldValue(`phases[${i}].polygonCoords`, polygons);
+                  close(false);
+                }}
+              >
                 Submit Location
               </Button>
             </Grid>
@@ -366,8 +365,6 @@ export default function Map({
 //     );
 //   }
 // }
-
-
 
 // let phase = {
 //   name: '',
