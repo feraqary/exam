@@ -10,7 +10,8 @@ export const companyApi = api.injectEndpoints({
           method: 'POST',
           body: formData
         };
-      }
+      },
+      invalidatesTags: ['subCompanies']
     }),
 
     //CREATE COMPANY API
@@ -21,7 +22,8 @@ export const companyApi = api.injectEndpoints({
           method: 'POST',
           body: formData
         };
-      }
+      },
+      invalidatesTags: ['LocalCompanies', 'InternationalCompanies']
     }),
 
     //GET SUB COMPANY TYPES BASED ON COMPANY TYPE API
@@ -31,7 +33,8 @@ export const companyApi = api.injectEndpoints({
           url: `services/getAllCompanyTypesByType/${id}`,
           method: 'GET'
         };
-      }
+      },
+      providesTags: ['subCompanies']
     }),
 
     //GET SUB COMPANY
@@ -61,11 +64,11 @@ export const companyApi = api.injectEndpoints({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getLocalCompanies?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
+          url: `dashboard/getLocalCompanies?page_no=${pageIndex + 1}&page_size=${pageSize}&country=pakistan`,
           method: 'GET'
         };
       },
-      providesTags: ['CompaniesByStatus', 'CompaniesByRank']
+      providesTags: ['LocalCompanies']
     }),
 
     //GET INTERNATIONAL COMPANIES API
@@ -73,11 +76,11 @@ export const companyApi = api.injectEndpoints({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getInternationalCompanies?page_no=${pageIndex + 1}&page_size=${pageSize}&country=pakistan`,
+          url: `dashboard/getInternationalCompanies?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
           method: 'GET'
         };
       },
-      providesTags: ['CompaniesByStatus', 'CompaniesByRank']
+      providesTags: ['InternationalCompanies']
     }),
 
     // GET A SINGLE COMPANY API
@@ -157,7 +160,7 @@ export const companyApi = api.injectEndpoints({
           body: formData
         };
       },
-      invalidatesTags: ['subCompanies']
+      invalidatesTags: ['subCompanies', 'InternationalCompanies', 'LocalCompanies']
     }),
 
     //UPDATE COMPANY RANK API
@@ -169,7 +172,7 @@ export const companyApi = api.injectEndpoints({
           body: formData
         };
       },
-      invalidatesTags: ['CompaniesByRank']
+      invalidatesTags: ['CompaniesByRank', 'InternationalCompanies', 'LocalCompanies']
     }),
 
     //UPDATE COMPANY STATUS API
@@ -182,7 +185,7 @@ export const companyApi = api.injectEndpoints({
           body: formData
         };
       },
-      invalidatesTags: ['CompaniesByStatus']
+      invalidatesTags: ['CompaniesByStatus', 'InternationalCompanies', 'LocalCompanies']
     }),
 
     //UPDATE COMPANY DOC API

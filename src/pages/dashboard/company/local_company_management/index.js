@@ -40,6 +40,8 @@ const localCompanies = () => {
 
   const [blockCompany, result] = useUpdateCompanyStatusMutation();
 
+  console.log('Local ===> ', result);
+
   useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Company hase been successfully blocked');
@@ -138,7 +140,6 @@ const localCompanies = () => {
           formData.append('company_id', row.original.ID);
           formData.append('status', '5');
           formData.append('company_type', row.original.CompanyType);
-
           blockCompany(formData);
         };
 
@@ -207,7 +208,7 @@ const localCompanies = () => {
         <Grid item xs={12}>
           <Table
             columnHeaders={ColumnHeaders}
-            data={localCompaniesData?.data || []}
+            data={error ? [] : localCompaniesData?.data || []}
             loading={isLoading}
             pagination={pagination}
             setPagination={setPagination}

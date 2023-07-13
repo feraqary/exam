@@ -15,11 +15,10 @@ import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
-import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 import { useCreateMainServiceMutation, useGetSubCompanyTypesWithoutPaginationQuery } from 'store/services/services/serviceApi';
-import { ToastSuccess } from 'utils/toast';
+import { ToastError, ToastSuccess } from 'utils/toast';
 
 // ==============================|| Add Company Type form ||============================== //
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
@@ -45,6 +44,13 @@ function MainService() {
       ToastSuccess('Main service has been created successfully');
     }
   }, [result.isSuccess]);
+
+  useEffect(() => {
+    if (result.isError) {
+      console.log(error);
+      ToastError(error);
+    }
+  }, [result.isError]);
 
   return (
     <Page title="Add Services">
