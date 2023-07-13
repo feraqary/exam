@@ -27,28 +27,28 @@ const agents = {
       title: <FormattedMessage id="Add Agent" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
-      url: '/agent/add_agent'
+      url: '/dashboard/agent/add_agent'
     },
 
     {
       id: 'local-agents',
       title: <FormattedMessage id="Manage Local Agents" />,
       type: 'item',
-      url: '/agent/local',
+      url: '/dashboard/agent/local',
       breadcrumbs: false
     },
     {
       id: 'international-agents',
       title: <FormattedMessage id="Manage International Agents" />,
       type: 'item',
-      url: '/agent/international',
+      url: '/dashboard/agent/international',
       breadcrumbs: false
     },
     {
       id: 'deleted-agent',
       title: <FormattedMessage id="Manage Deleted Agent" />,
       type: 'item',
-      url: '/agent/deleted_agents',
+      url: '/dashboard/agent/deleted_agents',
       breadcrumbs: false
     },
     {
@@ -56,7 +56,7 @@ const agents = {
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,
-      url: '/agent/activities'
+      url: '/dashboard/agent/activities'
     }
   ]
 };

@@ -26,32 +26,32 @@ const careers = {
       id: 'manage-jobs',
       title: <FormattedMessage id="Jobs" />,
       type: 'item',
-      url: '/career/jobs'
+      url: '/dashboard/career/jobs'
     },
     {
       id: 'manage-categories',
       title: <FormattedMessage id="Categories" />,
       type: 'item',
-      url: '/career/categories'
+      url: '/dashboard/career/categories'
     },
     {
       id: 'manage-articles',
       title: <FormattedMessage id="Articles" />,
       type: 'item',
-      url: '/career/articles'
+      url: '/dashboard/career/articles'
     },
     {
       id: 'delete-articles',
       title: <FormattedMessage id="Deleted Careers" />,
       type: 'item',
-      url: '/career/deleted_careers'
+      url: '/dashboard/career/deleted_careers'
     },
     {
       id: 'career-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,
-      url: '/career/activities'
+      url: '/dashboard/career/activities'
     }
   ]
 };

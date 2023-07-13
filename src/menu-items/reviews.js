@@ -28,27 +28,27 @@ const reviews = {
       title: <FormattedMessage id="Agent Reviews" />,
       type: 'item',
       icon: icons.IconForms,
-      url: '/review/agentreview'
+      url: '/dashboard/review/agentreview'
     },
     {
       id: 'company-reviews',
       title: <FormattedMessage id="Company Reviews" />,
       type: 'item',
-      url: '/review/company',
+      url: '/dashboard/review/company',
       icon: icons.IconForms
     },
     {
       id: 'project-reviews',
       title: <FormattedMessage id="Project Reviews" />,
       type: 'item',
-      url: '/review/project',
+      url: '/dashboard/review/project',
       icon: icons.IconForms
     },
     {
       id: 'building-reviews',
       title: <FormattedMessage id="Building Reviews" />,
       type: 'item',
-      url: '/review/building',
+      url: '/dashboard/review/building',
       icon: icons.IconForms
     }
   ]

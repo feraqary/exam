@@ -31,7 +31,9 @@ import {
   getCompanyType,
   getAllDeveloperCompany,
   getSubDevCompany,
-  getPropertyTypes
+  getPropertyTypes,
+  getFacilities,
+  getCompanyByType
 } from '../action/company';
 
 import { ToastError, ToastLoading, ToastSuccess } from 'utils/toast';
@@ -41,7 +43,9 @@ import { deleteService } from 'store/slices/company-section/action/company';
 const initialState = {
   companies: [],
   propertyTypes: [],
+  facilities: [],
   masterDeveloper: [],
+  broker: [],
   subdev: [],
   localCompanies: [],
   internationalCompanies: [],
@@ -579,21 +583,37 @@ const slice = createSlice({
         state.propertyTypes = state.propertyTypes;
         state.error = action.payload;
       })
-      // .addCase(getPropertyTypes.pending, (state, action) => {
-      //   state.loading = true;
-      //   state.propertyTypes = state.propertyTypes;
-      //   state.error = null;
-      // })
-      // .addCase(getPropertyTypes.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.propertyTypes = action.payload;
-      //   state.error = null;
-      // })
-      // .addCase(getPropertyTypes.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.propertyTypes = state.propertyTypes;
-      //   state.error = action.payload;
-      // });
+
+      .addCase(getFacilities.pending, (state, action) => {
+        state.loading = true;
+        state.facilities = state.facilities;
+        state.error = null;
+      })
+      .addCase(getFacilities.fulfilled, (state, action) => {
+        state.loading = false;
+        state.facilities = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getFacilities.rejected, (state, action) => {
+        state.loading = false;
+        state.facilities = state.facilities;
+        state.error = action.payload;
+      })
+      .addCase(getCompanyByType.pending, (state, action) => {
+        state.loading = true;
+        state.broker = state.broker;
+        state.error = null;
+      })
+      .addCase(getCompanyByType.fulfilled, (state, action) => {
+        state.loading = false;
+        state.broker = action.payload?.data;
+        state.error = null;
+      })
+      .addCase(getCompanyByType.rejected, (state, action) => {
+        state.loading = false;
+        state.broker = state.broker;
+        state.error = action.payload;
+      });
   }
 });
 

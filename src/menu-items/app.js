@@ -30,21 +30,21 @@ const app = {
       title: <FormattedMessage id="Posts" />,
       type: 'item',
       icon: icons.IconKey,
-      url: '/sm-app/posts'
+      url: '/dashboard/sm-app/posts'
     },
     {
       id: 'Documents',
       title: <FormattedMessage id="Documents" />,
       type: 'item',
       icon: icons.IconFile,
-      url: '/company/documents'
+      url: '/dashboard/company/documents'
     },
     {
       id: 'ManageDocuments',
       title: <FormattedMessage id="Manage documents" />,
       type: 'item',
       icon: icons.IconSettings,
-      url: '/company/documents/manage_documents'
+      url: '/dashboard/company/documents/manage_documents'
     }
   ]
 };

@@ -27,14 +27,14 @@ const contact = {
       title: <FormattedMessage id="Add Contact" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
-      url: '/contact/add_contact'
+      url: '/dashboard/contact/add_contact'
     },
     {
       id: 'manage-contact',
       title: <FormattedMessage id="Manage Contacts" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
-      url: '/contact/manage_contacts'
+      url: '/dashboard/contact/manage_contacts'
     }
   ]
 };

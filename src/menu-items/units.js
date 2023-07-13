@@ -27,57 +27,57 @@ const units = {
       title: <FormattedMessage id="Add Unit" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
-      url: '/units/add_unit'
+      url: '/dashboard/units/add_unit'
     },
     {
       id: 'sale-units',
       title: <FormattedMessage id="Sale Units" />,
       type: 'item',
-      url: '/units/sale_units'
+      url: '/dashboard/units/sale_units'
     },
     {
       id: 'rent-units',
       title: <FormattedMessage id="Rent Units" />,
       type: 'item',
-      url: '/units/rent_units'
+      url: '/dashboard/units/rent_units'
     },
     {
       id: 'shared-units',
       title: <FormattedMessage id="Shared Units" />,
       type: 'item',
-      url: '/units/shared_units'
+      url: '/dashboard/units/shared_units'
     },
     {
       id: 'international-units',
       title: <FormattedMessage id="International Units" />,
       type: 'item',
-      url: '/units/international_units'
+      url: '/dashboard/units/international_units'
     },
     {
       id: 'rejected-units',
       title: <FormattedMessage id="Rejected Units" />,
       type: 'item',
-      url: '/units/rejected_units'
+      url: '/dashboard/units/rejected_units'
     },
     {
       id: 'deleted-units',
       title: <FormattedMessage id="Deleted Units" />,
       type: 'item',
-      url: '/units/deleted_units'
+      url: '/dashboard/units/deleted_units'
     },
     {
       id: 'unit-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,
-      url: '/units/activities'
+      url: '/dashboard/units/activities'
     },
     {
       id: 'problem-reports',
       title: <FormattedMessage id="Problem Reports" />,
       type: 'item',
       icon: icons.IconBorderAll,
-      url: '/units/problem_reports'
+      url: '/dashboard/units/problem_reports'
     }
   ]
 };

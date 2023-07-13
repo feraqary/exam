@@ -43,23 +43,26 @@ import {
   getAllCurrencies,
   getStateCity
 } from 'store/slices/country-section/actions/countries';
-import { getAllDeveloperCompany, getSubDevCompany, getPropertyTypes } from 'store/slices/company-section/action/company';
+import {
+  getAllDeveloperCompany,
+  getSubDevCompany,
+  getPropertyTypes,
+  getFacilities,
+  getCompanyByType
+} from 'store/slices/company-section/action/company';
 import { useDispatch, useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomDateTime from 'components/InputArea/CustomDateTime';
 import { useGetCountriesQuery } from 'store/slices/location/locationHooks';
 import { id } from 'date-fns/locale';
 import PopUp from 'components/InputArea/PopUp';
+import { useFormikContext } from 'formik';
+import { Add } from '@mui/icons-material';
+import { values } from 'lodash';
+
 // ==============================|| Add Project ||============================== //
 
 function AddProject() {
-  // const { data, isLoading, isFetching, isError, error } = useGetCountriesQuery();
-
-  // console.log('location: ', useGetCountriesQuery());
-  // console.log('fetching:  ', isFetching);
-  // console.log('Error:  ', error);
-  // console.log('data:  ', data);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -68,9 +71,9 @@ function AddProject() {
     dispatch(getAllCurrencies());
     dispatch(getAllDeveloperCompany());
     dispatch(getPropertyTypes());
-
+    dispatch(getFacilities());
+    dispatch(getCompanyByType());
     setPhaseType(1);
-    console.log(cities);
   }, [dispatch]);
 
   const { countries, loading, states, cities, stateCity, communities, bankCountries, subCommunities, currencies } = useSelector(
@@ -86,23 +89,21 @@ function AddProject() {
     services,
     masterDeveloper,
     subdev,
-    propertyTypes
+    propertyTypes,
+    facilities,
+    broker
   } = useSelector((state) => state.companies);
-  console.log('property types: ', propertyTypes);
 
-  useEffect(() => {
-    console.log(stateCity);
-    console.log(masterDeveloper);
-  }, [stateCity, masterDeveloper]);
+  // useEffect(() => {
+  //   console.log(stateCity);
+  //   console.log(masterDeveloper);
+  // }, [stateCity, masterDeveloper]);
   // this is aglobal handle change that requires both value and of the input its used in to return an object with name: value
   const [city, setCity] = useState(null);
   const [developerCompany, setDeveloperCompany] = useState(null);
   const [subDeveloperCompany, setSubDeveloperCompany] = useState(null);
 
-  const [phaseType, setPhaseType] = useState({ id: 1, type: 'single' });
-  const [phaseTypeSelected, setPhaseTypeSelected] = useState(1);
-
-  const [phases, setPhases] = useState([{ phaseName: '', numberOfPhases: 0, mapUrl: '' }]);
+  const [phases, setPhases] = useState([{ id: null, phaseName: '', numberOfPhases: 0, mapUrl: '' }]);
 
   const [long, setlong] = useState(null);
   const [lat, setlat] = useState(null);
@@ -111,42 +112,6 @@ function AddProject() {
   const [country, setCountry] = useState('');
 
   const [state, setState] = useState('');
-
-  const addComponent = () => {
-    const phase = { phaseName: '', numberOfPhases: 0, mapUrl: '' };
-
-    setPhases((prev) => [...prev, phase]);
-  };
-
-  const removeComponent = () => {
-    setPhases((prev) => {
-      // Create a copy of the phases array
-      const newPhases = [...prev];
-
-      // Remove the last element from the array
-      if (newPhases.length != 1 && newPhases.length > 1) {
-        newPhases.pop();
-      }
-
-      // Return the updated array
-      return newPhases;
-    });
-  };
-
-  const resetComponents = (phaseType) => {
-    if (phaseType == 1) {
-      setPhases((prev) => {
-        // Create a new array containing only the first element
-        const newPhases = [prev[0]];
-
-        // Return the updated array
-        return newPhases;
-      });
-    }
-  };
-  useEffect(() => {
-    resetComponents(phaseType);
-  }, [phaseType]);
 
   const validationSchema = Yup.object({
     projectTitle: stringValidator('Please provide a title'),
@@ -168,11 +133,68 @@ function AddProject() {
     // locationSubCommunity: objectValidator('please select a sub community')
   });
 
-  const DynamicInput = ({ first, num }) => {
-    const P_TYPE = phases.length != 1 && phases.length > 1 && first != 0;
-    const size = P_TYPE ? 3.34 : 3.5;
-    const MAP_SIZE = P_TYPE ? 0.9 : 1.5;
+  const Add = () => {
+    const { values } = useFormikContext();
+    values.phasenames.push('hello');
+    console.log('values ===> ', values.phasenames);
+    return (
+      <Formik>
+        <AddPhase />
+      </Formik>
+    );
+  };
+
+  const AddPhase = () => {
+    const { setFieldValue, values, isSubmitting, resetForm } = useFormikContext();
+
+    const addPhases = () => {
+      return phases.map((phase, index) => (
+        <DynamicInput value={values} num={index + 1} setFieldValue={() => setFieldValue} key={index} first={index} />
+      ));
+    };
+
+    return <>{addPhases()}</>;
+  };
+
+  const [facilitiesSelected, setfacilitiesSelected] = useState([]);
+  const [floors, setfloors] = useState({ label: '', id: true });
+  const [shared, setShared] = useState(true);
+
+  // const [phaseType, setPhaseType] = useState([
+  //   { id: 1, type: 'single' },
+  //   { id: 2, type: 'multiple' }
+  // ]);
+
+  const isfloors = [
+    { label: 'Apartment', id: true },
+    { label: 'Farm', id: false },
+    { label: 'Compound', id: false }
+  ];
+  const handleCheck = (e) => {
+    setfacilities([...facilities, e]);
+  };
+
+  const [phasesnum, setPhasesnum] = useState(0);
+
+  const DynamicInput = ({ num, values, setFieldValues }) => {
+    const size = 3.34;
+    const MAP_SIZE = 0.9;
     const [open, setOpen] = useState(false);
+    const [lat, setPhaseLat] = useState(24.4979201);
+    const [long, setPhaseLong] = useState(54.4014014);
+    const [poly, setPoly] = useState([]);
+    const [phaseName, setPhaseName] = useState('');
+    const [noOfProperties, setNoOfProperties] = useState('');
+    const [locAdd, setLocAdd] = useState('');
+    // const { setFieldValue, values } = useFormikContext();
+
+    useEffect(() => {
+      // setFieldValue('phases.id', phasesnum);
+      console.log(values);
+    });
+    useEffect(() => {
+      // setFieldValue('phases.polygon', poly);
+    }, [poly]);
 
     return (
       <>
@@ -182,8 +204,12 @@ function AddProject() {
           helperText="Please enter phase name"
           style={{ xs: 12, lg: size }}
           type="text"
-          id="phaseName"
-          name="phaseName"
+          id="phasenames"
+          name={`phases${[num]}.phaseName`}
+          onChange={() => {
+            setPhaseName(e.target.value);
+          }}
+          value={phaseName}
         />
         <InputText
           label="Number of Properties"
@@ -191,8 +217,12 @@ function AddProject() {
           helperText="Please enter number of properties"
           style={{ xs: 12, lg: size }}
           type="number"
-          id="numberofPhases"
-          name="numberofPhases"
+          id="noofproperties"
+          name="phases.NoOfProperties"
+          onChange={() => {
+            setPhaseName(e.target.value);
+          }}
+          value={noOfProperties}
         />
         <InputText
           label="Location Address"
@@ -200,8 +230,11 @@ function AddProject() {
           helperText="Please enter the location address map url"
           type="text"
           id="locationAddress"
-          name="locationAddress"
+          name="phases.locationAddress"
           style={{ xs: 12, lg: size }}
+          onChange={() => {
+            setLocAdd(e.target.value);
+          }}
           inputProps={<CloseIcon />}
         />
         <Grid xs={12} lg={MAP_SIZE} justifyContent="center">
@@ -216,57 +249,62 @@ function AddProject() {
             Use map
           </Button>
         </Grid>
-        <PopUp title="Use the Map" opened={open} setOpen={setOpen} size={'xl'} fullScreen>
-          <Map locationAddress={address} xs={12} lg={12} height={'85vh'} />
+        <PopUp title="Use the Map" opened={open} setOpen={setOpen} size={'xl'} fullWidth>
+          <Map
+            locationAddress={address}
+            phase_lat={lat}
+            phase_long={long}
+            setPhaseLong={setPhaseLong}
+            setPhaseLat={setPhaseLat}
+            xs={12}
+            lg={12}
+            height={'65vh'}
+            forPhase={true}
+            setPoly={setPoly}
+          />
         </PopUp>
-        {P_TYPE ? (
-          <>
-            <Grid xs={12} lg={1} justifyContent="center" sx={{ marginLeft: '8px', width: '100%' }}>
-              <Button
-                onClick={() => {
-                  removeComponent();
-                }}
-                variant="outlined"
-                // fullWidth
-                color="error"
-                sx={{ margin: '19px 0px 0px 8px', height: '48px' }}
-              >
-                <CloseIcon />
-              </Button>
-            </Grid>
-          </>
-        ) : (
-          <></>
-        )}
+        <>
+          <Grid xs={12} lg={1} justifyContent="center" sx={{ marginLeft: '8px', width: '100%' }}>
+            <Button
+              onClick={() => {
+                const updatedValues = [...values.phases];
+                updatedValues.pop(); // Remove the last object from the array
+                setFieldValues('values', updatedValues);
+              }}
+              variant="outlined"
+              // fullWidth
+              color="error"
+              sx={{ margin: '19px 0px 0px 8px', height: '48px' }}
+            >
+              <CloseIcon />
+            </Button>
+          </Grid>
+        </>
       </>
     );
   };
 
-  const addPhases = (num) => {
-    return phases.map((phase, index) => {
-      return (
-        <>
-          <DynamicInput num={index + 1} key={index} first={index} />
-        </>
-      );
-    });
+  const [phaseType, setPhaseType] = useState([
+    { id: 1, type: 'single' },
+    { id: 2, type: 'multiple' }
+  ]);
+  const [phaseTypeSelected, setPhaseTypeSelected] = useState(1);
+
+  const resetComponents = (phaseType) => {
+    if (phaseType == 1) {
+      setPhases((prev) => {
+        // Create a new array containing only the first element
+        const newPhases = [prev[0]];
+
+        // Return the updated array
+        return newPhases;
+      });
+    }
   };
 
-  const [phasesnum, setPhasesnum] = useState(0);
-  const [facilities, setfacilities] = useState([]);
-  const [floors, setfloors] = useState({ label: '', id: true });
-  const [shared, setShared] = useState(true);
-
-  const isfloors = [
-    { label: 'Apartment', id: true },
-    { label: 'Farm', id: false },
-    { label: 'Compound', id: false }
-  ];
-  const handleCheck = (e) => {
-    setfacilities([...facilities, e]);
-  };
-
-  const testing = ['banks', 'rental pool', 'coffee shop', 'parking'];
+  useEffect(() => {
+    resetComponents(phaseType);
+  }, [phaseType]);
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
@@ -275,6 +313,8 @@ function AddProject() {
           <Grid container spacing={gridSpacing}>
             <Formik
               initialValues={{
+                lat: 27,
+                long: 25,
                 projectTitle: '',
                 brokerCompany: '',
                 detailsCountrySelect: '',
@@ -282,8 +322,9 @@ function AddProject() {
                 masterDeveloperSelector: '',
                 subDeveloperCompanySelector: '',
                 phaseType: phaseType,
-                phaseName: '',
-                numberofPhases: '',
+                phases: [{ id: null, phaseName: '', NoOfProperties: null, locationAddress: '', polygonCoords: null }],
+                numberofPhases: null,
+                isshared: shared,
                 locationAddress: '',
                 locationCountrySelect: '',
                 mapUrl: '',
@@ -308,11 +349,15 @@ function AddProject() {
                 propertyTitle: '',
                 arabicPropertyTitle: '',
                 propertyDescription: '',
-                arabicPropertyDescription: ''
+                arabicPropertyDescription: '',
+                areaPolygon: []
               }}
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 console.log('project values: ', values);
+              }}
+              handleChange={() => {
+                console.log(values);
               }}
             >
               {(props) => (
@@ -350,9 +395,8 @@ function AddProject() {
                             <AutoCompleteSelector
                               label="Broker Company"
                               placeholder="Select company"
-                              options={countries?.map((country) => {
-                                return { label: country.Country, id: country.ID, flag: country.Flag };
-                              })}
+                              options={broker}
+                              getOptionLabel={(property) => property.company_name || ''}
                               style={{ xs: 12, lg: 4 }}
                               helperText="Please select a company"
                               name="brokerCompany"
@@ -365,9 +409,8 @@ function AddProject() {
                             <AutoCompleteSelector
                               label="Country"
                               placeholder="Select Country"
-                              options={countries?.map((country) => {
-                                return { label: country.Country, id: country.ID, flag: country.Flag };
-                              })}
+                              options={countries}
+                              getOptionLabel={(country) => country.Country || ''}
                               style={{ xs: 12, lg: 4 }}
                               helperText="Please select country"
                               name="detailsCountrySelect"
@@ -381,9 +424,8 @@ function AddProject() {
                             <AutoCompleteSelector
                               label="State"
                               placeholder="Select State"
-                              options={stateCity.map((state) => {
-                                return { label: state.Title, id: state.ID };
-                              })}
+                              options={stateCity}
+                              getOptionLabel={(state) => state.Title || ''}
                               style={{ xs: 12, lg: 4 }}
                               id="detailsStateSelector"
                               helperText="Please select city"
@@ -394,9 +436,8 @@ function AddProject() {
                         <AutoCompleteSelector
                           label="Master Developer"
                           placeholder="Select Master Developer"
-                          options={masterDeveloper?.map((company) => {
-                            return { label: company.company_name, id: company.id };
-                          })}
+                          options={masterDeveloper}
+                          getOptionLabel={(company) => company.company_name || ''}
                           style={{ xs: 12, lg: 4 }}
                           helperText="Please select master developer company"
                           id="masterDeveloperSelector"
@@ -408,9 +449,8 @@ function AddProject() {
                         <AutoCompleteSelector
                           label="Sub Developer Company"
                           placeholder="Select Sub Developer Company"
-                          options={subdev?.map((sub) => {
-                            return { label: sub.CompanyName, id: sub.ID };
-                          })}
+                          options={subdev}
+                          getOptionLabel={(sub) => sub.CompanyName || ''}
                           style={{ xs: 12, lg: 4 }}
                           id="subDeveloperCompanySelector"
                           name="subDeveloperCompanySelector"
@@ -423,24 +463,37 @@ function AddProject() {
                           name="phaseTypeSelector"
                           label="Phase Type"
                           placeholder="Select Phase Type"
-                          options={['single', ' multiple']}
+                          options={['single', 'multiple']}
                           style={{ xs: 12, lg: 4 }}
-                          setValue={(e) => {
-                            console.log(e);
+                          onChange={(e) => {
                             setPhaseTypeSelected(e);
                           }}
                         />
                         <Grid item lg={8}></Grid>
-                        {phaseTypeSelected == 2 ? (
+
+                        {phaseTypeSelected == 1 ? (
                           <>
-                            {addPhases()}
+                            {/* <Add /> */}
+
+                            {Array(props.values.phases.length)
+                              .fill(null)
+                              .map((_, index) => (
+                                <DynamicInput setFieldValues={props.setFieldValue} values={props.values} num={index} key={index} />
+                              ))}
                             <Grid container justifyContent="center" style={{ xs: 12, lg: 12, marginTop: 20 }}>
                               <Button
                                 variant="outlined"
                                 style={{ width: '10%' }}
                                 onClick={() => {
                                   setPhasesnum(phasesnum + 1);
-                                  addComponent();
+                                  const newPhases = {
+                                    id: null,
+                                    phaseName: '',
+                                    NoOfProperties: null,
+                                    locationAddress: '',
+                                    polygonCoords: null
+                                  };
+                                  props.setFieldValue('phases', [...props.values.phases, newPhases]);
                                 }}
                               >
                                 Add More
@@ -460,9 +513,8 @@ function AddProject() {
                         <AutoCompleteSelector
                           label="Country"
                           placeholder="Select Country"
-                          options={countries?.map((country) => {
-                            return { label: country.Country, id: country.ID, flag: country.Flag };
-                          })}
+                          options={countries}
+                          getOptionLabel={(country) => country.Country || ''}
                           required
                           style={{ xs: 12, lg: 6 }}
                           helperText="Please select country"
@@ -579,7 +631,7 @@ function AddProject() {
                             />
 
                             <AutoCompleteSelector
-                               label="Property Type"
+                              label="Property Type"
                               required
                               placeholder="Select Property Type"
                               options={propertyTypes}
@@ -786,21 +838,22 @@ function AddProject() {
                     <MainCard title="Facilities">
                       <Grid container spacing={2} sx={{ padding: '10px 17px' }} alignItems="center">
                         {/* {facilities} */}
-                        {testing.map((x, i) => {
+                        {facilities.map((facility, i) => {
                           return (
                             <FormControlLabel
                               onChange={(e) => {
                                 if (e.target.checked == true) {
                                   console.log(e.target.value);
-                                  setfacilities([...facilities, e.target.value]);
+                                  setfacilitiesSelected([...facilitiesSelected, e.target.value]);
                                 } else {
-                                  const updatedState = facilities.filter((item) => item !== e.target.value);
-                                  setfacilities(updatedState);
+                                  const updatedState = facilitiesSelected.filter((item) => item !== e.target.value);
+                                  setfacilitiesSelected(updatedState);
                                 }
                               }}
-                              value={x}
+                              key={i}
+                              value={facility.ID}
                               control={<Checkbox color="primary" />}
-                              label={x}
+                              label={facility.Title}
                               labelPlacement="end"
                             />
                           );

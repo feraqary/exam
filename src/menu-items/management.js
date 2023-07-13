@@ -2,7 +2,19 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconClipboardCheck, IconPictureInPicture, IconForms, IconBorderAll, IconChartDots,IconUserX,IconUserExclamation, IconStairsUp, IconUserPlus, IconUserCircle, IconPerspective} from '@tabler/icons';
+import {
+  IconClipboardCheck,
+  IconPictureInPicture,
+  IconForms,
+  IconBorderAll,
+  IconChartDots,
+  IconUserX,
+  IconUserExclamation,
+  IconStairsUp,
+  IconUserPlus,
+  IconUserCircle,
+  IconPerspective
+} from '@tabler/icons';
 import { Adjustments } from 'tabler-icons-react';
 // constant
 const icons = {
@@ -32,43 +44,42 @@ const management = {
       title: <FormattedMessage id="Add User" />,
       type: 'item',
       icon: icons.IconUserPlus,
-      url: '/management/add_user'
+      url: '/dashboard/management/add_user'
     },
     {
       id: 'manage-users',
       title: <FormattedMessage id="Manage Users" />,
       type: 'item',
       icon: icons.IconUserCircle,
-      url: '/management/manage_user'
-      
+      url: '/dashboard/management/manage_user'
     },
     {
       id: 'manage-user-roles',
       title: <FormattedMessage id="Manage User Roles" />,
       type: 'item',
       icon: icons.IconUserExclamation,
-      url: '/management/user_roles'
+      url: '/dashboard/management/user_roles'
     },
     {
       id: 'manage-deparment',
       title: <FormattedMessage id="Manage Department" />,
       icon: icons.IconPerspective,
       type: 'item',
-      url: '/management/manage_department'
+      url: '/dashboard/management/manage_department'
     },
     {
       id: 'deleted-users',
       title: <FormattedMessage id="Manage Deleted Users" />,
       type: 'item',
       icon: icons.IconUserX,
-      url: '/management/deleted_users'
+      url: '/dashboard/management/deleted_users'
     },
     {
       id: 'management-activities',
       title: <FormattedMessage id="activities" />,
       type: 'item',
       icon: icons.IconBorderAll,
-      url: ' /management/activities'
+      url: ' /dashboard/management/activities'
     }
   ]
 };

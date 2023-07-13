@@ -18,9 +18,6 @@ import React, { useState, useMemo } from 'react';
  * @returns {JSX.Element} The rendered Selector component.
  */
 
-
-
-
 import InputLayout from './InputLayout';
 import { useField } from 'formik';
 

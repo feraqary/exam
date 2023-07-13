@@ -27,38 +27,38 @@ const exhibitions = {
       title: <FormattedMessage id="Add Exhibitions" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
-      url: '/exhibition/add'
+      url: '/dashboard/exhibition/add'
     },
     {
       id: 'manage-local-exhibitions',
       title: <FormattedMessage id="Manage Local Exhibitions" />,
       type: 'item',
-      url: '/exhibition/local'
+      url: '/dashboard/exhibition/local'
     },
     {
       id: 'manage-international-exhibitions',
       title: <FormattedMessage id="Manage International Exhibitions" />,
       type: 'item',
-      url: '/exhibition/international'
+      url: '/dashboard/exhibition/international'
     },
     {
       id: 'manage-clients',
       title: <FormattedMessage id="Manage Clients" />,
       type: 'item',
-      url: '/exhibition/clients'
+      url: '/dashboard/exhibition/clients'
     },
     {
       id: 'manage-exhibition-services',
       title: <FormattedMessage id="Manage Exhibition Services" />,
       type: 'item',
-      url: '/exhibition/services'
+      url: '/dashboard/exhibition/services'
     },
     {
       id: 'exhibitions-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconBorderAll,
-      url: '/exhibition/activities'
+      url: '/dashboard/exhibition/activities'
     }
   ]
 };
