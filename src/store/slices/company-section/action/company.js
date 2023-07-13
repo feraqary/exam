@@ -307,10 +307,25 @@ export const getPropertyTypes = createAsyncThunk('projects/getPropertyTypes', as
     return rejectWithValue(error.response.data);
   }
 });
+export const getCompanyByType = createAsyncThunk('company/getCompanyByType', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getAllCompanyNames/1`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const getFacilities = createAsyncThunk('projects/getFacilities', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/facilities/getAllFacilities/1`, config);
+    return response.data;
 
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
 
 export const createProject = createAsyncThunk('project/AddProject', async (formData, { rejectWithValue }) => {
-  console.log('fired');
   try {
     const response = await api.post(`${baseurl}/api/dashboard/createCompany`, formData, config);
     console.log(response.data);

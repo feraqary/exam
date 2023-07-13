@@ -33,7 +33,7 @@ const blogs = {
       title: <FormattedMessage id="Add Blog" />,
       type: 'item',
       icon: icons.IconKey,
-      url: '/blog/add_blog'
+      url: '/dashboard/blog/add_blog'
     },
 
     {
@@ -41,28 +41,28 @@ const blogs = {
       title: <FormattedMessage id="Manage Blogs" />,
       type: 'item',
       icon: icons.IconClipboardText,
-      url: '/blog/manage_blogs'
+      url: '/dashboard/blog/manage_blogs'
     },
     {
       id: 'manage-categories',
       title: <FormattedMessage id="Categories" />,
       type: 'item',
       icon: icons.IconTextCaption,
-      url: '/blog/manage_categories'
+      url: '/dashboard/blog/manage_categories'
     },
     {
       id: 'deleted-blog',
       title: <FormattedMessage id="Deleted Blogs" />,
       type: 'item',
       icon: icons.IconScriptX,
-      url: '/blog/deleted_blogs'
+      url: '/dashboard/blog/deleted_blogs'
     },
     {
       id: 'blogs-activities',
       title: <FormattedMessage id="Activities" />,
       icon: icons.IconBorderAll,
       type: 'item',
-      url: '/blog/activities'
+      url: '/dashboard/blog/activities'
     }
   ]
 };

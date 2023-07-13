@@ -2,7 +2,17 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconKey,IconHeartHandshake,IconPhoto, IconReceipt2, IconBug, IconBellRinging, IconPhoneCall, IconQuestionMark, IconShieldLock } from '@tabler/icons';
+import {
+  IconKey,
+  IconHeartHandshake,
+  IconPhoto,
+  IconReceipt2,
+  IconBug,
+  IconBellRinging,
+  IconPhoneCall,
+  IconQuestionMark,
+  IconShieldLock
+} from '@tabler/icons';
 import { MessageChatbot } from 'tabler-icons-react';
 
 // constant
@@ -30,15 +40,15 @@ const communityGuide = {
       id: 'manage-community',
       title: <FormattedMessage id="Community" />,
       type: 'item',
-      icon:icons.IconHeartHandshake,
-      url: '/community-guide/community'
+      icon: icons.IconHeartHandshake,
+      url: '/dashboard/community-guide/community'
     },
     {
       id: 'manage-tower-image',
       title: <FormattedMessage id="Tower Image" />,
       type: 'item',
-      icon:icons.IconPhoto,
-      url: '/community-guide/tower'
+      icon: icons.IconPhoto,
+      url: '/dashboard/community-guide/tower'
     },
 
     {
@@ -46,14 +56,14 @@ const communityGuide = {
       title: <FormattedMessage id="Change Community Publish Status" />,
       type: 'item',
       icon: icons.IconBug,
-      url: '/community-guide/list_community_status'
+      url: '/dashboard/community-guide/list_community_status'
     },
     {
       id: 'change-tower-status',
       title: <FormattedMessage id="Change Tower Status" />,
       type: 'item',
       icon: icons.IconBellRinging,
-      url: '/community-guide/list_tower_status',
+      url: '/dashboard/community-guide/list_tower_status',
       target: true
     },
     {
@@ -61,7 +71,7 @@ const communityGuide = {
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconPhoneCall,
-      url: '/community-guide/activities',
+      url: '/dashboard/community-guide/activities',
       target: true
     }
   ]
