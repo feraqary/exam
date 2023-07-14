@@ -10,7 +10,7 @@ import Table from 'components/Table/Table';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useGetAllSubCompanyTypesQuery } from 'store/services/company/companyApi';
-
+import { ToastContainer } from 'react-toastify';
 // ===========================|| International Company Managment list||=========================== //
 
 const ColumnHeaders = [
@@ -73,7 +73,8 @@ const companyType = () => {
   useEffect(() => {}, [pagination.pageIndex, pagination.pageSize]);
 
   return (
-    <Page title="International Company List">
+    <Page title="Company Type List">
+      <ToastContainer />
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <Table

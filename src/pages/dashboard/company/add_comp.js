@@ -238,7 +238,7 @@ function ColumnsLayouts() {
   const submitForm = (values) => {
     const formData = new FormData();
     formData.append('company_types', values.companyType.id);
-    formData.append('sub_company_type', values.subCompanyType.id);
+    formData.append('subcompany_type', values.subCompanyType.id);
     formData.append('main_service_type', values.mainService.id);
     formData.append('sub_service_type', values.service);
     formData.append('company_name', values.companyName);

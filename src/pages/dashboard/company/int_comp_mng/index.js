@@ -20,6 +20,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Documents from '../documents';
 import { useGetInternationalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
 import { ToastSuccess } from 'utils/toast';
+import { ToastContainer } from 'react-toastify';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 
 // ===========================|| International Company Managment list||=========================== //
@@ -214,6 +215,7 @@ const IntCompData = () => {
 
   return (
     <Page title="International Company List">
+      <ToastContainer />
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <Table
