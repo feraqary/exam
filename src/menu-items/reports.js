@@ -40,7 +40,7 @@ const reports = {
       title: <FormattedMessage id="Agents" />,
       type: 'item',
       icon: icons.IconBellRinging,
-      url: '/reports/agents',
+      url: '/dashboard/reports/agents',
       target: true
     },
     {
@@ -48,7 +48,7 @@ const reports = {
       title: <FormattedMessage id="Transactions" />,
       type: 'item',
       icon: icons.IconPhoneCall,
-      url: '/pages/landing',
+      url: '/dashboard/pages/landing',
       target: true
     },
     {
@@ -56,7 +56,7 @@ const reports = {
       title: <FormattedMessage id="Market" />,
       type: 'item',
       icon: icons.IconPhoneCall,
-      url: '/pages/landing',
+      url: '/dashboard/pages/landing',
       target: true
     }
   ]

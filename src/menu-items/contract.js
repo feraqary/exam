@@ -28,14 +28,14 @@ const contract = {
       title: <FormattedMessage id="Add Contract" />,
       type: 'item',
       icon: icons.IconKey,
-      url: '/contract/add'
+      url: '/dashboard/contract/add'
     },
     {
       id: 'manage-contract',
       title: <FormattedMessage id="Manage Contract" />,
       type: 'item',
       icon: icons.IconKey,
-      url: '/contract/manage'
+      url: '/dashboard/contract/manage'
     }
   ]
 };

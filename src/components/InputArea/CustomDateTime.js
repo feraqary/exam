@@ -25,7 +25,7 @@ import { useField, useFormikContext } from 'formik';
  * @returns {JSX.Element} The rendered CustomDateTime component.
  */
 
-const CustomDateTime = ({ style, label, helperText, value, setValue, required, name, id, helperInfo, ...rest }) => {
+const CustomDateTime = ({ style, label, helperText, value, setValue, required, name, id, helperInfo, func, ...rest }) => {
   const [field, meta] = useField(rest);
   const { touched, values, setFieldValue, setFieldTouched } = useFormikContext();
   return (
@@ -46,7 +46,19 @@ const CustomDateTime = ({ style, label, helperText, value, setValue, required, n
           id={id}
           value={values[`${name}`]}
           label={label}
-          onChange={(value) => setFieldValue(name, value)}
+          onChange={(value) => {
+            setFieldValue(name, value);
+
+            if (func) {
+              console.log(func.value, func.name);
+              let dt = new Date(value);
+
+              dt.setMonth(dt.getMonth() + Number(func.value));
+              console.log(dt);
+
+              setFieldValue(func.name, dt);
+            }
+          }}
           onClose={() => setFieldTouched(name)}
           inputFormat="yyyy/MM/dd"
           mask="__/__/__"

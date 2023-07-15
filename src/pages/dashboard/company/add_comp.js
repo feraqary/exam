@@ -7,7 +7,7 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Map from 'components/map/google-map';
 import MapAutocomplete from 'components/map/maps-autocomplete';
 import { LoadScript } from '@react-google-maps/api';
@@ -73,7 +73,6 @@ const validationSchema = Yup.object({
   subCommunity: objectValidator(),
   officeAddress: stringValidator('Please provide a valid office address'),
   mapUrl: stringValidator('Please provide a valid map url').url(),
-  // place: Yup.array().required('Please provide a valid address or place'),
   lat: numberValidator('Latitude is missing'),
   long: numberValidator('Longitude is missing'),
   companyWebsite: stringValidator('Please provid a valid company website').url(),
@@ -82,12 +81,8 @@ const validationSchema = Yup.object({
   companyDescription: stringValidator('Please provide a company description'),
   lisenceNo: stringValidator('Please provide a valid liscence number'),
   lisenceExpiryDate: dateValidator('Please select an expiration date'),
-  // facebook: stringValidator('Please provide your facebook profile'),
-  // instagram: stringValidator('Please provide your instagram profile'),
-  // linkedin: stringValidator('Please provide your linkedin profile'),
   twitter: stringValidator('Please provide your twitter profile'),
   youtube: stringValidator('Please provide your YouTube profile'),
-  tiktok: stringValidator('Please provide your TikTok profile'),
   firstName: stringValidator('Please provide your first name'),
   lastName: stringValidator('Please provide your last name'),
   emailAddress: stringValidator('Please provide a valid email address').email(),
@@ -241,11 +236,10 @@ function ColumnsLayouts() {
   const companyCoverRef = useRef(null);
   const profileRef = useRef(null);
   const reraRef = useRef(null);
-
   const submitForm = (values) => {
     const formData = new FormData();
     formData.append('company_types', values.companyType.id);
-    formData.append('sub_company_type', values.subCompanyType.id);
+    formData.append('subcompany_type', values.subCompanyType.id);
     formData.append('main_service_type', values.mainService.id);
     formData.append('sub_service_type', values.service);
     formData.append('company_name', values.companyName);
@@ -318,7 +312,7 @@ function ColumnsLayouts() {
               reraExpiryDate: '', //
               billingReference: '',
               vatNo: '',
-              vatStatus: '1',
+              vatStatus: '',
               country: '',
               state: '',
               city: '',
@@ -365,6 +359,7 @@ function ColumnsLayouts() {
             }}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
+              console.log('Hi');
               submitForm(values);
               setSubmitting(false);
               if (!companyError) {
@@ -383,6 +378,8 @@ function ColumnsLayouts() {
           >
             {(props) => (
               <>
+                {/* {console.log(props.values.vatStatus, props.values.subscriptionDuration)} */}
+                {console.log(props.errors)}
                 <Container title="Add Company Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
                     <AutoCompleteSelector
@@ -565,7 +562,11 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       label="VAT status"
                       helperText="Please Choose a VAT status"
-                      options={['Active', 'Non-Active', 'Pending']}
+                      options={[
+                        { value: 1, option: 'Active' },
+                        { value: 2, option: 'Non-Active' },
+                        { value: 3, option: 'Pending' }
+                      ]}
                       required={true}
                     />
                     <br />
@@ -729,7 +730,6 @@ function ColumnsLayouts() {
                         metaError={props.errors.place}
                         metaTouched={props.touched.place}
                       />
-                      {console.log(props.values)}
                     </InputLayout>
                     <Map locationAddress={address} height={'27vh'} xs={12} lg={12} mapUrl={props.values.mapUrl} />
                   </Grid>
@@ -926,8 +926,15 @@ function ColumnsLayouts() {
                       helperText="Please choose your purchased subscription duration"
                       style={{ xs: 12, lg: 4 }}
                       label="Subscription Duration"
-                      options={['1 Month', '3 Months', '6 Months', '9 Months', '12 Months']}
+                      options={[
+                        { value: 1, option: '1 Month' },
+                        { value: 3, option: '3 Months' },
+                        { value: 6, option: '6 Months' },
+                        { value: 9, option: '9 Months' },
+                        { value: 12, option: '12 Months' }
+                      ]}
                       required={true}
+                      reset={['subscriptionStartDate', 'subscriptionEndDate']}
                     />
                     <CustomDateTime
                       helperInfo
@@ -937,7 +944,8 @@ function ColumnsLayouts() {
                       id="subscriptionStartDate"
                       name="subscriptionStartDate"
                       required={true}
-                      setFieldValue={props.setFieldValue}
+                      func={{ value: props.values.subscriptionDuration, name: 'subscriptionEndDate' }}
+                      disabled={!props.values.subscriptionDuration}
                     />
                     <CustomDateTime
                       helperInfo
@@ -947,7 +955,7 @@ function ColumnsLayouts() {
                       id="subscriptionEndDate"
                       name="subscriptionEndDate"
                       required={true}
-                      setFieldValue={props.setFieldValue}
+                      disabled={true}
                     />
                     <FileUpload
                       helperInfo
