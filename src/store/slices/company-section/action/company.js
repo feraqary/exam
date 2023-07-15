@@ -210,7 +210,7 @@ export const getCompanyNames = createAsyncThunk('companies/companyNames', async 
 });
 export const updateCompanyDoc = createAsyncThunk('companies/docUpdate', async (formData, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyDoc`, formData, config);
+    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyDoc/1`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -301,7 +301,7 @@ export const getSubDevCompany = createAsyncThunk(
 
 export const getPropertyTypes = createAsyncThunk('projects/getPropertyTypes', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/propertyTypes/getAllPropertyTypes/1`, config);
+    const response = await api.get(`${baseurl}/api/propertyTypes/getPropertyTypes`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -319,7 +319,6 @@ export const getFacilities = createAsyncThunk('projects/getFacilities', async (_
   try {
     const response = await api.get(`${baseurl}/api/facilities/getAllFacilities/1`, config);
     return response.data;
-
   } catch (error) {
     return rejectWithValue(error.response.data);
   }

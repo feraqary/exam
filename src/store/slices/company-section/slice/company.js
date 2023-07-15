@@ -575,7 +575,7 @@ const slice = createSlice({
       })
       .addCase(getPropertyTypes.fulfilled, (state, action) => {
         state.loading = false;
-        state.propertyTypes = action.payload;
+        state.propertyTypes = action.payload?.data;
         state.error = null;
       })
       .addCase(getPropertyTypes.rejected, (state, action) => {

@@ -27,6 +27,7 @@ export default function Map({
   xs,
   lg,
   mapUrl,
+  values,
   height,
   i,
   close
@@ -34,9 +35,10 @@ export default function Map({
   const [lat, setlat] = useState(24.4984312);
   const [long, setlong] = useState(54.4036975);
   const [polygonsDrawn, setPolygonsDrawn] = useState();
+  // const []
   const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
   const enable = false;
-  const { setFieldValue, values } = useFormikContext();
+  // const { setFieldValue, values } = useFormikContext();
   const handleMapLoad = (map) => {
     // Set custom cursor for the map container
     map.setOptions({ draggableCursor: 'pointer' });
@@ -189,8 +191,6 @@ export default function Map({
     }
   };
 
-
-
   function getPaths(polygon) {
     var polygonBounds = polygon.getPath();
     var bounds = [];
@@ -213,14 +213,12 @@ export default function Map({
           center={{ lat: phase_lat && forPhase ? phase_lat : lat, lng: phase_long && forPhase ? phase_long : long }}
           zoom={12}
           onClick={(e) => {
-
-              setlat(e.latLng.lat());
-              setlong(e.latLng.lng());
-            
+            setlat(e.latLng.lat());
+            setlong(e.latLng.lng());
           }}
           onLoad={onLoadMap}
         >
-          <Marker position={{ lat: lat, lng : long }} />
+          <Marker position={{ lat: lat, lng: long }} />
           {forPhase && (
             <>
               <DrawingManager
@@ -281,7 +279,8 @@ export default function Map({
               <Button
                 variant="contained"
                 onClick={() => {
-                  setFieldValue(`phases[${i}].polygonCoords`, polygons);
+                  values.polygonCoords.push(polygons);
+                  // setFieldValue(`phases.polygonCoords`, polygonsCrds);
                   close(false);
                 }}
               >

@@ -124,6 +124,7 @@ const NavItem = ({ expand,item, level, parentId }) => {
           >
             
               <ButtonBase sx={{ borderRadius: `${borderRadius}px` }} disableRipple={drawerOpen} aria-label="theme-icon">
+        
                 <ListItemIcon
                   sx={{
                     minWidth: level === 1 ? 36 : 18,
