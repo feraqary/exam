@@ -61,8 +61,7 @@ const handleCheckBoxChange = (event) => {
             />
 
             <NormalAutoCompleteSelector
-              label="Choose Order ID"
-              
+              label="Choose Order ID" 
               id="company-order-selector"
               helperText="Please select an order"
               style={{ xs: 12, lg: 8 }}

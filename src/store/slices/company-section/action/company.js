@@ -96,6 +96,16 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
   }
 });
 
+export const getAllDraftSubscriptions = createAsyncThunk('draft/pdf_renderer', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/draftSubscription?id=1&company_type=1&is_branch=false`, 
+    config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.error);
+  }
+});
+
 export const getCompanyDocs = createAsyncThunk('company/getCompanyDocs', async ({ companyType, id }, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getCompanyDoc?company_type=${companyType}&id=${id}`, config);
@@ -307,7 +317,6 @@ export const getPropertyTypes = createAsyncThunk('projects/getPropertyTypes', as
     return rejectWithValue(error.response.data);
   }
 });
-
 
 export const createProject = createAsyncThunk('project/AddProject', async (formData, { rejectWithValue }) => {
   console.log('fired');

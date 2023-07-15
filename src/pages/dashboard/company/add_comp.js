@@ -217,6 +217,7 @@ function ColumnsLayouts() {
   } = useGetSubCommunitiesByCommunityQuery(communityId, {
     skip: communityId === null || communityId === undefined
   });
+  
 
   const {
     data: currenciesData,

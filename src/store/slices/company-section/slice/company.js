@@ -31,7 +31,8 @@ import {
   getCompanyType,
   getAllDeveloperCompany,
   getSubDevCompany,
-  getPropertyTypes
+  getPropertyTypes,
+  getAllDraftSubscriptions
 } from '../action/company';
 
 import { ToastError, ToastLoading, ToastSuccess } from 'utils/toast';
@@ -105,6 +106,24 @@ const slice = createSlice({
         state.companyType = state.companyType;
         state.error = action.payload;
       })
+
+      //getdraft subsriptions
+      .addCase(getAllDraftSubscriptions.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+        state.getAllDraftSubscriptions = state.getAllDraftSubscriptions;
+      }) 
+     .addCase( getAllDraftSubscriptions.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.getAllDraftSubscriptions = action.payload.data;
+      })
+      .addCase(getAllDraftSubscriptions.rejected, (state, action) => {
+        state.loading = false;
+        state.getAllDraftSubscriptions = state.getAllDraftSubscriptions;
+        state.error = action.payload;
+      })
+      
 
       // update company types=================================================================================================
       .addCase(updateCompanyType.fulfilled, (state, action) => {
