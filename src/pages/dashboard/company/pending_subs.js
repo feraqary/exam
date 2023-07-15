@@ -8,6 +8,7 @@ import { gridSpacing } from 'store/constant';
 import React, { useEffect, useState } from 'react';
 import Table from 'components/Table/Table';
 import { useGetPendingSubscriptionsQuery } from 'store/services/company/companyApi';
+import { getAllDraftSubscriptions } from 'store/slices/company-section/action/company';
 
 // ==============================|| View Pending Subscriptions ||============================== //
 
@@ -64,7 +65,7 @@ const ColumnHeaders = [
           gap: '1rem'
         }}
       >
-        <Button variant="contained" color="warning">
+        <Button variant="contained" color="primary">
           Draft
         </Button>
         <Button variant="contained" color="primary">

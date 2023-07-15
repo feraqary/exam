@@ -22,7 +22,7 @@ import FileUpload from 'components/InputArea/FileUpload';
 import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 import { useRouter } from 'next/router';
 import { useGetSubCompanyTypeQuery, useUpdateSubCompanyTypeMutation } from 'store/services/company/companyApi';
-import { ToastSuccess } from 'utils/toast';
+import { ToastError, ToastSuccess } from 'utils/toast';
 
 const roles = [
   { label: 'Broker Company', id: 1 },
@@ -48,6 +48,16 @@ function CompanyTypeEdit() {
 
   const { data, isError, isFetching, isLoading, error } = useGetSubCompanyTypeQuery(router.query.id);
   const [updateSubCompanyType, result] = useUpdateSubCompanyTypeMutation();
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      ToastSuccess('Sub Company Type hase been successfully updated');
+      router.back();
+    }
+    if (result.isError) {
+      ToastError(result.error);
+    }
+  }, [result.isSuccess, result.isError]);
 
   if (isLoading) return;
 
@@ -76,8 +86,6 @@ function CompanyTypeEdit() {
                 updateSubCompanyType({ formData: formData, id: data?.data?.id });
                 setSubmitting(false);
                 resetForm();
-                ToastSuccess('Sub Company Type hase been successfully updated');
-                router.back();
               }}
               onReset={(_) => {
                 logoRef.current.value = '';

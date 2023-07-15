@@ -317,9 +317,9 @@ function ColumnsLayouts() {
         <Grid container spacing={gridSpacing}>
           <Formik
             initialValues={{
-              companyType: '',
-              subCompanyType: '',
-              mainService: '',
+              companyType: options[0],
+              subCompanyType: data?.data.CompanyTypesID,
+              mainService: data?.data.MainServiceType,
               service: [],
               companyName: '',
               reraNo: '',
@@ -737,7 +737,7 @@ function ColumnsLayouts() {
                         metaTouched={props.touched.place}
                       />
                     </InputLayout>
-                    <Map locationAddress={address} height={'27vh'}  xs={12} lg={12} mapUrl={props.values.mapUrl} />
+                    <Map locationAddress={address} height={'27vh'} xs={12} lg={12} mapUrl={props.values.mapUrl} />
                   </Grid>
                 </Container>
 

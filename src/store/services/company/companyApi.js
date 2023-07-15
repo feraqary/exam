@@ -93,6 +93,17 @@ export const companyApi = api.injectEndpoints({
         };
       }
     }),
+   //generate draft
+    getallDraftSubscriptions: builder.query({
+      query(data){
+        const { id, is_branch, company_type} = data;
+        return {
+          url:  `dashboard/draftSubscription?id=${id}&company_type=${company_type}&is_branch=${is_branch}`,
+          method: 'GET'
+        };
+      }
+    }),
+    
     //GET COMPANIES BY RANK API
     getCompaniesByRank: builder.query({
       query({ rank, pagination }) {
@@ -104,6 +115,15 @@ export const companyApi = api.injectEndpoints({
       },
       providesTags: ['CompaniesByRank']
     }),
+    //GET DRAFT SUBSCRIPTIONS
+    getDraftContract: builder.query({
+      query({ data}) {
+        const { id, company_type, is_branch} = data;
+        return {
+          url: `dashboard/draftSubscription?id=${id}&company_type=${company_type}&is_branch=${is_branch}`,
+          method: 'GET'
+        };
+      }    }),
 
     //GET COMPANIES BY STATUS API
     getCompaniesByStatus: builder.query({
