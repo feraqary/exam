@@ -56,51 +56,55 @@ const options = [
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 // ==============================|| Add Company form ||============================== //
 const validationSchema = Yup.object({
-  companyType: objectValidator(),
-  subCompanyType: objectValidator(),
-  mainService: objectValidator(),
-  service: arrayValidator('Please select a service', 1),
-  companyName: stringValidator('Please provide a company name'),
-  reraNo: stringValidator('Please provide a valid reara number'),
-  reraExpiryDate: dateValidator('Please select an expiration date'),
-  billingReference: stringValidator('please provide a valid bill reference'),
-  vatNo: stringValidator('Please provide a valid vat number'),
-  vatStatus: stringValidator('Please select your vat status'),
-  country: objectValidator(),
-  state: objectValidator(),
-  city: objectValidator(),
-  community: objectValidator(),
-  subCommunity: objectValidator(),
-  officeAddress: stringValidator('Please provide a valid office address'),
+  companyType: objectValidator('Mandatory Selection', true),
+  subCompanyType: objectValidator('Mandatory Selection', true),
+  mainService: objectValidator('Mandatory Selection', true),
+  service: arrayValidator('Please select a service', true, 1),
+  companyName: stringValidator('Please provide a company name', true),
+  reraNo: stringValidator('Please provide a valid reara number', true),
+  reraExpiryDate: dateValidator('Please select an expiration date', true),
+  billingReference: stringValidator('please provide a valid bill reference', true),
+  vatNo: stringValidator('Please provide a valid vat number', true),
+  vatStatus: numberValidator('Please select your vat status', true),
+  country: objectValidator('Mandatory Selection', true),
+  state: objectValidator('Mandatory Selection', true),
+  city: objectValidator('Mandatory Selection', true),
+  community: objectValidator('Not a valid selection'),
+  subCommunity: objectValidator('Not a valid selection'),
+  officeAddress: stringValidator('Please provide a valid office address', true),
   mapUrl: stringValidator('Please provide a valid map url').url(),
-  lat: numberValidator('Latitude is missing'),
-  long: numberValidator('Longitude is missing'),
-  companyWebsite: stringValidator('Please provid a valid company website').url(),
-  companyEmailAddress: stringValidator('Please provide a valid company email address').email(),
-  companyContactNumber: stringValidator('Please provide a valid company contact number'),
-  companyDescription: stringValidator('Please provide a company description'),
-  lisenceNo: stringValidator('Please provide a valid liscence number'),
-  lisenceExpiryDate: dateValidator('Please select an expiration date'),
+  lat: numberValidator('Latitude is missing', true),
+  long: numberValidator('Longitude is missing', true),
+  companyWebsite: stringValidator('Please provid a valid company website', true).url(),
+  companyEmailAddress: stringValidator('Please provide a valid company email address', true).email(),
+  companyContactNumber: stringValidator('Please provide a valid company contact number', true),
+  companyDescription: stringValidator('Please provide a company description', true),
+  lisenceNo: stringValidator('Please provide a valid liscence number', true),
+  lisenceExpiryDate: dateValidator('Please select an expiration date', true),
+  facebook: stringValidator('Please provide your facebook profile'),
+  instagram: stringValidator('Please provide your instagram profile'),
+  linkedin: stringValidator('Please provide your linkedin profile'),
   twitter: stringValidator('Please provide your twitter profile'),
   youtube: stringValidator('Please provide your YouTube profile'),
-  firstName: stringValidator('Please provide your first name'),
-  lastName: stringValidator('Please provide your last name'),
-  emailAddress: stringValidator('Please provide a valid email address').email(),
-  phoneNumber: stringValidator('Please provide a valid phone number'),
-  numberOfEmployees: numberValidator('Please enter the number of employees'),
-  subscriptionDuration: stringValidator('Please select a subscription duration'),
-  subscriptionStartDate: dateValidator('Please select a subscription start date'),
-  subscriptionEndDate: dateValidator('Please select a subscription end date'),
+  firstName: stringValidator('Please provide your first name', true),
+  lastName: stringValidator('Please provide your last name', true),
+  emailAddress: stringValidator('Please provide a valid email address', true).email(),
+  phoneNumber: stringValidator('Please provide a valid phone number', true),
+  numberOfEmployees: numberValidator('Please enter the number of employees', true),
+  subscriptionDuration: stringValidator('Please select a subscription duration', true),
+  subscriptionStartDate: dateValidator('Please select a subscription start date', true),
+  subscriptionEndDate: dateValidator('Please select a subscription end date', true),
   ibanNumber: Yup.string()
+    .required()
     .trim()
     .test('TEST_IBAN_NUMBER', 'iban number is invalid', (value) => {
       return iban.isValid(value);
     }),
-  currency: objectValidator(),
-  accountCountry: objectValidator(),
-  bankName: stringValidator('Please provide a bank name'),
-  bankBranch: stringValidator('Please provide a bank branch'),
-  swiftCode: stringValidator('Please provide a swift code'),
+  currency: objectValidator('Mandatory Selection', true),
+  accountCountry: objectValidator('Mandatory Selection', true),
+  bankName: stringValidator('Please provide a bank name', true),
+  bankBranch: stringValidator('Please provide a bank branch', true),
+  swiftCode: stringValidator('Please provide a swift code', true),
   cardNumber: Yup.string().trim().min(6, 'please provide a valid account number').max(15, 'please provide a valid account number'),
 
   cardName: Yup.string()
@@ -301,6 +305,7 @@ function ColumnsLayouts() {
         <ToastContainer />
         <Grid container spacing={gridSpacing}>
           <Formik
+            validateOnChange={false}
             initialValues={{
               companyType: '',
               subCompanyType: '',
@@ -357,8 +362,8 @@ function ColumnsLayouts() {
               adminProfilePicture: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
-              console.log('Hi');
+            onSubmit={async (values, { setSubmitting, resetForm, validateForm }) => {
+              await validateForm(values);
               submitForm(values);
               setSubmitting(false);
               if (!companyError) {
@@ -377,8 +382,6 @@ function ColumnsLayouts() {
           >
             {(props) => (
               <>
-                {/* {console.log(props.values.vatStatus, props.values.subscriptionDuration)} */}
-                {console.log(props.errors)}
                 <Container title="Add Company Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
                     <AutoCompleteSelector
@@ -707,7 +710,7 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       id="mapUrl"
                       name="mapUrl"
-                      required={true}
+                      required={false}
                     />
 
                     <InputLayout

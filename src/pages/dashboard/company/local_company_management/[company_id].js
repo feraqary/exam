@@ -34,7 +34,7 @@ import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
 import { Formik } from 'formik';
 import PhoneInput from 'components/InputArea/PhoneInput';
-import { useCreateCompanyMutation, useGetCompanyQuery, useGetSubCompanyTypesByCompanyTypeQuery } from 'store/services/company/companyApi';
+import { useGetCompanyQuery, useGetSubCompanyTypesByCompanyTypeQuery, useUpdateCompanyMutation } from 'store/services/company/companyApi';
 import { useGetAllMainServicesBySubCompanyTypeQuery, useGetAllServicesBYMainServiceTypeQuery } from 'store/services/services/serviceApi';
 import {
   useGetCitiesByStateQuery,
@@ -57,56 +57,55 @@ const options = [
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 // ==============================|| Add Company form ||============================== //
 const validationSchema = Yup.object({
-  companyType: objectValidator(),
-  subCompanyType: objectValidator(),
-  mainService: objectValidator(),
-  service: arrayValidator('Please select a service', 1),
-  companyName: stringValidator('Please provide a company name'),
-  reraNo: stringValidator('Please provide a valid reara number'),
-  reraExpiryDate: dateValidator('Please select an expiration date'),
-  billingReference: stringValidator('please provide a valid bill reference'),
-  vatNo: stringValidator('Please provide a valid vat number'),
-  vatStatus: stringValidator('Please select your vat status'),
-  country: objectValidator(),
-  state: objectValidator(),
-  city: objectValidator(),
-  community: objectValidator(),
-  subCommunity: objectValidator(),
-  officeAddress: stringValidator('Please provide a valid office address'),
+  companyType: objectValidator('Mandatory Selection', true),
+  subCompanyType: objectValidator('Mandatory Selection', true),
+  mainService: objectValidator('Mandatory Selection', true),
+  service: arrayValidator('Please select a service', true, 1),
+  companyName: stringValidator('Please provide a company name', true),
+  reraNo: stringValidator('Please provide a valid reara number', true),
+  reraExpiryDate: dateValidator('Please select an expiration date', true),
+  billingReference: stringValidator('please provide a valid bill reference', true),
+  vatNo: stringValidator('Please provide a valid vat number', true),
+  vatStatus: numberValidator('Please select your vat status', true),
+  country: objectValidator('Mandatory Selection', true),
+  state: objectValidator('Mandatory Selection', true),
+  city: objectValidator('Mandatory Selection', true),
+  community: objectValidator('Not a valid selection'),
+  subCommunity: objectValidator('Not a valid selection'),
+  officeAddress: stringValidator('Please provide a valid office address', true),
   mapUrl: stringValidator('Please provide a valid map url').url(),
-  // place: Yup.array().required('Please provide a valid address or place'),
-  lat: numberValidator('Latitude is missing'),
-  long: numberValidator('Longitude is missing'),
-  companyWebsite: stringValidator('Please provid a valid company website').url(),
-  companyEmailAddress: stringValidator('Please provide a valid company email address').email(),
-  companyContactNumber: stringValidator('Please provide a valid company contact number'),
-  companyDescription: stringValidator('Please provide a company description'),
-  lisenceNo: stringValidator('Please provide a valid liscence number'),
-  lisenceExpiryDate: dateValidator('Please select an expiration date'),
+  lat: numberValidator('Latitude is missing', true),
+  long: numberValidator('Longitude is missing', true),
+  companyWebsite: stringValidator('Please provid a valid company website', true).url(),
+  companyEmailAddress: stringValidator('Please provide a valid company email address', true).email(),
+  companyContactNumber: stringValidator('Please provide a valid company contact number', true),
+  companyDescription: stringValidator('Please provide a company description', true),
+  lisenceNo: stringValidator('Please provide a valid liscence number', true),
+  lisenceExpiryDate: dateValidator('Please select an expiration date', true),
   facebook: stringValidator('Please provide your facebook profile'),
   instagram: stringValidator('Please provide your instagram profile'),
   linkedin: stringValidator('Please provide your linkedin profile'),
   twitter: stringValidator('Please provide your twitter profile'),
   youtube: stringValidator('Please provide your YouTube profile'),
-  tiktok: stringValidator('Please provide your TikTok profile'),
-  firstName: stringValidator('Please provide your first name'),
-  lastName: stringValidator('Please provide your last name'),
-  emailAddress: stringValidator('Please provide a valid email address').email(),
-  phoneNumber: stringValidator('Please provide a valid phone number'),
-  numberOfEmployees: numberValidator('Please enter the number of employees'),
-  subscriptionDuration: stringValidator('Please select a subscription duration'),
-  subscriptionStartDate: dateValidator('Please select a subscription start date'),
-  subscriptionEndDate: dateValidator('Please select a subscription end date'),
+  firstName: stringValidator('Please provide your first name', true),
+  lastName: stringValidator('Please provide your last name', true),
+  emailAddress: stringValidator('Please provide a valid email address', true).email(),
+  phoneNumber: stringValidator('Please provide a valid phone number', true),
+  numberOfEmployees: numberValidator('Please enter the number of employees', true),
+  subscriptionDuration: stringValidator('Please select a subscription duration', true),
+  subscriptionStartDate: dateValidator('Please select a subscription start date', true),
+  subscriptionEndDate: dateValidator('Please select a subscription end date', true),
   ibanNumber: Yup.string()
+    .required()
     .trim()
     .test('TEST_IBAN_NUMBER', 'iban number is invalid', (value) => {
       return iban.isValid(value);
     }),
-  currency: objectValidator(),
-  accountCountry: objectValidator(),
-  bankName: stringValidator('Please provide a bank name'),
-  bankBranch: stringValidator('Please provide a bank branch'),
-  swiftCode: stringValidator('Please provide a swift code'),
+  currency: objectValidator('Mandatory Selection', true),
+  accountCountry: objectValidator('Mandatory Selection', true),
+  bankName: stringValidator('Please provide a bank name', true),
+  bankBranch: stringValidator('Please provide a bank branch', true),
+  swiftCode: stringValidator('Please provide a swift code', true),
   cardNumber: Yup.string().trim().min(6, 'please provide a valid account number').max(15, 'please provide a valid account number'),
 
   cardName: Yup.string()
@@ -134,20 +133,13 @@ function ColumnsLayouts() {
 
   const router = useRouter();
 
-  const { data } = useGetCompanyQuery({
-    id: router.query.company_id,
-    company_type: router.query.company_type,
-    is_branch: router.query.is_branch
-  });
+  const { company_type, company_id, is_branch } = router.query;
 
-  const {
-    companyInformation,
-    error: companyError,
-    loading: companyLoading,
-    companyTypes,
-    mainServices,
-    services
-  } = useSelector((state) => state.companies);
+  const { data } = useGetCompanyQuery({
+    id: company_id,
+    company_type: company_type,
+    is_branch: is_branch
+  });
 
   const {
     data: companySubTypes,
@@ -155,8 +147,8 @@ function ColumnsLayouts() {
     isError,
     isLoading,
     isFetching
-  } = useGetSubCompanyTypesByCompanyTypeQuery(companyId, {
-    skip: companyId === null || companyId === undefined
+  } = useGetSubCompanyTypesByCompanyTypeQuery(data?.data.CompanyTypesID, {
+    skip: data?.data.CompanyTypesID === null || data?.data.CompanyTypesID === undefined
   });
 
   const {
@@ -165,8 +157,8 @@ function ColumnsLayouts() {
     isError: mainServiceIsError,
     isLoading: mainServiceIsLoading,
     isFetching: mainServiceIsFetching
-  } = useGetAllMainServicesBySubCompanyTypeQuery(subCompanyTypeId, {
-    skip: subCompanyTypeId === null || subCompanyTypeId === undefined
+  } = useGetAllMainServicesBySubCompanyTypeQuery(data?.data.SubCompanyType.id, {
+    skip: data?.data.SubCompanyType.id === null || data?.data.SubCompanyType.id === undefined
   });
 
   const {
@@ -175,8 +167,8 @@ function ColumnsLayouts() {
     isError: subServicesIsError,
     isLoading: subServicesIsLoading,
     isFetching: subServicesIsFetching
-  } = useGetAllServicesBYMainServiceTypeQuery(mainServiceId, {
-    skip: mainServiceId === null || mainServiceId === undefined
+  } = useGetAllServicesBYMainServiceTypeQuery(data?.data.MainServiceType.id, {
+    skip: data?.data.MainServiceType.id === null || data?.data.MainServiceType.id === undefined
   });
 
   const {
@@ -193,8 +185,8 @@ function ColumnsLayouts() {
     isError: statesIsError,
     isLoading: statesIsLoading,
     isFetching: statesIsFetching
-  } = useGetStatesByCountryQuery(countryId, {
-    skip: countryId === null || countryId === undefined
+  } = useGetStatesByCountryQuery(data?.data.BillingCountryID.id, {
+    skip: data?.data.BillingCountryID.id === null || data?.data.BillingCountryID.id === undefined
   });
 
   const {
@@ -203,8 +195,8 @@ function ColumnsLayouts() {
     isError: citiesIsError,
     isLoading: citiesIsLoading,
     isFetching: citiesIsFetching
-  } = useGetCitiesByStateQuery(stateId, {
-    skip: stateId === null || stateId === undefined
+  } = useGetCitiesByStateQuery(data?.data.BillingStateID.id, {
+    skip: data?.data.BillingStateID.id === null || data?.data.BillingStateID.id === undefined
   });
 
   const {
@@ -213,8 +205,8 @@ function ColumnsLayouts() {
     isError: communitiesIsError,
     isLoading: communitiesIsLoading,
     isFetching: communitiesIsFetching
-  } = useGetCommunitiesByCityQuery(cityId, {
-    skip: cityId === null || cityId === undefined
+  } = useGetCommunitiesByCityQuery(data?.data.BillingCityID.id, {
+    skip: data?.data.BillingCityID.id === null || data?.data.BillingCityID.id === undefined
   });
 
   const {
@@ -223,8 +215,8 @@ function ColumnsLayouts() {
     isError: subCommunitiesIsError,
     isLoading: subCommunitiesIsLoading,
     isFetching: subCommunitiesIsFetching
-  } = useGetSubCommunitiesByCommunityQuery(communityId, {
-    skip: communityId === null || communityId === undefined
+  } = useGetSubCommunitiesByCommunityQuery(data?.data.BillingCommunityID.id, {
+    skip: data?.data.BillingCommunityID.id === null || data?.data.BillingCommunityID.id === undefined
   });
 
   const {
@@ -235,11 +227,11 @@ function ColumnsLayouts() {
     isFetching: currenciesIsFetching
   } = useGetCurrenciesQuery();
 
-  const [createCompany, result] = useCreateCompanyMutation();
+  const [updateCompany, result] = useUpdateCompanyMutation();
 
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Company has been created successfully');
+      ToastSuccess('Company has been updated successfully');
     }
   }, [result.isSuccess]);
 
@@ -253,9 +245,9 @@ function ColumnsLayouts() {
   const submitForm = (values) => {
     const formData = new FormData();
     formData.append('company_types', values.companyType.id);
+    formData.append('id', company_id);
     formData.append('sub_company_type', values.subCompanyType.id);
     formData.append('main_service_type', values.mainService.id);
-    formData.append('sub_service_type', values.service);
     formData.append('company_name', values.companyName);
     formData.append('rera_no', values.reraNo);
     formData.append('commercial_license_no', values.lisenceNo);
@@ -267,11 +259,11 @@ function ColumnsLayouts() {
     formData.append('lat', values.lat);
     formData.append('lng', values.long);
     formData.append('no_of_employees', values.numberOfEmployees);
-    formData.append('billing_country_id', values.country.ID);
-    formData.append('billing_state_id', values.state.ID);
-    formData.append('billing_city_id', values.city.ID);
-    formData.append('billing_community_id', values.community.ID);
-    formData.append('billing_sub_community_id', values.subCommunity.ID);
+    formData.append('billing_country_id', values.country.id || values.country.ID);
+    formData.append('billing_state_id', values.state.id || values.state.ID);
+    formData.append('billing_city_id', values.city.id || values.city.ID);
+    formData.append('billing_community_id', values.community.id || values.community.ID);
+    formData.append('billing_sub_community_id', values.subCommunity.id || values.subCommunity.ID);
     formData.append('billing_office_address', values.officeAddress);
     formData.append('billing_reference', values.billingReference);
     formData.append('google_map_link', values.mapUrl);
@@ -297,72 +289,74 @@ function ColumnsLayouts() {
     formData.append('account_name', values.cardName);
     formData.append('account_number', values.cardNumber);
     formData.append('iban', values.ibanNumber);
-    formData.append('currency_id', values.currency.ID);
-    formData.append('bank_country_id', values.accountCountry.ID);
+    formData.append('currency_id', values.currency.ID || values.currency.id);
+    formData.append('bank_country_id', values.accountCountry.ID || values.currency.id);
     formData.append('bank_name', values.bankName);
     formData.append('branch_name', values.bankBranch);
     formData.append('swift_code', values.swiftCode);
     formData.append('rera_file_url', values.reraFile);
     formData.append('rera_expiry', values.reraExpiryDate);
+    formData.append('is_branch', is_branch);
     values.service.forEach((ser) => {
       formData.append('sub_service_type[]', ser?.id);
     });
-    createCompany(formData);
+    updateCompany(formData);
+    router.back();
   };
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
-      <Page title="Add Company">
+      <Page title="Edit Company">
         <ToastContainer />
         <Grid container spacing={gridSpacing}>
           <Formik
             initialValues={{
-              companyType: options[0],
-              subCompanyType: data?.data.CompanyTypesID,
-              mainService: data?.data.MainServiceType,
-              service: [],
-              companyName: '',
-              reraNo: '',
-              reraExpiryDate: '', //
-              billingReference: '',
-              vatNo: '',
-              vatStatus: '1',
-              country: '',
-              state: '',
-              city: '',
-              community: '',
+              companyType: options[data?.data.CompanyTypesID - 1],
+              subCompanyType: data?.data.SubCompanyType || '',
+              mainService: data?.data.MainServiceType || '',
+              service: data?.data.SubServiceType || [],
+              companyName: data?.data.CompanyName,
+              reraNo: data?.data.ReraNumber,
+              reraExpiryDate: data?.data.ReraExpiry, //
+              billingReference: data?.data.BillingReference,
+              vatNo: data?.data.VatNo,
+              vatStatus: data?.data.VatStatus,
+              country: data?.data.BillingCountryID,
+              state: data?.data.BillingStateID,
+              city: data?.data.BillingCityID,
+              community: data?.data.BillingCommunityID,
               subCommunity: '',
-              officeAddress: '',
-              mapUrl: '',
+              officeAddress: data?.data.BillingOfficeAddress,
+              mapUrl: data?.data.GoogleMapLink,
               place: '',
               lat: 24.4984312,
               long: 54.4036975,
-              companyWebsite: '',
-              companyEmailAddress: '',
-              companyContactNumber: '',
-              companyDescription: '',
-              lisenceNo: '',
-              lisenceExpiryDate: '',
-              facebook: '',
-              instagram: '',
-              linkedin: '',
-              twitter: '',
-              firstName: '',
-              lastName: '',
-              emailAddress: '',
-              phoneNumber: '',
-              numberOfEmployees: '',
-              subscriptionDuration: '',
-              subscriptionStartDate: '',
-              subscriptionEndDate: '',
-              cardNumber: '',
-              cardName: '',
-              ibanNumber: '',
-              currency: '',
-              accountCountry: '',
-              bankName: '',
-              bankBranch: '',
-              swiftCode: '',
+              companyWebsite: data?.data.WebsiteURL,
+              companyEmailAddress: data?.data.CompanyEmail,
+              companyContactNumber: '971504805823',
+              companyDescription: data?.data.Description,
+              lisenceNo: data?.data.CommercialLicenseNo,
+              lisenceExpiryDate: data?.data.CommercialLicenseExpiry,
+              facebook: data?.data.FacebookURL,
+              instagram: data?.data.InstagramURL,
+              linkedin: data?.data.LinkedInURL,
+              twitter: data?.data.TwitterURL,
+              firstName: data?.data.FirstName,
+              lastName: data?.data.LastName,
+              emailAddress: data?.data.UserEmail,
+              phoneNumber: '971504805823',
+              numberOfEmployees: data?.data.NoOfEmployees,
+              subscriptionDuration: '6',
+              subscriptionStartDate: data?.data.SubscriptionStartDate,
+              subscriptionEndDate: data?.data.SubscriptionEndDate,
+              cardNumber: data?.data.AccountNumber,
+              cardName: data?.data.AccountName,
+              ibanNumber: data?.data.IBANNumber,
+              currency: data?.data.Currency,
+              accountCountry: data?.data.BankCountry,
+              bankName: data?.data.BankName,
+              bankBranch: data?.data.BranchName,
+              swiftCode: data?.data.SwiftCode,
               reraFile: '', //
               lisenceFile: '',
               vatFile: '',
@@ -374,9 +368,7 @@ function ColumnsLayouts() {
             onSubmit={(values, { setSubmitting, resetForm }) => {
               submitForm(values);
               setSubmitting(false);
-              if (!companyError) {
-                resetForm();
-              }
+              resetForm();
             }}
             validator={() => ({})}
             onReset={(_) => {
@@ -390,7 +382,8 @@ function ColumnsLayouts() {
           >
             {(props) => (
               <>
-                <Container title="Add Company Details" style={{ xs: 12 }}>
+                {console.log(props.values)}
+                <Container title="Edit Local Company Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
                     <AutoCompleteSelector
                       helperInfo
@@ -572,7 +565,11 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       label="VAT status"
                       helperText="Please Choose a VAT status"
-                      options={['Active', 'Non-Active', 'Pending']}
+                      options={[
+                        { option: 'Active', value: 1 },
+                        { option: 'Non-Active', value: 2 },
+                        { option: 'Pending', value: 3 }
+                      ]}
                       required={true}
                     />
                     <br />
@@ -600,7 +597,7 @@ function ColumnsLayouts() {
                       id="country"
                       name="country"
                       options={countriesError || countriesIsLoading ? [] : countriesData?.data || []}
-                      getOptionLabel={(country) => country.Country || ''}
+                      getOptionLabel={(country) => country.Country || country.country || ''}
                       renderOption={(props, option) => (
                         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                           <Image
@@ -633,7 +630,7 @@ function ColumnsLayouts() {
                       id="state"
                       name="state"
                       options={statesData?.data || []}
-                      getOptionLabel={(state) => state.State || ''}
+                      getOptionLabel={(state) => state.State || state.state || ''}
                       placeholder="Select a State"
                       disabled={props.values.country ? false : true}
                       loading={statesIsLoading}
@@ -653,7 +650,7 @@ function ColumnsLayouts() {
                       id="city"
                       name="city"
                       options={citiesData?.data || []}
-                      getOptionLabel={(city) => city.City || ''}
+                      getOptionLabel={(city) => city.City || city.city || ''}
                       placeholder="Select a City"
                       disabled={props.values.state ? false : true}
                       loading={citiesIsLoading}
@@ -671,7 +668,7 @@ function ColumnsLayouts() {
                       id="community"
                       name="community"
                       options={communitiesData?.data || []}
-                      getOptionLabel={(community) => community.Community || ''}
+                      getOptionLabel={(community) => community.Community || community.community || ''}
                       placeholder="Select a Community"
                       disabled={props.values.city ? false : true}
                       loading={communitiesIsLoading}
@@ -688,7 +685,7 @@ function ColumnsLayouts() {
                       id="subCommunity"
                       name="subCommunity"
                       options={subCommunitiesData?.data || []}
-                      getOptionLabel={(subCommunity) => subCommunity.SubCommunity || ''}
+                      getOptionLabel={(subCommunity) => subCommunity.SubCommunity || subCommunity.subCommunity || ''}
                       placeholder="Select a Community"
                       disabled={props.values.community ? false : true}
                       loading={subCommunitiesIsLoading}
@@ -714,14 +711,14 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       id="mapUrl"
                       name="mapUrl"
-                      required={true}
+                      required={false}
                     />
 
                     <InputLayout
                       label="Place"
                       helperText="Please enter place address"
                       style={{ xs: 12, lg: 6 }}
-                      required={true}
+                      required={false}
                       metaError={props.errors.place}
                       metaTouched={props.touched.place}
                     >
@@ -828,7 +825,6 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="facebook"
                       id="facebook"
-                      required={false}
                     />
                     <InputText
                       helperInfo
@@ -839,7 +835,6 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="instagram"
                       id="instagram"
-                      required={false}
                     />
                     <InputText
                       helperInfo
@@ -850,7 +845,6 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="linkedin"
                       id="linkedin"
-                      required={false}
                     />
                     <InputText
                       helperInfo
@@ -861,29 +855,15 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="twitter"
                       id="twitter"
-                      required={false}
                     />
                     <InputText
-                      helperInfo
-                      label="YouTube"
+                      label="youtube"
                       type="url"
-                      placeholder="Enter Company YouTube Profile"
-                      helperText="Please enter company YouTube profile"
+                      placeholder="Enter Company youtube Profile"
+                      helperText="Please enter company youtube profile"
                       style={{ xs: 12, lg: 6 }}
                       name="youtube"
                       id="youtube"
-                      required={false}
-                    />
-                    <InputText
-                      helperInfo
-                      label="TikTok"
-                      type="url"
-                      placeholder="Enter Company TikTok Profile"
-                      helperText="Please enter company TikTok profile"
-                      style={{ xs: 12, lg: 6 }}
-                      name="tiktok"
-                      id="tiktok"
-                      required={false}
                     />
                   </Grid>
                 </Container>
@@ -949,8 +929,15 @@ function ColumnsLayouts() {
                       helperText="Please choose your purchased subscription duration"
                       style={{ xs: 12, lg: 4 }}
                       label="Subscription Duration"
-                      options={['1 Month', '3 Months', '6 Months', '9 Months', '12 Months']}
+                      options={[
+                        { value: 1, option: '1 Month' },
+                        { value: 3, option: '3 Months' },
+                        { value: 6, option: '6 Months' },
+                        { value: 9, option: '9 Months' },
+                        { value: 12, option: '12 Months' }
+                      ]}
                       required={true}
+                      reset={['subscriptionStartDate', 'subscriptionEndDate']}
                     />
                     <CustomDateTime
                       helperInfo
@@ -960,7 +947,8 @@ function ColumnsLayouts() {
                       id="subscriptionStartDate"
                       name="subscriptionStartDate"
                       required={true}
-                      setFieldValue={props.setFieldValue}
+                      func={{ value: props.values.subscriptionDuration, name: 'subscriptionEndDate' }}
+                      disabled={!props.values.subscriptionDuration}
                     />
                     <CustomDateTime
                       helperInfo
@@ -970,7 +958,7 @@ function ColumnsLayouts() {
                       id="subscriptionEndDate"
                       name="subscriptionEndDate"
                       required={true}
-                      setFieldValue={props.setFieldValue}
+                      disabled={true}
                     />
                     <FileUpload
                       helperInfo
@@ -1030,7 +1018,7 @@ function ColumnsLayouts() {
                       id="accountCountry"
                       name="accountCountry"
                       options={countriesError || countriesIsLoading ? [] : countriesData?.data || []}
-                      getOptionLabel={(country) => country.Country || ''}
+                      getOptionLabel={(country) => country.Country || country.country || ''}
                       renderOption={(props, option) => (
                         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                           <Image
@@ -1054,7 +1042,7 @@ function ColumnsLayouts() {
                       id="currency"
                       name="currency"
                       options={currenciesError || currenciesIsLoading ? [] : currenciesData?.data || []}
-                      getOptionLabel={(currency) => currency.Currency || ''}
+                      getOptionLabel={(currency) => currency.Currency || currency.currency || ''}
                       renderOption={(props, option) => (
                         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                           {option.Currency.toUpperCase()} : {option.Code}

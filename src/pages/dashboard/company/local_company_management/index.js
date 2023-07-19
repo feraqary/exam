@@ -20,7 +20,7 @@ import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import { Grid, Box, Button, Dialog, DialogActions, DialogContent, Slide } from '@mui/material';
 import Documents from '../documents';
 import { useGetLocalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
-import { ToastSuccess } from 'utils/toast';
+import { ToastError, ToastSuccess } from 'utils/toast';
 import Link from 'next/link';
 // ===========================|| International Company Managment list||=========================== //
 
@@ -40,13 +40,19 @@ const localCompanies = () => {
 
   const [blockCompany, result] = useUpdateCompanyStatusMutation();
 
-  console.log('Local ===> ', result);
-
   useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Company hase been successfully blocked');
     }
   }, [result.isSuccess]);
+
+  // useEffect(() => {
+  //   if (result.isError) {
+  //     const { data } = result.error;
+  //     console.log(data);
+  //     ToastError("Error");
+  //   }
+  // }, [result.isError]);
 
   const handleDocsOpen = () => {
     setDocsOpen(true);

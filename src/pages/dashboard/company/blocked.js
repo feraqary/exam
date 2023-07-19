@@ -53,7 +53,7 @@ const ColumnHeaders = [
             formData.append('company_id', row.original.ID);
             formData.append('status', '4');
             formData.append('company_type', row.original.CompanyMainType);
-
+            formData.append('is_branch', row.original.IsBranch);
             restoreCompany(formData);
           }}
         >

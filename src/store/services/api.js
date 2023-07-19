@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
 const token =
-  'v2.local.vXWFgWR_d-uUdQHOh5JeS8FfXcKprUHqBYSL_n1c_xCIUCmPl_lUhkHicqcFJjt2SYrEk9cakXAn76mH6kglDaj30QDeiLHWZgJzYXYKmTvUX583Rd5bxsLLgSIdD_Q7nGAZIWpuT5FHkCRp-0zP8nZY4VWbBn2YAeNIwLMyDaKQbQc09MQQX6PSPl8Vn5Pss8BKcrII_IBZA0AKNEMPvxYJkfB4UfoL-1XkryhNzLp2e_ky8TezxzyLEQf7tw7qMf5jpuL_VtjprIiQLL8.bnVsbA';
+  'v2.local.-XGDd5V5gG-Dyu92hX2WS1WlriMBLzVwsF5dug9M9vlJmGOJysojojve6ySwZipEMcObLxpOuFS39wzyZGkxATMMIlTP4VVYNjiidgpCtiEcT8p8d4SdcAm-DsYe2kCjFuBUkvTVf5q-x_0lcSteAOiiDQLUqwsQ82d7gclK8S8RvUt9fn9KBRZtWg1x6xI_YICNgsF1EN6QjtkX6YKmscWR36LesqR2llXlRqtWpzSxVpJ5Kxhri-9Flxi9i4_avDvWaPOVbySDumvjYw.bnVsbA';
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
@@ -16,7 +16,7 @@ const baseQuery = fetchBaseQuery({
   }
 });
 
-const baseQueryWithRetry = retry(baseQuery, { maxRetries: 3 });
+const baseQueryWithRetry = retry(baseQuery, { maxRetries: 1 });
 
 /**
  * Create a base API to inject endpoints into elsewhere.

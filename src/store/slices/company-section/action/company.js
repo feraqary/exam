@@ -1,7 +1,7 @@
 import { api } from 'utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
-  'v2.local.vXWFgWR_d-uUdQHOh5JeS8FfXcKprUHqBYSL_n1c_xCIUCmPl_lUhkHicqcFJjt2SYrEk9cakXAn76mH6kglDaj30QDeiLHWZgJzYXYKmTvUX583Rd5bxsLLgSIdD_Q7nGAZIWpuT5FHkCRp-0zP8nZY4VWbBn2YAeNIwLMyDaKQbQc09MQQX6PSPl8Vn5Pss8BKcrII_IBZA0AKNEMPvxYJkfB4UfoL-1XkryhNzLp2e_ky8TezxzyLEQf7tw7qMf5jpuL_VtjprIiQLL8.bnVsbA';
+  'v2.local.uHHNGU3VSKNPNr3wHkQtUbqCkNEv_gs7wCx6bzFWldTkLzkCQdCtVLpZ4vUYy5QnxciML1l1-s7fUW9ky4NyoyzCe0QoQoUFw-u1Klj5aSs642WDE4DRy7f1MhdIbx5FS43_t6rWHtuayNtESnB5xvv3XunBIS_yZO8CNrtQmHcGNumfARYWZrexlqTu0nXMlprYNJJaKTfWut2WDJusUCKEGkdNox8EvO_G1h_s31yyjfcZ5-OQixabqaTzGU0YEEMGd0iqqMnogEJa9Q.bnVsbA';
 const config = {
   headers: {
     'Content-Type': 'multipart/form-data',
@@ -200,9 +200,9 @@ export const getCompanyByStatus = createAsyncThunk('company/status', async (stat
   }
 });
 
-export const getCompanyNames = createAsyncThunk('companies/companyNames', async (_, { rejectWithValue }) => {
+export const getCompanyNames = createAsyncThunk('companies/companyNames', async (id, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/dashboard/getAllCompanyNames`, config);
+    const response = await api.get(`${baseurl}/api/dashboard/getAllCompanyNames/${id}`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -319,7 +319,6 @@ export const getFacilities = createAsyncThunk('projects/getFacilities', async (_
   try {
     const response = await api.get(`${baseurl}/api/facilities/getAllFacilities/1`, config);
     return response.data;
-
   } catch (error) {
     return rejectWithValue(error.response.data);
   }

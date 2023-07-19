@@ -7,7 +7,8 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import { useUpdateCompanyRankMutation } from 'store/services/company/companyApi';
-import { ToastSuccess } from 'utils/toast';
+import { ToastError, ToastSuccess } from 'utils/toast';
+import { memo, useState, useEffect } from 'react';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -22,16 +23,23 @@ const MenuProps = {
 
 const COMAPANY_STATUS = ['Standard', 'Featured', 'Premium', 'Top Deal'];
 
-export default function TableSelectorOption({ value, id, CompanyType }) {
-  const [companyStatus, setCompanyStatus] = React.useState(value - 1);
+const TableSelectorOption = memo(({ value, id, CompanyType }) => {
+  const [companyStatus, setCompanyStatus] = useState(value - 1);
 
   const [updateRank, result] = useUpdateCompanyRankMutation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Company has been updated successfully');
     }
   }, [result.isSuccess]);
+
+  useEffect(() => {
+    if (result.isError) {
+      const { data } = result.error;
+      ToastError(data.error);
+    }
+  }, [result.isError]);
 
   const handleChange = React.useCallback(
     (event) => {
@@ -69,4 +77,6 @@ export default function TableSelectorOption({ value, id, CompanyType }) {
       </Select>
     </FormControl>
   );
-}
+});
+
+export default TableSelectorOption;
