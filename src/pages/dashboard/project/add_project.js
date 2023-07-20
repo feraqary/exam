@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 // project imports
 import Layout from 'layout';
+import Categorization from './helper/Categorization';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
@@ -27,7 +28,7 @@ import { ToastContainer } from 'react-toastify';
 import { useEffect } from 'react';
 import InputText, { NormalInputText } from 'components/InputArea/TextInput';
 import Selector, { NormalSelector } from 'components/InputArea/Selector';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+import AutoCompleteSelector, { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
 import { FastField, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -58,9 +59,10 @@ import { id } from 'date-fns/locale';
 import PopUp from 'components/InputArea/PopUp';
 import { useFormikContext } from 'formik';
 import { Add } from '@mui/icons-material';
-import { values } from 'lodash';
+import { property, values } from 'lodash';
 import { number } from 'card-validator';
 import { object } from 'prop-types';
+import { useGetAllIntProjectsQuery, useGetPropertyTypeQuery } from 'store/services/project/projectApi';
 
 // ==============================|| Add Project ||============================== //
 
@@ -80,7 +82,6 @@ function AddProject() {
   const { countries, loading, states, cities, stateCity, communities, bankCountries, subCommunities, currencies } = useSelector(
     (state) => state.countries
   );
-
   const {
     companyInformation,
     error: companyError,
@@ -94,12 +95,8 @@ function AddProject() {
     facilities,
     broker
   } = useSelector((state) => state.companies);
-
-  // useEffect(() => {
-  //   console.log(stateCity);
-  //   console.log(masterDeveloper);
-  // }, [stateCity, masterDeveloper]);
-  // this is aglobal handle change that requires both value and of the input its used in to return an object with name: value
+  const { data: Types, isLoading, isError } = useGetPropertyTypeQuery();
+  console.log(Types);
 
   const [phases, setPhases] = useState([{ id: null, phaseName: '', numberOfPhases: 0, mapUrl: '' }]);
 
@@ -172,6 +169,8 @@ function AddProject() {
       setFieldValues('numberofPhases', num + 1);
     }, []);
 
+    if (isLoading) return;
+
     return (
       <>
         <InputText
@@ -219,7 +218,17 @@ function AddProject() {
           </Button>
         </Grid>
         <PopUp title="Use the Map" opened={open} setOpen={setOpen} size={'xl'} fullWidth>
-          <Map locationAddress={address} xs={12} i={num} lg={12} values={values} height={'65vh'} forPhase={true} close={setOpen} />
+          <Map
+            locationAddress={address}
+            setFieldValues={setFieldValues}
+            xs={12}
+            num={num}
+            lg={12}
+            values={values}
+            height={'65vh'}
+            forPhase={true}
+            close={setOpen}
+          />
         </PopUp>
         <>
           <Grid xs={12} lg={1} justifyContent="center" sx={{ marginLeft: '8px', width: '100%' }}>
@@ -265,7 +274,10 @@ function AddProject() {
     resetComponents(single);
   }, [single]);
 
-  const phase_t = ['single', 'multiple'];
+  const phase_t = [
+    { label: 'single', value: false },
+    { label: 'multiple', value: true }
+  ];
 
   const SinglePhase = (key) => {
     switch (key) {
@@ -360,8 +372,10 @@ function AddProject() {
         );
     }
   };
-
-  const [propertyType, setPropertyType] = useState();
+  const [propertyType, setPropertyType] = useState([]);
+  useEffect(() => {
+    console.log('propertyType: ', propertyType);
+  }, [propertyType]);
   const SinglePhasesInputs = propertyType?.map((component) => SinglePhase(component));
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
@@ -377,9 +391,8 @@ function AddProject() {
                 detailsStateSelector: '',
                 masterDeveloperSelector: '',
                 subDeveloperCompanySelector: '',
-                phaseType: single ? 'single' : 'multiple',
-                phases: [{ id: null, phaseName: '', NoOfProperties: null, locationAddress: '' }],
-                polygonCoords: [],
+                phaseType: null,
+                phases: [{ id: null, phaseName: '', NoOfProperties: null, locationAddress: '', polygonCoords: null }],
                 numberofPhases: 1,
                 isshared: shared,
 
@@ -396,7 +409,7 @@ function AddProject() {
                 long: 25,
 
                 // property details =================================================================
-                propertyType: '',
+                propertyType: [],
                 builtUpArea: '',
                 projectView: '',
                 parking: '',
@@ -427,7 +440,41 @@ function AddProject() {
               }}
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting, resetForm }) => {
-                console.log('project values: ', values);
+                const formData = new FormData();
+                // project details =================================================================
+                // formData.append('project_name', values.projectTitle);
+                // formData.append('parent_developer_company_id');
+                // formData.append('branch_developer_company_id');
+                // formData.append('ref_number');
+                // formData.append('country_id');
+                // formData.append('state_id');
+                // formData.append('city_id');
+                // formData.append('community_id');
+                // formData.append('sub_community_id');
+                // formData.append('lat');
+                // formData.append('lng');
+                // formData.append('is_shared');
+                // formData.append('property_title');
+                // formData.append('property_title_arabic');
+                // formData.append('description');
+                // formData.append('description_arabic');
+                // formData.append('completion_status_id');
+                // formData.append('no_of_floors');
+                // formData.append('no_of_unit_types');
+                // formData.append('life_style_id');
+                // formData.append('start_date');
+                // formData.append('completion_date');
+                // formData.append('handover_date');
+                // formData.append('ownership_id');
+                // formData.append('starting_price');
+                // formData.append('service_charges');
+                // formData.append('plot_area');
+                // formData.append('buildup_area');
+                // formData.append('min_area');
+                // formData.append('max_area');
+                // formData.append('property_type_id[]');
+                // formData.append('facilities_id[]');
+                // formData.append('broker_companies_id[]');
               }}
               handleChange={() => {
                 console.log(values);
@@ -453,7 +500,6 @@ function AddProject() {
                             }
                           }}
                         />
-
                         <FormControlLabel
                           sx={4}
                           lg={4}
@@ -537,19 +583,20 @@ function AddProject() {
                         <Grid item lg={18}></Grid>
                         {props.values.phaseTypeSelector == 2 ? setSingle(true) : setSingle(false)}
                         <Selector
-                          id="phaseTypeSelector"
-                          name="phaseTypeSelector"
+                          id="phaseType"
+                          name="phaseType"
                           label="Phase Type"
                           placeholder="Select Phase Type"
                           options={phase_t}
                           style={{ xs: 12, lg: 4 }}
                           func={(e) => {
-                            e == 1 ? setSingle(true) : setSingle(false), console.log(e);
+                            // setSingle(e);
+                            console.log(e.target.value);
                           }}
                         />
                         <Grid item lg={8}></Grid>
 
-                        {single ? (
+                        {props.values.phaseType ? (
                           <>
                             {props.values.phases.map((_, index) => (
                               <DynamicInput setFieldValues={props.setFieldValue} values={props.values} num={index} key={index} />
@@ -595,7 +642,7 @@ function AddProject() {
                           name="locationCountrySelect"
                           id="locationCountrySelect"
                           func={(newValue) => {
-                            dispatch(getStateCity(newValue.id));
+                            dispatch(getStateCity(newValue.ID));
                             console.log(newValue);
                           }}
                         />
@@ -704,20 +751,28 @@ function AddProject() {
                               helperText="Please select property status"
                             />
 
-                            <AutoCompleteSelector
-                              label="Property Type"
-                              required
-                              placeholder="Select Property Type"
-                              options={propertyTypes}
-                              getOptionLabel={(property) => property.Title || ''}
+                            <MultipleAutoCompleteSelector
                               style={{ xs: 12, lg: 4 }}
-                              id="propertyType"
-                              name="propertyType"
+                              label="Property Type"
+                              // id="propertyTypess"
+                              // name="propertyTypess"
+                              placeholder="Select Property Type"
+                              options={isError || isLoading ? [] : Types?.data || []}
+                              getOptionLabel={(property) => property?.title || ''}
                               helperText="Please select property type"
+                              required
                               func={(e) => {
                                 console.log(e);
-                                setPropertyType(e.Facts);
-                                console.log('p types: ', propertyType);
+                                e.map((pro, i) => {
+                                  console.log('p types: ', pro.facts);
+                                  setPropertyType([...propertyType, ...pro.facts]);
+
+                                });
+
+                                e.map((x, i) => {
+                                  console.log('p types: ', x.facts);
+                                  console.log('p types====> ', propertyType);
+                                });
                               }}
                             />
 
@@ -854,7 +909,7 @@ function AddProject() {
                               helperText="Please enter the service charge amount"
                             />
 
-                            {SinglePhasesInputs}
+                            {/* <>{SinglePhasesInputs}</> */}
                             <Grid lg={12} xs={12}></Grid>
                             <InputText
                               style={{ xs: 12, lg: 6 }}
@@ -915,28 +970,10 @@ function AddProject() {
 
                   <Grid item xs={12}>
                     <MainCard title="Facilities">
-                      <Grid container spacing={2} sx={{ padding: '10px 17px' }} alignItems="center">
-                        {/* {facilities} */}
-                        {facilities.map((facility, i) => {
-                          return (
-                            <FormControlLabel
-                              onChange={(e) => {
-                                if (e.target.checked == true) {
-                                  console.log(e.target.value);
-                                  setfacilitiesSelected([...facilitiesSelected, e.target.value]);
-                                } else {
-                                  const updatedState = facilitiesSelected.filter((item) => item !== e.target.value);
-                                  setfacilitiesSelected(updatedState);
-                                }
-                              }}
-                              key={i}
-                              value={facility.ID}
-                              control={<Checkbox color="primary" />}
-                              label={facility.Title}
-                              labelPlacement="end"
-                            />
-                          );
-                        })}
+                      <Grid container spacing={2} sx={{ padding: '10px 17px' }}>
+                        <Categorization list={listt} label={'xxx'} list_header={'hello'} />
+                        <Categorization list={listt1} label={'xxx'} list_header={'hello1'} />
+                        <Categorization list={listt2} label={'xxx'} list_header={'hello2'} />
                       </Grid>
                     </MainCard>
                   </Grid>
@@ -958,6 +995,10 @@ function AddProject() {
     </LoadScript>
   );
 }
+
+let listt = ['hello', 'dsdsa', 'sada'];
+let listt1 = ['hello', 'dsdsa', 'sada', 'dsdfasd', 'dasdasds', 'asasddsda'];
+let listt2 = ['hello', 'dsdsa', 'sada', 'dasdasds', 'asasddsda', 'hedllo', 'dsfdsa', 'sagda', 'daswdasds', 'asasdd12sda'];
 
 AddProject.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;

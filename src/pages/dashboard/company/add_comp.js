@@ -446,7 +446,6 @@ function ColumnsLayouts() {
                         placeholder="Select Sub Service Type"
                         options={subServicesError ? [] : subServicesData?.data || []}
                         getOptionLabel={(subService) => subService.title || ''}
-                        setFieldValue={props.setFieldValue}
                       />
                     )}
                   </Grid>

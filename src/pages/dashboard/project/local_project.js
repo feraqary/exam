@@ -64,7 +64,13 @@ const ColumnHeaders = [
           gap: '1rem'
         }}
       >
-        <Button variant="contained" color="primary">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            console.log(row);
+          }}
+        >
           Edit
         </Button>
         <Button color="primary" variant="contained">
@@ -74,16 +80,10 @@ const ColumnHeaders = [
           View Live
         </Button>
         <Button variant="contained" color="primary">
-          Multiple
-        </Button>
-        <Button variant="contained" color="primary">
           Report
         </Button>
         <Button variant="contained" color="error">
           Block
-        </Button>
-        <Button variant="contained" color="warning">
-          Reset
         </Button>
       </Box>
     )

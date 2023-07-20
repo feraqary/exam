@@ -19,8 +19,6 @@ import { border } from '@mui/system';
 
 export default function Map({
   forPhase,
-  setPhaseLat,
-  setPhaseLong,
   phase_long,
   phase_lat,
   locationAddress,
@@ -29,7 +27,8 @@ export default function Map({
   mapUrl,
   values,
   height,
-  i,
+  num,
+  setFieldValues,
   close
 }) {
   const [lat, setlat] = useState(24.4984312);
@@ -38,6 +37,9 @@ export default function Map({
   // const []
   const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
   const enable = false;
+
+  const { setFieldValue } = useFormikContext();
+
   // const { setFieldValue, values } = useFormikContext();
   const handleMapLoad = (map) => {
     // Set custom cursor for the map container
@@ -63,8 +65,8 @@ export default function Map({
         }
       })
       .then((response) => {
-        // setFieldValue('lat', response.data.results[0].geometry.location.lat);
-        // setFieldValue('long', response.data.results[0].geometry.location.lng);
+        setFieldValue('lat', response.data.results[0].geometry.location.lat);
+        setFieldValue('long', response.data.results[0].geometry.location.lng);
       })
       .catch((error) => {
         console.log('error', error);
@@ -75,7 +77,10 @@ export default function Map({
     getloc(locationAddress);
   }, [locationAddress]);
 
-  useEffect(() => {}, [lat, long]);
+  useEffect(() => {
+    setFieldValue('lat', lat);
+    setFieldValue('long', long);
+  }, [lat, long]);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey,
@@ -89,19 +94,7 @@ export default function Map({
   const drawingManagerRef = useRef();
 
   const [polygons, setPolygons] = useState([
-    // [
-    //   { lat: 28.630818281028954, lng: 79.80954378826904 },
-    //   { lat: 28.62362346815063, lng: 79.80272024853515 },
-    //   { lat: 28.623585797675588, lng: 79.81490820629882 },
-    //   { lat: 28.630818281028954, lng: 79.80954378826904 }
-    // ],
-    // [
-    //   { lat: 28.63130796240949, lng: 79.8170110581665 },
-    //   { lat: 28.623623468150655, lng: 79.81705397351074 },
-    //   { lat: 28.623623468150655, lng: 79.82619494183349 },
-    //   { lat: 28.6313832978037, lng: 79.82619494183349 },
-    //   { lat: 28.63130796240949, lng: 79.8170110581665 }
-    // ]
+
   ]);
 
   const polygonOptions = {
@@ -120,8 +113,7 @@ export default function Map({
       position: window.google?.maps?.ControlPosition?.TOP_CENTER,
       drawingModes: [
         window.google?.maps?.drawing?.OverlayType?.POLYGON
-        // window.google?.maps?.drawing?.OverlayType?.CIRCLE,
-        // window.google?.maps?.drawing?.OverlayType?.RECTANGLE
+
       ]
     }
   };
@@ -279,9 +271,7 @@ export default function Map({
               <Button
                 variant="contained"
                 onClick={() => {
-                  values.polygonCoords.push(polygons);
-                  // setFieldValue(`phases.polygonCoords`, polygonsCrds);
-                  close(false);
+                  setFieldValue(`phases[${num}].polygonCoords`, polygons);
                 }}
               >
                 Submit Location

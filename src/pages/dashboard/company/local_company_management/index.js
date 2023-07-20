@@ -44,7 +44,7 @@ const localCompanies = () => {
 
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Company hase been successfully blocked');
+      ToastSuccess('Company has been successfully blocked');
     }
   }, [result.isSuccess]);
 

@@ -6,52 +6,71 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-
+import { useGetSharedProjectsQuery } from 'store/services/project/projectApi';
 // ===========================|| International Company Managment list||=========================== //
 
 const ColumnHeaders = [
   {
-    accessorKey: 'proId',
+    accessorKey: 'ID',
     header: 'Project ID '
   },
   {
-    accessorKey: 'featured',
+    accessorKey: 'Featured',
     header: 'Featured'
   },
   {
-    accessorKey: 'name.projectName',
+    accessorKey: 'ProjectName',
     header: 'Project Name'
   },
   {
-    accessorKey: 'location',
+    accessorKey: 'Country',
     header: 'Location'
   },
   {
-    accessorKey: 'developerCompany',
+    accessorKey: 'DeveloperCompany',
     header: 'Developer Company'
   },
   {
+    accessorKey: 'endis',
+    header: 'Enable / Disable',
+    Cell: ({ renderedCellValue, row }) => {
+      return (
+        <>
+          <FormControlLabel control={<Switch defaultChecked />} />
+        </>
+      );
+    }
+  },
+  { accessorKey: 'QualityScore', header: 'Quality Score' },
+  {
     accessorKey: 'rating',
-    header: 'Rating'
+    header: 'Rating',
+    Cell: ({ renderedCellValue, row }) => {
+      // console.log('row: ', projectData.data[row.index].Rating);
+
+      return (
+        <>
+          <Rating readonly={true} name="read-only" value={projectData.data[row.index].Rating} />
+        </>
+      );
+    }
   },
   {
-    accessorKey: 'numberOfPhases',
+    accessorKey: 'NoOfPhases',
     header: 'Number of Phases'
   },
-
   {
-    accessorKey: 'phaseType',
+    accessorKey: 'PhaseType',
     header: 'Phase Type'
   },
   {
-    accessorKey: 'phases',
+    accessorKey: 'Phases',
     header: 'Phases'
   },
   {
-    accessorKey: 'endis',
-    header: 'Enable / Disable'
+    accessorKey: 'QualityScore',
+    header: 'Quality Score'
   },
-  { accessorKey: 'qualityScore', header: 'Quality Score' },
 
   {
     accessorKey: 'action',
@@ -65,85 +84,51 @@ const ColumnHeaders = [
         }}
       >
         <Button variant="contained" color="primary">
+          Verify
+        </Button>
+        <Button variant="contained" color="primary">
           Edit
         </Button>
         <Button color="primary" variant="contained">
-          View Documents
+          Manage Documents
         </Button>
         <Button variant="contained" color="primary">
           View Live
         </Button>
         <Button variant="contained" color="primary">
-          Multiple
+          Listing Properties
         </Button>
         <Button variant="contained" color="primary">
-          Report
+          Featured
+        </Button>
+        <Button variant="contained" color="primary">
+          Add Promotion
         </Button>
         <Button variant="contained" color="error">
           Block
         </Button>
-        <Button variant="contained" color="warning">
-          Reset
+        <Button variant="contained" color="primary">
+          Rating
         </Button>
       </Box>
     )
   }
 ];
 
-const data = [
-  {
-    projectName: 'Forum',
-    developerCompany: 'Broker Company',
-    featured: 'standard',
-    location: 'UAE',
-    proId: 'PA283102',
-    rating: 'Cercie',
-    endis: 'new@gmail.com',
-    qualityScore: '+0192831-310',
-    phaseType: 'Lannisters',
-    numberOfPhases: '2-12-2023',
-    phases: ' uploaded',
-    action: ' edit, multiple'
-  },
-  {
-    projectName: 'Dubai Holding',
-    developerCompany: 'Marketing Company',
-    featured: 'standard',
-    location: 'UAE',
-    proId: 'PA283102',
-    rating: 'Arya Stark',
-    endis: 'new@gmail.com',
-    qualityScore: '+0192831-310',
-    phaseType: 'Winterfell',
-    numberOfPhases: '2-12-2023',
-    phases: ' uploaded',
-    action: ' edit, multiple'
-  },
-  {
-    projectName: 'BlueStone',
-    developerCompany: 'Developer Company',
-    featured: 'standard',
-    location: 'USA',
-    proId: 'PA283102',
-    rating: 'Joffery',
-    endis: 'new@gmail.com',
-    qualityScore: '+0192831-310',
-    phaseType: 'Lannisters',
-    numberOfPhases: '2-12-2023',
-    phases: ' uploaded',
-    action: ' edit, multiple'
-  }
-];
 
-const IntCompData = () => (
+
+const IntCompData = () => {
+  const { data: Shared, isLoading, isError } = useGetSharedProjectsQuery();
+  if (isLoading) return;
+  return(
   <Page title="Local Project List">
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <Table columnHeaders={ColumnHeaders} data={data} />
+        <Table columnHeaders={ColumnHeaders} data={[]} />
       </Grid>
     </Grid>
   </Page>
-);
+)};
 
 IntCompData.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;

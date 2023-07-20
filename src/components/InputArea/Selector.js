@@ -19,16 +19,24 @@ import React, { useState, useMemo } from 'react';
  */
 
 import InputLayout from './InputLayout';
-import { useField } from 'formik';
+import { useField, useFormikContext } from 'formik';
 
 const Selector = ({ style, label, options, helperText, name, id, required, helperInfo, func }) => {
   const [field, meta] = useField(name);
+  const { setFieldValue } = useFormikContext();
 
   return (
     <InputLayout style={style} helperText={helperText} label={label} required={required} helperInfo={helperInfo}>
-      <NativeSelect id={id} fullWidth {...field} handleChange={func}>
+      <NativeSelect
+        id={id}
+        fullWidth
+        {...field}
+        onChange={(e) => {
+          setFieldValue(name, e.target.value);
+        }}
+      >
         {options.map((option, i) => {
-          return <option value={i + 1}>{option}</option>;
+          return <option value={option.value}>{option.label}</option>;
         })}
       </NativeSelect>
     </InputLayout>
