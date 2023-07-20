@@ -15,20 +15,20 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import { Grid, Box, Button, Dialog, DialogActions, DialogContent, Slide } from '@mui/material';
 import Documents from '../documents';
 import { useGetLocalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
 import { ToastSuccess } from 'utils/toast';
 import Link from 'next/link';
-// ===========================|| International Company Managment list||=========================== //
+// ===========================|| Local Company Managment list||=========================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const localCompanies = () => {
+const localCompanies = () => 
+{
   const [docsOpen, setDocsOpen] = useState(false);
   const [docsCrid, setDocsCrid] = useState({ comp: null, id: null });
 
@@ -44,7 +44,7 @@ const localCompanies = () => {
 
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Company hase been successfully blocked');
+      ToastSuccess('Company has been successfully blocked');
     }
   }, [result.isSuccess]);
 
@@ -165,7 +165,7 @@ const localCompanies = () => {
                 <AqaryButton variant="contained">Edit </AqaryButton>
               </Link>
               <Button variant="contained" color="primary" onClick={handleClickOpen} startIcon={<PreviewIcon />}>
-                Add sub-company
+                Add Sub-company
               </Button>
               <Button
                 color="primary"

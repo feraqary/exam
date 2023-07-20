@@ -16,7 +16,6 @@ import valid from 'card-validator';
 import { objectValidator, arrayValidator, stringValidator, numberValidator, fileValidator, dateValidator } from 'utils/formik-validations';
 import iban from 'iban';
 // redux actions import
-
 // assets
 import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
@@ -34,8 +33,15 @@ import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
 import { Formik } from 'formik';
 import PhoneInput from 'components/InputArea/PhoneInput';
-import { useCreateCompanyMutation, useGetCompanyQuery, useGetSubCompanyTypesByCompanyTypeQuery } from 'store/services/company/companyApi';
-import { useGetAllMainServicesBySubCompanyTypeQuery, useGetAllServicesBYMainServiceTypeQuery } from 'store/services/services/serviceApi';
+import { 
+  useCreateCompanyMutation, 
+  useGetCompanyQuery, 
+  useGetSubCompanyTypesByCompanyTypeQuery } 
+  from 'store/services/company/companyApi';
+import { 
+  useGetAllMainServicesBySubCompanyTypeQuery, 
+  useGetAllServicesBYMainServiceTypeQuery } 
+  from 'store/services/services/serviceApi';
 import {
   useGetCitiesByStateQuery,
   useGetCommunitiesByCityQuery,
@@ -46,6 +52,7 @@ import {
 } from 'store/services/country/countryApi';
 import { ToastSuccess } from 'utils/toast';
 import { useRouter } from 'next/router';
+
 
 // ==============================|| FIELDS ||============================== //
 const options = [
