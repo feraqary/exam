@@ -4,7 +4,7 @@ import InfoIcon from '@mui/icons-material/Info';
 
 // project imports
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
-import React from 'react';
+import React, { memo } from 'react';
 
 /**
  * A layout component for form inputs that includes a label, helper text, and error message.
@@ -19,7 +19,7 @@ import React from 'react';
  * @returns {JSX.Element} The rendered InputLayout component.
  */
 
-const InputLayout = ({ label, helperText, style, children, required, metaError, metaTouched, helperInfo }) => {
+const InputLayout = memo(({ label, helperText, style, children, required, metaError, metaTouched, helperInfo }) => {
   return (
     <Grid item xs={style.xs} lg={style.lg}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
@@ -40,6 +40,6 @@ const InputLayout = ({ label, helperText, style, children, required, metaError, 
       )}
     </Grid>
   );
-};
+});
 
 export default InputLayout;

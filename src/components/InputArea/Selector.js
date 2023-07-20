@@ -2,7 +2,7 @@
 import { NativeSelect } from '@mui/material';
 
 // project imports
-import React, { useState, useMemo } from 'react';
+import React, { memo } from 'react';
 // import TagsInput from 'react-tagsinput';
 
 /**
@@ -21,7 +21,7 @@ import React, { useState, useMemo } from 'react';
 import InputLayout from './InputLayout';
 import { useField, useFormikContext } from 'formik';
 
-const Selector = ({ style, label, options, helperText, name, id, required, helperInfo, func }) => {
+const Selector = memo(({ style, label, options, helperText, name, id, required, helperInfo, reset }) => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
 
@@ -31,17 +31,25 @@ const Selector = ({ style, label, options, helperText, name, id, required, helpe
         id={id}
         fullWidth
         {...field}
-        onChange={(e) => {
-          setFieldValue(name, e.target.value);
+        onChange={(val) => {
+          setFieldValue(name, Number(val.target.value));
+          if (reset) {
+            reset.forEach((ele) => setFieldValue(ele, ''));
+          }
         }}
       >
-        {options.map((option, i) => {
-          return <option value={option.value}>{option.label}</option>;
+        <option value="">None</option>
+        {options.map((option) => {
+          return (
+            <option value={option.value} selected={field.name === option.value}>
+              {option.option}
+            </option>
+          );
         })}
       </NativeSelect>
     </InputLayout>
   );
-};
+});
 //
 export const NormalSelector = ({ id, style, label, options, helperText, value, setValue }) => {
   return (

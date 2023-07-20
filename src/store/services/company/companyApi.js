@@ -198,7 +198,6 @@ export const companyApi = api.injectEndpoints({
     //UPDATE COMPANY STATUS API
     updateCompanyStatus: builder.mutation({
       query(formData) {
-        console.log(formData);
         return {
           url: `dashboard/updateCompanyStatus`,
           method: 'PUT',
@@ -206,6 +205,18 @@ export const companyApi = api.injectEndpoints({
         };
       },
       invalidatesTags: ['CompaniesByStatus', 'InternationalCompanies', 'LocalCompanies']
+    }),
+
+    //UPDATE COMPANY API
+    updateCompany: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/updateCompany`,
+          method: 'PUT',
+          body: formData
+        };
+      },
+      invalidatesTags: ['LocalCompanies', 'InternationalCompanies', 'CompaniesByStatus', 'CompaniesByRank']
     }),
 
     //UPDATE COMPANY DOC API
@@ -262,5 +273,6 @@ export const {
   useGetSubCompanyTypeQuery,
   useUpdateSubCompanyTypeMutation,
   useGetAllSubCompanyTypesQuery,
-  useGetCompanyQuery
+  useGetCompanyQuery,
+  useUpdateCompanyMutation
 } = companyApi;
