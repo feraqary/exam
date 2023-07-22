@@ -19,24 +19,28 @@ import { border } from '@mui/system';
 
 export default function Map({
   forPhase,
-  setPhaseLat,
-  setPhaseLong,
   phase_long,
   phase_lat,
   locationAddress,
   xs,
   lg,
   mapUrl,
+  values,
   height,
-  i,
+  num,
+  setFieldValues,
   close
 }) {
   const [lat, setlat] = useState(24.4984312);
   const [long, setlong] = useState(54.4036975);
   const [polygonsDrawn, setPolygonsDrawn] = useState();
+  // const []
   const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
   const enable = false;
-  const { setFieldValue, values } = useFormikContext();
+
+  const { setFieldValue } = useFormikContext();
+
+  // const { setFieldValue, values } = useFormikContext();
   const handleMapLoad = (map) => {
     // Set custom cursor for the map container
     map.setOptions({ draggableCursor: 'pointer' });
@@ -61,8 +65,8 @@ export default function Map({
         }
       })
       .then((response) => {
-        // setFieldValue('lat', response.data.results[0].geometry.location.lat);
-        // setFieldValue('long', response.data.results[0].geometry.location.lng);
+        setFieldValue('lat', response.data.results[0].geometry.location.lat);
+        setFieldValue('long', response.data.results[0].geometry.location.lng);
       })
       .catch((error) => {
         console.log('error', error);
@@ -73,7 +77,10 @@ export default function Map({
     getloc(locationAddress);
   }, [locationAddress]);
 
-  useEffect(() => {}, [lat, long]);
+  useEffect(() => {
+    setFieldValue('lat', lat);
+    setFieldValue('long', long);
+  }, [lat, long]);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey,
@@ -87,19 +94,7 @@ export default function Map({
   const drawingManagerRef = useRef();
 
   const [polygons, setPolygons] = useState([
-    // [
-    //   { lat: 28.630818281028954, lng: 79.80954378826904 },
-    //   { lat: 28.62362346815063, lng: 79.80272024853515 },
-    //   { lat: 28.623585797675588, lng: 79.81490820629882 },
-    //   { lat: 28.630818281028954, lng: 79.80954378826904 }
-    // ],
-    // [
-    //   { lat: 28.63130796240949, lng: 79.8170110581665 },
-    //   { lat: 28.623623468150655, lng: 79.81705397351074 },
-    //   { lat: 28.623623468150655, lng: 79.82619494183349 },
-    //   { lat: 28.6313832978037, lng: 79.82619494183349 },
-    //   { lat: 28.63130796240949, lng: 79.8170110581665 }
-    // ]
+
   ]);
 
   const polygonOptions = {
@@ -118,8 +113,7 @@ export default function Map({
       position: window.google?.maps?.ControlPosition?.TOP_CENTER,
       drawingModes: [
         window.google?.maps?.drawing?.OverlayType?.POLYGON
-        // window.google?.maps?.drawing?.OverlayType?.CIRCLE,
-        // window.google?.maps?.drawing?.OverlayType?.RECTANGLE
+
       ]
     }
   };
@@ -189,8 +183,6 @@ export default function Map({
     }
   };
 
-
-
   function getPaths(polygon) {
     var polygonBounds = polygon.getPath();
     var bounds = [];
@@ -213,14 +205,12 @@ export default function Map({
           center={{ lat: phase_lat && forPhase ? phase_lat : lat, lng: phase_long && forPhase ? phase_long : long }}
           zoom={12}
           onClick={(e) => {
-
-              setlat(e.latLng.lat());
-              setlong(e.latLng.lng());
-            
+            setlat(e.latLng.lat());
+            setlong(e.latLng.lng());
           }}
           onLoad={onLoadMap}
         >
-          <Marker position={{ lat: lat, lng : long }} />
+          <Marker position={{ lat: lat, lng: long }} />
           {forPhase && (
             <>
               <DrawingManager
@@ -281,8 +271,7 @@ export default function Map({
               <Button
                 variant="contained"
                 onClick={() => {
-                  setFieldValue(`phases[${i}].polygonCoords`, polygons);
-                  close(false);
+                  setFieldValue(`phases[${num}].polygonCoords`, polygons);
                 }}
               >
                 Submit Location

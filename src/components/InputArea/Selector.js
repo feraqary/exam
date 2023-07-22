@@ -24,6 +24,7 @@ import { useField, useFormikContext } from 'formik';
 const Selector = memo(({ style, label, options, helperText, name, id, required, helperInfo, reset }) => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
+
   return (
     <InputLayout style={style} helperText={helperText} label={label} required={required} helperInfo={helperInfo}>
       <NativeSelect

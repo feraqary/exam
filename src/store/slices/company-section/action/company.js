@@ -1,7 +1,8 @@
 import { api } from 'utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
-  'v2.local.uHHNGU3VSKNPNr3wHkQtUbqCkNEv_gs7wCx6bzFWldTkLzkCQdCtVLpZ4vUYy5QnxciML1l1-s7fUW9ky4NyoyzCe0QoQoUFw-u1Klj5aSs642WDE4DRy7f1MhdIbx5FS43_t6rWHtuayNtESnB5xvv3XunBIS_yZO8CNrtQmHcGNumfARYWZrexlqTu0nXMlprYNJJaKTfWut2WDJusUCKEGkdNox8EvO_G1h_s31yyjfcZ5-OQixabqaTzGU0YEEMGd0iqqMnogEJa9Q.bnVsbA';
+  'v2.local.aF-W6zSgvmo3A8MTMtxZRIm5dzddgpq5Ga_i8mzmcbMgBt73H4sOSNCiQG0FpNaac_qjjeTFS8mmQNypErAkaLAaqDv-WE9I-mgts5RDoJSRT7zGM_jf2ZtG_0LSPqvJtcyhnVZc9h1K4Nzrasthqo_zFEqeSV2M2wXxw80mjF07-xaHezVZmsuHfjREdqG-PkStmxILGbYWWyeeZJFTBXk9YcCTvCG7pgWd-10-nqCKiPSfBmAbJAeBe4-QgHBMpFhwNTr4K9zJHlKJZA.bnVsbA';
+
 const config = {
   headers: {
     'Content-Type': 'multipart/form-data',
@@ -220,7 +221,7 @@ export const getCompanyNames = createAsyncThunk('companies/companyNames', async 
 });
 export const updateCompanyDoc = createAsyncThunk('companies/docUpdate', async (formData, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyDoc`, formData, config);
+    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyDoc/1`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -311,7 +312,7 @@ export const getSubDevCompany = createAsyncThunk(
 
 export const getPropertyTypes = createAsyncThunk('projects/getPropertyTypes', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.get(`${baseurl}/api/propertyTypes/getAllPropertyTypes/1`, config);
+    const response = await api.get(`${baseurl}/api/propertyTypes/getPropertyTypes`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);

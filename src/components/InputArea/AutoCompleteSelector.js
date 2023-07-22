@@ -1,7 +1,7 @@
 // material-ui
 import { Autocomplete, Grid, TextField, Tooltip, IconButton, FormHelperText } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
-
+import React, { useRef } from 'react';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { useField, useFormikContext } from 'formik';
 import { memo } from 'react';
@@ -108,7 +108,8 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
         multiple
         getOptionDisabled={(option) => {
           const selectedValues = values[name];
-          return selectedValues.some((selectedValue) => selectedValue.id === option.id);
+          console.log(option);
+          return selectedValues.some((selectedValue) => selectedValue?.id === option?.id);
         }}
         limitTags={2}
         onChange={(e, value, reason) => {

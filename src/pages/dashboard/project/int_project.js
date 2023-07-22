@@ -6,135 +6,143 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-
+import { useGetAllIntProjectsQuery } from 'store/services/project/projectApi';
+import Rating from '@mui/material/Rating';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import { useEffect } from 'react';
+import Tooltip from '@mui/material/Tooltip';
 // ==============================|| Manage International Project ||============================== //
 
-const ColumnHeaders = [
-  {
-    accessorKey: 'proId',
-    header: 'Project ID '
-  },
-  {
-    accessorKey: 'featured',
-    header: 'Featured'
-  },
-  {
-    accessorKey: 'projectName',
-    header: 'Project Name'
-  },
-  {
-    accessorKey: 'location',
-    header: 'Location'
-  },
-  {
-    accessorKey: 'developerCompany',
-    header: 'Developer Company'
-  },
-  {
-    accessorKey: 'rating',
-    header: 'Rating'
-  },
-  {
-    accessorKey: 'numberOfPhases',
-    header: 'Number of Phases'
-  },
-
-  {
-    accessorKey: 'phaseType',
-    header: 'Phase Type'
-  },
-  {
-    accessorKey: 'phases',
-    header: 'Phases'
-  },
-  {
-    accessorKey: 'endis',
-    header: 'Enable / Disable'
-  },
-  { accessorKey: 'qualityScore', header: 'Quality Score' },
-
-  {
-    accessorKey: 'action',
-    header: 'Action',
-    Cell: ({ renderedCellValue, row }) => (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem'
-        }}
-      >
-        <Button variant="contained" color="primary">
-          Verify
-        </Button>
-        <Button variant="contained" color="primary">
-          Edit
-        </Button>
-        <Button color="primary" variant="contained">
-          Manage Documents
-        </Button>
-        <Button variant="contained" color="primary">
-          View Live
-        </Button>
-        <Button variant="contained" color="primary">
-        Listing Properties
-        </Button>
-        <Button variant="contained" color="primary">
-          Featured
-        </Button>
-        <Button variant="contained" color="primary">
-          Add Promotion
-        </Button>
-        <Button variant="contained" color="error">
-         Remove
-        </Button>
-        <Button variant="contained" color="warning">
-          Block
-        </Button>
-        <Button variant="contained" color="primary">
-          Rating
-        </Button>
-      </Box>
-    )
-  }
-];
-
-const data = [
-  {
-    projectName: 'Dubai Holding',
-    developerCompany: 'Marketing Company',
-    featured: 'standard',
-    location: 'UAE',
-    proId: 'PA283102',
-    rating: 'Arya Stark',
-    endis: 'new@gmail.com',
-    qualityScore: '+0192831-310',
-    phaseType: 'Winterfell',
-    numberOfPhases: '2-12-2023',
-    phases: ' uploaded',
-    action: ' edit, multiple'
-  },
-  {
-    projectName: 'BlueStone',
-    developerCompany: 'Developer Company',
-    featured: 'standard',
-    location: 'USA',
-    proId: 'PA283102',
-    rating: 'Joffery',
-    endis: 'new@gmail.com',
-    qualityScore: '+0192831-310',
-    phaseType: 'Lannisters',
-    numberOfPhases: '2-12-2023',
-    phases: ' uploaded',
-    action: ' edit, multiple'
-  }
-];
 function ManageProject() {
+  const formData = new FormData();
+  formData.append('page_no', 1);
+  formData.append('page_size', 20);
+  formData.append('country', 'pakistan');
+  const { data: projectData, isLoading, isError } = useGetAllIntProjectsQuery(formData);
+  let x = "Dwsfdwsfd"
+  console.log('data: ', projectData?.data);
+  const ColumnHeaders = [
+    {
+      accessorKey: 'ID',
+      header: 'Project ID ',
+      title: (
+        <Tooltip title={'dewfedfe'}>
+          <span>edewfdedfwe</span>
+        </Tooltip>
+      )
+    },
+    {
+      accessorKey: 'Featured',
+      header: `Featured ${<Tooltip>fsafd</Tooltip>}`
+    },
+    {
+      accessorKey: 'ProjectName',
+      header: 'Project Name'
+    },
+    {
+      accessorKey: 'Country',
+      header: 'Location'
+    },
+    {
+      accessorKey: 'DeveloperCompany',
+      header: 'Developer Company',
+      render: (rowData) => {
+        return <Tooltip title="xswdfw">werfwerf</Tooltip>;
+      }
+    },
+    {
+      accessorKey: 'endis',
+      header: 'Enable / Disable',
+      Cell: ({ renderedCellValue, row }) => {
+        return (
+          <>
+            <FormControlLabel control={<Switch defaultChecked />} />
+          </>
+        );
+      }
+    },
+    { accessorKey: 'QualityScore', header: 'Quality Score' },
+    {
+      accessorKey: 'rating',
+      header: 'Rating',
+      Cell: ({ renderedCellValue, row }) => {
+        // console.log('row: ', projectData.data[row.index].Rating);
+
+        return (
+          <>
+            <Rating readonly={true} name="read-only" value={projectData.data[row.index].Rating} />
+          </>
+        );
+      }
+    },
+    {
+      accessorKey: 'NoOfPhases',
+      header: 'Number of Phases'
+    },
+    {
+      accessorKey: 'PhaseType',
+      header: 'Phase Type'
+    },
+    {
+      accessorKey: 'Phases',
+      header: 'Phases'
+    },
+    {
+      accessorKey: 'QualityScore',
+      header: 'Quality Score'
+    },
+
+    {
+      accessorKey: 'action',
+      header: 'Action',
+      Cell: ({ renderedCellValue, row }) => (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem'
+          }}
+        >
+          <Button variant="contained" color="primary">
+            Verify
+          </Button>
+          <Button variant="contained" color="primary">
+            Edit
+          </Button>
+          <Button color="primary" variant="contained">
+            Manage Documents
+          </Button>
+          <Button variant="contained" color="primary">
+            View Live
+          </Button>
+          <Button variant="contained" color="primary">
+            Listing Properties
+          </Button>
+          <Button variant="contained" color="primary">
+            Featured
+          </Button>
+          <Button variant="contained" color="primary">
+            Add Promotion
+          </Button>
+
+          <Button variant="contained" color="error">
+            Block
+          </Button>
+          <Button variant="contained" color="primary">
+            Rating
+          </Button>
+        </Box>
+      )
+    }
+  ];
+
+  if (isLoading) return;
   return (
     <Page title="Manage Project">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table columnHeaders={ColumnHeaders} data={projectData?.data} />
         </Grid>
       </Grid>
     </Page>

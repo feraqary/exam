@@ -37,6 +37,7 @@ import useAuth from 'hooks/useAuth';
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
 import useConfig from 'hooks/useConfig';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 const User1 = '/assets/images/users/user-round.svg';
 
@@ -52,13 +53,17 @@ const ProfileSection = () => {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const { logout, user } = useAuth();
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
 
   /**
    * anchorRef is used on different components and specifying one type leads to other components throwing an error
    * */
+
   const anchorRef = useRef(null);
   const handleLogout = async () => {
     try {
+      signOut();
+      // Cookies.remove('next-auth.csrf-token');
       await logout();
     } catch (err) {
       console.error(err);
