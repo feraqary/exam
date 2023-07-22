@@ -170,9 +170,11 @@ const localCompanies = () => {
               >
                 <AqaryButton variant="contained">Edit </AqaryButton>
               </Link>
-              <Button variant="contained" color="primary" onClick={handleClickOpen} startIcon={<PreviewIcon />}>
-                Add sub-company
-              </Button>
+              <Link href={{ pathname: `/dashboard/company/add_comp/${row.original.ID}` }}>
+                <Button variant="contained" color="primary">
+                  Add sub-company
+                </Button>
+              </Link>
               <Button
                 color="primary"
                 variant="contained"
