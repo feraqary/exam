@@ -53,7 +53,7 @@ const project = {
       title: <FormattedMessage id="Local Projects" />,
       type: 'item',
       icon: icons.IconPin,
-      url: '//dashboard/project/local_project'
+      url: '/dashboard/project/local_project'
     },
     {
       id: 'international',

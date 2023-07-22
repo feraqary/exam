@@ -87,6 +87,13 @@ const validationSchema = Yup.object({
 });
 
 // ==============================|| Add Subscriptions form ||============================== //
+const options = [
+  { label: 'Broker Company', id: 1 },
+  { label: 'Developer Company', id: 2 },
+  { label: 'Service Company', id: 3 }
+];
+
+///
 function Subscription() {
   const [checked, setChecked] = useState(false);
   const [freeSubChecked, setFreeChecked] = useState(false);
@@ -102,6 +109,8 @@ function Subscription() {
   const [freeFeatured, setFreeFeatured] = useState(null);
   const [freePremium, setFreePremium] = useState(null);
   const [freeDealOfWeek, setFreeDealOfWeek] = useState(null);
+
+  const [companyTypeId, setCompanyTypeId] = useState(null);
 
   const calculateDiscount = (price, discount) => {
     if (discount === null) {
@@ -247,10 +256,6 @@ function Subscription() {
     }
   };
 
-  useEffect(() => {
-    dispatch(getCompanyNames());
-  }, []);
-
   return (
     <Page title="Add Subscriptions">
       <ToastContainer />
@@ -265,7 +270,7 @@ function Subscription() {
             }}
             onSubmit={(values, { resetForm }) => {
               const formData = new FormData();
-              formData.append('company_type', values.companyName?.company_type);
+              formData.append('company_type', companyTypeId);
               formData.append('subscription_duration', values.duration);
               formData.append('start_date', values.subscriptionStartDate);
               formData.append('end_date', values.subscriptionEndDate);
@@ -296,6 +301,22 @@ function Subscription() {
             {(props) => (
               <>
                 <Grid container spacing={2} alignItems="flex-start">
+                  <AutoCompleteSelector
+                    helperInfo
+                    style={{ xs: 12, lg: 6 }}
+                    label="Company Type"
+                    id="companyType"
+                    name="companyType"
+                    options={options}
+                    placeholder="Select Company Type"
+                    setFieldValue={props.setFieldValue}
+                    func={(newValue) => {
+                      setCompanyTypeId(newValue?.id);
+                      dispatch(getCompanyNames(1));
+                    }}
+                    required={true}
+                  />
+                  <Grid item style={{ xs: 12, lg: 6 }}></Grid>
                   <AutoCompleteSelector
                     label="Company Name"
                     options={companies.map((company) => {

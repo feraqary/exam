@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'Link';
 import { useRouter } from 'next/router';
 
@@ -54,19 +54,6 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
   const { data: session } = useSession();
 
   console.log('session', session);
-  if (session) {
-    const formData = new FormData();
-    console.log('email: ', session.user.email);
-    formData.append('email', session.user.email);
-    // formData.append('password', '');
-    formData.append('social_login', session.provider);
-    dispatch(userLogIn(formData));
-    // setTimeout(() => {
-    //   router.push('/dashboard/default');
-    // }, 1500);
-
-    console.log('logged in');
-  }
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -76,6 +63,15 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
     event.preventDefault();
   };
 
+
+
+  const normalSignin = useRef(null);
+  const [submit, setSubmit] = useState(false);
+
+
+  const handleSocialLogin = (event) => {
+
+  }
   return (
     <Formik
       initialValues={{
@@ -92,7 +88,7 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
           const formData = new FormData();
           formData.append('email', values.email);
           formData.append('password', values.password);
-          formData.append('social_login', 'googles');
+          formData.append('social_login', '');
 
           dispatch(userLogIn(formData));
 
@@ -204,17 +200,19 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 disabled={isSubmitting}
                 onClick={() => {
                   console.log(page);
+                  setSubmit(true);
                 }}
                 fullWidth
                 size="large"
                 type="submit"
                 variant="contained"
+                ref={normalSignin}
               >
                 Sign In
               </Button>
             </AnimateButton>
           </Box>
-          <Box sx={{ mt: 2 }}>
+          {/* <Box sx={{ mt: 2 }}>
             <AnimateButton>
               <Button
                 color="secondary"
@@ -227,7 +225,8 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 size="large"
                 variant="outlined"
                 startIcon={<GoogleIcon />}
-                disabled={isSubmitting}
+                disabled={isSubmitting && (session ? true : false)}
+                type="submit"
               >
                 Sign In With google
               </Button>
@@ -247,6 +246,7 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 size="large"
                 variant="outlined"
                 startIcon={<LinkedInIcon />}
+                type="submit"
               >
                 Sign In With LinkedIn
               </Button>
@@ -266,11 +266,12 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 size="large"
                 variant="outlined"
                 startIcon={<TwitterIcon />}
+                type="submit"
               >
                 Sign In With Twitter
               </Button>
             </AnimateButton>
-          </Box>
+          </Box> */}
         </form>
       )}
     </Formik>

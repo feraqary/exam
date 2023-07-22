@@ -182,8 +182,9 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
             // disablePadding={!drawerOpen}
             sx={{
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
               // justifyContent:'space-between'
+          
             }}
             subheader={
               currentItem.title && drawerOpen ? (

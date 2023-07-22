@@ -57,56 +57,55 @@ const options = [
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 // ==============================|| Add Company form ||============================== //
 const validationSchema = Yup.object({
-  companyType: objectValidator(),
-  subCompanyType: objectValidator(),
-  mainService: objectValidator(),
-  service: arrayValidator('Please select a service', 1),
-  companyName: stringValidator('Please provide a company name'),
-  reraNo: stringValidator('Please provide a valid reara number'),
-  reraExpiryDate: dateValidator('Please select an expiration date'),
-  billingReference: stringValidator('please provide a valid bill reference'),
-  vatNo: stringValidator('Please provide a valid vat number'),
-  vatStatus: stringValidator('Please select your vat status'),
-  country: objectValidator(),
-  state: objectValidator(),
-  city: objectValidator(),
-  community: objectValidator(),
-  subCommunity: objectValidator(),
-  officeAddress: stringValidator('Please provide a valid office address'),
+  companyType: objectValidator('Mandatory Selection', true),
+  subCompanyType: objectValidator('Mandatory Selection', true),
+  mainService: objectValidator('Mandatory Selection', true),
+  service: arrayValidator('Please select a service', true, 1),
+  companyName: stringValidator('Please provide a company name', true),
+  reraNo: stringValidator('Please provide a valid reara number', true),
+  reraExpiryDate: dateValidator('Please select an expiration date', true),
+  billingReference: stringValidator('please provide a valid bill reference', true),
+  vatNo: stringValidator('Please provide a valid vat number', true),
+  vatStatus: numberValidator('Please select your vat status', true),
+  country: objectValidator('Mandatory Selection', true),
+  state: objectValidator('Mandatory Selection', true),
+  city: objectValidator('Mandatory Selection', true),
+  community: objectValidator('Not a valid selection'),
+  subCommunity: objectValidator('Not a valid selection'),
+  officeAddress: stringValidator('Please provide a valid office address', true),
   mapUrl: stringValidator('Please provide a valid map url').url(),
-  // place: Yup.array().required('Please provide a valid address or place'),
-  lat: numberValidator('Latitude is missing'),
-  long: numberValidator('Longitude is missing'),
-  companyWebsite: stringValidator('Please provid a valid company website').url(),
-  companyEmailAddress: stringValidator('Please provide a valid company email address').email(),
-  companyContactNumber: stringValidator('Please provide a valid company contact number'),
-  companyDescription: stringValidator('Please provide a company description'),
-  lisenceNo: stringValidator('Please provide a valid liscence number'),
-  lisenceExpiryDate: dateValidator('Please select an expiration date'),
+  lat: numberValidator('Latitude is missing', true),
+  long: numberValidator('Longitude is missing', true),
+  companyWebsite: stringValidator('Please provid a valid company website', true).url(),
+  companyEmailAddress: stringValidator('Please provide a valid company email address', true).email(),
+  companyContactNumber: stringValidator('Please provide a valid company contact number', true),
+  companyDescription: stringValidator('Please provide a company description', true),
+  lisenceNo: stringValidator('Please provide a valid liscence number', true),
+  lisenceExpiryDate: dateValidator('Please select an expiration date', true),
   facebook: stringValidator('Please provide your facebook profile'),
   instagram: stringValidator('Please provide your instagram profile'),
   linkedin: stringValidator('Please provide your linkedin profile'),
   twitter: stringValidator('Please provide your twitter profile'),
   youtube: stringValidator('Please provide your YouTube profile'),
-  tiktok: stringValidator('Please provide your TikTok profile'),
-  firstName: stringValidator('Please provide your first name'),
-  lastName: stringValidator('Please provide your last name'),
-  emailAddress: stringValidator('Please provide a valid email address').email(),
-  phoneNumber: stringValidator('Please provide a valid phone number'),
-  numberOfEmployees: numberValidator('Please enter the number of employees'),
-  subscriptionDuration: stringValidator('Please select a subscription duration'),
-  subscriptionStartDate: dateValidator('Please select a subscription start date'),
-  subscriptionEndDate: dateValidator('Please select a subscription end date'),
+  firstName: stringValidator('Please provide your first name', true),
+  lastName: stringValidator('Please provide your last name', true),
+  emailAddress: stringValidator('Please provide a valid email address', true).email(),
+  phoneNumber: stringValidator('Please provide a valid phone number', true),
+  numberOfEmployees: numberValidator('Please enter the number of employees', true),
+  subscriptionDuration: stringValidator('Please select a subscription duration', true),
+  subscriptionStartDate: dateValidator('Please select a subscription start date', true),
+  subscriptionEndDate: dateValidator('Please select a subscription end date', true),
   ibanNumber: Yup.string()
+    .required()
     .trim()
     .test('TEST_IBAN_NUMBER', 'iban number is invalid', (value) => {
       return iban.isValid(value);
     }),
-  currency: objectValidator(),
-  accountCountry: objectValidator(),
-  bankName: stringValidator('Please provide a bank name'),
-  bankBranch: stringValidator('Please provide a bank branch'),
-  swiftCode: stringValidator('Please provide a swift code'),
+  currency: objectValidator('Mandatory Selection', true),
+  accountCountry: objectValidator('Mandatory Selection', true),
+  bankName: stringValidator('Please provide a bank name', true),
+  bankBranch: stringValidator('Please provide a bank branch', true),
+  swiftCode: stringValidator('Please provide a swift code', true),
   cardNumber: Yup.string().trim().min(6, 'please provide a valid account number').max(15, 'please provide a valid account number'),
 
   cardName: Yup.string()
@@ -135,19 +134,10 @@ function ColumnsLayouts() {
   const router = useRouter();
 
   const { data } = useGetCompanyQuery({
-    id: router.query.id,
+    id: router.query.company_id,
     company_type: router.query.company_type,
     is_branch: router.query.is_branch
   });
-
-  const {
-    companyInformation,
-    error: companyError,
-    loading: companyLoading,
-    companyTypes,
-    mainServices,
-    services
-  } = useSelector((state) => state.companies);
 
   const {
     data: companySubTypes,
@@ -155,8 +145,8 @@ function ColumnsLayouts() {
     isError,
     isLoading,
     isFetching
-  } = useGetSubCompanyTypesByCompanyTypeQuery(companyId, {
-    skip: companyId === null || companyId === undefined
+  } = useGetSubCompanyTypesByCompanyTypeQuery(data?.data.CompanyTypesID, {
+    skip: data?.data.CompanyTypesID === null || data?.data.CompanyTypesID === undefined
   });
 
   const {
@@ -165,8 +155,8 @@ function ColumnsLayouts() {
     isError: mainServiceIsError,
     isLoading: mainServiceIsLoading,
     isFetching: mainServiceIsFetching
-  } = useGetAllMainServicesBySubCompanyTypeQuery(subCompanyTypeId, {
-    skip: subCompanyTypeId === null || subCompanyTypeId === undefined
+  } = useGetAllMainServicesBySubCompanyTypeQuery(data?.data.SubCompanyType.id, {
+    skip: data?.data.SubCompanyType.id === null || data?.data.SubCompanyType.id === undefined
   });
 
   const {
@@ -175,8 +165,8 @@ function ColumnsLayouts() {
     isError: subServicesIsError,
     isLoading: subServicesIsLoading,
     isFetching: subServicesIsFetching
-  } = useGetAllServicesBYMainServiceTypeQuery(mainServiceId, {
-    skip: mainServiceId === null || mainServiceId === undefined
+  } = useGetAllServicesBYMainServiceTypeQuery(data?.data.MainServiceType.id, {
+    skip: data?.data.MainServiceType.id === null || data?.data.MainServiceType.id === undefined
   });
 
   const {
@@ -312,15 +302,15 @@ function ColumnsLayouts() {
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
-      <Page title="Add Company">
+      <Page title="Edit Internationl Company">
         <ToastContainer />
         <Grid container spacing={gridSpacing}>
           <Formik
             initialValues={{
-              companyType: '',
-              subCompanyType: '',
-              mainService: '',
-              service: [],
+              companyType: options[data?.data.CompanyTypesID - 1],
+              subCompanyType: data?.data.SubCompanyType,
+              mainService: data?.data.MainServiceType,
+              service: data?.data.SubServiceType || [],
               companyName: '',
               reraNo: '',
               reraExpiryDate: '', //
@@ -374,9 +364,7 @@ function ColumnsLayouts() {
             onSubmit={(values, { setSubmitting, resetForm }) => {
               submitForm(values);
               setSubmitting(false);
-              if (!companyError) {
-                resetForm();
-              }
+              resetForm();
             }}
             validator={() => ({})}
             onReset={(_) => {
@@ -390,7 +378,7 @@ function ColumnsLayouts() {
           >
             {(props) => (
               <>
-                <Container title="Add Company Details" style={{ xs: 12 }}>
+                <Container title="Edit International Company Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
                     <AutoCompleteSelector
                       helperInfo
@@ -714,7 +702,7 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       id="mapUrl"
                       name="mapUrl"
-                      required={true}
+                      required={false}
                     />
 
                     <InputLayout
@@ -828,7 +816,6 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="facebook"
                       id="facebook"
-                      required={false}
                     />
                     <InputText
                       helperInfo
@@ -839,7 +826,6 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="instagram"
                       id="instagram"
-                      required={false}
                     />
                     <InputText
                       helperInfo
@@ -850,7 +836,6 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="linkedin"
                       id="linkedin"
-                      required={false}
                     />
                     <InputText
                       helperInfo
@@ -861,29 +846,15 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 6 }}
                       name="twitter"
                       id="twitter"
-                      required={false}
                     />
                     <InputText
-                      helperInfo
-                      label="YouTube"
+                      label="youtube"
                       type="url"
-                      placeholder="Enter Company YouTube Profile"
-                      helperText="Please enter company YouTube profile"
+                      placeholder="Enter Company youtube Profile"
+                      helperText="Please enter company youtube profile"
                       style={{ xs: 12, lg: 6 }}
                       name="youtube"
                       id="youtube"
-                      required={false}
-                    />
-                    <InputText
-                      helperInfo
-                      label="TikTok"
-                      type="url"
-                      placeholder="Enter Company TikTok Profile"
-                      helperText="Please enter company TikTok profile"
-                      style={{ xs: 12, lg: 6 }}
-                      name="tiktok"
-                      id="tiktok"
-                      required={false}
                     />
                   </Grid>
                 </Container>
@@ -949,8 +920,15 @@ function ColumnsLayouts() {
                       helperText="Please choose your purchased subscription duration"
                       style={{ xs: 12, lg: 4 }}
                       label="Subscription Duration"
-                      options={['1 Month', '3 Months', '6 Months', '9 Months', '12 Months']}
+                      options={[
+                        { value: 1, option: '1 Month' },
+                        { value: 3, option: '3 Months' },
+                        { value: 6, option: '6 Months' },
+                        { value: 9, option: '9 Months' },
+                        { value: 12, option: '12 Months' }
+                      ]}
                       required={true}
+                      reset={['subscriptionStartDate', 'subscriptionEndDate']}
                     />
                     <CustomDateTime
                       helperInfo
@@ -960,7 +938,8 @@ function ColumnsLayouts() {
                       id="subscriptionStartDate"
                       name="subscriptionStartDate"
                       required={true}
-                      setFieldValue={props.setFieldValue}
+                      func={{ value: props.values.subscriptionDuration, name: 'subscriptionEndDate' }}
+                      disabled={!props.values.subscriptionDuration}
                     />
                     <CustomDateTime
                       helperInfo
@@ -970,7 +949,7 @@ function ColumnsLayouts() {
                       id="subscriptionEndDate"
                       name="subscriptionEndDate"
                       required={true}
-                      setFieldValue={props.setFieldValue}
+                      disabled={true}
                     />
                     <FileUpload
                       helperInfo
