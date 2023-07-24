@@ -89,13 +89,7 @@ const localProjects = () => {
         return <Tooltip title="Developer Company Name">Developer Company</Tooltip>;
       }
     },
-    {
-      accessorKey: 'rating',
-      header: 'Rating',
-      render: (rowData) => {
-        return <Rating name="read-only" value={value} readOnly />;
-      }
-    },
+
     {
       accessorKey: 'endis',
       header: 'Enable / Disable',
@@ -108,13 +102,11 @@ const localProjects = () => {
       }
     },
 
-    { accessorKey: 'QualityScore', header: 'Quality Score' },
+    { accessorKey: 'quality_score', header: 'Quality Score' },
     {
       accessorKey: 'rating',
       header: 'Rating',
       Cell: ({ renderedCellValue, row }) => {
-        // console.log('row: ', projectData.data[row.index].Rating);
-
         return (
           <>
             <Rating readonly={true} name="read-only" value={localProjectsData?.data[row.index].Rating} />

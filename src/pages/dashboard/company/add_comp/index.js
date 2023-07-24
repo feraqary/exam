@@ -233,6 +233,13 @@ function ColumnsLayouts() {
     }
   }, [result.isSuccess]);
 
+  useEffect(() => {
+    if (result.isError) {
+      const { data } = result.error;
+      ToastError(data.error);
+    }
+  }, [result.isError]);
+
   const vatRef = useRef(null);
   const lisenceRef = useRef(null);
   const companyLogoRef = useRef(null);

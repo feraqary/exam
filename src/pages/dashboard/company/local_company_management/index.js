@@ -45,13 +45,12 @@ const localCompanies = () => {
     }
   }, [result.isSuccess]);
 
-  // useEffect(() => {
-  //   if (result.isError) {
-  //     const { data } = result.error;
-  //     console.log(data);
-  //     ToastError("Error");
-  //   }
-  // }, [result.isError]);
+  useEffect(() => {
+    if (result.isError) {
+      const { data } = result.error;
+      ToastError(data.error);
+    }
+  }, [result.isError]);
 
   const handleDocsOpen = () => {
     setDocsOpen(true);
@@ -131,10 +130,6 @@ const localCompanies = () => {
       header: 'Action',
       Cell: ({ renderedCellValue, row }) => {
         const [open, setOpen] = useState(false);
-
-        const handleClickOpen = () => {
-          setOpen(true);
-        };
 
         const handleClose = () => {
           setOpen(false);
