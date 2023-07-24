@@ -108,11 +108,11 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
         multiple
         getOptionDisabled={(option) => {
           const selectedValues = values[name];
-          console.log(option);
           return selectedValues.some((selectedValue) => selectedValue?.id === option?.id);
         }}
         limitTags={2}
         onChange={(e, value, reason) => {
+          console.log(value);
           if (reason === 'clear') {
             setFieldValue(name, []);
           } else {

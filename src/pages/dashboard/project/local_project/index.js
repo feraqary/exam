@@ -125,7 +125,6 @@ const localProjects = () => {
         );
       }
     },
-
     {
       accessorKey: 'action',
       header: 'Action',

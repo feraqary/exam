@@ -25,7 +25,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const international_Projects = () => {
   const [docsOpen, setDocsOpen] = useState(false);
   const [updateDocs, setUpdateDocs] = useState({ project: null, id: null });
-  const [pagination, setPagination] = useState({
+  const [pagination, setPagination] = 
+  useState({
     pageIndex: 0,
     pageSize: 5
   });

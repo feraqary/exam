@@ -34,7 +34,11 @@ import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
 import { Formik } from 'formik';
 import PhoneInput from 'components/InputArea/PhoneInput';
-import { useCreateCompanyMutation, useGetSubCompanyTypesByCompanyTypeQuery } from 'store/services/company/companyApi';
+import {
+  useCreateCompanyBranchMutation,
+  useCreateCompanyMutation,
+  useGetSubCompanyTypesByCompanyTypeQuery
+} from 'store/services/company/companyApi';
 import { useGetAllMainServicesBySubCompanyTypeQuery, useGetAllServicesBYMainServiceTypeQuery } from 'store/services/services/serviceApi';
 import {
   useGetCitiesByStateQuery,
@@ -44,7 +48,8 @@ import {
   useGetStatesByCountryQuery,
   useGetSubCommunitiesByCommunityQuery
 } from 'store/services/country/countryApi';
-import { ToastSuccess } from 'utils/toast';
+import { ToastError, ToastSuccess } from 'utils/toast';
+import { useRouter } from 'next/router';
 
 // ==============================|| FIELDS ||============================== //
 const options = [
@@ -129,6 +134,8 @@ function ColumnsLayouts() {
   const [stateId, setStateId] = useState(null);
   const [cityId, setCityId] = useState(null);
   const [communityId, setCommunityId] = useState(null);
+
+  const { parent_id } = useRouter().query;
 
   const {
     companyInformation,
@@ -225,13 +232,20 @@ function ColumnsLayouts() {
     isFetching: currenciesIsFetching
   } = useGetCurrenciesQuery();
 
-  const [createCompany, result] = useCreateCompanyMutation();
+  const [createCompanyBranch, result] = useCreateCompanyBranchMutation();
 
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Company has been created successfully');
+      ToastSuccess('Company Branch has been created successfully');
     }
   }, [result.isSuccess]);
+
+  useEffect(() => {
+    if (result.isError) {
+      const { data } = result.error;
+      ToastError(data.error);
+    }
+  }, [result.isError]);
 
   const vatRef = useRef(null);
   const lisenceRef = useRef(null);
@@ -241,10 +255,10 @@ function ColumnsLayouts() {
   const reraRef = useRef(null);
   const submitForm = (values) => {
     const formData = new FormData();
+    formData.append('parent_company_id', parent_id);
     formData.append('company_types', values.companyType.id);
     formData.append('subcompany_type', values.subCompanyType.id);
     formData.append('main_service_type', values.mainService.id);
-    formData.append('sub_service_type', values.service);
     formData.append('company_name', values.companyName);
     formData.append('rera_no', values.reraNo);
     formData.append('commercial_license_no', values.lisenceNo);
@@ -294,9 +308,10 @@ function ColumnsLayouts() {
     formData.append('rera_file_url', values.reraFile);
     formData.append('rera_expiry', values.reraExpiryDate);
     values.service.forEach((ser) => {
+      console.log(ser?.id);
       formData.append('sub_service_type[]', ser?.id);
     });
-    createCompany(formData);
+    createCompanyBranch(formData);
   };
 
   return (
