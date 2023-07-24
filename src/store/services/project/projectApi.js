@@ -13,35 +13,17 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['LocalProject']
     }),
-
-    /*  // GET ALL PROJECTS API
-     getAllIntProjects: builder.query({
-      query(_) {
-        return {
-          url: `dashboard/getAllIntProjects?page_no=1&page_size=20&country=pakistan`,
-          method: 'GET'
-        };
-      }
-    }),
-    getPropertyType: builder.query({
-      query(_) {
-        return {
-          url: `propertyTypes/getPropertyTypes`,
-          method: 'GET'
-        };
-      }
-    }),
-    //GET shared projects API
-    getSharedProjects: builder.query({
-      query(_) {
-        return {
-          url: `dashboard/getAllSharedProjects`,
-          method: 'GET'
-        };
-      }
-    }),
-    */
-
+      //GET International Projects API
+      getInternationalProjects: builder.query({
+        query(pagination) {
+          const { pageIndex, pageSize } = pagination;
+          return {
+            url: `dashboard/getAllIntProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
+            method: 'GET'
+          };
+        },
+        providesTags: ['InternationalProject']
+      }),
     //UPDATE Project STATUS API
     updateProjectStatus: builder.mutation({
       query(formData) {
@@ -64,6 +46,7 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+    
     deleteSubCompanyType: builder.mutation({
       query(id) {
         return {
@@ -75,4 +58,8 @@ export const projectApi = api.injectEndpoints({
   })
 });
 
-export const { useGetLocalProjectsQuery, useUpdateProjectStatusMutation } = projectApi;
+export const { useGetLocalProjectsQuery, 
+  useGetInternationalProjectsQuery,
+  useUpdateProjectStatusMutation 
+
+} = projectApi;

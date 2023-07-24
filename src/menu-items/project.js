@@ -60,7 +60,7 @@ const project = {
       title: <FormattedMessage id="International Projects" />,
       type: 'item',
       icon: icons.IconMapPin,
-      url: '/dashboard/project/int_project'
+      url: '/dashboard/project/international_project'
     },
     {
       id: 'shared-projects',

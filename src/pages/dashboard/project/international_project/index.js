@@ -11,26 +11,25 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { useGetLocalProjectsQuery, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
+import { useGetInternationalProjectsQuery, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import 'react-toastify/dist/ReactToastify.css';
 
-// ==============================|| Manage Local Projects ||============================== //
+// ==============================|| Manage international_ Projects ||============================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const localProjects = () => {
+const international_Projects = () => {
   const [docsOpen, setDocsOpen] = useState(false);
   const [updateDocs, setUpdateDocs] = useState({ project: null, id: null });
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
-  const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
-
+  const { data: international_ProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
   const [blockProject, result] = useUpdateProjectStatusMutation();
   useEffect(() => {
     if (result.isSuccess) {
@@ -93,7 +92,7 @@ const localProjects = () => {
 
         return (
           <>
-            <Rating name="read-only" value={localProjectsData?.data[row.index].Rating + 1} />
+            <Rating name="read-only" value={international_ProjectsData?.data[row.index].Rating} />
           </>
         );
       }
@@ -201,12 +200,12 @@ const localProjects = () => {
         <Grid item xs={12}>
           <Table
             columnHeaders={ColumnHeaders}
-            data={localProjectsData?.data || []}
+            data={international_ProjectsData?.data || []}
             loading={isLoading}
             pagination={pagination}
             setPagination={setPagination}
             isFetching={isFetching}
-            rowCount={localProjectsData?.Total}
+            rowCount={international_ProjectsData?.Total}
           />
         </Grid>
       </Grid>
@@ -220,8 +219,8 @@ const localProjects = () => {
   );
 };
 
-localProjects.getLayout = function getLayout(page) {
+international_Projects.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default localProjects;
+export default international_Projects;
