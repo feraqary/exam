@@ -16,7 +16,6 @@ import valid from 'card-validator';
 import { objectValidator, arrayValidator, stringValidator, numberValidator, fileValidator, dateValidator } from 'utils/formik-validations';
 import iban from 'iban';
 // redux actions import
-
 // assets
 import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
@@ -34,7 +33,12 @@ import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
 import { Formik } from 'formik';
 import PhoneInput from 'components/InputArea/PhoneInput';
-import { useGetCompanyQuery, useGetSubCompanyTypesByCompanyTypeQuery, useUpdateCompanyMutation } from 'store/services/company/companyApi';
+import {
+  useCreateCompanyMutation,
+  useGetCompanyQuery,
+  useGetSubCompanyTypesByCompanyTypeQuery,
+  useUpdateCompanyMutation
+} from 'store/services/company/companyApi';
 import { useGetAllMainServicesBySubCompanyTypeQuery, useGetAllServicesBYMainServiceTypeQuery } from 'store/services/services/serviceApi';
 import {
   useGetCitiesByStateQuery,
@@ -234,6 +238,13 @@ function ColumnsLayouts() {
       ToastSuccess('Company has been updated successfully');
     }
   }, [result.isSuccess]);
+
+  useEffect(() => {
+    if (result.isError) {
+      const { data } = result.error;
+      ToastError(data.error);
+    }
+  }, [result.isError]);
 
   const vatRef = useRef(null);
   const lisenceRef = useRef(null);

@@ -24,8 +24,13 @@ const Table = ({ columnHeaders, data, loading, pagination, setPagination, isFetc
           borderRadius: '200'
         }
       }}
-      // onPaginationChange={setPagination}
-      // state={{ pagination, isLoading: loading, showProgressBars: isFetching }}
+      localization={{
+        header: {
+          firstTooltip: 'wsdfwdfwdfwwd'
+        }
+      }}
+      onPaginationChange={setPagination}
+      state={{ pagination, isLoading: loading, showProgressBars: isFetching }}
       rowCount={rowCount}
       manualPagination
     />

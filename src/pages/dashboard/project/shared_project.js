@@ -1,6 +1,9 @@
 // material-ui
 import { Grid, Box, Button } from '@mui/material';
 
+// react imports
+import { useState } from 'react';
+
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -115,23 +118,35 @@ const ColumnHeaders = [
   }
 ];
 
+const SharedProjects = () => {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
 
-
-const IntCompData = () => {
-  const { data: Shared, isLoading, isError } = useGetSharedProjectsQuery();
+  const { data: SharedProjects, isLoading, isError, isFetching } = useGetSharedProjectsQuery(pagination);
   if (isLoading) return;
-  return(
-  <Page title="Local Project List">
-    <Grid container spacing={gridSpacing}>
-      <Grid item xs={12}>
-        <Table columnHeaders={ColumnHeaders} data={[]} />
+  return (
+    <Page title="Shared Project List">
+      <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={isError ? [] : SharedProjects?.data || []}
+            loading={isLoading}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={isFetching}
+            rowCount={SharedProjects?.Total}
+          />
+        </Grid>
       </Grid>
-    </Grid>
-  </Page>
-)};
+    </Page>
+  );
+};
 
-IntCompData.getLayout = function getLayout(page) {
+SharedProjects.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default IntCompData;
+export default SharedProjects;

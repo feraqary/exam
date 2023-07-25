@@ -38,12 +38,19 @@ const IntCompData = () => {
   const { data: internationalCompaniesData, isError, error, isLoading, isFetching } = useGetInternationalCompaniesQuery(pagination);
 
   const [blockCompany, result] = useUpdateCompanyStatusMutation();
-  console.log('International ===> ', result);
+
   useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Company hase been successfully blocked');
     }
   }, [result.isSuccess]);
+
+  useEffect(() => {
+    if (result.isError) {
+      const { data } = result.error;
+      ToastError(data.error);
+    }
+  }, [result.isError]);
 
   const [docsOpen, setDocsOpen] = useState(false);
   const [docsCrid, setDocsCrid] = useState({ comp: null, id: null });

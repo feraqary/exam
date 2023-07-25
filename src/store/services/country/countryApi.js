@@ -41,7 +41,7 @@ export const countryApi = api.injectEndpoints({
         };
       }
     }),
-
+ 
     //GET COMMUNITIES BASED ON THE CITIES FOUND API
     getCommunitiesByCity: builder.query({
       query(city_id) {

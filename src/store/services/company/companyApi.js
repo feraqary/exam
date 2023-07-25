@@ -26,6 +26,18 @@ export const companyApi = api.injectEndpoints({
       invalidatesTags: ['LocalCompanies', 'InternationalCompanies']
     }),
 
+    //CREATE COMPANY BRANCH API FROM A COMPANY API
+    createCompanyBranch: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/createSubCompany`,
+          method: 'POST',
+          body: formData
+        };
+      },
+      invalidatesTags: ['LocalCompanies', 'InternationalCompanies']
+    }),
+
     //GET SUB COMPANY TYPES BASED ON COMPANY TYPE API
     getSubCompanyTypesByCompanyType: builder.query({
       query(id) {
@@ -93,17 +105,17 @@ export const companyApi = api.injectEndpoints({
         };
       }
     }),
-   //generate draft
+    //generate draft
     getallDraftSubscriptions: builder.query({
-      query(data){
-        const { id, is_branch, company_type} = data;
+      query(data) {
+        const { id, is_branch, company_type } = data;
         return {
-          url:  `dashboard/draftSubscription?id=${id}&company_type=${company_type}&is_branch=${is_branch}`,
+          url: `dashboard/draftSubscription?id=${id}&company_type=${company_type}&is_branch=${is_branch}`,
           method: 'GET'
         };
       }
     }),
-    
+
     //GET COMPANIES BY RANK API
     getCompaniesByRank: builder.query({
       query({ rank, pagination }) {
@@ -117,13 +129,14 @@ export const companyApi = api.injectEndpoints({
     }),
     //GET DRAFT SUBSCRIPTIONS
     getDraftContract: builder.query({
-      query({ data}) {
-        const { id, company_type, is_branch} = data;
+      query({ data }) {
+        const { id, company_type, is_branch } = data;
         return {
           url: `dashboard/draftSubscription?id=${id}&company_type=${company_type}&is_branch=${is_branch}`,
           method: 'GET'
         };
-      }    }),
+      }
+    }),
 
     //GET COMPANIES BY STATUS API
     getCompaniesByStatus: builder.query({
@@ -257,6 +270,7 @@ export const companyApi = api.injectEndpoints({
 export const {
   useCreateCompanyMutation,
   useCreateSubCompanyTypeMutation,
+  useCreateCompanyBranchMutation,
   useGetActiveSubscriptionsQuery,
   useGetCompaniesByRankQuery,
   useGetCompaniesByStatusQuery,
@@ -264,15 +278,15 @@ export const {
   useGetInternationalCompaniesQuery,
   useGetLocalCompaniesQuery,
   useGetPendingSubscriptionsQuery,
+  useGetSubCompanyTypesByCompanyTypeQuery,
+  useGetSubCompanyTypeQuery,
+  useGetAllSubCompanyTypesQuery,
+  useGetCompanyQuery,
   useUpdateCompanyDocMutation,
   useUpdateCompanyRankMutation,
   useUpdateCompanyStatusMutation,
   useUpdateSubscriptionMutation,
-  useDeleteSubCompanyTypeMutation,
-  useGetSubCompanyTypesByCompanyTypeQuery,
-  useGetSubCompanyTypeQuery,
   useUpdateSubCompanyTypeMutation,
-  useGetAllSubCompanyTypesQuery,
-  useGetCompanyQuery,
-  useUpdateCompanyMutation
+  useUpdateCompanyMutation,
+  useDeleteSubCompanyTypeMutation
 } = companyApi;

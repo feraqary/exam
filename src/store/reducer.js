@@ -22,7 +22,6 @@ import signupSlice from './slices/user-registration/slice/user-registration';
 import userManagement from './slices/Management_/slice/users';
 import { api } from './services/api';
 import locationApi from './slices/location/locationHooks';
-import projectRedudcer from './slices/project-section/slice/project';
 // ==============================|| COMBINE REDUCER ||============================== //
 
 const reducer = combineReducers({
@@ -46,7 +45,6 @@ const reducer = combineReducers({
   menu: menuReducer,
   countries: countriesReducer,
   companies: companiesReducer,
-  projects: projectRedudcer,
   serviceUpdate: serviceUpdate,
   signUp: signupSlice,
   usermanagement: userManagement,

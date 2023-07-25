@@ -16,6 +16,7 @@ import valid from 'card-validator';
 import { objectValidator, arrayValidator, stringValidator, numberValidator, fileValidator, dateValidator } from 'utils/formik-validations';
 import iban from 'iban';
 // redux actions import
+
 // assets
 import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
@@ -33,12 +34,7 @@ import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
 import { Formik } from 'formik';
 import PhoneInput from 'components/InputArea/PhoneInput';
-import {
-  useCreateCompanyMutation,
-  useGetCompanyQuery,
-  useGetSubCompanyTypesByCompanyTypeQuery,
-  useUpdateCompanyMutation
-} from 'store/services/company/companyApi';
+import { useCreateCompanyMutation, useGetSubCompanyTypesByCompanyTypeQuery } from 'store/services/company/companyApi';
 import { useGetAllMainServicesBySubCompanyTypeQuery, useGetAllServicesBYMainServiceTypeQuery } from 'store/services/services/serviceApi';
 import {
   useGetCitiesByStateQuery,
@@ -49,7 +45,6 @@ import {
   useGetSubCommunitiesByCommunityQuery
 } from 'store/services/country/countryApi';
 import { ToastSuccess } from 'utils/toast';
-import { useRouter } from 'next/router';
 
 // ==============================|| FIELDS ||============================== //
 const options = [
@@ -135,15 +130,14 @@ function ColumnsLayouts() {
   const [cityId, setCityId] = useState(null);
   const [communityId, setCommunityId] = useState(null);
 
-  const router = useRouter();
-
-  const { company_type, company_id, is_branch } = router.query;
-
-  const { data } = useGetCompanyQuery({
-    id: company_id,
-    company_type: company_type,
-    is_branch: is_branch
-  });
+  const {
+    companyInformation,
+    error: companyError,
+    loading: companyLoading,
+    companyTypes,
+    mainServices,
+    services
+  } = useSelector((state) => state.companies);
 
   const {
     data: companySubTypes,
@@ -151,8 +145,8 @@ function ColumnsLayouts() {
     isError,
     isLoading,
     isFetching
-  } = useGetSubCompanyTypesByCompanyTypeQuery(data?.data.CompanyTypesID, {
-    skip: data?.data.CompanyTypesID === null || data?.data.CompanyTypesID === undefined
+  } = useGetSubCompanyTypesByCompanyTypeQuery(companyId, {
+    skip: companyId === null || companyId === undefined
   });
 
   const {
@@ -161,8 +155,8 @@ function ColumnsLayouts() {
     isError: mainServiceIsError,
     isLoading: mainServiceIsLoading,
     isFetching: mainServiceIsFetching
-  } = useGetAllMainServicesBySubCompanyTypeQuery(data?.data.SubCompanyType.id, {
-    skip: data?.data.SubCompanyType.id === null || data?.data.SubCompanyType.id === undefined
+  } = useGetAllMainServicesBySubCompanyTypeQuery(subCompanyTypeId, {
+    skip: subCompanyTypeId === null || subCompanyTypeId === undefined
   });
 
   const {
@@ -171,8 +165,8 @@ function ColumnsLayouts() {
     isError: subServicesIsError,
     isLoading: subServicesIsLoading,
     isFetching: subServicesIsFetching
-  } = useGetAllServicesBYMainServiceTypeQuery(data?.data.MainServiceType.id, {
-    skip: data?.data.MainServiceType.id === null || data?.data.MainServiceType.id === undefined
+  } = useGetAllServicesBYMainServiceTypeQuery(mainServiceId, {
+    skip: mainServiceId === null || mainServiceId === undefined
   });
 
   const {
@@ -189,8 +183,8 @@ function ColumnsLayouts() {
     isError: statesIsError,
     isLoading: statesIsLoading,
     isFetching: statesIsFetching
-  } = useGetStatesByCountryQuery(data?.data.BillingCountryID.id, {
-    skip: data?.data.BillingCountryID.id === null || data?.data.BillingCountryID.id === undefined
+  } = useGetStatesByCountryQuery(countryId, {
+    skip: countryId === null || countryId === undefined
   });
 
   const {
@@ -199,8 +193,8 @@ function ColumnsLayouts() {
     isError: citiesIsError,
     isLoading: citiesIsLoading,
     isFetching: citiesIsFetching
-  } = useGetCitiesByStateQuery(data?.data.BillingStateID.id, {
-    skip: data?.data.BillingStateID.id === null || data?.data.BillingStateID.id === undefined
+  } = useGetCitiesByStateQuery(stateId, {
+    skip: stateId === null || stateId === undefined
   });
 
   const {
@@ -209,8 +203,8 @@ function ColumnsLayouts() {
     isError: communitiesIsError,
     isLoading: communitiesIsLoading,
     isFetching: communitiesIsFetching
-  } = useGetCommunitiesByCityQuery(data?.data.BillingCityID.id, {
-    skip: data?.data.BillingCityID.id === null || data?.data.BillingCityID.id === undefined
+  } = useGetCommunitiesByCityQuery(cityId, {
+    skip: cityId === null || cityId === undefined
   });
 
   const {
@@ -219,8 +213,8 @@ function ColumnsLayouts() {
     isError: subCommunitiesIsError,
     isLoading: subCommunitiesIsLoading,
     isFetching: subCommunitiesIsFetching
-  } = useGetSubCommunitiesByCommunityQuery(data?.data.BillingCommunityID.id, {
-    skip: data?.data.BillingCommunityID.id === null || data?.data.BillingCommunityID.id === undefined
+  } = useGetSubCommunitiesByCommunityQuery(communityId, {
+    skip: communityId === null || communityId === undefined
   });
 
   const {
@@ -231,11 +225,11 @@ function ColumnsLayouts() {
     isFetching: currenciesIsFetching
   } = useGetCurrenciesQuery();
 
-  const [updateCompany, result] = useUpdateCompanyMutation();
+  const [createCompany, result] = useCreateCompanyMutation();
 
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Company has been updated successfully');
+      ToastSuccess('Company has been created successfully');
     }
   }, [result.isSuccess]);
 
@@ -252,13 +246,12 @@ function ColumnsLayouts() {
   const companyCoverRef = useRef(null);
   const profileRef = useRef(null);
   const reraRef = useRef(null);
-
   const submitForm = (values) => {
     const formData = new FormData();
     formData.append('company_types', values.companyType.id);
-    formData.append('id', company_id);
-    formData.append('sub_company_type', values.subCompanyType.id);
+    formData.append('subcompany_type', values.subCompanyType.id);
     formData.append('main_service_type', values.mainService.id);
+    formData.append('sub_service_type', values.service);
     formData.append('company_name', values.companyName);
     formData.append('rera_no', values.reraNo);
     formData.append('commercial_license_no', values.lisenceNo);
@@ -270,11 +263,11 @@ function ColumnsLayouts() {
     formData.append('lat', values.lat);
     formData.append('lng', values.long);
     formData.append('no_of_employees', values.numberOfEmployees);
-    formData.append('billing_country_id', values.country.id || values.country.ID);
-    formData.append('billing_state_id', values.state.id || values.state.ID);
-    formData.append('billing_city_id', values.city.id || values.city.ID);
-    formData.append('billing_community_id', values.community.id || values.community.ID);
-    formData.append('billing_sub_community_id', values.subCommunity.id || values.subCommunity.ID);
+    formData.append('billing_country_id', values.country.ID);
+    formData.append('billing_state_id', values.state.ID);
+    formData.append('billing_city_id', values.city.ID);
+    formData.append('billing_community_id', values.community.ID);
+    formData.append('billing_sub_community_id', values.subCommunity.ID);
     formData.append('billing_office_address', values.officeAddress);
     formData.append('billing_reference', values.billingReference);
     formData.append('google_map_link', values.mapUrl);
@@ -300,74 +293,74 @@ function ColumnsLayouts() {
     formData.append('account_name', values.cardName);
     formData.append('account_number', values.cardNumber);
     formData.append('iban', values.ibanNumber);
-    formData.append('currency_id', values.currency.ID || values.currency.id);
-    formData.append('bank_country_id', values.accountCountry.ID || values.currency.id);
+    formData.append('currency_id', values.currency.ID);
+    formData.append('bank_country_id', values.accountCountry.ID);
     formData.append('bank_name', values.bankName);
     formData.append('branch_name', values.bankBranch);
     formData.append('swift_code', values.swiftCode);
     formData.append('rera_file_url', values.reraFile);
     formData.append('rera_expiry', values.reraExpiryDate);
-    formData.append('is_branch', is_branch);
     values.service.forEach((ser) => {
       formData.append('sub_service_type[]', ser?.id);
     });
-    updateCompany(formData);
-    router.back();
+    createCompany(formData);
   };
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
-      <Page title="Edit Company">
+      <Page title="Add Company">
         <ToastContainer />
         <Grid container spacing={gridSpacing}>
           <Formik
+            validateOnChange={false}
             initialValues={{
-              companyType: options[data?.data.CompanyTypesID - 1],
-              subCompanyType: data?.data.SubCompanyType || '',
-              mainService: data?.data.MainServiceType || '',
-              service: data?.data.SubServiceType || [],
-              companyName: data?.data.CompanyName,
-              reraNo: data?.data.ReraNumber,
-              reraExpiryDate: data?.data.ReraExpiry, //
-              billingReference: data?.data.BillingReference,
-              vatNo: data?.data.VatNo,
-              vatStatus: data?.data.VatStatus,
-              country: data?.data.BillingCountryID,
-              state: data?.data.BillingStateID,
-              city: data?.data.BillingCityID,
-              community: data?.data.BillingCommunityID,
+              companyType: '',
+              subCompanyType: '',
+              mainService: '',
+              service: [],
+              companyName: '',
+              reraNo: '',
+              reraExpiryDate: '', //
+              billingReference: '',
+              vatNo: '',
+              vatStatus: '',
+              country: '',
+              state: '',
+              city: '',
+              community: '',
               subCommunity: '',
-              officeAddress: data?.data.BillingOfficeAddress,
-              mapUrl: data?.data.GoogleMapLink,
+              officeAddress: '',
+              mapUrl: '',
               place: '',
               lat: 24.4984312,
               long: 54.4036975,
-              companyWebsite: data?.data.WebsiteURL,
-              companyEmailAddress: data?.data.CompanyEmail,
-              companyContactNumber: '971504805823',
-              companyDescription: data?.data.Description,
-              lisenceNo: data?.data.CommercialLicenseNo,
-              lisenceExpiryDate: data?.data.CommercialLicenseExpiry,
-              facebook: data?.data.FacebookURL,
-              instagram: data?.data.InstagramURL,
-              linkedin: data?.data.LinkedInURL,
-              twitter: data?.data.TwitterURL,
-              firstName: data?.data.FirstName,
-              lastName: data?.data.LastName,
-              emailAddress: data?.data.UserEmail,
-              phoneNumber: '971504805823',
-              numberOfEmployees: data?.data.NoOfEmployees,
-              subscriptionDuration: '6',
-              subscriptionStartDate: data?.data.SubscriptionStartDate,
-              subscriptionEndDate: data?.data.SubscriptionEndDate,
-              cardNumber: data?.data.AccountNumber,
-              cardName: data?.data.AccountName,
-              ibanNumber: data?.data.IBANNumber,
-              currency: data?.data.Currency,
-              accountCountry: data?.data.BankCountry,
-              bankName: data?.data.BankName,
-              bankBranch: data?.data.BranchName,
-              swiftCode: data?.data.SwiftCode,
+              companyWebsite: '',
+              companyEmailAddress: '',
+              companyContactNumber: '',
+              companyDescription: '',
+              lisenceNo: '',
+              lisenceExpiryDate: '',
+              facebook: '',
+              instagram: '',
+              linkedin: '',
+              twitter: '',
+              youtube: '',
+              firstName: '',
+              lastName: '',
+              emailAddress: '',
+              phoneNumber: '',
+              numberOfEmployees: '',
+              subscriptionDuration: '',
+              subscriptionStartDate: '',
+              subscriptionEndDate: '',
+              cardNumber: '',
+              cardName: '',
+              ibanNumber: '',
+              currency: '',
+              accountCountry: '',
+              bankName: '',
+              bankBranch: '',
+              swiftCode: '',
               reraFile: '', //
               lisenceFile: '',
               vatFile: '',
@@ -376,10 +369,13 @@ function ColumnsLayouts() {
               adminProfilePicture: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
+            onSubmit={async (values, { setSubmitting, resetForm, validateForm }) => {
+              await validateForm(values);
               submitForm(values);
               setSubmitting(false);
-              resetForm();
+              if (!companyError) {
+                resetForm();
+              }
             }}
             validator={() => ({})}
             onReset={(_) => {
@@ -393,8 +389,7 @@ function ColumnsLayouts() {
           >
             {(props) => (
               <>
-                {console.log(props.values)}
-                <Container title="Edit Local Company Details" style={{ xs: 12 }}>
+                <Container title="Add Company Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
                     <AutoCompleteSelector
                       helperInfo
@@ -453,14 +448,14 @@ function ColumnsLayouts() {
                     )}
                     {props.values.mainService && (
                       <MultipleAutoCompleteSelector
-                        style={{ xs: 12, lg: 10 }}
                         label="Sub Service Type"
-                        id="service"
-                        name="service"
                         placeholder="Select Sub Service Type"
                         options={subServicesError ? [] : subServicesData?.data || []}
                         getOptionLabel={(subService) => subService.title || ''}
-                        setFieldValue={props.setFieldValue}
+                        style={{ xs: 12, lg: 10 }}
+                        helperText="Please select a sub service type"
+                        id="service"
+                        name="service"
                       />
                     )}
                   </Grid>
@@ -577,9 +572,9 @@ function ColumnsLayouts() {
                       label="VAT status"
                       helperText="Please Choose a VAT status"
                       options={[
-                        { option: 'Active', value: 1 },
-                        { option: 'Non-Active', value: 2 },
-                        { option: 'Pending', value: 3 }
+                        { value: 1, option: 'Active' },
+                        { value: 2, option: 'Non-Active' },
+                        { value: 3, option: 'Pending' }
                       ]}
                       required={true}
                     />
@@ -608,7 +603,7 @@ function ColumnsLayouts() {
                       id="country"
                       name="country"
                       options={countriesError || countriesIsLoading ? [] : countriesData?.data || []}
-                      getOptionLabel={(country) => country.Country || country.country || ''}
+                      getOptionLabel={(country) => country.Country || ''}
                       renderOption={(props, option) => (
                         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                           <Image
@@ -641,7 +636,7 @@ function ColumnsLayouts() {
                       id="state"
                       name="state"
                       options={statesData?.data || []}
-                      getOptionLabel={(state) => state.State || state.state || ''}
+                      getOptionLabel={(state) => state.State || ''}
                       placeholder="Select a State"
                       disabled={props.values.country ? false : true}
                       loading={statesIsLoading}
@@ -661,7 +656,7 @@ function ColumnsLayouts() {
                       id="city"
                       name="city"
                       options={citiesData?.data || []}
-                      getOptionLabel={(city) => city.City || city.city || ''}
+                      getOptionLabel={(city) => city.City || ''}
                       placeholder="Select a City"
                       disabled={props.values.state ? false : true}
                       loading={citiesIsLoading}
@@ -679,7 +674,7 @@ function ColumnsLayouts() {
                       id="community"
                       name="community"
                       options={communitiesData?.data || []}
-                      getOptionLabel={(community) => community.Community || community.community || ''}
+                      getOptionLabel={(community) => community.Community || ''}
                       placeholder="Select a Community"
                       disabled={props.values.city ? false : true}
                       loading={communitiesIsLoading}
@@ -696,7 +691,7 @@ function ColumnsLayouts() {
                       id="subCommunity"
                       name="subCommunity"
                       options={subCommunitiesData?.data || []}
-                      getOptionLabel={(subCommunity) => subCommunity.SubCommunity || subCommunity.subCommunity || ''}
+                      getOptionLabel={(subCommunity) => subCommunity.SubCommunity || ''}
                       placeholder="Select a Community"
                       disabled={props.values.community ? false : true}
                       loading={subCommunitiesIsLoading}
@@ -729,7 +724,7 @@ function ColumnsLayouts() {
                       label="Place"
                       helperText="Please enter place address"
                       style={{ xs: 12, lg: 6 }}
-                      required={false}
+                      required={true}
                       metaError={props.errors.place}
                       metaTouched={props.touched.place}
                     >
@@ -1029,7 +1024,7 @@ function ColumnsLayouts() {
                       id="accountCountry"
                       name="accountCountry"
                       options={countriesError || countriesIsLoading ? [] : countriesData?.data || []}
-                      getOptionLabel={(country) => country.Country || country.country || ''}
+                      getOptionLabel={(country) => country.Country || ''}
                       renderOption={(props, option) => (
                         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                           <Image
@@ -1053,7 +1048,7 @@ function ColumnsLayouts() {
                       id="currency"
                       name="currency"
                       options={currenciesError || currenciesIsLoading ? [] : currenciesData?.data || []}
-                      getOptionLabel={(currency) => currency.Currency || currency.currency || ''}
+                      getOptionLabel={(currency) => currency.Currency || ''}
                       renderOption={(props, option) => (
                         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                           {option.Currency.toUpperCase()} : {option.Code}

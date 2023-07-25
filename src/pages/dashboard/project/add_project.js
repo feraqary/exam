@@ -2,6 +2,18 @@ import { Button, Checkbox, FormControlLabel, FormHelperText, Grid, InputLabel } 
 import { LoadScript } from '@react-google-maps/api';
 import Map from 'components/map/google-map';
 import MapAutocomplete, { NormalMapAutocomplete } from 'components/map/maps-autocomplete';
+// material-ui
+import {
+  Grid,
+  FormHelperText,
+  Button,
+  FormControlLabel,
+  Checkbox,
+  InputLabel
+} from '@mui/material';
+// project imports
+import Layout from 'layout';
+import Categorization from './helper/Categorization';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import Layout from 'layout';

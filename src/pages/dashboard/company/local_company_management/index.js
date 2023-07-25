@@ -15,14 +15,13 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import { Grid, Box, Button, Dialog, DialogActions, DialogContent, Slide } from '@mui/material';
 import Documents from '../documents';
 import { useGetLocalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
 import { ToastError, ToastSuccess } from 'utils/toast';
 import Link from 'next/link';
-// ===========================|| International Company Managment list||=========================== //
+// ===========================|| Local Company Managment list||=========================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -46,13 +45,12 @@ const localCompanies = () => {
     }
   }, [result.isSuccess]);
 
-  // useEffect(() => {
-  //   if (result.isError) {
-  //     const { data } = result.error;
-  //     console.log(data);
-  //     ToastError("Error");
-  //   }
-  // }, [result.isError]);
+  useEffect(() => {
+    if (result.isError) {
+      const { data } = result.error;
+      ToastError(data.error);
+    }
+  }, [result.isError]);
 
   const handleDocsOpen = () => {
     setDocsOpen(true);
@@ -133,10 +131,6 @@ const localCompanies = () => {
       Cell: ({ renderedCellValue, row }) => {
         const [open, setOpen] = useState(false);
 
-        const handleClickOpen = () => {
-          setOpen(true);
-        };
-
         const handleClose = () => {
           setOpen(false);
         };
@@ -170,9 +164,11 @@ const localCompanies = () => {
               >
                 <AqaryButton variant="contained">Edit </AqaryButton>
               </Link>
-              <Button variant="contained" color="primary" onClick={handleClickOpen} startIcon={<PreviewIcon />}>
-                Add sub-company
-              </Button>
+              <Link href={{ pathname: `/dashboard/company/add_comp/${row.original.ID}` }}>
+                <Button variant="contained" color="primary">
+                  Add sub-company
+                </Button>
+              </Link>
               <Button
                 color="primary"
                 variant="contained"
