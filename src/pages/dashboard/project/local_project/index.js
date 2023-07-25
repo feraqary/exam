@@ -16,7 +16,7 @@ import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useUpdateProjectRankMutation } from 'store/services/project/projectApi';
 // ==============================|| Manage Local Projects ||============================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -64,11 +64,17 @@ const localProjects = () => {
     {
       accessorKey: 'Status',
       header: 'Company Status',
-      Cell: ({ renderedCellValue, row }) => (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <TableSelectorOption value={row.original.rank_id} ProjectType={row.original.phase_type} id={row.original.id} />
-        </Box>
-      )
+      Cell: ({ renderedCellValue, row }) => {
+        const data = {
+          rank_id: row.original.rank_id,
+          project_id: row.original.id
+        };
+        return (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <TableSelectorOption formData={JSON.stringify(data)} value={data.rank_id} rankMutation={useUpdateProjectRankMutation} />
+          </Box>
+        );
+      }
     },
     {
       accessorKey: 'Featured',
@@ -123,7 +129,7 @@ const localProjects = () => {
       header: 'Phase Type'
     },
     {
-      accessorKey: 'phases',
+      accessorKey: 'phasestest',
       header: 'Phases'
     },
     {

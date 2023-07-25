@@ -14,13 +14,13 @@ import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 // ==============================|| Manage International Project ||============================== //
 
-function ManageProject() {
+function InternationalProject() {
   const formData = new FormData();
   formData.append('page_no', 1);
   formData.append('page_size', 20);
   formData.append('country', 'pakistan');
   const { data: projectData, isLoading, isError } = useGetAllIntProjectsQuery(formData);
-  let x = "Dwsfdwsfd"
+  let x = 'Dwsfdwsfd';
   console.log('data: ', projectData?.data);
   const ColumnHeaders = [
     {
@@ -34,7 +34,7 @@ function ManageProject() {
     },
     {
       accessorKey: 'Featured',
-      header: `Featured ${<Tooltip>fsafd</Tooltip>}`
+      header: `Featured ${(<Tooltip>fsafd</Tooltip>)}`
     },
     {
       accessorKey: 'ProjectName',
@@ -85,7 +85,7 @@ function ManageProject() {
       header: 'Phase Type'
     },
     {
-      accessorKey: 'Phases',
+      accessorKey: 'Phasestest',
       header: 'Phases'
     },
     {
@@ -149,8 +149,8 @@ function ManageProject() {
   );
 }
 
-ManageProject.getLayout = function getLayout(page) {
+InternationalProject.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default ManageProject;
+export default InternationalProject;

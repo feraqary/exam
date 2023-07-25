@@ -14,65 +14,54 @@ import { useGetSharedProjectsQuery } from 'store/services/project/projectApi';
 
 const ColumnHeaders = [
   {
-    accessorKey: 'ID',
+    accessorKey: 'id',
     header: 'Project ID '
   },
   {
-    accessorKey: 'Featured',
+    accessorKey: 'rank_id',
     header: 'Featured'
   },
   {
-    accessorKey: 'ProjectName',
+    accessorKey: 'project_name',
     header: 'Project Name'
   },
   {
-    accessorKey: 'Country',
+    accessorKey: 'country',
     header: 'Location'
   },
   {
-    accessorKey: 'DeveloperCompany',
+    accessorKey: 'parent_developer_company',
     header: 'Developer Company'
   },
   {
     accessorKey: 'endis',
-    header: 'Enable / Disable',
-    Cell: ({ renderedCellValue, row }) => {
-      return (
-        <>
-          <FormControlLabel control={<Switch defaultChecked />} />
-        </>
-      );
-    }
+    header: 'Enable / Disable'
   },
-  { accessorKey: 'QualityScore', header: 'Quality Score' },
+  { accessorKey: 'quality_score', header: 'Quality Score' },
   {
     accessorKey: 'rating',
-    header: 'Rating',
-    Cell: ({ renderedCellValue, row }) => {
-      // console.log('row: ', projectData.data[row.index].Rating);
+    header: 'Rating'
+    // Cell: ({ renderedCellValue, row }) => {
+    //   // console.log('row: ', projectData.data[row.index].Rating);
 
-      return (
-        <>
-          <Rating readonly={true} name="read-only" value={projectData.data[row.index].Rating} />
-        </>
-      );
-    }
+    //   return (
+    //     <>
+    //       <Rating readonly={true} name="read-only" value={projectData.data[row.index].Rating} />
+    //     </>
+    //   );
+    // }
   },
   {
-    accessorKey: 'NoOfPhases',
+    accessorKey: 'no_of_phases',
     header: 'Number of Phases'
   },
   {
-    accessorKey: 'PhaseType',
+    accessorKey: 'phase_type',
     header: 'Phase Type'
   },
   {
     accessorKey: 'Phases',
     header: 'Phases'
-  },
-  {
-    accessorKey: 'QualityScore',
-    header: 'Quality Score'
   },
 
   {

@@ -1,6 +1,7 @@
 // material-ui
 import { Grid, Box } from '@mui/material';
 import * as Yup from 'yup';
+
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -12,10 +13,6 @@ import Map from 'components/map/google-map';
 import MapAutocomplete from 'components/map/maps-autocomplete';
 import { LoadScript } from '@react-google-maps/api';
 import Image from 'next/image';
-import valid from 'card-validator';
-import { objectValidator, arrayValidator, stringValidator, numberValidator, fileValidator, dateValidator } from 'utils/formik-validations';
-import iban from 'iban';
-// redux actions import
 
 // assets
 import InputText from 'components/InputArea/TextInput';
@@ -24,27 +21,10 @@ import Selector from 'components/InputArea/Selector';
 import Container from 'components/Elements/Container';
 import AutoCompleteSelector, { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
-import { useEffect } from 'react';
-import { setCountry } from 'store/slices/country-section/slice/country';
-import { setState } from 'store/slices/country-section/slice/country';
 import InputLayout from 'components/InputArea/InputLayout';
-
 import CustomDateTime from 'components/InputArea/CustomDateTime';
 import { ToastContainer } from 'react-toastify';
-import { useRef } from 'react';
-import { Formik } from 'formik';
 import PhoneInput from 'components/InputArea/PhoneInput';
-import { useCreateCompanyMutation, useGetSubCompanyTypesByCompanyTypeQuery } from 'store/services/company/companyApi';
-import { useGetAllMainServicesBySubCompanyTypeQuery, useGetAllServicesBYMainServiceTypeQuery } from 'store/services/services/serviceApi';
-import {
-  useGetCitiesByStateQuery,
-  useGetCommunitiesByCityQuery,
-  useGetCountriesQuery,
-  useGetCurrenciesQuery,
-  useGetStatesByCountryQuery,
-  useGetSubCommunitiesByCommunityQuery
-} from 'store/services/country/countryApi';
-import { ToastSuccess } from 'utils/toast';
 
 // ==============================|| FIELDS ||============================== //
 const options = [
@@ -54,72 +34,9 @@ const options = [
 ];
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
+
 // ==============================|| Add Company form ||============================== //
-const validationSchema = Yup.object({
-  companyType: objectValidator('Mandatory Selection', true),
-  subCompanyType: objectValidator('Mandatory Selection', true),
-  mainService: objectValidator('Mandatory Selection', true),
-  service: arrayValidator('Please select a service', true, 1),
-  companyName: stringValidator('Please provide a company name', true),
-  reraNo: stringValidator('Please provide a valid reara number', true),
-  reraExpiryDate: dateValidator('Please select an expiration date', true),
-  billingReference: stringValidator('please provide a valid bill reference', true),
-  vatNo: stringValidator('Please provide a valid vat number', true),
-  vatStatus: numberValidator('Please select your vat status', true),
-  country: objectValidator('Mandatory Selection', true),
-  state: objectValidator('Mandatory Selection', true),
-  city: objectValidator('Mandatory Selection', true),
-  community: objectValidator('Not a valid selection'),
-  subCommunity: objectValidator('Not a valid selection'),
-  officeAddress: stringValidator('Please provide a valid office address', true),
-  mapUrl: stringValidator('Please provide a valid map url').url(),
-  lat: numberValidator('Latitude is missing', true),
-  long: numberValidator('Longitude is missing', true),
-  companyWebsite: stringValidator('Please provid a valid company website', true).url(),
-  companyEmailAddress: stringValidator('Please provide a valid company email address', true).email(),
-  companyContactNumber: stringValidator('Please provide a valid company contact number', true),
-  companyDescription: stringValidator('Please provide a company description', true),
-  lisenceNo: stringValidator('Please provide a valid liscence number', true),
-  lisenceExpiryDate: dateValidator('Please select an expiration date', true),
-  facebook: stringValidator('Please provide your facebook profile'),
-  instagram: stringValidator('Please provide your instagram profile'),
-  linkedin: stringValidator('Please provide your linkedin profile'),
-  twitter: stringValidator('Please provide your twitter profile'),
-  youtube: stringValidator('Please provide your YouTube profile'),
-  firstName: stringValidator('Please provide your first name', true),
-  lastName: stringValidator('Please provide your last name', true),
-  emailAddress: stringValidator('Please provide a valid email address', true).email(),
-  phoneNumber: stringValidator('Please provide a valid phone number', true),
-  numberOfEmployees: numberValidator('Please enter the number of employees', true),
-  subscriptionDuration: stringValidator('Please select a subscription duration', true),
-  subscriptionStartDate: dateValidator('Please select a subscription start date', true),
-  subscriptionEndDate: dateValidator('Please select a subscription end date', true),
-  ibanNumber: Yup.string()
-    .required()
-    .trim()
-    .test('TEST_IBAN_NUMBER', 'iban number is invalid', (value) => {
-      return iban.isValid(value);
-    }),
-  currency: objectValidator('Mandatory Selection', true),
-  accountCountry: objectValidator('Mandatory Selection', true),
-  bankName: stringValidator('Please provide a bank name', true),
-  bankBranch: stringValidator('Please provide a bank branch', true),
-  swiftCode: stringValidator('Please provide a swift code', true),
-  cardNumber: Yup.string().trim().min(6, 'please provide a valid account number').max(15, 'please provide a valid account number'),
-
-  cardName: Yup.string()
-    .trim()
-    .test('CREDIT_CARD_NAME', 'Please provide a valid name', (value) => valid.cardholderName(value).isValid),
-
-  adminProfilePicture: fileValidator(SUPPORTED_FORMATS),
-  companyLogo: fileValidator(SUPPORTED_FORMATS),
-  companyCoverImage: fileValidator(SUPPORTED_FORMATS),
-  vatFile: fileValidator(['application/pdf']),
-  reraFile: fileValidator(['application/pdf']),
-  lisenceFile: fileValidator(['application/pdf'])
-});
-
-function AddCompany() {
+function CompanyForm() {
   const [address, setAddress] = useState('Abu Dhabi');
   const [companyId, setCompanyId] = useState(null);
   const [subCompanyTypeId, setSubCompanyTypeId] = useState(null);
@@ -1103,8 +1020,8 @@ function AddCompany() {
   );
 }
 
-AddCompany.getLayout = function getLayout(page) {
+CompanyForm.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default AddCompany;
+export default CompanyForm;

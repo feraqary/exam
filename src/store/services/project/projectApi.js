@@ -67,6 +67,19 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['projectStatus']
     }),
+
+    //UPDATE PROJECT RANK api
+    updateProjectRank: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/updatePorjectRank`,
+          method: 'PUT',
+          body: data
+        };
+      },
+      invalidatesTags: ['localProjects']
+    }),
+
     //updateproject
     updateProject: builder.mutation({
       query: (updateProject) => {
@@ -77,17 +90,14 @@ export const projectApi = api.injectEndpoints({
           body: updateProject
         };
       }
-    }),
-    deleteSubCompanyType: builder.mutation({
-      query(id) {
-        return {
-          url: `Type/${id}`,
-          method: 'DELETE'
-        };
-      }
     })
   })
 });
 
-export const { useGetLocalProjectsQuery, useGetProjectsByStatusQuery, useUpdateProjectStatusMutation, useGetSharedProjectsQuery } =
-  projectApi;
+export const {
+  useGetLocalProjectsQuery,
+  useGetProjectsByStatusQuery,
+  useUpdateProjectStatusMutation,
+  useGetSharedProjectsQuery,
+  useUpdateProjectRankMutation
+} = projectApi;
