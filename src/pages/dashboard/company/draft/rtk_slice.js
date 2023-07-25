@@ -5,9 +5,9 @@ export const dashboardApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '20.203.31.58' }),
   endpoints: (builder) => ({
     fetchDashboardData: builder.query({
-      query: ({ id, company_type, is_branch }) => `dashboard/draftSubscription?id=${id}&company_type=${company_type}&is_branch=${is_branch}`,
-    }),
-  }),
+      query: ({ id, company_type, is_branch }) => `dashboard/draftSubscription?id=${id}&company_type=${company_type}&is_branch=${is_branch}`
+    })
+  })
 });
 
 export const { useFetchDashboardDataQuery } = dashboardApi;
@@ -17,7 +17,7 @@ const dashboardSlice = createSlice({
   initialState: {
     data: null,
     loading: false,
-    error: null,
+    error: null
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -34,7 +34,7 @@ const dashboardSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       });
-  },
+  }
 });
 
 export const { reducer } = dashboardSlice;

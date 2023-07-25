@@ -12,6 +12,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
+import Link from 'next/link';
+import { Query } from '@tanstack/react-query';
 // ==============================|| Manage International Project ||============================== //
 
 function ManageProject() {
@@ -19,37 +21,29 @@ function ManageProject() {
   formData.append('page_no', 1);
   formData.append('page_size', 20);
   formData.append('country', 'pakistan');
-  const { data: projectData, isLoading, isError } = useGetAllIntProjectsQuery(formData);
-  let x = "Dwsfdwsfd"
+  const { data: projectData, isLoading, isError } = useGetAllIntProjectsQuery();
+  let x = 'Dwsfdwsfd';
   console.log('data: ', projectData?.data);
   const ColumnHeaders = [
     {
-      accessorKey: 'ID',
-      header: 'Project ID ',
-      title: (
-        <Tooltip title={'dewfedfe'}>
-          <span>edewfdedfwe</span>
-        </Tooltip>
-      )
+      accessorKey: 'id',
+      header: 'Project ID '
     },
     {
-      accessorKey: 'Featured',
-      header: `Featured ${<Tooltip>fsafd</Tooltip>}`
+      accessorKey: 'featured',
+      header: `Featured`
     },
     {
-      accessorKey: 'ProjectName',
+      accessorKey: 'project_name',
       header: 'Project Name'
     },
     {
-      accessorKey: 'Country',
+      accessorKey: 'country',
       header: 'Location'
     },
     {
-      accessorKey: 'DeveloperCompany',
-      header: 'Developer Company',
-      render: (rowData) => {
-        return <Tooltip title="xswdfw">werfwerf</Tooltip>;
-      }
+      accessorKey: 'developer_company',
+      header: 'Developer Company'
     },
     {
       accessorKey: 'endis',
@@ -62,7 +56,7 @@ function ManageProject() {
         );
       }
     },
-    { accessorKey: 'QualityScore', header: 'Quality Score' },
+    { accessorKey: 'quality_score', header: 'Quality Score' },
     {
       accessorKey: 'rating',
       header: 'Rating',
@@ -77,19 +71,19 @@ function ManageProject() {
       }
     },
     {
-      accessorKey: 'NoOfPhases',
+      accessorKey: 'no_of_phases',
       header: 'Number of Phases'
     },
     {
-      accessorKey: 'PhaseType',
+      accessorKey: 'phase_type',
       header: 'Phase Type'
     },
     {
-      accessorKey: 'Phases',
+      accessorKey: 'phases',
       header: 'Phases'
     },
     {
-      accessorKey: 'QualityScore',
+      accessorKey: 'quality_score',
       header: 'Quality Score'
     },
 
@@ -107,14 +101,23 @@ function ManageProject() {
           <Button variant="contained" color="primary">
             Verify
           </Button>
-          <Button variant="contained" color="primary">
-            Edit
-          </Button>
+          <Link
+            href={{
+              pathname: `/dashboard/project/int_project_mng/${row.original.id}`,
+              query: {
+                project_id: row.original.id
+              }
+            }}
+          >
+            <Button variant="contained" onClick={() => console.log(row.original.id)} color="primary">
+              Edit
+            </Button>
+          </Link>
           <Button color="primary" variant="contained">
             Manage Documents
           </Button>
           <Button variant="contained" color="primary">
-            View Live
+            View
           </Button>
           <Button variant="contained" color="primary">
             Listing Properties

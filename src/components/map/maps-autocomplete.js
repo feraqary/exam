@@ -59,7 +59,7 @@ export default function MapAutocomplete({ onChangeAddress, country, state, metaE
   );
 }
 
-export function NormalMapAutocomplete({ onChangeAddress, country, state }) {
+export function NormalMapAutocomplete({ onChangeAddress, country, state, setlong, setlat }) {
   const inputRef = useRef();
   const handlePlaceChanged = () => {
     console.log('place changed');
@@ -81,7 +81,9 @@ export function NormalMapAutocomplete({ onChangeAddress, country, state }) {
         });
 
         console.log(place.geometry.location.lat());
+        setlat(place.geometry.location.lat());
         console.log(place.geometry.location.lng());
+        setlong(place.geometry.location.lng());
       }
     } else {
       return;
