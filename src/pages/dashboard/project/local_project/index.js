@@ -14,7 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useGetLocalProjectsQuery, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import TableSelectorOption from 'components/InputArea/TableSelectorOption';
+import ProjectRankSelector from '../project_rank';
 import 'react-toastify/dist/ReactToastify.css';
 
 // ==============================|| Manage Local Projects ||============================== //
@@ -62,28 +62,28 @@ const localProjects = () => {
       )
     },
     {
-      accessorKey: 'Status',
-      header: 'Company Status',
+      accessorKey: 'projectStatus',
+      header: 'Project Rank',
       Cell: ({ renderedCellValue, row }) => (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <TableSelectorOption value={row.original.rank_id} ProjectType={row.original.phase_type} id={row.original.id} />
+          <ProjectRankSelector value={row.original.rank_id} ProjectType={row.original.phase_type} id={row.original.id} />
         </Box>
       )
     },
     {
       accessorKey: 'project_name',
       header: 'Project Name'
-    },
+    },4
     {
       accessorKey: 'country',
       header: 'Location'
     },
     {
-      accessorKey: 'developer_company',
+      accessorKey: 'parent_developer_company',
       header: 'Developer Company',
-      render: (rowData) => {
-        return <Tooltip title="Developer Company Name">Developer Company</Tooltip>;
-      }
+     Cell: ({ renderedCellValue}) => {
+      return <Tooltip title= "Developer Company Name"> {renderedCellValue}</Tooltip>
+     }
     },
     {
       accessorKey: 'rating',
@@ -106,14 +106,13 @@ const localProjects = () => {
       header: 'Number of Phases'
     },
     {
-      accessorKey: 'phases',
+      accessorKey: 'phasestest',
       header: 'Phases'
     },
     {
       accessorKey: 'phase_type',
       header: 'Phase Type'
     },
-
     {
       accessorKey: 'endis',
       header: 'Enable / Disable',
@@ -168,17 +167,12 @@ const localProjects = () => {
                 Listing Properties
               </Button>
               <Button variant="contained" color="primary">
-                Featured
-              </Button>
-              <Button variant="contained" color="primary">
                 Add Promotion
               </Button>
               <Button variant="contained" color="error">
                 Block
               </Button>
-              <Button variant="contained" color="primary">
-                Rating
-              </Button>
+        
               <Dialog maxWidth={'xl'} open={open} onClose={handleClose} TransitionComponent={Transition}>
                 <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
                   <IconButton>{/* <CloseIcon /> */}</IconButton>

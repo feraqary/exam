@@ -379,7 +379,7 @@ import {
               <Formik
                 initialValues={{
                   // project details =================================================================
-                  projectTitle: '',
+                  projectTitle: data?.data.projectTitle ||'',
                   brokerCompany: '',
                   detailsCountrySelect: '',
                   detailsStateSelector: '',

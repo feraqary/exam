@@ -14,7 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useGetInternationalProjectsQuery, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import TableSelectorOption from 'components/InputArea/TableSelectorOption';
+import ProjectRankSelector from '../project_rank';
 import 'react-toastify/dist/ReactToastify.css';
 
 // ==============================|| Manage international_ Projects ||============================== //
@@ -25,8 +25,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const international_Projects = () => {
   const [docsOpen, setDocsOpen] = useState(false);
   const [updateDocs, setUpdateDocs] = useState({ project: null, id: null });
-  const [pagination, setPagination] = 
-  useState({
+  const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
@@ -63,10 +62,10 @@ const international_Projects = () => {
     },
     {
       accessorKey: 'Status',
-      header: 'Company Status',
+      header: 'Project Status',
       Cell: ({ renderedCellValue, row }) => (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <TableSelectorOption value={row.original.rank_id} ProjectType={row.original.phase_type} id={row.original.id} />
+          <ProjectRankSelector value={row.original.rank_id} ProjectType={row.original.phase_type} id={row.original.id} />
         </Box>
       )
     },
@@ -79,10 +78,10 @@ const international_Projects = () => {
       header: 'Location'
     },
     {
-      accessorKey: 'developer_company',
+      accessorKey: 'parent_developer_company',
       header: 'Developer Company',
-      render: (rowData) => {
-        return <Tooltip title="Developer Company Name">Developer Company</Tooltip>;
+      Cell: ({ renderedCellValue}) => {
+        return <Tooltip title=" Developer Company Name: ">{renderedCellValue} </Tooltip>
       }
     },
     {
@@ -90,7 +89,6 @@ const international_Projects = () => {
       header: 'Rating',
       Cell: ({ renderedCellValue, row }) => {
         // console.log('row: ', projectData.data[row.index].Rating);
-
         return (
           <>
             <Rating name="read-only" value={international_ProjectsData?.data[row.index].Rating} />
@@ -98,7 +96,6 @@ const international_Projects = () => {
         );
       }
     },
-
     { accessorKey: 'quality_score', header: 'Quality Score' },
 
     {
@@ -106,14 +103,13 @@ const international_Projects = () => {
       header: 'Number of Phases'
     },
     {
-      accessorKey: 'phases',
+      accessorKey: 'phasestest',
       header: 'Phases'
     },
     {
       accessorKey: 'phase_type',
       header: 'Phase Type'
     },
-
     {
       accessorKey: 'endis',
       header: 'Enable / Disable',
@@ -125,7 +121,6 @@ const international_Projects = () => {
         );
       }
     },
-
     {
       accessorKey: 'action',
       header: 'Action',
@@ -137,7 +132,6 @@ const international_Projects = () => {
         const handleClose = () => {
           setOpen(false);
         };
-
         const handleBlock = () => {
           const formData = new FormData();
           formData.append('project_id', row.original.id);

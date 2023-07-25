@@ -24,25 +24,28 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['InternationalProject']
     }),
-
-    /*  // GET ALL PROJECTS API
-     getAllIntProjects: builder.query({
-      query(_) {
+    //update Project 
+    getProjectUpdate: builder.mutation({
+      query(formData) {
         return {
-          url: `dashboard/getAllIntProjects?page_no=1&page_size=20&country=pakistan`,
-          method: 'GET'
+          url: `dashboard/updateProject/1`,
+          method: 'GET',
+          body: formData
         };
-      }
+      },
+      invalidatesTags: ['localProjects' , 'internationalProjects']
     }),
-    getPropertyType: builder.query({
-      query(_) {
+    //Update Projects by Rank API 
+    updateProjectRank: builder.mutation({
+      query(formData) {
         return {
-          url: `propertyTypes/getPropertyTypes`,
-          method: 'GET'
+          url: `dashboard/updatePorjectRank`,
+          method: 'PUT',
+          body: formData
         };
-      }
+      },
+      invalidatesTags: ['ProjectsByRank', 'InternationalProjects', 'LocalProjects']
     }),
-    */     
 
     // GET ALL PROJECTS BY STATUS
     getProjectsByStatus: builder.query({
@@ -55,7 +58,6 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['projectStatus']
     }),
-
     // GET ALL SHARED PROJECTS API
     getSharedProjects: builder.query({
       query(pagination) {
@@ -77,6 +79,8 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['projectStatus']
     }),
+
+    
     //updateproject
     updateProject: builder.mutation({
       query: (updateProject) => {
@@ -99,6 +103,15 @@ export const projectApi = api.injectEndpoints({
     })
   })
 });
+export const {
+  useGetLocalProjectsQuery,
+  useGetInternationalProjectsQuery,
+  useGetProjectUpdateQuery,
+  useUpdateProjectRankMutation,
+  useGetProjectsByStatusQuery,
+  useGetSharedProjectsQuery,
+  useUpdateProjectStatusMutation,
+  useUpdateProjectMutation,
+  useDeleteProjectMutation
 
-export const { useGetLocalProjectsQuery, useGetProjectsByStatusQuery, useUpdateProjectStatusMutation, useGetInternationalProjectsQuery, useGetSharedProjectsQuery } =
-  projectApi;
+} = projectApi;
