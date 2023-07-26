@@ -1,11 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { GoogleMap, Marker, Polygon, useLoadScript, DrawingManager } from '@react-google-maps/api';
-import { useFormikContext } from 'formik';
+import { DrawingManager, GoogleMap, Marker, Polygon, useLoadScript } from '@react-google-maps/api';
 import axios from 'axios';
-import Autocomplete from 'react-google-autocomplete';
+import { useFormikContext } from 'formik';
+import { useEffect, useRef, useState } from 'react';
 
 const Map = ({
   forPhase,
@@ -26,8 +25,8 @@ const Map = ({
   const { setFieldValue } = useFormikContext();
   const { isLoaded } = useLoadScript({ googleMapsApiKey: apiKey, libraries: ['drawing'] });
 
-  const [lat, setLat] = useState(normallat || 24.4984312);
-  const [long, setLong] = useState(normallng || 54.4036975);
+  const [lat, setLat] = useState(normallat ? normallat : 24.4984312);
+  const [long, setLong] = useState(normallng ? normallng : 54.4036975);
   const mapRef = useRef();
   const polygonRefs = useRef([]);
   const activePolygonIndex = useRef([]);
@@ -160,17 +159,11 @@ const Map = ({
     return <div>loading....</div>;
   }
 
-
-
+  {
+    /*  */
+  }
   return (
     <Grid item xs={xs} lg={lg}>
-      {/* <Autocomplete
-        style={{ width: '500px' }}
-        apiKey={apiKey}
-        onPlaceSelected={(place) => {
-          console.log(place);
-        }}
-      /> */}
       <GoogleMap
         mapContainerStyle={{ position: 'relative', height: height, width: '100%' }}
         center={{ lat: phase_lat && forPhase ? phase_lat : lat, lng: phase_long && forPhase ? phase_long : long }}

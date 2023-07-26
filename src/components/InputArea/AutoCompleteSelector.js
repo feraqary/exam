@@ -42,7 +42,7 @@ const AutoCompleteSelector = ({
   return (
     <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
-        {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
+        {required ? <InputLabel  required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
 
         {helperInfo ? (
           <Tooltip title={label}>
@@ -127,7 +127,6 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
         }}
         limitTags={2}
         onChange={(e, value, reason) => {
-          console.log(value);
           if (reason === 'clear') {
             setFieldValue(name, []);
           } else {

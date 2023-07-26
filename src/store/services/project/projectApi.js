@@ -13,6 +13,14 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['LocalProject']
     }),
+    getPropertyType: builder.query({
+      query() {
+        return {
+          url: `propertyTypes/getPropertyTypes`,
+          method: 'GET' 
+        };
+      }
+    }),
     //GET International Projects API
     getInternationalProjects: builder.query({
       query(pagination) {

@@ -1,46 +1,32 @@
 import { Button, Checkbox, FormControlLabel, FormHelperText, Grid, InputLabel } from '@mui/material';
 import { LoadScript } from '@react-google-maps/api';
 import Map from 'components/map/google-map';
-import MapAutocomplete, { NormalMapAutocomplete } from 'components/map/maps-autocomplete';
+import MapAutocomplete from 'components/map/maps-autocomplete';
 // material-ui
-import {
-  Grid,
-  FormHelperText,
-  Button,
-  FormControlLabel,
-  Checkbox,
-  InputLabel
-} from '@mui/material';
+
 // project imports
-import Layout from 'layout';
-import Categorization from './helper/Categorization';
-import Page from 'components/ui-component/Page';
-import MainCard from 'components/ui-component/cards/MainCard';
-import Layout from 'layout';
-import { useState } from 'react';
-import { gridSpacing } from 'store/constant';
-import Categorization from './helper/Categorization';
+import CloseIcon from '@mui/icons-material/Close';
 import SubmitButton from 'components/Elements/SubmitButton';
 import AutoCompleteSelector, { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
-import Selector from 'components/InputArea/Selector';
-import InputText from 'components/InputArea/TextInput';
-import { Formik } from 'formik';
-import { useEffect } from 'react';
-import { arrayValidator, numberValidator, objectValidator, stringValidator } from 'utils/formik-validations';
-import * as Yup from 'yup';
-import CloseIcon from '@mui/icons-material/Close';
 import CustomDateTime from 'components/InputArea/CustomDateTime';
 import PopUp from 'components/InputArea/PopUp';
-import { useDispatch, useSelector } from 'react-redux';
+import Selector from 'components/InputArea/Selector';
+import InputText from 'components/InputArea/TextInput';
+import Page from 'components/ui-component/Page';
+import MainCard from 'components/ui-component/cards/MainCard';
+import { Formik } from 'formik';
+import Layout from 'layout';
+import { useEffect, useState } from 'react';
+import { gridSpacing } from 'store/constant';
+import { useGetDeveloperCompanyQuery, useGetSubCompanyAccordingToParentQuery } from 'store/services/company/companyApi';
 import {
-  getAllDeveloperCompany,
-  getCompanyByType,
-  getFacilities,
-  getPropertyTypes,
-  getSubDevCompany
-} from 'store/slices/company-section/action/company';
-import { getAllCountries, getAllCurrencies, getCountries, getStateCity } from 'store/slices/country-section/actions/countries';
-import { useGetStatesOrCitiesQuery } from 'store/services/country/countryApi';
+  useGetCitiesByStateQuery,
+  useGetCommunitiesByCityQuery,
+  useGetCountriesQuery,
+  useGetStatesByCountryQuery,
+  useGetStatesOrCitiesQuery,
+  useGetSubCommunitiesByCommunityQuery
+} from 'store/services/country/countryApi';
 import {
   useCreateProjectMutation,
   useGetAllfacilitiesQuery,
@@ -48,41 +34,75 @@ import {
   useGetPropertyTypeQuery
 } from 'store/services/project/projectApi';
 
-function AddProject() {
-  const dispatch = useDispatch();
+import { arrayValidator, numberValidator, objectValidator, stringValidator } from 'utils/formik-validations';
+import * as Yup from 'yup';
+import Categorization from './helper/Categorization';
 
+function AddProject() {
+  //is shared
+  const [shared, setShared] = useState(false);
   const [countryLocationID, setCountryLocationID] = useState(null);
   const [isState_Id, setIsState_Id] = useState({ id: null, isState: null });
-  const [address, setAddress] = useState('Dubai');
+
+  //single or multiple phases
   const [single, setSingle] = useState(false);
-  const [shared, setShared] = useState(false);
+
+  //property type
   const [propertyType, setPropertyType] = useState([]);
+
+  //maps
+  const [address, setAddress] = useState('Dubai');
   const [long, setlong] = useState(null);
   const [lat, setlat] = useState(null);
+
+  //location details
+  const [countryID, setCountryID] = useState(null);
+  const [stateID, setStateID] = useState(null);
+  const [cityID, setCityID] = useState(null);
+  const [communityID, setCommunityID] = useState(null);
+  const [subCommunityID, setSubCommunityID] = useState(null);
+
+  //facilities
   const [checkedItems, setCheckedItems] = useState([]);
 
+  //DEV COMPANY
+  const [devCompany, setDevCompany] = useState(null);
   //API============================================================================================================
   const { data: Types, isLoading, isError } = useGetPropertyTypeQuery();
   const { data: Allfacilities } = useGetAllfacilitiesQuery();
   const { data: SharedStates } = useGetStatesOrCitiesQuery(countryLocationID, {
     skip: countryLocationID === null || countryLocationID === undefined
   });
-  const [createProject, result] = useCreateProjectMutation();
-  const { data: brokerComp, error: brokerCompError } = useGetBrokerCompaniesByCitiesQuery(isState_Id, {
-    skip: isState_Id === null || isState_Id === null
-  });
-  useEffect(() => {
-    dispatch(getCountries());
-    dispatch(getAllCountries());
-    dispatch(getAllCurrencies());
-    dispatch(getAllDeveloperCompany());
-    dispatch(getPropertyTypes());
-    dispatch(getFacilities());
-    dispatch(getCompanyByType());
-  }, [dispatch]);
 
-  const { countries, stateCity } = useSelector((state) => state.countries);
-  const { masterDeveloper, subdev } = useSelector((state) => state.companies);
+
+  const { data: Countries } = useGetCountriesQuery();
+  const { data: StateByCountry } = useGetStatesByCountryQuery(countryID, {
+    skip: countryID === null || countryID === undefined
+  });
+  const { data: CityByState } = useGetCitiesByStateQuery(stateID, {
+    skip: stateID === null || stateID === undefined
+  });
+  const { data: Community } = useGetCommunitiesByCityQuery(cityID, {
+    skip: cityID === null || cityID === undefined
+  });
+  const { data: subCommunity } = useGetSubCommunitiesByCommunityQuery(communityID, {
+    skip: communityID === null || communityID === undefined
+  });
+
+
+  //GET COMPANIES
+  const { data: DeveloperComp } = useGetDeveloperCompanyQuery();
+  const { data: subDevComp } = useGetSubCompanyAccordingToParentQuery(devCompany, {
+    skip: devCompany === null || devCompany === undefined
+  });
+
+  const { data: brokerComp, error: brokerCompError } = useGetBrokerCompaniesByCitiesQuery(isState_Id, {
+    skip: isState_Id === null || isState_Id === undefined
+  });
+
+  const [createProject, CreateProjectResult] = useCreateProjectMutation();
+
+
 
   //PHASES====================================================================================
   const handleDelete = (index, values, setFieldValues) => {
@@ -90,12 +110,11 @@ function AddProject() {
     setFieldValues('phases', updatedPhases);
   };
 
-  const DynamicInput = ({ num, values, setFieldValues, onSelect, DeleteFunc }) => {
+  const DynamicInput = ({ num, values, setFieldValues, DeleteFunc }) => {
     const size = 5.1;
     const MAP_SIZE = 1.2;
     const phaseID = num;
     const [open, setOpen] = useState(false);
-    const [isSelected, setIsSelected] = useState(false);
     const [mapSubmitted, setMapSubmitted] = useState(false);
     useEffect(() => {
       setFieldValues(`phases[${num}].id`, num + 1);
@@ -107,6 +126,7 @@ function AddProject() {
     return (
       <>
         <InputText
+          required
           label="Phase Name"
           placeholder="Phase Name"
           helperText="Please enter phase name"
@@ -114,16 +134,15 @@ function AddProject() {
           type="text"
           id={`phases[${num}].phaseName`}
           name={`phases[${num}].phaseName`}
-          required
         />
         <InputText
+          required
           label="Number of Properties"
           placeholder="Number of Properties"
           helperText="Please enter number of properties"
           style={{ xs: 12, lg: size }}
           id={`phases[${num}].NoOfProperties`}
           name={`phases[${num}].NoOfProperties`}
-          required
           type="number"
         />
 
@@ -140,6 +159,7 @@ function AddProject() {
           </Button>
         </Grid>
         <PopUp title="Use the Map" opened={open} setOpen={setOpen} size={'xl'} fullWidth>
+          <MapAutocomplete placeHolder onChangeAddress={setAddress} value="uae" setlong={setlong} setlat={setlat} />
           <Map
             locationAddress={address}
             setFieldValues={setFieldValues}
@@ -186,11 +206,13 @@ function AddProject() {
   }, [single]);
 
   //PROPERTY DETAILS============================================================================
-  const SinglePhase = (key) => {
+  // Function that generates different components based on the 'key' provided
+  const SinglePhaseComponents = (key) => {
     switch (key) {
       case 'Furnished':
         return (
           <>
+            {/* AutoCompleteSelector component */}
             <AutoCompleteSelector
               label="Furnished"
               required
@@ -206,6 +228,7 @@ function AddProject() {
       case 'No. Of Floors':
         return (
           <>
+            {/* InputText component */}
             <InputText
               label="No. of Floors"
               required
@@ -221,6 +244,7 @@ function AddProject() {
       case 'Price':
         return (
           <>
+            {/* InputText component */}
             <InputText
               label="Price"
               required
@@ -234,38 +258,12 @@ function AddProject() {
         );
     }
   };
-  const SinglePhasesInputs = propertyType?.map((component) => component.facts?.map((fact) => SinglePhase(fact)));
+  // Retrieve nested facts arrays from propertyType and flatten them
+  const facts = propertyType?.map((component) => component.facts?.map((fact) => fact));
+  const Filtered = [...new Set([].concat(...facts))];
+  // Generate SinglePhaseComponents for each fact in the Filtered array
+  const SinglePhaseInputs = Filtered?.map((fact) => SinglePhaseComponents(fact));
 
-  const validationSchema = Yup.object({
-    projectTitle: stringValidator('Please provide a title'),
-    locationCountrySelect: objectValidator('please select a country'),
-    mapUrl: stringValidator('Please enter a map url'),
-    locationCitySelector: objectValidator('please select a city'),
-    locationState: objectValidator('please select a state'),
-    propertyStatus: objectValidator('please enter the property status'),
-    propertyTitle: stringValidator('Please enter the property title'),
-    arabicPropertyTitle: stringValidator('Please enter the arabic title'),
-    propertyDescription: stringValidator('Please enter the property description'),
-    arabicPropertyDescription: stringValidator('Please enter the arabic description'),
-    phases: arrayValidator(),
-    propertyType: objectValidator('Please enter the property type'),
-    view: stringValidator('Please enter the view details'),
-    noOfBedrooms: numberValidator('Please enter the number of bedrooms'),
-    noOfbathrooms: numberValidator('Please enter the number of bathrooms'),
-    plotArea: numberValidator('please enter the plot area'),
-    isfurnished: objectValidator('please enter the furnish status'),
-    noOfFloors: numberValidator('Please enter the number of floors'),
-    price: numberValidator('Please enter the price'),
-    builtUpArea: numberValidator('please enter the built up area'),
-    parking: stringValidator('please enter the parking area'),
-    ownership: stringValidator('please enter the ownership status'),
-    completionStatus: stringValidator('please enter the completion status'),
-    plotAreaMin: numberValidator('please enter the minimum plot area'),
-    plotAreaMax: numberValidator('please enter the maximum plot area'),
-    noOfunits: numberValidator('please enter the number of available units'),
-    availableUnits: numberValidator('please enter the number of available units'),
-    serviceCharge: numberValidator('please enter the service charge')
-  });
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
       <Page title="Add Project">
@@ -292,6 +290,7 @@ function AddProject() {
                 locationSubCommunity: '',
                 propertyStatus: '',
                 mapUrl: '',
+                place: '',
                 lat: 27,
                 long: 25,
                 propertyType: propertyType,
@@ -320,7 +319,36 @@ function AddProject() {
                 arabicPropertyDescription: '',
                 facilities: checkedItems
               }}
-              validationSchema={validationSchema}
+              validationSchema={Yup.object({
+                projectTitle: stringValidator('Please provide a title'),
+                locationCountrySelect: objectValidator('please select a country'),
+                mapUrl: stringValidator('Please enter a map url'),
+                locationCitySelector: objectValidator('please select a city'),
+                locationState: objectValidator('please select a state'),
+                propertyStatus: objectValidator('please enter the property status'),
+                propertyTitle: stringValidator('Please enter the property title'),
+                arabicPropertyTitle: stringValidator('Please enter the arabic title'),
+                propertyDescription: stringValidator('Please enter the property description'),
+                arabicPropertyDescription: stringValidator('Please enter the arabic description'),
+                phases: arrayValidator(),
+                propertyType: objectValidator('Please enter the property type'),
+                view: stringValidator('Please enter the view details'),
+                noOfBedrooms: numberValidator('Please enter the number of bedrooms'),
+                noOfbathrooms: numberValidator('Please enter the number of bathrooms'),
+                plotArea: numberValidator('please enter the plot area'),
+                isfurnished: objectValidator('please enter the furnish status'),
+                noOfFloors: numberValidator('Please enter the number of floors'),
+                price: numberValidator('Please enter the price'),
+                builtUpArea: numberValidator('please enter the built up area'),
+                parking: stringValidator('please enter the parking area'),
+                ownership: stringValidator('please enter the ownership status'),
+                completionStatus: stringValidator('please enter the completion status'),
+                plotAreaMin: numberValidator('please enter the minimum plot area'),
+                plotAreaMax: numberValidator('please enter the maximum plot area'),
+                noOfunits: numberValidator('please enter the number of available units'),
+                availableUnits: numberValidator('please enter the number of available units'),
+                serviceCharge: numberValidator('please enter the service charge')
+              })}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 const ProjectData = {
                   project_name: values.projectTitle,
@@ -328,7 +356,7 @@ function AddProject() {
                   branch_developer_company_id: values?.subDeveloperCompanySelector.ID,
                   ref_number: null,
                   country_id: values?.locationCountrySelect?.ID,
-                  state_id: values?.detailsStateSelector?.ID,
+                  state_id: values?.locationState?.ID,
                   city_id: values?.locationCitySelector?.id,
                   community_id: values?.locationCommunity?.ID,
                   sub_community_id: values?.locationSubCommunity?.ID,
@@ -406,7 +434,7 @@ function AddProject() {
                             <AutoCompleteSelector
                               label="Country"
                               placeholder="Select Country"
-                              options={countries}
+                              options={Countries?.data || []}
                               getOptionLabel={(country) => country.Country || ''}
                               style={{ xs: 12, lg: 4 }}
                               helperText="Please select country"
@@ -420,6 +448,7 @@ function AddProject() {
                             <AutoCompleteSelector
                               helperText="Please select country"
                               label="State"
+                              // disabled={countryLocationID ? false : true}
                               disabled={props.values.detailsCountrySelect ? false : true}
                               placeholder="Select State"
                               options={SharedStates?.data || []}
@@ -428,8 +457,6 @@ function AddProject() {
                               id="detailsStateSelector"
                               name="detailsStateSelector"
                               func={(newValue) => {
-                                setIsState(newValue?.IsState);
-                                setStateId(newValue?.ID);
                                 setIsState_Id({
                                   id: newValue?.ID,
                                   isState: newValue?.IsState
@@ -453,23 +480,23 @@ function AddProject() {
                         )}
 
                         <AutoCompleteSelector
-                          label="Master Developer"
-                          placeholder="Select Master Developer"
-                          options={masterDeveloper}
+                          label="Developer Company"
+                          placeholder="Select Developer Company"
+                          options={DeveloperComp?.data || []}
                           getOptionLabel={(company) => company.company_name || ''}
                           style={{ xs: 12, lg: 4 }}
-                          helperText="Please select master developer company"
+                          helperText="Please select developer company"
                           id="masterDeveloperSelector"
                           name="masterDeveloperSelector"
                           func={(newValue) => {
-                            dispatch(getSubDevCompany({ parentCompanyId: newValue.id, companyType: 2 }));
+                            setDevCompany(newValue.id);
                           }}
                         />
 
                         <AutoCompleteSelector
                           label="Sub Developer Company"
                           placeholder="Select Sub Developer Company"
-                          options={subdev}
+                          options={subDevComp?.data || []}
                           getOptionLabel={(sub) => sub.CompanyName || ''}
                           style={{ xs: 12, lg: 4 }}
                           id="subDeveloperCompanySelector"
@@ -548,7 +575,7 @@ function AddProject() {
                         <AutoCompleteSelector
                           label="Country"
                           placeholder="Select Country"
-                          options={countries}
+                          options={Countries?.data}
                           getOptionLabel={(country) => country.Country || ''}
                           required
                           style={{ xs: 12, lg: 6 }}
@@ -556,7 +583,7 @@ function AddProject() {
                           name="locationCountrySelect"
                           id="locationCountrySelect"
                           func={(newValue) => {
-                            dispatch(getStateCity(newValue.ID));
+                            setCountryID(newValue.ID);
                           }}
                         />
 
@@ -573,16 +600,19 @@ function AddProject() {
 
                         <AutoCompleteSelector
                           style={{ xs: 12, lg: 6 }}
+                          disabled={!countryID}
                           label="State"
                           placeholder="State"
                           type="text"
                           helperText="Please enter the location's state"
-                          options={stateCity?.map((state) => {
-                            return { label: state.Title, id: state.ID };
-                          })}
+                          options={StateByCountry?.data || []}
+                          getOptionLabel={(state) => state.State || ''}
                           id="locationState"
                           name="locationState"
                           required
+                          func={(e) => {
+                            setStateID(e.ID);
+                          }}
                         />
 
                         <Grid item xs={12} lg={6}>
@@ -595,17 +625,20 @@ function AddProject() {
                           <AutoCompleteSelector
                             label="City"
                             placeholder="Select City"
-                            options={stateCity?.map((state) => {
-                              return { label: state.Title, id: state.ID };
-                            })}
+                            disabled={!stateID}
+                            options={CityByState?.data || []}
+                            getOptionLabel={(city) => city?.City || ''}
                             style={{ xs: 12, lg: 12 }}
                             id="locationCitySelector"
                             helperText="Please select city"
                             name="locationCitySelector"
                             required
+                            func={(e) => {
+                              setCityID(e.ID);
+                            }}
                           />
 
-                          <AutoCompleteSelector
+                          {/* <AutoCompleteSelector
                             label="District"
                             placeholder="District"
                             type="text"
@@ -614,33 +647,43 @@ function AddProject() {
                             helperText="Please enter the location's district"
                             options={['option 1', 'option 2', 'option 3']}
                             style={{ xs: 12, lg: 12 }}
-                          />
+                          /> */}
 
                           <AutoCompleteSelector
                             label="Community"
                             placeholder="Community"
                             type="text"
+                            disabled={!cityID}
                             id="locationCommunity"
                             name="locationCommunity"
                             helperText="Please enter the location's community"
-                            options={['option 1', 'option 2', 'option 3']}
+                            options={Community?.data || []}
+                            getOptionLabel={(com) => com?.Community || ''}
                             style={{ xs: 12, lg: 12 }}
+                            func={(e) => {
+                              setCommunityID(e.ID);
+                            }}
                           />
 
                           <AutoCompleteSelector
                             label="Sub Community"
                             placeholder="Sub Community"
+                            disabled={!subCommunityID}
                             type="text"
                             id="locationSubCommunity"
                             name="locationSubCommunity"
                             helperText="Please enter the location's sub community"
-                            options={['option 1', 'option 2', 'option 3']}
+                            options={subCommunity?.data || []}
+                            getOptionLabel={(sub) => sub?.SubCommunity || ''}
                             style={{ xs: 12, lg: 12 }}
+                            func={(e) => {
+                              setSubCommunityID(e.ID);
+                            }}
                           />
                         </Grid>
 
                         <Grid item xs={12} lg={6}>
-                          <Map normallng={long} normallat={lat} locationAddress={address} height={'30vh'} xs={12} lg={12} />
+                          <Map normallng={long} normallat={lat} locationAddress={address} height={'22vh'} xs={12} lg={12} />
                         </Grid>
                       </Grid>
                     </MainCard>
@@ -768,7 +811,7 @@ function AddProject() {
                               helperText="Please enter the service charge amount"
                             />
 
-                            <>{SinglePhasesInputs}</>
+                            {SinglePhaseInputs}
                             <Grid lg={12} xs={12}></Grid>
                             <InputText
                               style={{ xs: 12, lg: 6 }}
@@ -844,13 +887,13 @@ function AddProject() {
                     </MainCard>
                   </Grid>
                   <SubmitButton />
-                  <Button
+                  {/* <Button
                     onClick={() => {
                       console.log('values=======> ', props.values);
                     }}
                   >
                     test
-                  </Button>
+                  </Button> */}
                 </>
               )}
             </Formik>

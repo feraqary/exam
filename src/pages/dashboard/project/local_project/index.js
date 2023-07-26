@@ -73,7 +73,7 @@ const localProjects = () => {
     {
       accessorKey: 'project_name',
       header: 'Project Name'
-    },4
+    },
     {
       accessorKey: 'country',
       header: 'Location'
