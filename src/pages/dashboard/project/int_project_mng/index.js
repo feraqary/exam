@@ -6,7 +6,7 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-import { useGetAllIntProjectsQuery } from 'store/services/project/projectApi';
+import { useGetInternationalProjectsQuery } from 'store/services/project/projectApi';
 import Rating from '@mui/material/Rating';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
@@ -21,8 +21,8 @@ function ManageProject() {
   formData.append('page_no', 1);
   formData.append('page_size', 20);
   formData.append('country', 'pakistan');
-  const { data: projectData, isLoading, isError } = useGetAllIntProjectsQuery();
-  let x = 'Dwsfdwsfd';
+  const { data: projectData, isLoading, isError } = useGetInternationalProjectsQuery();
+  // let x = 'Dwsfdwsfd';
   console.log('data: ', projectData?.data);
   const ColumnHeaders = [
     {
@@ -145,7 +145,7 @@ function ManageProject() {
     <Page title="Manage Project">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={projectData?.data} />
+          <Table columnHeaders={ColumnHeaders} data={projectData?.data || []} />
         </Grid>
       </Grid>
     </Page>

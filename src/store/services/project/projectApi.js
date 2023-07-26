@@ -21,17 +21,6 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
-    //GET International Projects API
-    getInternationalProjects: builder.query({
-      query(pagination) {
-        const { pageIndex, pageSize } = pagination;
-        return {
-          url: `dashboard/getAllIntProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
-          method: 'GET'
-        };
-      },
-      providesTags: ['InternationalProject']
-    }),
     //update Project
     getProjectUpdate: builder.mutation({
       query(formData) {
@@ -72,6 +61,16 @@ export const projectApi = api.injectEndpoints({
         const { pageIndex, pageSize } = pagination;
         return {
           url: `dashboard/getAllSharedProjects?page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
+        };
+      }
+    }),
+    // GET ALL INTERNATIONAL PROJECTS API
+    getInternationalProjects: builder.query({
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
+        return {
+          url: `dashboard/getAllIntProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
           method: 'GET'
         };
       }
@@ -153,7 +152,6 @@ export const {
   useUpdateProjectStatusMutation,
   useUpdateProjectMutation,
   useDeleteProjectMutation,
-  useGetAllIntProjectsQuery,
   useGetPropertyTypeQuery,
   useGetSharedProjectsQuery,
   useGetProjectByIdQuery,
