@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
 const token =
-  'v2.local.-XGDd5V5gG-Dyu92hX2WS1WlriMBLzVwsF5dug9M9vlJmGOJysojojve6ySwZipEMcObLxpOuFS39wzyZGkxATMMIlTP4VVYNjiidgpCtiEcT8p8d4SdcAm-DsYe2kCjFuBUkvTVf5q-x_0lcSteAOiiDQLUqwsQ82d7gclK8S8RvUt9fn9KBRZtWg1x6xI_YICNgsF1EN6QjtkX6YKmscWR36LesqR2llXlRqtWpzSxVpJ5Kxhri-9Flxi9i4_avDvWaPOVbySDumvjYw.bnVsbA';
+  'v2.local.FGe3TJuNPmwCsHUYXFC4c4_DvuJGQNDDz2mTa1TiXoOY59Q4Fih7uR_i9_y_h_AdwBHSAtWv4XcfjkILYcWUWIvx0r4_4BNEs6nCo1UhOf4E9mG3OWG-I205MlamJN4FrqcgFtK7NZ3q9D5u4BupSRYl9HOKawtmXtRBUa37n42arOF7B-PQX8klRmFlq0RvJPGJMeAS7MHEo2iDpr6ChDLuIh6DYmxpNeIh_1o-pFeaniWy2cTvboU33auW057uxez8TWiRgYT6v6eZMg.bnVsbA';
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
@@ -47,8 +47,10 @@ export const api = createApi({
     'CompaniesByStatus',
     'CompaniesByRank',
     'subCompanies',
-    'projectStatus',
-    'localProjects'
+    'ProjectStatus',
+    'LocalProjects',
+    'InternationalProjects',
+    'SharedProjects'
   ],
   /**
    * This api has endpoints injected in adjacent files,

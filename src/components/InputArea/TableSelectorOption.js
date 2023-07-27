@@ -22,14 +22,14 @@ const MenuProps = {
 
 const COMAPANY_STATUS = ['Standard', 'Featured', 'Premium', 'Top Deal'];
 
-const TableSelectorOption = memo(({ formData, value, rankMutation }) => {
+const TableSelectorOption = memo(({ value, formData, func }) => {
   const [companyStatus, setCompanyStatus] = useState(value - 1);
 
-  const [updateRank, result] = rankMutation();
+  const [updateRank, result] = func;
 
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Company has been updated successfully');
+      ToastSuccess('Rank has been updated successfully');
     }
   }, [result.isSuccess]);
 
@@ -45,6 +45,7 @@ const TableSelectorOption = memo(({ formData, value, rankMutation }) => {
       const {
         target: { value }
       } = event;
+      formData.append('rank', value + 1);
       updateRank(formData);
       setCompanyStatus(value);
     },

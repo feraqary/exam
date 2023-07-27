@@ -18,11 +18,14 @@ import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Documents from '../documents';
-import { useGetInternationalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
+import {
+  useGetInternationalCompaniesQuery,
+  useUpdateCompanyRankMutation,
+  useUpdateCompanyStatusMutation
+} from 'store/services/company/companyApi';
 import { ToastSuccess } from 'utils/toast';
 import { ToastContainer } from 'react-toastify';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
-import { useUpdateCompanyRankMutation } from 'store/services/company/companyApi';
 
 // ===========================|| International Company Managment list||=========================== //
 
@@ -88,13 +91,13 @@ const IntCompData = () => {
       accessorKey: 'Status',
       header: 'Company Status',
       Cell: ({ renderedCellValue, row }) => {
+        const [updateRank, result] = useUpdateCompanyRankMutation();
         const formData = new FormData();
         formData.append('company_type', row.original.CompanyType);
-        formData.append('rank', row.original.CompanyRank);
         formData.append('company_id', row.original.ID);
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <TableSelectorOption formData={formData} value={row.original.CompanyRank} rankMutation={useUpdateCompanyRankMutation} />
+            <TableSelectorOption value={row.original.CompanyRank} formData={formData} func={func} />
           </Box>
         );
       }

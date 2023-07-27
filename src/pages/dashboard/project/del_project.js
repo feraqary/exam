@@ -15,6 +15,7 @@ import { useGetProjectsByStatusQuery, useUpdateProjectStatusMutation } from 'sto
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { ToastSuccess, ToastError } from 'utils/toast';
+import { useEffect } from 'react';
 
 // ==============================|| Manage International Project ||============================== //
 
@@ -59,11 +60,11 @@ const ColumnHeaders = [
             variant="contained"
             color="primary"
             onClick={() => {
-              const data = {
-                id: row.original.id,
-                status_id: 6
-              };
-              restoreProject(JSON.stringify(data));
+              const formData = new FormData();
+              formData.append('id', row.original.id);
+              formData.append('status_id', 4);
+
+              restoreProject(formData);
             }}
           >
             Restore
@@ -80,7 +81,7 @@ function DeletedProjects() {
     pageSize: 5
   });
 
-  const { data: projects, isError, error, isLoading, isFetching } = useGetProjectsByStatusQuery({ pagination, status: 6 });
+  const { data: deletedProjects, isError, error, isLoading, isFetching } = useGetProjectsByStatusQuery({ pagination, status: 6 });
 
   return (
     <Page title="Manage Project">
@@ -89,12 +90,12 @@ function DeletedProjects() {
         <Grid item xs={12}>
           <Table
             columnHeaders={ColumnHeaders}
-            data={error ? [] : projects?.data || []}
+            data={error ? [] : deletedProjects?.data || []}
             loading={isLoading}
             pagination={pagination}
             setPagination={setPagination}
             isFetching={isFetching}
-            rowCount={projects?.Total}
+            rowCount={deletedProjects?.Total}
           />
         </Grid>
       </Grid>

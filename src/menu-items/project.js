@@ -60,14 +60,21 @@ const project = {
       title: <FormattedMessage id="International Projects" />,
       type: 'item',
       icon: icons.IconMapPin,
-      url: '/dashboard/project/int_project'
+      url: '/dashboard/project/international_project'
     },
     {
       id: 'shared-projects',
       title: <FormattedMessage id="Shared Projects" />,
       type: 'item',
       icon: icons.IconHomeShare,
-      url: '/dashboard/project/shared_project'
+      url: '/dashboard/project/shared_projects'
+    },
+    {
+      id: 'blocked-projects',
+      title: <FormattedMessage id="Blocked Projects" />,
+      type: 'item',
+      icon: icons.IconTrashX,
+      url: '/dashboard/project/blocked_projects'
     },
     {
       id: 'deleted-projects',

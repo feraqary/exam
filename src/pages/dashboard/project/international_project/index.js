@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, Box, Button } from '@mui/material';
+import { Grid, Box, Button, Chip } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -11,21 +11,25 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { useGetLocalProjectsQuery, useUpdateProjectRankMutation, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
+import {
+  useGetInternationalProjectsQuery,
+  useUpdateProjectStatusMutation,
+  useUpdateProjectRankMutation
+} from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
 
-// ==============================|| Manage Local Projects ||============================== //
+// ==============================|| Manage international_ Projects ||============================== //
 
-const localProjects = () => {
+const international_Projects = () => {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
-  const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
+  const { data: international_ProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
 
   useEffect(() => {
@@ -45,10 +49,10 @@ const localProjects = () => {
   const ColumnHeaders = [
     {
       accessorKey: 'id',
-      header: 'Project ID ',
+      header: 'Reference Number ',
       title: (
-        <Tooltip title={'Project ID'}>
-          <span>Project ID</span>
+        <Tooltip title={'Ref.No'}>
+          <span>Reference Number</span>
         </Tooltip>
       )
     },
@@ -62,7 +66,7 @@ const localProjects = () => {
 
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <TableSelectorOption value={row.original.rank_id} formData={formData} func={func} />
+            <TableSelectorOption value={row.original.rank_id} func={func} formData={formData} />
           </Box>
         );
       }
@@ -82,50 +86,41 @@ const localProjects = () => {
         return <Tooltip title="Developer Company Name">Developer Company</Tooltip>;
       }
     },
-
-    {
-      accessorKey: 'endis',
-      header: 'Enable / Disable',
-      Cell: ({ renderedCellValue, row }) => {
-        return (
-          <>
-            <FormControlLabel control={<Switch defaultChecked />} />
-          </>
-        );
-      }
-    },
-
-    { accessorKey: 'quality_score', header: 'Quality Score' },
     {
       accessorKey: 'rating',
       header: 'Rating',
       Cell: ({ renderedCellValue, row }) => {
-        return (
-          <>
-            <Rating readonly={true} name="read-only" value={localProjectsData?.data[row.index].Rating} readOnly />
-          </>
-        );
+        return <Rating name="read-only" value={international_ProjectsData?.data[row.index].Rating} readOnly />;
       }
     },
+
+    { accessorKey: 'quality_score', header: 'Quality Score' },
+
     {
       accessorKey: 'no_of_phases',
       header: 'Number of Phases'
     },
     {
-      accessorKey: 'phase_type',
-      header: 'Phase Type'
-    },
-    {
-      accessorKey: 'phasess',
+      accessorKey: 'phasesss',
       header: 'Phases',
       cell: ({ renderedCellValue, row }) => {
-        console.log(row.original.phases);
-        return 'hi';
+        return row.original.phases.map((phase) => {
+          console.log(phase);
+          return <Chip>{phase.name}</Chip>;
+        });
       }
     },
     {
-      accessorKey: 'quality_score',
-      header: 'Quality Score'
+      accessorKey: 'phase_type',
+      header: 'Phase Type'
+    },
+
+    {
+      accessorKey: 'endis',
+      header: 'Enable / Disable',
+      Cell: ({ renderedCellValue, row }) => {
+        return <FormControlLabel control={<Switch defaultChecked />} />;
+      }
     },
 
     {
@@ -138,6 +133,7 @@ const localProjects = () => {
           formData.append('status_id', status);
           updateStatus(formData);
         };
+
         return (
           <>
             <Box
@@ -189,12 +185,12 @@ const localProjects = () => {
         <Grid item xs={12}>
           <Table
             columnHeaders={ColumnHeaders}
-            data={localProjectsData?.data || []}
+            data={international_ProjectsData?.data || []}
             loading={isLoading}
             pagination={pagination}
             setPagination={setPagination}
             isFetching={isFetching}
-            rowCount={localProjectsData?.Total}
+            rowCount={international_ProjectsData?.Total}
           />
         </Grid>
       </Grid>
@@ -202,8 +198,8 @@ const localProjects = () => {
   );
 };
 
-localProjects.getLayout = function getLayout(page) {
+international_Projects.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default localProjects;
+export default international_Projects;

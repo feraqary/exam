@@ -36,10 +36,6 @@ import {
   
   import {
     getCountries,
-    getStates,
-    getCities,
-    getCommunities,
-    getSubCommunities,
     getAllCountries,
     getAllCurrencies,
     getStateCity
@@ -54,8 +50,6 @@ import {
   import { useDispatch, useSelector } from 'react-redux';
   import CloseIcon from '@mui/icons-material/Close';
   import CustomDateTime from 'components/InputArea/CustomDateTime';
-  import { useGetCountriesQuery } from 'store/slices/location/locationHooks';
-  import { id } from 'date-fns/locale';
   import PopUp from 'components/InputArea/PopUp';
   import { useFormikContext } from 'formik';
   import { Add } from '@mui/icons-material';
