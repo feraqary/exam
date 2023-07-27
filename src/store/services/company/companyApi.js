@@ -263,11 +263,33 @@ export const companyApi = api.injectEndpoints({
           method: 'DELETE'
         };
       }
+    }),
+
+    //GET SUB COMPANY TYPE RELATIVE TO THE DEVELOPER
+    getSubCompanyAccordingToParent: builder.query({
+      query(parentCompanyId) {
+        return {
+          url: `dashboard/getSubCompanies?parent_company_id=${parentCompanyId}&company_type=2`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    //GET SUB COMPANY TYPE RELATIVE TO THE DEVELOPER
+    getDeveloperCompany: builder.query({
+      query(_) {
+        return {
+          url: `dashboard/getAllDeveloperCompany`,
+          method: 'GET'
+        };
+      }
     })
   })
 });
 
 export const {
+  useGetDeveloperCompanyQuery,
+  useGetSubCompanyAccordingToParentQuery,
   useCreateCompanyMutation,
   useCreateSubCompanyTypeMutation,
   useCreateCompanyBranchMutation,

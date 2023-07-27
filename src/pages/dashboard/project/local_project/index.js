@@ -14,9 +14,9 @@ import Tooltip from '@mui/material/Tooltip';
 import { useGetLocalProjectsQuery, useUpdateProjectRankMutation, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
+import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 
 // ==============================|| Manage Local Projects ||============================== //
 
@@ -78,11 +78,10 @@ const localProjects = () => {
     {
       accessorKey: 'parent_developer_company',
       header: 'Developer Company',
-      render: (rowData) => {
-        return <Tooltip title="Developer Company Name">Developer Company</Tooltip>;
+      Cell: ({ renderedCellValue }) => {
+        return <Tooltip title="Developer Company Name"> Developer Company</Tooltip>;
       }
     },
-
     {
       accessorKey: 'endis',
       header: 'Enable / Disable',

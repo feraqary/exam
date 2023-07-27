@@ -48,8 +48,7 @@ const reducer = combineReducers({
   serviceUpdate: serviceUpdate,
   signUp: signupSlice,
   usermanagement: userManagement,
-  [api.reducerPath]: api.reducer,
-  locationapi: locationApi.reducer
+  [api.reducerPath]: api.reducer
 });
 
 //Reducer

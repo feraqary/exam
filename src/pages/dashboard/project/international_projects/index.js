@@ -18,9 +18,10 @@ import {
 } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import TableSelectorOption from 'components/InputArea/TableSelectorOption';
+import ProjectRankSelector from '../project_rank';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
+import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 
 // ==============================|| Manage international_ Projects ||============================== //
 
@@ -82,8 +83,8 @@ const international_Projects = () => {
     {
       accessorKey: 'parent_developer_company',
       header: 'Developer Company',
-      render: (rowData) => {
-        return <Tooltip title="Developer Company Name">Developer Company</Tooltip>;
+      Cell: ({ renderedCellValue }) => {
+        return <Tooltip title=" Developer Company Name: ">Developer Company</Tooltip>;
       }
     },
     {
@@ -93,7 +94,6 @@ const international_Projects = () => {
         return <Rating name="read-only" value={international_ProjectsData?.data[row.index].Rating} readOnly />;
       }
     },
-
     { accessorKey: 'quality_score', header: 'Quality Score' },
 
     {
@@ -114,7 +114,6 @@ const international_Projects = () => {
       accessorKey: 'phase_type',
       header: 'Phase Type'
     },
-
     {
       accessorKey: 'endis',
       header: 'Enable / Disable',
@@ -122,7 +121,6 @@ const international_Projects = () => {
         return <FormControlLabel control={<Switch defaultChecked />} />;
       }
     },
-
     {
       accessorKey: 'action',
       header: 'Action',
@@ -133,7 +131,6 @@ const international_Projects = () => {
           formData.append('status_id', status);
           updateStatus(formData);
         };
-
         return (
           <>
             <Box

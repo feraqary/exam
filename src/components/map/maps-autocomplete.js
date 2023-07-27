@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
 import { TextField } from '@mui/material';
 import { StandaloneSearchBox } from '@react-google-maps/api';
 import { useField, useFormikContext } from 'formik';
+import { useRef } from 'react';
 
 export default function MapAutocomplete({ onChangeAddress, country, state, metaError, metaTouched, id, name }) {
   const [field, meta] = useField(name);
@@ -10,28 +10,28 @@ export default function MapAutocomplete({ onChangeAddress, country, state, metaE
 
   const inputRef = useRef();
   const handlePlaceChanged = () => {
-    console.log('place changed');
+
     const [place] = inputRef.current.getPlaces();
     if (place) {
       setFieldValue('place', place.address_components);
       console.log(place.address_components);
-      if (place.address_components != undefined && place.address_components.length > 0) {
-        place.address_components.forEach((addr) => {
-          if (addr.types.indexOf('country') != -1) {
-            console.log('country: ' + addr.long_name);
-            country(addr.long_name);
-          }
-          if (addr.types.indexOf('administrative_area_level_1') != -1 && place.address_components.length > 1) {
-            console.log(`state: ${addr.long_name}`);
-            state(addr.long_name);
-          } else {
-            return;
-          }
-        });
+      // if (place.address_components != undefined && place.address_components.length > 0) {
+      //   place.address_components.forEach((addr) => {
+      //     if (addr.types.indexOf('country') != -1) {
+      //       console.log('country: ' + addr.long_name);
+      //       country(addr.long_name);
+      //     }
+      //     if (addr.types.indexOf('administrative_area_level_1') != -1 && place.address_components.length > 1) {
+      //       console.log(`state: ${addr.long_name}`);
+      //       state(addr.long_name);
+      //     } else {
+      //       return;
+      //     }
+      //   });
 
-        console.log(place.geometry.location.lat());
-        console.log(place.geometry.location.lng());
-      }
+      //   console.log(place.geometry.location.lat());
+      //   console.log(place.geometry.location.lng());
+      // }
     } else {
       return;
     }
@@ -59,7 +59,7 @@ export default function MapAutocomplete({ onChangeAddress, country, state, metaE
   );
 }
 
-export function NormalMapAutocomplete({ onChangeAddress, country, state }) {
+export function NormalMapAutocomplete({ onChangeAddress, country, state, setlong, setlat }) {
   const inputRef = useRef();
   const handlePlaceChanged = () => {
     console.log('place changed');
@@ -81,7 +81,9 @@ export function NormalMapAutocomplete({ onChangeAddress, country, state }) {
         });
 
         console.log(place.geometry.location.lat());
+        setlat(place.geometry.location.lat());
         console.log(place.geometry.location.lng());
+        setlong(place.geometry.location.lng());
       }
     } else {
       return;
