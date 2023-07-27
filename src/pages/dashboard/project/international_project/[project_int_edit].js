@@ -15,7 +15,7 @@ import {
   } from '@mui/material';
   // project imports
   import Layout from 'layout';
-  import Categorization from './helper/Categorization';
+  import Categorization from '../helper/Categorization';
   import Page from 'components/ui-component/Page';
   import MainCard from 'components/ui-component/cards/MainCard';
   import { gridSpacing } from 'store/constant';

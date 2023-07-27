@@ -448,14 +448,14 @@ function ColumnsLayouts() {
                     )}
                     {props.values.mainService && (
                       <MultipleAutoCompleteSelector
-                        style={{ xs: 12, lg: 10 }}
                         label="Sub Service Type"
-                        id="service"
-                        name="service"
                         placeholder="Select Sub Service Type"
                         options={subServicesError ? [] : subServicesData?.data || []}
                         getOptionLabel={(subService) => subService.title || ''}
-                        setFieldValue={props.setFieldValue}
+                        style={{ xs: 12, lg: 10 }}
+                        helperText="Please select a sub service type"
+                        id="service"
+                        name="service"
                       />
                     )}
                   </Grid>

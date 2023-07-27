@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // material-ui
 import {
   Grid,
@@ -15,35 +15,40 @@ import {
   InputLabel,
   Typography
 } from '@mui/material';
-import { m } from 'framer-motion';
 
-export default function Categorization({ list, label }) {
-  const handleChange = (e) => {
-    (e) => {
-      if (e.target.checked == true) {
-        console.log(e.target.value);
-        setfacilitiesSelected([...facilitiesSelected, e.target.value]);
+export default function Categorization({ list, icon, setFieldValue, setCheckedItems }) {
+  // const [checkedItems, setCheckedItems] = useState([]);
+
+  
+  // Function to handle checkbox changes
+  const handleChange = (event) => {
+    const { value, checked } = event.target;
+
+    // Update the list of checked items based on the checkbox change
+    setCheckedItems((prevCheckedItems) => {
+      if (checked) {
+        return [...prevCheckedItems, value]; // Add the item to the list if it's checked
       } else {
-        const updatedState = facilitiesSelected.filter((item) => item !== e.target.value);
-        setfacilitiesSelected(updatedState);
+        return prevCheckedItems.filter((item) => item !== value); // Remove the item from the list if it's unchecked
       }
-    };
+    });
   };
 
   return (
     <>
       <Grid item>
-        <Typography variant="h4">{label}</Typography>
+        <Typography variant="h4">{list[0].category}</Typography>
         <FormGroup>
           {list.map((facility, i) => {
             return (
               <FormControlLabel
-                // onChange={}
                 key={i}
-                value={1}
-                control={<Checkbox color="primary" />}
-                label={facility}
+                value={facility.id}
+                control={<Checkbox onChange={handleChange} color="primary" />}
+                label={facility.title}
                 labelPlacement="end"
+                icon={<Image fill src={icon} />}
+                checkedIcon={<Image fill src={icon} />}
               />
             );
           })}

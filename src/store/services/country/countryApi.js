@@ -12,6 +12,16 @@ export const countryApi = api.injectEndpoints({
       }
     }),
 
+    //GET ALL STATES AND/OR CITIES API
+    getStatesOrCities: builder.query({
+      query(id) {
+        return {
+          url: `country/getStateCityByCountry/${id}`,
+          method: 'GET'
+        };
+      }
+    }),
+
     //GET STATES BASED ON THE COUNTRY API
     getStatesByCountry: builder.query({
       query(country_id) {
@@ -31,7 +41,7 @@ export const countryApi = api.injectEndpoints({
         };
       }
     }),
- 
+
     //GET COMMUNITIES BASED ON THE CITIES FOUND API
     getCommunitiesByCity: builder.query({
       query(city_id) {
@@ -70,5 +80,6 @@ export const {
   useGetCountriesQuery,
   useGetCurrenciesQuery,
   useGetStatesByCountryQuery,
-  useGetSubCommunitiesByCommunityQuery
+  useGetSubCommunitiesByCommunityQuery,
+  useGetStatesOrCitiesQuery
 } = countryApi;

@@ -11,26 +11,26 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { useGetInternationalProjectsQuery, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
+import { useGetLocalProjectsQuery, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastSuccess, ToastError } from 'utils/toast';
 import { ToastContainer } from 'react-toastify';
 import ProjectRankSelector from '../project_rank';
 import 'react-toastify/dist/ReactToastify.css';
 
-// ==============================|| Manage International Projects ||============================== //
+// ==============================|| Manage Local Projects ||============================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const internationalProjects = () => {
+const localProjects = () => {
   const [docsOpen, setDocsOpen] = useState(false);
   const [updateDocs, setUpdateDocs] = useState({ project: null, id: null });
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
-  const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
+  const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
 
   const [deleteProject, result] = useUpdateProjectStatusMutation();
   useEffect(() => {
@@ -223,8 +223,8 @@ const internationalProjects = () => {
   );
 };
 
-internationalProjects.getLayout = function getLayout(page) {
+localProjects.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default internationalProjects;
+export default localProjects;

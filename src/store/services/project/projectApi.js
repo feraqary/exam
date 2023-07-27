@@ -22,7 +22,7 @@ export const projectApi = api.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags: ['InternationalProjects']
+      providesTags: ['InternationalProject']
     }),
     //update Project 
     getProjectUpdate: builder.mutation({
@@ -33,7 +33,7 @@ export const projectApi = api.injectEndpoints({
           body: formData
         };
       },
-      invalidatesTags: ['LocalProjects' , 'InternationalProjects']
+      invalidatesTags: ['localProjects' , 'internationalProjects']
     }),
     //Update Projects by Rank API 
     updateProjectRank: builder.mutation({
@@ -77,7 +77,7 @@ export const projectApi = api.injectEndpoints({
           body: data
         };
       },
-      invalidatesTags: ['ProjectStatus', 'LocalProjects', 'InternationalProjects']
+      invalidatesTags: ['ProjectStatus', 'InternationalProjects', 'LocalProjects']
     }),
 
     
