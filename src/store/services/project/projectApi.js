@@ -11,7 +11,7 @@ export const projectApi = api.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags: ['LocalProject']
+      providesTags: ['LocalProjects']
     }),
     //GET International Projects API
     getInternationalProjects: builder.query({
@@ -22,7 +22,7 @@ export const projectApi = api.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags: ['InternationalProject']
+      providesTags: ['InternationalProjects']
     }),
     //update Project 
     getProjectUpdate: builder.mutation({
@@ -33,7 +33,7 @@ export const projectApi = api.injectEndpoints({
           body: formData
         };
       },
-      invalidatesTags: ['localProjects' , 'internationalProjects']
+      invalidatesTags: ['LocalProjects' , 'InternationalProjects']
     }),
     //Update Projects by Rank API 
     updateProjectRank: builder.mutation({
@@ -56,7 +56,7 @@ export const projectApi = api.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags: ['projectStatus']
+      providesTags: ['ProjectStatus']
     }),
     // GET ALL SHARED PROJECTS API
     getSharedProjects: builder.query({
@@ -72,12 +72,12 @@ export const projectApi = api.injectEndpoints({
     updateProjectStatus: builder.mutation({
       query(data) {
         return {
-          url: `dashboard/getAllProjectsByStatus`,
+          url: `dashboard/updateProjectStatus`,
           method: 'PUT',
           body: data
         };
       },
-      invalidatesTags: ['projectStatus']
+      invalidatesTags: ['ProjectStatus', 'LocalProjects', 'InternationalProjects']
     }),
 
     

@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import { useGetLocalProjectsQuery, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
+import { ToastSuccess, ToastError } from 'utils/toast';
 import { ToastContainer } from 'react-toastify';
 import ProjectRankSelector from '../project_rank';
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,10 +32,10 @@ const localProjects = () => {
   });
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
 
-  const [blockProject, result] = useUpdateProjectStatusMutation();
+  const [deleteProject, result] = useUpdateProjectStatusMutation();
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Project has been Sucessfully Blocked!');
+      ToastSuccess('Project has been Successfully Deleted!');
     }
   }, [result.isSuccess]);
   useEffect(() => {
@@ -73,7 +74,7 @@ const localProjects = () => {
     {
       accessorKey: 'project_name',
       header: 'Project Name'
-    },4
+    },
     {
       accessorKey: 'country',
       header: 'Location'
@@ -81,9 +82,9 @@ const localProjects = () => {
     {
       accessorKey: 'parent_developer_company',
       header: 'Developer Company',
-     Cell: ({ renderedCellValue}) => {
-      return <Tooltip title= "Developer Company Name"> {renderedCellValue}</Tooltip>
-     }
+      Cell: ({ renderedCellValue }) => {
+        return <Tooltip title="Developer Company Name"> {renderedCellValue}</Tooltip>;
+      }
     },
     {
       accessorKey: 'rating',
@@ -135,13 +136,13 @@ const localProjects = () => {
         const handleClose = () => {
           setOpen(false);
         };
+        const [deleteProject, result] = useUpdateProjectStatusMutation();
+        useEffect(() => {
+          if (result.isSuccess) {
+            ToastSuccess('Project has been Deleted Successfully');
+          }
+        }, [result.isSuccess]);
 
-        const handleBlock = () => {
-          const formData = new FormData();
-          formData.append('project_id', row.original.id);
-          formData.append('status', '4');
-          formData.append('company_type', row.original.ProjectType);
-        };
         return (
           <>
             <Box
@@ -169,10 +170,19 @@ const localProjects = () => {
               <Button variant="contained" color="primary">
                 Add Promotion
               </Button>
-              <Button variant="contained" color="error">
-                Block
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  const formData = new FormData();
+                  formData.append('status_id', 6);
+                  formData.append('id', row.original.id);
+                  deleteProject(formData);
+                }}
+              >
+                Delete
               </Button>
-        
+
               <Dialog maxWidth={'xl'} open={open} onClose={handleClose} TransitionComponent={Transition}>
                 <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
                   <IconButton>{/* <CloseIcon /> */}</IconButton>

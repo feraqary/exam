@@ -12,7 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { useGetCompaniesByStatusQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
 import { ToastSuccess } from 'utils/toast';
-
 // ===========================|| Blocked Company list||=========================== //
 
 const ColumnHeaders = [
@@ -44,7 +43,6 @@ const ColumnHeaders = [
           ToastSuccess('Company has been restored Successfully');
         }
       }, [result.isSuccess]);
-
       return (
         <AqaryButton
           variant="contained"

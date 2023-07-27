@@ -14,6 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useGetInternationalProjectsQuery, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { ToastSuccess, ToastError } from 'utils/toast';
 import ProjectRankSelector from '../project_rank';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -33,7 +34,7 @@ const international_Projects = () => {
   const [blockProject, result] = useUpdateProjectStatusMutation();
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Project has been Sucessfully Blocked!');
+      ToastSuccess('Project has been Sucessfully Deleted!');
     }
   }, [result.isSuccess]);
   useEffect(() => {
@@ -80,8 +81,8 @@ const international_Projects = () => {
     {
       accessorKey: 'parent_developer_company',
       header: 'Developer Company',
-      Cell: ({ renderedCellValue}) => {
-        return <Tooltip title=" Developer Company Name: ">{renderedCellValue} </Tooltip>
+      Cell: ({ renderedCellValue }) => {
+        return <Tooltip title=" Developer Company Name: ">{renderedCellValue} </Tooltip>;
       }
     },
     {
@@ -132,12 +133,13 @@ const international_Projects = () => {
         const handleClose = () => {
           setOpen(false);
         };
-        const handleBlock = () => {
-          const formData = new FormData();
-          formData.append('project_id', row.original.id);
-          formData.append('status', '4');
-          formData.append('company_type', row.original.ProjectType);
-        };
+        const [deleteProject, result] = useUpdateProjectStatusMutation();
+        useEffect(() => {
+          if (result.isSuccess) {
+            ToastSuccess('Project has been Deleted Successfully');
+          }
+        }, [result.isSuccess]);
+
         return (
           <>
             <Box
@@ -168,11 +170,20 @@ const international_Projects = () => {
               <Button variant="contained" color="primary">
                 Add Promotion
               </Button>
-              <Button variant="contained" color="error">
-                Block
-              </Button>
               <Button variant="contained" color="primary">
                 Rating
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  const formData = new FormData();
+                  formData.append('status_id', 6);
+                  formData.append('id', row.original.id);
+                  deleteProject(formData);
+                }}
+              >
+                Delete
               </Button>
               <Dialog maxWidth={'xl'} open={open} onClose={handleClose} TransitionComponent={Transition}>
                 <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>

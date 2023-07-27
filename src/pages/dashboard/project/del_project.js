@@ -2,7 +2,7 @@
 import { Grid, Box, Button } from '@mui/material';
 
 //react imports
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // project imports
 import Layout from 'layout';
@@ -41,9 +41,11 @@ const ColumnHeaders = [
     header: 'Action',
     Cell: ({ renderedCellValue, row }) => {
       const [restoreProject, result] = useUpdateProjectStatusMutation();
+    
+      
       useEffect(() => {
         if (result.isSuccess) {
-          ToastSuccess('Company has been restored Successfully');
+          ToastSuccess('Project has been Restored Successfully');
         }
       }, [result.isSuccess]);
 
@@ -59,11 +61,10 @@ const ColumnHeaders = [
             variant="contained"
             color="primary"
             onClick={() => {
-              const data = {
-                id: row.original.id,
-                status_id: 6
-              };
-              restoreProject(JSON.stringify(data));
+              const formData = new FormData();
+              formData.append("status_id", 4);
+              formData.append("id", row.original.id);
+              restoreProject(formData);
             }}
           >
             Restore

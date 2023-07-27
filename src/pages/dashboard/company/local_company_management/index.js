@@ -26,7 +26,6 @@ import Link from 'next/link';
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
 const localCompanies = () => {
   const [docsOpen, setDocsOpen] = useState(false);
   const [docsCrid, setDocsCrid] = useState({ comp: null, id: null });
@@ -59,7 +58,6 @@ const localCompanies = () => {
   const handleDocsClose = () => {
     setDocsOpen(false);
   };
-
   const ColumnHeaders = [
     {
       accessorKey: 'CompanyName',
