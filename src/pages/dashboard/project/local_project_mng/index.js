@@ -17,12 +17,27 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import { ToastContainer } from 'react-toastify';
 import ProjectRankSelector from '../project_rank';
 import 'react-toastify/dist/ReactToastify.css';
-
+import AddPromotions from '../add_promotions';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import Slide from '@mui/material/Slide';
 // ==============================|| Manage Local Projects ||============================== //
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+const [open, setOpen] = useState(false);
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 const localProjects = () => {
   const [docsOpen, setDocsOpen] = useState(false);
   const [updateDocs, setUpdateDocs] = useState({ project: null, id: null });
@@ -31,6 +46,10 @@ const localProjects = () => {
     pageSize: 5
   });
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
+
+
+  const [isOpen, setIsOpen] = useState(false);
+
 
   const [deleteProject, result] = useUpdateProjectStatusMutation();
   useEffect(() => {
@@ -52,6 +71,7 @@ const localProjects = () => {
   const handleDocsClose = () => {
     setDocsOpen(false);
   };
+
   const ColumnHeaders = [
     {
       accessorKey: 'id',
@@ -133,9 +153,8 @@ const localProjects = () => {
         const handleClickOpen = () => {
           setOpen(true);
         };
-        const handleClose = () => {
-          setOpen(false);
-        };
+        const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
         const [deleteProject, result] = useUpdateProjectStatusMutation();
         useEffect(() => {
           if (result.isSuccess) {
@@ -167,9 +186,12 @@ const localProjects = () => {
               <Button variant="contained" color="primary">
                 Listing Properties
               </Button>
-              <Button variant="contained" color="primary">
-                Add Promotion
-              </Button>
+              <Button onClick={handleOpen} color="primary" variant="contained"> Add Promotions</Button>
+              <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+                <Box sx={style}>
+                 <AddPromotions></AddPromotions>
+                </Box>
+              </Modal>
               <Button
                 variant="contained"
                 color="error"
@@ -182,13 +204,7 @@ const localProjects = () => {
               >
                 Delete
               </Button>
-
-              <Dialog maxWidth={'xl'} open={open} onClose={handleClose} TransitionComponent={Transition}>
-                <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
-                  <IconButton>{/* <CloseIcon /> */}</IconButton>
-                </DialogActions>
-                <DialogContent></DialogContent>
-              </Dialog>
+          
             </Box>
           </>
         );

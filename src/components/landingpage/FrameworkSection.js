@@ -122,10 +122,10 @@ const FrameworkSection = () => {
       <Container sx={{ mb: 6 }}>
         <Stack spacing={0.25} alignItems="center">
           <Typography variant="h2" align="center" sx={{ fontSize: { xs: '1.5rem', sm: '2.125rem' } }}>
-            Berry is now available in multiple frameworks*
+           Aqary Interntional 
           </Typography>
           <Typography variant="body2" align="center" sx={{ pt: 1 }}>
-            Each framework is sold separately on different platforms. Click to{' '}
+           Real Estate UAE{' '}
             <Link href="https://codedthemes.gitbook.io/berry/berry-eco-system" target="_blank" underline="hover">
               learn more.
             </Link>

@@ -53,14 +53,14 @@ const project = {
       title: <FormattedMessage id="Local Projects" />,
       type: 'item',
       icon: icons.IconPin,
-      url: '/dashboard/project/local_project'
+      url: '/dashboard/project/local_project_mng'
     },
     {
       id: 'international',
       title: <FormattedMessage id="International Projects" />,
       type: 'item',
       icon: icons.IconMapPin,
-      url: '/dashboard/project/int_project_mng'
+      url: '/dashboard/project/international_project_mng'
     },
     {
       id: 'shared-projects',
@@ -81,14 +81,14 @@ const project = {
       title: 'Promotions',
       type: 'item',
       icon: icons.IconLayoutKanban,
-      url: '/dashboard/project/promotions'
+      url: '/dashboard/project/add_promotions'
     },
     {
       id: 'manage-requests',
       title: <FormattedMessage id="Manage Requests" />,
       type: 'item',
       icon: icons.IconMail,
-      url: '/dashboard/project/manage_requests'
+      url: '/dashboard/project/add_promotions'
     },
     {
       id: 'project-activities',

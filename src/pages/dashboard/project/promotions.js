@@ -3,11 +3,19 @@ import { Grid, Button, Box } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
+import { useState } from 'react';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 
-// ==============================|| Manage International Project ||============================== //
+// ==============================|| Manage Project Promotions ||============================== //
+
+const [pagination, setPagination] = useState({
+  pageIndex: 0,
+  pageSize: 5
+});
+
+
 const ColumnHeaders = [
   {
     accessorKey: 'proId',

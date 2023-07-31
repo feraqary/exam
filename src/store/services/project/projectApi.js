@@ -93,15 +93,20 @@ export const projectApi = api.injectEndpoints({
       }
     }),
 
-    deleteSubCompanyType: builder.mutation({
-      query(id) {
-        return {
-          url: `Type/${id}`,
-          method: 'DELETE'
+    // create/add promotions mutation
+
+    createPromotions: builder.mutation({
+      query({ pagination, status }) {
+        const { pageIndex, pageSize } = pagination;
+        return{
+          url: `dashboard/createProjectPromotion`,
+          method: 'POST',
+          body: createPromotions
         };
-      }
-    })
+    },
+    invalidatesTags: ['CreatePromotions']
   })
+}),
 });
 export const {
   useGetLocalProjectsQuery,
@@ -112,6 +117,6 @@ export const {
   useGetSharedProjectsQuery,
   useUpdateProjectStatusMutation,
   useUpdateProjectMutation,
-  useDeleteProjectMutation
+  useCreatePromotionsMutation
 
 } = projectApi;

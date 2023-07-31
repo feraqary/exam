@@ -167,9 +167,12 @@ const international_Projects = () => {
               <Button variant="contained" color="primary">
                 Featured
               </Button>
-              <Button variant="contained" color="primary">
-                Add Promotion
-              </Button>
+              <Button onClick={handleOpen} color="primary" variant="contained"> Add Promotions</Button>
+              <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+                <Box sx={style}>
+                 <AddPromotions></AddPromotions>
+                </Box>
+              </Modal>
               <Button variant="contained" color="primary">
                 Rating
               </Button>
