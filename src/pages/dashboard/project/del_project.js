@@ -108,3 +108,6 @@ DeletedProjects.getLayout = function getLayout(page) {
 };
 
 export default DeletedProjects;
+
+
+

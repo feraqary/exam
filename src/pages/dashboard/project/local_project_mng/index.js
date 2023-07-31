@@ -26,15 +26,15 @@ import Slide from '@mui/material/Slide';
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const [open, setOpen] = useState(false);
+
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 700,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '10px solid #000',
   boxShadow: 24,
   p: 4,
 };
