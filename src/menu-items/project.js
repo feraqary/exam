@@ -78,17 +78,17 @@ const project = {
     },
     {
       id: 'promotions',
-      title: 'Promotions',
+      title: 'Manage Promotions',
       type: 'item',
       icon: icons.IconLayoutKanban,
-      url: '/dashboard/project/add_promotions'
+      url: '/dashboard/project/promotions'
     },
     {
       id: 'manage-requests',
       title: <FormattedMessage id="Manage Requests" />,
       type: 'item',
       icon: icons.IconMail,
-      url: '/dashboard/project/add_promotions'
+      url: '/dashboard/project/manage_requests'
     },
     {
       id: 'project-activities',

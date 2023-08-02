@@ -63,7 +63,7 @@ const companies = {
     },
     {
       id: 'add_company_types',
-      title: <FormattedMessage id="Add Sub-Company Types" />,
+      title: <FormattedMessage id="add-sub-comp" />,
       type: 'item',
       icon: icons.IconLayoutGridAdd,
       url: '/dashboard/company/add_type',
@@ -71,7 +71,7 @@ const companies = {
     },
     {
       id: 'company-types',
-      title: <FormattedMessage id="Manage Sub-Company Types" />,
+      title: <FormattedMessage id="mng-sub-comp" />,
       type: 'item',
       icon: icons.IconLayoutGrid,
       url: '/dashboard/company/manage_type',
@@ -96,7 +96,7 @@ const companies = {
     },
     {
       id: 'featured-companies',
-      title: <FormattedMessage id="Featured Companies" />,
+      title: <FormattedMessage id="featured-companies" />,
       type: 'item',
       icon: icons.IconFileStar,
       url: '/dashboard/company/featured',
@@ -104,7 +104,7 @@ const companies = {
     },
     {
       id: 'blocked-companies',
-      title: <FormattedMessage id="Blocked Companies" />,
+      title: <FormattedMessage id= "blocked-companies"/>,
       type: 'item',
       icon: icons.IconFileX,
       url: '/dashboard/company/blocked',

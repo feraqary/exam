@@ -22,6 +22,8 @@ import FileUpload from 'components/InputArea/FileUpload';
 import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 import { useCreateSubCompanyTypeMutation } from 'store/services/company/companyApi';
 import { ToastSuccess } from 'utils/toast';
+import i18next from "i18next";
+
 
 const roles = [
   { label: 'Broker Company', id: 1 },

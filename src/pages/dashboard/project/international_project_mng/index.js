@@ -38,16 +38,15 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 const localProjects = () => {
   const [docsOpen, setDocsOpen] = useState(false);
   const [updateDocs, setUpdateDocs] = useState({ project: null, id: null });
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 5
+    pageSize: 10
   });
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
-
-
   const [isOpen, setIsOpen] = useState(false);
 
 
@@ -203,7 +202,6 @@ const localProjects = () => {
               >
                 Delete
               </Button>
-          
             </Box>
           </>
         );
