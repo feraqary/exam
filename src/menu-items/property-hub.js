@@ -24,7 +24,7 @@ const icons = {
   IconStairsUp,
   IconPin,
   IconMapPin,
-  IconHomeShare 
+  IconHomeShare
 };
 
 // ==============================|| UI FORMS MENU ITEMS ||============================== //
@@ -40,7 +40,7 @@ const propertyhub = {
       title: <FormattedMessage id="Add Property" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
-      url: '/propery_hub/add_property'
+      url: '/dashboard/propery_hub/add_property'
     },
 
     {
@@ -48,7 +48,7 @@ const propertyhub = {
       title: <FormattedMessage id="Local Properties" />,
       type: 'item',
       icon: icons.IconPin,
-      url: '/property_hub/local_properties'
+      url: '/dashboard/property_hub/local_properties'
       
     },
     {

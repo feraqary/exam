@@ -1,14 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useLoadScript, GoogleMap, Marker, DrawingManager, Polygon,Rectangle,RectangleFunctional, useJsApiLoader } from '@react-google-maps/api';
-import { Grid } from '@mui/material';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { Grid, TextField } from '@mui/material';
+import Button from '@mui/material/Button';
+import { DrawingManager, GoogleMap, Marker, Polygon, StandaloneSearchBox, useLoadScript } from '@react-google-maps/api';
 import axios from 'axios';
 import { useFormikContext } from 'formik';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import Button from '@mui/material/Button';
+import { useEffect, useRef, useState } from 'react';
+import MapAutocomplete from './maps-autocomplete';
 
-export default function Map({ locationAddress, xs, lg, mapUrl }) {
-  const [lat, setlat] = useState(24.4984312);
-  const [long, setlong] = useState(54.4036975);
+const Map = ({
+  forPhase,
+  phase_long,
+  phase_lat,
+  xs,
+  lg,
+  height,
+  num,
+  normallng,
+  normallat,
+  setSubmitted,
+  phaseID,
+  close,
+  setPolyValue
+}) => {
   const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
   const { setFieldValue, values } = useFormikContext();
   const enable = false
@@ -100,6 +113,14 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
 
   const onLoadMap = (map) => {
     mapRef.current = map;
+    map.setOptions({ draggableCursor: 'pointer' });
+    window.google.maps.event.addListener(map, 'dragstart', () => {
+      map.setOptions({ draggableCursor: 'grabbing' });
+    });
+
+    window.google.maps.event.addListener(map, 'dragend', () => {
+      map.setOptions({ draggableCursor: 'pointer' });
+    });
   };
 
   const onLoadPolygon = (polygon, index) => {
@@ -125,6 +146,29 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
     mapRef.current.fitBounds(bounds);
   };
 
+  const onDeleteDrawing = () => {
+    setPolygons([]);
+    activePolygonIndex.current = null;
+  };
+
+  const getPaths = (polygon) => {
+    var polygonBounds = polygon.getPath();
+    var bounds = [];
+    for (var i = 0; i < polygonBounds?.length; i++) {
+      var point = {
+        lat: polygonBounds.getAt(i).lat(),
+        lng: polygonBounds.getAt(i).lng()
+      };
+      bounds.push(point);
+    }
+    return bounds;
+  };
+
+  useEffect(() => {
+    setFieldValue('lat', lat);
+    setFieldValue('long', long);
+  }, [lat, long]);
+
   const onLoadDrawingManager = (drawingManager) => {
     drawingManagerRef.current = drawingManager;
   };
@@ -145,13 +189,7 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
     }
   };
 
-  const onDeleteDrawing = () => {
-    // const filtered = polygons.filter((polygon, index) => index !== activePolygonIndex.current);
-    // setPolygons(filtered);
-    const filteredPolygons = polygons.filter((_, index) => index !== activePolygonIndex.current);
-    setPolygons([]);
-    activePolygonIndex.current = null; // Reset the activePolygonIndex
-  };
+  const inputRef = useRef();
 
   const onEditPolygon = (index) => {
     const polygonRef = polygonRefs.current[index];
@@ -170,33 +208,46 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
   if (!isLoaded) {
     return <div>loading....</div>;
   } else {
-    return (
-      <Grid item xs={xs} lg={lg}>
-        <GoogleMap
-          mapContainerStyle={{ position: 'relative', height: '27vh', width: '100%' }}
-          center={{ lat: values.lat, lng: values.long }}
-          zoom={11}
-          onClick={(e) => {
-            setFieldValue('lat', e.latLng.lat());
-            setFieldValue('long', e.latLng.lng());
-          }}
-          onLoad={onLoadMap}
-        >
-          <DrawingManager onLoad={onLoadDrawingManager} onOverlayComplete={onOverlayComplete} options={drawingManagerOptions} />
-          {polygons.map((iterator, index) => (
-            <Polygon
-              key={index}
-              onLoad={(event) => onLoadPolygon(event, index)}
-              onMouseDown={() => onClickPolygon(index)}
-              onMouseUp={() => onEditPolygon(index)}
-              onDragEnd={() => onEditPolygon(index)}
-              options={polygonOptions}
-              paths={iterator}
-              draggable
-              editable
-            />
-          ))}
 
+  const handlePlaceChanged = (location) => {
+    const { place } = inputRef.current.getPlaces();
+    setSearchedLocation(location);
+    setHighlightedLocation({ lat: selectedLat, lng: selectedLng });
+    if (place) {
+      setFieldValue('place', place.address_components);
+      map.panTo({ lat: lat, lng: long });
+      console.log(place.address_components);
+    } else {
+      return;
+    }
+  };
+
+  return (
+    <Grid item xs={xs} lg={lg}>
+      <GoogleMap
+        mapContainerStyle={{ position: 'relative', height: height, width: '100%' }}
+        center={{ lat: phase_lat && forPhase ? phase_lat : lat, lng: phase_long && forPhase ? phase_long : long }}
+        zoom={12}
+        onClick={(e) => {
+          setLat(e.latLng.lat());
+          setLong(e.latLng.lng());
+        }}
+        onLoad={onLoadMap}
+      >
+        <Marker position={{ lat: lat, lng: long }} />
+        <StandaloneSearchBox onLoad={(ref) => (inputRef.current = ref)} onPlacesChanged={handlePlaceChanged}>
+          <TextField
+            className="form-control"
+            placeholder="Enter Location"
+            variant="outlined"
+            color="secondary"
+            size="small"
+            sx={{ position: 'absolute', top: '11px', left: '190px', color: 'white', width: '30%' }}
+            onChange={(e) => {
+              getloc(e.target.value);
+            }}
+          />
+        </StandaloneSearchBox>
 
 
           
@@ -204,23 +255,16 @@ export default function Map({ locationAddress, xs, lg, mapUrl }) {
             variant="contained"
             startIcon={<RemoveCircleIcon />}
             onClick={() => {
-              onDeleteDrawing();
-            }}
-            sx={{
-              position: 'absolute',
-              right: '4%',
-              top: '10px',
-              backgroundColor: '#FFFFFF',
-              color: 'black',
-              height: '40px',
-              '&:hover': {
-                backgroundColor: 'rgb(235,235,235)'
-              }
+              const flattenedArray = [].concat(...polygons);
+              console.log(flattenedArray);
+              // setFieldValue(`phases[${num}].polygonCoords`, [...flattenedArray]);
+              setPolyValue([...flattenedArray]);
+              close(false);
+              setSubmitted(polygons?.length !== 0 && num === phaseID);
             }}
           >
             Clear Drawings
           </Button>
-
           <Marker position={{ lat: values.lat, lng: values.long }} />
         </GoogleMap>
       </Grid>

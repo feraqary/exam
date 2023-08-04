@@ -54,14 +54,14 @@ const project = {
       title: <FormattedMessage id="Local Projects" />,
       type: 'item',
       icon: icons.IconPin,
-      url: '/project/local_project'
+      url: '/dashboard/project/project_management/local'
     },
     {
       id: 'international',
       title: <FormattedMessage id="International Projects" />,
       type: 'item',
       icon: icons.IconMapPin,
-      url: '/project/int_project'
+      url: '/dashboard/project/project_management/international'
     },
     {
       id: 'shared-projects',
