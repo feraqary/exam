@@ -1,4 +1,3 @@
-
 import { Button, Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { LoadScript } from '@react-google-maps/api';
 import Map from 'components/map/google-map';
@@ -29,7 +28,6 @@ import {
 } from 'store/services/country/countryApi';
 import {
   useCreateProjectMutation,
-
   useGetAllAmenitiesQuery,
   useGetAllfacilitiesQuery,
   useGetBrokerCompaniesByCitiesQuery,
@@ -51,7 +49,6 @@ function AddProject() {
   //property type
   const [propertyType, setPropertyType] = useState([]);
   const [viewSelected, setViews] = useState([]);
-
 
   //maps
   const [address, setAddress] = useState('Dubai');
@@ -118,7 +115,6 @@ function AddProject() {
 
   if (isLoading) return null;
 
-
   //PHASES====================================================================================
   const handleDelete = (index, values, setFieldValues) => {
     const updatedPhases = values.phases?.filter((phase, idx) => idx !== index);
@@ -135,7 +131,6 @@ function AddProject() {
       setFieldValues(`phases[${num}].id`, num + 1);
       setFieldValues('numberofPhases', num + 1);
     }, []);
-
 
     const [polys, setPolys] = useState([]);
     useEffect(() => {
@@ -223,10 +218,6 @@ function AddProject() {
       });
     }
   };
-  // useEffect(() => {
-  //   resetComponents(single);
-  // }, [resetComponents, single]);
-
 
   //PROPERTY DETAILS============================================================================
   // Function that generates different components based on the 'key' provided
@@ -244,7 +235,6 @@ function AddProject() {
               style={{ xs: 12, lg: 4 }}
               id="facts[6].value"
               name="facts[6].value"
-
               helperText="Please select property status"
             />
           </>
@@ -332,42 +322,21 @@ function AddProject() {
                 locationCommunity: '',
                 locationSubCommunity: '',
                 propertyStatus: '',
-                mapUrl: '',
                 place: '',
                 lat: 27,
                 long: 25,
-
                 propertyType: propertyType,
-                projectView: '',
-                parking: '',
-                ownerShip: '',
-                completionStatus: '',
-                isfurnished: '',
-                noOfFloors: null,
-                price: '',
-                noOfunits: null,
-                availableUnits: '',
-                serviceCharge: '',
-                lifeStyle: '',
-                ownershipSelector: '',
                 plotAreaMin: null,
                 plotAreaMax: null,
-                projectStartDate: '',
-                projectCompletionDate: '',
-                nooffloors: null,
-                noofpools: null,
-                noofretailcenters: null,
-                noofunits: null,
-                propertyTitle: null,
-                arabicPropertyTitle: null,
-                propertyDescription: null,
-                arabicPropertyDescription: null,
-                facilities: [],
                 facts: Array(30)
                   .fill(null)
                   .map((_, i) => {
                     return { id: i - 1, value: null };
-                  })
+                  }),
+                propertyTitle: null,
+                arabicPropertyTitle: null,
+                propertyDescription: null,
+                arabicPropertyDescription: null
               }}
               // validationSchema={Yup.object({
               //   projectTitle: stringValidator('Please provide a title'),
@@ -670,7 +639,6 @@ function AddProject() {
                           }}
                         />
 
-
                         <AutoCompleteSelector
                           style={{ xs: 12, lg: 6 }}
                           disabled={!countryID}
@@ -710,7 +678,7 @@ function AddProject() {
                             setCityID(e.ID);
                           }}
                         />
-                          {/* <AutoCompleteSelector
+                        {/* <AutoCompleteSelector
                             label="District"
                             placeholder="District"
                             type="text"
@@ -1094,7 +1062,6 @@ function AddProject() {
                   >
                     test
                   </Button>
-
                 </>
               )}
             </Formik>
