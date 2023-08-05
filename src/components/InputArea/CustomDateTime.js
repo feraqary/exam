@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 // material-ui
 import { InputAdornment, TextField } from '@mui/material';
 import { LocalizationProvider, MobileDatePicker } from '@mui/x-date-pickers';
@@ -25,7 +25,7 @@ import { useField, useFormikContext } from 'formik';
  * @returns {JSX.Element} The rendered CustomDateTime component.
  */
 
-const CustomDateTime = ({ style, label, helperText, value, setValue, required, name, id, ...rest }) => {
+const CustomDateTime = memo(({ style, label, helperText, value, setValue, required, name, id, helperInfo, func, ...rest }) => {
   const [field, meta] = useField(rest);
   const { touched, values, setFieldValue, setFieldTouched } = useFormikContext();
   return (
@@ -36,22 +36,37 @@ const CustomDateTime = ({ style, label, helperText, value, setValue, required, n
       required={required}
       metaError={meta.error[`${name}`]}
       metaTouched={touched[`${name}`]}
+      helperInfo={helperInfo}
     >
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <MobileDatePicker
+          {...rest}
           {...field}
           name={name}
           id={id}
           value={values[`${name}`]}
           label={label}
-          onChange={(value) => setFieldValue(name, value)}
+          onChange={(value) => {
+            setFieldValue(name, value);
+
+            if (func) {
+              console.log(func.value, func.name);
+              let dt = new Date(value);
+
+              dt.setMonth(dt.getMonth() + Number(func.value));
+              console.log(dt);
+
+              setFieldValue(func.name, dt);
+            }
+          }}
           onClose={() => setFieldTouched(name)}
           inputFormat="yyyy/MM/dd"
-          mask="___/__/__"
+          mask="__/__/__"
           renderInput={(params) => (
             <TextField
               {...params}
               fullWidth
+              value={field.name}
               error={touched[`${name}`] && meta.error[`${name}`]}
               InputProps={{
                 endAdornment: (
@@ -66,6 +81,6 @@ const CustomDateTime = ({ style, label, helperText, value, setValue, required, n
       </LocalizationProvider>
     </InputLayout>
   );
-};
+});
 
 export default CustomDateTime;

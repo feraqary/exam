@@ -1,7 +1,8 @@
 import { api } from 'utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 const token =
-  'v2.local.qFaCoB8jNaB0b6Boxn5J19MV8QTi656lRNWJSvp5_c_Ip9LIZ8H_vZBqRmaPDwe8NUxcwinVnPV2F6qEvjyMYxu87PrMSSgeeAqwtHWHEljqJFQBnTnlRq8XikJOGW5q1kGgK-Yp2DFphav3Y4RUuIclJqN21HbthpkPA5oEq1YZTW90Q0S6gYX-eLlv0tW_bftEgJy8NppWF4d4Xf-bV1EH_pqhvy_UNiBaFJ654PHGSTr8ATzmXZPzPt-g3cEmpeqZ_RAoB8uAJi7kyfI.bnVsbA';
+  'v2.local.aF-W6zSgvmo3A8MTMtxZRIm5dzddgpq5Ga_i8mzmcbMgBt73H4sOSNCiQG0FpNaac_qjjeTFS8mmQNypErAkaLAaqDv-WE9I-mgts5RDoJSRT7zGM_jf2ZtG_0LSPqvJtcyhnVZc9h1K4Nzrasthqo_zFEqeSV2M2wXxw80mjF07-xaHezVZmsuHfjREdqG-PkStmxILGbYWWyeeZJFTBXk9YcCTvCG7pgWd-10-nqCKiPSfBmAbJAeBe4-QgHBMpFhwNTr4K9zJHlKJZA.bnVsbA';
+
 const config = {
   headers: {
     'Content-Type': 'multipart/form-data',
@@ -38,7 +39,6 @@ export const getAllCompanyTypes = createAsyncThunk('company/getAllCompanyTypes',
 });
 export const updateCompanyType = createAsyncThunk('company/updateCompanyType', async ({ company_id, formData }, { rejectWithValue }) => {
   try {
-    console.log(`company id: ${company_id}`);
     const response = await api.put(`${baseurl}/api/services/updateCompanyType/${company_id}`, formData, config);
 
     return response.data;
@@ -97,6 +97,16 @@ export const getLocalCompanies = createAsyncThunk('company/getLocalCompanies', a
   }
 });
 
+export const getAllDraftSubscriptions = createAsyncThunk('draft/pdf_renderer', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/draftSubscription?id=1&company_type=1&is_branch=false`, 
+    config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.error);
+  }
+});
+
 export const getCompanyDocs = createAsyncThunk('company/getCompanyDocs', async ({ companyType, id }, { rejectWithValue }) => {
   try {
     const response = await api.get(`${baseurl}/api/dashboard/getCompanyDoc?company_type=${companyType}&id=${id}`, config);
@@ -125,7 +135,6 @@ export const createCompany = createAsyncThunk('company/createCompany', async (fo
     return rejectWithValue(error);
   }
 });
-
 
 export const updateSubService = createAsyncThunk('subService/Updatesubservice', async ({ id, formData }, { rejectWithValue }) => {
   try {
@@ -192,10 +201,9 @@ export const deleteMainService = createAsyncThunk('services/deleteMainService', 
   }
 });
 
-
 export const getCompanyByStatus = createAsyncThunk('company/status', async (status, { rejectWithValue }) => {
-
   try {
+    console.log(status);
     const response = await api.get(`${baseurl}/api/dashboard/getCompaniesByStatus/${status}`, config);
     return response.data;
   } catch (error) {
@@ -203,30 +211,9 @@ export const getCompanyByStatus = createAsyncThunk('company/status', async (stat
   }
 });
 
-export const restoreCompany = createAsyncThunk('companies/restoreCompany', async ({ formData, id }, { rejectWithValue }) => {
+export const getCompanyNames = createAsyncThunk('companies/companyNames', async (id, { rejectWithValue }) => {
   try {
-    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
-    response.data.id = id;
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
-  }
-});
-
-
-export const blockCompany = createAsyncThunk('companies/blockCompany', async ({ formData, id }, { rejectWithValue }) => {
-  try {
-    const response = await api.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
-    response.data.id = id;
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
-  }
-});
-
-export const updateCompanyStatus = createAsyncThunk('companies/status', async (formData, { rejectWithValue }) => {
-  try {
-    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
+    const response = await api.get(`${baseurl}/api/dashboard/getAllCompanyNames/${id}`, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -234,18 +221,125 @@ export const updateCompanyStatus = createAsyncThunk('companies/status', async (f
 });
 export const updateCompanyDoc = createAsyncThunk('companies/docUpdate', async (formData, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyDoc`, formData, config);
+    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyDoc/1`, formData, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const updateCompanyStatus = createAsyncThunk('companies/StatusStatus', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await axios.put(`${baseurl}/api/dashboard/updateCompanyStatus`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
 });
 
-export const updateCompany = createAsyncThunk('companies/update_company', async (formData, { rejectWithValue }) => {
+export const getSubscription = createAsyncThunk(
+  'companies/getSubscription',
+  async ({ id, company_type, is_branch }, { rejectWithValue }) => {
+    try {
+      const response = await api.get(
+        `${baseurl}/api/dashboard/getSubscription?id=${id}&company_type=${company_type}&is_branch=${is_branch}`,
+        config
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateSubscription = createAsyncThunk('companies/updateSubscription', async ({ formData, id }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${baseurl}/api/dashboard/updateCompany`, formData, config);
+    const response = await api.put(`${baseurl}/api/dashboard/updateSubscription/${id}`, formData, config);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
+  }
+});
+
+export const getActiveSubscription = createAsyncThunk('companies/getActiveSubscription', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getActiveSubscription?page_no=1&page_size=5`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const getPendingSubscription = createAsyncThunk('companies/getPendingSubscription', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getPendingSubscription?page_no=1&page_size=35`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const getCompanyType = createAsyncThunk('companies/getCompanyType', async (id, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/services/getCompanyType/${id}`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const getAllDeveloperCompany = createAsyncThunk('companies/getDeveloperCompany', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getAllDeveloperCompany`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const getSubDevCompany = createAsyncThunk(
+  'companies/getSubDeveloperCompany',
+  async ({ parentCompanyId, companyType }, { rejectWithValue }) => {
+    try {
+      const response = await api.get(
+        `${baseurl}/api/dashboard/getSubCompanies?parent_company_id=${parentCompanyId}&company_type=${companyType}`,
+        config
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getPropertyTypes = createAsyncThunk('projects/getPropertyTypes', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/propertyTypes/getPropertyTypes`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const getCompanyByType = createAsyncThunk('company/getCompanyByType', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/dashboard/getAllCompanyNames/1`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const getFacilities = createAsyncThunk('projects/getFacilities', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get(`${baseurl}/api/facilities/getAllFacilities/1`, config);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const createProject = createAsyncThunk('project/AddProject', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await api.post(`${baseurl}/api/dashboard/createCompany`, formData, config);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error);
   }
 });

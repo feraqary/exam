@@ -27,34 +27,34 @@ const leads = {
       title: <FormattedMessage id="Add Leads" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
-      url: '/leads/add_leads'
+      url: '/dashboard/leads/add_leads'
     },
     {
       id: 'manage-leads',
       title: <FormattedMessage id="Manage Leads" />,
       type: 'item',
       icon: icons.IconPictureInPicture,
-      url: '/leads/manage_leads'
+      url: '/dashboard/leads/manage_leads'
     },
 
     {
       id: 'video-requests',
       title: <FormattedMessage id="Video Requests" />,
       type: 'item',
-      url: '/leads/request_video'
+      url: '/dashboard/leads/request_video'
     },
     {
       id: 'general-requests',
       title: <FormattedMessage id="General Requests" />,
       type: 'item',
-      url: '/leads/general_request'
+      url: '/dashboard/leads/general_request'
     },
     {
       id: 'view-schedules',
       title: <FormattedMessage id="View Schedules" />,
       type: 'item',
       icon: icons.IconForms,
-      url: '/leads/schedule_viewing'
+      url: '/dashboard/leads/schedule_viewing'
     }
   ]
 };

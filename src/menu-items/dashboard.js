@@ -14,7 +14,7 @@ const icons = {
 
 const dashboard = {
   id: 'dashboard',
-  title: <FormattedMessage id="dashboard" />,
+  title: <FormattedMessage id="analytics" />,
   icon: <LayoutDashboard size={23} strokeWidth={1.5} color={'black'} style={{ marginRight: '10px' }} />,
   type: 'group',
   children: [

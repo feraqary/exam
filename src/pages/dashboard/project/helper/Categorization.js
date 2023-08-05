@@ -44,3 +44,4 @@ export default function Categorization({ list, setFieldValue, name, data }) {
     </>
   );
 }
+

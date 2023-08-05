@@ -26,7 +26,7 @@ const auctions = {
       id: 'auction-users',
       title: <FormattedMessage id="Auction Users" />,
       type: 'item',
-      url: '/auction/users',
+      url: '/dashboard/auction/users',
       icon: icons.IconTypography
     },
 
@@ -34,38 +34,38 @@ const auctions = {
       id: 'manage-local-auction',
       title: <FormattedMessage id="Manage Local Auction" />,
       type: 'item',
-      url: '/auction/local'
+      url: '/dashboard/auction/local'
     },
     {
       id: 'manage-international-auction',
       title: <FormattedMessage id="Manage Internationl Auction" />,
       type: 'item',
-      url: '/auction/international'
+      url: '/dashboard/auction/international'
     },
     {
       id: 'manage-partners',
       title: <FormattedMessage id="Manage Partners" />,
       type: 'item',
-      url: '/auction/partners'
+      url: '/dashboard/auction/partners'
     },
     {
       id: 'deleted-auction',
       title: <FormattedMessage id="Manage Deleted Auctions" />,
       type: 'item',
-      url: '/auction/deleted_auctions'
+      url: '/dashboard/auction/deleted_auctions'
     },
     {
       id: 'auction-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
-      url: '/auction/activities',
+      url: '/dashboard/auction/activities',
       icon: icons.IconBrandFramer
     },
     {
       id: 'faqs',
       title: <FormattedMessage id="FAQs" />,
       type: 'item',
-      url: '/auction/faq',
+      url: '/dashboard/auction/faq',
       icon: icons.IconLayoutGridAdd
     }
   ]

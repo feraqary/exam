@@ -3,7 +3,7 @@ import { useField, useFormikContext } from 'formik';
 import MuiPhoneNumber from 'material-ui-phone-number';
 
 // project imports
-import React from 'react';
+import React, { memo } from 'react';
 import InputLayout from './InputLayout';
 
 /**
@@ -18,7 +18,7 @@ import InputLayout from './InputLayout';
  * @returns {JSX.Element} The rendered PhoneInput component.
  */
 
-const PhoneInput = ({ label, placeholder, helperText, style, type, required, ...rest }) => {
+const PhoneInput = memo(({ label, placeholder, helperText, style, type, required, helperInfo, ...rest }) => {
   const [field, meta] = useField(rest);
   const { setFieldValue, setFieldTouched } = useFormikContext();
 
@@ -39,9 +39,11 @@ const PhoneInput = ({ label, placeholder, helperText, style, type, required, ...
       metaError={meta?.error}
       metaTouched={meta?.touched}
       required={required}
+      helperInfo={helperInfo}
     >
       <MuiPhoneNumber
         defaultCountry={'us'}
+        defaultValue={field.value || ''}
         onChange={handleOnChange}
         value={field.value}
         name={field.name}
@@ -53,6 +55,6 @@ const PhoneInput = ({ label, placeholder, helperText, style, type, required, ...
       />
     </InputLayout>
   );
-};
+});
 
 export default PhoneInput;

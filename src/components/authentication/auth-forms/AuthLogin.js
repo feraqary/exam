@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'Link';
 import { useRouter } from 'next/router';
 
@@ -54,18 +54,6 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
   const { data: session } = useSession();
 
   console.log('session', session);
-  if (session) {
-    const formData = new FormData();
-    console.log('email: ', session.user.email);
-    formData.append('email', session.user.email);
-    // formData.append('password', '');
-    formData.append('social_login', session.provider);
-    dispatch(userLogIn(formData));
-
-    router.push(page == 'dashboard' ? '/dashboard/default' : '/');
-
-    console.log('logged in');
-  }
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -75,6 +63,15 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
     event.preventDefault();
   };
 
+
+
+  const normalSignin = useRef(null);
+  const [submit, setSubmit] = useState(false);
+
+
+  const handleSocialLogin = (event) => {
+
+  }
   return (
     <Formik
       initialValues={{
@@ -91,7 +88,7 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
           const formData = new FormData();
           formData.append('email', values.email);
           formData.append('password', values.password);
-          formData.append('social_login', 'googles');
+          formData.append('social_login', '');
 
           dispatch(userLogIn(formData));
 
@@ -102,9 +99,7 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
             setSubmitting(false);
           }
 
-          setTimeout(() => {
-            router.push(page == 'dashboard' ? '/dashboard/default' : '/');
-          }, 1500);
+          router.push('/dashboard/default');
         } catch (err) {
           console.error(err);
           if (scriptedRef.current) {
@@ -205,28 +200,33 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 disabled={isSubmitting}
                 onClick={() => {
                   console.log(page);
+                  setSubmit(true);
                 }}
                 fullWidth
                 size="large"
                 type="submit"
                 variant="contained"
+                ref={normalSignin}
               >
                 Sign In
               </Button>
             </AnimateButton>
           </Box>
-          <Box sx={{ mt: 2 }}>
+          {/* <Box sx={{ mt: 2 }}>
             <AnimateButton>
               <Button
                 color="secondary"
                 onClick={() => {
-                  signIn('google');
+                  signIn('google', {
+                    callbackUrl: 'http://localhost:3000/dashboard/default'
+                  });
                 }}
                 fullWidth
                 size="large"
                 variant="outlined"
                 startIcon={<GoogleIcon />}
-                disabled={isSubmitting}
+                disabled={isSubmitting && (session ? true : false)}
+                type="submit"
               >
                 Sign In With google
               </Button>
@@ -238,12 +238,15 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 color="secondary"
                 disabled={isSubmitting}
                 onClick={() => {
-                  signIn('linkedin');
+                  signIn('linkedin', {
+                    callbackUrl: 'http://localhost:3000/dashboard/default'
+                  });
                 }}
                 fullWidth
                 size="large"
                 variant="outlined"
                 startIcon={<LinkedInIcon />}
+                type="submit"
               >
                 Sign In With LinkedIn
               </Button>
@@ -255,17 +258,20 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 color="secondary"
                 disabled={isSubmitting}
                 onClick={() => {
-                  signIn('twitter');
+                  signIn('twitter', {
+                    callbackUrl: 'http://localhost:3000/dashboard/default'
+                  });
                 }}
                 fullWidth
                 size="large"
                 variant="outlined"
                 startIcon={<TwitterIcon />}
+                type="submit"
               >
                 Sign In With Twitter
               </Button>
             </AnimateButton>
-          </Box>
+          </Box> */}
         </form>
       )}
     </Formik>

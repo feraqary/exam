@@ -6,9 +6,9 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import { useDispatch } from 'react-redux';
-import { updateCompanyRank } from 'store/slices/company-section/action/company';
-import { useEffect } from 'react';
+import { useUpdateCompanyRankMutation } from 'store/services/company/companyApi';
+import { ToastError, ToastSuccess } from 'utils/toast';
+import { memo, useState, useEffect } from 'react';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -20,13 +20,25 @@ const MenuProps = {
     }
   }
 };
-
 const COMAPANY_STATUS = ['Standard', 'Featured', 'Premium', 'Top Deal'];
 
-export default function MultipleSelectCheckmarks({ value, id, companyMainType }) {
-  const [companyStatus, setCompanyStatus] = React.useState(value - 1);
+const TableSelectorOption = memo(({ value, id, CompanyType }) => {
+  const [companyStatus, setCompanyStatus] = useState(value - 1);
 
-  const dispatch = useDispatch();
+  const [updateRank, result] = useUpdateCompanyRankMutation();
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      ToastSuccess('Company has been updated successfully');
+    }
+  }, [result.isSuccess]);
+
+  useEffect(() => {
+    if (result.isError) {
+      const { data } = result.error;
+      ToastError(data.error);
+    }
+  }, [result.isError]);
 
   const handleChange = React.useCallback(
     (event) => {
@@ -34,10 +46,10 @@ export default function MultipleSelectCheckmarks({ value, id, companyMainType })
         target: { value }
       } = event;
       const formData = new FormData();
-      formData.append('company_type', companyMainType);
+      formData.append('company_type', CompanyType);
       formData.append('rank', value + 1);
       formData.append('company_id', id);
-      dispatch(updateCompanyRank(formData));
+      updateRank(formData);
       setCompanyStatus(value);
     },
     [companyStatus]
@@ -64,4 +76,6 @@ export default function MultipleSelectCheckmarks({ value, id, companyMainType })
       </Select>
     </FormControl>
   );
-}
+});
+
+export default TableSelectorOption;

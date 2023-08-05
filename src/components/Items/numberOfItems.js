@@ -60,6 +60,7 @@ export const NumberOfItems = ({
             }}
             value={standard}
             onChange={handleStandardChange}
+            placeholder="Number of standard units"
           />
           <FormHelperText>Please enter number of units</FormHelperText>
         </Grid>
@@ -77,6 +78,7 @@ export const NumberOfItems = ({
             }}
             value={featured}
             onChange={handleFeaturedChange}
+            placeholder="Number of featured units"
           />
           <FormHelperText>Please enter number of units</FormHelperText>
         </Grid>
@@ -94,6 +96,7 @@ export const NumberOfItems = ({
             }}
             value={premium}
             onChange={handlePremiumChange}
+            placeholder="Number of premium units"
           />
           <FormHelperText>Please enter number of units</FormHelperText>
         </Grid>
@@ -111,6 +114,7 @@ export const NumberOfItems = ({
             }}
             value={dealOfWeek}
             onChange={handleDealOfWeekChange}
+            placeholder="Number of top deal units"
           />
           <FormHelperText>Please enter number of units</FormHelperText>
         </Grid>

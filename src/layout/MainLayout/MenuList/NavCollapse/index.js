@@ -85,7 +85,7 @@ const PopperStyled = styled(Popper)(({ theme }) => ({
 // ==============================|| SIDEBAR MENU LIST COLLAPSE ITEMS ||============================== //
 
 const NavCollapse = ({ menu, level, parentId, expand }) => {
-  console.log(expand)
+  console.log(expand);
   const theme = useTheme();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -97,7 +97,7 @@ const NavCollapse = ({ menu, level, parentId, expand }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClickMini = (event) => {
-    console.log(event)
+    console.log(event);
     setAnchorEl(null);
     if (drawerOpen) {
       setOpen(!open);
@@ -162,7 +162,6 @@ const NavCollapse = ({ menu, level, parentId, expand }) => {
         return (
           <>
             <NavCollapse key={item.id} menu={item} level={level + 1} parentId={parentId} />
-            dsafasdfs
           </>
         );
       case 'item':
@@ -297,7 +296,7 @@ const NavCollapse = ({ menu, level, parentId, expand }) => {
               {openMini || open ? (
                 collapseIcon
               ) : (
-                <IconChevronDown stroke={1.5} size="16px" style={{ marginTop: 'auto', marginBottom: 'auto', marginLeft: '50px' }} />
+                <IconChevronDown stroke={1.5} size="16px" style={{ marginTop: 'auto', marginBottom: 'auto', marginLeft: '60px' }} />
               )}
 
               {!drawerOpen && (

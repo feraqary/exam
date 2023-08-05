@@ -30,7 +30,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CloseIcon from '@mui/icons-material/Close';
 // project imports
 import Logo from '../Logo';
-import Login from '../../../pages/pages/authentication/portal_registration/login';
+import Login from '../../../pages/dashboard/pages/authentication/portal_registration/login';
 // assets
 import { IconBook, IconCreditCard, IconDashboard, IconHome2 } from '@tabler/icons';
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -42,12 +42,10 @@ function ElevationScroll({ children, window }) {
 
   const { session, error, isLoading } = useSession();
 
-
   if (isLoading) {
     console.log('Loading');
   }
   if (error) {
-
     console.log(error);
   }
   if (session) {
@@ -99,7 +97,6 @@ const AppBar = ({ ...others }) => {
   };
   const { data: session } = useSession();
 
-
   return (
     <ElevationScroll {...others}>
       <MuiAppBar>
@@ -115,21 +112,24 @@ const AppBar = ({ ...others }) => {
               <Button color="inherit" component={Link} href="/pages/media_posts/Tabs" target="_blank">
                 Social Media
               </Button>
-              <Button color="inherit" component={Link} href="login">
+              <Button color="inherit" component={Link} href="/dashboard/pages/authentication/portal_registration/login">
                 Dashboard
               </Button>
               {session ? (
-                <Button color="inherit" onClick={()=>{signOut()}} target="_blank">
+                <Button
+                  color="inherit"
+                  onClick={() => {
+                    signOut({ callbackUrl: '/dashboard/pages/authentication/portal_registration/login' });
+                  }}
+                >
                   Sign Out
                 </Button>
               ) : (
-                <Button color="inherit" component={Link} href="/pages/authentication/portal_registration/login" target="_blank">
-                  Portal Login
-                </Button>
+                <></>
+                // <Button color="inherit" component={Link} href="/dashboard/pages/authentication/portal_registration/login" target="_blank">
+                //   Portal Login
+                // </Button>
               )}
-
-              {/* <a href="/api/auth/login">Login</a>
-              <a href="/api/auth/logout">Logout</a>  */}
 
               <Tooltip title="Log In">
                 <IconButton color="inherit" target="_blank" onClick={handleClickOpen}>

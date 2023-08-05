@@ -1,3 +1,4 @@
+
 import { Button, Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { LoadScript } from '@react-google-maps/api';
 import Map from 'components/map/google-map';
@@ -28,12 +29,14 @@ import {
 } from 'store/services/country/countryApi';
 import {
   useCreateProjectMutation,
+
   useGetAllAmenitiesQuery,
   useGetAllfacilitiesQuery,
   useGetBrokerCompaniesByCitiesQuery,
   useGetPropertyTypeQuery,
   useGetViewQuery
 } from 'store/services/project/projectApi';
+
 import Categorization from './helper/Categorization';
 
 function AddProject() {
@@ -48,6 +51,7 @@ function AddProject() {
   //property type
   const [propertyType, setPropertyType] = useState([]);
   const [viewSelected, setViews] = useState([]);
+
 
   //maps
   const [address, setAddress] = useState('Dubai');
@@ -114,6 +118,7 @@ function AddProject() {
 
   if (isLoading) return null;
 
+
   //PHASES====================================================================================
   const handleDelete = (index, values, setFieldValues) => {
     const updatedPhases = values.phases?.filter((phase, idx) => idx !== index);
@@ -130,6 +135,7 @@ function AddProject() {
       setFieldValues(`phases[${num}].id`, num + 1);
       setFieldValues('numberofPhases', num + 1);
     }, []);
+
 
     const [polys, setPolys] = useState([]);
     useEffect(() => {
@@ -221,6 +227,7 @@ function AddProject() {
   //   resetComponents(single);
   // }, [resetComponents, single]);
 
+
   //PROPERTY DETAILS============================================================================
   // Function that generates different components based on the 'key' provided
   const SinglePhaseComponents = (key) => {
@@ -237,10 +244,12 @@ function AddProject() {
               style={{ xs: 12, lg: 4 }}
               id="facts[6].value"
               name="facts[6].value"
+
               helperText="Please select property status"
             />
           </>
         );
+
       case 'No Of Floor':
         return (
           <>
@@ -472,6 +481,7 @@ function AddProject() {
                           //   setCountryLocationID(newValue?.ID);
                           // }}
                         /> */}
+
                         <InputText
                           label="Project Title"
                           placeholder="Project Title"
@@ -660,6 +670,7 @@ function AddProject() {
                           }}
                         />
 
+
                         <AutoCompleteSelector
                           style={{ xs: 12, lg: 6 }}
                           disabled={!countryID}
@@ -699,8 +710,7 @@ function AddProject() {
                             setCityID(e.ID);
                           }}
                         />
-
-                        {/* <AutoCompleteSelector
+                          {/* <AutoCompleteSelector
                             label="District"
                             placeholder="District"
                             type="text"
@@ -710,7 +720,6 @@ function AddProject() {
                             options={['option 1', 'option 2', 'option 3']}
                             style={{ xs: 12, lg: 12 }}
                           /> */}
-
                         <AutoCompleteSelector
                           label="Community"
                           placeholder="Community"
@@ -953,7 +962,6 @@ function AddProject() {
                               name="facts[21].value"
                               helperText="Please select the number of retail centers"
                             />
-
                             <InputText
                               label="Service Charge"
                               required
@@ -974,7 +982,6 @@ function AddProject() {
                               name="facts[24].value"
                               helperText="Please enter the starting price"
                             />
-
                             <Grid lg={12} xs={12}></Grid>
                             <InputText
                               style={{ xs: 12, lg: 6 }}
@@ -1087,6 +1094,7 @@ function AddProject() {
                   >
                     test
                   </Button>
+
                 </>
               )}
             </Formik>

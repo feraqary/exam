@@ -13,36 +13,51 @@ import {
   getMainServices,
   updateCompanyType,
   updateSubService,
-  DeleteSubService,
   getFeaturedCompanies,
   updateCompanyRank,
-  getBlockedCompanies,
   restoreCompany,
-  blockCompany,
   updateCompanyStatus,
   updateMainService,
-
   deleteMainService,
+  getCompanyNames,
+  getSubscription,
+  updateSubscription,
+  getActiveSubscription,
+  getPendingSubscription,
   getFeaturedCompany,
   getCompanyByStatus,
   getCompanyDocs,
-  updateCompanyDoc
+  updateCompanyDoc,
+  getCompanyType,
+  getAllDeveloperCompany,
+  getSubDevCompany,
+  getPropertyTypes,
+  getAllDraftSubscriptions,
+  getFacilities,
+  getCompanyByType
 } from '../action/company';
 
-import { toast } from 'react-toastify';
+import { ToastError, ToastLoading, ToastSuccess } from 'utils/toast';
 
-import { ToastError, ToastSuccess } from 'utils/toast';
-
-import { deleteService, createServices, updateCompany } from 'store/slices/company-section/action/company';
+import { deleteService } from 'store/slices/company-section/action/company';
 
 const initialState = {
   companies: [],
+  propertyTypes: [],
+  facilities: [],
+  masterDeveloper: [],
+  broker: [],
+  subdev: [],
   localCompanies: [],
   internationalCompanies: [],
   companyTypes: [],
   mainServices: [],
   features: [],
   services: [],
+  featuredCompanies: [],
+  companiesStatus: [],
+  activeSubscription: [],
+  pendingSubscription: [],
   blocks: [],
   companyDocs: [],
   companyType: null,
@@ -50,49 +65,78 @@ const initialState = {
   company: null,
   mainService: null,
   loading: false,
-  error: null
+  error: null,
+  status: null
 };
 
 const slice = createSlice({
   name: 'companies',
   initialState,
-  reducers: {},
+  reducers: {
+    setCompany: (state, action) => {
+      state.company = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
+
       .addCase(createCompanyType.pending, (state) => {
         state.loading = true;
-        state.companyTypes = state.companyTypes;
         state.error = null;
       })
       .addCase(createCompanyType.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.companyTypes = [...state.companyTypes, action.payload.data];
-
         ToastSuccess('Added Successfully');
       })
       .addCase(createCompanyType.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
-        state.companyTypes = state.companyTypes;
-
         ToastError(state.error);
       })
-      // update company types=================================================================================================
-      .addCase(updateCompanyType.pending, (state) => {
+
+      .addCase(getCompanyType.pending, (state, action) => {
         state.loading = true;
-        state.companyTypes = state.companyTypes;
         state.error = null;
+        state.companyType = state.companyType;
       })
-      .addCase(updateCompanyType.fulfilled, (state, action) => {
+      .addCase(getCompanyType.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.companyTypes = action.payload.data;
+        state.companyType = action.payload.data;
+      })
+      .addCase(getCompanyType.rejected, (state, action) => {
+        state.loading = false;
+        state.companyType = state.companyType;
+        state.error = action.payload;
+      })
+
+      //getdraft subsriptions
+      .addCase(getAllDraftSubscriptions.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+        state.getAllDraftSubscriptions = state.getAllDraftSubscriptions;
+      }) 
+     .addCase( getAllDraftSubscriptions.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.getAllDraftSubscriptions = action.payload.data;
+      })
+      .addCase(getAllDraftSubscriptions.rejected, (state, action) => {
+        state.loading = false;
+        state.getAllDraftSubscriptions = state.getAllDraftSubscriptions;
+        state.error = action.payload;
+      })
+      
+
+      // update company types=================================================================================================
+      .addCase(updateCompanyType.fulfilled, (state, action) => {
+        ToastSuccess('Updated Successfully');
       })
       .addCase(updateCompanyType.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.companyTypes = state.companyTypes;
+        ToastError(state.error);
       })
       // get all company types=================================================================================================
       .addCase(getAllCompanyTypes.pending, (state) => {
@@ -188,65 +232,6 @@ const slice = createSlice({
         ToastError(state.error);
       })
 
-      // .addCase(createCompany.pending, (state) => {
-      //   state.loading = true;
-      //   state.companies = state.companies;
-      //   state.error = null;
-      // })
-      // .addCase(createCompany.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.error = null;
-      //   state.companies = [...state.companies, action.payload.data];
-      //   // toast.success('Company Added Successfully', {
-      //   //   position: 'top-right',
-      //   //   autoClose: 5000,
-      //   //   hideProgressBar: false,
-      //   //   closeOnClick: true,
-      //   //   pauseOnHover: true,
-      //   //   draggable: true,
-      //   //   progress: undefined,
-      //   //   theme: 'dark'
-      //   // });
-      // })
-      // .addCase(createCompany.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.payload.error;
-      //   state.companies = state.companies;
-      //   // toast.error(`${state.error}`, {
-      //   //   position: 'top-right',
-      //   //   autoClose: 5000,
-      //   //   hideProgressBar: false,
-      //   //   closeOnClick: true,
-      //   //   pauseOnHover: true,
-      //   //   draggable: true,
-      //   //   progress: undefined,
-      //   //   theme: 'dark'
-      //   // });
-      // })
-
-      .addCase(updateCompany.pending, (state) => {
-        state.loading = true;
-        state.companies = state.companies;
-        state.error = null;
-      })
-      .addCase(updateCompany.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        state.companies = state.companies;
-        // .map((item) => {
-        //   if (item.id === action.payload.data.id) {
-        //     return action.payload.data;
-        //   }
-        //   return item;
-        // });
-      })
-      .addCase(updateCompany.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload.error;
-        state.companies = state.companies;
-      })
-      // create service
-
       .addCase(createService.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -277,12 +262,28 @@ const slice = createSlice({
       .addCase(getLocalCompanies.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
+
         state.localCompanies = action.payload.data.filter((item) => item.Status != '5');
       })
       .addCase(getLocalCompanies.rejected, (state, action) => {
         state.loading = false;
-        state.error =null;
+        state.error = null;
         state.localCompanies = state.localCompanies;
+      })
+
+      .addCase(updateCompanyStatus.pending, (state) => {
+        state.status = state.status;
+        state.error = null;
+      })
+      .addCase(updateCompanyStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = action.payload;
+      })
+      .addCase(updateCompanyStatus.rejected, (state, action) => {
+        state.status = state.status;
+        state.error = action.payload;
+        console.log('fired rejected1', state);
+        console.log('fired rejected', action);
       })
 
       .addCase(getInternationalCompanies.pending, (state) => {
@@ -315,8 +316,8 @@ const slice = createSlice({
         state.error = null;
       })
 
-
       .addCase(updateCompanyDoc.rejected, (state, action) => {
+        console.log(action);
         state.loading = false;
         state.companyDocs = state.companyDocs;
         state.error = action.payload.error;
@@ -373,17 +374,17 @@ const slice = createSlice({
       //get Blocked Company
       .addCase(getCompanyByStatus.pending, (state) => {
         state.loading = true;
-        state.blocks = state.blocks;
+        state.companiesStatus = state.companiesStatus;
         state.error = null;
       })
       .addCase(getCompanyByStatus.fulfilled, (state, action) => {
         state.loading = false;
-        state.blocks = action.payload.data;
+        state.companiesStatus = action.payload.data;
         state.error = null;
       })
       .addCase(getCompanyByStatus.rejected, (state, action) => {
         state.loading = false;
-        state.blocks = state.blocks;
+        state.companiesStatus = state.companiesStatus;
         state.error = action.payload.error;
       })
       .addCase(updateSubService.pending, (state) => {
@@ -403,13 +404,6 @@ const slice = createSlice({
         });
         state.error = null;
       })
-
-
-      // .addCase(updateSubService.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.services = state.services;
-      //   state.error = action.payload.error;
-      // })
 
       // ==============================================================
       .addCase(updateMainService.pending, (state) => {
@@ -470,20 +464,7 @@ const slice = createSlice({
         state.error = action.payload;
         ToastError(state.error);
       })
-      .addCase(getBlockedCompanies.pending, (state) => {
-        state.loading = true;
-        state.blockedCompanies = state.blockedCompanies;
-        state.error = null;
-      })
-      .addCase(getBlockedCompanies.fulfilled, (state, action) => {
-        state.loading = false;
-        state.blockedCompanies = action.payload.data || [];
-        state.error = null;
-      })
-      .addCase(getBlockedCompanies.rejected, (state, action) => {
-        state.loading = false;
-        state.blockedCompanies = state.blockedCompanies;
-      })
+
       .addCase(deleteMainService.pending, (state) => {
         state.deleting = true;
         state.services = state.services;
@@ -500,69 +481,157 @@ const slice = createSlice({
         state.error = action.payload;
       })
 
-      // .addCase(createServices.pending, (state) => {
-      //   state.deleting = true;
-      //   state.error = null;
-      // })
-
-      // .addCase(createServices.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.error = null;
-      //   state.services = [...state.services, action.payload.data];
-      //   state.error = null;
-      //   // Perform any additional state updates if necessary
-      // })
-      // .addCase(createServices.rejected, (state, action) => {
-      //   state.deleting = false;
-      //   state.error = action.payload;
-      // });
-
-      .addCase(updateCompanyStatus.pending, (state) => {
-        state.deleting = true;
-        state.status = state.status;
+      .addCase(getCompanyNames.pending, (state) => {
+        state.loading = true;
+        state.companies = state.companies;
         state.error = null;
       })
-      .addCase(updateCompanyStatus.fulfilled, (state, action) => {
+      .addCase(getCompanyNames.fulfilled, (state, action) => {
         state.loading = false;
-        state.status = action.payload.data.status; // Update the status in the state
-        if (action.payload.data.status === 'blocked') {
-          const companyId = action.payload.data.company_id;
-          const updatedServices = state.services.filter((company) => company.company_id !== companyId);
-          state.services = updatedServices;
-        }
-        state.deleting = false;
+        state.companies = action.payload.data || [];
+        state.error = null;
       })
-      .addCase(updateCompanyStatus.rejected, (state, action) => {
-        state.deleting = false;
-        state.status = state.status;
-
+      .addCase(getCompanyNames.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload;
-
+        state.companies = state.companies;
       })
-      .addCase(restoreCompany.pending, (state) => {
+      .addCase(getSubscription.pending, (state) => {
+        state.company = state.company;
         state.loading = true;
         state.error = null;
       })
-      .addCase(restoreCompany.fulfilled, (state, action) => {
+      .addCase(getSubscription.fulfilled, (state, action) => {
+        state.company = action.payload.data;
         state.loading = false;
         state.error = null;
-        state.blockedCompanies = state.blockedCompanies.filter((company) => company.ID !== action.payload.id);
-        ToastSuccess('Restored Successfully');
       })
-      .addCase(restoreCompany.rejected, (state, action) => {
+      .addCase(getSubscription.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        ToastError(state.error);
+        state.companies = state.companies;
+      })
+      .addCase(updateSubscription.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateSubscription.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+        ToastSuccess('Subscription Updated Succesfully');
+      })
+      .addCase(updateSubscription.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        ToastError(action.payload);
+      })
+      .addCase(getActiveSubscription.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.activeSubscription = state.activeSubscription;
+      })
+      .addCase(getActiveSubscription.fulfilled, (state, action) => {
+        state.loading = false;
+        state.activeSubscription = action.payload.data || [];
+        state.error = null;
+      })
+      .addCase(getActiveSubscription.rejected, (state, action) => {
+        state.loading = false;
+        state.activeSubscription = state.activeSubscription;
+        state.error = action.payload;
+      })
+      .addCase(getPendingSubscription.pending, (state, action) => {
+        state.loading = true;
+        state.pendingSubscription = state.pendingSubscription;
+        state.error = null;
+      })
+      .addCase(getPendingSubscription.fulfilled, (state, action) => {
+        state.loading = false;
+        state.pendingSubscription = action.payload.data || [];
+        state.error = null;
+      })
+      .addCase(getPendingSubscription.rejected, (state, action) => {
+        state.loading = false;
+        state.pendingSubscription = state.pendingSubscription;
+        state.error = action.payload;
+      })
+      // get master developer companies   ===================================================================================
+      .addCase(getAllDeveloperCompany.pending, (state) => {
+        state.loading = true;
+        state.masterDeveloper = state.masterDeveloper;
+        state.error = null;
+      })
+      .addCase(getAllDeveloperCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.masterDeveloper = action.payload.data;
+      })
+      .addCase(getAllDeveloperCompany.rejected, (state, action) => {
+        console.log(action);
+        state.loading = false;
+        state.error = action.payload?.error;
+        state.masterDeveloper = state.masterDeveloper;
+      })
+      .addCase(getSubDevCompany.pending, (state, action) => {
+        state.loading = true;
+        state.subdev = state.subdev;
+        state.error = null;
+      })
+      .addCase(getSubDevCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.subdev = action.payload.data || [];
+        state.error = null;
+      })
+      .addCase(getSubDevCompany.rejected, (state, action) => {
+        state.loading = false;
+        state.subdev = state.subdev;
+        state.error = action.payload;
+      })
+      .addCase(getPropertyTypes.pending, (state, action) => {
+        state.loading = true;
+        state.propertyTypes = state.propertyTypes;
+        state.error = null;
+      })
+      .addCase(getPropertyTypes.fulfilled, (state, action) => {
+        state.loading = false;
+        state.propertyTypes = action.payload?.data;
+        state.error = null;
+      })
+      .addCase(getPropertyTypes.rejected, (state, action) => {
+        state.loading = false;
+        state.propertyTypes = state.propertyTypes;
+        state.error = action.payload;
       })
 
-      .addCase(blockCompany.fulfilled, (state, action) => {
-        ToastSuccess('Company Blocked Successfully');
+      .addCase(getFacilities.pending, (state, action) => {
+        state.loading = true;
+        state.facilities = state.facilities;
+        state.error = null;
       })
-      .addCase(blockCompany.rejected, (state, action) => {
+      .addCase(getFacilities.fulfilled, (state, action) => {
         state.loading = false;
+        state.facilities = action.payload.data;
+        state.error = null;
+      })
+      .addCase(getFacilities.rejected, (state, action) => {
+        state.loading = false;
+        state.facilities = state.facilities;
         state.error = action.payload;
-        // state.blockedCompanies = state.blockedCompanies;
-        ToastError(state.error);
+      })
+      .addCase(getCompanyByType.pending, (state, action) => {
+        state.loading = true;
+        state.broker = state.broker;
+        state.error = null;
+      })
+      .addCase(getCompanyByType.fulfilled, (state, action) => {
+        state.loading = false;
+        state.broker = action.payload?.data;
+        state.error = null;
+      })
+      .addCase(getCompanyByType.rejected, (state, action) => {
+        state.loading = false;
+        state.broker = state.broker;
+        state.error = action.payload;
       });
   }
 });

@@ -13,6 +13,30 @@ export const projectApi = api.injectEndpoints({
       }
     }),
     //update Project
+
+    getLocalProjects: builder.query({
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
+        return {
+          url: `dashboard/getAllLocalProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
+          method: 'GET'
+        };
+      },
+      providesTags: ['LocalProjects']
+    }),
+    //GET International Projects API
+    getInternationalProjects: builder.query({
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
+        return {
+          url: `dashboard/getAllIntProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
+          method: 'GET'
+        };
+      },
+      providesTags: ['InternationalProject']
+    }),
+    //update Project 
+
     getProjectUpdate: builder.mutation({
       query(formData) {
         return {
@@ -24,6 +48,7 @@ export const projectApi = api.injectEndpoints({
       invalidatesTags: ['localProjects', 'internationalProjects']
     }),
     //Update Projects by Rank API
+
     updateProjectRank: builder.mutation({
       query(formData) {
         return {
@@ -45,6 +70,7 @@ export const projectApi = api.injectEndpoints({
         };
       },
       providesTags: ['projectStatus']
+
     }),
     // GET ALL SHARED PROJECTS API
     getSharedProjects: builder.query({
@@ -119,6 +145,13 @@ export const projectApi = api.injectEndpoints({
       query(data) {
         return {
           url: `dashboard/getAllProjectsByStatus`,
+
+    //UPDATE Project STATUS API
+    updateProjectStatus: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/updateProjectStatus`,
+
           method: 'PUT',
           body: data
         };
@@ -132,6 +165,10 @@ export const projectApi = api.injectEndpoints({
         return {
           url: `dashboard/updateProject/1`,
           method: 'PUT',
+
+      invalidatesTags: ['ProjectStatus', 'InternationalProjects', 'LocalProjects']
+    }),
+
           body: updateProject
         };
       }
@@ -184,4 +221,5 @@ export const {
   useGetViewQuery
   // useDeleteProjectMutation,
   // useGetProjectUpdateQuery
+
 } = projectApi;

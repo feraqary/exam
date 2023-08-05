@@ -60,6 +60,7 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
 
   useEffect(() => {
     navigation.items.map((menu) => {
+      // console.log(menu);
       if (menu.type && menu.type === 'group') {
         getCollapse(menu);
       }

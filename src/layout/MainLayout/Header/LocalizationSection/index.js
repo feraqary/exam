@@ -139,7 +139,7 @@ const LocalizationSection = () => {
                       }
                     }}
                   >
-                    <ListItemButton selected={language === 'ar'} onClick={(event) => handleListItemClick(event, 'en')}>
+                    <ListItemButton selected={language === 'en'} onClick={(event) => handleListItemClick(event, 'en')}>
                       <ListItemText
                         primary={
                           <Grid container>
@@ -151,25 +151,26 @@ const LocalizationSection = () => {
                         }
                       />
                     </ListItemButton>
-                    <ListItemButton selected={language === 'en' } onClick={(event) => handleListItemClick(event, 'zh')}>
+                    <ListItemButton selected={language === 'fr'} onClick={(event) => handleListItemClick(event, 'en')}>
                       <ListItemText
                         primary={
                           <Grid container>
-                            <Typography color="textPrimary">عربي</Typography>
+                            <Typography color="textPrimary">French</Typography>
                             <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
-                              (Arabic)
+                              (FR)
                             </Typography>
                           </Grid>
                         }
                       />
                     </ListItemButton>
-                    <ListItemButton selected={language === 'fr'} onClick={(event) => handleListItemClick(event, 'fr')}>
+                   
+                    <ListItemButton selected={language === 'arabic'} onClick={(event) => handleListItemClick(event, 'fr')}>
                       <ListItemText
                         primary={
                           <Grid container>
-                            <Typography color="textPrimary">français</Typography>
+                            <Typography color="textPrimary">عربي</Typography>
                             <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
-                              (French)
+                              (AR)
                             </Typography>
                           </Grid>
                         }

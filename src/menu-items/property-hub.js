@@ -56,28 +56,28 @@ const propertyhub = {
       title: <FormattedMessage id="International Properties" />,
       type: 'item',
       icon: icons.IconMapPin,
-      url: '/property_hub/international_properties'
+      url: '/dashboard/property_hub/international_properties'
     },
     {
       id: 'shared-properties',
       title: <FormattedMessage id="Shared Properties" />,
       type: 'item',
       icon: icons.IconHomeShare,
-      url: '/property_hub/shared_properties'
+      url: '/dashboard/property_hub/shared_properties'
     },
     {
       id: 'deleted-properties',
       title: <FormattedMessage id="Deleted Properties" />,
       type: 'item',
       icon: icons.IconForms,
-      url: '/property_hub/deleted_properties'
+      url: '/dashboard/property_hub/deleted_properties'
     },
     {
       id: 'property-hub-activities',
       title: <FormattedMessage id="Activities" />,
       type: 'item',
       icon: icons.IconForms,
-      url: '/property_hub/activities'
+      url: '/dashboard/property_hub/activities'
     }
   ]
 };

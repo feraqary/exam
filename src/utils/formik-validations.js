@@ -8,18 +8,20 @@ const FILE_SIZE = 1;
  * @returns {Yup.ObjectSchema} The Yup object validation schema.
  */
 
-export const objectValidator = (val = 'Mandatory Selection') => Yup.object().typeError().required(val);
+export const objectValidator = (val = 'Mandatory Selection', required) =>
+  required ? Yup.object().typeError().required(val) : Yup.object().typeError();
 
 /**
  * Creates a validation schema for arrays using Yup.
  *
  * @param {string} [val='Mandatory Selection'] - The error message to display when the array is empty.
+ * @param {boolean} required - The value that determines wether the validation is required or not.
  * @param {number} [min=null] - The minimum number of items required in the array.
  * @param {number} [max=null] - The maximum number of items allowed in the array.
  * @returns {Yup.ArraySchema} The validation schema for arrays.
  */
 
-export const arrayValidator = (val = 'Mandatory Selection', min = null, max = null) => {
+export const arrayValidator = (val = 'Mandatory Selection', required, min = null, max = null) => {
   let ARRAY_VALIDATION = Yup.array();
 
   if (min && max) {
@@ -34,18 +36,20 @@ export const arrayValidator = (val = 'Mandatory Selection', min = null, max = nu
   if (!min && max) {
     ARRAY_VALIDATION = ARRAY_VALIDATION.max(max, `You must at least select a maximum value of ${max}`);
   }
-  return ARRAY_VALIDATION.required(val);
+  if (required) return ARRAY_VALIDATION.required(val);
+  return ARRAY_VALIDATION;
 };
 
 /**
  * Validates a string value, optionally specifying minimum and maximum length constraints.
  * @param {string} msg - The validation error message.
+ * @param {boolean} required - The value that determines wether the validation is required or not.
  * @param {number} [min=null] - The minimum length constraint.
  * @param {number} [max=null] - The maximum length constraint.
  * @returns {Yup.StringSchema} The Yup string validation schema.
  */
 
-export const stringValidator = (msg, min = null, max = null) => {
+export const stringValidator = (msg, required, min = null, max = null) => {
   let STRING_VALIDATION = Yup.string().trim();
   if (min && max) {
     STRING_VALIDATION = STRING_VALIDATION.min(min, `The value must be more than ${min} characters`).max(
@@ -59,31 +63,32 @@ export const stringValidator = (msg, min = null, max = null) => {
   if (!min && max) {
     STRING_VALIDATION = STRING_VALIDATION.max(max, `The value must not be more than ${max} characters`);
   }
-
-  return STRING_VALIDATION.required(msg);
+  if (required) return STRING_VALIDATION.required(msg);
+  return STRING_VALIDATION;
 };
 
 /**
  * Validates a numeric value, optionally specifying minimum and maximum constraints.
  * @param {string} msg - The validation error message.
+ * @param {boolean} required - The value that determines wether the validation is required or not.
  * @param {number} [min=null] - The minimum value constraint.
  * @param {number} [max=null] - The maximum value constraint.
  * @returns {Yup.NumberSchema} The Yup number validation schema.
  */
 
-export const numberValidator = (msg, min = null, max = null) => {
-  let STRING_VALIDATION = Yup.number();
-  if (min && max) {
-    STRING_VALIDATION = STRING_VALIDATION.min(min, `The value must be more than ${min}`).max(max, `The value must not be less than ${max}`);
+export const numberValidator = (msg, required, min = null, max = null) => {
+  let NUMBER_VALIDATION = Yup.number();
+  if (min !== null && max !== null) {
+    NUMBER_VALIDATION = NUMBER_VALIDATION.min(min, `The value must be more than ${min}`).max(max, `The value must not be less than ${max}`);
   }
-  if (min && !max) {
-    STRING_VALIDATION = STRING_VALIDATION.min(min, `The value must be more than ${min}`);
+  if (min !== null && !max) {
+    NUMBER_VALIDATION = NUMBER_VALIDATION.min(min, `The value must be more than ${min}`);
   }
-  if (!min && max) {
-    STRING_VALIDATION = STRING_VALIDATION.max(max, `The value must not be more than ${max}`);
+  if (!min && max !== null) {
+    NUMBER_VALIDATION = NUMBER_VALIDATION.max(max, `The value must not be more than ${max}`);
   }
-
-  return STRING_VALIDATION.required(msg);
+  if (required) return NUMBER_VALIDATION.required(msg);
+  return NUMBER_VALIDATION;
 };
 
 /**
@@ -116,7 +121,8 @@ export const fileValidator = (format, msg = 'Please provide an image input') => 
 /**
  * A date validator function using Yup.
  * @param {string} msg - The error message to display if the date is not provided.
+ * @param {boolean} required - The value that determines wether the validation is required or not.
  * @returns {Yup.DateSchema} The Yup date validation schema.
  */
 
-export const dateValidator = (msg) => Yup.date().required(msg);
+export const dateValidator = (msg, required) => (required ? Yup.date().required(msg) : Yup.date());

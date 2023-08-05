@@ -20,7 +20,8 @@ import companiesReducer from './slices/company-section/slice/company';
 import serviceUpdate from './slices/services/slice/services';
 import signupSlice from './slices/user-registration/slice/user-registration';
 import userManagement from './slices/Management_/slice/users';
-
+import { api } from './services/api';
+import locationApi from './slices/location/locationHooks';
 // ==============================|| COMBINE REDUCER ||============================== //
 
 const reducer = combineReducers({
@@ -46,7 +47,8 @@ const reducer = combineReducers({
   companies: companiesReducer,
   serviceUpdate: serviceUpdate,
   signUp: signupSlice,
-  usermanagement: userManagement
+  usermanagement: userManagement,
+  [api.reducerPath]: api.reducer
 });
 
 //Reducer

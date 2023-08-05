@@ -1,4 +1,4 @@
-// third-party
+/// third-party
 import { FormattedMessage } from 'react-intl';
 import { AddressBook } from 'tabler-icons-react';
 // assets
@@ -28,7 +28,7 @@ const subscribers = {
       title: <FormattedMessage id="Subscribers List" />,
       type: 'item',
       icon: icons.IconKey,
-      url: '/subscribers/list'
+      url: '/dashboard/subscribers/list'
     }
   ]
 };

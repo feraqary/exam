@@ -1,10 +1,7 @@
 import React, { useMemo } from 'react';
 import { MaterialReactTable } from 'material-react-table';
 
-const Table = ({ columnHeaders, data, loading }) => {
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+const Table = ({ columnHeaders, data, loading, pagination, setPagination, isFetching, rowCount, paginating }) => {
   return (
     <MaterialReactTable
       columns={columnHeaders}
@@ -27,6 +24,15 @@ const Table = ({ columnHeaders, data, loading }) => {
           borderRadius: '200'
         }
       }}
+      localization={{
+        header: {
+          firstTooltip: 'wsdfwdfwdfwwd'
+        }
+      }}
+      onPaginationChange={setPagination}
+      state={{ pagination, isLoading: loading, showProgressBars: isFetching }}
+      rowCount={rowCount}
+      manualPagination
     />
   );
 };
