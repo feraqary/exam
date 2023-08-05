@@ -3,6 +3,17 @@ import { api } from '../api';
 export const projectApi = api.injectEndpoints({
   endpoints: (builder) => ({
     //GET LOCAL Projects API
+
+    getPropertyType: builder.query({
+      query() {
+        return {
+          url: `propertyTypes/getPropertyTypes`,
+          method: 'GET'
+        };
+      }
+    }),
+    //update Project
+
     getLocalProjects: builder.query({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
@@ -25,6 +36,7 @@ export const projectApi = api.injectEndpoints({
       providesTags: ['InternationalProject']
     }),
     //update Project 
+
     getProjectUpdate: builder.mutation({
       query(formData) {
         return {
@@ -33,9 +45,10 @@ export const projectApi = api.injectEndpoints({
           body: formData
         };
       },
-      invalidatesTags: ['localProjects' , 'internationalProjects']
+      invalidatesTags: ['localProjects', 'internationalProjects']
     }),
-    //Update Projects by Rank API 
+    //Update Projects by Rank API
+
     updateProjectRank: builder.mutation({
       query(formData) {
         return {
@@ -56,7 +69,8 @@ export const projectApi = api.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags: ['ProjectStatus']
+      providesTags: ['projectStatus']
+
     }),
     // GET ALL SHARED PROJECTS API
     getSharedProjects: builder.query({
@@ -68,55 +82,144 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+
+    //GET ALL LOCAL PROJECTS API
+    getLocalProjects: builder.query({
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
+        return {
+          url: `dashboard/getAllLocalProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=pakistan`,
+          method: 'GET'
+        };
+      },
+      providesTags: ['LocalProject']
+    }),
+
+    // GET ALL INTERNATIONAL PROJECTS API
+    getInternationalProjects: builder.query({
+      query(pagination) {
+        const { pageIndex, pageSize } = pagination;
+        console.log(pagination);
+        return {
+          url: `dashboard/getAllIntProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    getProjectById: builder.query({
+      query(ProjectId) {
+        return {
+          url: `dashboard/getProject/${ProjectId}`,
+          method: 'GET'
+        };
+      }
+    }),
+    getAllfacilities: builder.query({
+      query(_) {
+        return {
+          url: `facilities/getAllFacilitiesByCategory/1`,
+          method: 'GET'
+        };
+      }
+    }),
+    getBrokerCompaniesByCities: builder.query({
+      query({ id, isState }) {
+        return {
+          url: `dashboard/getAllBrokerCompanyByStateCity?id=${id}&is_state=${isState}`,
+          method: 'GET'
+        };
+      }
+    }),
+    CreateProject: builder.mutation({
+      query({ data, isMulti }) {
+        console.log('xxxx', isMulti);
+        return {
+          url: `dashboard/createProject/${isMulti ? '0' : '1'}`,
+          method: 'POST',
+          body: data
+        };
+      }
+    }),
+    updateProjectStatus: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/getAllProjectsByStatus`,
+
     //UPDATE Project STATUS API
     updateProjectStatus: builder.mutation({
       query(data) {
         return {
           url: `dashboard/updateProjectStatus`,
+
           method: 'PUT',
           body: data
         };
       },
-      invalidatesTags: ['ProjectStatus', 'InternationalProjects', 'LocalProjects']
+      invalidatesTags: ['projectStatus']
     }),
 
-    
     //updateproject
     updateProject: builder.mutation({
       query: (updateProject) => {
-        const { formData, id } = data;
         return {
-          url: ``,
-          method: 'PATCH',
+          url: `dashboard/updateProject/1`,
+          method: 'PUT',
+
+      invalidatesTags: ['ProjectStatus', 'InternationalProjects', 'LocalProjects']
+    }),
+
           body: updateProject
         };
       }
     }),
-
-    // create/add promotions mutation
-
-    createPromotions: builder.mutation({
-      query({ pagination, status }) {
-        const { pageIndex, pageSize } = pagination;
-        return{
-          url: `dashboard/createProjectPromotion`,
-          method: 'POST',
-          body: createPromotions
+    //GET PROJECT BY ID
+    getProject: builder.query({
+      query(id) {
+        return {
+          url: `dashboard/getProject/${id}`,
+          method: 'GET'
         };
-    },
-    invalidatesTags: ['CreatePromotions']
+      }
+    }),
+    //GET VIEW
+    getView: builder.query({
+      query() {
+        return {
+          url: `views/getAllViews?page_no=1&page_size=10`,
+          method: 'GET'
+        };
+      }
+    }),
+    //GET VIEW
+    getAllAmenities: builder.query({
+      query() {
+        return {
+          url: `facilities/getAllAmenititesByCategory/1`,
+          method: 'GET'
+        };
+      }
+    })
   })
-}),
 });
+
 export const {
   useGetLocalProjectsQuery,
+  useGetProjectQuery,
   useGetInternationalProjectsQuery,
-  useGetProjectUpdateQuery,
   useUpdateProjectRankMutation,
   useGetProjectsByStatusQuery,
-  useGetSharedProjectsQuery,
   useUpdateProjectStatusMutation,
   useUpdateProjectMutation,
-  useCreatePromotionsMutation
+  useGetPropertyTypeQuery,
+  useGetSharedProjectsQuery,
+  useGetProjectByIdQuery,
+  useGetAllAmenitiesQuery,
+  useGetAllfacilitiesQuery,
+  useGetBrokerCompaniesByCitiesQuery,
+  useCreateProjectMutation,
+  useGetViewQuery
+  // useDeleteProjectMutation,
+  // useGetProjectUpdateQuery
 
 } = projectApi;

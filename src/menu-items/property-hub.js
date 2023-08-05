@@ -24,7 +24,7 @@ const icons = {
   IconStairsUp,
   IconPin,
   IconMapPin,
-  IconHomeShare 
+  IconHomeShare
 };
 
 // ==============================|| UI FORMS MENU ITEMS ||============================== //

@@ -54,6 +54,34 @@ const Selector = memo(({ style, label, options, helperText, name, id, required, 
 
 export const NormalSelector = ({ id, style, label, options, helperText, value, setValue }) => {
   return (
+    <InputLayout style={style} helperText={helperText} label={label} required={required} helperInfo={helperInfo}>
+      <NativeSelect
+        id={id}
+        fullWidth
+        {...field}
+        onChange={(val) => {
+          setFieldValue(name, val.target.value);
+          if (reset) {
+            reset.forEach((ele) => setFieldValue(ele, ''));
+          }
+        }}
+      >
+        {/* <option value="">None</option> */}
+        {options.map((option) => {
+          return (
+            <option value={option.value} selected={field.name === option.value}>
+              {option.label }
+            </option>
+          );
+        })}
+      </NativeSelect>
+    </InputLayout>
+  );
+}
+//
+
+export const NormalSelector = ({ id, style, label, options, helperText, value, setValue }) => {
+  return (
     <InputLayout style={style} helperText={helperText} label={label}>
       <NativeSelect id={id} fullWidth value={value} onChange={(e) => setValue(e.target.value)}>
         <option value="">None</option>

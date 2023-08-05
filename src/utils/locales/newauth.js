@@ -4,8 +4,7 @@ import React from 'react'
 import ReacrDOM from 'react-dom'
 import './index.css'
 import App from './App'
-import {store} from .'./app/store'
-
+import {store} from './app/store'
 import {createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction} from '@reduxjs/toolkit'
 import * as 
