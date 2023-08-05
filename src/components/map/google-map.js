@@ -7,7 +7,6 @@ import { useFormikContext } from 'formik';
 import { useEffect, useRef, useState } from 'react';
 import MapAutocomplete from './maps-autocomplete';
 
-
 const Map = ({
   forPhase,
   phase_long,
@@ -111,25 +110,6 @@ const Map = ({
   const getPaths = (polygon) => {
     var polygonBounds = polygon.getPath();
     var bounds = [];
-    for (var i = 0; i < polygonBounds.length; i++) {
-      var point = {
-        lat: polygonBounds.getAt(i).lat(),
-        lng: polygonBounds.getAt(i).lng()
-      };
-      bounds.push(point);
-    }
-    return bounds;
-  };
-
-
-  const onDeleteDrawing = () => {
-    setPolygons([]);
-    activePolygonIndex.current = null;
-  };
-
-  const getPaths = (polygon) => {
-    var polygonBounds = polygon.getPath();
-    var bounds = [];
     for (var i = 0; i < polygonBounds?.length; i++) {
       var point = {
         lat: polygonBounds.getAt(i).lat(),
@@ -139,11 +119,6 @@ const Map = ({
     }
     return bounds;
   };
-
-  useEffect(() => {
-    getloc(locationAddress);
-  }, [locationAddress]);
-
 
   useEffect(() => {
     setFieldValue('lat', lat);
@@ -170,19 +145,8 @@ const Map = ({
     }
   };
 
-
   const inputRef = useRef();
-
-  const onEditPolygon = (index) => {
-    const polygonRef = polygonRefs.current[index];
-    if (polygonRef) {
-      const coordinates = polygonRef
-        .getPath()
-        .getArray()
-        .map((latLng) => ({ lat: latLng.lat(), lng: latLng.lng() }));
-
   const drawingManagerRef = useRef();
-
 
   const mapOptions = {
     polygonOptions: polygonOptions
@@ -190,118 +154,110 @@ const Map = ({
 
   if (!isLoaded) {
     return <div>loading....</div>;
-
   } else {
+    const handlePlaceChanged = (location) => {
+      const { place } = inputRef.current.getPlaces();
+      setSearchedLocation(location);
+      setHighlightedLocation({ lat: selectedLat, lng: selectedLng });
+      if (place) {
+        setFieldValue('place', place.address_components);
+        map.panTo({ lat: lat, lng: long });
+        console.log(place.address_components);
+      } else {
+        return;
+      }
+    };
 
-  const handlePlaceChanged = (location) => {
-    const { place } = inputRef.current.getPlaces();
-    setSearchedLocation(location);
-    setHighlightedLocation({ lat: selectedLat, lng: selectedLng });
-    if (place) {
-      setFieldValue('place', place.address_components);
-      map.panTo({ lat: lat, lng: long });
-      console.log(place.address_components);
-    } else {
-      return;
-    }
-  };
+    return (
+      <Grid item xs={xs} lg={lg}>
+        <GoogleMap
+          mapContainerStyle={{ position: 'relative', height: height, width: '100%' }}
+          center={{ lat: phase_lat && forPhase ? phase_lat : lat, lng: phase_long && forPhase ? phase_long : long }}
+          zoom={12}
+          onClick={(e) => {
+            setLat(e.latLng.lat());
+            setLong(e.latLng.lng());
+          }}
+          onLoad={onLoadMap}
+        >
+          <Marker position={{ lat: lat, lng: long }} />
 
+          <StandaloneSearchBox onLoad={(ref) => (inputRef.current = ref)} onPlacesChanged={handlePlaceChanged}>
+            <TextField
+              className="form-control"
+              placeholder="Enter Location"
+              variant="outlined"
+              color="secondary"
+              size="small"
+              sx={{ position: 'absolute', top: '11px', left: '190px', color: 'white', width: '30%' }}
+              onChange={(e) => {
+                getloc(e.target.value);
+              }}
+            />
+          </StandaloneSearchBox>
 
-  return (
-    <Grid item xs={xs} lg={lg}>
-      <GoogleMap
-        mapContainerStyle={{ position: 'relative', height: height, width: '100%' }}
-        center={{ lat: phase_lat && forPhase ? phase_lat : lat, lng: phase_long && forPhase ? phase_long : long }}
-        zoom={12}
-        onClick={(e) => {
-          setLat(e.latLng.lat());
-          setLong(e.latLng.lng());
-        }}
-        onLoad={onLoadMap}
-      >
-        <Marker position={{ lat: lat, lng: long }} />
+          {forPhase && (
+            <>
+              <DrawingManager onLoad={onLoadDrawingManager} onOverlayComplete={onOverlayComplete} options={drawingManagerOptions} />
+              {polygons.map((iterator, index) => (
+                <Polygon
+                  key={index}
+                  onLoad={(event) => onLoadPolygon(event, index)}
+                  onMouseDown={() => onClickPolygon(index)}
+                  onMouseUp={() => onEditPolygon(index)}
+                  onDragEnd={() => onEditPolygon(index)}
+                  options={mapOptions.polygonOptions}
+                  paths={iterator}
+                  draggable
+                  editable
+                />
+              ))}
 
-        <StandaloneSearchBox onLoad={(ref) => (inputRef.current = ref)} onPlacesChanged={handlePlaceChanged}>
-          <TextField
-            className="form-control"
-            placeholder="Enter Location"
-            variant="outlined"
-            color="secondary"
-            size="small"
-            sx={{ position: 'absolute', top: '11px', left: '190px', color: 'white', width: '30%' }}
-            onChange={(e) => {
-              getloc(e.target.value);
-            }}
-          />
-        </StandaloneSearchBox>
-
-
-          
-
-
+              <Button
+                variant="contained"
+                startIcon={<RemoveCircleIcon />}
+                onClick={() => {
+                  onDeleteDrawing();
+                  setSubmitted(false);
+                }}
+                sx={{
+                  position: 'absolute',
+                  right: '60px',
+                  top: '10px',
+                  backgroundColor: '#FFFFFF',
+                  borderRaduis: '1px',
+                  color: 'black',
+                  height: '41px',
+                  '&:hover': {
+                    backgroundColor: 'rgb(235,235,235)'
+                  }
+                }}
+              >
+                Clear Drawings
+              </Button>
+            </>
+          )}
+        </GoogleMap>
         {forPhase && (
-          <>
-            <DrawingManager onLoad={onLoadDrawingManager} onOverlayComplete={onOverlayComplete} options={drawingManagerOptions} />
-            {polygons.map((iterator, index) => (
-              <Polygon
-                key={index}
-                onLoad={(event) => onLoadPolygon(event, index)}
-                onMouseDown={() => onClickPolygon(index)}
-                onMouseUp={() => onEditPolygon(index)}
-                onDragEnd={() => onEditPolygon(index)}
-                options={mapOptions.polygonOptions}
-                paths={iterator}
-                draggable
-                editable
-              />
-            ))}
-
+          <Grid item xs={12} lg={12} justifyContent={'center'} sx={{ padding: '16px 0 0 0', textAlign: 'center' }}>
             <Button
               variant="contained"
-              startIcon={<RemoveCircleIcon />}
               onClick={() => {
-                onDeleteDrawing();
-                setSubmitted(false);
-              }}
-              sx={{
-                position: 'absolute',
-                right: '60px',
-                top: '10px',
-                backgroundColor: '#FFFFFF',
-                borderRaduis: '1px',
-                color: 'black',
-                height: '41px',
-                '&:hover': {
-                  backgroundColor: 'rgb(235,235,235)'
-                }
+                const flattenedArray = [].concat(...polygons);
+                console.log(flattenedArray);
+                // setFieldValue(`phases[${num}].polygonCoords`, [...flattenedArray]);
+                setPolyValue([...flattenedArray]);
+                close(false);
+                setSubmitted(polygons?.length !== 0 && num === phaseID);
               }}
             >
-              Clear Drawings
+              Submit Location
             </Button>
-          </>
+          </Grid>
         )}
-      </GoogleMap>
-      {forPhase && (
-        <Grid item xs={12} lg={12} justifyContent={'center'} sx={{ padding: '16px 0 0 0', textAlign: 'center' }}>
-          <Button
-            variant="contained"
-            onClick={() => {
-              const flattenedArray = [].concat(...polygons);
-              console.log(flattenedArray);
-              // setFieldValue(`phases[${num}].polygonCoords`, [...flattenedArray]);
-              setPolyValue([...flattenedArray]);
-              close(false);
-              setSubmitted(polygons?.length !== 0 && num === phaseID);
-
-            }}
-          >
-            Submit Location
-          </Button>
-        </Grid>
-      )}
-    </Grid>
-  );
+      </Grid>
+    );
+  }
 };
 
 export default Map;
-

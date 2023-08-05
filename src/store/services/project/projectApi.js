@@ -35,7 +35,7 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['InternationalProject']
     }),
-    //update Project 
+    //update Project
 
     getProjectUpdate: builder.mutation({
       query(formData) {
@@ -70,7 +70,6 @@ export const projectApi = api.injectEndpoints({
         };
       },
       providesTags: ['projectStatus']
-
     }),
     // GET ALL SHARED PROJECTS API
     getSharedProjects: builder.query({
@@ -141,11 +140,14 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
-    updateProjectStatus: builder.mutation({
+    updateProjectStatus: builder.query({
       query(data) {
         return {
           url: `dashboard/getAllProjectsByStatus`,
-
+          method: 'GET'
+        };
+      }
+    }),
     //UPDATE Project STATUS API
     updateProjectStatus: builder.mutation({
       query(data) {
@@ -165,10 +167,6 @@ export const projectApi = api.injectEndpoints({
         return {
           url: `dashboard/updateProject/1`,
           method: 'PUT',
-
-      invalidatesTags: ['ProjectStatus', 'InternationalProjects', 'LocalProjects']
-    }),
-
           body: updateProject
         };
       }
@@ -221,5 +219,4 @@ export const {
   useGetViewQuery
   // useDeleteProjectMutation,
   // useGetProjectUpdateQuery
-
 } = projectApi;
