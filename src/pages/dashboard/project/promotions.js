@@ -10,12 +10,6 @@ import Table from 'components/Table/Table';
 
 // ==============================|| Manage Project Promotions ||============================== //
 
-const [pagination, setPagination] = useState({
-  pageIndex: 0,
-  pageSize: 5
-});
-
-
 const ColumnHeaders = [
   {
     accessorKey: 'proId',
@@ -87,11 +81,15 @@ const data = [
   }
 ];
 function ManageProject() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
   return (
     <Page title="Manage Project">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={data} columnHeaders={ColumnHeaders} />
+          <Table data={data} columnHeaders={ColumnHeaders} pagination={pagination} setPagination={setPagination} />
         </Grid>
       </Grid>
     </Page>

@@ -1,7 +1,6 @@
-import { Button, Checkbox, FormControlLabel, FormHelperText, Grid, InputLabel } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { LoadScript } from '@react-google-maps/api';
 import Map from 'components/map/google-map';
-import MapAutocomplete from 'components/map/maps-autocomplete';
 // material-ui
 
 // project imports
@@ -28,32 +27,18 @@ import {
   useGetSubCommunitiesByCommunityQuery
 } from 'store/services/country/countryApi';
 import {
+  useCreateProjectMutation,
+  useGetAllAmenitiesQuery,
   useGetAllfacilitiesQuery,
   useGetBrokerCompaniesByCitiesQuery,
-  useGetProjectQuery,
   useGetPropertyTypeQuery,
+  useGetViewQuery,
   useUpdateProjectMutation
 } from 'store/services/project/projectApi';
 
-import { arrayValidator, numberValidator, objectValidator, stringValidator } from 'utils/formik-validations';
-import * as Yup from 'yup';
 import Categorization from '../../helper/Categorization';
 
-import { useRouter } from 'next/router';
-
 function AddProject() {
-  const router = useRouter();
-  const { project_id } = router.query;
-
-  const { data: projectData } = useGetProjectQuery(project_id, {
-    skip: project_id === null || project_id === undefined
-  });
-
-  const Autofill = projectData?.data;
-
-  useEffect(() => {
-    console.log('project: ', projectData);
-  }, [projectData]);
   //is shared
   const [shared, setShared] = useState(false);
   const [countryLocationID, setCountryLocationID] = useState(null);
@@ -63,12 +48,13 @@ function AddProject() {
   const [single, setSingle] = useState(false);
 
   //property type
-  const [propertyType, setPropertyType] = useState(Autofill?.property_type || []);
+  const [propertyType, setPropertyType] = useState([]);
+  const [viewSelected, setViews] = useState([]);
 
   //maps
   const [address, setAddress] = useState('Dubai');
-  const [long, setlong] = useState(Autofill?.lng);
-  const [lat, setlat] = useState(Autofill?.lat);
+  const [long, setlong] = useState(null);
+  const [lat, setlat] = useState(null);
 
   //location details
   const [countryID, setCountryID] = useState(null);
@@ -79,42 +65,56 @@ function AddProject() {
 
   //facilities
   const [checkedItems, setCheckedItems] = useState([]);
+  const [amenitiesCheckedItems, setAmenitiesCheckedItems] = useState([]);
 
   //DEV COMPANY
   const [devCompany, setDevCompany] = useState(null);
+
   //API============================================================================================================
   const { data: Types, isLoading, isError } = useGetPropertyTypeQuery();
-  const { data: Allfacilities } = useGetAllfacilitiesQuery();
-  const { data: SharedStates } = useGetStatesOrCitiesQuery(countryLocationID, {
+  const { data: Allfacilities, isLoading: loadingFacility } = useGetAllfacilitiesQuery();
+  const { data: AllAmenities, isLoading: loadingAmenities } = useGetAllAmenitiesQuery();
+  const { data: SharedStates, isLoading: loadingStateOrCity } = useGetStatesOrCitiesQuery(countryLocationID, {
     skip: countryLocationID === null || countryLocationID === undefined
   });
+  let amenities;
+  let facilities;
+  if (AllAmenities && AllAmenities) {
+    amenities = Object.keys(AllAmenities?.data || {});
+    facilities = Object.keys(Allfacilities?.data || {});
+  }
 
-  const { data: Countries } = useGetCountriesQuery();
-  const { data: StateByCountry } = useGetStatesByCountryQuery(countryID, {
+  const { data: Countries, isLoading: loadingCountry } = useGetCountriesQuery();
+  const { data: StateByCountry, isLoading: loadingState } = useGetStatesByCountryQuery(countryID, {
     skip: countryID === null || countryID === undefined
   });
-
-  const { data: CityByState } = useGetCitiesByStateQuery(stateID, {
+  const { data: CityByState, isLoading: loadingStateByCountry } = useGetCitiesByStateQuery(stateID, {
     skip: stateID === null || stateID === undefined
   });
-  const { data: Community } = useGetCommunitiesByCityQuery(cityID, {
+  const { data: Community, isLoading: loadingCommunities } = useGetCommunitiesByCityQuery(cityID, {
     skip: cityID === null || cityID === undefined
   });
-  const { data: subCommunity } = useGetSubCommunitiesByCommunityQuery(communityID, {
+  const { data: subCommunity, isLoading: loadingSubComunities } = useGetSubCommunitiesByCommunityQuery(communityID, {
     skip: communityID === null || communityID === undefined
   });
 
   //GET COMPANIES
-  const { data: DeveloperComp } = useGetDeveloperCompanyQuery();
-  const { data: subDevComp } = useGetSubCompanyAccordingToParentQuery(devCompany, {
+  const { data: DeveloperComp, isLoading: loadingDev } = useGetDeveloperCompanyQuery();
+  const { data: subDevComp, isLoading: loadingSubdev } = useGetSubCompanyAccordingToParentQuery(devCompany, {
     skip: devCompany === null || devCompany === undefined
   });
 
-  const { data: brokerComp, error: brokerCompError } = useGetBrokerCompaniesByCitiesQuery(isState_Id, {
+  const {
+    data: brokerComp,
+    error: brokerCompError,
+    isLoading: loadingBroker
+  } = useGetBrokerCompaniesByCitiesQuery(isState_Id, {
     skip: isState_Id === null || isState_Id === undefined
   });
+  const { data: views, error: viewsError, isLoading: loadingView } = useGetViewQuery();
+  const [updateProject, UpdateProjectResult] = useUpdateProjectMutation();
 
-  const [updateProject, updateProjectResult] = useUpdateProjectMutation();
+  if (isLoading) return null;
 
   //PHASES====================================================================================
   const handleDelete = (index, values, setFieldValues) => {
@@ -131,8 +131,13 @@ function AddProject() {
     useEffect(() => {
       setFieldValues(`phases[${num}].id`, num + 1);
       setFieldValues('numberofPhases', num + 1);
-      setFieldValues('no_of_unit_types', num + 1);
     }, []);
+
+    const [polys, setPolys] = useState([]);
+    useEffect(() => {
+      console.log('polys: ', polys);
+      setFieldValues(`phases[${num}].polygonCoords`, polys);
+    }, [polys]);
 
     if (isLoading) return null;
 
@@ -145,8 +150,8 @@ function AddProject() {
           helperText="Please enter phase name"
           style={{ xs: 12, lg: size }}
           type="text"
-          id={`phases[${num}].phase_name`}
-          name={`phases[${num}].phase_name`}
+          id={`phases[${num}].phaseName`}
+          name={`phases[${num}].phaseName`}
         />
         <InputText
           required
@@ -154,8 +159,8 @@ function AddProject() {
           placeholder="Number of Properties"
           helperText="Please enter number of properties"
           style={{ xs: 12, lg: size }}
-          id={`phases[${num}].no_of_unittypes_in_phase`}
-          name={`phases[${num}].no_of_unittypes_in_phase`}
+          id={`phases[${num}].NoOfProperties`}
+          name={`phases[${num}].NoOfProperties`}
           type="number"
         />
 
@@ -176,6 +181,7 @@ function AddProject() {
           <Map
             locationAddress={address}
             setFieldValues={setFieldValues}
+            setPolyValue={setPolys}
             xs={12}
             num={num}
             phaseID={phaseID}
@@ -214,10 +220,6 @@ function AddProject() {
     }
   };
 
-  useEffect(() => {
-    resetComponents(single);
-  }, [single]);
-
   //PROPERTY DETAILS============================================================================
   // Function that generates different components based on the 'key' provided
   const SinglePhaseComponents = (key) => {
@@ -232,24 +234,25 @@ function AddProject() {
               options={['Furnished', 'Semi-Furnished', 'Not Furnished']}
               placeholder="furnished"
               style={{ xs: 12, lg: 4 }}
-              id="isfurnished"
-              name="isfurnished"
+              id="facts[6].value"
+              name="facts[6].value"
               helperText="Please select property status"
             />
           </>
         );
-      case 'No. Of Floors':
+
+      case 'No Of Floor':
         return (
           <>
             {/* InputText component */}
             <InputText
-              label="No. of Floors"
+              label="No of Floors"
               required
               type="number"
               placeholder="Number of bedrooms"
               style={{ xs: 12, lg: 4 }}
-              id="noOfFloors"
-              name="noOfFloors"
+              id="facts[12].value"
+              name="facts[12].value"
               helperText="Please select property status"
             />
           </>
@@ -263,153 +266,168 @@ function AddProject() {
               required
               placeholder="enter the price"
               style={{ xs: 12, lg: 4 }}
-              id="price"
-              name="price"
+              id="facts[17].value"
+              name="facts[17].value"
               helperText="Please select property status"
+            />
+          </>
+        );
+      case 'Elevator':
+        return (
+          <>
+            {/* InputText component */}
+            <InputText
+              label="Elevators"
+              required
+              placeholder="enter the number of elevators"
+              style={{ xs: 12, lg: 4 }}
+              id="facts[23].value"
+              name="facts[23].value"
+              helperText="Please enter the number of elevators"
             />
           </>
         );
     }
   };
+
   // Retrieve nested facts arrays from propertyType and flatten them
   const facts = propertyType?.map((component) => component.facts?.map((fact) => fact));
   const Filtered = [...new Set([].concat(...facts))];
+  console.log(Filtered);
   // Generate SinglePhaseComponents for each fact in the Filtered array
-  const SinglePhaseInputs = Filtered?.map((fact) => SinglePhaseComponents(fact));
+  const SinglePhaseInputs = Filtered?.map((fact) => SinglePhaseComponents(fact.label));
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
       <Page title="Add Project">
         <>
           <Grid container spacing={gridSpacing}>
-            {/* [{ id: null, phaseName: '', NoOfProperties: null, polygonCoords: [] }] */}
             <Formik
               initialValues={{
-                projectTitle: Autofill?.project_name,
-                brokerCompanies: Autofill?.broker_companies,
+                projectTitle: '',
+                brokerCompanies: null,
                 detailsCountrySelect: '',
                 detailsStateSelector: '',
-                masterDeveloperSelector: Autofill?.parent_developer_company,
-                subDeveloperCompanySelector: Autofill?.branch_developer_company,
-                phaseType: Autofill?.phases?.length == 0 ? 'single' : 'multiple',
-                phases: Autofill?.phases,
-                numberofPhases: null,
-                isshared: Autofill?.is_shared,
-                locationCountrySelect: Autofill?.country,
+                masterDeveloperSelector: '',
+                subDeveloperCompanySelector: '',
+                phaseType: 'single',
+                phases: [{ id: null, phaseName: '', NoOfProperties: null, polygonCoords: [] }],
+                numberofPhases: 1,
+                amenities: [],
+                isshared: shared,
+                locationCountrySelect: '',
                 locationAddress: '',
-                locationCitySelector: Autofill?.city,
+                locationCitySelector: '',
                 locationDistrict: '',
-                locationState: Autofill?.state,
-                locationCommunity: Autofill?.community,
-                locationSubCommunity: Autofill?.sub_community,
+                locationState: '',
+                locationCommunity: '',
+                locationSubCommunity: '',
                 propertyStatus: '',
-                mapUrl: '',
                 place: '',
-                propertyType: Autofill?.property_type,
-                projectView: '',
-                parking: '',
-                ownerShip: '',
-                completionStatus: '',
-                isfurnished: '',
-                noOfFloors: '',
-                price: '',
-                startingPrice: '',
-                noOfunits: Autofill?.no_of_unittypes,
-                availableUnits: '',
-                lifeStyleSelector: '',
-                ownershipSelector: '',
-                plotAreaMin: '',
-                plotAreaMax: '',
-                serviceCharge: Autofill?.service_charges,
-                projectStartDate: Autofill?.start_date || null,
-                projectCompletionDate: Autofill?.completion_date || null,
-                projectHandoverDate: null,
-                nooffloors: Autofill?.no_of_floors,
-                noofpools: '',
-                noofretailcenters: '',
-                propertyTitle: Autofill?.property_title,
-                arabicPropertyTitle: Autofill?.property_title_arabic,
-                propertyDescription: Autofill?.description,
-                arabicPropertyDescription: Autofill?.description_arabic,
-                facilities: checkedItems
+                lat: 27,
+                long: 25,
+                propertyType: propertyType,
+                plotAreaMin: null,
+                plotAreaMax: null,
+                facts: Array(30)
+                  .fill(null)
+                  .map((_, i) => {
+                    return { id: i - 1, value: null };
+                  }),
+                propertyTitle: null,
+                arabicPropertyTitle: null,
+                propertyDescription: null,
+                arabicPropertyDescription: null
               }}
-              validationSchema={Yup.object({
-                projectTitle: stringValidator('Please provide a title'),
-                locationCountrySelect: objectValidator('please select a country'),
-                mapUrl: stringValidator('Please enter a map url'),
-                locationCitySelector: objectValidator('please select a city'),
-                locationState: objectValidator('please select a state'),
-                propertyStatus: objectValidator('please enter the property status'),
-                propertyTitle: stringValidator('Please enter the property title'),
-                arabicPropertyTitle: stringValidator('Please enter the arabic title'),
-                propertyDescription: stringValidator('Please enter the property description'),
-                arabicPropertyDescription: stringValidator('Please enter the arabic description'),
-                phases: arrayValidator(),
-                propertyType: objectValidator('Please enter the property type'),
-                view: stringValidator('Please enter the view details'),
-                noOfBedrooms: numberValidator('Please enter the number of bedrooms'),
-                noOfbathrooms: numberValidator('Please enter the number of bathrooms'),
-                plotArea: numberValidator('please enter the plot area'),
-                isfurnished: objectValidator('please enter the furnish status'),
-                noOfFloors: numberValidator('Please enter the number of floors'),
-                price: numberValidator('Please enter the price'),
-                builtUpArea: numberValidator('please enter the built up area'),
-                parking: stringValidator('please enter the parking area'),
-                ownership: stringValidator('please enter the ownership status'),
-                completionStatus: stringValidator('please enter the completion status'),
-                plotAreaMin: numberValidator('please enter the minimum plot area'),
-                plotAreaMax: numberValidator('please enter the maximum plot area'),
-                noOfunits: numberValidator('please enter the number of available units'),
-                availableUnits: numberValidator('please enter the number of available units'),
-                serviceCharge: numberValidator('please enter the service charge')
-              })}
+              // validationSchema={Yup.object({
+              //   projectTitle: stringValidator('Please provide a title'),
+              //   locationCountrySelect: objectValidator('please select a country'),
+              //   mapUrl: stringValidator('Please enter a map url'),
+              //   locationCitySelector: objectValidator('please select a city'),
+              //   locationState: objectValidator('please select a state'),
+              //   propertyStatus: objectValidator('please enter the property status'),
+              //   propertyTitle: stringValidator('Please enter the property title'),
+              //   arabicPropertyTitle: stringValidator('Please enter the arabic title'),
+              //   propertyDescription: stringValidator('Please enter the property description'),
+              //   arabicPropertyDescription: stringValidator('Please enter the arabic description'),
+              //   phases: arrayValidator(),
+              //   propertyType: objectValidator('Please enter the property type'),
+              //   view: stringValidator('Please enter the view details'),
+              //   noOfBedrooms: numberValidator('Please enter the number of bedrooms'),
+              //   noOfbathrooms: numberValidator('Please enter the number of bathrooms'),
+              //   plotArea: numberValidator('please enter the plot area'),
+              //   isfurnished: objectValidator('please enter the furnish status'),
+              //   noOfFloors: numberValidator('Please enter the number of floors'),
+              //   price: numberValidator('Please enter the price'),
+              //   builtUpArea: numberValidator('please enter the built up area'),
+              //   parking: stringValidator('please enter the parking area'),
+              //   ownership: stringValidator('please enter the ownership status'),
+              //   completionStatus: stringValidator('please enter the completion status'),
+              //   plotAreaMin: numberValidator('please enter the minimum plot area'),
+              //   plotAreaMax: numberValidator('please enter the maximum plot area'),
+              //   noOfunits: numberValidator('please enter the number of available units'),
+              //   availableUnits: numberValidator('please enter the number of available units'),
+              //   serviceCharge: numberValidator('please enter the service charge')
+              // })}
               onSubmit={(values, { setSubmitting, resetForm }) => {
+                console.log();
+
                 const ProjectData = {
-                  'broker_companies_id[]': values?.brokerCompanies?.map((broker) => broker.id),
-                  city_id: values?.locationCitySelector?.ID,
-                  completion_date: values?.projectCompletionDate,
-                  completion_status_id: values?.completionStatus,
-                  community_id: values?.locationCommunity?.ID,
-                  description: values?.propertyDescription,
-                  description_arabic: values?.arabicPropertyDescription,
-                  'facilities_id[]': checkedItems,
-                  handover_date: values?.projectHandoverDate,
-                  id: Number(project_id),
+                  min_area: values?.plotAreaMin?.toString(),
+                  max_area: values?.plotAreaMax?.toString(),
+                  facts: values.facts
+                    .filter((element) => element.value && element.id !== 0)
+                    .map((fact) => {
+                      return { id: fact.id, value: fact.value };
+                    }),
                   is_shared: shared,
                   lat: lat?.toString() || '25',
                   lng: long?.toString() || '100',
-                  no_of_floors: values?.noOfFloors,
-                  no_of_unit_types: values?.no_of_unit_types,
-                  ownership_id: values?.ownerShip,
+                  'broker_companies_id[]': values?.brokerCompanies?.map((broker) => broker?.id),
+                  branch_developer_company_id: values?.subDeveloperCompanySelector?.id,
+                  city_id: values?.locationCitySelector?.ID,
+                  community_id: values?.locationCommunity?.ID,
+                  description: values?.propertyDescription,
+                  description_arabic: values?.arabicPropertyDescription,
+                  // 'facilities_id[]': '',
+                  'facilities_id[]': values.facilities,
+                  'amenities_id[]': values.amenities,
+                  area_range_id: 14,
                   parent_developer_company_id: values?.masterDeveloperSelector?.id,
-                  'phases[]': values?.phases?.map((phase) => {
-                    return {
-                      name: phase?.phase_name,
-                      no_of_unittypes: phase?.no_of_unittypes_in_phase,
-                      polygons: phase?.phase_polygon?.map((poly) => {
-                        return {
-                          lat: poly?.lat,
-                          lng: poly?.lng
-                        };
-                      })
-                    };
-                  }),
+                  'phases[]':
+                    values?.phaseType == 'multiple'
+                      ? values?.phases?.map((phase) => {
+                          return {
+                            name: phase?.phaseName,
+                            no_of_unittypes: phase?.NoOfProperties,
+                            polygons: phase?.polygonCoords?.map((poly) => {
+                              return {
+                                lat: poly?.lat,
+                                lng: poly?.lng
+                              };
+                            })
+                          };
+                        })
+                      : [],
                   project_name: values?.projectTitle,
                   property_title: values?.propertyTitle,
                   property_title_arabic: values?.arabicPropertyTitle,
-                  ref_number: 'fdf',
-                  service_charges: values?.serviceCharge,
-                  start_date: values?.projectStartDate,
-                  starting_price: values?.startingPrice,
+                  ref_number: '',
                   state_id: values?.locationState?.ID,
                   sub_community_id: values?.locationSubCommunity?.ID,
-                  'property_type_i[]': propertyType?.map((type) => type.id),
+                  'property_type_id[]': propertyType?.map((type) => type?.id),
                   country_id: values?.locationCountrySelect?.ID
                 };
 
-                setSubmitting(false);
                 const data = JSON.stringify(ProjectData);
-                updateProject(data);
+                console.log('project data ', ProjectData);
+
+                const submit = {
+                  data: data,
+                  isMulti: values?.phaseType == 'single'
+                };
+                updateProject(submit);
+                setSubmitting(false);
               }}
             >
               {(props) => (
@@ -417,6 +435,23 @@ function AddProject() {
                   <Grid item xs={12}>
                     <MainCard title="Project details">
                       <Grid container spacing={2} alignItems="center">
+                        {/* <AutoCompleteSelectorAPI
+                          label="Country"
+                          placeholder="Select Country"
+                          options={Countries?.data || []}
+                          fetchData={useGetCountriesQuery}
+                          labels={'Country'}
+                          style={{ xs: 12, lg: 4 }}
+                          helperText="Please select country"
+                          name="detailsCountrySelect"
+                          id="detailsCountrySelect"
+                          labelObject="Country"
+                          // api={console.log('hi')}
+                          // func={(newValue) => {
+                          //   setCountryLocationID(newValue?.ID);
+                          // }}
+                        /> */}
+
                         <InputText
                           label="Project Title"
                           placeholder="Project Title"
@@ -424,7 +459,7 @@ function AddProject() {
                           style={{ xs: 12, lg: 4 }}
                           type="text"
                           name="projectTitle"
-                          id="projectTitle project-title"
+                          id="projectTitle"
                           required={true}
                         />
 
@@ -455,20 +490,21 @@ function AddProject() {
                               helperText="Please select country"
                               name="detailsCountrySelect"
                               id="detailsCountrySelect"
-                              value
+                              labelObject="Country"
+                              api={() => console.log('hi')}
                               func={(newValue) => {
                                 setCountryLocationID(newValue?.ID);
                               }}
                             />
 
                             <AutoCompleteSelector
-                              helperText="Please select state"
+                              helperText="Please select country"
                               label="State"
                               // disabled={countryLocationID ? false : true}
                               disabled={props.values.detailsCountrySelect ? false : true}
                               placeholder="Select State"
                               options={SharedStates?.data || []}
-                              getOptionLabel={(state) => state?.State || state?.state || state.Title || ''}
+                              getOptionLabel={(state) => state[`${labelObject}`] || state?.state || state.Title || ''}
                               style={{ xs: 12, lg: 4 }}
                               id="detailsStateSelector"
                               name="detailsStateSelector"
@@ -499,13 +535,12 @@ function AddProject() {
                           label="Developer Company"
                           placeholder="Select Developer Company"
                           options={DeveloperComp?.data || []}
-                          getOptionLabel={(company) => company.company_name || ''}
                           style={{ xs: 12, lg: 4 }}
                           helperText="Please select developer company"
                           id="masterDeveloperSelector"
                           name="masterDeveloperSelector"
                           func={(newValue) => {
-                            setDevCompany(newValue.id);
+                            setDevCompany(newValue.id || null);
                           }}
                         />
 
@@ -513,7 +548,6 @@ function AddProject() {
                           label="Sub Developer Company"
                           placeholder="Select Sub Developer Company"
                           options={subDevComp?.data || []}
-                          getOptionLabel={(sub) => sub.company_name || ''}
                           style={{ xs: 12, lg: 4 }}
                           id="subDeveloperCompanySelector"
                           name="subDeveloperCompanySelector"
@@ -533,7 +567,7 @@ function AddProject() {
                             { value: 'single', label: 'single' },
                             { value: 'multiple', label: 'multiple' }
                           ]}
-                          getOptionLabel={(type) => type.label || ''}
+                          getOptionLabel={(type) => type?.label || ''}
                           style={{ xs: 12, lg: 4 }}
                         />
                         <Grid item lg={8}></Grid>
@@ -588,11 +622,14 @@ function AddProject() {
                   <Grid item xs={12}>
                     <MainCard title="Location details">
                       <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={12} lg={12}>
+                          <Map normallng={long} normallat={lat} locationAddress={address} height={'40vh'} xs={12} lg={12} />
+                        </Grid>
                         <AutoCompleteSelector
                           label="Country"
                           placeholder="Select Country"
                           options={Countries?.data}
-                          getOptionLabel={(country) => country.country || country.Country || ''}
+                          getOptionLabel={(country) => country?.country || country?.Country || ''}
                           required
                           style={{ xs: 12, lg: 6 }}
                           helperText="Please select country"
@@ -603,26 +640,15 @@ function AddProject() {
                           }}
                         />
 
-                        <InputText
-                          style={{ xs: 12, lg: 6 }}
-                          label="Map URL"
-                          placeholder="Address"
-                          helperText="Please enter the location address"
-                          type="text"
-                          id="mapUrl"
-                          name="mapUrl"
-                          required
-                        />
-
                         <AutoCompleteSelector
                           style={{ xs: 12, lg: 6 }}
-                          disabled={!countryID || !Autofill.country}
+                          disabled={!countryID}
                           label="State"
                           placeholder="State"
                           type="text"
                           helperText="Please enter the location's state"
                           options={StateByCountry?.data || []}
-                          getOptionLabel={(state) => state.state || state?.State || ''}
+                          getOptionLabel={(state) => state?.state || state?.State || ''}
                           id="locationState"
                           name="locationState"
                           required
@@ -631,30 +657,29 @@ function AddProject() {
                           }}
                         />
 
-                        <Grid item xs={12} lg={6}>
+                        {/* <Grid item xs={12} lg={6}>
                           <InputLabel>Place</InputLabel>
                           <MapAutocomplete placeHolder onChangeAddress={setAddress} value="uae" setlong={setlong} setlat={setlat} />
                           <FormHelperText>Please enter place address</FormHelperText>
-                        </Grid>
+                        </Grid> */}
 
-                        <Grid item xs={12} lg={6}>
-                          <AutoCompleteSelector
-                            label="City"
-                            placeholder="Select City"
-                            disabled={!stateID || !Autofill.state}
-                            options={CityByState?.data || []}
-                            getOptionLabel={(city) => city?.city || city?.City || ''}
-                            style={{ xs: 12, lg: 12 }}
-                            id="locationCitySelector"
-                            helperText="Please select city"
-                            name="locationCitySelector"
-                            required
-                            func={(e) => {
-                              setCityID(e.ID);
-                            }}
-                          />
-
-                          {/* <AutoCompleteSelector
+                        {/* <Grid item xs={12} lg={6}> */}
+                        <AutoCompleteSelector
+                          label="City"
+                          placeholder="Select City"
+                          disabled={!stateID}
+                          options={CityByState?.data || []}
+                          getOptionLabel={(city) => city?.city || city?.City || ''}
+                          style={{ xs: 12, lg: 6 }}
+                          id="locationCitySelector"
+                          helperText="Please select city"
+                          name="locationCitySelector"
+                          required
+                          func={(e) => {
+                            setCityID(e.ID);
+                          }}
+                        />
+                        {/* <AutoCompleteSelector
                             label="District"
                             placeholder="District"
                             type="text"
@@ -664,270 +689,333 @@ function AddProject() {
                             options={['option 1', 'option 2', 'option 3']}
                             style={{ xs: 12, lg: 12 }}
                           /> */}
+                        <AutoCompleteSelector
+                          label="Community"
+                          placeholder="Community"
+                          type="text"
+                          disabled={!cityID}
+                          id="locationCommunity"
+                          name="locationCommunity"
+                          helperText="Please enter the location's community"
+                          options={Community?.data || []}
+                          getOptionLabel={(com) => com?.community || com?.Community || ''}
+                          style={{ xs: 12, lg: 6 }}
+                          func={(e) => {
+                            setCommunityID(e.ID);
+                          }}
+                        />
 
-                          <AutoCompleteSelector
-                            label="Community"
-                            placeholder="Community"
-                            type="text"
-                            disabled={!cityID || !Autofill.city}
-                            id="locationCommunity"
-                            name="locationCommunity"
-                            helperText="Please enter the location's community"
-                            options={Community?.data || []}
-                            getOptionLabel={(com) => com?.community || com.Community || ''}
-                            style={{ xs: 12, lg: 12 }}
-                            func={(e) => {
-                              setCommunityID(e.ID);
-                            }}
-                          />
-
-                          <AutoCompleteSelector
-                            label="Sub Community"
-                            placeholder="Sub Community"
-                            disabled={!communityID || !Autofill.sub_community}
-                            type="text"
-                            id="locationSubCommunity"
-                            name="locationSubCommunity"
-                            helperText="Please enter the location's sub community"
-                            options={subCommunity?.data || []}
-                            getOptionLabel={(sub) => sub?.sub_community || sub?.SubCommunity || ''}
-                            style={{ xs: 12, lg: 12 }}
-                            func={(e) => {
-                              setSubCommunityID(e.ID);
-                            }}
-                          />
-                        </Grid>
-
-                        <Grid item xs={12} lg={6}>
-                          <Map normallng={long} normallat={lat} locationAddress={address} height={'22vh'} xs={12} lg={12} />
-                        </Grid>
+                        <AutoCompleteSelector
+                          label="Sub Community"
+                          placeholder="Sub Community"
+                          disabled={!communityID}
+                          type="text"
+                          id="locationSubCommunity"
+                          name="locationSubCommunity"
+                          helperText="Please enter the location's sub community"
+                          options={subCommunity?.data || []}
+                          getOptionLabel={(sub) => sub?.sub_community || sub?.SubCommunity || ''}
+                          style={{ xs: 12, lg: 6 }}
+                          func={(e) => {
+                            setSubCommunityID(e.ID);
+                          }}
+                        />
                       </Grid>
+
+                      {/* </Grid> */}
                     </MainCard>
                   </Grid>
 
-                  <>
-                    <Grid item xs={12}>
-                      <MainCard title="Property Details">
-                        <Grid container spacing={2} alignItems="center">
-                          {props.values.phaseType === 'single' && (
-                            <>
-                              <AutoCompleteSelector
-                                label="Property Status"
-                                required
-                                placeholder="Select Property Status"
-                                options={['Upcoming', 'Under Construction', 'Completed', 'Off Plan', 'Ready']}
-                                style={{ xs: 12, lg: 4 }}
-                                id="propertyStatus"
-                                name="propertyStatus"
-                                helperText="Please select property status"
-                              />
+                  {props.values.phaseType === 'single' && (
+                    <>
+                      <Grid item xs={12}>
+                        <MainCard title="Property Details">
+                          <Grid container spacing={2} alignItems="center">
+                            <AutoCompleteSelector
+                              label="Property Status"
+                              required
+                              placeholder="Select Property Status"
+                              options={[
+                                { id: 4, name: 'Off Plan' },
+                                { id: 5, name: 'Ready' }
+                              ]}
+                              getOptionLabel={(property) => property?.title || property?.name || ''}
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[8].value"
+                              name="facts[8].value"
+                              helperText="Please select property status"
+                              func={(e) => {
+                                console.log(e);
+                              }}
+                            />
 
-                              <MultipleAutoCompleteSelector
-                                style={{ xs: 12, lg: 4 }}
-                                label="Property Type"
-                                placeholder="Select Property Type"
-                                options={isError || isLoading ? [] : Types?.data || []}
-                                getOptionLabel={(property) => property?.title || property?.name || ''}
-                                // (country) => country.Country || country.country || ''
-                                helperText="Please select property type"
-                                required
-                                func={(e, value) => {
-                                  setPropertyType(e);
-                                  props.setFieldValue('propertyType', e);
-                                }}
-                              />
-                              <InputText
-                                label="View"
-                                required
-                                placeholder="view"
-                                style={{ xs: 12, lg: 4 }}
-                                id="view"
-                                name="view"
-                                helperText="Please enter the view"
-                              />
+                            <MultipleAutoCompleteSelector
+                              style={{ xs: 12, lg: 4 }}
+                              label="Property Type"
+                              placeholder="Select Property Type"
+                              options={isError ? [] : Types?.data || []}
+                              getOptionLabel={(property) => property?.title || property?.label || ''}
+                              helperText="Please select property type"
+                              required
+                              func={(e, value) => {
+                                setPropertyType(e);
+                                props.setFieldValue('propertyType', e);
+                              }}
+                            />
+                            {SinglePhaseInputs}
+                            <MultipleAutoCompleteSelector
+                              style={{ xs: 12, lg: 4 }}
+                              label="Views"
+                              placeholder="Select The Views"
+                              options={viewsError ? [] : views?.data || []}
+                              getOptionLabel={(view) => view?.title || view?.label || ''}
+                              helperText="Please Select The Views"
+                              required
+                              id="facts[5].value"
+                              name="facts[5].value"
+                              func={(e, value) => {
+                                // props.setFieldValue('facts[7].value', e.id);
+                                setViews(e);
+                              }}
+                            />
+                            <AutoCompleteSelector
+                              label="Lifestyle"
+                              required
+                              placeholder="Select Lifestyle"
+                              options={[
+                                { id: 1, name: 'Affordable' },
+                                { id: 2, name: 'Standard' },
+                                { id: 3, name: 'Luxury' },
+                                { id: 4, name: 'Ultra Luxury' }
+                              ]}
+                              getOptionLabel={(style) => style?.name || ''}
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[25].value"
+                              name="facts[25].value"
+                              helperText="Please select the lifestyle"
+                              func={(e) => {
+                                console.log(e);
+                              }}
+                            />
+                            <InputText
+                              label="Plot Area"
+                              placeholder="insert area range"
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[3].value"
+                              name="facts[3].value"
+                              helperText="insert area range"
+                              type="number"
+                            />
 
+                            <InputText
+                              label="Built Up Area"
+                              placeholder="insert area range"
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[4].value"
+                              name="facts[4].value"
+                              helperText="insert area range"
+                              type="number"
+                            />
+
+                            <Grid container sx={{ padding: 0 }} xs={12} lg={4} justifyContent={'space-evenly'}>
                               <InputText
-                                label="Parking"
+                                label="Area Range:"
                                 required
-                                placeholder="Parking"
-                                style={{ xs: 12, lg: 4 }}
-                                id="parking"
-                                name="parking"
-                                helperText="parking"
+                                placeholder="insert area range"
+                                style={{ xs: 12, lg: 5 }}
+                                id="plotAreaMin"
+                                name="plotAreaMin"
+                                helperText="insert area range"
                                 type="number"
                               />
                               <InputText
-                                label="Ownership"
-                                required
-                                placeholder="Ownership"
-                                style={{ xs: 12, lg: 4 }}
-                                id="ownerShip"
-                                name="ownerShip"
-                                helperText="Ownership"
-                              />
-
-                              <InputText
-                                label="Completion status"
-                                required
-                                placeholder="enter the completion status"
-                                style={{ xs: 12, lg: 4 }}
-                                id="completionStatus"
-                                name="completionStatus"
-                                helperText="Please select the completion status"
-                              />
-
-                              <CustomDateTime
-                                style={{ xs: 12, lg: 4 }}
-                                label="Start Date"
-                                helperText="Please enter the project start date"
-                                id="projectStartDate"
-                                name="projectStartDate"
-                              />
-                              <CustomDateTime
-                                style={{ xs: 12, lg: 4 }}
-                                label="Completion Date"
-                                helperText="Please enter the project completion date"
-                                id="projectCompletionDate"
-                                name="projectCompletionDate"
-                              />
-                              <CustomDateTime
-                                label="Handover Date"
-                                style={{ xs: 12, lg: 4 }}
-                                helperText="Please enter the project handover date"
-                                id="projectHandoverDate"
-                                required
-                                name="projectHandoverDate"
-                              />
-
-                              <InputText
-                                label="No. Of Units"
-                                required
+                                label="-"
+                                placeholder="insert area range"
+                                style={{ xs: 12, lg: 5 }}
+                                id="plotAreaMax"
+                                name="plotAreaMax"
+                                helperText="insert area range"
                                 type="number"
-                                placeholder="Number of bedrooms"
-                                style={{ xs: 12, lg: 4 }}
-                                id="noOfunits"
-                                name="noOfunits"
-                                helperText="Please select the number of units"
                               />
-                              <InputText
-                                label="Available Units"
-                                required
-                                type="number"
-                                placeholder="please enter the umber of available units"
-                                style={{ xs: 12, lg: 4 }}
-                                id="availableUnits"
-                                name="availableUnits"
-                                helperText="Please select the number of available units"
-                              />
-                              <InputText
-                                label="No. Of Pools"
-                                required
-                                type="number"
-                                placeholder="please enter the number of pools"
-                                style={{ xs: 12, lg: 4 }}
-                                id="noofpools"
-                                name="noofpools"
-                                helperText="Please select the number of pools"
-                              />
-                              <InputText
-                                label="No. Of Retail Centers"
-                                required
-                                type="number"
-                                placeholder="please enter the number of retail centers"
-                                style={{ xs: 12, lg: 4 }}
-                                id="noofretailcenters"
-                                name="noofretailcenters"
-                                helperText="Please select the number of retail centers"
-                              />
-                              <InputText
-                                label="Starting Price"
-                                required
-                                type="number"
-                                placeholder="starting price"
-                                style={{ xs: 12, lg: 4 }}
-                                id="startingPrice"
-                                name="startingPrice"
-                                helperText="Please enter the starting price"
-                              />
-                              <InputText
-                                label="Service Charge"
-                                required
-                                type="number"
-                                placeholder="service charge amount"
-                                style={{ xs: 12, lg: 4 }}
-                                id="serviceCharge"
-                                name="serviceCharge"
-                                helperText="Please enter the service charge amount"
-                              />
-                            </>
-                          )}
-                          {SinglePhaseInputs}
-                          <Grid lg={12} xs={12}></Grid>
+                            </Grid>
+                            <InputText
+                              label="Parking"
+                              required
+                              placeholder="Parking"
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[16].value"
+                              name="facts[16].value"
+                              helperText="parking"
+                              type="number"
+                            />
+                            <AutoCompleteSelector
+                              label="Ownership"
+                              required
+                              placeholder="ownership"
+                              options={[
+                                { id: 1, name: 'Freeholdd' },
+                                { id: 2, name: 'GCC Citizen' },
+                                { id: 3, name: 'Leasehold' },
+                                { id: 4, name: 'Local Citizen' },
+                                { id: 5, name: 'Other' }
+                              ]}
+                              getOptionLabel={(style) => style?.name || ''}
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[7].value"
+                              name="facts[7].value"
+                              helperText="Ownership"
+                              func={(e) => {
+                                console.log(e);
+                              }}
+                            />
+                            <CustomDateTime
+                              style={{ xs: 12, lg: 4 }}
+                              label="Start Date"
+                              helperText="Please enter the project start date"
+                              id="facts[9].value"
+                              name="facts[9].value"
+                            />
+                            <CustomDateTime
+                              style={{ xs: 12, lg: 4 }}
+                              label="Completion Date"
+                              helperText="Please enter the project completion date"
+                              id="facts[10].value"
+                              name="facts[10].value"
+                            />
+                            <CustomDateTime
+                              label="Handover Date"
+                              style={{ xs: 12, lg: 4 }}
+                              helperText="Please enter the project handover date"
+                              id="facts[11].value"
+                              name="facts[11].value"
+                              required
+                            />
+                            <InputText
+                              label="No. Of Units"
+                              required
+                              type="number"
+                              placeholder="Number of bedrooms"
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[13].value"
+                              name="facts[13].value"
+                              helperText="Please select the number of units"
+                            />
+                            <InputText
+                              label="Available Units"
+                              required
+                              type="number"
+                              placeholder="please enter the number of available units"
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[17].value"
+                              name="facts[17].value"
+                              helperText="Please select the number of available units"
+                            />
+                            {/*   :'', noofparkingspaces:'', */}
+                            <InputText
+                              label="No. Of Pools"
+                              required
+                              type="number"
+                              placeholder="please enter the number of pools"
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[22].value"
+                              name="facts[22].value"
+                              helperText="Please select the number of pools"
+                            />
+                            <InputText
+                              label="No. Of Retail Centers"
+                              required
+                              type="number"
+                              placeholder="please enter the number of retail centers"
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[21].value"
+                              name="facts[21].value"
+                              helperText="Please select the number of retail centers"
+                            />
+                            <InputText
+                              label="Service Charge"
+                              required
+                              type="number"
+                              placeholder="service charge amount"
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[15].value"
+                              name="facts[15].value"
+                              helperText="Please enter the service charge amount"
+                            />
+                            <InputText
+                              label="Starting Price"
+                              required
+                              type="number"
+                              placeholder="starting price"
+                              style={{ xs: 12, lg: 4 }}
+                              id="facts[24].value"
+                              name="facts[24].value"
+                              helperText="Please enter the starting price"
+                            />
+                            <Grid lg={12} xs={12}></Grid>
+                            <InputText
+                              style={{ xs: 12, lg: 6 }}
+                              label="Property Title"
+                              required
+                              placeholder="Property Title"
+                              name="propertyTitle"
+                              helperText="Please enter the property title"
+                              type="text"
+                              id="propertyTitle"
+                            />
+                            <InputText
+                              style={{ xs: 12, lg: 6 }}
+                              label="Arabic Property Title"
+                              placeholder="Arabic Property Title"
+                              helperText="Please enter the arabic property title"
+                              type="text"
+                              id="arabicPropertyTitle"
+                              name="arabicPropertyTitle"
+                              required
+                            />
+                            <InputText
+                              style={{ xs: 12, lg: 6 }}
+                              label="Property Description"
+                              placeholder="Property Description"
+                              type="text"
+                              helperText="Please enter the property desciption"
+                              multiline
+                              rows={4}
+                              required
+                              fullWidth
+                              description
+                              id="propertyDescription"
+                              name="propertyDescription"
+                            />
+                            <InputText
+                              style={{ xs: 12, lg: 6 }}
+                              label="Arabic Property Description"
+                              placeholder="Arabic Property Description"
+                              type="text"
+                              helperText="Please enter the arabic property desciption"
+                              multiline
+                              rows={4}
+                              fullWidth
+                              required
+                              id="arabicPropertyDescription"
+                              name="arabicPropertyDescription"
+                              description
+                            />
+                          </Grid>
+                        </MainCard>
+                      </Grid>
+                    </>
+                  )}
 
-                          <InputText
-                            style={{ xs: 12, lg: 6 }}
-                            label="Property Title"
-                            required
-                            placeholder="Property Title"
-                            name="propertyTitle"
-                            helperText="Please enter the property title"
-                            type="text"
-                            id="propertyTitle"
-                          />
-                          <InputText
-                            style={{ xs: 12, lg: 6 }}
-                            label="Arabic Property Title"
-                            placeholder="Arabic Property Title"
-                            helperText="Please enter the arabic property title"
-                            type="text"
-                            id="arabicPropertyTitle"
-                            name="arabicPropertyTitle"
-                            required
-                          />
-
-                          <InputText
-                            style={{ xs: 12, lg: 6 }}
-                            label="Property Description"
-                            placeholder="Property Description"
-                            type="text"
-                            helperText="Please enter the property desciption"
-                            multiline
-                            rows={4}
-                            required
-                            fullWidth
-                            description
-                            id="propertyDescription"
-                            name="propertyDescription"
-                          />
-                          <InputText
-                            style={{ xs: 12, lg: 6 }}
-                            label="Arabic Property Description"
-                            placeholder="Arabic Property Description"
-                            type="text"
-                            helperText="Please enter the arabic property desciption"
-                            multiline
-                            rows={4}
-                            fullWidth
-                            required
-                            id="arabicPropertyDescription"
-                            name="arabicPropertyDescription"
-                            description
-                          />
-                        </Grid>
-                      </MainCard>
-                    </Grid>
-                  </>
-
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                     <MainCard title="Facilities">
                       <Grid container spacing={2} sx={{ padding: '10px 17px' }}>
                         {Allfacilities?.data &&
-                          Object.keys(Allfacilities?.data).map((category) => {
+                          Object?.keys(Allfacilities?.data)?.map((category) => {
                             return (
                               <Categorization
-                                list={Allfacilities.data[category]}
+                                list={Allfacilities?.data[category]}
                                 list_header={category}
-                                icon={Allfacilities.data[category].icon}
+                                icon={Allfacilities?.data[category]?.icon}
                                 setFieldValue={props.setFieldValue}
                                 setCheckedItems={setCheckedItems}
                               />
@@ -935,7 +1023,38 @@ function AddProject() {
                           })}
                       </Grid>
                     </MainCard>
+                  </Grid> */}
+
+                  <Grid item xs={12}>
+                    <MainCard title="Facilities">
+                      <Grid container spacing={2} sx={{ padding: '10px 17px' }}>
+                        <Categorization
+                          list={facilities}
+                          data={Allfacilities?.data}
+                          setFieldValue={props.setFieldValue}
+                          setCheckedItems={setAmenitiesCheckedItems}
+                          name="facilities"
+                          id="facilities"
+                        />
+                      </Grid>
+                    </MainCard>
                   </Grid>
+
+                  <Grid item xs={12}>
+                    <MainCard title="Amenities">
+                      <Grid container spacing={2} sx={{ padding: '10px 17px' }}>
+                        <Categorization
+                          list={amenities}
+                          data={AllAmenities?.data}
+                          setFieldValue={props.setFieldValue}
+                          setCheckedItems={setAmenitiesCheckedItems}
+                          name="amenities"
+                          id="amenities"
+                        />
+                      </Grid>
+                    </MainCard>
+                  </Grid>
+
                   <SubmitButton />
                   <Button
                     onClick={() => {
