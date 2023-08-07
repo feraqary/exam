@@ -13,7 +13,15 @@ import MapAutocomplete from 'components/map/maps-autocomplete';
 import { LoadScript } from '@react-google-maps/api';
 import Image from 'next/image';
 import valid from 'card-validator';
-import { objectValidator, arrayValidator, stringValidator, numberValidator, fileValidator, dateValidator } from 'utils/formik-validations';
+import {
+  objectValidator,
+  arrayValidator,
+  stringValidator,
+  numberValidator,
+  fileValidator,
+  dateValidator,
+  positiveNumberValidator
+} from 'utils/formik-validations';
 import iban from 'iban';
 // redux actions import
 
@@ -59,7 +67,7 @@ const validationSchema = Yup.object({
   companyType: objectValidator('Mandatory Selection', true),
   subCompanyType: objectValidator('Mandatory Selection', true),
   mainService: objectValidator('Mandatory Selection', true),
-  service: arrayValidator('Please select a service', true, 1),
+  service: objectValidator('Mandatory Selection', true),
   companyName: stringValidator('Please provide a company name', true),
   reraNo: stringValidator('Please provide a valid reara number', true),
   reraExpiryDate: dateValidator('Please select an expiration date', true),
@@ -90,7 +98,7 @@ const validationSchema = Yup.object({
   lastName: stringValidator('Please provide your last name', true),
   emailAddress: stringValidator('Please provide a valid email address', true).email(),
   phoneNumber: stringValidator('Please provide a valid phone number', true),
-  numberOfEmployees: numberValidator('Please enter the number of employees', true),
+  numberOfEmployees: positiveNumberValidator(),
   subscriptionDuration: stringValidator('Please select a subscription duration', true),
   subscriptionStartDate: dateValidator('Please select a subscription start date', true),
   subscriptionEndDate: dateValidator('Please select a subscription end date', true),
@@ -448,14 +456,13 @@ function AddCompany() {
                     )}
                     {props.values.mainService && (
                       <MultipleAutoCompleteSelector
+                        style={{ xs: 12, lg: 10 }}
                         label="Sub Service Type"
+                        id="service"
+                        name="service"
                         placeholder="Select Sub Service Type"
                         options={subServicesError ? [] : subServicesData?.data || []}
                         getOptionLabel={(subService) => subService.title || ''}
-                        style={{ xs: 12, lg: 10 }}
-                        helperText="Please select a sub service type"
-                        id="service"
-                        name="service"
                       />
                     )}
                   </Grid>

@@ -2,7 +2,7 @@
 import { Grid, Box, Button } from '@mui/material';
 
 //react imports
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // project imports
 import Layout from 'layout';
@@ -15,7 +15,6 @@ import { useGetProjectsByStatusQuery, useUpdateProjectStatusMutation } from 'sto
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { ToastSuccess, ToastError } from 'utils/toast';
-import { useEffect } from 'react';
 
 // ==============================|| Manage International Project ||============================== //
 
@@ -42,9 +41,10 @@ const ColumnHeaders = [
     header: 'Action',
     Cell: ({ renderedCellValue, row }) => {
       const [restoreProject, result] = useUpdateProjectStatusMutation();
+
       useEffect(() => {
         if (result.isSuccess) {
-          ToastSuccess('Company has been restored Successfully');
+          ToastSuccess('Project has been Restored Successfully');
         }
       }, [result.isSuccess]);
 

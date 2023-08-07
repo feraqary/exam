@@ -2,6 +2,28 @@ import { api } from '../api';
 
 export const projectApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    //CREATE PROJECT DOCUMENT API
+    createProjectDoc: builder.mutation({
+      query(formData) {
+        return {
+          url: `api/dashboard/createProjectDoc`,
+          method: 'POST',
+          body: formData
+        };
+      }
+    }),
+
+    //CREATE PROJECT API
+    CreateProject: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/createProject/1`,
+          method: 'POST',
+          body: data
+        };
+      }
+    }),
+
     //GET LOCAL Projects API
     getLocalProjects: builder.query({
       query(pagination) {
@@ -25,14 +47,7 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['InternationalProjects']
     }),
-    getPropertyType: builder.query({
-      query() {
-        return {
-          url: `propertyTypes/getPropertyTypes`,
-          method: 'GET'
-        };
-      }
-    }),
+
     //update Project
     getProjectUpdate: builder.mutation({
       query(formData) {
@@ -44,17 +59,6 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['localProjects', 'internationalProjects']
     }),
-    //Update Projects by Rank API
-    updateProjectRank: builder.mutation({
-      query(formData) {
-        return {
-          url: `dashboard/updatePorjectRank`,
-          method: 'PUT',
-          body: formData
-        };
-      },
-      invalidatesTags: ['ProjectsByRank', 'InternationalProjects', 'LocalProjects']
-    }),
 
     // GET ALL PROJECTS BY STATUS
     getProjectsByStatus: builder.query({
@@ -65,8 +69,9 @@ export const projectApi = api.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags: ['projectStatus']
+      providesTags: ['ProjectStatus']
     }),
+
     // GET ALL SHARED PROJECTS API
     getSharedProjects: builder.query({
       query(pagination) {
@@ -91,17 +96,7 @@ export const projectApi = api.injectEndpoints({
       providesTags: ['ProjectStatus']
     }),
 
-    // GET ALL INTERNATIONAL PROJECTS API
-    getInternationalProjects: builder.query({
-      query(pagination) {
-        const { pageIndex, pageSize } = pagination;
-        return {
-          url: `dashboard/getAllIntProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
-          method: 'GET'
-        };
-      },
-      providesTags: ['InternationalProjects']
-    }),
+    //GET PROJECTS BY ID API
     getProjectById: builder.query({
       query(ProjectId) {
         return {
@@ -110,6 +105,8 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+
+    //GET ALL FACILITIES API
     getAllfacilities: builder.query({
       query(_) {
         return {
@@ -118,6 +115,8 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+
+    //GET BROKER COMPANIES BY CITY API
     getBrokerCompaniesByCities: builder.query({
       query({ id, isState }) {
         console.log('is, isstate', id, isState);
@@ -127,12 +126,55 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
-    CreateProject: builder.mutation({
-      query(data) {
+
+    //GET ALL DOCUMENT CATEGORIES
+    getAllDocCategories: builder.query({
+      query() {
         return {
-          url: `dashboard/createProject/1`,
-          method: 'POST',
-          body: data
+          url: `docscategory/getAllDocCategories`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    //GET ALL DOCUMENT SUBCATEGORY BY CATEGORY ID API
+    getSubCategoryById: builder.query({
+      query(categoryId) {
+        return {
+          url: `docscategory/getAllSubCategoriesByCategory/${categoryId}`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    //GET DOCS BY PROJECT ID API
+    getDocByProjectId: builder.query({
+      query({ pagination, project_id }) {
+        const { pageIndex, pageSize } = pagination;
+        return {
+          url: `dashboard/getAllDocsByProject?project_id=${project_id}&page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    //GET PROPERTY TYP
+    getPropertyType: builder.query({
+      query() {
+        return {
+          url: `propertyTypes/getPropertyTypes`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    //GET PROPERTIES BY PROJECT ID API
+    getPropertyByProjectId: builder.query({
+      query({ project_id, pagination }) {
+        const { pageIndex, pageSize } = pagination;
+        return {
+          url: `dashboard/getAllProjectPropertiesByProject?project_id=${project_id}&page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
         };
       }
     }),
@@ -161,7 +203,18 @@ export const projectApi = api.injectEndpoints({
       invalidatesTags: ['localProjects', 'InternationalProjects', 'SharedProjects']
     }),
 
-    //updateproject
+    //Update Projects by Rank API
+    updateProjectRank: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/updatePorjectRank`,
+          method: 'PUT',
+          body: formData
+        };
+      },
+      invalidatesTags: ['ProjectsByRank', 'InternationalProjects', 'LocalProjects']
+    }),
+    //UPDATE PROJECT API
     updateProject: builder.mutation({
       query: (updateProject) => {
         const { formData, id } = data;
@@ -180,14 +233,19 @@ export const {
   useGetInternationalProjectsQuery,
   useGetProjectsByStatusQuery,
   useGetSharedProjectsQuery,
-  useUpdateProjectStatusMutation,
-  useUpdateProjectRankMutation,
-  useGetProjectUpdateQuery,
-  useUpdateProjectMutation,
-  useDeleteProjectMutation,
-  useGetPropertyTypeQuery,
+  useGetDocByProjectIdQuery,
+  useGetAllDocCategoriesQuery,
+  useGetSubCategoryByIdQuery,
   useGetProjectByIdQuery,
   useGetAllfacilitiesQuery,
   useGetBrokerCompaniesByCitiesQuery,
-  useCreateProjectMutation
+  useGetProjectUpdateQuery,
+  useGetPropertyTypeQuery,
+  useGetPropertyByProjectIdQuery,
+  useCreateProjectMutation,
+  useCreateProjectDocMutation,
+  useUpdateProjectStatusMutation,
+  useUpdateProjectRankMutation,
+  useUpdateProjectMutation,
+  useDeleteProjectMutation
 } = projectApi;

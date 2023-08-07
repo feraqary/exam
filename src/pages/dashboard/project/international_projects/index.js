@@ -18,10 +18,10 @@ import {
 } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import ProjectRankSelector from '../project_rank';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
+import Link from 'next/link';
 
 // ==============================|| Manage international_ Projects ||============================== //
 
@@ -146,9 +146,11 @@ const international_Projects = () => {
               <Button variant="contained" color="primary">
                 Edit
               </Button>
-              <Button color="primary" variant="contained">
-                Manage Documents
-              </Button>
+              <Link href={{ pathname: `/dashboard/project/documents/${row.original.id}` }}>
+                <Button color="primary" variant="contained">
+                  Manage Documents
+                </Button>
+              </Link>
               <Button variant="contained" color="primary">
                 View Live
               </Button>

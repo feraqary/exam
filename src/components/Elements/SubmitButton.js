@@ -10,9 +10,7 @@ const SubmitButton = () => {
       <CardActions>
         <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
           <Grid item>
-
-            <Button variant="contained" color="secondary" type="submit" onClick={() => submitForm()} disabled={isSubmitting}>
-
+            <Button variant="contained" color="secondary" type="submit" onClick={submitForm} disabled={isSubmitting}>
               Submit
             </Button>
           </Grid>

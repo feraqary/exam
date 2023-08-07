@@ -17,6 +17,7 @@ import { ToastContainer } from 'react-toastify';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
+import Link from 'next/link';
 
 // ==============================|| Manage international_ Projects ||============================== //
 
@@ -145,9 +146,11 @@ const SharedProjects = () => {
               <Button variant="contained" color="primary">
                 Edit
               </Button>
-              <Button color="primary" variant="contained">
-                Manage Documents
-              </Button>
+              <Link href={{ pathname: `/dashboard/project/documents/${row.original.id}` }}>
+                <Button color="primary" variant="contained">
+                  Manage Documents
+                </Button>
+              </Link>
               <Button variant="contained" color="primary">
                 View Live
               </Button>

@@ -19,7 +19,6 @@ const MenuProps = {
     }
   }
 };
-
 const COMAPANY_STATUS = ['Standard', 'Featured', 'Premium', 'Top Deal'];
 
 const TableSelectorOption = memo(({ value, formData, func }) => {

@@ -26,26 +26,20 @@ import {
 import { ToastSuccess } from 'utils/toast';
 import { ToastContainer } from 'react-toastify';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
-
 // ===========================|| International Company Managment list||=========================== //
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
 const IntCompData = () => {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
-
   const { data: internationalCompaniesData, isError, error, isLoading, isFetching } = useGetInternationalCompaniesQuery(pagination);
-
   const [blockCompany, result] = useUpdateCompanyStatusMutation();
-
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Company hase been successfully blocked');
+      ToastSuccess('Company has been successfully blocked');
     }
   }, [result.isSuccess]);
 
@@ -144,7 +138,6 @@ const IntCompData = () => {
         const [editOpen, setEditOpen] = React.useState(false);
         const [id, setId] = React.useState();
         const [MainType, setMainType] = React.useState(null);
-
         const handleEditClose = () => {
           setEditOpen(false);
         };
@@ -153,7 +146,6 @@ const IntCompData = () => {
           console.log(row.original);
           setId(row.original.ID);
         };
-
         const handleClose = () => {
           setOpen(false);
         };
@@ -165,7 +157,6 @@ const IntCompData = () => {
           formData.append('is_branch', row.original.IsBranch);
           blockCompany(formData);
         };
-
         return (
           <Box
             sx={{
@@ -198,11 +189,9 @@ const IntCompData = () => {
             <Button variant="contained" color="primary">
               Report
             </Button>
-
             <Button variant="contained" onClick={handleBlock} color="error" startIcon={<DeleteIcon />}>
               Block
             </Button>
-
             <Dialog fullScreen open={editOpen} onClose={handleEditClose} TransitionComponent={Transition}>
               <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleEditClose}>
                 <IconButton>
@@ -211,7 +200,6 @@ const IntCompData = () => {
               </DialogActions>
               <DialogContent></DialogContent>
             </Dialog>
-
             <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
               <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
                 <IconButton>
@@ -225,11 +213,8 @@ const IntCompData = () => {
       }
     }
   ];
-
   useEffect(() => {}, [pagination.pageIndex, pagination.pageSize]);
-
   if (isLoading) return;
-
   return (
     <Page title="International Company List">
       <ToastContainer />
@@ -246,7 +231,6 @@ const IntCompData = () => {
           />
         </Grid>
       </Grid>
-
       <Dialog maxWidth={'xl'} open={docsOpen} onClose={handleDocsClose} TransitionComponent={Transition}>
         <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleDocsClose}>
           <IconButton>

@@ -17,8 +17,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
+import Link from 'next/link';
 
-// ==============================|| Manage Local Projects ||============================== //
+// ==============================|| Manage International Projects ||============================== //
 
 const localProjects = () => {
   const [pagination, setPagination] = useState({
@@ -55,7 +56,7 @@ const localProjects = () => {
     {
       accessorKey: 'rank_id',
       header: 'Company Rank',
-      Cell: ({ renderedCellValue, row }) => {
+      Cell: ({ row }) => {
         const formData = new FormData();
         const func = useUpdateProjectRankMutation();
         formData.append('project_id', row.original.id);
@@ -85,7 +86,7 @@ const localProjects = () => {
     {
       accessorKey: 'endis',
       header: 'Enable / Disable',
-      Cell: ({ renderedCellValue, row }) => {
+      Cell: ({ row }) => {
         return (
           <>
             <FormControlLabel control={<Switch defaultChecked />} />
@@ -98,7 +99,7 @@ const localProjects = () => {
     {
       accessorKey: 'rating',
       header: 'Rating',
-      Cell: ({ renderedCellValue, row }) => {
+      Cell: ({ row }) => {
         return (
           <>
             <Rating readonly={true} name="read-only" value={localProjectsData?.data[row.index].Rating} readOnly />
@@ -115,11 +116,13 @@ const localProjects = () => {
       header: 'Phase Type'
     },
     {
-      accessorKey: 'phasess',
+      accessorKey: 'phasesw',
       header: 'Phases',
-      cell: ({ renderedCellValue, row }) => {
-        console.log(row.original.phases);
-        return 'hi';
+      cell: ({ row }) => {
+        return row.original.phases.map((phase) => {
+          console.log(phase);
+          return <span> {phase.name} </span>;
+        });
       }
     },
     {
@@ -130,7 +133,7 @@ const localProjects = () => {
     {
       accessorKey: 'action',
       header: 'Action',
-      Cell: ({ renderedCellValue, row }) => {
+      Cell: ({ row }) => {
         const handleUpdateStatus = (status) => {
           const formData = new FormData();
           formData.append('id', row.original.id);
@@ -142,7 +145,7 @@ const localProjects = () => {
             <Box
               sx={{
                 display: 'flex',
-                alignItems: 'center',
+                // alignItems: 'center',
                 gap: '1rem'
               }}
             >
@@ -152,15 +155,19 @@ const localProjects = () => {
               <Button variant="contained" color="primary">
                 Edit
               </Button>
-              <Button color="primary" variant="contained">
-                Manage Documents
-              </Button>
+              <Link href={{ pathname: `/dashboard/project/documents/${row.original.id}` }}>
+                <Button color="primary" variant="contained">
+                  Manage Documents
+                </Button>
+              </Link>
               <Button variant="contained" color="primary">
                 View Live
               </Button>
-              <Button variant="contained" color="primary">
-                Listing Properties
-              </Button>
+              <Link href={{ pathname: `/dashboard/project/listing_properties/${row.original.id}` }}>
+                <Button variant="contained" color="primary">
+                  Listing Properties
+                </Button>
+              </Link>
               <Button variant="contained" color="primary">
                 Add Promotion
               </Button>
