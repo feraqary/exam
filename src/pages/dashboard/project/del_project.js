@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { ToastSuccess, ToastError } from 'utils/toast';
 
-// ==============================|| Manage International Project ||============================== //
+// ==============================|| Manage International Project ||======     c ccc c======================== //
 
 const ColumnHeaders = [
   {
@@ -78,7 +78,7 @@ const ColumnHeaders = [
 function DeletedProjects() {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 5
+    pageSize: 15
   });
 
   const { data: deletedProjects, isError, error, isLoading, isFetching } = useGetProjectsByStatusQuery({ pagination, status: 6 });
@@ -108,3 +108,6 @@ DeletedProjects.getLayout = function getLayout(page) {
 };
 
 export default DeletedProjects;
+
+
+

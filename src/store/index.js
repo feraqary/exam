@@ -14,12 +14,9 @@ const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false, immutableCheck: false }).concat(api.middleware)
 });
-
 const persister = persistStore(store);
 setupListeners(store.dispatch);
-
 const { dispatch } = store;
-
 const useDispatch = () => useAppDispatch();
 const useSelector = useAppSelector;
 export { store, persister, dispatch, useSelector, useDispatch };

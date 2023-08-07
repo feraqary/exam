@@ -41,7 +41,6 @@ const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, s
       >
         <TextField
           {...field}
-          {...rest}
           required={required}
           type="file"
           id={id}
@@ -63,6 +62,7 @@ const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, s
           error={meta.error && meta.touched}
         />
       </InputLayout>
+
       {image && (
         <Grid item xs={3} lg={style.lg} alignContent="right">
           {field.value ? (

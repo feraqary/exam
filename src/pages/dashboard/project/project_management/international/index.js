@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, Box, Button } from '@mui/material';
+import { Grid, Box, Button, Chip } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -11,7 +11,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { useGetLocalProjectsQuery, useUpdateProjectRankMutation, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
+import {
+  useGetInternationalProjectsQuery,
+  useUpdateProjectStatusMutation,
+  useUpdateProjectRankMutation
+} from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,14 +23,14 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 
-// ==============================|| Manage International Projects ||============================== //
+// ==============================|| Manage international_ Projects ||============================== //
 
-const localProjects = () => {
+const international_Projects = () => {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
-  const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
+  const { data: international_ProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
 
   useEffect(() => {
@@ -46,24 +50,24 @@ const localProjects = () => {
   const ColumnHeaders = [
     {
       accessorKey: 'id',
-      header: 'Project ID ',
+      header: 'Reference Number ',
       title: (
-        <Tooltip title={'Project ID'}>
-          <span>Project ID</span>
+        <Tooltip title={'Ref.No'}>
+          <span>Reference Number</span>
         </Tooltip>
       )
     },
     {
       accessorKey: 'rank_id',
       header: 'Company Rank',
-      Cell: ({ row }) => {
+      Cell: ({ renderedCellValue, row }) => {
         const formData = new FormData();
         const func = useUpdateProjectRankMutation();
         formData.append('project_id', row.original.id);
 
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <TableSelectorOption value={row.original.rank_id} formData={formData} func={func} />
+            <TableSelectorOption value={row.original.rank_id} func={func} formData={formData} />
           </Box>
         );
       }
@@ -80,60 +84,47 @@ const localProjects = () => {
       accessorKey: 'parent_developer_company',
       header: 'Developer Company',
       Cell: ({ renderedCellValue }) => {
-        return <Tooltip title="Developer Company Name"> Developer Company</Tooltip>;
+        return <Tooltip title=" Developer Company Name: ">Developer Company</Tooltip>;
       }
     },
-    {
-      accessorKey: 'endis',
-      header: 'Enable / Disable',
-      Cell: ({ row }) => {
-        return (
-          <>
-            <FormControlLabel control={<Switch defaultChecked />} />
-          </>
-        );
-      }
-    },
-
-    { accessorKey: 'quality_score', header: 'Quality Score' },
     {
       accessorKey: 'rating',
       header: 'Rating',
-      Cell: ({ row }) => {
-        return (
-          <>
-            <Rating readonly={true} name="read-only" value={localProjectsData?.data[row.index].Rating} readOnly />
-          </>
-        );
+      Cell: ({ renderedCellValue, row }) => {
+        return <Rating name="read-only" value={international_ProjectsData?.data[row.index].Rating} readOnly />;
       }
     },
+    { accessorKey: 'quality_score', header: 'Quality Score' },
+
     {
       accessorKey: 'no_of_phases',
       header: 'Number of Phases'
+    },
+    {
+      accessorKey: 'phasesss',
+      header: 'Phases',
+      cell: ({ renderedCellValue, row }) => {
+        return row.original.phases.map((phase) => {
+          console.log(phase);
+          return <Chip>{phase.name}</Chip>;
+        });
+      }
     },
     {
       accessorKey: 'phase_type',
       header: 'Phase Type'
     },
     {
-      accessorKey: 'phasesw',
-      header: 'Phases',
-      cell: ({ row }) => {
-        return row.original.phases.map((phase) => {
-          console.log(phase);
-          return <span> {phase.name} </span>;
-        });
+      accessorKey: 'endis',
+      header: 'Enable / Disable',
+      Cell: ({ renderedCellValue, row }) => {
+        return <FormControlLabel control={<Switch defaultChecked />} />;
       }
     },
     {
-      accessorKey: 'quality_score',
-      header: 'Quality Score'
-    },
-
-    {
       accessorKey: 'action',
       header: 'Action',
-      Cell: ({ row }) => {
+      Cell: ({ renderedCellValue, row }) => {
         const handleUpdateStatus = (status) => {
           const formData = new FormData();
           formData.append('id', row.original.id);
@@ -145,7 +136,7 @@ const localProjects = () => {
             <Box
               sx={{
                 display: 'flex',
-                // alignItems: 'center',
+                alignItems: 'center',
                 gap: '1rem'
               }}
             >
@@ -155,7 +146,7 @@ const localProjects = () => {
               <Button variant="contained" color="primary">
                 Edit
               </Button>
-              <Link href={{ pathname: `/dashboard/project/documents/${row.original.id}` }}>
+              <Link href={{ pathname: `/dashboard/project/project_management/documents/${row.original.id}` }}>
                 <Button color="primary" variant="contained">
                   Manage Documents
                 </Button>
@@ -163,11 +154,9 @@ const localProjects = () => {
               <Button variant="contained" color="primary">
                 View Live
               </Button>
-              <Link href={{ pathname: `/dashboard/project/listing_properties/${row.original.id}` }}>
-                <Button variant="contained" color="primary">
-                  Listing Properties
-                </Button>
-              </Link>
+              <Button variant="contained" color="primary">
+                Listing Properties
+              </Button>
               <Button variant="contained" color="primary">
                 Add Promotion
               </Button>
@@ -195,12 +184,12 @@ const localProjects = () => {
         <Grid item xs={12}>
           <Table
             columnHeaders={ColumnHeaders}
-            data={localProjectsData?.data || []}
+            data={international_ProjectsData?.data || []}
             loading={isLoading}
             pagination={pagination}
             setPagination={setPagination}
             isFetching={isFetching}
-            rowCount={localProjectsData?.Total}
+            rowCount={international_ProjectsData?.Total}
           />
         </Grid>
       </Grid>
@@ -208,8 +197,8 @@ const localProjects = () => {
   );
 };
 
-localProjects.getLayout = function getLayout(page) {
+international_Projects.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default localProjects;
+export default international_Projects;

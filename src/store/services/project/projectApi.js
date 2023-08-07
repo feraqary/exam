@@ -25,6 +25,17 @@ export const projectApi = api.injectEndpoints({
     }),
 
     //GET LOCAL Projects API
+
+    getPropertyType: builder.query({
+      query() {
+        return {
+          url: `propertyTypes/getPropertyTypes`,
+          method: 'GET'
+        };
+      }
+    }),
+    //update Project
+
     getLocalProjects: builder.query({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
@@ -59,6 +70,18 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['localProjects', 'internationalProjects']
     }),
+    //Update Projects by Rank API
+
+    updateProjectRank: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/updatePorjectRank`,
+          method: 'PUT',
+          body: formData
+        };
+      },
+      invalidatesTags: ['ProjectsByRank', 'InternationalProjects', 'LocalProjects']
+    }),
 
     // GET ALL PROJECTS BY STATUS
     getProjectsByStatus: builder.query({
@@ -69,7 +92,7 @@ export const projectApi = api.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags: ['ProjectStatus']
+      providesTags: ['projectStatus']
     }),
 
     // GET ALL SHARED PROJECTS API
@@ -105,8 +128,8 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
-
     //GET ALL FACILITIES API
+
     getAllfacilities: builder.query({
       query(_) {
         return {
@@ -116,10 +139,17 @@ export const projectApi = api.injectEndpoints({
       }
     }),
 
-    //GET BROKER COMPANIES BY CITY API
+    getProjectById: builder.query({
+      query(ProjectId) {
+        return {
+          url: `dashboard/getProject/${ProjectId}`,
+          method: 'GET'
+        };
+      }
+    }),
+
     getBrokerCompaniesByCities: builder.query({
       query({ id, isState }) {
-        console.log('is, isstate', id, isState);
         return {
           url: `dashboard/getAllBrokerCompanyByStateCity?id=${id}&is_state=${isState}`,
           method: 'GET'
@@ -133,6 +163,17 @@ export const projectApi = api.injectEndpoints({
         return {
           url: `docscategory/getAllDocCategories`,
           method: 'GET'
+        };
+      }
+    }),
+
+    CreateProject: builder.mutation({
+      query({ data, isMulti }) {
+        console.log('xxxx', isMulti);
+        return {
+          url: `dashboard/createProject/${isMulti ? '0' : '1'}`,
+          method: 'POST',
+          body: data
         };
       }
     }),
@@ -184,6 +225,7 @@ export const projectApi = api.injectEndpoints({
       query(data) {
         return {
           url: `dashboard/updateProjectStatus`,
+
           method: 'PUT',
           body: data
         };
@@ -203,25 +245,40 @@ export const projectApi = api.injectEndpoints({
       invalidatesTags: ['localProjects', 'InternationalProjects', 'SharedProjects']
     }),
 
-    //Update Projects by Rank API
-    updateProjectRank: builder.mutation({
-      query(formData) {
-        return {
-          url: `dashboard/updatePorjectRank`,
-          method: 'PUT',
-          body: formData
-        };
-      },
-      invalidatesTags: ['ProjectsByRank', 'InternationalProjects', 'LocalProjects']
-    }),
-    //UPDATE PROJECT API
+    //updateproject
     updateProject: builder.mutation({
       query: (updateProject) => {
-        const { formData, id } = data;
         return {
-          url: ``,
-          method: 'PATCH',
+          url: `dashboard/updateProject/1`,
+          method: 'PUT',
           body: updateProject
+        };
+      }
+    }),
+    //GET PROJECT BY ID
+    getProject: builder.query({
+      query(id) {
+        return {
+          url: `dashboard/getProject/${id}`,
+          method: 'GET'
+        };
+      }
+    }),
+    //GET VIEW
+    getView: builder.query({
+      query() {
+        return {
+          url: `views/getAllViews?page_no=1&page_size=10`,
+          method: 'GET'
+        };
+      }
+    }),
+    //GET VIEW
+    getAllAmenities: builder.query({
+      query() {
+        return {
+          url: `facilities/getAllAmenititesByCategory/1`,
+          method: 'GET'
         };
       }
     })
@@ -230,22 +287,25 @@ export const projectApi = api.injectEndpoints({
 
 export const {
   useGetLocalProjectsQuery,
+  useGetProjectQuery,
   useGetInternationalProjectsQuery,
-  useGetProjectsByStatusQuery,
-  useGetSharedProjectsQuery,
   useGetDocByProjectIdQuery,
   useGetAllDocCategoriesQuery,
   useGetSubCategoryByIdQuery,
-  useGetProjectByIdQuery,
-  useGetAllfacilitiesQuery,
-  useGetBrokerCompaniesByCitiesQuery,
   useGetProjectUpdateQuery,
-  useGetPropertyTypeQuery,
   useGetPropertyByProjectIdQuery,
-  useCreateProjectMutation,
   useCreateProjectDocMutation,
+  useGetProjectsByStatusQuery,
   useUpdateProjectStatusMutation,
   useUpdateProjectRankMutation,
   useUpdateProjectMutation,
-  useDeleteProjectMutation
+  useDeleteProjectMutation,
+  useGetPropertyTypeQuery,
+  useGetSharedProjectsQuery,
+  useGetProjectByIdQuery,
+  useGetAllAmenitiesQuery,
+  useGetAllfacilitiesQuery,
+  useGetBrokerCompaniesByCitiesQuery,
+  useCreateProjectMutation,
+  useGetViewQuery
 } = projectApi;

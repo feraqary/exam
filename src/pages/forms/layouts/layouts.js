@@ -89,7 +89,7 @@ function Layouts() {
                   </Grid>
                   <Grid item xs={12} sm={9} lg={6}>
                     <FormControlLabel control={<Checkbox defaultChecked />} label="English" />
-                    <FormControlLabel control={<Checkbox />} label="French" />
+                    <FormControlLabel control={<Checkbox />} label="Arabic" />
                     <FormControlLabel control={<Checkbox />} label="Dutch" />
                   </Grid>
                 </Grid>
@@ -127,7 +127,7 @@ function Layouts() {
                 <InputLabel>Language</InputLabel>
                 <FormGroup>
                   <FormControlLabel control={<Checkbox defaultChecked />} label="English" />
-                  <FormControlLabel control={<Checkbox />} label="French" />
+                  <FormControlLabel control={<Checkbox />} label="Arabic" />
                   <FormControlLabel control={<Checkbox />} label="Dutch" />
                 </FormGroup>
               </Grid>

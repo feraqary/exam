@@ -32,10 +32,11 @@ import {
   useGetAllfacilitiesQuery,
   useGetBrokerCompaniesByCitiesQuery,
   useGetPropertyTypeQuery,
-  useGetViewQuery
+  useGetViewQuery,
+  useUpdateProjectMutation
 } from 'store/services/project/projectApi';
 
-import Categorization from './helper/Categorization';
+import Categorization from '../../helper/Categorization';
 
 function AddProject() {
   //is shared
@@ -111,7 +112,7 @@ function AddProject() {
     skip: isState_Id === null || isState_Id === undefined
   });
   const { data: views, error: viewsError, isLoading: loadingView } = useGetViewQuery();
-  const [createProject, CreateProjectResult] = useCreateProjectMutation();
+  const [updateProject, UpdateProjectResult] = useUpdateProjectMutation();
 
   if (isLoading) return null;
 
@@ -425,7 +426,7 @@ function AddProject() {
                   data: data,
                   isMulti: values?.phaseType == 'single'
                 };
-                createProject(submit);
+                updateProject(submit);
                 setSubmitting(false);
               }}
             >

@@ -53,7 +53,8 @@ const project = {
       title: <FormattedMessage id="Local Projects" />,
       type: 'item',
       icon: icons.IconPin,
-      url: '/dashboard/project/local_project'
+
+      url: '/dashboard/project/project_management/local'
     },
     {
       id: 'international',
@@ -85,7 +86,7 @@ const project = {
     },
     {
       id: 'promotions',
-      title: 'Promotions',
+      title: 'Manage Promotions',
       type: 'item',
       icon: icons.IconLayoutKanban,
       url: '/dashboard/project/promotions'

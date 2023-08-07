@@ -146,7 +146,7 @@ const SharedProjects = () => {
               <Button variant="contained" color="primary">
                 Edit
               </Button>
-              <Link href={{ pathname: `/dashboard/project/documents/${row.original.id}` }}>
+              <Link href={{ pathname: `/dashboard/project/project_management/documents/${row.original.id}` }}>
                 <Button color="primary" variant="contained">
                   Manage Documents
                 </Button>

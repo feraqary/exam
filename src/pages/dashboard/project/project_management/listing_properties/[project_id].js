@@ -81,12 +81,12 @@ const ListingProperties = () => {
                 Document
               </Button>
 
-              <Link href={{ pathname: `/dashboard/project/manage_units/${project_id}` }}>
+              <Link href={{ pathname: `/dashboard/project/project_management/manage_units/${project_id}` }}>
                 <Button variant="contained" color="primary">
                   Manage Units
                 </Button>
               </Link>
-              <Link href={{ pathname: `/dashboard/project/payment_plans/${row.original.id}` }}>
+              <Link href={{ pathname: `/dashboard/project/project_management/payment_plans/${row.original.id}` }}>
                 <Button variant="contained" color="primary">
                   Manage payment plan
                 </Button>
