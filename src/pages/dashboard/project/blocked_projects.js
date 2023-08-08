@@ -13,6 +13,7 @@ import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
+import Container from 'components/Elements/Container';
 
 // ==============================|| Manage international_ Projects ||============================== //
 
@@ -98,7 +99,7 @@ const BlockedProjects = () => {
   return (
     <Page title="Manage Blocked Projects">
       <ToastContainer />
-      <Container title="Manage Blocked Projects">
+      <Container title="Manage Blocked Projects" style={{ xs: 12 }}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <Table
