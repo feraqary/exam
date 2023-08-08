@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Container from 'components/Elements/Container';
 
 // ==============================|| Manage International Projects ||============================== //
 
@@ -87,30 +88,32 @@ const Documents = () => {
 
   if (isLoading) return;
   return (
-    <Page title="Manage Project">
+    <Page title="Manage Documents">
       <ToastContainer />
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table
-            columnHeaders={ColumnHeaders}
-            data={projectDocData?.data || []}
-            loading={isLoading}
-            pagination={pagination}
-            setPagination={setPagination}
-            isFetching={isFetching}
-            rowCount={projectDocData?.Total}
-            renderTopToolbarCustomActions={({ table }) => {
-              return (
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <Link href={{ pathname: `/dashboard/project/project_management/add_doc/${project_id}` }}>
-                    <Button color="primary">Add Document</Button>
-                  </Link>
-                </div>
-              );
-            }}
-          />
+      <Container title="Manage Documents" style={{ xs: 12 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              columnHeaders={ColumnHeaders}
+              data={projectDocData?.data || []}
+              loading={isLoading}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={isFetching}
+              rowCount={projectDocData?.Total}
+              renderTopToolbarCustomActions={({ table }) => {
+                return (
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <Link href={{ pathname: `/dashboard/project/project_management/add_doc/${project_id}` }}>
+                      <Button color="primary">Add Document</Button>
+                    </Link>
+                  </div>
+                );
+              }}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 };

@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
+import Container from 'components/Elements/Container';
 
 // ==============================|| Manage International Projects ||============================== //
 
@@ -191,19 +192,21 @@ const localProjects = () => {
   return (
     <Page title="Manage Project">
       <ToastContainer />
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table
-            columnHeaders={ColumnHeaders}
-            data={localProjectsData?.data || []}
-            loading={isLoading}
-            pagination={pagination}
-            setPagination={setPagination}
-            isFetching={isFetching}
-            rowCount={localProjectsData?.Total}
-          />
+      <Container title="Manage Local Projects" style={{ xs: 12 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              columnHeaders={ColumnHeaders}
+              data={localProjectsData?.data || []}
+              loading={isLoading}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={isFetching}
+              rowCount={localProjectsData?.Total}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 };

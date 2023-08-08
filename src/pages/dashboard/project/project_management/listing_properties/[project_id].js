@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Container from 'components/Elements/Container';
 
 // ==============================|| Manage International Projects ||============================== //
 
@@ -81,12 +82,12 @@ const ListingProperties = () => {
                 Document
               </Button>
 
-              <Link href={{ pathname: `/dashboard/project/project_management/manage_units/${project_id}` }}>
+              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/manage_units/${project_id}` }}>
                 <Button variant="contained" color="primary">
                   Manage Units
                 </Button>
               </Link>
-              <Link href={{ pathname: `/dashboard/project/project_management/payment_plans/${row.original.id}` }}>
+              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/payment_plans/${row.original.id}` }}>
                 <Button variant="contained" color="primary">
                   Manage payment plan
                 </Button>
@@ -100,30 +101,32 @@ const ListingProperties = () => {
 
   if (isLoading) return;
   return (
-    <Page title="Manage Project">
+    <Page title="Manage listing Propeties">
       <ToastContainer />
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table
-            columnHeaders={ColumnHeaders}
-            data={projectDocData?.data || []}
-            loading={isLoading}
-            pagination={pagination}
-            setPagination={setPagination}
-            isFetching={isFetching}
-            rowCount={projectDocData?.Total}
-            // renderTopToolbarCustomActions={({ table }) => {
-            //   return (
-            //     <div style={{ display: 'flex', gap: '0.5rem' }}>
-            //       <Link href={{ pathname: `/dashboard/project/add_doc/${project_id}` }}>
-            //         <Button color="primary">Add Document</Button>
-            //       </Link>
-            //     </div>
-            //   );
-            // }}
-          />
+      <Container title="Manage listing Propeties" style={{ xs: 12 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              columnHeaders={ColumnHeaders}
+              data={projectDocData?.data || []}
+              loading={isLoading}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={isFetching}
+              rowCount={projectDocData?.Total}
+              // renderTopToolbarCustomActions={({ table }) => {
+              //   return (
+              //     <div style={{ display: 'flex', gap: '0.5rem' }}>
+              //       <Link href={{ pathname: `/dashboard/project/add_doc/${project_id}` }}>
+              //         <Button color="primary">Add Document</Button>
+              //       </Link>
+              //     </div>
+              //   );
+              // }}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 };

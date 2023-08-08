@@ -18,6 +18,7 @@ import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
 import Link from 'next/link';
+import Container from 'components/Elements/Container';
 
 // ==============================|| Manage international_ Projects ||============================== //
 
@@ -178,21 +179,23 @@ const SharedProjects = () => {
 
   if (isLoading) return;
   return (
-    <Page title="Shared Projects List">
+    <Page title="Manage Shared Projects">
       <ToastContainer />
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table
-            columnHeaders={ColumnHeaders}
-            data={sharedProjectsData?.data || []}
-            loading={isLoading}
-            pagination={pagination}
-            setPagination={setPagination}
-            isFetching={isFetching}
-            rowCount={sharedProjectsData?.Total}
-          />
+      <Container title="Manage Shared Projects" style={{ xs: 12 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              columnHeaders={ColumnHeaders}
+              data={sharedProjectsData?.data || []}
+              loading={isLoading}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={isFetching}
+              rowCount={sharedProjectsData?.Total}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 };

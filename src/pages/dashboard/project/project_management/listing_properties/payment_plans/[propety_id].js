@@ -3,7 +3,6 @@ import { Button, Grid } from '@mui/material';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 // project imports
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
@@ -11,17 +10,14 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 // assets
-import FileUpload, { MultipleFileUpload } from 'components/InputArea/FileUpload';
-import SubmitButton from 'components/Elements/SubmitButton';
+import SubmitButton, { NormalSubmitButton } from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
 import { ToastContainer } from 'react-toastify';
 import { fileValidator, objectValidator } from 'utils/formik-validations';
 import { ToastError, ToastSuccess } from 'utils/toast';
-import { useCreateProjectDocMutation, useGetAllDocCategoriesQuery, useGetSubCategoryByIdQuery } from 'store/services/project/projectApi';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { NormalInputText } from 'components/InputArea/TextInput';
-import AqaryButton from 'components/AqaryButton/ThemeButton';
 
 // ==============================|| Add Company Type form ||============================== //
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
@@ -61,15 +57,15 @@ function AddPaymentPlans() {
           type="text"
         />
         <NormalInputText
-          label="Percentage"
-          placeholder="Please enter a percentage"
+          label="Date"
+          placeholder="Please enter a date"
           helperText="please input a valid input"
           style={{ xs: 12, lg: 4 }}
-          type="text"
+          type="date"
         />
         <NormalInputText
-          label="Percentage"
-          placeholder="Please enter a percentage"
+          label="Milestone"
+          placeholder="Please enter a milestone"
           helperText="please input a valid input"
           style={{ xs: 12, lg: 4 }}
           type="text"
@@ -79,7 +75,7 @@ function AddPaymentPlans() {
   };
 
   return (
-    <Page title="Add Services">
+    <Page title="Add Payment Plans">
       <Grid container spacing={gridSpacing}>
         <ToastContainer />
         <Container style={{ xs: 12 }} title="Add Payment Plans">
@@ -92,6 +88,7 @@ function AddPaymentPlans() {
             </Grid>
           </Grid>
         </Container>
+        <NormalSubmitButton />
       </Grid>
     </Page>
   );

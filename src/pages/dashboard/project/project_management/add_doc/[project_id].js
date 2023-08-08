@@ -52,10 +52,10 @@ function AddDocuments() {
   const { project_id } = router.query;
 
   return (
-    <Page title="Add Services">
+    <Page title="Add Project Documents">
       <Grid container spacing={gridSpacing}>
         <ToastContainer />
-        <Container style={{ xs: 12 }}>
+        <Container style={{ xs: 12 }} title="Add Project Documents">
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
             <Formik
               initialValues={{

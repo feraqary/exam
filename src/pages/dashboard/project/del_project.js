@@ -84,21 +84,23 @@ function DeletedProjects() {
   const { data: deletedProjects, isError, error, isLoading, isFetching } = useGetProjectsByStatusQuery({ pagination, status: 6 });
 
   return (
-    <Page title="Manage Project">
+    <Page title="Manage Deleted Projects">
       <ToastContainer />
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table
-            columnHeaders={ColumnHeaders}
-            data={error ? [] : deletedProjects?.data || []}
-            loading={isLoading}
-            pagination={pagination}
-            setPagination={setPagination}
-            isFetching={isFetching}
-            rowCount={deletedProjects?.Total}
-          />
+      <Container title="Manage Deleted Projects">
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              columnHeaders={ColumnHeaders}
+              data={error ? [] : deletedProjects?.data || []}
+              loading={isLoading}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={isFetching}
+              rowCount={deletedProjects?.Total}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 }
@@ -108,6 +110,3 @@ DeletedProjects.getLayout = function getLayout(page) {
 };
 
 export default DeletedProjects;
-
-
-

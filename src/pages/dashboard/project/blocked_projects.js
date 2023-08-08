@@ -96,21 +96,23 @@ const BlockedProjects = () => {
 
   if (isLoading) return;
   return (
-    <Page title="Shared Projects List">
+    <Page title="Manage Blocked Projects">
       <ToastContainer />
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table
-            columnHeaders={ColumnHeaders}
-            data={error ? [] : blockedProjects?.data || []}
-            loading={isLoading}
-            pagination={pagination}
-            setPagination={setPagination}
-            isFetching={isFetching}
-            rowCount={blockedProjects?.Total}
-          />
+      <Container title="Manage Blocked Projects">
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              columnHeaders={ColumnHeaders}
+              data={error ? [] : blockedProjects?.data || []}
+              loading={isLoading}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={isFetching}
+              rowCount={blockedProjects?.Total}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 };

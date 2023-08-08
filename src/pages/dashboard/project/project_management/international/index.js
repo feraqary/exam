@@ -22,6 +22,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
+import Container from 'components/Elements/Container';
 
 // ==============================|| Manage international_ Projects ||============================== //
 
@@ -178,21 +179,23 @@ const international_Projects = () => {
 
   if (isLoading) return;
   return (
-    <Page title="Manage Project">
+    <Page title="Manage International Project">
       <ToastContainer />
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table
-            columnHeaders={ColumnHeaders}
-            data={international_ProjectsData?.data || []}
-            loading={isLoading}
-            pagination={pagination}
-            setPagination={setPagination}
-            isFetching={isFetching}
-            rowCount={international_ProjectsData?.Total}
-          />
+      <Container title="Manage International Project" style={{ xs: 12 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              columnHeaders={ColumnHeaders}
+              data={international_ProjectsData?.data || []}
+              loading={isLoading}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={isFetching}
+              rowCount={international_ProjectsData?.Total}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 };
