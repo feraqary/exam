@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, FormHelperText, Grid, InputLabel, TextField } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, FormHelperText, Grid, InputLabel, TextField,CircularProgress,Typography,Box    } from '@mui/material';
 import { LoadScript } from '@react-google-maps/api';
 import Map from 'components/map/google-map';
 import MapAutocomplete from 'components/map/maps-autocomplete';
@@ -759,6 +759,7 @@ function AddProperty() {
     </LoadScript>
   );
 }
+
 AddProperty.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };

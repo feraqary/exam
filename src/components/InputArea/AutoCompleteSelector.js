@@ -233,7 +233,7 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
         loading={true}
         limitTags={2}
         onChange={(e, value, reason) => {
-          console.log(value)
+          console.log(value);
           if (reason === 'clear') {
             setFieldValue(name, []);
           } else {
