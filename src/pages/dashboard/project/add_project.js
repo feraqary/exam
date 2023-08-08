@@ -382,7 +382,7 @@ function AddProject() {
                   is_shared: shared,
                   lat: lat?.toString() || '25',
                   lng: long?.toString() || '100',
-                  'broker_companies_id[]': values?.brokerCompanies?.map((broker) => broker?.id),
+                  'broker_companies_id[]': values?.brokerCompanies,
                   branch_developer_company_id: values?.subDeveloperCompanySelector?.id,
                   city_id: values?.locationCitySelector?.ID,
                   community_id: values?.locationCommunity?.ID,
@@ -503,7 +503,7 @@ function AddProject() {
                               disabled={props.values.detailsCountrySelect ? false : true}
                               placeholder="Select State"
                               options={SharedStates?.data || []}
-                              getOptionLabel={(state) => state[`${labelObject}`] || state?.state || state.Title || ''}
+                              getOptionLabel={(state) => state?.state || state.Title || ''}
                               style={{ xs: 12, lg: 4 }}
                               id="detailsStateSelector"
                               name="detailsStateSelector"
@@ -520,7 +520,7 @@ function AddProject() {
                               label="Broker Company"
                               placeholder="Select company"
                               options={brokerCompError ? [] : brokerComp?.data || []}
-                              getOptionLabel={(broker) => broker?.company_name || ''}
+                              getOptionLabel={(broker) => broker?.label || ''}
                               helperText="Please select a company"
                               style={{ xs: 12, lg: 4 }}
                               func={(newValue) => {
@@ -731,7 +731,7 @@ function AddProject() {
                         <MainCard title="Property Details">
                           <Grid container spacing={2} alignItems="center">
                             <AutoCompleteSelector
-                              label="Property Status"
+                              label="Completion Status"
                               required
                               placeholder="Select Property Status"
                               options={[

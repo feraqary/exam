@@ -55,7 +55,6 @@ const project = {
       icon: icons.IconPin,
 
       url: '/dashboard/project/project_management/local'
-
     },
     {
       id: 'international',
@@ -63,7 +62,13 @@ const project = {
       type: 'item',
       icon: icons.IconMapPin,
       url: '/dashboard/project/project_management/international'
-
+    },
+    {
+      id: 'create-category',
+      title: <FormattedMessage id="Create Category" />,
+      type: 'item',
+      icon: icons.IconMapPin,
+      url: '/dashboard/project/create_category'
     },
     {
       id: 'shared-projects',

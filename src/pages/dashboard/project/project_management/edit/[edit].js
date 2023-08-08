@@ -15,6 +15,7 @@ import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { Formik } from 'formik';
 import Layout from 'layout';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { gridSpacing } from 'store/constant';
 import { useGetDeveloperCompanyQuery, useGetSubCompanyAccordingToParentQuery } from 'store/services/company/companyApi';
@@ -27,18 +28,22 @@ import {
   useGetSubCommunitiesByCommunityQuery
 } from 'store/services/country/countryApi';
 import {
-  useCreateProjectMutation,
   useGetAllAmenitiesQuery,
   useGetAllfacilitiesQuery,
   useGetBrokerCompaniesByCitiesQuery,
+  useGetProjectByIdQuery,
   useGetPropertyTypeQuery,
   useGetViewQuery,
   useUpdateProjectMutation
 } from 'store/services/project/projectApi';
-
 import Categorization from '../../helper/Categorization';
 
 function AddProject() {
+  const router = useRouter();
+  const { project_id } = router.query;
+  const { data: ProjectToUpdate, loading: projectLoading } = useGetProjectByIdQuery(project_id);
+  const AutoFill = ProjectToUpdate?.data;
+  console.log('project: ', ProjectToUpdate);
   //is shared
   const [shared, setShared] = useState(false);
   const [countryLocationID, setCountryLocationID] = useState(null);
@@ -136,7 +141,7 @@ function AddProject() {
     const [polys, setPolys] = useState([]);
     useEffect(() => {
       console.log('polys: ', polys);
-      setFieldValues(`phases[${num}].polygonCoords`, polys);
+      setFieldValues(`phases[${num}].polygons`, polys);
     }, [polys]);
 
     if (isLoading) return null;
@@ -150,8 +155,8 @@ function AddProject() {
           helperText="Please enter phase name"
           style={{ xs: 12, lg: size }}
           type="text"
-          id={`phases[${num}].phaseName`}
-          name={`phases[${num}].phaseName`}
+          id={`phases[${num}].name`}
+          name={`phases[${num}].name`}
         />
         <InputText
           required
@@ -159,8 +164,8 @@ function AddProject() {
           placeholder="Number of Properties"
           helperText="Please enter number of properties"
           style={{ xs: 12, lg: size }}
-          id={`phases[${num}].NoOfProperties`}
-          name={`phases[${num}].NoOfProperties`}
+          id={`phases[${num}].no_of_unittypes`}
+          name={`phases[${num}].no_of_unittypes`}
           type="number"
         />
 
@@ -292,10 +297,22 @@ function AddProject() {
 
   // Retrieve nested facts arrays from propertyType and flatten them
   const facts = propertyType?.map((component) => component.facts?.map((fact) => fact));
+
   const Filtered = [...new Set([].concat(...facts))];
-  console.log(Filtered);
+  const uniqueFacts = [];
+  const uniqueLabels = {};
+  const filteredArray = Filtered.filter((obj) => {
+    if (!uniqueLabels[obj.label]) {
+      uniqueLabels[obj.label] = true;
+      return true;
+    }
+    return false;
+  });
+
+  console.log('fa: ', filteredArray);
+
   // Generate SinglePhaseComponents for each fact in the Filtered array
-  const SinglePhaseInputs = Filtered?.map((fact) => SinglePhaseComponents(fact.label));
+  const SinglePhaseInputs = filteredArray?.map((fact) => SinglePhaseComponents(fact.label));
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
@@ -304,28 +321,36 @@ function AddProject() {
           <Grid container spacing={gridSpacing}>
             <Formik
               initialValues={{
-                projectTitle: '',
-                brokerCompanies: null,
+                projectTitle: AutoFill?.label,
+                brokerCompanies: AutoFill?.borker_companies,
                 detailsCountrySelect: '',
                 detailsStateSelector: '',
-                masterDeveloperSelector: '',
-                subDeveloperCompanySelector: '',
-                phaseType: 'single',
-                phases: [{ id: null, phaseName: '', NoOfProperties: null, polygonCoords: [] }],
+                masterDeveloperSelector: AutoFill?.parent_developer_company,
+                subDeveloperCompanySelector: AutoFill?.branch_developer_company,
+                phaseType: AutoFill?.phases.length > 0 ? 'multiple' : 'single',
+                phases: AutoFill?.phases,
+                phases: AutoFill?.phases.map((phaseInfo, i) => {
+                  return {
+                    id: phaseInfo.id,
+                    name: phaseInfo.label,
+                    no_of_unittypes: phaseInfo.no_of_unittypes_in_phase,
+                    polygons: phaseInfo.phase_polygon
+                  };
+                }),
                 numberofPhases: 1,
                 amenities: [],
                 isshared: shared,
-                locationCountrySelect: '',
+                locationCountrySelect: AutoFill?.country,
                 locationAddress: '',
-                locationCitySelector: '',
+                locationCitySelector: AutoFill?.city,
                 locationDistrict: '',
-                locationState: '',
-                locationCommunity: '',
-                locationSubCommunity: '',
+                locationState: AutoFill?.state,
+                locationCommunity: AutoFill?.community,
+                locationSubCommunity: AutoFill?.sub_community,
                 propertyStatus: '',
                 place: '',
-                lat: 27,
-                long: 25,
+                lat: AutoFill?.lat,
+                long: AutoFill?.lng,
                 propertyType: propertyType,
                 plotAreaMin: null,
                 plotAreaMax: null,
@@ -373,6 +398,7 @@ function AddProject() {
                 console.log();
 
                 const ProjectData = {
+                  id: parseInt(project_id),
                   min_area: values?.plotAreaMin?.toString(),
                   max_area: values?.plotAreaMax?.toString(),
                   facts: values.facts
@@ -385,11 +411,10 @@ function AddProject() {
                   lng: long?.toString() || '100',
                   'broker_companies_id[]': values?.brokerCompanies?.map((broker) => broker?.id),
                   branch_developer_company_id: values?.subDeveloperCompanySelector?.id,
-                  city_id: values?.locationCitySelector?.ID,
-                  community_id: values?.locationCommunity?.ID,
+                  city_id: values?.locationCitySelector?.id,
+                  community_id: values?.locationCommunity?.id,
                   description: values?.propertyDescription,
                   description_arabic: values?.arabicPropertyDescription,
-                  // 'facilities_id[]': '',
                   'facilities_id[]': values.facilities,
                   'amenities_id[]': values.amenities,
                   area_range_id: 14,
@@ -398,9 +423,9 @@ function AddProject() {
                     values?.phaseType == 'multiple'
                       ? values?.phases?.map((phase) => {
                           return {
-                            name: phase?.phaseName,
-                            no_of_unittypes: phase?.NoOfProperties,
-                            polygons: phase?.polygonCoords?.map((poly) => {
+                            name: phase?.name,
+                            no_of_unittypes: phase?.no_of_unittypes,
+                            polygons: phase?.polygons?.map((poly) => {
                               return {
                                 lat: poly?.lat,
                                 lng: poly?.lng
@@ -413,10 +438,10 @@ function AddProject() {
                   property_title: values?.propertyTitle,
                   property_title_arabic: values?.arabicPropertyTitle,
                   ref_number: '',
-                  state_id: values?.locationState?.ID,
-                  sub_community_id: values?.locationSubCommunity?.ID,
+                  state_id: values?.locationState?.id,
+                  sub_community_id: values?.locationSubCommunity?.id,
                   'property_type_id[]': propertyType?.map((type) => type?.id),
-                  country_id: values?.locationCountrySelect?.ID
+                  country_id: values?.locationCountrySelect?.id
                 };
 
                 const data = JSON.stringify(ProjectData);
@@ -504,7 +529,7 @@ function AddProject() {
                               disabled={props.values.detailsCountrySelect ? false : true}
                               placeholder="Select State"
                               options={SharedStates?.data || []}
-                              getOptionLabel={(state) => state[`${labelObject}`] || state?.state || state.Title || ''}
+                              getOptionLabel={(state) => state?.state || state.Title || ''}
                               style={{ xs: 12, lg: 4 }}
                               id="detailsStateSelector"
                               name="detailsStateSelector"
@@ -521,7 +546,7 @@ function AddProject() {
                               label="Broker Company"
                               placeholder="Select company"
                               options={brokerCompError ? [] : brokerComp?.data || []}
-                              getOptionLabel={(broker) => broker?.company_name || ''}
+                              getOptionLabel={(broker) => broker?.label || ''}
                               helperText="Please select a company"
                               style={{ xs: 12, lg: 4 }}
                               func={(newValue) => {
@@ -642,7 +667,7 @@ function AddProject() {
 
                         <AutoCompleteSelector
                           style={{ xs: 12, lg: 6 }}
-                          disabled={!countryID}
+                          // disabled={!countryID}
                           label="State"
                           placeholder="State"
                           type="text"
@@ -667,7 +692,7 @@ function AddProject() {
                         <AutoCompleteSelector
                           label="City"
                           placeholder="Select City"
-                          disabled={!stateID}
+                          // disabled={!stateID}
                           options={CityByState?.data || []}
                           getOptionLabel={(city) => city?.city || city?.City || ''}
                           style={{ xs: 12, lg: 6 }}
@@ -693,7 +718,7 @@ function AddProject() {
                           label="Community"
                           placeholder="Community"
                           type="text"
-                          disabled={!cityID}
+                          // disabled={!cityID}
                           id="locationCommunity"
                           name="locationCommunity"
                           helperText="Please enter the location's community"
@@ -708,7 +733,7 @@ function AddProject() {
                         <AutoCompleteSelector
                           label="Sub Community"
                           placeholder="Sub Community"
-                          disabled={!communityID}
+                          // disabled={!communityID}
                           type="text"
                           id="locationSubCommunity"
                           name="locationSubCommunity"

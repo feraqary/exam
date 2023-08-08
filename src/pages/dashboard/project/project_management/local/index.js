@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, Box, Button, DialogActions, IconButton, Dialog, DialogContent } from '@mui/material';
+import { Grid, Box, Button, DialogActions, IconButton, Dialog, DialogContent, CircularProgress, Typography } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -11,7 +11,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { useGetLocalProjectsQuery, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
+import {
+  useGetLocalProjectsQuery,
+  useUpdateProjectStatusMutation,
+  useUpdateProjectsVerifyStatusMutation,
+  useUpdateProjectsIsEnabledMutation
+} from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import ProjectRankSelector from '../../project_rank';
@@ -19,7 +24,29 @@ import Link from 'next/link';
 import 'react-toastify/dist/ReactToastify.css';
 
 // ==============================|| Manage Local Projects ||============================== //
-
+function CircularProgressWithLabel(props) {
+  return (
+    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+      <CircularProgress variant="determinate" {...props} />
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <Typography variant="caption" component="div" color="text.secondary">
+          {`${Math.round(props.value)}%`}
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -30,9 +57,11 @@ const localProjects = () => {
     pageIndex: 0,
     pageSize: 5
   });
+
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
 
   const [blockProject, result] = useUpdateProjectStatusMutation();
+
   useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Project has been Sucessfully Blocked!');
@@ -100,7 +129,13 @@ const localProjects = () => {
       }
     },
 
-    { accessorKey: 'quality_score', header: 'Quality Score' },
+    {
+      accessorKey: 'quality_score',
+      header: 'Quality Score',
+      Cell: ({ renderedCellValue, row }) => {
+        return <CircularProgressWithLabel value={row.original.quality_score} />;
+      }
+    },
 
     {
       accessorKey: 'no_of_phases',
@@ -118,9 +153,20 @@ const localProjects = () => {
       accessorKey: 'endis',
       header: 'Enable / Disable',
       Cell: ({ renderedCellValue, row }) => {
+        const [updateIsEnabled, IsEnabledresult] = useUpdateProjectsIsEnabledMutation();
+        const [enabled, setEnabled] = useState(null);
+
+        useEffect(() => {
+          console.log('project_id', row.original.id, enabled);
+          const formData = new FormData();
+          formData.append('project_id', row.original.id);
+          formData.append('is_enabled', enabled);
+          updateIsEnabled(formData);
+        }, [enabled]);
+
         return (
           <>
-            <FormControlLabel control={<Switch defaultChecked />} />
+            <Switch checked={enabled} onChange={() => setEnabled((prev) => !prev)} />
           </>
         );
       }
@@ -130,6 +176,8 @@ const localProjects = () => {
       header: 'Action',
       Cell: ({ renderedCellValue, row }) => {
         const [open, setOpen] = useState(false);
+        const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
+        const [verify, setVerify] = useState(false);
         const handleClickOpen = () => {
           setOpen(true);
         };
@@ -143,6 +191,14 @@ const localProjects = () => {
           formData.append('status', '4');
           formData.append('company_type', row.original.ProjectType);
         };
+        const handleVerifyStatus = () => {
+          setVerify((prev) => !prev);
+          const formData = new FormData();
+          formData.append('project_id', row.original.id);
+          formData.append('is_verified', verify);
+          updateVerifyStatus(formData);
+        };
+
         return (
           <>
             <Box
@@ -163,13 +219,7 @@ const localProjects = () => {
                 <Button variant="contained" color="primary">
                   View Live
                 </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    console.log(row.original.phase_type);
-                  }}
-                >
+                <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
                   Verify
                 </Button>
                 <Link
@@ -229,6 +279,18 @@ const localProjects = () => {
                     </Button>
                   </Link>
                 )}
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/rating/${row.original.id}`,
+                    query: {
+                      id: row.original.id
+                    }
+                  }}
+                >
+                  <Button color="primary" variant="contained">
+                    Rating
+                  </Button>
+                </Link>
                 <Button color="primary" variant="contained">
                   Manage Documents
                 </Button>

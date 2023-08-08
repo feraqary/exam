@@ -71,6 +71,7 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['projectStatus']
     }),
+
     // GET ALL SHARED PROJECTS API
     getSharedProjects: builder.query({
       query(pagination) {
@@ -130,11 +131,87 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+    //GET PROJECT BY ID
+    getProject: builder.query({
+      query(id) {
+        return {
+          url: `dashboard/getProject/${id}`,
+          method: 'GET'
+        };
+      }
+    }),
+    //GET VIEW
+    getView: builder.query({
+      query() {
+        return {
+          url: `views/getAllViews?page_no=1&page_size=10`,
+          method: 'GET'
+        };
+      }
+    }),
+    //GET VIEW
+    getAllAmenities: builder.query({
+      query() {
+        return {
+          url: `facilities/getAllAmenititesByCategory/1`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    // GET ALL SHARED PROJECTS API
+    getRatings: builder.query({
+      query({ pageIndex, pageSize, id }) {
+        return {
+          url: `dashboard/getAllReviewsByProject?page_no=${pageIndex}&page_size=${pageSize}&project_id=${1}`,
+          method: 'GET'
+        };
+      }
+    }),
+    // GET PROJECTS DOCUMENTS API
+    getDocsByProjectId: builder.query({
+      query({ pageIndex, pageSize, id }) {
+        return {
+          url: `dashboard/getAllDocsByProject?project_id=${1}&page_no=${pageIndex}&page_size=${pageSize}`,
+          method: 'GET'
+        };
+      }
+    }),
+    // GET DOCUMENT CATEGORIES API
+    getDocsCategories: builder.query({
+      query() {
+        return {
+          url: `docscategory/getAllDocCategories?page_no=1&page_size=100`,
+          method: 'GET'
+        };
+      }
+    }),
+
     CreateProject: builder.mutation({
       query({ data, isMulti }) {
-        console.log('xxxx', isMulti);
         return {
           url: `dashboard/createProject/${isMulti ? '0' : '1'}`,
+          method: 'POST',
+          body: data
+        };
+      }
+    }),
+    //CREATE DOCS CATEGORY
+    CreateCategory: builder.mutation({
+      query(data) {
+        return {
+          url: `docscategory/createDocCategory`,
+          method: 'POST',
+          body: data
+        };
+      },
+      invalidatesTags: ['DocumentsCategory']
+    }),
+    //CREATE DOCS SUB CATEGORY
+    CreateSubCategory: builder.mutation({
+      query(data) {
+        return {
+          url: `docscategory/createDocSubCategory`,
           method: 'POST',
           body: data
         };
@@ -163,38 +240,33 @@ export const projectApi = api.injectEndpoints({
 
     //updateproject
     updateProject: builder.mutation({
-      query: (updateProject) => {
+      query: ({ data, isMulti }) => {
         return {
-          url: `dashboard/updateProject/1`,
+          url: `dashboard/updateProject/${isMulti ? '0' : '1'}`,
           method: 'PUT',
-          body: updateProject
+          body: data
         };
       }
     }),
-    //GET PROJECT BY ID
-    getProject: builder.query({
-      query(id) {
+
+    //UPDATE PROJECTS VERIFY STATUS
+    updateProjectsVerifyStatus: builder.mutation({
+      query(submit) {
         return {
-          url: `dashboard/getProject/${id}`,
-          method: 'GET'
+          url: `dashboard/updatePorjectVerifyStatus`,
+          method: 'PUT',
+          body: submit
         };
-      }
+      },
+      providesTags: ['projectVerifyStatus']
     }),
-    //GET VIEW
-    getView: builder.query({
-      query() {
+    //UPDATE PROJECTS
+    updateProjectsIsEnabled: builder.mutation({
+      query(submit) {
         return {
-          url: `views/getAllViews?page_no=1&page_size=10`,
-          method: 'GET'
-        };
-      }
-    }),
-    //GET VIEW
-    getAllAmenities: builder.query({
-      query() {
-        return {
-          url: `facilities/getAllAmenititesByCategory/1`,
-          method: 'GET'
+          url: `dashboard/updateProjectIsEnable`,
+          method: 'PUT',
+          body: submit
         };
       }
     })
@@ -202,9 +274,15 @@ export const projectApi = api.injectEndpoints({
 });
 
 export const {
+  useGetDocsCategoriesQuery,
+  useCreateCategoryMutation,
+  useCreateSubCategoryMutation,
+  useGetDocsByProjectIdQuery,
+  useUpdateProjectsIsEnabledMutation,
   useGetLocalProjectsQuery,
   useGetProjectQuery,
   useGetInternationalProjectsQuery,
+  useUpdateProjectsVerifyStatusMutation,
   useUpdateProjectRankMutation,
   useGetProjectsByStatusQuery,
   useUpdateProjectStatusMutation,
@@ -216,7 +294,8 @@ export const {
   useGetAllfacilitiesQuery,
   useGetBrokerCompaniesByCitiesQuery,
   useCreateProjectMutation,
-  useGetViewQuery
+  useGetViewQuery,
+  useGetRatingsQuery
   // useDeleteProjectMutation,
   // useGetProjectUpdateQuery
 } = projectApi;
