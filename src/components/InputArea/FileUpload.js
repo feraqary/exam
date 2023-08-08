@@ -24,10 +24,66 @@ import { useField } from 'formik';
  * @returns {JSX.Element} The rendered FileUpload component.
  */
 
-const FileUpload = forwardRef(
-  ({ label, placeholder, helperText, image, style, setFieldValue, id, required, helperInfo, preview, ...rest }, ref) => {
-    const [field, meta] = useField(rest);
+const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, setFieldValue, id, required, helperInfo, ...rest }, ref) => {
+  console.log(rest);
+  const [field, meta] = useField(rest);
 
+  return (
+    <>
+      <InputLayout
+        label={label}
+        helperText={helperText}
+        style={style}
+        metaError={meta.error}
+        metaTouched={meta.touched}
+        required={required}
+        helperInfo={helperInfo}
+      >
+        <TextField
+          {...field}
+          required={required}
+          type="file"
+          id={id}
+          name={field.name}
+          fullWidth
+          placeholder={placeholder}
+          value={field.value?.logoImage}
+          inputRef={ref}
+          onChange={(e) => {
+            setFieldValue(field.name, e.target.files[0]);
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <UploadFile />
+              </InputAdornment>
+            )
+          }}
+          error={meta.error && meta.touched}
+        />
+      </InputLayout>
+
+      {image && (
+        <Grid item xs={3} lg={style.lg} alignContent="right">
+          {field.value ? (
+            <img
+              src={field.value && !meta.error && URL.createObjectURL(field.value)}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+            />
+          ) : (
+            <img src="/assets/image_preveiw.jpg" alt={image.alt} width={100} height={100} />
+          )}
+        </Grid>
+      )}
+    </>
+  );
+});
+
+export const MultipleFileUpload = forwardRef(
+  ({ label, placeholder, helperText, image, style, setFieldValue, id, required, helperInfo, ...rest }, ref) => {
+    const [field, meta] = useField(rest);
     return (
       <>
         <InputLayout
@@ -41,6 +97,7 @@ const FileUpload = forwardRef(
         >
           <TextField
             {...field}
+            multiple
             required={required}
             type="file"
             id={id}
@@ -62,70 +119,9 @@ const FileUpload = forwardRef(
             error={meta.error && meta.touched}
           />
         </InputLayout>
-
-        {image && (
-          <Grid item xs={3} lg={style.lg} alignContent="right">
-            {field.value ? (
-              <img
-                src={field.value && !meta.error && URL.createObjectURL(field.value)}
-                alt={image.alt}
-                width={image.width}
-                height={image.height}
-              />
-            ) : (
-              <img src="/assets/image_preveiw.jpg" alt={image.alt} width={100} height={100} />
-            )}
-          </Grid>
-        )}
       </>
     );
   }
 );
-
-// const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, setFieldValue, id, required, ...rest }, ref) => {
-//   const [field, meta] = useField(rest);
-
-//   return (
-//     <>
-//       <InputLayout label={label} helperText={helperText} style={style} required={required}>
-//         <TextField
-//           required={required}
-//           type="file"
-//           id={id}
-//           name={field.name}
-//           fullWidth
-//           placeholder={placeholder}
-//           value={field.value?.logoImage}
-//           inputRef={ref}
-//           onChange={(e) => {
-//             setFieldValue(field.name, e.target.files[0]);
-//           }}
-//           InputProps={{
-//             endAdornment: (
-//               <InputAdornment position="end">
-//                 <UploadFile />
-//               </InputAdornment>
-//             )
-//           }}
-//           error={meta.error && meta.touched}
-//         />
-//       </InputLayout>
-//       {image && (
-//         <Grid item xs={3} lg={style.lg} alignContent="right">
-//           {field.value ? (
-//             <img
-//               src={field.value && !meta.error && URL.createObjectURL(field.value)}
-//               alt={image.alt}
-//               width={image.width}
-//               height={image.height}
-//             />
-//           ) : (
-//             <img src="/assets/image_preveiw.jpg" alt={image.alt} width={100} height={100} />
-//           )}
-//         </Grid>
-//       )}
-//     </>
-//   );
-// });
 
 export default FileUpload;

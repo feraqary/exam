@@ -1,11 +1,12 @@
 // material-ui
-import { Grid, Box, Button, CircularProgress, Checkbox, Typography } from '@mui/material';
+import { Grid, Box, CircularProgress, Button, Checkbox, Typography } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
+import { useState } from 'react';
 
 // ==============================|| Reviews datatable ||============================== //
 
@@ -222,20 +223,32 @@ const data = [
   }
 ];
 
-function InternationalPropertiesHub() {
+function InternationalPropertyHub() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
   return (
     <Page title="International Property Hub">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={data}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={false}
+            loading={false}
+            rowCount={ColumnHeaders.length}
+          />
         </Grid>
       </Grid>
     </Page>
   );
 }
 
-InternationalPropertiesHub.getLayout = function getLayout(page) {
+InternationalPropertyHub.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default InternationalPropertiesHub;
+export default InternationalPropertyHub;

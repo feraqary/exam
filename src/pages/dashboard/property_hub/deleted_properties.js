@@ -7,6 +7,7 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 
 import Table from 'components/Table/Table';
+import { useState } from 'react';
 
 // ==============================|| Reviews datatable ||============================== //
 
@@ -167,11 +168,23 @@ const data = [
 ];
 
 function DeletedPropertiesHub() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
   return (
     <Page title="Deleted Property Hub">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={data} columnHeaders={ColumnHeaders} />
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={data}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={false}
+            loading={false}
+            rowCount={ColumnHeaders.length}
+          />
         </Grid>
       </Grid>
     </Page>

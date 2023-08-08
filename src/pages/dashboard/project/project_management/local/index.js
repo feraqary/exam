@@ -15,58 +15,34 @@ import {
   useGetLocalProjectsQuery,
   useUpdateProjectStatusMutation,
   useUpdateProjectsVerifyStatusMutation,
-  useUpdateProjectsIsEnabledMutation
+  useUpdateProjectsIsEnabledMutation,
+  useUpdateProjectRankMutation
 } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import ProjectRankSelector from '../../project_rank';
-import Link from 'next/link';
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastSuccess, ToastError } from 'utils/toast';
+import TableSelectorOption from 'components/InputArea/TableSelectorOption';
+import Link from 'next/link';
+import Container from 'components/Elements/Container';
 
-// ==============================|| Manage Local Projects ||============================== //
-function CircularProgressWithLabel(props) {
-  return (
-    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-      <CircularProgress variant="determinate" {...props} />
-      <Box
-        sx={{
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          position: 'absolute',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        <Typography variant="caption" component="div" color="text.secondary">
-          {`${Math.round(props.value)}%`}
-        </Typography>
-      </Box>
-    </Box>
-  );
-}
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+// ==============================|| Manage International Projects ||============================== //
+
 const localProjects = () => {
-  const [docsOpen, setDocsOpen] = useState(false);
-  const [updateDocs, setUpdateDocs] = useState({ project: null, id: null });
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
 
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
-
-  const [blockProject, result] = useUpdateProjectStatusMutation();
+  const [updateStatus, result] = useUpdateProjectStatusMutation();
 
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Project has been Sucessfully Blocked!');
+      ToastSuccess('Project status successfully updated');
     }
   }, [result.isSuccess]);
+
   useEffect(() => {
     if (result.isError) {
       const { data } = result.error;
@@ -75,30 +51,30 @@ const localProjects = () => {
     }
   }, [result.isError]);
 
-  const handleDocsOpen = () => {
-    setDocsOpen(true);
-  };
-  const handleDocsClose = () => {
-    setDocsOpen(false);
-  };
   const ColumnHeaders = [
     {
       accessorKey: 'id',
-      header: 'Reference Number ',
+      header: 'Project ID ',
       title: (
-        <Tooltip title={'Ref.No'}>
-          <span>Reference Number</span>
+        <Tooltip title={'Project ID'}>
+          <span>Project ID</span>
         </Tooltip>
       )
     },
     {
-      accessorKey: 'projectStatus',
-      header: 'Project Rank',
-      Cell: ({ renderedCellValue, row }) => (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <ProjectRankSelector value={row.original.rank_id} ProjectType={row.original.phase_type} id={row.original.id} />
-        </Box>
-      )
+      accessorKey: 'rank_id',
+      header: 'Company Rank',
+      Cell: ({ row }) => {
+        const formData = new FormData();
+        const func = useUpdateProjectRankMutation();
+        formData.append('project_id', row.original.id);
+
+        return (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <TableSelectorOption value={row.original.rank_id} formData={formData} func={func} />
+          </Box>
+        );
+      }
     },
     {
       accessorKey: 'project_name',
@@ -112,7 +88,7 @@ const localProjects = () => {
       accessorKey: 'parent_developer_company',
       header: 'Developer Company',
       Cell: ({ renderedCellValue }) => {
-        return <Tooltip title="Developer Company Name"> {renderedCellValue}</Tooltip>;
+        return <Tooltip title="Developer Company Name"> Developer Company</Tooltip>;
       }
     },
     {
@@ -187,9 +163,9 @@ const localProjects = () => {
 
         const handleBlock = () => {
           const formData = new FormData();
-          formData.append('project_id', row.original.id);
-          formData.append('status', '4');
-          formData.append('company_type', row.original.ProjectType);
+          formData.append('id', row.original.id);
+          formData.append('status_id', status);
+          updateStatus(formData);
         };
         const handleVerifyStatus = () => {
           setVerify((prev) => !prev);
@@ -204,7 +180,7 @@ const localProjects = () => {
             <Box
               sx={{
                 display: 'flex',
-                alignItems: 'center',
+                // alignItems: 'center',
                 gap: '1rem',
                 flexDirection: 'column'
               }}
@@ -219,9 +195,11 @@ const localProjects = () => {
                 <Button variant="contained" color="primary">
                   View Live
                 </Button>
+
                 <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
                   Verify
                 </Button>
+
                 <Link
                   href={{
                     pathname: `/dashboard/project/project_management/edit/${row.original.id}`,
@@ -233,14 +211,17 @@ const localProjects = () => {
                   <Button variant="contained">Edit </Button>
                 </Link>
 
-                <Button variant="contained" color="primary">
-                  Listing Properties
-                </Button>
+                <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
+                  <Button variant="contained" color="primary">
+                    Listing Properties
+                  </Button>
+                </Link>
 
                 <Button variant="contained" color="error">
                   Block
                 </Button>
               </Box>
+              {/* //================================= */}
               <Box
                 sx={{
                   display: 'flex',
@@ -291,19 +272,26 @@ const localProjects = () => {
                     Rating
                   </Button>
                 </Link>
-                <Button color="primary" variant="contained">
-                  Manage Documents
-                </Button>
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
+                    query: {
+                      id: row.original.id
+                    }
+                  }}
+                >
+                  <Button color="primary" variant="contained">
+                    Manage Documents
+                  </Button>
+                </Link>
+
                 <Button variant="contained" color="primary">
                   Add Promotion
                 </Button>
+                <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
+                  Delete
+                </Button>
               </Box>
-              <Dialog maxWidth={'xl'} open={open} onClose={handleClose} TransitionComponent={Transition}>
-                <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
-                  <IconButton>{/* <CloseIcon /> */}</IconButton>
-                </DialogActions>
-                <DialogContent></DialogContent>
-              </Dialog>
             </Box>
           </>
         );
@@ -315,29 +303,48 @@ const localProjects = () => {
   return (
     <Page title="Manage Project">
       <ToastContainer />
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table
-            columnHeaders={ColumnHeaders}
-            data={localProjectsData?.data || []}
-            loading={isLoading}
-            pagination={pagination}
-            setPagination={setPagination}
-            isFetching={isFetching}
-            rowCount={localProjectsData?.Total}
-          />
+      <Container title="Manage Local Projects" style={{ xs: 12 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              columnHeaders={ColumnHeaders}
+              data={localProjectsData?.data || []}
+              loading={isLoading}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={isFetching}
+              rowCount={localProjectsData?.Total}
+            />
+          </Grid>
         </Grid>
-      </Grid>
-
-      <Dialog maxWidth={'xl'} open={docsOpen} onClose={handleDocsClose} TransitionComponent={Transition}>
-        <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleDocsClose}>
-          <IconButton></IconButton>
-        </DialogActions>
-        <DialogContent>{/* <Documents comp={docs} /> */}</DialogContent>
-      </Dialog>
+      </Container>
     </Page>
   );
 };
+
+function CircularProgressWithLabel(props) {
+  return (
+    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+      <CircularProgress variant="determinate" {...props} />
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <Typography variant="caption" component="div" color="text.secondary">
+          {`${Math.round(props.value)}%`}
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
 
 localProjects.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;

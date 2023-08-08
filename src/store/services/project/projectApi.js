@@ -2,6 +2,28 @@ import { api } from '../api';
 
 export const projectApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    //CREATE PROJECT DOCUMENT API
+    createProjectDoc: builder.mutation({
+      query(formData) {
+        return {
+          url: `api/dashboard/createProjectDoc`,
+          method: 'POST',
+          body: formData
+        };
+      }
+    }),
+
+    //CREATE PROJECT API
+    CreateProject: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/createProject/1`,
+          method: 'POST',
+          body: data
+        };
+      }
+    }),
+
     //GET LOCAL Projects API
 
     getPropertyType: builder.query({
@@ -18,25 +40,26 @@ export const projectApi = api.injectEndpoints({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getAllLocalProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
+          url: `dashboard/getAllLocalProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=pakistan`,
           method: 'GET'
         };
       },
       providesTags: ['LocalProjects']
     }),
+
     //GET International Projects API
     getInternationalProjects: builder.query({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getAllIntProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
+          url: `dashboard/getAllIntProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=pakistan`,
           method: 'GET'
         };
       },
-      providesTags: ['InternationalProject']
+      providesTags: ['InternationalProjects']
     }),
-    //update Project
 
+    //update Project
     getProjectUpdate: builder.mutation({
       query(formData) {
         return {
@@ -80,28 +103,37 @@ export const projectApi = api.injectEndpoints({
           url: `dashboard/getAllSharedProjects?page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
-      }
+      },
+      providesTags: ['SharedProjects']
     }),
 
-    //GET ALL LOCAL PROJECTS API
-    getLocalProjects: builder.query({
-      query(pagination) {
+    // GET ALL PROJECTS BY STATUS
+    getProjectsByStatus: builder.query({
+      query({ pagination, status }) {
         const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getAllLocalProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=pakistan`,
+          url: `dashboard/getAllProjectsByStatus?page_no=${pageIndex + 1}&page_size=${pageSize}&status_id=${status}`,
           method: 'GET'
         };
       },
-      providesTags: ['LocalProject']
+      providesTags: ['ProjectStatus']
     }),
 
-    // GET ALL INTERNATIONAL PROJECTS API
-    getInternationalProjects: builder.query({
-      query(pagination) {
-        const { pageIndex, pageSize } = pagination;
-        console.log(pagination);
+    //GET PROJECTS BY ID API
+    getProjectById: builder.query({
+      query(ProjectId) {
         return {
-          url: `dashboard/getAllIntProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
+          url: `dashboard/getProject/${ProjectId}`,
+          method: 'GET'
+        };
+      }
+    }),
+    //GET ALL FACILITIES API
+
+    getAllfacilities: builder.query({
+      query(_) {
+        return {
+          url: `facilities/getAllFacilitiesByCategory/1`,
           method: 'GET'
         };
       }
@@ -115,14 +147,7 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
-    getAllfacilities: builder.query({
-      query(_) {
-        return {
-          url: `facilities/getAllFacilitiesByCategory/1`,
-          method: 'GET'
-        };
-      }
-    }),
+
     getBrokerCompaniesByCities: builder.query({
       query({ id, isState }) {
         return {
@@ -196,6 +221,7 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+
     //CREATE DOCS CATEGORY
     CreateCategory: builder.mutation({
       query(data) {
@@ -217,14 +243,49 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
-    updateProjectStatus: builder.query({
-      query(data) {
+
+    //GET ALL DOCUMENT SUBCATEGORY BY CATEGORY ID API
+    getSubCategoryById: builder.query({
+      query(categoryId) {
         return {
-          url: `dashboard/getAllProjectsByStatus`,
+          url: `docscategory/getAllSubCategoriesByCategory/${categoryId}`,
           method: 'GET'
         };
       }
     }),
+
+    //GET DOCS BY PROJECT ID API
+    getDocByProjectId: builder.query({
+      query({ pagination, project_id }) {
+        const { pageIndex, pageSize } = pagination;
+        return {
+          url: `dashboard/getAllDocsByProject?project_id=${project_id}&page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    //GET PROPERTY TYP
+    getPropertyType: builder.query({
+      query() {
+        return {
+          url: `propertyTypes/getPropertyTypes`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    //GET PROPERTIES BY PROJECT ID API
+    getPropertyByProjectId: builder.query({
+      query({ project_id, pagination }) {
+        const { pageIndex, pageSize } = pagination;
+        return {
+          url: `dashboard/getAllProjectPropertiesByProject?project_id=${project_id}&page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
+        };
+      }
+    }),
+
     //UPDATE Project STATUS API
     updateProjectStatus: builder.mutation({
       query(data) {
@@ -235,7 +296,19 @@ export const projectApi = api.injectEndpoints({
           body: data
         };
       },
-      invalidatesTags: ['projectStatus']
+      invalidatesTags: ['InternationalProjects', 'LocalProjects', 'ProjectStatus', 'SharedProjects']
+    }),
+
+    //UPDATE PROJECT RANK api
+    updateProjectRank: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/updatePorjectRank`,
+          method: 'PUT',
+          body: data
+        };
+      },
+      invalidatesTags: ['localProjects', 'InternationalProjects', 'SharedProjects']
     }),
 
     //updateproject
@@ -283,10 +356,16 @@ export const {
   useGetProjectQuery,
   useGetInternationalProjectsQuery,
   useUpdateProjectsVerifyStatusMutation,
-  useUpdateProjectRankMutation,
+  useGetDocByProjectIdQuery,
+  useGetAllDocCategoriesQuery,
+  useGetSubCategoryByIdQuery,
+  useGetPropertyByProjectIdQuery,
+  useCreateProjectDocMutation,
   useGetProjectsByStatusQuery,
   useUpdateProjectStatusMutation,
+  useUpdateProjectRankMutation,
   useUpdateProjectMutation,
+  useDeleteProjectMutation,
   useGetPropertyTypeQuery,
   useGetSharedProjectsQuery,
   useGetProjectByIdQuery,
@@ -297,5 +376,4 @@ export const {
   useGetViewQuery,
   useGetRatingsQuery
   // useDeleteProjectMutation,
-  // useGetProjectUpdateQuery
 } = projectApi;

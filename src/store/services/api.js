@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
 const token =
-  'v2.local.K3GOK40Cst1DskSbgXDolmSy7IpRrYwj1P34rzgxw2g5PiTmZPY8wFgtFOy_txwcrU6fpZ8eCQabFqRU4Q11ZIRVaE67KUb8hW62yMSqOoBcAs6TTa3HfTLB7AZTfNuJphHmfqSJOeckm8QU78juYP7qr9HD5n-8AN5ud0EO5-H5fUkwrV_2Z1g9RB494-OTLw6DDrFh2ltSr152PdYwdYwmKcVjd2JmDxoTH7aeN5J4loBkLmX6jScFcSgTErUUlYkJnq32o33hQYs6zg.bnVsbA';
+  'v2.local.k8F2wvdu15ngyY-rcEU5lGxMpvTu8WtT0umsGZuEwwyF75knF0NMa79IOZ2U3K2plIBetsCHOz5Yc_Ss5XbFueRfDSTj2sSWelMI6bK9uSFczDiUo7cbJ0W2OxyhjbroQ2QbrRoL04TVKPhn7GS_-0yskdR8hZyLsnyJ23ba6JQcbuQZ9KN1ePKBvhkNXHyc_77_iFzrWMTClvmXRDkJO4cQbc9aF4Gmi56-c6-yXfXrAOUZVDctzilpKlkremEqJMDFpdX311ELcFvLrw.bnVsbA';
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
@@ -41,7 +41,6 @@ export const api = createApi({
    * Tag types must be defined in the original API definition
    * for any tags that would be provided by injected endpoints
    */
-
   tagTypes: [
     'LocalCompanies',
     'InternationalCompanies',
@@ -49,11 +48,11 @@ export const api = createApi({
     'CompaniesByRank',
     'subCompanies',
     'ProjectStatus',
-    'InternationalProjects',
     'LocalProjects',
-    "DocumentsCategory"
+    'InternationalProjects',
+    'SharedProjects',
+    'ProjectDocuments'
   ],
-
   /**
    * This api has endpoints injected in adjacent files,
    * which is why no endpoints are shown below.

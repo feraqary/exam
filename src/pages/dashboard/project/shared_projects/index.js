@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, Box, Button, Chip } from '@mui/material';
+import { Grid, Box, Button } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -11,27 +11,23 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import {
-  useGetInternationalProjectsQuery,
-  useUpdateProjectStatusMutation,
-  useUpdateProjectRankMutation
-} from 'store/services/project/projectApi';
+import { useUpdateProjectStatusMutation, useUpdateProjectRankMutation, useGetSharedProjectsQuery } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
+import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
-import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
 
 // ==============================|| Manage international_ Projects ||============================== //
 
-const international_Projects = () => {
+const SharedProjects = () => {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
-  const { data: international_ProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
+  const { data: sharedProjectsData, isError, error, isLoading, isFetching } = useGetSharedProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
 
   useEffect(() => {
@@ -84,17 +80,18 @@ const international_Projects = () => {
     {
       accessorKey: 'parent_developer_company',
       header: 'Developer Company',
-      Cell: ({ renderedCellValue }) => {
-        return <Tooltip title=" Developer Company Name: ">Developer Company</Tooltip>;
+      render: (rowData) => {
+        return <Tooltip title="Developer Company Name">Developer Company</Tooltip>;
       }
     },
     {
       accessorKey: 'rating',
       header: 'Rating',
       Cell: ({ renderedCellValue, row }) => {
-        return <Rating name="read-only" value={international_ProjectsData?.data[row.index].Rating} readOnly />;
+        return <Rating name="read-only" value={sharedProjectsData?.data[row.index].Rating} readOnly />;
       }
     },
+
     { accessorKey: 'quality_score', header: 'Quality Score' },
 
     {
@@ -102,7 +99,7 @@ const international_Projects = () => {
       header: 'Number of Phases'
     },
     {
-      accessorKey: 'phasesss',
+      accessorKey: 'phasessss',
       header: 'Phases',
       cell: ({ renderedCellValue, row }) => {
         return row.original.phases.map((phase) => {
@@ -115,6 +112,7 @@ const international_Projects = () => {
       accessorKey: 'phase_type',
       header: 'Phase Type'
     },
+
     {
       accessorKey: 'endis',
       header: 'Enable / Disable',
@@ -122,6 +120,7 @@ const international_Projects = () => {
         return <FormControlLabel control={<Switch defaultChecked />} />;
       }
     },
+
     {
       accessorKey: 'action',
       header: 'Action',
@@ -132,6 +131,7 @@ const international_Projects = () => {
           formData.append('status_id', status);
           updateStatus(formData);
         };
+
         return (
           <>
             <Box
@@ -179,19 +179,19 @@ const international_Projects = () => {
 
   if (isLoading) return;
   return (
-    <Page title="Manage International Project">
+    <Page title="Manage Shared Projects">
       <ToastContainer />
-      <Container title="Manage International Project" style={{ xs: 12 }}>
+      <Container title="Manage Shared Projects" style={{ xs: 12 }}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <Table
               columnHeaders={ColumnHeaders}
-              data={international_ProjectsData?.data || []}
+              data={sharedProjectsData?.data || []}
               loading={isLoading}
               pagination={pagination}
               setPagination={setPagination}
               isFetching={isFetching}
-              rowCount={international_ProjectsData?.Total}
+              rowCount={sharedProjectsData?.Total}
             />
           </Grid>
         </Grid>
@@ -200,8 +200,8 @@ const international_Projects = () => {
   );
 };
 
-international_Projects.getLayout = function getLayout(page) {
+SharedProjects.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default international_Projects;
+export default SharedProjects;

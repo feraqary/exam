@@ -141,7 +141,7 @@ const AutoCompleteSelector = ({
   name,
   ...rest
 }) => {
-  const [field, meta] = useField(rest);
+  const [field, meta] = useField(name);
   const { touched, values, setFieldValue } = useFormikContext();
 
   return (
@@ -168,7 +168,7 @@ const AutoCompleteSelector = ({
         value={values[`${name}`]}
         sx={{ width: '100%' }}
         loading={loading}
-        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[`${name}`] && !!meta.error[`${name}`]} />}
+        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[`${name}`] && !!meta.error} />}
         onChange={(e, value, reason) => {
           if (reason === 'clear') {
             setFieldValue(name, '');
@@ -226,8 +226,8 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
         options={options}
         multiple
         getOptionDisabled={(option) => {
+          console.log(option);
           const selectedValues = values[name] || [];
-
           return selectedValues.some((selectedValue) => selectedValue?.id === option?.id);
         }}
         loading={true}

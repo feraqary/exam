@@ -10,9 +10,7 @@ const SubmitButton = () => {
       <CardActions>
         <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
           <Grid item>
-
-            <Button variant="contained" color="secondary" type="submit" onClick={() => submitForm()} disabled={isSubmitting}>
-
+            <Button variant="contained" color="secondary" type="submit" onClick={submitForm} disabled={isSubmitting}>
               Submit
             </Button>
           </Grid>
@@ -20,6 +18,25 @@ const SubmitButton = () => {
             <Button variant="outlined" onClick={resetForm}>
               Clear
             </Button>
+          </Grid>
+        </Grid>
+      </CardActions>
+    </Grid>
+  );
+};
+
+export const NormalSubmitButton = () => {
+  return (
+    <Grid container justifyContent="flex-end">
+      <CardActions>
+        <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
+          <Grid item>
+            <Button variant="contained" color="secondary" type="submit">
+              Submit
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button variant="outlined">Clear</Button>
           </Grid>
         </Grid>
       </CardActions>
