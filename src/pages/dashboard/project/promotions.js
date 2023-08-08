@@ -89,7 +89,15 @@ function ManageProject() {
     <Page title="Manage Project">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={data} columnHeaders={ColumnHeaders} pagination={pagination} setPagination={setPagination} />
+          <Table
+            data={data}
+            columnHeaders={ColumnHeaders}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={false}
+            loading={false}
+            rowCount={data.length}
+          />
         </Grid>
       </Grid>
     </Page>

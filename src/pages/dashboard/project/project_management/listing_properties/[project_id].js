@@ -51,8 +51,8 @@ const ListingProperties = () => {
       header: 'Reference No'
     },
     { accessorKey: 'property_title', header: 'Property Title' },
-    { accessorKey: 'community', header: 'Community' },
-    { accessorKey: 'developer_company', header: 'Developer Company' },
+    { accessorKey: 'community.community', header: 'Community' },
+    { accessorKey: 'developer_company.label', header: 'Developer Company' },
     { accessorKey: 'no_of_floors', header: 'Number of Floors' },
     { accessorKey: 'no_of_units', header: 'Number of Units' },
     { accessoryKey: 'plot_area', header: 'Plot Area' },

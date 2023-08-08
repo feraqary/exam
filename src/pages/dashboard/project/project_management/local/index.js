@@ -160,19 +160,19 @@ const localProjects = () => {
         const handleClose = () => {
           setOpen(false);
         };
-
-        const handleBlock = () => {
-          const formData = new FormData();
-          formData.append('id', row.original.id);
-          formData.append('status_id', status);
-          updateStatus(formData);
-        };
         const handleVerifyStatus = () => {
           setVerify((prev) => !prev);
           const formData = new FormData();
           formData.append('project_id', row.original.id);
           formData.append('is_verified', verify);
           updateVerifyStatus(formData);
+        };
+
+        const handleUpdateStatus = (status) => {
+          const formData = new FormData();
+          formData.append('id', row.original.id);
+          formData.append('status_id', status);
+          updateStatus(formData);
         };
 
         return (
@@ -217,7 +217,7 @@ const localProjects = () => {
                   </Button>
                 </Link>
 
-                <Button variant="contained" color="error">
+                <Button variant="contained" color="warning" onClick={() => handleUpdateStatus(5)}>
                   Block
                 </Button>
               </Box>
@@ -246,7 +246,7 @@ const localProjects = () => {
                 {row.original.phase_type === 'Single' && (
                   <Link
                     href={{
-                      pathname: `/dashboard/project/project_management/plans/${row.original.id}`
+                      pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
                     }}
                   >
                     <Button
