@@ -30,7 +30,7 @@ export default function Plans() {
             <MainCard title="Add Plans">
               <Grid container spacing={2} alignItems="center" justifyContent={'center'}>
                 <Grid sx={12} lg={6} xs={{ border: '1px red solid' }}>
-                  <NormalAutoCompleteSelector
+                  <AutoCompleteSelector
                     label="Type"
                     placeholder="Select Plan Type"
                     options={[
@@ -41,8 +41,8 @@ export default function Plans() {
                     getOptionLabel={(type) => type.label}
                     style={{ xs: 12, lg: 12 }}
                     helperText="Please Select Plan Type"
-                    name="planType"
                     id="planType"
+                    name="planType"
                   />
                   <FileUpload
                     id="planDocument"

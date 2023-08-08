@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, Box, Button } from '@mui/material';
+import { Grid, Box, Button, DialogActions, IconButton, Dialog, DialogContent, CircularProgress, Typography } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
@@ -11,7 +11,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { useGetLocalProjectsQuery, useUpdateProjectRankMutation, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
+import {
+  useGetLocalProjectsQuery,
+  useUpdateProjectStatusMutation,
+  useUpdateProjectsVerifyStatusMutation,
+  useUpdateProjectsIsEnabledMutation,
+  useUpdateProjectRankMutation
+} from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,6 +33,7 @@ const localProjects = () => {
     pageIndex: 0,
     pageSize: 5
   });
+
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
 
@@ -85,102 +92,206 @@ const localProjects = () => {
       }
     },
     {
-      accessorKey: 'endis',
-      header: 'Enable / Disable',
-      Cell: ({ row }) => {
+      accessorKey: 'rating',
+      header: 'Rating',
+      Cell: ({ renderedCellValue, row }) => {
+        // console.log('row: ', projectData.data[row.index].Rating);
+
         return (
           <>
-            <FormControlLabel control={<Switch defaultChecked />} />
+            <Rating name="read-only" value={localProjectsData?.data[row.index].Rating + 1} readOnly />
           </>
         );
       }
     },
 
-    { accessorKey: 'quality_score', header: 'Quality Score' },
     {
-      accessorKey: 'rating',
-      header: 'Rating',
-      Cell: ({ row }) => {
-        return (
-          <>
-            <Rating readonly={true} name="read-only" value={localProjectsData?.data[row.index].Rating} readOnly />
-          </>
-        );
+      accessorKey: 'quality_score',
+      header: 'Quality Score',
+      Cell: ({ renderedCellValue, row }) => {
+        return <CircularProgressWithLabel value={row.original.quality_score} />;
       }
     },
+
     {
       accessorKey: 'no_of_phases',
       header: 'Number of Phases'
+    },
+    {
+      accessorKey: 'phasestest',
+      header: 'Phases'
     },
     {
       accessorKey: 'phase_type',
       header: 'Phase Type'
     },
     {
-      accessorKey: 'phasesw',
-      header: 'Phases',
-      cell: ({ row }) => {
-        return row.original.phases.map((phase) => {
-          console.log(phase);
-          return <span> {phase.name} </span>;
-        });
+      accessorKey: 'endis',
+      header: 'Enable / Disable',
+      Cell: ({ renderedCellValue, row }) => {
+        const [updateIsEnabled, IsEnabledresult] = useUpdateProjectsIsEnabledMutation();
+        const [enabled, setEnabled] = useState(null);
+
+        useEffect(() => {
+          console.log('project_id', row.original.id, enabled);
+          const formData = new FormData();
+          formData.append('project_id', row.original.id);
+          formData.append('is_enabled', enabled);
+          updateIsEnabled(formData);
+        }, [enabled]);
+
+        return (
+          <>
+            <Switch checked={enabled} onChange={() => setEnabled((prev) => !prev)} />
+          </>
+        );
       }
     },
     {
-      accessorKey: 'quality_score',
-      header: 'Quality Score'
-    },
-
-    {
       accessorKey: 'action',
       header: 'Action',
-      Cell: ({ row }) => {
-        const handleUpdateStatus = (status) => {
+      Cell: ({ renderedCellValue, row }) => {
+        const [open, setOpen] = useState(false);
+        const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
+        const [verify, setVerify] = useState(false);
+        const handleClickOpen = () => {
+          setOpen(true);
+        };
+        const handleClose = () => {
+          setOpen(false);
+        };
+
+        const handleBlock = () => {
           const formData = new FormData();
           formData.append('id', row.original.id);
           formData.append('status_id', status);
           updateStatus(formData);
         };
+        const handleVerifyStatus = () => {
+          setVerify((prev) => !prev);
+          const formData = new FormData();
+          formData.append('project_id', row.original.id);
+          formData.append('is_verified', verify);
+          updateVerifyStatus(formData);
+        };
+
         return (
           <>
             <Box
               sx={{
                 display: 'flex',
                 // alignItems: 'center',
-                gap: '1rem'
+                gap: '1rem',
+                flexDirection: 'column'
               }}
             >
-              <Button variant="contained" color="primary">
-                Verify
-              </Button>
-              <Button variant="contained" color="primary">
-                Edit
-              </Button>
-              <Link href={{ pathname: `/dashboard/project/project_management/documents/${row.original.id}` }}>
-                <Button color="primary" variant="contained">
-                  Manage Documents
-                </Button>
-              </Link>
-              <Button variant="contained" color="primary">
-                View Live
-              </Button>
-              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem'
+                }}
+              >
                 <Button variant="contained" color="primary">
-                  Listing Properties
+                  View Live
                 </Button>
-              </Link>
-              <Button variant="contained" color="primary">
-                Add Promotion
-              </Button>
-              <Button variant="contained" color="warning" onClick={() => handleUpdateStatus(5)}>
-                Block
-              </Button>
-              <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
-                Delete
-              </Button>
-              <Button variant="contained" color="primary">
-                Rating
-              </Button>
+
+                <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
+                  Verify
+                </Button>
+
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/edit/${row.original.id}`,
+                    query: {
+                      project_id: row.original.id
+                    }
+                  }}
+                >
+                  <Button variant="contained">Edit </Button>
+                </Link>
+
+                <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
+                  <Button variant="contained" color="primary">
+                    Listing Properties
+                  </Button>
+                </Link>
+
+                <Button variant="contained" color="error">
+                  Block
+                </Button>
+              </Box>
+              {/* //================================= */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem'
+                }}
+              >
+                {row.original.phase_type == 'Multiple' && (
+                  <>
+                    <Link
+                      href={{
+                        pathname: `/dashboard/project/project_management/add_property/${row.original.id}`
+                      }}
+                    >
+                      <Button variant="contained" color="primary">
+                        Add Property
+                      </Button>
+                    </Link>
+                  </>
+                )}
+
+                {row.original.phase_type === 'Single' && (
+                  <Link
+                    href={{
+                      pathname: `/dashboard/project/project_management/plans/${row.original.id}`
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        console.log(row.original.phase_type);
+                      }}
+                    >
+                      Plans
+                    </Button>
+                  </Link>
+                )}
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/rating/${row.original.id}`,
+                    query: {
+                      id: row.original.id
+                    }
+                  }}
+                >
+                  <Button color="primary" variant="contained">
+                    Rating
+                  </Button>
+                </Link>
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
+                    query: {
+                      id: row.original.id
+                    }
+                  }}
+                >
+                  <Button color="primary" variant="contained">
+                    Manage Documents
+                  </Button>
+                </Link>
+
+                <Button variant="contained" color="primary">
+                  Add Promotion
+                </Button>
+                <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
+                  Delete
+                </Button>
+              </Box>
             </Box>
           </>
         );
@@ -210,6 +321,30 @@ const localProjects = () => {
     </Page>
   );
 };
+
+function CircularProgressWithLabel(props) {
+  return (
+    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+      <CircularProgress variant="determinate" {...props} />
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <Typography variant="caption" component="div" color="text.secondary">
+          {`${Math.round(props.value)}%`}
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
 
 localProjects.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;

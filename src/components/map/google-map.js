@@ -5,7 +5,6 @@ import { DrawingManager, GoogleMap, Marker, Polygon, StandaloneSearchBox, useLoa
 import axios from 'axios';
 import { useFormikContext } from 'formik';
 import { useEffect, useRef, useState } from 'react';
-import MapAutocomplete from './maps-autocomplete';
 
 const Map = ({
   forPhase,
@@ -184,7 +183,6 @@ const Map = ({
 
           <StandaloneSearchBox onLoad={(ref) => (inputRef.current = ref)} onPlacesChanged={handlePlaceChanged}>
             <TextField
-              className="form-control"
               placeholder="Enter Location"
               variant="outlined"
               color="secondary"
@@ -245,8 +243,8 @@ const Map = ({
               onClick={() => {
                 const flattenedArray = [].concat(...polygons);
                 console.log(flattenedArray);
-                // setFieldValue(`phases[${num}].polygonCoords`, [...flattenedArray]);
-                setPolyValue([...flattenedArray]);
+                setFieldValue(`phases[${num}].polygons`, [...flattenedArray]);
+                // setPolyValue([...flattenedArray]);
                 close(false);
                 setSubmitted(polygons?.length !== 0 && num === phaseID);
               }}
