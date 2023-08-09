@@ -27,7 +27,7 @@ const ListingProperties = () => {
     pageSize: 5
   });
   const { data: projectDocData, isError, error, isLoading, isFetching } = useGetPropertyByProjectIdQuery({ pagination, project_id });
-
+  console.log(projectDocData);
   const ColumnHeaders = [
     {
       accessorKey: 'id',
@@ -51,8 +51,8 @@ const ListingProperties = () => {
       header: 'Reference No'
     },
     { accessorKey: 'property_title', header: 'Property Title' },
-    { accessorKey: 'community', header: 'Community' },
-    { accessorKey: 'developer_company', header: 'Developer Company' },
+    { accessorKey: 'community.community', header: 'Community' },
+    { accessorKey: 'developer_company.label', header: 'Developer Company' },
     { accessorKey: 'no_of_floors', header: 'Number of Floors' },
     { accessorKey: 'no_of_units', header: 'Number of Units' },
     { accessoryKey: 'plot_area', header: 'Plot Area' },
@@ -82,6 +82,11 @@ const ListingProperties = () => {
                 Document
               </Button>
 
+              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/gallery/${project_id}` }}>
+                <Button variant="contained" color="primary">
+                  Gallery
+                </Button>
+              </Link>
               <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/manage_units/${project_id}` }}>
                 <Button variant="contained" color="primary">
                   Manage Units
