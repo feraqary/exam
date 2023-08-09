@@ -1,4 +1,15 @@
-import { Button, Checkbox, FormControlLabel, FormHelperText, Grid, InputLabel, TextField,CircularProgress,Typography,Box    } from '@mui/material';
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  TextField,
+  CircularProgress,
+  Typography,
+  Box
+} from '@mui/material';
 import { LoadScript } from '@react-google-maps/api';
 import Map from 'components/map/google-map';
 import MapAutocomplete from 'components/map/maps-autocomplete';
@@ -80,6 +91,12 @@ function AddProperty() {
   //API============================================================================================================
   const { data: Types, isLoading, isError } = useGetPropertyTypeQuery();
   const { data: Allfacilities } = useGetAllfacilitiesQuery();
+
+  let facilities;
+  if (Allfacilities) {
+    // amenities = Object.keys(AllAmenities?.data || {});
+    facilities = Object.keys(Allfacilities?.data || {});
+  }
   const { data: SharedStates } = useGetStatesOrCitiesQuery(countryLocationID, {
     skip: countryLocationID === null || countryLocationID === undefined
   });
@@ -726,18 +743,13 @@ function AddProperty() {
                   <Grid item xs={12}>
                     <MainCard title="Facilities">
                       <Grid container spacing={2} sx={{ padding: '10px 17px' }}>
-                        {Allfacilities?.data &&
-                          Object.keys(Allfacilities?.data).map((category) => {
-                            return (
-                              <Categorization
-                                list={Allfacilities.data[category]}
-                                list_header={category}
-                                icon={Allfacilities.data[category].icon}
-                                setFieldValue={props.setFieldValue}
-                                setCheckedItems={setCheckedItems}
-                              />
-                            );
-                          })}
+                        <Categorization
+                          list={facilities}
+                          data={Allfacilities?.data}
+                          setFieldValue={props.setFieldValue}
+                          name="facilities"
+                          id="facilities"
+                        />
                       </Grid>
                     </MainCard>
                   </Grid>

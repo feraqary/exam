@@ -152,7 +152,7 @@ function AddProject() {
 
     useEffect(() => {
       console.log('polys: ', polys);
-      setFieldValues(`phases[${num}].polygonCoords`, polys);
+      setFieldValues(`phases[${num}].polygons`, [...polys]);
     }, [polys]);
 
     if (isLoading) return null;
@@ -328,7 +328,7 @@ function AddProject() {
                 masterDeveloperSelector: '',
                 subDeveloperCompanySelector: '',
                 phaseType: 'single',
-                phases: [{ id: null, phaseName: '', NoOfProperties: null, polygonCoords: [] }],
+                phases: [{ id: null, phaseName: '', NoOfProperties: null, polygons: [] }],
                 numberofPhases: 1,
                 amenities: [],
                 isshared: shared,
@@ -417,7 +417,7 @@ function AddProject() {
                           return {
                             name: phase?.phaseName,
                             no_of_unittypes: phase?.NoOfProperties,
-                            polygons: phase?.polygonCoords?.map((poly) => {
+                            polygons: phase?.polygons?.map((poly) => {
                               return {
                                 lat: poly?.lat,
                                 lng: poly?.lng
