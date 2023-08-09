@@ -7,7 +7,6 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import { useSelector } from 'react-redux';
 import Map from 'components/map/google-map';
 import MapAutocomplete from 'components/map/maps-autocomplete';
 import { LoadScript } from '@react-google-maps/api';

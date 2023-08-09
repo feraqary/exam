@@ -3,7 +3,8 @@ import InfoIcon from '@mui/icons-material/Info';
 import { Autocomplete, FormHelperText, Grid, IconButton, TextField, Tooltip } from '@mui/material';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { useField, useFormikContext } from 'formik';
-
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 /**
  * A component that provides an autocomplete selector with validation support for Formik forms.
  * @param {Object} props - The component props.
@@ -18,6 +19,110 @@ import { useField, useFormikContext } from 'formik';
  * @param {...any} rest - Additional props to be passed to the Autocomplete component.
  * @returns {JSX.Element} The rendered AutoCompleteSelector component.
  */
+
+export const AutoCompleteSelectorAPI = ({
+  params,
+  fetchData,
+  labels,
+
+  style,
+  label,
+  id,
+  value,
+  // options,
+  placeholder,
+  required,
+  setValue,
+  helperText,
+  // loading,
+  func,
+  helperInfo,
+  // error,
+  name,
+  ...rest
+}) => {
+  const [field, meta] = useField(rest);
+  const { touched, values, setFieldValue } = useFormikContext();
+  const dispatch = useDispatch();
+
+  const [options, setOptions] = useState([]);
+  const [loading, setloading] = useState();
+  const [error, setIsError] = useState();
+  const [isOpened, setOpened] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchDataAndSetOptions = async () => {
+  //     try {
+  //       const data = await dispatch(fetchData());
+  //       setOptions(data?.data);
+  //     } catch (error) {
+  //       console.log('Error while fetching data:', error);
+  //     }
+  //   };
+
+  //   fetchDataAndSetOptions();
+  // }, [isOpened]);
+
+  const handleData = async () => {
+    setloading(true);
+    // Use the useGetCountriesQuery hook here to fetch data
+    // Make sure useGetCountriesQuery returns the response you expect
+    const { data, loading, error } = await fetchData();
+    console.log('auto complete inside: ', data);
+
+    console.log(data);
+    setloading(false);
+  };
+
+  // ;
+  return (
+    <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
+      <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
+        {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
+
+        {helperInfo ? (
+          <Tooltip title={label}>
+            <IconButton>
+              <InfoIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <></>
+        )}
+      </Grid>
+      <Autocomplete
+        {...rest}
+        {...field}
+        getOptionLabel={(country) => country.Country || country.country || ''}
+        id={id}
+        options={options}
+        onOpen={handleData}
+        // options={options}
+        name={name}
+        value={values[`${name}`]}
+        sx={{ width: '100%' }}
+        loading={loading}
+        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[`${name}`] && !!meta.error[`${name}`]} />}
+        onChange={(e, value, reason) => {
+          console.log('changed');
+          if (reason === 'clear') {
+            setFieldValue(name, '');
+          } else {
+            setFieldValue(name, value);
+          }
+          if (func) {
+            func(value);
+          }
+        }}
+      />
+      {helperText && meta.error && touched[`${name}`] ? (
+        <FormHelperText error={true}>{meta.error[`${name}`]}</FormHelperText>
+      ) : (
+        <FormHelperText>{helperText}</FormHelperText>
+      )}
+    </Grid>
+  );
+};
 
 const AutoCompleteSelector = ({
   style,
@@ -36,13 +141,13 @@ const AutoCompleteSelector = ({
   name,
   ...rest
 }) => {
-  const [field, meta] = useField(rest);
+  const [field, meta] = useField(name);
   const { touched, values, setFieldValue } = useFormikContext();
 
   return (
     <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
-        {required ? <InputLabel  required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
+        {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
 
         {helperInfo ? (
           <Tooltip title={label}>
@@ -63,7 +168,7 @@ const AutoCompleteSelector = ({
         value={values[`${name}`]}
         sx={{ width: '100%' }}
         loading={loading}
-        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[`${name}`] && !!meta.error[`${name}`]} />}
+        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[`${name}`] && !!meta.error} />}
         onChange={(e, value, reason) => {
           if (reason === 'clear') {
             setFieldValue(name, '');
@@ -121,13 +226,14 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
         options={options}
         multiple
         getOptionDisabled={(option) => {
+          console.log(option);
           const selectedValues = values[name] || [];
-
           return selectedValues.some((selectedValue) => selectedValue?.id === option?.id);
         }}
+        loading={true}
         limitTags={2}
         onChange={(e, value, reason) => {
-          console.log(value)
+          console.log(value);
           if (reason === 'clear') {
             setFieldValue(name, []);
           } else {

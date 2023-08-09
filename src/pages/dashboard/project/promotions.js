@@ -7,14 +7,9 @@ import { useState } from 'react';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
+import Container from 'components/Elements/Container';
 
 // ==============================|| Manage Project Promotions ||============================== //
-
-const [pagination, setPagination] = useState({
-  pageIndex: 0,
-  pageSize: 5
-});
-
 
 const ColumnHeaders = [
   {
@@ -86,20 +81,34 @@ const data = [
     action: ' edit, multiple'
   }
 ];
-function ManageProject() {
+function ManagePromotions() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
   return (
     <Page title="Manage Project">
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table data={data} columnHeaders={ColumnHeaders} />
+      <Container title="Manage Promotions" style={{ xs: 12 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              data={data}
+              columnHeaders={ColumnHeaders}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={false}
+              loading={false}
+              rowCount={data.length}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 }
 
-ManageProject.getLayout = function getLayout(page) {
+ManagePromotions.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default ManageProject;
+export default ManagePromotions;

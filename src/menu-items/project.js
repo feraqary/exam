@@ -53,21 +53,36 @@ const project = {
       title: <FormattedMessage id="Local Projects" />,
       type: 'item',
       icon: icons.IconPin,
-      url: '/dashboard/project/local_project_mng'
+
+      url: '/dashboard/project/project_management/local'
     },
     {
       id: 'international',
       title: <FormattedMessage id="International Projects" />,
       type: 'item',
       icon: icons.IconMapPin,
-      url: '/dashboard/project/international_project_mng'
+      url: '/dashboard/project/project_management/international'
+    },
+    {
+      id: 'create-category',
+      title: <FormattedMessage id="Create Category" />,
+      type: 'item',
+      icon: icons.IconMapPin,
+      url: '/dashboard/project/create_category'
     },
     {
       id: 'shared-projects',
       title: <FormattedMessage id="Shared Projects" />,
       type: 'item',
       icon: icons.IconHomeShare,
-      url: '/dashboard/project/shared_project'
+      url: '/dashboard/project/shared_projects'
+    },
+    {
+      id: 'blocked-projects',
+      title: <FormattedMessage id="Blocked Projects" />,
+      type: 'item',
+      icon: icons.IconTrashX,
+      url: '/dashboard/project/blocked_projects'
     },
     {
       id: 'deleted-projects',

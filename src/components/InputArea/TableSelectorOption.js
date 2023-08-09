@@ -6,7 +6,6 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import { useUpdateCompanyRankMutation } from 'store/services/company/companyApi';
 import { ToastError, ToastSuccess } from 'utils/toast';
 import { memo, useState, useEffect } from 'react';
 
@@ -22,14 +21,14 @@ const MenuProps = {
 };
 const COMAPANY_STATUS = ['Standard', 'Featured', 'Premium', 'Top Deal'];
 
-const TableSelectorOption = memo(({ value, id, CompanyType }) => {
+const TableSelectorOption = memo(({ value, formData, func }) => {
   const [companyStatus, setCompanyStatus] = useState(value - 1);
 
-  const [updateRank, result] = useUpdateCompanyRankMutation();
+  const [updateRank, result] = func;
 
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Company has been updated successfully');
+      ToastSuccess('Rank has been updated successfully');
     }
   }, [result.isSuccess]);
 
@@ -45,10 +44,7 @@ const TableSelectorOption = memo(({ value, id, CompanyType }) => {
       const {
         target: { value }
       } = event;
-      const formData = new FormData();
-      formData.append('company_type', CompanyType);
       formData.append('rank', value + 1);
-      formData.append('company_id', id);
       updateRank(formData);
       setCompanyStatus(value);
     },

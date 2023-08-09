@@ -1,8 +1,6 @@
 // material-ui
 import Image from 'next/image';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import PreviewIcon from '@mui/icons-material/Preview';
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -11,29 +9,21 @@ import Table from 'components/Table/Table';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
-import { Grid, Box, Button, Dialog, DialogActions, DialogContent, Slide } from '@mui/material';
-import Documents from '../documents';
-import { useGetLocalCompaniesQuery, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
+import { Grid, Box, Button } from '@mui/material';
+import { useGetLocalCompaniesQuery, useUpdateCompanyRankMutation, useUpdateCompanyStatusMutation } from 'store/services/company/companyApi';
 import { ToastError, ToastSuccess } from 'utils/toast';
 import Link from 'next/link';
 // ===========================|| Local Company Managment list||=========================== //
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 const localCompanies = () => {
-  const [docsOpen, setDocsOpen] = useState(false);
-  const [docsCrid, setDocsCrid] = useState({ comp: null, id: null });
-
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
+
   const { data: localCompaniesData, isError, error, isLoading, isFetching } = useGetLocalCompaniesQuery(pagination);
 
   const [blockCompany, result] = useUpdateCompanyStatusMutation();
@@ -51,13 +41,6 @@ const localCompanies = () => {
     }
   }, [result.isError]);
 
-  const handleDocsOpen = () => {
-    setDocsOpen(true);
-  };
-
-  const handleDocsClose = () => {
-    setDocsOpen(false);
-  };
   const ColumnHeaders = [
     {
       accessorKey: 'CompanyName',
@@ -83,11 +66,17 @@ const localCompanies = () => {
     {
       accessorKey: 'Status',
       header: 'Company Status',
-      Cell: ({ renderedCellValue, row }) => (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <TableSelectorOption value={row.original.CompanyRank} CompanyType={row.original.CompanyType} id={row.original.ID} />
-        </Box>
-      )
+      Cell: ({ renderedCellValue, row }) => {
+        const formData = new FormData();
+        const func = useUpdateCompanyRankMutation();
+        formData.append('company_type', row.original.CompanyType);
+        formData.append('company_id', row.original.ID);
+        return (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <TableSelectorOption value={row.original.CompanyRank} formData={formData} func={func} />
+          </Box>
+        );
+      }
     },
     {
       accessorKey: 'LicenseNO',
@@ -127,12 +116,6 @@ const localCompanies = () => {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ renderedCellValue, row }) => {
-        const [open, setOpen] = useState(false);
-
-        const handleClose = () => {
-          setOpen(false);
-        };
-
         const handleBlock = () => {
           const formData = new FormData();
           formData.append('company_id', row.original.ID);
@@ -167,31 +150,13 @@ const localCompanies = () => {
                   Add sub-company
                 </Button>
               </Link>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={() => {
-                  handleDocsOpen(), setDocsCrid({ comp: row.original.CompanyMainType, id: row.original.ID });
-                }}
-                startIcon={<AssignmentIcon />}
-              >
-                View Documents
-              </Button>
+              <Button>View Documents</Button>
               <Button variant="contained" color="primary">
                 Report
               </Button>
               <Button variant="contained" onClick={handleBlock} color="error" startIcon={<DeleteIcon />}>
                 Block
               </Button>
-
-              <Dialog maxWidth={'xl'} open={open} onClose={handleClose} TransitionComponent={Transition}>
-                <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleClose}>
-                  <IconButton>
-                    <CloseIcon />
-                  </IconButton>
-                </DialogActions>
-                <DialogContent></DialogContent>
-              </Dialog>
             </Box>
           </>
         );
@@ -218,17 +183,6 @@ const localCompanies = () => {
           />
         </Grid>
       </Grid>
-
-      <Dialog maxWidth={'xl'} open={docsOpen} onClose={handleDocsClose} TransitionComponent={Transition}>
-        <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleDocsClose}>
-          <IconButton>
-            <CloseIcon />
-          </IconButton>
-        </DialogActions>
-        <DialogContent>
-          <Documents comp={docsCrid.comp} id={docsCrid.id} />
-        </DialogContent>
-      </Dialog>
     </Page>
   );
 };
