@@ -15,6 +15,7 @@ import { useGetProjectsByStatusQuery, useUpdateProjectStatusMutation } from 'sto
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { ToastSuccess, ToastError } from 'utils/toast';
+import Container from 'components/Elements/Container';
 
 // ==============================|| Manage International Project ||======     c ccc c======================== //
 
@@ -86,7 +87,7 @@ function DeletedProjects() {
   return (
     <Page title="Manage Deleted Projects">
       <ToastContainer />
-      <Container title="Manage Deleted Projects">
+      <Container title="Manage Deleted Projects" style={{ xs: 12 }}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <Table
