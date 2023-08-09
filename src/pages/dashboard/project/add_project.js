@@ -1,6 +1,7 @@
 import { Button, Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { LoadScript } from '@react-google-maps/api';
 import Map from 'components/map/google-map';
+import * as Yup from 'yup';
 // material-ui
 
 // project imports
@@ -26,6 +27,15 @@ import {
   useGetStatesOrCitiesQuery,
   useGetSubCommunitiesByCommunityQuery
 } from 'store/services/country/countryApi';
+import {
+  objectValidator,
+  arrayValidator,
+  stringValidator,
+  numberValidator,
+  fileValidator,
+  dateValidator,
+  positiveNumberValidator
+} from 'utils/formik-validations';
 import {
   useCreateProjectMutation,
   useGetAllAmenitiesQuery,
@@ -240,7 +250,7 @@ function AddProject() {
           </>
         );
 
-      case 'No Of Floor':
+      case 'No of Floor':
         return (
           <>
             {/* InputText component */}
@@ -256,22 +266,22 @@ function AddProject() {
             />
           </>
         );
-      case 'Price':
-        return (
-          <>
-            {/* InputText component */}
-            <InputText
-              label="Price"
-              required
-              placeholder="enter the price"
-              style={{ xs: 12, lg: 4 }}
-              id="facts[17].value"
-              name="facts[17].value"
-              helperText="Please select property status"
-            />
-          </>
-        );
-      case 'Elevator':
+      // case 'Price':
+      //   return (
+      //     <>
+      //       {/* InputText component */}
+      //       <InputText
+      //         label="Price"
+      //         required
+      //         placeholder="enter the price"
+      //         style={{ xs: 12, lg: 4 }}
+      //         id="facts[17].value"
+      //         name="facts[17].value"
+      //         helperText="Please select property status"
+      //       />
+      //     </>
+      //   );
+      case 'Elevator ':
         return (
           <>
             {/* InputText component */}
@@ -290,11 +300,12 @@ function AddProject() {
   };
 
   // Retrieve nested facts arrays from propertyType and flatten them
-  const facts = propertyType?.map((component) => component.facts?.map((fact) => fact));
+  const facts = propertyType?.map((component) => component.facts?.map((fact) => fact.label));
   const Filtered = [...new Set([].concat(...facts))];
+
   console.log(Filtered);
   // Generate SinglePhaseComponents for each fact in the Filtered array
-  const SinglePhaseInputs = Filtered?.map((fact) => SinglePhaseComponents(fact.label));
+  const SinglePhaseInputs = Filtered?.map((fact) => SinglePhaseComponents(fact));
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
@@ -338,36 +349,36 @@ function AddProject() {
                 propertyDescription: null,
                 arabicPropertyDescription: null
               }}
-              // validationSchema={Yup.object({
-              //   projectTitle: stringValidator('Please provide a title'),
-              //   locationCountrySelect: objectValidator('please select a country'),
-              //   mapUrl: stringValidator('Please enter a map url'),
-              //   locationCitySelector: objectValidator('please select a city'),
-              //   locationState: objectValidator('please select a state'),
-              //   propertyStatus: objectValidator('please enter the property status'),
-              //   propertyTitle: stringValidator('Please enter the property title'),
-              //   arabicPropertyTitle: stringValidator('Please enter the arabic title'),
-              //   propertyDescription: stringValidator('Please enter the property description'),
-              //   arabicPropertyDescription: stringValidator('Please enter the arabic description'),
-              //   phases: arrayValidator(),
-              //   propertyType: objectValidator('Please enter the property type'),
-              //   view: stringValidator('Please enter the view details'),
-              //   noOfBedrooms: numberValidator('Please enter the number of bedrooms'),
-              //   noOfbathrooms: numberValidator('Please enter the number of bathrooms'),
-              //   plotArea: numberValidator('please enter the plot area'),
-              //   isfurnished: objectValidator('please enter the furnish status'),
-              //   noOfFloors: numberValidator('Please enter the number of floors'),
-              //   price: numberValidator('Please enter the price'),
-              //   builtUpArea: numberValidator('please enter the built up area'),
-              //   parking: stringValidator('please enter the parking area'),
-              //   ownership: stringValidator('please enter the ownership status'),
-              //   completionStatus: stringValidator('please enter the completion status'),
-              //   plotAreaMin: numberValidator('please enter the minimum plot area'),
-              //   plotAreaMax: numberValidator('please enter the maximum plot area'),
-              //   noOfunits: numberValidator('please enter the number of available units'),
-              //   availableUnits: numberValidator('please enter the number of available units'),
-              //   serviceCharge: numberValidator('please enter the service charge')
-              // })}
+              validationSchema={Yup.object({
+                projectTitle: stringValidator('Please provide a title'),
+                locationCountrySelect: objectValidator('please select a country'),
+                mapUrl: stringValidator('Please enter a map url'),
+                locationCitySelector: objectValidator('please select a city'),
+                locationState: objectValidator('please select a state'),
+                propertyStatus: objectValidator('please enter the property status'),
+                propertyTitle: stringValidator('Please enter the property title'),
+                arabicPropertyTitle: stringValidator('Please enter the arabic title'),
+                propertyDescription: stringValidator('Please enter the property description'),
+                arabicPropertyDescription: stringValidator('Please enter the arabic description'),
+                phases: arrayValidator(),
+                propertyType: objectValidator('Please enter the property type'),
+                view: stringValidator('Please enter the view details'),
+                noOfBedrooms: numberValidator('Please enter the number of bedrooms'),
+                noOfbathrooms: numberValidator('Please enter the number of bathrooms'),
+                plotArea: numberValidator('please enter the plot area'),
+                isfurnished: objectValidator('please enter the furnish status'),
+                noOfFloors: numberValidator('Please enter the number of floors'),
+                price: numberValidator('Please enter the price'),
+                builtUpArea: numberValidator('please enter the built up area'),
+                parking: stringValidator('please enter the parking area'),
+                ownership: stringValidator('please enter the ownership status'),
+                completionStatus: stringValidator('please enter the completion status'),
+                plotAreaMin: numberValidator('please enter the minimum plot area'),
+                plotAreaMax: numberValidator('please enter the maximum plot area'),
+                noOfunits: numberValidator('please enter the number of available units'),
+                availableUnits: numberValidator('please enter the number of available units'),
+                serviceCharge: numberValidator('please enter the service charge')
+              })}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 console.log();
 
@@ -483,7 +494,7 @@ function AddProject() {
                             <AutoCompleteSelector
                               label="Country"
                               placeholder="Select Country"
-                              options={Countries?.data || []}
+                              options={isLoading && isError ? [] : Countries?.data || []}
                               getOptionLabel={(country) => country.Country || country.country || ''}
                               style={{ xs: 12, lg: 4 }}
                               helperText="Please select country"
@@ -675,7 +686,7 @@ function AddProject() {
                           name="locationCitySelector"
                           required
                           func={(e) => {
-                            setCityID(e.ID);
+                            setCityID(e.ID || '');
                           }}
                         />
                         {/* <AutoCompleteSelector
@@ -700,7 +711,7 @@ function AddProject() {
                           getOptionLabel={(com) => com?.community || com?.Community || ''}
                           style={{ xs: 12, lg: 6 }}
                           func={(e) => {
-                            setCommunityID(e.ID);
+                            setCommunityID(e.ID || '');
                           }}
                         />
 
@@ -716,7 +727,7 @@ function AddProject() {
                           getOptionLabel={(sub) => sub?.sub_community || sub?.SubCommunity || ''}
                           style={{ xs: 12, lg: 6 }}
                           func={(e) => {
-                            setSubCommunityID(e.ID);
+                            setSubCommunityID(e.ID || '');
                           }}
                         />
                       </Grid>
