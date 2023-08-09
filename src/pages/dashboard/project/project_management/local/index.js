@@ -77,7 +77,7 @@ const localProjects = () => {
       }
     },
     {
-      accessorKey: 'project_name',
+      accessorKey: 'label',
       header: 'Project Name'
     },
     {
@@ -246,23 +246,23 @@ const localProjects = () => {
                   </>
                 )}
 
-                {row.original.phase_type === 'Single' && (
-                  <Link
-                    href={{
-                      pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                {/* {row.original.phase_type === 'Single' && ( */}
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      console.log(row.original.phase_type);
                     }}
                   >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        console.log(row.original.phase_type);
-                      }}
-                    >
-                      Plans
-                    </Button>
-                  </Link>
-                )}
+                    Plans
+                  </Button>
+                </Link>
+                {/* )} */}
                 <Link
                   href={{
                     pathname: `/dashboard/project/project_management/rating/${row.original.id}`,
