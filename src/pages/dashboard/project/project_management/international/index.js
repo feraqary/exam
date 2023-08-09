@@ -149,7 +149,7 @@ const international_Projects = () => {
               </Button>
               <Link href={{ pathname: `/dashboard/project/project_management/documents/${row.original.id}` }}>
                 <Button color="primary" variant="contained">
-                  Manage Documents
+                  Documents
                 </Button>
               </Link>
               <Button variant="contained" color="primary">

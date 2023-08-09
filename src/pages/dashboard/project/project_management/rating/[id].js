@@ -11,6 +11,7 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { useGetRatingsQuery } from 'store/services/project/projectApi';
+import Container from 'components/Elements/Container';
 
 // ===========================|| International Company Managment list||=========================== //
 
@@ -27,7 +28,6 @@ const Ratings = () => {
   if (isLoading) {
     return;
   }
-  console.log(RatingsData);
   const ColumnHeaders = [
     {
       accessorKey: 'reference_number',
@@ -76,19 +76,21 @@ const Ratings = () => {
 
   return (
     <Page title="Project Rating">
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table
-            columnHeaders={ColumnHeaders}
-            data={RatingsData?.data}
-            loading={isLoading}
-            pagination={pagination}
-            setPagination={setPagination}
-            isFetching={isFetching}
-            rowCount={RatingsData?.data?.length}
-          />
+      <Container title="Project Ratings" style={{ xs: 12 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              columnHeaders={ColumnHeaders}
+              data={[]}
+              loading={isLoading}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={isFetching}
+              rowCount={RatingsData?.data?.length}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 };

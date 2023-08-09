@@ -78,11 +78,31 @@ const ListingProperties = () => {
               <Button variant="contained" color="primary">
                 Edit
               </Button>
-              <Button variant="contained" color="primary">
-                Document
-              </Button>
-
-              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/manage_units/${project_id}` }}>
+              <Link
+                href={{
+                  pathname: `/dashboard/project/project_management/documents/${row.original.id}`
+                }}
+              >
+                <Button variant="contained" color="primary">
+                  Document
+                </Button>
+              </Link>
+              <Link
+                href={{
+                  pathname: `/dashboard/project/project_management/listing_properties/financial_providers`,
+                  query: { project_id }
+                }}
+              >
+                <Button variant="contained" color="primary">
+                  Financial Providers
+                </Button>
+              </Link>
+              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/manage_units`, query: { project_id } }}>
+                <Button variant="contained" color="primary">
+                  Manage Unit Types
+                </Button>
+              </Link>
+              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/units`, query: { project_id } }}>
                 <Button variant="contained" color="primary">
                   Manage Units
                 </Button>

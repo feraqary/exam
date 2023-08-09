@@ -341,7 +341,7 @@ export const projectApi = api.injectEndpoints({
           body: submit
         };
       },
-      providesTags: ['projectVerifyStatus']
+      invalidatesTags: ['LocalProjects', 'InternationalProjects', 'SharedProjects']
     }),
     //UPDATE PROJECTS
     updateProjectsIsEnabled: builder.mutation({

@@ -154,12 +154,15 @@ const localProjects = () => {
         const [open, setOpen] = useState(false);
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
         const [verify, setVerify] = useState(false);
+
         const handleClickOpen = () => {
           setOpen(true);
         };
+
         const handleClose = () => {
           setOpen(false);
         };
+
         const handleVerifyStatus = () => {
           setVerify((prev) => !prev);
           const formData = new FormData();
@@ -193,11 +196,11 @@ const localProjects = () => {
                 }}
               >
                 <Button variant="contained" color="primary">
-                  View Live
+                  View
                 </Button>
 
                 <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
-                  Verify
+                  {row.original.is_verified ? 'Unverify' : 'Verify'}
                 </Button>
 
                 <Link
@@ -281,7 +284,7 @@ const localProjects = () => {
                   }}
                 >
                   <Button color="primary" variant="contained">
-                    Manage Documents
+                    Documents
                   </Button>
                 </Link>
 
