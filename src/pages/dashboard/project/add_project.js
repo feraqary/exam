@@ -1,7 +1,6 @@
 import { Button, Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { LoadScript } from '@react-google-maps/api';
 import Map from 'components/map/google-map';
-import * as Yup from 'yup';
 // material-ui
 
 // project imports
@@ -17,6 +16,8 @@ import MainCard from 'components/ui-component/cards/MainCard';
 import { Formik } from 'formik';
 import Layout from 'layout';
 import { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { gridSpacing } from 'store/constant';
 import { useGetDeveloperCompanyQuery, useGetSubCompanyAccordingToParentQuery } from 'store/services/company/companyApi';
 import {
@@ -28,15 +29,6 @@ import {
   useGetSubCommunitiesByCommunityQuery
 } from 'store/services/country/countryApi';
 import {
-  objectValidator,
-  arrayValidator,
-  stringValidator,
-  numberValidator,
-  fileValidator,
-  dateValidator,
-  positiveNumberValidator
-} from 'utils/formik-validations';
-import {
   useCreateProjectMutation,
   useGetAllAmenitiesQuery,
   useGetAllfacilitiesQuery,
@@ -44,7 +36,7 @@ import {
   useGetPropertyTypeQuery,
   useGetViewQuery
 } from 'store/services/project/projectApi';
-
+import { ToastError, ToastSuccess } from 'utils/toast';
 import Categorization from './helper/Categorization';
 
 function AddProject() {
@@ -123,6 +115,21 @@ function AddProject() {
   const { data: views, error: viewsError, isLoading: loadingView } = useGetViewQuery();
   const [createProject, CreateProjectResult] = useCreateProjectMutation();
 
+  console.log(CreateProjectResult);
+
+  useEffect(() => {
+    if (CreateProjectResult.isSuccess) {
+      ToastSuccess('Project has been created successfully');
+    }
+  }, [CreateProjectResult.isSuccess]);
+
+  useEffect(() => {
+    if (CreateProjectResult.isError) {
+      const { data } = CreateProjectResult.error;
+      ToastError(data.error);
+    }
+  }, [CreateProjectResult.isError]);
+
   if (isLoading) return null;
 
   //PHASES====================================================================================
@@ -137,12 +144,12 @@ function AddProject() {
     const phaseID = num;
     const [open, setOpen] = useState(false);
     const [mapSubmitted, setMapSubmitted] = useState(false);
+    const [polys, setPolys] = useState([]);
     useEffect(() => {
       setFieldValues(`phases[${num}].id`, num + 1);
       setFieldValues('numberofPhases', num + 1);
     }, []);
 
-    const [polys, setPolys] = useState([]);
     useEffect(() => {
       console.log('polys: ', polys);
       setFieldValues(`phases[${num}].polygonCoords`, polys);
@@ -349,36 +356,36 @@ function AddProject() {
                 propertyDescription: null,
                 arabicPropertyDescription: null
               }}
-              validationSchema={Yup.object({
-                projectTitle: stringValidator('Please provide a title'),
-                locationCountrySelect: objectValidator('please select a country'),
-                mapUrl: stringValidator('Please enter a map url'),
-                locationCitySelector: objectValidator('please select a city'),
-                locationState: objectValidator('please select a state'),
-                propertyStatus: objectValidator('please enter the property status'),
-                propertyTitle: stringValidator('Please enter the property title'),
-                arabicPropertyTitle: stringValidator('Please enter the arabic title'),
-                propertyDescription: stringValidator('Please enter the property description'),
-                arabicPropertyDescription: stringValidator('Please enter the arabic description'),
-                phases: arrayValidator(),
-                propertyType: objectValidator('Please enter the property type'),
-                view: stringValidator('Please enter the view details'),
-                noOfBedrooms: numberValidator('Please enter the number of bedrooms'),
-                noOfbathrooms: numberValidator('Please enter the number of bathrooms'),
-                plotArea: numberValidator('please enter the plot area'),
-                isfurnished: objectValidator('please enter the furnish status'),
-                noOfFloors: numberValidator('Please enter the number of floors'),
-                price: numberValidator('Please enter the price'),
-                builtUpArea: numberValidator('please enter the built up area'),
-                parking: stringValidator('please enter the parking area'),
-                ownership: stringValidator('please enter the ownership status'),
-                completionStatus: stringValidator('please enter the completion status'),
-                plotAreaMin: numberValidator('please enter the minimum plot area'),
-                plotAreaMax: numberValidator('please enter the maximum plot area'),
-                noOfunits: numberValidator('please enter the number of available units'),
-                availableUnits: numberValidator('please enter the number of available units'),
-                serviceCharge: numberValidator('please enter the service charge')
-              })}
+              // validationSchema={Yup.object({
+              //   projectTitle: stringValidator('Please provide a title'),
+              //   locationCountrySelect: objectValidator('please select a country'),
+              //   mapUrl: stringValidator('Please enter a map url'),
+              //   locationCitySelector: objectValidator('please select a city'),
+              //   locationState: objectValidator('please select a state'),
+              //   propertyStatus: objectValidator('please enter the property status'),
+              //   propertyTitle: stringValidator('Please enter the property title'),
+              //   arabicPropertyTitle: stringValidator('Please enter the arabic title'),
+              //   propertyDescription: stringValidator('Please enter the property description'),
+              //   arabicPropertyDescription: stringValidator('Please enter the arabic description'),
+              //   phases: arrayValidator(),
+              //   propertyType: objectValidator('Please enter the property type'),
+              //   view: stringValidator('Please enter the view details'),
+              //   noOfBedrooms: numberValidator('Please enter the number of bedrooms'),
+              //   noOfbathrooms: numberValidator('Please enter the number of bathrooms'),
+              //   plotArea: numberValidator('please enter the plot area'),
+              //   isfurnished: objectValidator('please enter the furnish status'),
+              //   noOfFloors: numberValidator('Please enter the number of floors'),
+              //   price: numberValidator('Please enter the price'),
+              //   builtUpArea: numberValidator('please enter the built up area'),
+              //   parking: stringValidator('please enter the parking area'),
+              //   ownership: stringValidator('please enter the ownership status'),
+              //   completionStatus: stringValidator('please enter the completion status'),
+              //   plotAreaMin: numberValidator('please enter the minimum plot area'),
+              //   plotAreaMax: numberValidator('please enter the maximum plot area'),
+              //   noOfunits: numberValidator('please enter the number of available units'),
+              //   availableUnits: numberValidator('please enter the number of available units'),
+              //   serviceCharge: numberValidator('please enter the service charge')
+              // })}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 console.log();
 
@@ -443,6 +450,7 @@ function AddProject() {
               {(props) => (
                 <>
                   <Grid item xs={12}>
+                    <ToastContainer />
                     <MainCard title="Project details">
                       <Grid container spacing={2} alignItems="center">
                         {/* <AutoCompleteSelectorAPI
