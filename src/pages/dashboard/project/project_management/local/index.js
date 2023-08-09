@@ -220,7 +220,7 @@ const localProjects = () => {
                   </Button>
                 </Link>
 
-                <Button variant="contained" color="warning" onClick={() => handleUpdateStatus(5)}>
+                <Button color="error" variant="outlined" onClick={() => handleUpdateStatus(5)}>
                   Block
                 </Button>
               </Box>

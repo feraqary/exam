@@ -115,7 +115,7 @@ function AddProject() {
   const { data: views, error: viewsError, isLoading: loadingView } = useGetViewQuery();
   const [createProject, CreateProjectResult] = useCreateProjectMutation();
 
-  console.log(CreateProjectResult);
+
 
   useEffect(() => {
     if (CreateProjectResult.isSuccess) {
@@ -151,7 +151,6 @@ function AddProject() {
     }, []);
 
     useEffect(() => {
-      console.log('polys: ', polys);
       setFieldValues(`phases[${num}].polygons`, [...polys]);
     }, [polys]);
 
@@ -310,7 +309,6 @@ function AddProject() {
   const facts = propertyType?.map((component) => component.facts?.map((fact) => fact.label));
   const Filtered = [...new Set([].concat(...facts))];
 
-  console.log(Filtered);
   // Generate SinglePhaseComponents for each fact in the Filtered array
   const SinglePhaseInputs = Filtered?.map((fact) => SinglePhaseComponents(fact));
 
@@ -387,7 +385,6 @@ function AddProject() {
               //   serviceCharge: numberValidator('please enter the service charge')
               // })}
               onSubmit={(values, { setSubmitting, resetForm }) => {
-                console.log();
 
                 const ProjectData = {
                   min_area: values?.plotAreaMin?.toString(),
@@ -437,7 +434,7 @@ function AddProject() {
                 };
 
                 const data = JSON.stringify(ProjectData);
-                console.log('project data ', ProjectData);
+
 
                 const submit = {
                   data: data,
@@ -464,7 +461,6 @@ function AddProject() {
                           name="detailsCountrySelect"
                           id="detailsCountrySelect"
                           labelObject="Country"
-                          // api={console.log('hi')}
                           // func={(newValue) => {
                           //   setCountryLocationID(newValue?.ID);
                           // }}
@@ -509,7 +505,6 @@ function AddProject() {
                               name="detailsCountrySelect"
                               id="detailsCountrySelect"
                               labelObject="Country"
-                              api={() => console.log('hi')}
                               func={(newValue) => {
                                 setCountryLocationID(newValue?.ID);
                               }}
@@ -762,9 +757,6 @@ function AddProject() {
                               id="facts[8].value"
                               name="facts[8].value"
                               helperText="Please select property status"
-                              func={(e) => {
-                                console.log(e);
-                              }}
                             />
 
                             <MultipleAutoCompleteSelector
@@ -811,9 +803,6 @@ function AddProject() {
                               id="facts[25].value"
                               name="facts[25].value"
                               helperText="Please select the lifestyle"
-                              func={(e) => {
-                                console.log(e);
-                              }}
                             />
                             <InputText
                               label="Plot Area"
@@ -882,9 +871,6 @@ function AddProject() {
                               id="facts[7].value"
                               name="facts[7].value"
                               helperText="Ownership"
-                              func={(e) => {
-                                console.log(e);
-                              }}
                             />
                             <CustomDateTime
                               style={{ xs: 12, lg: 4 }}
