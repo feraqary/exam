@@ -254,6 +254,16 @@ export const projectApi = api.injectEndpoints({
       }
     }),
 
+    //GET ALL DOCUMENT CATEGORIES
+    getAllDocCategories: builder.query({
+      query() {
+        return {
+          url: `docscategory/getAllDocCategories`,
+          method: 'GET'
+        };
+      }
+    }),
+
     //GET DOCS BY PROJECT ID API
     getDocByProjectId: builder.query({
       query({ pagination, project_id }) {
@@ -331,7 +341,7 @@ export const projectApi = api.injectEndpoints({
           body: submit
         };
       },
-      providesTags: ['projectVerifyStatus']
+      invalidatesTags: ['LocalProjects', 'InternationalProjects', 'SharedProjects']
     }),
     //UPDATE PROJECTS
     updateProjectsIsEnabled: builder.mutation({
@@ -365,7 +375,6 @@ export const {
   useUpdateProjectStatusMutation,
   useUpdateProjectRankMutation,
   useUpdateProjectMutation,
-  useDeleteProjectMutation,
   useGetPropertyTypeQuery,
   useGetSharedProjectsQuery,
   useGetProjectByIdQuery,
@@ -375,5 +384,4 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery
-  // useDeleteProjectMutation,
 } = projectApi;

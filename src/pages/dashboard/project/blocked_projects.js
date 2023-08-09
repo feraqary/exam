@@ -99,7 +99,8 @@ const BlockedProjects = () => {
   return (
     <Page title="Manage Blocked Projects">
       <ToastContainer />
-      <Container title="Manage Blocked Projects" style={{ xs: 12, lg: 12 }}>
+
+      <Container title="Manage Blocked Projects" style={{ xs: 12 }}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <Table

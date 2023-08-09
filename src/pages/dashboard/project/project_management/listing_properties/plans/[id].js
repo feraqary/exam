@@ -38,7 +38,6 @@ export default function Plans() {
                       { label: 'Floor Plan', value: 2 },
                       { label: 'Tower Structure', value: 3 }
                     ]}
-                    getOptionLabel={(type) => type.label}
                     style={{ xs: 12, lg: 12 }}
                     helperText="Please Select Plan Type"
                     id="planType"
