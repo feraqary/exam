@@ -28,7 +28,6 @@ import { useEffect } from 'react';
 import { setCountry } from 'store/slices/country-section/slice/country';
 import { setState } from 'store/slices/country-section/slice/country';
 import InputLayout from 'components/InputArea/InputLayout';
-
 import CustomDateTime from 'components/InputArea/CustomDateTime';
 import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';

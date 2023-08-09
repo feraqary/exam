@@ -1,14 +1,10 @@
 // material-ui
 import { Grid, Box, Button, DialogActions, IconButton, Dialog, DialogContent } from '@mui/material';
-
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-import Rating from '@mui/material/Rating';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import { useGetInternationalProjectsQuery, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
@@ -17,6 +13,10 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Slide from '@mui/material/Slide';
+import AddDocuments from './documents';
+import AddAuctions from './add_auctions';
+import ExchangeForm from './add_exchange';
+import Modal from '@mui/material/Modal';
 
 
 // ==============================|| Manage International Unit ||============================== //
@@ -47,7 +47,7 @@ const internationalUnits = () => {
   const [deleteProject, result] = useUpdateProjectStatusMutation();
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Project has been Successfully Deleted!');
+      ToastSuccess('Unit has been Successfully Deleted!');
     }
   }, [result.isSuccess]);
   useEffect(() => {
@@ -64,6 +64,7 @@ const internationalUnits = () => {
   const handleDocsClose = () => {
     setDocsOpen(false);
   };
+ 
 
 
   const data = [
@@ -461,15 +462,14 @@ const internationalUnits = () => {
         const handleClickOpen = () => {
           setOpen(true);
         };
+        const [auctionOpen, setAuctionOpen] = useState(false);
+        const handleAuctionClickOpen = () => {
+          setAuctionOpen(true);
+        }
         const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-        const [deleteProject, result] = useUpdateProjectStatusMutation();
-        useEffect(() => {
-          if (result.isSuccess) {
-            ToastSuccess('Project has been Deleted Successfully');
-          }
-        }, [result.isSuccess]);
-
+        const handleClose = () => setOpen(false); 
+        const handleAuctionClose = () => setAuctionOpen(false);
+        const handleAuctionOpen = () => setAuctionOpen(true);
         return (
           <>
             <Box
@@ -485,9 +485,12 @@ const internationalUnits = () => {
               <Button variant="contained" color="primary">
                 Edit
               </Button>
-              <Button color="primary" variant="contained">
-                Manage Documents
-              </Button>
+              <Button onClick={handleOpen} color="primary" variant="contained"> Manage Documents</Button>
+              <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+                <Box sx={style}>
+                 <AddDocuments></AddDocuments>
+                </Box>
+              </Modal>
               <Button variant="contained" color="primary">
                 View
               </Button>
@@ -497,12 +500,15 @@ const internationalUnits = () => {
               <Button variant="contained" color="primary">
               Add to Draft
               </Button>
-              <Button variant="contained" color="primary">
-              Add to Exchange
-              </Button>
-              <Button variant="contained" color="primary">
-              Add to Auction
-              </Button>
+              <Button variant="contained" color="primary">Add to Exchange</Button>
+    
+              <Button onClick={handleAuctionOpen} variant="contained" color="primary" >Add to Auction </Button>
+              <Modal open={auctionOpen} onClose={handleAuctionClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+                <Box sx={style}>
+                <AddAuctions/>
+                </Box>
+              </Modal>
+             
               <Button variant="contained" color="primary">
               Add to Sale
               </Button>
@@ -531,7 +537,7 @@ const internationalUnits = () => {
 
   if (isLoading) return;
   return (
-    <Page title="Manage Project">
+    <Page title="Manage International Units">
       <ToastContainer />
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
