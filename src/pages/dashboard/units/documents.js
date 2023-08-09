@@ -2,25 +2,31 @@
 
 import React, { useState } from 'react';
 import { Grid, TextField, FormHelperText, Button } from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 import Page from 'components/ui-component/Page';
 import { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import { Formik, Field } from 'formik';
+import Input from '@mui/material/Input';
+import MainCard from 'components/ui-component/cards/MainCard';
+import { NormalAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 
-const promotionOptions = [
-  { id: 0, label: 'Open to All Nationalities' },
-  { id: 1, label: 'Flexible Payment Plan' },
-  { id: 2, label: 'No Commission' },
-  { id: 3, label: '0 ADM Waiver' },
-  { id: 4, label: 'Discount' },
-  { id: 5, label: 'Low Down Payment' },
+const uploadDocumentOptions = [
+  { id: 0, label: 'Accountant' },
+  { id: 1, label: 'Fax Documents' },
+  { id: 2, label: 'General Papers' },
+  { id: 3, label: 'Legal Papers' },
+  { id: 4, label: 'Listing Documents' },
+  { id: 5, label: 'Images' },
+  { id: 6, label: 'Owner Papers' },
+  { id: 7, label: 'Property Papers' },
+  { id: 8, label: 'Whatsapp' },
+  { id: 9, label: 'Email' },
+  { id: 10, label: 'Video' }
 ];
 
 const inputFieldStyle = { width: '100%' };
 
-function AddPromotions({ projectId, onClose }) {
+function AddDocuments({ projectId, onClose }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedPromotions, setSelectedPromotions] = useState([]);
 
@@ -30,16 +36,15 @@ function AddPromotions({ projectId, onClose }) {
 
   const handlePromotionsChange = (event) => {
     setSelectedPromotions(event.target.value);
-  };
+  };  
   const useCreatePromotionsMutation = (formData) => {
     return new Promise((resolve, reject) => {
-     
       setTimeout(() => {
         const response = {
           data: {
             Message: 'success',
-            data: formData,
-          },
+            data: formData
+          }
         };
         resolve(response);
       }, 1000);
@@ -47,12 +52,11 @@ function AddPromotions({ projectId, onClose }) {
   };
 
   const handleFormSubmit = (values, formikBag) => {
-   
     useCreatePromotionsMutation({
       project_id: projectId,
       promotion_types: values.promotion_types,
       description: values.description,
-      expiry_date: values.expiry_date,
+      expiry_date: values.expiry_date
     })
       .then((response) => {
         if (response && response.data && response.data.Message === 'success') {
@@ -73,24 +77,25 @@ function AddPromotions({ projectId, onClose }) {
   };
 
   return (
-    <Page title="Add Promotions">
+    <Page title="Upload Documents" item xs={12} md={6}>
       <Formik
         initialValues={{
           promotion_types: [],
           description: '',
-          expiry_date: null,
+          expiry_date: null
         }}
         onSubmit={handleFormSubmit}
       >
-        {({ handleSubmit, isSubmitting }) => (
+        {({ handleSubmit, isUploading, isResetting }) => (
           <form onSubmit={handleSubmit}>
+            <MainCard title="Add Documents">
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Field
                   style={{ xs: 12, lg: 12, mb: 3 }}
-                  component={MultipleAutoCompleteSelector}
-                  options={promotionOptions}
-                  label="Promotion Types"
+                  component={NormalAutoCompleteSelector}
+                  options={uploadDocumentOptions}
+                  label="Category"
                   name="promotion_types"
                   onChange={handlePromotionsChange}
                   value={selectedPromotions}
@@ -100,40 +105,41 @@ function AddPromotions({ projectId, onClose }) {
                 <Field
                   as={TextField}
                   fullWidth
-                  label="Description"
-                  rows={8}
-                  id="description"
-                  placeholder="Describe Promotion"
-                  multiline
-                  name="description"
+                  label="Title"
+                  id="title"
+                  placeholder="add document title"
+                  name="title"
                   sx={inputFieldStyle}
                 />
-                <FormHelperText>Please Describe Promotion</FormHelperText>
+                <FormHelperText>Please Add Title </FormHelperText>
               </Grid>
               <Grid item xs={12}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <Field
-                    as={DatePicker}
-                    label="Expiry Date"
-                    id="expiry_date"
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    renderInput={(params) => <TextField {...params} sx={inputFieldStyle} />}
-                  />
-                </LocalizationProvider>
-                <FormHelperText>Pick Expiry Date</FormHelperText>
+                <Field
+                  as={Input}
+                  type = "file"
+                  label="File"
+                  id="file"
+                  placeholder="add document title"
+                  name="title"
+                  sx={inputFieldStyle}
+                 
+                />
               </Grid>
               <Grid item xs={12}>
-                <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
-                  {isSubmitting ? 'Submitting...' : 'Submit'}
+                <Button type="upload" variant="contained" color="primary" disabled={isUploading}>
+                  {isUploading? 'Uploading...' : 'Upload'}
+                </Button>
+                <Button type="reset" variant="contained" color="primary" disabled={isResetting}>
+                  {isResetting? 'Resetting...' : 'Reset'}
                 </Button>
               </Grid>
             </Grid>
+            </MainCard>
+            
           </form>
         )}
       </Formik>
     </Page>
   );
-        }
-        export default AddPromotions;
-
+}
+export default AddDocuments;
