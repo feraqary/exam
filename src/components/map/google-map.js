@@ -243,8 +243,9 @@ const Map = ({
               onClick={() => {
                 const flattenedArray = [].concat(...polygons);
                 console.log(flattenedArray);
-                setFieldValue(`phases[${num}].polygons`, [...flattenedArray]);
-                // setPolyValue([...flattenedArray]);
+                // setFieldValue(`phases[${num}].polygons`, [...flattenedArray]);
+                // setFieldValue(`phases[${num}].polygonCoords`, [...flattenedArray]);
+                setPolyValue([...flattenedArray]);
                 close(false);
                 setSubmitted(polygons?.length !== 0 && num === phaseID);
               }}
