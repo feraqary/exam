@@ -7,6 +7,8 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { useState } from 'react';
+
+import Container from 'components/Elements/Container';
 // ==============================|| Activities Project ||============================== //
 
 const ColumnHeaders = [
@@ -70,19 +72,21 @@ function Activities() {
   });
   return (
     <Page title="Activities">
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table
-            columnHeaders={ColumnHeaders}
-            data={data}
-            pagination={pagination}
-            setPagination={setPagination}
-            rowCount={data.length}
-            isFetching={false}
-            loading={false}
-          />
+      <Container title="Manage Activities" style={{ xs: 12 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              columnHeaders={ColumnHeaders}
+              data={data}
+              pagination={pagination}
+              setPagination={setPagination}
+              rowCount={data.length}
+              isFetching={false}
+              loading={false}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 }

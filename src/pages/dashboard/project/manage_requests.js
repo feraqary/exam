@@ -6,6 +6,8 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
+import Container from 'components/Elements/Container';
+import { useState } from 'react';
 
 // ==============================|| Manage International Project ||============================== //
 
@@ -66,20 +68,34 @@ const data = [
     date: '2-12-2023'
   }
 ];
-function ManageProject() {
+function ManageRequests() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
   return (
-    <Page title="Manage Project">
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table data={data} columnHeaders={ColumnHeaders} />
+    <Page title="Manage Requests">
+      <Container title="Manage Requests" style={{ xs: 12 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              data={data}
+              columnHeaders={ColumnHeaders}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={false}
+              loading={false}
+              rowCount={data.length}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 }
 
-ManageProject.getLayout = function getLayout(page) {
+ManageRequests.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default ManageProject;
+export default ManageRequests;
