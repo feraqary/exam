@@ -13,17 +13,6 @@ export const projectApi = api.injectEndpoints({
       }
     }),
 
-    //CREATE PROJECT API
-    CreateProject: builder.mutation({
-      query(data) {
-        return {
-          url: `dashboard/createProject/1`,
-          method: 'POST',
-          body: data
-        };
-      }
-    }),
-
     //GET LOCAL Projects API
 
     getPropertyType: builder.query({
