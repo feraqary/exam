@@ -63,34 +63,7 @@ const property_name = [
   { label: 'Emirates Tower', id: 3
  },
 ];
-const unit_type = [
-  { label: 'Hotel Apartment', id: 1 
-},
-  {label: 'Office', id: 2 },
-  { label: 'Residential Floor', id: 3 },
-  { label: 'Commercial Floor', id: 4 },
-  { label: 'Showroom' ,  id: 5},
-  { label: ' Retail', id: 6}, 
-  { label: 'Shop', id: 7},
-  { label: 'Labour Camp' , id: 8
-},
-  { label: 'Commercial Villas', id: 9},
-  { label: ' Townhouse', id: 10
-},
-  { label: 'Apartment', id: 11
-},
-  { label: 'Penthouse', id: 12
-},
-  { label: 'Commercial Land', id: 13
-},
-  { label: ' Residential Land', id: 14
-},
-  { label: 'Mixed Used Land', id: 15
-},
-  { label: 'Industrial Land', id: 16
-},
-  { label: 'Farm', id: 17},
-]
+
 const company_names = [
   { label: 'ALDAR' , id: 1},
   { label: 'EMAAR', id: 2},

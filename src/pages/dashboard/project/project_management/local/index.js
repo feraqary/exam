@@ -25,6 +25,9 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
+import AddPromotions from '../../add_promotions';
+import Modal from '@mui/material/Modal';
+
 
 // ==============================|| Manage International Projects ||============================== //
 
@@ -33,6 +36,7 @@ const localProjects = () => {
     pageIndex: 0,
     pageSize: 5
   });
+  
 
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
@@ -50,6 +54,7 @@ const localProjects = () => {
       ToastError('Error');
     }
   }, [result.isError]);
+  
 
   const ColumnHeaders = [
     {
@@ -154,6 +159,24 @@ const localProjects = () => {
         const [open, setOpen] = useState(false);
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
         const [verify, setVerify] = useState(false);
+        const style = {
+          position: 'relative',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 700,
+          bgcolor: 'background.paper',
+          border: '10px solid #000',
+          boxShadow: 24,
+          p: 4
+        };
+        const [promotionOpen , setPromotionOpen] = useState(false); 
+        const handlePromotionOpen = () => {
+          setPromotionOpen(true);
+        }
+        const handlePromotionClose = () => {
+          setPromotionOpen(false);
+        } 
 
         const handleClickOpen = () => {
           setOpen(true);
@@ -287,10 +310,20 @@ const localProjects = () => {
                     Documents
                   </Button>
                 </Link>
-
-                <Button variant="contained" color="primary">
-                  Add Promotion
-                </Button>
+                <Button onClick={handlePromotionOpen} variant="contained" color="primary">
+                Add to Promotions
+              </Button>
+              <Modal
+                open={promotionOpen}
+                onClose={handlePromotionClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <AddPromotions/>
+                </Box>
+              </Modal>
+            
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
                 </Button>
