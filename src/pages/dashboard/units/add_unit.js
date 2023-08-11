@@ -1,505 +1,1041 @@
 // material-ui
-import { Grid, Checkbox } from '@mui/material';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import { Grid, Box } from '@mui/material';
+import * as Yup from 'yup';
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
+import Map from 'components/map/google-map';
+import MapAutocomplete from 'components/map/maps-autocomplete';
+import { LoadScript } from '@react-google-maps/api';
+import Image from 'next/image';
+import valid from 'card-validator';
+import { objectValidator, arrayValidator, stringValidator, numberValidator, fileValidator, dateValidator } from 'utils/formik-validations';
+import iban from 'iban';
+// redux actions import
 
-//assets
-import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
+// assets
 import InputText from 'components/InputArea/TextInput';
-import Container from 'components/Elements/Container';
-import SubmitButton from 'components/Elements/SubmitButton';
+import FileUpload from 'components/InputArea/FileUpload';
 import Selector from 'components/InputArea/Selector';
-import CustomizedTabs from 'components/Elements/Tab';
+import Container from 'components/Elements/Container';
+import AutoCompleteSelector, { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
+import SubmitButton from 'components/Elements/SubmitButton';
+import { useEffect } from 'react';
+import { setCountry } from 'store/slices/country-section/slice/country';
+import { setState } from 'store/slices/country-section/slice/country';
+import InputLayout from 'components/InputArea/InputLayout';
+import CustomDateTime from 'components/InputArea/CustomDateTime';
+import { ToastContainer } from 'react-toastify';
+import { useRef } from 'react';
+import { Formik } from 'formik';
+import PhoneInput from 'components/InputArea/PhoneInput';
+import { useCreateCompanyMutation, useGetSubCompanyTypesByCompanyTypeQuery } from 'store/services/company/companyApi';
+import { useGetAllMainServicesBySubCompanyTypeQuery, useGetAllServicesBYMainServiceTypeQuery } from 'store/services/services/serviceApi';
+import {
+  useGetCitiesByStateQuery,
+  useGetCommunitiesByCityQuery,
+  useGetCountriesQuery,
+  useGetCurrenciesQuery,
+  useGetStatesByCountryQuery,
+  useGetSubCommunitiesByCommunityQuery
+} from 'store/services/country/countryApi';
+import { ToastSuccess } from 'utils/toast';
+import { property } from 'lodash';
 
-// ==============================|| Add Units ||============================== //
-function AddUnits() {
-  const [globalValues, setGlobalValues] = useState([]);
-  const [long, setlong] = useState(null);
-  const [lat, setlat] = useState(null);
-  const [country, setCountry] = useState('');
-  const [invest, setInvest] = useState(false);
-  const [locationLink, setLocationLink] = useState({
-    latitude: 24.4984312,
-    longitude: 54.4036975
+// ==============================|| FIELDS ||============================== //
+const unit_options = [
+  { label: 'Sale', id: 1 },
+  { label: 'Rent', id: 2 },
+  { label: 'Commercial Rent', id: 3
+ },
+ {label: 'Commercial Sale', id: 4},
+ { label: 'Exchange', id: 5},
+ { label: 'Commercial Exchange', id: 5},
+
+];
+const property_name = [
+  { label: 'Al-Ain Tower', id: 1 },
+  { label: 'Sharjah Tower', id: 2 },
+  { label: 'Emirates Tower', id: 3
+ },
+];
+const unit_type = [
+  { label: 'Hotel Apartment', id: 1 
+},
+  {label: 'Office', id: 2 },
+  { label: 'Residential Floor', id: 3 },
+  { label: 'Commercial Floor', id: 4 },
+  { label: 'Showroom' ,  id: 5},
+  { label: ' Retail', id: 6}, 
+  { label: 'Shop', id: 7},
+  { label: 'Labour Camp' , id: 8
+},
+  { label: 'Commercial Villas', id: 9},
+  { label: ' Townhouse', id: 10
+},
+  { label: 'Apartment', id: 11
+},
+  { label: 'Penthouse', id: 12
+},
+  { label: 'Commercial Land', id: 13
+},
+  { label: ' Residential Land', id: 14
+},
+  { label: 'Mixed Used Land', id: 15
+},
+  { label: 'Industrial Land', id: 16
+},
+  { label: 'Farm', id: 17},
+]
+const company_names = [
+  { label: 'ALDAR' , id: 1},
+  { label: 'EMAAR', id: 2},
+
+]
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
+// ==============================|| Add Unit form ||============================== //
+const validationSchema = Yup.object({
+  unitType: objectValidator('Mandatory Selection', true),
+  subCompanyType: objectValidator('Mandatory Selection', true),
+  mainService: objectValidator('Mandatory Selection', true),
+  service: arrayValidator('Please select a service', true, 1),
+  companyName: stringValidator('Please provide a company name', true),
+  reraNo: stringValidator('Please provide a valid reara number', true),
+  reraExpiryDate: dateValidator('Please select an expiration date', true),
+  billingReference: stringValidator('please provide a valid bill reference', true),
+  vatNo: stringValidator('Please provide a valid vat number', true),
+  vatStatus: numberValidator('Please select your vat status', true),
+  country: objectValidator('Mandatory Selection', true),
+  state: objectValidator('Mandatory Selection', true),
+  city: objectValidator('Mandatory Selection', true),
+  community: objectValidator('Not a valid selection'),
+  subCommunity: objectValidator('Not a valid selection'),
+  officeAddress: stringValidator('Please provide a valid office address', true),
+  mapUrl: stringValidator('Please provide a valid map url').url(),
+  lat: numberValidator('Latitude is missing', true),
+  long: numberValidator('Longitude is missing', true),
+  companyWebsite: stringValidator('Please provid a valid company website', true).url(),
+  companyEmailAddress: stringValidator('Please provide a valid company email address', true).email(),
+  companyContactNumber: stringValidator('Please provide a valid company contact number', true),
+  companyDescription: stringValidator('Please provide a company description', true),
+  lisenceNo: stringValidator('Please provide a valid liscence number', true),
+  lisenceExpiryDate: dateValidator('Please select an expiration date', true),
+  facebook: stringValidator('Please provide your facebook profile'),
+  instagram: stringValidator('Please provide your instagram profile'),
+  linkedin: stringValidator('Please provide your linkedin profile'),
+  twitter: stringValidator('Please provide your twitter profile'),
+  youtube: stringValidator('Please provide your YouTube profile'),
+  firstName: stringValidator('Please provide your first name', true),
+  lastName: stringValidator('Please provide your last name', true),
+  emailAddress: stringValidator('Please provide a valid email address', true).email(),
+  phoneNumber: stringValidator('Please provide a valid phone number', true),
+  numberOfEmployees: numberValidator('Please enter the number of employees', true),
+  subscriptionDuration: stringValidator('Please select a subscription duration', true),
+  subscriptionStartDate: dateValidator('Please select a subscription start date', true),
+  subscriptionEndDate: dateValidator('Please select a subscription end date', true),
+  ibanNumber: Yup.string()
+    .required()
+    .trim()
+    .test('TEST_IBAN_NUMBER', 'iban number is invalid', (value) => {
+      return iban.isValid(value);
+    }),
+  currency: objectValidator('Mandatory Selection', true),
+  accountCountry: objectValidator('Mandatory Selection', true),
+  bankName: stringValidator('Please provide a bank name', true),
+  bankBranch: stringValidator('Please provide a bank branch', true),
+  swiftCode: stringValidator('Please provide a swift code', true),
+  cardNumber: Yup.string().trim().min(6, 'please provide a valid account number').max(15, 'please provide a valid account number'),
+
+  cardName: Yup.string()
+    .trim()
+    .test('CREDIT_CARD_NAME', 'Please provide a valid name', (value) => valid.cardholderName(value).isValid),
+
+  adminProfilePicture: fileValidator(SUPPORTED_FORMATS),
+  companyLogo: fileValidator(SUPPORTED_FORMATS),
+  companyCoverImage: fileValidator(SUPPORTED_FORMATS),
+  vatFile: fileValidator(['application/pdf']),
+  reraFile: fileValidator(['application/pdf']),
+  lisenceFile: fileValidator(['application/pdf'])
+});
+
+function ColumnsLayouts() {
+  const [address, setAddress] = useState('Abu Dhabi');
+  const [companyId, setCompanyId] = useState(null);
+  const [subCompanyTypeId, setSubCompanyTypeId] = useState(null);
+  const [mainServiceId, setMainServiceId] = useState(null);
+
+  const [countryId, setCountryId] = useState(null);
+  const [stateId, setStateId] = useState(null);
+  const [cityId, setCityId] = useState(null);
+  const [communityId, setCommunityId] = useState(null);
+
+  const {
+    companyInformation,
+    error: companyError,
+    loading: companyLoading,
+    companyTypes,
+    mainServices,
+    services
+  } = useSelector((state) => state.companies);
+
+  const {
+    data: companySubTypes,
+    error: companySubTypeError,
+    isError,
+    isLoading,
+    isFetching
+  } = useGetSubCompanyTypesByCompanyTypeQuery(companyId, {
+    skip: companyId === null || companyId === undefined
   });
-  const [numOfPhases, setNumOfPhases] = useState(0);
 
-  let link =
-    'https://www.google.com/maps/place/Addax+Office+Tower/@24.4984312,54.4036975,18.25z/data=!4m6!3m5!1s0x3e5e67a52a16039b:0x3b49e7595dafcef7!8m2!3d24.4989329!4d54.4031167!16s%2Fg%2F11b722p3r4?entry=ttu';
+  const {
+    data: mainServicesData,
+    error: mainServicesError,
+    isError: mainServiceIsError,
+    isLoading: mainServiceIsLoading,
+    isFetching: mainServiceIsFetching
+  } = useGetAllMainServicesBySubCompanyTypeQuery(subCompanyTypeId, {
+    skip: subCompanyTypeId === null || subCompanyTypeId === undefined
+  });
 
-  const getLongLat = (link) => {
-    const regex = /@([-0-9.]+),([-0-9.]+)/;
-    const match = link.match(regex);
+  const {
+    data: subServicesData,
+    error: subServicesError,
+    isError: subServicesIsError,
+    isLoading: subServicesIsLoading,
+    isFetching: subServicesIsFetching
+  } = useGetAllServicesBYMainServiceTypeQuery(mainServiceId, {
+    skip: mainServiceId === null || mainServiceId === undefined
+  });
 
-    if (match && match.length === 3) {
-      const latitude = parseFloat(match[1]);
-      const longitude = parseFloat(match[2]);
-      return { latitude, longitude };
+  const {
+    data: countriesData,
+    error: countriesError,
+    isError: countriesIsError,
+    isLoading: countriesIsLoading,
+    isFetching: countriesIsFetching
+  } = useGetCountriesQuery();
+
+  const {
+    data: statesData,
+    error: statesError,
+    isError: statesIsError,
+    isLoading: statesIsLoading,
+    isFetching: statesIsFetching
+  } = useGetStatesByCountryQuery(countryId, {
+    skip: countryId === null || countryId === undefined
+  });
+
+  const {
+    data: citiesData,
+    error: citiesError,
+    isError: citiesIsError,
+    isLoading: citiesIsLoading,
+    isFetching: citiesIsFetching
+  } = useGetCitiesByStateQuery(stateId, {
+    skip: stateId === null || stateId === undefined
+  });
+
+  const {
+    data: communitiesData,
+    error: communitiesError,
+    isError: communitiesIsError,
+    isLoading: communitiesIsLoading,
+    isFetching: communitiesIsFetching
+  } = useGetCommunitiesByCityQuery(cityId, {
+    skip: cityId === null || cityId === undefined
+  });
+
+  const {
+    data: subCommunitiesData,
+    error: subCommunitiesError,
+    isError: subCommunitiesIsError,
+    isLoading: subCommunitiesIsLoading,
+    isFetching: subCommunitiesIsFetching
+  } = useGetSubCommunitiesByCommunityQuery(communityId, {
+    skip: communityId === null || communityId === undefined
+  });
+
+  const {
+    data: currenciesData,
+    error: currenciesError,
+    isError: currenciesIsError,
+    isLoading: currenciesIsLoading,
+    isFetching: currenciesIsFetching
+  } = useGetCurrenciesQuery();
+
+  const [createCompany, result] = useCreateCompanyMutation();
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      ToastSuccess('Company has been created successfully');
     }
+  }, [result.isSuccess]);
 
-    return null;
+  useEffect(() => {
+    if (result.isError) {
+      const { data } = result.error;
+      ToastError(data.error);
+    }
+  }, [result.isError]);
+
+  const vatRef = useRef(null);
+  const lisenceRef = useRef(null);
+  const companyLogoRef = useRef(null);
+  const companyCoverRef = useRef(null);
+  const profileRef = useRef(null);
+  const reraRef = useRef(null);
+  const submitForm = (values) => {
+    const formData = new FormData();
+    formData.append('company_types', values.companyType.id);
+    formData.append('subcompany_type', values.subCompanyType.id);
+    formData.append('main_service_type', values.mainService.id);
+    formData.append('sub_service_type', values.service);
+    formData.append('company_name', values.companyName);
+    formData.append('rera_no', values.reraNo);
+    formData.append('commercial_license_no', values.lisenceNo);
+    formData.append('commercial_license_file_url', values.lisenceFile);
+    formData.append('commercial_license_expiry', values.lisenceExpiryDate);
+    formData.append('vat_no', values.vatNo);
+    formData.append('vat_status', values.vatStatus);
+    formData.append('vat_file_url', values.vatFile);
+    formData.append('lat', values.lat);
+    formData.append('lng', values.long);
+    formData.append('no_of_employees', values.numberOfEmployees);
+    formData.append('billing_country_id', values.country.ID);
+    formData.append('billing_state_id', values.state.ID);
+    formData.append('billing_city_id', values.city.ID);
+    formData.append('billing_community_id', values.community.ID);
+    formData.append('billing_sub_community_id', values.subCommunity.ID);
+    formData.append('billing_office_address', values.officeAddress);
+    formData.append('billing_reference', values.billingReference);
+    formData.append('google_map_link', values.mapUrl);
+    formData.append('website_url', values.companyWebsite);
+    formData.append('company_email', values.companyEmailAddress);
+    formData.append('company_contact_number', values.companyContactNumber);
+    formData.append('company_whatsapp_number', values.companyContactNumber);
+    formData.append('company_description', values.companyDescription);
+    formData.append('logo_url', values.companyLogo);
+    formData.append('cover_image_url', values.companyCoverImage);
+    formData.append('facebook_profile_url', values.facebook);
+    formData.append('instagram_profile_url', values.twitter);
+    formData.append('linkedin_profile_url', values.instagram);
+    formData.append('twitter_profile_url', values.linkedin);
+    formData.append('first_name', values.firstName);
+    formData.append('last_name', values.lastName);
+    formData.append('user_email', values.emailAddress);
+    formData.append('user_phone_number', values.phoneNumber);
+    formData.append('user_profile_picture', values.adminProfilePicture);
+    formData.append('subscription_duration', values.subscriptionDuration);
+    formData.append('subscription_start_date', values.subscriptionStartDate);
+    formData.append('subscription_end_date', values.subscriptionEndDate);
+    formData.append('account_name', values.cardName);
+    formData.append('account_number', values.cardNumber);
+    formData.append('iban', values.ibanNumber);
+    formData.append('currency_id', values.currency.ID);
+    formData.append('bank_country_id', values.accountCountry.ID);
+    formData.append('bank_name', values.bankName);
+    formData.append('branch_name', values.bankBranch);
+    formData.append('swift_code', values.swiftCode);
+    formData.append('rera_file_url', values.reraFile);
+    formData.append('rera_expiry', values.reraExpiryDate);
+    values.service.forEach((ser) => {
+      formData.append('sub_service_type[]', ser?.id);
+    });
+    createCompany(formData);
   };
-
-  const handleLocation = (e) => {
-    setLocationLink(getLongLat(e.target.value));
-    console.log(e.target.value);
-    console.log(locationLink);
-  };
-
-  const defaultMapProps = {
-    center: {
-      lat: getLongLat(link).latitude,
-      lng: getLongLat(link).longitude
-    },
-    zoom: 12
-  };
-
-  const sugg = {
-    countries: ['UAE', 'Egypt', 'United States of America', 'United Kingdom', 'Sudan'],
-    projdetcity: ['Abudhabi', 'New york', 'London', 'Khartoum', 'Cairo'],
-    brokercomp: [
-      'Yas Real Estate LLC',
-      'Finehome Inter. Real Estate LLc',
-      'Management Real Estate LLC',
-      'My Real Estate LLC',
-      'Hello Real Estate'
-    ],
-    masterdev: ['Al dar', 'EMAAR', 'AQARY', 'FINE HOME', 'VERY FINE HOME'],
-    subdevco: ['LETS DO IT LLC', 'Subdev LLC', 'ABC LLC', 'Dev LLC', 'Maybe LLC'],
-    locCountry: ['Brazil', 'Nigeria', 'Qatar', 'Angola', 'Saudi Arabia'],
-    state: ['Rio', 'Nairobi', 'Doha', 'Luena', 'Jedda'],
-    city: ['Chicago', 'New Jersy', 'Ohio', 'Manchester', 'Lviv'],
-    district: ['Kharkov', 'Denipro', 'Mosscow', 'Doha', 'Riyadh'],
-    community: ['Al reem', "Sa'adyat", 'Yas', 'Al Raha', 'MBZ'],
-    subcomm: ['Al Qurm', 'Al Mushrif', 'Al Wahda', 'Khaldiya', 'Mussafah'],
-    propertystat: ['Upcoming', 'Completed', 'Under Construction', 'Off plan', 'Ready'],
-    propertytype: ['Apartment', 'Building', 'Bungalow', 'Land/Plot', 'Retail'],
-    lifestyle: ['Luxury', 'Ultra Luxury', 'Standard', 'Affordable'],
-    ownership: ['Free Hold', 'GCC citizen', 'Leasehold', 'UAE Citizen', 'Other']
-  };
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y'
-  });
 
   return (
-    <Page title="Add Project">
-      <Grid container spacing={gridSpacing}>
-        <Container title="Listing Details" style={{ xs: 12 }}>
-          <Grid container spacing={2} alignItems="center">
-            <AutoCompleteSelector
-              label="Category"
-              placeholder="Select Category"
-              options={sugg.countries}
-              style={{ xs: 12, lg: 4 }}
-              id="categorySelector"
-              value={country}
-              setValue={setCountry}
-              helperText="Please select category"
-            />
-            <AutoCompleteSelector
-              label="Unity Type"
-              placeholder="Select Unity Type"
-              options={sugg.countries}
-              style={{ xs: 12, lg: 4 }}
-              id="unityTypeSelector"
-              value={country}
-              setValue={setCountry}
-              helperText="Please select Unit Type"
-            />
+    <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
+      <Page title="Add Units">
+        <ToastContainer />
+        <Grid container spacing={gridSpacing}>
+          <Formik
+            validateOnChange={false}
+            initialValues={{
+              companyType: '',
+              subCompanyType: '',
+              mainService: '',
+              service: [],
+              companyName: '',
+              reraNo: '',
+              reraExpiryDate: '', //
+              billingReference: '',
+              vatNo: '',
+              vatStatus: '',
+              country: '',
+              state: '',
+              city: '',
+              community: '',
+              subCommunity: '',
+              officeAddress: '',
+              mapUrl: '',
+              place: '',
+              lat: 24.4984312,
+              long: 54.4036975,
+              companyWebsite: '',
+              companyEmailAddress: '',
+              companyContactNumber: '',
+              companyDescription: '',
+              lisenceNo: '',
+              lisenceExpiryDate: '',
+              facebook: '',
+              instagram: '',
+              linkedin: '',
+              twitter: '',
+              youtube: '',
+              firstName: '',
+              lastName: '',
+              emailAddress: '',
+              phoneNumber: '',
+              numberOfEmployees: '',
+              subscriptionDuration: '',
+              subscriptionStartDate: '',
+              subscriptionEndDate: '',
+              cardNumber: '',
+              cardName: '',
+              ibanNumber: '',
+              currency: '',
+              accountCountry: '',
+              bankName: '',
+              bankBranch: '',
+              swiftCode: '',
+              reraFile: '', //
+              lisenceFile: '',
+              vatFile: '',
+              companyLogo: '',
+              companyCoverImage: '',
+              adminProfilePicture: ''
+            }}
+            validationSchema={validationSchema}
+            onSubmit={async (values, { setSubmitting, resetForm, validateForm }) => {
+              await validateForm(values);
+              submitForm(values);
+              setSubmitting(false);
+              if (!companyError) {
+                resetForm();
+              }
+            }}
+            validator={() => ({})}
+            onReset={(_) => {
+              vatRef.current.value = '';
+              lisenceRef.current.value = '';
+              companyLogoRef.current.value = '';
+              companyCoverRef.current.value = '';
+              profileRef.current.value = '';
+              reraRef.current.value = '';
+            }}
+          >
+            {(props) => (
+              <>
+                <Container title="Add Unit Details" style={{ xs: 12 }}>
+                  <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 10 }}
+                      label="Category"
+                      id="category"
+                      name="category"
+                      options={unit_options}
+                      placeholder="Select Category"
+                      setFieldValue={props.setFieldValue}
+                      func={(newValue) => {
+                      
+                      }}
+                      required={true}
+                    />
+                  
+                      <AutoCompleteSelector
+                        helperInfo
+                        style={{ xs: 12, lg: 10 }}
+                        label="Unit Type"
+                        id="unitType"
+                        name="unitType"
+                        placeholder="Select Unit Type"
+                        options={unit_type}
+                        setFieldValue={props.setFieldValue}
+                        func={(newValue) => {
+                        
+                        }}
+                        required={true}
+                      />
+                      <AutoCompleteSelector
+                        helperInfo
+                        style={{ xs: 12, lg: 10 }}
+                        label="Select Property"
+                        id="mainService"
+                        name="mainService"
+                        placeholder="Select Property"
+                        options={property_name}
+                        func={(newValue) => {
+      
+                        }}
+                        required={true}
+                      />
+                          <AutoCompleteSelector
+                        helperInfo
+                        style={{ xs: 12, lg: 10 }}
+                        label="Select Company"
+                        id="company"
+                        name="companyName"
+                        placeholder="Select Company Name"
+                        options={unit_type}
+                        setFieldValue={props.setFieldValue}
+                        func={(newValue) => {
+                        
+                        }}
+                        required={true}
+                      />
+<InputText
+                      helperInfo
+                      label="References No"
+                      placeholder="Enter References No"
+                      style={{ xs: 12, lg: 6 }}
+                      type="text"
+                      id="refNo"
+                      name="refNo"
+                      required={true}
+                    />
+                    <InputText
+                      helperInfo
+                      label="ORN Number"
+                      placeholder="Enter ORN No"
+                      style={{ xs: 12, lg: 6 }}
+                      type="text"
+                      id="refNo"
+                      name="refNo"
+                      required={true}
+                    />
+                    <CustomDateTime
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="RERA No. Expiry Date"
+                      helperText="Please enter RERA No. Expiry Date"
+                      id="reraExpiryDate"
+                      name="reraExpiryDate"
+                      required={true}
+                      setFieldValue={props.setFieldValue}
+                    />
+                   
+                  </Grid>
 
-            <AutoCompleteSelector
-              label="Property"
-              placeholder="Select Property"
-              options={sugg.city}
-              style={{ xs: 12, lg: 4 }}
-              id="property-Selector"
-              value={globalValues}
-              setValue={setGlobalValues}
-              helperText="Please select a property"
-            />
+                </Container>
+            
+                <Container title="Location Details" style={{ xs: 12 }}>
+                  <Grid container spacing={2} alignItems="center">
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Countries"
+                      id="country"
+                      name="country"
+                      options={countriesError || countriesIsLoading ? [] : countriesData?.data || []}
+                      getOptionLabel={(country) => country.Country || ''}
+                      renderOption={(props, option) => (
+                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                          <Image
+                            src={`http://20.203.31.58/upload/${option.Flag}`}
+                            width={30}
+                            height={30}
+                            style={{ objectFit: 'contain' }}
+                          />
 
-            <AutoCompleteSelector
-              label="Company"
-              placeholder="Select Company"
-              options={sugg.masterdev}
-              style={{ xs: 12, lg: 4 }}
-              id="company-Selector"
-              value={globalValues}
-              setValue={setGlobalValues}
-              helperText="Please select a company"
-            />
+                          {option.Country}
+                        </Box>
+                      )}
+                      placeholder="Select a Country"
+                      loading={countriesIsLoading}
+                      func={(newValue) => {
+                        setCountryId(newValue?.ID);
+                        props.setFieldValue('subCommunity', '');
+                        props.setFieldValue('state', '');
+                        props.setFieldValue('city', '');
+                        props.setFieldValue('community', '');
+                        props.setFieldValue('subCommunity', '');
+                      }}
+                      required={true}
+                    />
 
-            <AutoCompleteSelector
-              label="Agent"
-              placeholder="Select Agent"
-              options={sugg.subdevco}
-              style={{ xs: 12, lg: 4 }}
-              id="agent-Selector"
-              value={globalValues}
-              setValue={setGlobalValues}
-              helperText="Please select a agent"
-            />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="States"
+                      id="state"
+                      name="state"
+                      options={statesData?.data || []}
+                      getOptionLabel={(state) => state.State || ''}
+                      placeholder="Select a State"
+                      disabled={props.values.country ? false : true}
+                      loading={statesIsLoading}
+                      func={(newValue) => {
+                        setStateId(newValue?.ID);
+                        props.setFieldValue('subCommunity', '');
+                        props.setFieldValue('city', '');
+                        props.setFieldValue('community', '');
+                      }}
+                      required={true}
+                    />
 
-            <AutoCompleteSelector
-              label="Reference No."
-              placeholder="Select Reference No."
-              options={sugg.subdevco}
-              style={{ xs: 12, lg: 4 }}
-              id="refernce-number-Selector"
-              value={globalValues}
-              setValue={setGlobalValues}
-              helperText="Please select a refernce number"
-            />
-            <AutoCompleteSelector
-              label="ORN Number"
-              placeholder="Select ORN Number"
-              options={sugg.subdevco}
-              style={{ xs: 12, lg: 4 }}
-              id="ORN-number-Selector"
-              value={globalValues}
-              setValue={setGlobalValues}
-              helperText="Please select a ORN number"
-            />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Cites"
+                      id="city"
+                      name="city"
+                      options={citiesData?.data || []}
+                      getOptionLabel={(city) => city.City || ''}
+                      placeholder="Select a City"
+                      disabled={props.values.state ? false : true}
+                      loading={citiesIsLoading}
+                      func={(newValue) => {
+                        setCityId(newValue?.ID);
+                        props.setFieldValue('subCommunity', '');
+                        props.setFieldValue('community', '');
+                      }}
+                      required={true}
+                    />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Communities"
+                      id="community"
+                      name="community"
+                      options={communitiesData?.data || []}
+                      getOptionLabel={(community) => community.Community || ''}
+                      placeholder="Select a Community"
+                      disabled={props.values.city ? false : true}
+                      loading={communitiesIsLoading}
+                      func={(newValue) => {
+                        setCommunityId(newValue?.ID);
+                        props.setFieldValue('subCommunity', '');
+                      }}
+                      required={false}
+                    />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Sub Communities"
+                      id="subCommunity"
+                      name="subCommunity"
+                      options={subCommunitiesData?.data || []}
+                      getOptionLabel={(subCommunity) => subCommunity.SubCommunity || ''}
+                      placeholder="Select a Community"
+                      disabled={props.values.community ? false : true}
+                      loading={subCommunitiesIsLoading}
+                      required={false}
+                    />
+                    <InputText
+                      helperInfo
+                      label="Office Address"
+                      placeholder="Enter the office address"
+                      helperText="Please enter the office address"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      id="officeAddress"
+                      name="officeAddress"
+                      required={true}
+                    />
+                    <InputText
+                      helperInfo
+                      label="Google Map Link"
+                      placeholder="Google Map URL"
+                      helperText="Please enter Google Map URL for Company Location"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      id="mapUrl"
+                      name="mapUrl"
+                      required={false}
+                    />
 
-            <InputText
-              label="RERA Expiry Date"
-              placeholder="RERA Expiry Date"
-              helperText="Please enter RERA expiry date"
-              type="date"
-              style={{ xs: 12, lg: 4 }}
-            />
-          </Grid>
-        </Container>
-        <Container title="Location details" style={{ xs: 12 }}>
-          <Grid container spacing={2} alignItems="center">
-            <AutoCompleteSelector
-              label="Country"
-              placeholder="Select Country"
-              id="countrySelector"
-              style={{ xs: 12, lg: 6 }}
-              value={country}
-              setValue={setCountry}
-              options={sugg.countries}
-              helperText="Please select country"
-            />
-            <InputText
-              style={{ xs: 12, lg: 6 }}
-              label="Address"
-              placeholder="Address"
-              helperText="Please enter the location address"
-              type="text"
-            />
-            <AutoCompleteSelector
-              style={{ xs: 12, lg: 6 }}
-              label="State"
-              placeholder="State"
-              type="text"
-              helperText="Please enter the location's state"
-              options={sugg.countries}
-              value={country}
-              setValue={setCountry}
-              id="location-details-state"
-            />
+                    <InputLayout
+                      label="Place"
+                      helperText="Please enter place address"
+                      style={{ xs: 12, lg: 6 }}
+                      required={true}
+                      metaError={props.errors.place}
+                      metaTouched={props.touched.place}
+                    >
+                      <MapAutocomplete
+                        placeHolder
+                        onChangeAddress={setAddress}
+                        country={setCountry}
+                        state={setState}
+                        value="uae"
+                        id="place"
+                        name="place"
+                        metaError={props.errors.place}
+                        metaTouched={props.touched.place}
+                      />
+                    </InputLayout>
+                    <Map locationAddress={address} height={'27vh'} xs={12} lg={12} mapUrl={props.values.mapUrl} />
+                  </Grid>
+                </Container>
 
-            <InputText
-              label="Place"
-              style={{ xs: 12, lg: 6 }}
-              placeholder="Place"
-              type="text"
-              helperText="Place the enter location's place"
-            />
+                <Container title="Unit Details" style={{ xs: 12 }}>
+                  <Grid container spacing={2} alignItems="center">
+                    <InputText
+                      helperInfo
+                      label="Unit No. "
+                      placeholder="Enter the Number of Units"
+                      helperText="Please enter the Number of Units"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="companyWebsite"
+                      id="companyWebsite"
+                      required={true}
+                    />
 
-            <Grid item xs={12} lg={6}>
-              <AutoCompleteSelector
-                label="City"
-                placeholder="City"
-                type="text"
-                helperText="City the enter location's city"
-                options={sugg.city}
-                value={globalValues}
-                setValue={setGlobalValues}
-                id="location-details-city"
-                style={{ xs: 12, lg: 12 }}
-              />
-              <AutoCompleteSelector
-                label="District"
-                placeholder="District"
-                type="text"
-                id="location-details-district"
-                helperText="Please enter the location's district"
-                value={country}
-                setValue={setCountry}
-                options={sugg.countries}
-                style={{ xs: 12, lg: 12 }}
-              />
-              <AutoCompleteSelector
-                label="Community"
-                placeholder="Community"
-                type="text"
-                id="location-details-community"
-                helperText="Please enter the location's community"
-                value={country}
-                setValue={setCountry}
-                options={sugg.countries}
-                style={{ xs: 12, lg: 12 }}
-              />
-              <AutoCompleteSelector
-                label="Sub Community"
-                placeholder="Sub Community"
-                type="text"
-                id="location-details-sub-community"
-                helperText="Please enter the location's sub community"
-                value={country}
-                setValue={setCountry}
-                options={sugg.countries}
-                style={{ xs: 12, lg: 12 }}
-              />
-            </Grid>
+                    <InputText
+                      helperInfo
+                      label="Bathroom"
+                      placeholder="Enter Number of Bathrooms"
+                      helperText="Please enter the No.of Bathroom"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="companyEmailAddress"
+                      id="companyEmailAddress"
+                      required={true}
+                    />
 
-            <Grid item xs={12} lg={6} style={{ height: '100%' }} rowSpan={4}>
-              {/* API Key for google map
-                      AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y */}
+                    <PhoneInput
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Primary View"
+                      placeholder="Enter the company Contact Number"
+                      helperText="Please enter the company Contact Number"
+                      name="companyContactNumber"
+                      id="companyContactNumber"
+                    />
 
-              {/* //!fix the height*/}
-              {!isLoaded ? (
-                <div>loading....</div>
-              ) : (
-                <>
-                  <GoogleMap
-                    bootstrapURLKeys={{
-                      key: 'YOUR_API_KEY',
-                      language: 'en'
-                    }}
-                    style={{ height: '43vh' }}
-                    mapContainerStyle={{ position: 'relative', height: '40vh', width: '100%' }}
-                    center={lat != null || long != null ? { lat: lat, lng: long } : { lat: 24.4984312, lng: 54.4036975 }}
-                    zoom={13}
-                  >
-                    <Marker position={lat != null || long != null ? { lat: lat, lng: long } : { lat: 24.4984312, lng: 54.4036975 }} />
-                  </GoogleMap>
-                </>
-              )}
-            </Grid>
-          </Grid>
-        </Container>
+                    <InputText
+                      helperInfo
+                      label="Company Description"
+                      placeholder="Enter the company description"
+                      helperText="Please enter the company description"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="companyDescription"
+                      id="companyDescription"
+                      required={true}
+                    />
 
-        <Container title="Unit Details" style={{ xs: 12 }}>
-          <Grid container spacing={2} justifyContent="space-between">
-            <Grid container spacing={2} xs={12} lg={8}>
-              <InputText
-                label="Unit No."
-                placeholder="Unit Number"
-                type="number"
-                helperText={<FormControlLabel control={<Checkbox defaultChecked />} label="View for public" />}
-                style={{ xs: 12, lg: 6 }}
-              />
+                    <FileUpload
+                      helperInfo
+                      label="Company logo"
+                      placeholder="Enter the company logo"
+                      helperText="Please enter the company logo"
+                      style={{ xs: 12, lg: 6 }}
+                      image={{ alt: 'Company Logo Preview', width: '250px', height: '250px' }}
+                      ref={companyLogoRef}
+                      id="companyLogo"
+                      name="companyLogo"
+                      setFieldValue={props.setFieldValue}
+                      required={true}
+                    />
+                    <FileUpload
+                      helperInfo
+                      label="Company Cover Image"
+                      placeholder="Enter the company cover image"
+                      helperText="Please enter the company cover image"
+                      style={{ xs: 12, lg: 6 }}
+                      image={{ alt: 'Cover Image Preview', width: '250px', height: '250px' }}
+                      ref={companyCoverRef}
+                      required={true}
+                      name="companyCoverImage"
+                      id="companyCoverImage"
+                      setFieldValue={props.setFieldValue}
+                    />
+                  </Grid>
+                </Container>
+                <Container style={{ xs: 12 }} title="Social Media">
+                  <Grid container spacing={2} alignItems="center">
+                    <InputText
+                      helperInfo
+                      label="Facebook"
+                      type="url"
+                      placeholder="Enter Company Facebook Profile"
+                      helperText="Please enter company facebook profile"
+                      style={{ xs: 12, lg: 6 }}
+                      name="facebook"
+                      id="facebook"
+                    />
+                    <InputText
+                      helperInfo
+                      label="Instagram"
+                      type="url"
+                      placeholder="Enter Company Instagram Profile"
+                      helperText="Please enter company instagram profile"
+                      style={{ xs: 12, lg: 6 }}
+                      name="instagram"
+                      id="instagram"
+                    />
+                    <InputText
+                      helperInfo
+                      label="LinkedIn"
+                      type="url"
+                      placeholder="Enter Company LinkedIn Profile"
+                      helperText="Please enter company linkedIn profile"
+                      style={{ xs: 12, lg: 6 }}
+                      name="linkedin"
+                      id="linkedin"
+                    />
+                    <InputText
+                      helperInfo
+                      label="Twitter"
+                      type="url"
+                      placeholder="Enter Company Twitter Profile"
+                      helperText="Please enter company twitter profile"
+                      style={{ xs: 12, lg: 6 }}
+                      name="twitter"
+                      id="twitter"
+                    />
+                    <InputText
+                      label="youtube"
+                      type="url"
+                      placeholder="Enter Company youtube Profile"
+                      helperText="Please enter company youtube profile"
+                      style={{ xs: 12, lg: 6 }}
+                      name="youtube"
+                      id="youtube"
+                    />
+                  </Grid>
+                </Container>
+                <Container title="Company Admin Contact Details" style={{ xs: 12 }}>
+                  <Grid container spacing={2} alignItems="center">
+                    <InputText
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="First Name"
+                      placeholder="Admin First Name"
+                      helperText="Please enter admin first name"
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      required={true}
+                    />
+                    <InputText
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Last Name"
+                      placeholder="Admin Last Name"
+                      helperText="Please enter admin last name"
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      required={true}
+                    />
+                    <InputText
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Email Address"
+                      placeholder="Admin Email Address"
+                      helperText="Please enter admin email address"
+                      type="text"
+                      id="emailAddress"
+                      name="emailAddress"
+                      required={true}
+                    />
+                    <PhoneInput
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Admin Phone Number"
+                      placeholder="Enter the Admin Phone Number"
+                      helperText="Please enter admin phone number"
+                      name="phoneNumber"
+                      id="phoneNumber"
+                    />
+                    <InputText
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Number of Employees"
+                      placeholder="Number of Employees"
+                      helperText="Please enter Number of Employees"
+                      type="text"
+                      id="numberOfEmployees"
+                      name="numberOfEmployees"
+                      required={true}
+                    />
+                    <Selector
+                      helperInfo
+                      id="subscriptionDuration"
+                      name="subscriptionDuration"
+                      helperText="Please choose your purchased subscription duration"
+                      style={{ xs: 12, lg: 4 }}
+                      label="Subscription Duration"
+                      options={[
+                        { value: 1, option: '1 Month' },
+                        { value: 3, option: '3 Months' },
+                        { value: 6, option: '6 Months' },
+                        { value: 9, option: '9 Months' },
+                        { value: 12, option: '12 Months' }
+                      ]}
+                      required={true}
+                      reset={['subscriptionStartDate', 'subscriptionEndDate']}
+                    />
+                    <CustomDateTime
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Subscription Start Date"
+                      helperText="Please enter subscription start date"
+                      id="subscriptionStartDate"
+                      name="subscriptionStartDate"
+                      required={true}
+                      func={{ value: props.values.subscriptionDuration, name: 'subscriptionEndDate' }}
+                      disabled={!props.values.subscriptionDuration}
+                    />
+                    <CustomDateTime
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Subscription End Date"
+                      helperText="Please enter subscription end date"
+                      id="subscriptionEndDate"
+                      name="subscriptionEndDate"
+                      required={true}
+                      disabled={true}
+                    />
+                    <FileUpload
+                      helperInfo
+                      setFieldValue={props.setFieldValue}
+                      id="adminProfilePicture"
+                      name="adminProfilePicture"
+                      required={true}
+                      style={{ xs: 12, lg: 6 }}
+                      label="Upload Profile Picture"
+                      placeholder="Upload Profile Picture"
+                      helperText="Please enter upload profile picture"
+                      image={{ alt: 'Admin Profile Preview', width: '250px', height: '250px' }}
+                      ref={profileRef}
+                    />
+                    <Grid item lg="4"></Grid>
+                  </Grid>
+                </Container>
+                <Container title="Bank Account Details" style={{ xs: 12 }}>
+                  <Grid container spacing={2} alignItems="center">
+                    <InputText
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Account Number"
+                      placeholder="Account Number"
+                      helperText="Please enter account number"
+                      type="text"
+                      id="cardNumber"
+                      name="cardNumber"
+                      required={true}
+                    />
+                    <InputText
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Account Name"
+                      placeholder="Account Name"
+                      helperText="Please enter account name"
+                      type="text"
+                      id="cardName"
+                      name="cardName"
+                      required={true}
+                    />
+                    <InputText
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="IBAN Number"
+                      placeholder="IBAN Number"
+                      helperText="Please enter IBAN number"
+                      type="text"
+                      id="ibanNumber"
+                      name="ibanNumber"
+                      required={true}
+                    />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Countries"
+                      id="accountCountry"
+                      name="accountCountry"
+                      options={countriesError || countriesIsLoading ? [] : countriesData?.data || []}
+                      getOptionLabel={(country) => country.Country || ''}
+                      renderOption={(props, option) => (
+                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                          <Image
+                            src={`http://20.203.31.58/upload/${option.Flag}`}
+                            width={30}
+                            height={30}
+                            style={{ objectFit: 'contain' }}
+                          />
 
-              <InputText
-                label="Bedrooms"
-                placeholder="Number Of Bedrooms"
-                type="number"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please enter the number of bedrooms"
-              />
-
-              <InputText
-                label="Bathrooms"
-                placeholder="Number of Bathrooms"
-                type="number"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please enter the number of bathrooms"
-              />
-
-              <InputText
-                label="Parking"
-                placeholder="Number of parking space"
-                type="number"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please enter the number of parking space"
-              />
-
-              <AutoCompleteSelector
-                label="Primary View"
-                placeholder="Primary View"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please select the primary view"
-                options={sugg.district}
-                value={globalValues}
-                setValue={setGlobalValues}
-                id="primary-view-selector"
-              />
-
-              <AutoCompleteSelector
-                label="Secondary View"
-                placeholder="Secondary View"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please select the secondary view"
-                options={sugg.district}
-                value={globalValues}
-                setValue={setGlobalValues}
-                id="secondary-view-selector"
-              />
-
-              <InputText
-                label="PlotArea (sqft)"
-                placeholder="Plot Area (sqft)"
-                type="number"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please enter the plot area (sqft)"
-              />
-
-              <InputText
-                label="Price"
-                placeholder="Price"
-                type="number"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please enter the unit price"
-              />
-
-              <InputText
-                label="Built up area (sqft)"
-                placeholder="Built up area (sqft)"
-                type="number"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please enter the unit built up area (sqft)"
-              />
-
-              <InputText
-                label="Service Charge"
-                placeholder="Service Charge"
-                type="number"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please enter the unit service charge"
-              />
-
-              <InputText
-                label="No. of Payments"
-                placeholder="No. of Payments"
-                type="number"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please enter the unit no. of payments"
-              />
-
-              <AutoCompleteSelector
-                label="Rent Type"
-                placeholder="Rent Type"
-                type="number"
-                helperText="Please enter the unit rent type"
-                options={sugg.district}
-                value={globalValues}
-                setValue={setGlobalValues}
-                id="no-of-payments-selector"
-                style={{ xs: 12, lg: 6 }}
-              />
-              <Selector
-                id="furnished-selector"
-                label="Furnished"
-                style={{ xs: 12, lg: 6 }}
-                options={['No', 'Semi Furnished', 'Full Furnished']}
-                helperText="Please select whether the unit is furnished or not"
-              />
-
-              <AutoCompleteSelector
-                label="Ownership"
-                placeholder="Ownership"
-                style={{ xs: 12, lg: 6 }}
-                options={sugg.district}
-                value={globalValues}
-                setValue={setGlobalValues}
-                id="ownership-selector"
-                helperText={
-                  <FormControlLabel
-                    onClick={() => {
-                      setInvest(!invest);
-                    }}
-                    control={<Checkbox defaultChecked />}
-                    label="Investment"
-                  />
-                }
-              />
-
-              <InputText
-                label="Contract Start Date"
-                placeholder="Contract Start Date"
-                type="date"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please enter the contract start date"
-                disabled={!invest ? 'disabled' : null}
-              />
-
-              <InputText
-                label="Contract End Date"
-                placeholder="Contract End Date"
-                type="date"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please enter the contract end date"
-                disabled={!invest ? 'disabled' : null}
-              />
-              <InputText
-                label="Amount"
-                placeholder="Amount"
-                type="number"
-                style={{ xs: 12, lg: 6 }}
-                disabled={!invest ? 'disabled' : null}
-                helperText="Please enter the contract amount"
-              />
-
-              <Selector
-                label="Completion status"
-                style={{ xs: 12, lg: 6 }}
-                helperText="Please enter the completion status"
-                id="completion-status-selector"
-                options={['Up Coming', 'Off Plan', 'Ready', 'Under Construction', 'Up Coming']}
-              />
-            </Grid>
-
-            <CustomizedTabs />
-
-            {/* <Grid container spacing={2} lg={8} xs={12} alignItems="center">
-              <Grid style={{ padding: '16px 0 0 16px' }} container xs={12} lg={12}>
-                <Grid item xs={12} lg={6}>
-                  <InputLabel required>Custom Amenities</InputLabel>
-                  <AutocompleteForms setCompanyFun={handleGlobalChange} data={sugg.district} />
-                </Grid>
-                <Grid item xs={12} lg={6} alignContent="center">
-                  <InputLabel>Choose Type</InputLabel>
-                  <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="female" row onChange={handlePhaseType}>
-                    <FormControlLabel value="Upload" control={<Radio />} label="Upload" />
-                    <FormControlLabel value="Select Existing" control={<Radio />} label="Multiple" />
-                  </RadioGroup>
-                </Grid>
-              </Grid>
-
-              <Grid style={{ padding: '16px 0 0 16px' }} container xs={12} lg={12}>
-                <Grid item xs={12} lg={6}>
-                  <InputLabel required>Custom Facilities</InputLabel>
-                  <AutocompleteForms setCompanyFun={handleGlobalChange} data={sugg.district} />
-                </Grid>
-                <Grid item xs={12} lg={6} alignContent="center">
-                  <InputLabel>choose Type</InputLabel>
-                  <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="female" row onChange={handlePhaseType}>
-                    <FormControlLabel value="Upload" control={<Radio />} label="Single" />
-                    <FormControlLabel value="Select Existing" control={<Radio />} label="Multiple" />
-                  </RadioGroup>
-                </Grid>
-              </Grid>
-            </Grid> */}
-          </Grid>
-        </Container>
-        <SubmitButton />
-      </Grid>
-    </Page>
+                          {option.Country}
+                        </Box>
+                      )}
+                      placeholder="Select a Country"
+                      helperText="Please select a country"
+                      required={true}
+                    />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Currencies"
+                      id="currency"
+                      name="currency"
+                      options={currenciesError || currenciesIsLoading ? [] : currenciesData?.data || []}
+                      getOptionLabel={(currency) => currency.Currency || ''}
+                      renderOption={(props, option) => (
+                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                          {option.Currency.toUpperCase()} : {option.Code}
+                        </Box>
+                      )}
+                      placeholder="Select a Currency"
+                      helperText="Please select a currency"
+                      required={true}
+                    />
+                    <InputText
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Bank Name"
+                      placeholder="Bank Name"
+                      helperText="Please enter bank name"
+                      type="text"
+                      id="bankName"
+                      name="bankName"
+                      required={true}
+                    />
+                    <InputText
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Bank Branch"
+                      placeholder="Bank Branch"
+                      helperText="Please enter bank branch"
+                      type="text"
+                      id="bankBranch"
+                      name="bankBranch"
+                      required={true}
+                    />
+                    <InputText
+                      helperInfo
+                      style={{ xs: 12, lg: 4 }}
+                      label="Swift Code"
+                      placeholder="Swift Code"
+                      helperText="Please enter swift code"
+                      type="text"
+                      id="swiftCode"
+                      name="swiftCode"
+                      required={true}
+                    />
+                  </Grid>
+                  <SubmitButton />
+                </Container>
+              </>
+            )}
+          </Formik>
+        </Grid>
+      </Page>
+    </LoadScript>
   );
 }
 
-AddUnits.getLayout = function getLayout(page) {
+ColumnsLayouts.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default AddUnits;
+export default ColumnsLayouts;
