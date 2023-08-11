@@ -4,11 +4,9 @@ import Map from 'components/map/google-map';
 // material-ui
 
 // project imports
-import CloseIcon from '@mui/icons-material/Close';
 import SubmitButton from 'components/Elements/SubmitButton';
 import AutoCompleteSelector, { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import CustomDateTime from 'components/InputArea/CustomDateTime';
-import PopUp from 'components/InputArea/PopUp';
 import Selector from 'components/InputArea/Selector';
 import InputText from 'components/InputArea/TextInput';
 import Page from 'components/ui-component/Page';
@@ -38,7 +36,6 @@ import {
 } from 'store/services/project/projectApi';
 import { ToastError, ToastSuccess } from 'utils/toast';
 import Categorization from './helper/Categorization';
-import { v4 as uuidv4 } from 'uuid';
 import MultiPhaseInputs from './helper/multi_inputs';
 function AddProject() {
   //is shared
@@ -208,10 +205,6 @@ function AddProject() {
   // Generate SinglePhaseComponents for each fact in the Filtered array
   const SinglePhaseInputs = Filtered?.map((fact) => SinglePhaseComponents(fact));
   //PHASES====================================================================================
-
-  // const handlePhaseDelete = (index, values, setFieldValues) => {
-
-  // };
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
@@ -536,9 +529,13 @@ function AddProject() {
                   <Grid item xs={12}>
                     <MainCard title="Location details">
                       <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={12} lg={12}>
-                          <Map normallng={long} normallat={lat} height={'40vh'} xs={12} lg={12} />
-                        </Grid>
+                        {props.values.phaseType === 'single' && (
+                          <>
+                            <Grid item xs={12} lg={12}>
+                              <Map normallng={long} normallat={lat} height={'40vh'} xs={12} lg={12} />
+                            </Grid>
+                          </>
+                        )}
                         <AutoCompleteSelector
                           label="Country"
                           placeholder="Select Country"
@@ -774,26 +771,34 @@ function AddProject() {
                               helperText="Ownership"
                             />
                             <CustomDateTime
+                              helperInfo
                               style={{ xs: 12, lg: 4 }}
                               label="Start Date"
                               helperText="Please enter the project start date"
                               id="facts[9].value"
                               name="facts[9].value"
+                              required={true}
+                              setFieldValue={props.setFieldValue}
                             />
                             <CustomDateTime
+                              helperInfo
                               style={{ xs: 12, lg: 4 }}
                               label="Completion Date"
                               helperText="Please enter the project completion date"
                               id="facts[10].value"
                               name="facts[10].value"
+                              required={true}
+                              setFieldValue={props.setFieldValue}
                             />
                             <CustomDateTime
-                              label="Handover Date"
+                              helperInfo
                               style={{ xs: 12, lg: 4 }}
+                              label="Handover Date"
                               helperText="Please enter the project handover date"
                               id="facts[11].value"
                               name="facts[11].value"
-                              required
+                              required={true}
+                              setFieldValue={props.setFieldValue}
                             />
                             <InputText
                               label="No. Of Units"

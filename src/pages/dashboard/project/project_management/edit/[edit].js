@@ -37,7 +37,7 @@ import {
   useUpdateProjectMutation
 } from 'store/services/project/projectApi';
 import Categorization from '../../helper/Categorization';
-
+import MultiPhaseInputs from '../../helper/multi_inputs';
 function AddProject() {
   const router = useRouter();
   const { project_id } = router.query;
@@ -246,7 +246,7 @@ function AddProject() {
           </>
         );
 
-      case 'No Of Floor':
+      case 'No of Floor':
         return (
           <>
             {/* InputText component */}
@@ -262,22 +262,22 @@ function AddProject() {
             />
           </>
         );
-      case 'Price':
-        return (
-          <>
-            {/* InputText component */}
-            <InputText
-              label="Price"
-              required
-              placeholder="enter the price"
-              style={{ xs: 12, lg: 4 }}
-              id="facts[17].value"
-              name="facts[17].value"
-              helperText="Please select property status"
-            />
-          </>
-        );
-      case 'Elevator':
+      // case 'Price':
+      //   return (
+      //     <>
+      //       {/* InputText component */}
+      //       <InputText
+      //         label="Price"
+      //         required
+      //         placeholder="enter the price"
+      //         style={{ xs: 12, lg: 4 }}
+      //         id="facts[17].value"
+      //         name="facts[17].value"
+      //         helperText="Please select property status"
+      //       />
+      //     </>
+      //   );
+      case 'Elevator ':
         return (
           <>
             {/* InputText component */}
@@ -603,10 +603,11 @@ function AddProject() {
                             {props.values?.phases?.map((phase, index) => {
                               return (
                                 // Render the 'DynamicInput' component for each phase
-                                <DynamicInput
+                                <MultiPhaseInputs
                                   setFieldValues={props.setFieldValue}
-                                  DeleteFunc={handleDelete}
+                                  // DeleteFunc={handlePhaseDelete}
                                   values={props.values}
+                                  id={props.values.phases[index].id}
                                   num={index}
                                   key={index}
                                 />
@@ -647,9 +648,13 @@ function AddProject() {
                   <Grid item xs={12}>
                     <MainCard title="Location details">
                       <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={12} lg={12}>
-                          <Map normallng={long} normallat={lat} locationAddress={address} height={'40vh'} xs={12} lg={12} />
-                        </Grid>
+                        {props.values.phaseType === 'single' && (
+                          <>
+                            <Grid item xs={12} lg={12}>
+                              <Map normallng={long} normallat={lat} height={'40vh'} xs={12} lg={12} />
+                            </Grid>
+                          </>
+                        )}
                         <AutoCompleteSelector
                           label="Country"
                           placeholder="Select Country"
@@ -894,26 +899,34 @@ function AddProject() {
                               }}
                             />
                             <CustomDateTime
+                              helperInfo
                               style={{ xs: 12, lg: 4 }}
                               label="Start Date"
                               helperText="Please enter the project start date"
                               id="facts[9].value"
                               name="facts[9].value"
+                              required={true}
+                              setFieldValue={props.setFieldValue}
                             />
                             <CustomDateTime
+                              helperInfo
                               style={{ xs: 12, lg: 4 }}
                               label="Completion Date"
                               helperText="Please enter the project completion date"
                               id="facts[10].value"
                               name="facts[10].value"
+                              required={true}
+                              setFieldValue={props.setFieldValue}
                             />
                             <CustomDateTime
-                              label="Handover Date"
+                              helperInfo
                               style={{ xs: 12, lg: 4 }}
+                              label="Handover Date"
                               helperText="Please enter the project handover date"
                               id="facts[11].value"
                               name="facts[11].value"
-                              required
+                              required={true}
+                              setFieldValue={props.setFieldValue}
                             />
                             <InputText
                               label="No. Of Units"
