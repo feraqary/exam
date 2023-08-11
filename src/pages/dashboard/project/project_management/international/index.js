@@ -25,12 +25,11 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
-import AddPromotions from '../../add_promotions';
+import AddPromotions from '../promotion/add_promotions';
+import PopUp from 'components/InputArea/PopUp';
 import Modal from '@mui/material/Modal';
 
 // ==============================|| Manage international_ Projects ||============================== //
-
-
 
 const international_Projects = () => {
   const [pagination, setPagination] = useState({
@@ -158,10 +157,13 @@ const international_Projects = () => {
         const [open, setOpen] = useState(false);
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
         const [verify, setVerify] = useState(false);
+        const [promotionOpen, setPromotionOpen] = useState(false);
+        const [viewOpen, setViewOpen] = useState(false);
+
         const handleClickOpen = () => {
           setOpen(true);
         };
-    
+
 
         const handleBlock = () => {
           const formData = new FormData();
@@ -194,9 +196,13 @@ const international_Projects = () => {
                   gap: '1rem'
                 }}
               >
-                <Button variant="contained" color="primary">
-                  View Live
+                <Button variant="contained" color="primary" onClick={() => setViewOpen(true)}>
+                  View Information
                 </Button>
+
+                <PopUp opened={viewOpen} setOpen={setViewOpen} size={'lg'}>
+                  <ViewInformation project_id={row.original.id} />
+                </PopUp>
 
                 <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
                   Verify
@@ -291,10 +297,21 @@ const international_Projects = () => {
                   </Button>
                 </Link>
 
-                <Button variant="contained" color="primary">
-                Add to Promotions
-              </Button>
-         
+
+                <Button
+                  onClick={() => {
+                    setPromotionOpen(true);
+                    console.log('opened');
+                  }}
+                  variant="contained"
+                  color="primary"
+                >
+                  Add to Promotions
+                </Button>
+                <PopUp title="Add Promotion" opened={promotionOpen} setOpen={setPromotionOpen} size={'md'} full width>
+                  <AddPromotions onClose={setPromotionOpen} />
+                </PopUp>
+
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
                 </Button>

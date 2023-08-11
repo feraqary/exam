@@ -25,10 +25,9 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
-import AddPromotions from '../../add_promotions';
-import Modal from '@mui/material/Modal';
-
-
+import AddPromotions from '../promotion/add_promotions';
+import PopUp from 'components/InputArea/PopUp';
+import ViewInformation from '../information/view_information';
 // ==============================|| Manage International Projects ||============================== //
 
 const localProjects = () => {
@@ -36,7 +35,6 @@ const localProjects = () => {
     pageIndex: 0,
     pageSize: 5
   });
-  
 
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
@@ -54,7 +52,6 @@ const localProjects = () => {
       ToastError('Error');
     }
   }, [result.isError]);
-  
 
   const ColumnHeaders = [
     {
@@ -157,7 +154,17 @@ const localProjects = () => {
         const [open, setOpen] = useState(false);
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
         const [verify, setVerify] = useState(false);
-   
+        const [promotionOpen, setPromotionOpen] = useState(false);
+        const [viewOpen, setViewOpen] = useState(false);
+
+        const handlePromotionOpen = () => {
+          setPromotionOpen(true);
+        };
+        const handlePromotionClose = () => {
+          setPromotionOpen(false);
+        };
+
+
         const handleClickOpen = () => {
           setOpen(true);
         };
@@ -199,9 +206,13 @@ const localProjects = () => {
                   gap: '1rem'
                 }}
               >
-                <Button variant="contained" color="primary">
-                  View
+                <Button variant="contained" color="primary" onClick={() => setViewOpen(true)}>
+                  View Information
                 </Button>
+
+                <PopUp opened={viewOpen} setOpen={setViewOpen} size={'lg'}>
+                  <ViewInformation project_id={row.original.id} />
+                </PopUp>
 
                 <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
                   {row.original.is_verified ? 'Unverify' : 'Verify'}
@@ -291,11 +302,14 @@ const localProjects = () => {
                     Documents
                   </Button>
                 </Link>
-                <Button variant="contained" color="primary">
-                Add to Promotions
-              </Button>
-              
-            
+                <Button onClick={handlePromotionOpen} variant="contained" color="primary">
+                  Add to Promotions
+                </Button>
+                <PopUp opened={promotionOpen} setOpen={setPromotionOpen} title="Add Promotion" size={'md'}>
+                  <AddPromotions />
+                </PopUp>
+
+
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
                 </Button>
