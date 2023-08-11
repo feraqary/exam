@@ -8,7 +8,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Page from 'components/ui-component/Page';
 import { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import { Formik, Field } from 'formik';
-
+import Layout from 'layout';
 const promotionOptions = [
   { id: 0, label: 'Open to All Nationalities' },
   { id: 1, label: 'Flexible Payment Plan' },
@@ -135,5 +135,7 @@ function AddPromotions({ projectId, onClose }) {
     </Page>
   );
         }
+
+    
         export default AddPromotions;
 
