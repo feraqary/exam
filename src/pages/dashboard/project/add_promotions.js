@@ -15,7 +15,7 @@ const promotionOptions = [
   { id: 2, label: 'No Commission' },
   { id: 3, label: '0 ADM Waiver' },
   { id: 4, label: 'Discount' },
-  { id: 5, label: 'Low Down Payment' },
+  { id: 5, label: 'Low Down Payment' }
 ];
 
 const inputFieldStyle = { width: '100%' };
@@ -33,13 +33,12 @@ function AddPromotions({ projectId, onClose }) {
   };
   const useCreatePromotionsMutation = (formData) => {
     return new Promise((resolve, reject) => {
-     
       setTimeout(() => {
         const response = {
           data: {
             Message: 'success',
-            data: formData,
-          },
+            data: formData
+          }
         };
         resolve(response);
       }, 1000);
@@ -47,12 +46,11 @@ function AddPromotions({ projectId, onClose }) {
   };
 
   const handleFormSubmit = (values, formikBag) => {
-   
     useCreatePromotionsMutation({
       project_id: projectId,
       promotion_types: values.promotion_types,
       description: values.description,
-      expiry_date: values.expiry_date,
+      expiry_date: values.expiry_date
     })
       .then((response) => {
         if (response && response.data && response.data.Message === 'success') {
@@ -78,7 +76,7 @@ function AddPromotions({ projectId, onClose }) {
         initialValues={{
           promotion_types: [],
           description: '',
-          expiry_date: null,
+          expiry_date: null
         }}
         onSubmit={handleFormSubmit}
       >
@@ -134,6 +132,5 @@ function AddPromotions({ projectId, onClose }) {
       </Formik>
     </Page>
   );
-        }
-        export default AddPromotions;
-
+}
+export default AddPromotions;
