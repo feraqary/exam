@@ -95,8 +95,6 @@ const localProjects = () => {
       accessorKey: 'rating',
       header: 'Rating',
       Cell: ({ renderedCellValue, row }) => {
-        // console.log('row: ', projectData.data[row.index].Rating);
-
         return (
           <>
             <Rating name="read-only" value={localProjectsData?.data[row.index].Rating + 1} readOnly />
@@ -169,6 +167,7 @@ const localProjects = () => {
           formData.append('project_id', row.original.id);
           formData.append('is_verified', verify);
           updateVerifyStatus(formData);
+          console.log(row.original);
         };
 
         const handleUpdateStatus = (status) => {

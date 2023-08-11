@@ -76,7 +76,7 @@ const international_Projects = () => {
       }
     },
     {
-      accessorKey: 'project_name',
+      accessorKey: 'label',
       header: 'Project Name'
     },
     {
@@ -198,12 +198,11 @@ const international_Projects = () => {
                 <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
                   Verify
                 </Button>
-              <Link href={{ pathname: `/dashboard/project/project_management/documents/${row.original.id}` }}>
-                <Button color="primary" variant="contained">
-                  Documents
-
-                </Button>
-              </Link>
+                <Link href={{ pathname: `/dashboard/project/project_management/documents/${row.original.id}` }}>
+                  <Button color="primary" variant="contained">
+                    Documents
+                  </Button>
+                </Link>
                 <Link
                   href={{
                     pathname: `/dashboard/project/project_management/edit/${row.original.id}`,
