@@ -1,7 +1,7 @@
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Grid, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
-import { DrawingManager, GoogleMap, Marker, Polygon, StandaloneSearchBox, useLoadScript } from '@react-google-maps/api';
+import { DrawingManager, GoogleMap, Marker, Polygon, Polyline, StandaloneSearchBox, useLoadScript } from '@react-google-maps/api';
 import axios from 'axios';
 import { useFormikContext } from 'formik';
 import { useEffect, useRef, useState } from 'react';
@@ -24,13 +24,50 @@ const Map = ({
   const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
   const { setFieldValue } = useFormikContext();
   const { isLoaded } = useLoadScript({ googleMapsApiKey: apiKey, libraries: ['drawing'] });
-
   const [lat, setLat] = useState(normallat ? normallat : 24.4984312);
   const [long, setLong] = useState(normallng ? normallng : 54.4036975);
   const mapRef = useRef();
   const polygonRefs = useRef([]);
   const activePolygonIndex = useRef([]);
   const [polygons, setPolygons] = useState([]);
+  const [boundaries, setBounds] = useState([]);
+
+  const GetPath = (address) => {};
+
+  function countNestedArrays(arr) {
+    let count = 0;
+
+    function checkNested(arr) {
+      for (let i = 0; i < arr.length; i++) {
+        if (Array.isArray(arr[i])) {
+          count++;
+          checkNested(arr[i]);
+        }
+      }
+    }
+
+    checkNested(arr);
+    return count;
+  }
+  //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  useEffect(() => {
+    const url = 'https://nominatim.openstreetmap.org/search.php?q=$Musaffah&polygon_geojson=1&format=json';
+
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data from the API. Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setBounds(data[0].geojson.coordinates);
+        const count = countNestedArrays(data[0].geojson.coordinates);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   const polygonOptions = {
     fillOpacity: 0.3,
@@ -167,6 +204,65 @@ const Map = ({
       }
     };
 
+    // let bounds = [
+    //   [53.9777051, 25.2242273],
+    //   [53.9819409, 25.1921773],
+    //   [53.9853031, 25.1792032],
+    //   [53.9978742, 25.1469907],
+    //   [54.0169671, 25.1142776],
+    //   [54.0378675, 25.0893841],
+    //   [54.053518, 25.0742938],
+    //   [54.0707469, 25.0606988],
+    //   [54.0893132, 25.0487224],
+    //   [54.1311317, 25.0298636],
+    //   [54.1763645, 25.01945],
+    //   [54.1927627, 25.0164888],
+    //   [54.2302464, 25.011895],
+    //   [54.2680385, 25.0132103],
+    //   [54.305027, 25.0203956],
+    //   [54.3401238, 25.0332387],
+    //   [54.3722956, 25.0513615],
+    //   [54.3995117, 25.073156],
+    //   [54.4223302, 25.0985723],
+    //   [54.4403543, 25.127073],
+    //   [54.4529625, 25.1576749],
+    //   [54.4599439, 25.1897343],
+    //   [54.4611086, 25.2223997],
+    //   [54.4550978, 25.2696522],
+    //   [54.4547686, 25.2722393],
+    //   [54.4449485, 25.3052745],
+    //   [54.43855, 25.3198369],
+    //   [54.4280301, 25.3391845],
+    //   [54.4056003, 25.370095],
+    //   [54.3772831, 25.3967251],
+    //   [54.3569717, 25.4123479],
+    //   [54.3098203, 25.4361034],
+    //   [54.2891301, 25.4430865],
+    //   [54.2714532, 25.4474559],
+    //   [54.2389568, 25.4523926],
+    //   [54.2063719, 25.4528949],
+    //   [54.1823543, 25.4506464],
+    //   [54.1299623, 25.4372688],
+    //   [54.1012525, 25.4247436],
+    //   [54.0817832, 25.4141569],
+    //   [54.0513951, 25.3923945],
+    //   [54.0256702, 25.3661398],
+    //   [54.0053994, 25.3362026],
+    //   [53.9970264, 25.3199175],
+    //   [53.9883726, 25.298563],
+    //   [53.9830534, 25.279862],
+    //   [53.9793637, 25.2578464],
+    //   [53.9780974, 25.2432401],
+    //   [53.978338, 25.2380795],
+    //   [53.9777051, 25.2242273]
+    // ];
+
+    function flattenCoordinates(arr) {
+      return arr.reduce((acc, val) => acc.concat(Array.isArray(val) && typeof acc[0] !== 'number' ? flattenCoordinates(val) : acc), []);
+    }
+
+    const polyline = flattenCoordinates(boundaries);
+
     return (
       <Grid item xs={xs} lg={lg}>
         <GoogleMap
@@ -193,6 +289,16 @@ const Map = ({
               }}
             />
           </StandaloneSearchBox>
+
+          <Polyline
+            path={boundaries}
+            visible
+            options={{
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.8,
+              strokeWeight: 2
+            }}
+          />
 
           {forPhase && (
             <>
@@ -243,11 +349,9 @@ const Map = ({
               onClick={() => {
                 const flattenedArray = [].concat(...polygons);
                 console.log(flattenedArray);
-                // setFieldValue(`phases[${num}].polygons`, [...flattenedArray]);
-                // setFieldValue(`phases[${num}].polygonCoords`, [...flattenedArray]);
                 setPolyValue([...flattenedArray]);
-                close(false);
                 setSubmitted(polygons?.length !== 0 && num === phaseID);
+                close(false);
               }}
             >
               Submit Location

@@ -14,13 +14,34 @@ import React, { useEffect } from 'react';
 import InputText from 'components/InputArea/TextInput';
 import SubmitButton from 'components/Elements/SubmitButton';
 import { useCreateCategoryMutation, useCreateSubCategoryMutation, useGetDocsCategoriesQuery } from 'store/services/project/projectApi';
+import { useState } from 'react';
+import { ToastError, ToastSuccess } from 'utils/toast';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export default function Category() {
   const [createCategory, CreateCategoryResult] = useCreateCategoryMutation();
+  const [success, setSuccess] = useState(CreateCategoryResult.isSuccess);
+  useEffect(() => {
+    if (CreateCategoryResult.isSuccess) {
+      ToastSuccess('Document category has been created successfully');
+    }
+  }, [CreateCategoryResult.isSuccess]);
 
+  useEffect(() => {
+    if (CreateCategoryResult.isError) {
+      const { data } = CreateCategoryResult.error;
+      ToastError(data.error);
+    }
+  }, [CreateCategoryResult.isError]);
+
+  useEffect(() => {
+    setSuccess(CreateCategoryResult.isSuccess);
+  }, [CreateCategoryResult.isSuccess]);
   return (
     <>
       <Page title="Add Document Category">
+        <ToastContainer />
         <Grid container spacing={3}>
           <Formik
             initialValues={{
@@ -64,17 +85,32 @@ export default function Category() {
               </Grid>
             )}
           </Formik>
-          {CreateCategoryResult.isSuccess && <Sub />}
+          {success && <Sub setSuccess={setSuccess} />}
         </Grid>
       </Page>
     </>
   );
 }
 
-function Sub() {
+function Sub({ setSuccess }) {
   const [createSubCategory, CreateSubCategoryResult] = useCreateSubCategoryMutation();
   const { data: categories, isLoading, isError } = useGetDocsCategoriesQuery();
-  console.log(categories);
+  useEffect(() => {
+    setSuccess(!CreateSubCategoryResult.isSuccess);
+  }, [CreateSubCategoryResult.isSuccess]);
+
+  useEffect(() => {
+    if (CreateSubCategoryResult.isSuccess) {
+      ToastSuccess('Document Sub-Category has been created successfully');
+    }
+  }, [CreateSubCategoryResult.isSuccess]);
+
+  useEffect(() => {
+    if (CreateSubCategoryResult.isError) {
+      const { data } = CreateSubCategoryResult.error;
+      ToastError(data.error);
+    }
+  }, [CreateSubCategoryResult.isError]);
   return (
     <>
       <Formik
@@ -89,10 +125,15 @@ function Sub() {
           formData.append('sub_category', values.sub_name);
 
           createSubCategory(formData);
+
+          // if(){
+          //   setSuccess(!CreateSubCategoryResult);
+          // }
         }}
       >
         {(props) => (
           <Grid item xs={12}>
+            <ToastContainer />
             <MainCard title="Add Document Sub-Category">
               <Grid container spacing={2} alignItems="center" justifyContent={'center'}>
                 <AutoCompleteSelector
@@ -105,6 +146,7 @@ function Sub() {
                   name="category_id"
                   required={true}
                 />
+
                 <InputText
                   label="Sub Category Name"
                   helperText="provide the name of the sub category"
