@@ -25,6 +25,9 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
+import AddPromotions from '../../add_promotions';
+import Modal from '@mui/material/Modal';
+
 
 // ==============================|| Manage International Projects ||============================== //
 
@@ -33,6 +36,7 @@ const localProjects = () => {
     pageIndex: 0,
     pageSize: 5
   });
+  
 
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
@@ -50,6 +54,7 @@ const localProjects = () => {
       ToastError('Error');
     }
   }, [result.isError]);
+  
 
   const ColumnHeaders = [
     {
@@ -152,7 +157,7 @@ const localProjects = () => {
         const [open, setOpen] = useState(false);
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
         const [verify, setVerify] = useState(false);
-
+   
         const handleClickOpen = () => {
           setOpen(true);
         };
@@ -286,10 +291,11 @@ const localProjects = () => {
                     Documents
                   </Button>
                 </Link>
-
                 <Button variant="contained" color="primary">
-                  Add Promotion
-                </Button>
+                Add to Promotions
+              </Button>
+              
+            
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
                 </Button>

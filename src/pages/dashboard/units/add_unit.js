@@ -50,52 +50,45 @@ import { property } from 'lodash';
 const unit_options = [
   { label: 'Sale', id: 1 },
   { label: 'Rent', id: 2 },
-  { label: 'Commercial Rent', id: 3
- },
- {label: 'Commercial Sale', id: 4},
- { label: 'Exchange', id: 5},
- { label: 'Commercial Exchange', id: 5},
-
+  { label: 'Commercial Rent', id: 3 },
+  { label: 'Commercial Sale', id: 4 },
+  { label: 'Exchange', id: 5 },
+  { label: 'Commercial Exchange', id: 5 }
 ];
 const property_name = [
   { label: 'Al-Ain Tower', id: 1 },
   { label: 'Sharjah Tower', id: 2 },
-  { label: 'Emirates Tower', id: 3
- },
+  { label: 'Emirates Tower', id: 3 }
 ];
-const unit_type = [
-  { label: 'Hotel Apartment', id: 1 
-},
-  {label: 'Office', id: 2 },
-  { label: 'Residential Floor', id: 3 },
-  { label: 'Commercial Floor', id: 4 },
-  { label: 'Showroom' ,  id: 5},
-  { label: ' Retail', id: 6}, 
-  { label: 'Shop', id: 7},
-  { label: 'Labour Camp' , id: 8
-},
-  { label: 'Commercial Villas', id: 9},
-  { label: ' Townhouse', id: 10
-},
-  { label: 'Apartment', id: 11
-},
-  { label: 'Penthouse', id: 12
-},
-  { label: 'Commercial Land', id: 13
-},
-  { label: ' Residential Land', id: 14
-},
-  { label: 'Mixed Used Land', id: 15
-},
-  { label: 'Industrial Land', id: 16
-},
-  { label: 'Farm', id: 17},
-]
-const company_names = [
-  { label: 'ALDAR' , id: 1},
-  { label: 'EMAAR', id: 2},
 
-]
+const company_names = [
+  { label: 'ALDAR', id: 1 },
+  { label: 'EMAAR', id: 2 }
+];
+
+const unit_type = [
+  { id: 0, label: ' Hotel Apartment' },
+  {
+    id: 1,
+    label: 'Villa'
+  },
+  { id: 2, label: 'Commercial Villa'},
+  { id: 3, label: 'Townhouse'},
+  { id: 4, label: ' Apartment'},
+  { id: 5, label: ' Penthouse'},
+  { id: 6, label: ' Residential Land'},
+  {  id: 7, label: ' Commercial Land'},
+  { id: 8, label: 'Mixed Used Land'},
+  { id: 9, label: ' Industrial Land'},
+  { id: 10, label: ' Office'},
+  { id: 11, label: ' Residential Floor'},
+  { id: 12, label: 'Commercial Floor'},
+  { id: 13, label: 'Showroom'},
+  { id: 14, label: 'Retail'},
+  { id: 15, label: 'Shop'},
+  { id: 16, label: 'Labour Camp'},
+  { id: 17, label: 'Farm'}
+];
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 // ==============================|| Add Unit form ||============================== //
 const validationSchema = Yup.object({
@@ -443,54 +436,46 @@ function ColumnsLayouts() {
                       options={unit_options}
                       placeholder="Select Category"
                       setFieldValue={props.setFieldValue}
-                      func={(newValue) => {
-                      
-                      }}
+                      func={(newValue) => {}}
                       required={true}
                     />
-                  
-                      <AutoCompleteSelector
-                        helperInfo
-                        style={{ xs: 12, lg: 10 }}
-                        label="Unit Type"
-                        id="unitType"
-                        name="unitType"
-                        placeholder="Select Unit Type"
-                        options={unit_type}
-                        setFieldValue={props.setFieldValue}
-                        func={(newValue) => {
-                        
-                        }}
-                        required={true}
-                      />
-                      <AutoCompleteSelector
-                        helperInfo
-                        style={{ xs: 12, lg: 10 }}
-                        label="Select Property"
-                        id="mainService"
-                        name="mainService"
-                        placeholder="Select Property"
-                        options={property_name}
-                        func={(newValue) => {
-      
-                        }}
-                        required={true}
-                      />
-                          <AutoCompleteSelector
-                        helperInfo
-                        style={{ xs: 12, lg: 10 }}
-                        label="Select Company"
-                        id="company"
-                        name="companyName"
-                        placeholder="Select Company Name"
-                        options={unit_type}
-                        setFieldValue={props.setFieldValue}
-                        func={(newValue) => {
-                        
-                        }}
-                        required={true}
-                      />
-<InputText
+
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 10 }}
+                      label="Unit Type"
+                      id="unitType"
+                      name="unitType"
+                      placeholder="Select Unit Type"
+                      options={unit_type}
+                      setFieldValue={props.setFieldValue}
+                      func={(newValue) => {}}
+                      required={true}
+                    />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 10 }}
+                      label="Select Property"
+                      id="mainService"
+                      name="mainService"
+                      placeholder="Select Property"
+                      options={property_name}
+                      func={(newValue) => {}}
+                      required={true}
+                    />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 10 }}
+                      label="Select Company"
+                      id="company"
+                      name="companyName"
+                      placeholder="Select Company Name"
+                      options={unit_type}
+                      setFieldValue={props.setFieldValue}
+                      func={(newValue) => {}}
+                      required={true}
+                    />
+                    <InputText
                       helperInfo
                       label="References No"
                       placeholder="Enter References No"
@@ -520,11 +505,9 @@ function ColumnsLayouts() {
                       required={true}
                       setFieldValue={props.setFieldValue}
                     />
-                   
                   </Grid>
-
                 </Container>
-            
+
                 <Container title="Location Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} alignItems="center">
                     <AutoCompleteSelector

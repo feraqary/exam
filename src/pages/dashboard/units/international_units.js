@@ -17,7 +17,7 @@ import AddDocuments from './documents';
 import AddAuctions from './add_auctions';
 import ExchangeForm from './add_exchange';
 import Modal from '@mui/material/Modal';
-
+import Link from 'Link';
 
 // ==============================|| Manage International Unit ||============================== //
 
@@ -25,17 +25,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const style = {
-  position: 'relative',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 700,
-  bgcolor: 'background.paper',
-  border: '10px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+
 const internationalUnits = () => {
   const [docsOpen, setDocsOpen] = useState(false);
   const [updateDocs, setUpdateDocs] = useState({ project: null, id: null });
@@ -44,7 +34,7 @@ const internationalUnits = () => {
     pageSize: 10
   });
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
-  const [deleteProject, result] = useUpdateProjectStatusMutation();
+
   useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Unit has been Successfully Deleted!');
@@ -58,13 +48,6 @@ const internationalUnits = () => {
     }
   }, [result.isError]);
 
-  const handleDocsOpen = () => {
-    setDocsOpen(true);
-  };
-  const handleDocsClose = () => {
-    setDocsOpen(false);
-  };
- 
 
 
   const data = [
@@ -322,59 +305,56 @@ const internationalUnits = () => {
       request_video: 'Request Video Button',
       open_house: 'Open House Button'
     },
-    
-    {
-      web_id: '1234556',
-      ref_no: '1234567',
-      unit_title: 'some title',
-      company_agent: 'New company agent',
-      category: 'Standard',
-      type: 'some type',
-      country: 'UAE',
-      location: 'Abu Dhabi',
-      price: '100',
-      quality_score: '100%',
-      listing_type: 'some type',
-      bedroom: '2',
-      plot_area: '130,000',
-      build_area: '130,000',
-      created_date: '2020-01-01',
-      updated_date: '2020-01-01',
-      status: 'Active',
-      verify: 'Verified',
-      book_now: 'Book Now Button',
-      request_video: 'Request Video Button',
-      open_house: 'Open House Button'
-    },
-    
-    {
-      web_id: '1234556',
-      ref_no: '1234567',
-      unit_title: 'some title',
-      company_agent: 'New company agent',
-      category: 'Standard',
-      type: 'some type',
-      country: 'UAE',
-      location: 'Abu Dhabi',
-      price: '100',
-      quality_score: '100%',
-      listing_type: 'some type',
-      bedroom: '2',
-      plot_area: '130,000',
-      build_area: '130,000',
-      created_date: '2020-01-01',
-      updated_date: '2020-01-01',
-      status: 'Active',
-      verify: 'Verified',
-      book_now: 'Book Now Button',
-      request_video: 'Request Video Button',
-      open_house: 'Open House Button'
-    },
-    
 
+    {
+      web_id: '1234556',
+      ref_no: '1234567',
+      unit_title: 'some title',
+      company_agent: 'New company agent',
+      category: 'Standard',
+      type: 'some type',
+      country: 'UAE',
+      location: 'Abu Dhabi',
+      price: '100',
+      quality_score: '100%',
+      listing_type: 'some type',
+      bedroom: '2',
+      plot_area: '130,000',
+      build_area: '130,000',
+      created_date: '2020-01-01',
+      updated_date: '2020-01-01',
+      status: 'Active',
+      verify: 'Verified',
+      book_now: 'Book Now Button',
+      request_video: 'Request Video Button',
+      open_house: 'Open House Button'
+    },
+
+    {
+      web_id: '1234556',
+      ref_no: '1234567',
+      unit_title: 'some title',
+      company_agent: 'New company agent',
+      category: 'Standard',
+      type: 'some type',
+      country: 'UAE',
+      location: 'Abu Dhabi',
+      price: '100',
+      quality_score: '100%',
+      listing_type: 'some type',
+      bedroom: '2',
+      plot_area: '130,000',
+      build_area: '130,000',
+      created_date: '2020-01-01',
+      updated_date: '2020-01-01',
+      status: 'Active',
+      verify: 'Verified',
+      book_now: 'Book Now Button',
+      request_video: 'Request Video Button',
+      open_house: 'Open House Button'
+    }
   ];
   const ColumnHeaders = [
-
     {
       accessorKey: 'web_id',
       header: 'Web ID'
@@ -399,11 +379,9 @@ const internationalUnits = () => {
     },
     {
       accessorKey: 'category',
-      header: 'Category',
-     
+      header: 'Category'
     },
-    { accessorKey: 'type',
-     header: 'Type' },
+    { accessorKey: 'type', header: 'Type' },
 
     {
       accessorKey: 'country',
@@ -438,7 +416,7 @@ const internationalUnits = () => {
       header: 'Created Date'
     },
     {
-      accessorKey:"updated_date",
+      accessorKey: 'updated_date',
       header: 'Updated Date'
     },
     {
@@ -446,14 +424,14 @@ const internationalUnits = () => {
       header: 'Book Now'
     },
     {
-      accessorKey:  'request_video',
+      accessorKey: 'request_video',
       header: 'Request Video'
     },
     {
       accessorKey: 'open_house',
       header: 'Open House'
     },
- 
+
     {
       accessorKey: 'action',
       header: 'Action',
@@ -465,9 +443,9 @@ const internationalUnits = () => {
         const [auctionOpen, setAuctionOpen] = useState(false);
         const handleAuctionClickOpen = () => {
           setAuctionOpen(true);
-        }
+        };
         const handleOpen = () => setOpen(true);
-        const handleClose = () => setOpen(false); 
+        const handleClose = () => setOpen(false);
         const handleAuctionClose = () => setAuctionOpen(false);
         const handleAuctionOpen = () => setAuctionOpen(true);
         return (
@@ -485,10 +463,13 @@ const internationalUnits = () => {
               <Button variant="contained" color="primary">
                 Edit
               </Button>
-              <Button onClick={handleOpen} color="primary" variant="contained"> Manage Documents</Button>
+              <Button onClick={handleOpen} color="primary" variant="contained">
+                {' '}
+                Manage Documents
+              </Button>
               <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                 <Box sx={style}>
-                 <AddDocuments></AddDocuments>
+                  <AddDocuments></AddDocuments>
                 </Box>
               </Modal>
               <Button variant="contained" color="primary">
@@ -498,24 +479,34 @@ const internationalUnits = () => {
                 View Live
               </Button>
               <Button variant="contained" color="primary">
-              Add to Draft
+                Add to Draft
               </Button>
-              <Button variant="contained" color="primary">Add to Exchange</Button>
-    
-              <Button onClick={handleAuctionOpen} variant="contained" color="primary" >Add to Auction </Button>
-              <Modal open={auctionOpen} onClose={handleAuctionClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+              <Link href={{ pathname: `/dashboard/units/add_exchange
+               ` }}>
+                  <Button variant="contained" color="primary">
+                   Add to Exchange
+                  </Button>
+                </Link>
+              <Button onClick={handleAuctionOpen} variant="contained" color="primary">
+                Add to Auction{' '}
+              </Button>
+              <Modal
+                open={auctionOpen}
+                onClose={handleAuctionClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
                 <Box sx={style}>
-                <AddAuctions/>
+                  <AddAuctions />
                 </Box>
               </Modal>
-             
+
               <Button variant="contained" color="primary">
-              Add to Sale
+                Add to Sale
               </Button>
               <Button variant="contained" color="primary">
-              Add to Rent
+                Add to Rent
               </Button>
-            
               <Button
                 variant="contained"
                 color="error"

@@ -25,14 +25,19 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
+import AddPromotions from '../../add_promotions';
+import Modal from '@mui/material/Modal';
 
 // ==============================|| Manage international_ Projects ||============================== //
+
+
 
 const international_Projects = () => {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
+
   const { data: international_ProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
 
@@ -156,9 +161,7 @@ const international_Projects = () => {
         const handleClickOpen = () => {
           setOpen(true);
         };
-        const handleClose = () => {
-          setOpen(false);
-        };
+    
 
         const handleBlock = () => {
           const formData = new FormData();
@@ -289,8 +292,9 @@ const international_Projects = () => {
                 </Link>
 
                 <Button variant="contained" color="primary">
-                  Add Promotion
-                </Button>
+                Add to Promotions
+              </Button>
+         
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
                 </Button>
