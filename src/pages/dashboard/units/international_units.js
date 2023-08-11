@@ -25,17 +25,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const style = {
-  position: 'relative',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 700,
-  bgcolor: 'background.paper',
-  border: '10px solid #000',
-  boxShadow: 24,
-  p: 4
-};
+
 const internationalUnits = () => {
   const [docsOpen, setDocsOpen] = useState(false);
   const [updateDocs, setUpdateDocs] = useState({ project: null, id: null });
@@ -44,7 +34,7 @@ const internationalUnits = () => {
     pageSize: 10
   });
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
-  const [deleteProject, result] = useUpdateProjectStatusMutation();
+
   useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Unit has been Successfully Deleted!');
@@ -58,12 +48,7 @@ const internationalUnits = () => {
     }
   }, [result.isError]);
 
-  const handleDocsOpen = () => {
-    setDocsOpen(true);
-  };
-  const handleDocsClose = () => {
-    setDocsOpen(false);
-  };
+
 
   const data = [
     {

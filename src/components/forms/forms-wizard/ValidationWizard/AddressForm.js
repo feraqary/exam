@@ -40,7 +40,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
       </Typography>
       <form onSubmit={formik.handleSubmit} id="validation-forms">
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <TextField
               id="firstName"
               name="firstName"
@@ -53,7 +53,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               autoComplete="given-name"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <TextField
               id="lastName"
               name="lastName"
