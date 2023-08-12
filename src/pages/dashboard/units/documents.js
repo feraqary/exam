@@ -63,7 +63,6 @@ function AddDocuments({ projectId, onClose }) {
           console.log('Promotion created successfully!', response.data.data);
           setSelectedPromotions([]);
           setSelectedDate(null);
-          onClose();
           formikBag.setSubmitting(false);
         } else {
           console.error('Error creating promotion:', response && response.data);

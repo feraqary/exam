@@ -18,6 +18,7 @@ import AddAuctions from './add_auctions';
 import ExchangeForm from './add_exchange';
 import Modal from '@mui/material/Modal';
 import Link from 'Link';
+import PopUp from 'components/InputArea/PopUp';
 
 // ==============================|| Manage International Unit ||============================== //
 
@@ -27,26 +28,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 const internationalUnits = () => {
-  const [docsOpen, setDocsOpen] = useState(false);
+
   const [updateDocs, setUpdateDocs] = useState({ project: null, id: null });
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10
   });
+
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
 
-  useEffect(() => {
-    if (result.isSuccess) {
-      ToastSuccess('Unit has been Successfully Deleted!');
-    }
-  }, [result.isSuccess]);
-  useEffect(() => {
-    if (result.isError) {
-      const { data } = result.error;
-      console.log(data);
-      ToastError('Error');
-    }
-  }, [result.isError]);
 
 
 
@@ -354,6 +344,7 @@ const internationalUnits = () => {
       open_house: 'Open House Button'
     }
   ];
+
   const ColumnHeaders = [
     {
       accessorKey: 'web_id',
@@ -436,18 +427,15 @@ const internationalUnits = () => {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ renderedCellValue, row }) => {
-        const [open, setOpen] = useState(false);
-        const handleClickOpen = () => {
-          setOpen(true);
-        };
-        const [auctionOpen, setAuctionOpen] = useState(false);
-        const handleAuctionClickOpen = () => {
-          setAuctionOpen(true);
-        };
-        const handleOpen = () => setOpen(true);
-        const handleClose = () => setOpen(false);
-        const handleAuctionClose = () => setAuctionOpen(false);
-        const handleAuctionOpen = () => setAuctionOpen(true);
+        const [docsOpen, setDocsOpen] = useState(false);
+        const [auctionsOpen, setAuctionsOpen] = useState(false);
+        const [deleteProject, result] = useUpdateProjectStatusMutation();
+        useEffect(() => {
+          if (result.isSuccess) {
+            ToastSuccess('Project has been Deleted Successfully');
+          }
+        }, [result.isSuccess]);
+
         return (
           <>
             <Box
@@ -463,15 +451,19 @@ const internationalUnits = () => {
               <Button variant="contained" color="primary">
                 Edit
               </Button>
-              <Button onClick={handleOpen} color="primary" variant="contained">
-                {' '}
-                Manage Documents
-              </Button>
-              <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-                <Box sx={style}>
-                  <AddDocuments></AddDocuments>
-                </Box>
-              </Modal>
+              <Button
+                  onClick={() => {
+                setDocsOpen(true);
+                    console.log('opened');
+                  }}
+                  variant="contained"
+                  color="primary"
+                >
+                  Add Documents
+                </Button>
+                <PopUp opened={docsOpen} setOpen={setDocsOpen} size={'md'} >
+                  <AddDocuments/>
+                </PopUp>
               <Button variant="contained" color="primary">
                 View
               </Button>
@@ -479,7 +471,7 @@ const internationalUnits = () => {
                 View Live
               </Button>
               <Button variant="contained" color="primary">
-                Add to Draft
+              Add to Draft
               </Button>
               <Link href={{ pathname: `/dashboard/units/add_exchange
                ` }}>
@@ -487,25 +479,22 @@ const internationalUnits = () => {
                    Add to Exchange
                   </Button>
                 </Link>
-              <Button onClick={handleAuctionOpen} variant="contained" color="primary">
-                Add to Auction{' '}
-              </Button>
-              <Modal
-                open={auctionOpen}
-                onClose={handleAuctionClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
-                  <AddAuctions />
-                </Box>
-              </Modal>
-
+          
+                <Button
+                  onClick={() => {
+                setAuctionsOpen(true);
+                    console.log('opened');
+                  }}
+                  variant="contained"
+                  color="primary"
+                >
+                  Add to Auctions
+                </Button>
+                <PopUp opened={auctionsOpen} setOpen={setAuctionsOpen} size={'md'} full width>
+                  <AddAuctions onClose={setAuctionsOpen} />
+                </PopUp>
               <Button variant="contained" color="primary">
-                Add to Sale
-              </Button>
-              <Button variant="contained" color="primary">
-                Add to Rent
+              Add to Sale
               </Button>
               <Button
                 variant="contained"
@@ -523,7 +512,10 @@ const internationalUnits = () => {
           </>
         );
       }
-    }
+    },
+    { accessorKey: 'status',
+       header: 'Status'
+  }
   ];
 
   if (isLoading) return;
@@ -543,12 +535,6 @@ const internationalUnits = () => {
           />
         </Grid>
       </Grid>
-      <Dialog maxWidth={'xl'} open={docsOpen} onClose={handleDocsClose} TransitionComponent={Transition}>
-        <DialogActions sx={{ justifyContent: 'flex-start' }} onClick={handleDocsClose}>
-          <IconButton></IconButton>
-        </DialogActions>
-        <DialogContent>{/* <Documents comp={docs} /> */}</DialogContent>
-      </Dialog>
     </Page>
   );
 };
