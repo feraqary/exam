@@ -74,8 +74,6 @@ const propertyTypes = [
   { id: 15, label: 'Labour Camp'},
   { id: 16, label: 'Farm'}
 ];
-
-
 const bedrooms = [
   { id: 0, label: 'Studio' },
   { id: 1, label: '1 Bedroom'},
@@ -86,7 +84,6 @@ const bedrooms = [
   { id: 1, label: '6 Bedroom'},
   { id: 1, label: '7 Bedroom'},
 ]
-
 const completion_status = [
   { id: 0, label: 'Ready'},
   { id: 1, label: 'Completed'},
@@ -94,15 +91,12 @@ const completion_status = [
   { id: 3, label: 'Upcoming'},
   { id:4, label: 'Under Construction'}
 ]
-
 const view= [
   { id: 0, label: 'Sea'},
   { id: 1, label: 'Street'},
   { id: 2, label: 'City View'}
 ]
-
 const ownership = [
-
   { id: 0, label: 'Freehold'},
   { id: 1, label: 'Leasehold'},
   { id: 2, label: 'Local Citizen'},
@@ -110,15 +104,12 @@ const ownership = [
     id: 3, label: 'GCC Citizenship'
   },
   { label: 4, label: ' Others'}
-
-
 ]
 const furnished = [
   { id: 0, label: 'All Furnished'},
   { id: 1, label: 'Non-Furnished'},
   { id: 2, label: ' Partially Furnished'}
 ]
-
 const vat = [
   { id: 0, label: 'Commercial Property'},
   {id: 1, label: 'New Residential Property'},
@@ -129,8 +120,6 @@ const vat = [
   { id: 6, label: 'Subsequent Supply of Charitable Building'},
   { id: 7, label: 'Property Located within a Designated Zone'}
 ]
-
-
 const unit_usage = [
   { id: 0, label: 'Residential'},
   { id: 1, label: 'Industrial'},
@@ -146,6 +135,7 @@ const unit_usage = [
   { id: 11, label: 'Business Center'},
   { id: 12, label: 'Offices'}
 ]
+
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 // ==============================|| Add Unit form ||============================== //
 const validationSchema = Yup.object({
@@ -652,7 +642,6 @@ function ExchangeForm() {
                       name="completionStatus"
                       options={completion_status}
                       placeholder="Select Completion Status"
-                     
                     />
                         <AutoCompleteSelector
                       helperInfo
@@ -672,7 +661,6 @@ function ExchangeForm() {
                       options={furnished}
                       placeholder="Select Furnished Status"
                       />
-                     
                     <InputText
                       helperInfo
                       label="Plot Area"
