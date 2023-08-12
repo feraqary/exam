@@ -4,11 +4,9 @@ import Map from 'components/map/google-map';
 // material-ui
 
 // project imports
-import CloseIcon from '@mui/icons-material/Close';
 import SubmitButton from 'components/Elements/SubmitButton';
 import AutoCompleteSelector, { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import CustomDateTime from 'components/InputArea/CustomDateTime';
-import PopUp from 'components/InputArea/PopUp';
 import Selector from 'components/InputArea/Selector';
 import InputText from 'components/InputArea/TextInput';
 import Page from 'components/ui-component/Page';
@@ -38,7 +36,7 @@ import {
 } from 'store/services/project/projectApi';
 import { ToastError, ToastSuccess } from 'utils/toast';
 import Categorization from './helper/Categorization';
-
+import MultiPhaseInputs from './helper/multi_inputs';
 function AddProject() {
   //is shared
   const [shared, setShared] = useState(false);
@@ -53,7 +51,7 @@ function AddProject() {
   const [viewSelected, setViews] = useState([]);
 
   //maps
-  const [address, setAddress] = useState('Dubai');
+  // const [address, setAddress] = useState('Dubai');
   const [long, setlong] = useState(null);
   const [lat, setlat] = useState(null);
 
@@ -115,8 +113,6 @@ function AddProject() {
   const { data: views, error: viewsError, isLoading: loadingView } = useGetViewQuery();
   const [createProject, CreateProjectResult] = useCreateProjectMutation();
 
-  console.log(CreateProjectResult);
-
   useEffect(() => {
     if (CreateProjectResult.isSuccess) {
       ToastSuccess('Project has been created successfully');
@@ -131,110 +127,6 @@ function AddProject() {
   }, [CreateProjectResult.isError]);
 
   if (isLoading) return null;
-
-  //PHASES====================================================================================
-  const handleDelete = (index, values, setFieldValues) => {
-    const updatedPhases = values.phases?.filter((phase, idx) => idx !== index);
-    setFieldValues('phases', updatedPhases);
-  };
-
-  const DynamicInput = ({ num, values, setFieldValues, DeleteFunc }) => {
-    const size = 5.1;
-    const MAP_SIZE = 1.2;
-    const phaseID = num;
-    const [open, setOpen] = useState(false);
-    const [mapSubmitted, setMapSubmitted] = useState(false);
-    const [polys, setPolys] = useState([]);
-    useEffect(() => {
-      setFieldValues(`phases[${num}].id`, num + 1);
-      setFieldValues('numberofPhases', num + 1);
-    }, []);
-
-    useEffect(() => {
-      console.log('polys: ', polys);
-      setFieldValues(`phases[${num}].polygonCoords`, polys);
-    }, [polys]);
-
-    if (isLoading) return null;
-
-    return (
-      <>
-        <InputText
-          required
-          label="Phase Name"
-          placeholder="Phase Name"
-          helperText="Please enter phase name"
-          style={{ xs: 12, lg: size }}
-          type="text"
-          id={`phases[${num}].phaseName`}
-          name={`phases[${num}].phaseName`}
-        />
-        <InputText
-          required
-          label="Number of Properties"
-          placeholder="Number of Properties"
-          helperText="Please enter number of properties"
-          style={{ xs: 12, lg: size }}
-          id={`phases[${num}].NoOfProperties`}
-          name={`phases[${num}].NoOfProperties`}
-          type="number"
-        />
-
-        <Grid xs={6} lg={MAP_SIZE} justifyContent="center" fullWidth>
-          <Button
-            onClick={() => {
-              setOpen(true);
-            }}
-            variant={mapSubmitted ? 'contained' : 'outlined'}
-            fullWidth
-            sx={{ margin: '19px 0px 0px 8px', height: '48px' }}
-          >
-            {mapSubmitted ? 'Edit Location' : 'Select Location'}
-          </Button>
-        </Grid>
-        <PopUp title="Use the Map" opened={open} setOpen={setOpen} size={'xl'} fullWidth>
-          {/* <MapAutocomplete placeHolder onChangeAddress={setAddress} value="uae" setlong={setlong} setlat={setlat} /> */}
-          <Map
-            locationAddress={address}
-            setFieldValues={setFieldValues}
-            setPolyValue={setPolys}
-            xs={12}
-            num={num}
-            phaseID={phaseID}
-            lg={12}
-            values={values}
-            height={'65vh'}
-            forPhase={true}
-            close={setOpen}
-            setSubmitted={setMapSubmitted}
-          />
-        </PopUp>
-        <Grid xs={6} lg={0.5} justifyContent="center" fullWidth>
-          <Button
-            onClick={() => {
-              DeleteFunc(num, values, setFieldValues);
-            }}
-            fullWidth
-            variant="outlined"
-            color="error"
-            sx={{ margin: '19px 0px 0px 8px', height: '48px' }}
-          >
-            <CloseIcon />
-          </Button>
-        </Grid>
-      </>
-    );
-  };
-
-  const resetComponents = (phaseType) => {
-    if (phaseType) {
-      setPhases((prev) => {
-        const newPhases = [prev[0]];
-
-        return newPhases;
-      });
-    }
-  };
 
   //PROPERTY DETAILS============================================================================
   // Function that generates different components based on the 'key' provided
@@ -310,9 +202,9 @@ function AddProject() {
   const facts = propertyType?.map((component) => component.facts?.map((fact) => fact.label));
   const Filtered = [...new Set([].concat(...facts))];
 
-  console.log(Filtered);
   // Generate SinglePhaseComponents for each fact in the Filtered array
   const SinglePhaseInputs = Filtered?.map((fact) => SinglePhaseComponents(fact));
+  //PHASES====================================================================================
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
@@ -328,7 +220,7 @@ function AddProject() {
                 masterDeveloperSelector: '',
                 subDeveloperCompanySelector: '',
                 phaseType: 'single',
-                phases: [{ id: null, phaseName: '', NoOfProperties: null, polygonCoords: [] }],
+                phases: [{ id: null, phaseName: '', NoOfProperties: null, polygons: [], mapSubmitted: null }],
                 numberofPhases: 1,
                 amenities: [],
                 isshared: shared,
@@ -387,8 +279,6 @@ function AddProject() {
               //   serviceCharge: numberValidator('please enter the service charge')
               // })}
               onSubmit={(values, { setSubmitting, resetForm }) => {
-                console.log();
-
                 const ProjectData = {
                   min_area: values?.plotAreaMin?.toString(),
                   max_area: values?.plotAreaMax?.toString(),
@@ -417,7 +307,7 @@ function AddProject() {
                           return {
                             name: phase?.phaseName,
                             no_of_unittypes: phase?.NoOfProperties,
-                            polygons: phase?.polygonCoords?.map((poly) => {
+                            polygons: phase?.polygons?.map((poly) => {
                               return {
                                 lat: poly?.lat,
                                 lng: poly?.lng
@@ -437,7 +327,6 @@ function AddProject() {
                 };
 
                 const data = JSON.stringify(ProjectData);
-                console.log('project data ', ProjectData);
 
                 const submit = {
                   data: data,
@@ -464,7 +353,6 @@ function AddProject() {
                           name="detailsCountrySelect"
                           id="detailsCountrySelect"
                           labelObject="Country"
-                          // api={console.log('hi')}
                           // func={(newValue) => {
                           //   setCountryLocationID(newValue?.ID);
                           // }}
@@ -509,7 +397,6 @@ function AddProject() {
                               name="detailsCountrySelect"
                               id="detailsCountrySelect"
                               labelObject="Country"
-                              api={() => console.log('hi')}
                               func={(newValue) => {
                                 setCountryLocationID(newValue?.ID);
                               }}
@@ -596,10 +483,11 @@ function AddProject() {
                             {props.values?.phases?.map((phase, index) => {
                               return (
                                 // Render the 'DynamicInput' component for each phase
-                                <DynamicInput
+                                <MultiPhaseInputs
                                   setFieldValues={props.setFieldValue}
-                                  DeleteFunc={handleDelete}
+                                  // DeleteFunc={handlePhaseDelete}
                                   values={props.values}
+                                  id={props.values.phases[index].id}
                                   num={index}
                                   key={index}
                                 />
@@ -621,7 +509,8 @@ function AddProject() {
                                     id: null,
                                     phaseName: '',
                                     NoOfProperties: null,
-                                    locationAddress: ''
+                                    polygons: [],
+                                    mapSubmitted: null
                                   };
 
                                   // Add the new phase to the 'phases' array using spread operator
@@ -640,9 +529,13 @@ function AddProject() {
                   <Grid item xs={12}>
                     <MainCard title="Location details">
                       <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={12} lg={12}>
-                          <Map normallng={long} normallat={lat} locationAddress={address} height={'40vh'} xs={12} lg={12} />
-                        </Grid>
+                        {props.values.phaseType === 'single' && (
+                          <>
+                            <Grid item xs={12} lg={12}>
+                              <Map normallng={long} normallat={lat} height={'40vh'} xs={12} lg={12} />
+                            </Grid>
+                          </>
+                        )}
                         <AutoCompleteSelector
                           label="Country"
                           placeholder="Select Country"
@@ -762,9 +655,6 @@ function AddProject() {
                               id="facts[8].value"
                               name="facts[8].value"
                               helperText="Please select property status"
-                              func={(e) => {
-                                console.log(e);
-                              }}
                             />
 
                             <MultipleAutoCompleteSelector
@@ -811,9 +701,6 @@ function AddProject() {
                               id="facts[25].value"
                               name="facts[25].value"
                               helperText="Please select the lifestyle"
-                              func={(e) => {
-                                console.log(e);
-                              }}
                             />
                             <InputText
                               label="Plot Area"
@@ -882,31 +769,36 @@ function AddProject() {
                               id="facts[7].value"
                               name="facts[7].value"
                               helperText="Ownership"
-                              func={(e) => {
-                                console.log(e);
-                              }}
                             />
                             <CustomDateTime
+                              helperInfo
                               style={{ xs: 12, lg: 4 }}
                               label="Start Date"
                               helperText="Please enter the project start date"
                               id="facts[9].value"
                               name="facts[9].value"
+                              required={true}
+                              setFieldValue={props.setFieldValue}
                             />
                             <CustomDateTime
+                              helperInfo
                               style={{ xs: 12, lg: 4 }}
                               label="Completion Date"
                               helperText="Please enter the project completion date"
                               id="facts[10].value"
                               name="facts[10].value"
+                              required={true}
+                              setFieldValue={props.setFieldValue}
                             />
                             <CustomDateTime
-                              label="Handover Date"
+                              helperInfo
                               style={{ xs: 12, lg: 4 }}
+                              label="Handover Date"
                               helperText="Please enter the project handover date"
                               id="facts[11].value"
                               name="facts[11].value"
-                              required
+                              required={true}
+                              setFieldValue={props.setFieldValue}
                             />
                             <InputText
                               label="No. Of Units"

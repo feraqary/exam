@@ -14,7 +14,6 @@ export const projectApi = api.injectEndpoints({
     }),
 
     //GET LOCAL Projects API
-
     getPropertyType: builder.query({
       query() {
         return {

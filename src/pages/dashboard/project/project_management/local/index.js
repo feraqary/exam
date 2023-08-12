@@ -25,10 +25,9 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
-import AddPromotions from '../../add_promotions';
-import Modal from '@mui/material/Modal';
-
-
+import AddPromotions from '../promotion/add_promotions';
+import PopUp from 'components/InputArea/PopUp';
+import ViewInformation from '../information/view_information';
 // ==============================|| Manage International Projects ||============================== //
 
 const localProjects = () => {
@@ -36,7 +35,6 @@ const localProjects = () => {
     pageIndex: 0,
     pageSize: 5
   });
-  
 
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
@@ -54,7 +52,6 @@ const localProjects = () => {
       ToastError('Error');
     }
   }, [result.isError]);
-  
 
   const ColumnHeaders = [
     {
@@ -82,7 +79,7 @@ const localProjects = () => {
       }
     },
     {
-      accessorKey: 'project_name',
+      accessorKey: 'label',
       header: 'Project Name'
     },
     {
@@ -100,8 +97,6 @@ const localProjects = () => {
       accessorKey: 'rating',
       header: 'Rating',
       Cell: ({ renderedCellValue, row }) => {
-        // console.log('row: ', projectData.data[row.index].Rating);
-
         return (
           <>
             <Rating name="read-only" value={localProjectsData?.data[row.index].Rating + 1} readOnly />
@@ -159,7 +154,17 @@ const localProjects = () => {
         const [open, setOpen] = useState(false);
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
         const [verify, setVerify] = useState(false);
-   
+        const [promotionOpen, setPromotionOpen] = useState(false);
+        const [viewOpen, setViewOpen] = useState(false);
+
+        const handlePromotionOpen = () => {
+          setPromotionOpen(true);
+        };
+        const handlePromotionClose = () => {
+          setPromotionOpen(false);
+        };
+
+
         const handleClickOpen = () => {
           setOpen(true);
         };
@@ -174,6 +179,7 @@ const localProjects = () => {
           formData.append('project_id', row.original.id);
           formData.append('is_verified', verify);
           updateVerifyStatus(formData);
+          console.log(row.original);
         };
 
         const handleUpdateStatus = (status) => {
@@ -200,9 +206,13 @@ const localProjects = () => {
                   gap: '1rem'
                 }}
               >
-                <Button variant="contained" color="primary">
-                  View
+                <Button variant="contained" color="primary" onClick={() => setViewOpen(true)}>
+                  View Information
                 </Button>
+
+                <PopUp opened={viewOpen} setOpen={setViewOpen} size={'lg'}>
+                  <ViewInformation project_id={row.original.id} />
+                </PopUp>
 
                 <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
                   {row.original.is_verified ? 'Unverify' : 'Verify'}
@@ -225,7 +235,7 @@ const localProjects = () => {
                   </Button>
                 </Link>
 
-                <Button variant="contained" color="warning" onClick={() => handleUpdateStatus(5)}>
+                <Button color="error" variant="outlined" onClick={() => handleUpdateStatus(5)}>
                   Block
                 </Button>
               </Box>
@@ -251,23 +261,23 @@ const localProjects = () => {
                   </>
                 )}
 
-                {row.original.phase_type === 'Single' && (
-                  <Link
-                    href={{
-                      pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                {/* {row.original.phase_type === 'Single' && ( */}
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      console.log(row.original.phase_type);
                     }}
                   >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        console.log(row.original.phase_type);
-                      }}
-                    >
-                      Plans
-                    </Button>
-                  </Link>
-                )}
+                    Plans
+                  </Button>
+                </Link>
+                {/* )} */}
                 <Link
                   href={{
                     pathname: `/dashboard/project/project_management/rating/${row.original.id}`,
@@ -292,11 +302,14 @@ const localProjects = () => {
                     Documents
                   </Button>
                 </Link>
-                <Button variant="contained" color="primary">
-                Add to Promotions
-              </Button>
-              
-            
+                <Button onClick={handlePromotionOpen} variant="contained" color="primary">
+                  Add to Promotions
+                </Button>
+                <PopUp opened={promotionOpen} setOpen={setPromotionOpen} title="Add Promotion" size={'md'}>
+                  <AddPromotions />
+                </PopUp>
+
+
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
                 </Button>
