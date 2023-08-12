@@ -18,9 +18,11 @@ const PopUp = memo(({ title, setOpen, opened, children, size, fullScreen, action
         </DialogActions>
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>{children}</DialogContent>
-        <Grid item sx={{ padding: '10px 22px' }}>
-          {actions}
-        </Grid>
+        {actions && (
+          <Grid item sx={{ padding: '10px 22px' }}>
+            {actions}
+          </Grid>
+        )}
       </Dialog>
     </>
   );
