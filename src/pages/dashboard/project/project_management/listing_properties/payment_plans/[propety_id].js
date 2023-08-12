@@ -18,6 +18,7 @@ import { ToastError, ToastSuccess } from 'utils/toast';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { NormalInputText } from 'components/InputArea/TextInput';
+import { ProjectStepper } from 'components/dashboard/Project/Stepper';
 
 // ==============================|| Add Company Type form ||============================== //
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
@@ -41,37 +42,14 @@ function AddPaymentPlans() {
   const iconRef = useRef(null);
   const [categoryId, setCategoryId] = useState(null);
   const [paymentPlans, setPaymentPlans] = useState([{ percentage: null, date: null, milestone: null }]);
-  console.log(paymentPlans);
   const addPaymentPlans = () => {
     setPaymentPlans((pre) => [...pre, { percentage: null, date: null, milestone: null }]);
   };
 
-  const DynamicInputField = () => {
-    return (
-      <>
-        <NormalInputText
-          label="Percentage"
-          placeholder="Please enter a percentage"
-          helperText="please input a valid input"
-          style={{ xs: 12, lg: 4 }}
-          type="text"
-        />
-        <NormalInputText
-          label="Date"
-          placeholder="Please enter a date"
-          helperText="please input a valid input"
-          style={{ xs: 12, lg: 4 }}
-          type="date"
-        />
-        <NormalInputText
-          label="Milestone"
-          placeholder="Please enter a milestone"
-          helperText="please input a valid input"
-          style={{ xs: 12, lg: 4 }}
-          type="text"
-        />
-      </>
-    );
+  const [num, setNum] = useState(1);
+
+  const changeNum = (val) => {
+    setNum(val);
   };
 
   return (
@@ -80,12 +58,15 @@ function AddPaymentPlans() {
         <ToastContainer />
         <Container style={{ xs: 12 }} title="Add Payment Plans">
           <Grid container xs={12} lg={12} justifyContent="center" spacing={gridSpacing}>
-            {paymentPlans.map((plan) => (
-              <DynamicInputField />
-            ))}
-            <Grid lg={3} mt={10}>
-              <AddMoreBtn addPaymentPlan={addPaymentPlans} />
-            </Grid>
+            <NormalInputText
+              label="Payment plans"
+              placeholder="enter number of payment plans"
+              style={{ xs: 12 }}
+              type="number"
+              value={num}
+              func={changeNum}
+            />
+            <ProjectStepper num={num} />
           </Grid>
         </Container>
         <NormalSubmitButton />
@@ -99,3 +80,7 @@ AddPaymentPlans.getLayout = function getLayout(page) {
 };
 
 export default AddPaymentPlans;
+
+/* <Grid lg={3} mt={10}>
+  <AddMoreBtn addPaymentPlan={addPaymentPlans} />
+</Grid> */

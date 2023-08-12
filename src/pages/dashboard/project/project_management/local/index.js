@@ -97,8 +97,6 @@ const localProjects = () => {
       accessorKey: 'rating',
       header: 'Rating',
       Cell: ({ renderedCellValue, row }) => {
-        // console.log('row: ', projectData.data[row.index].Rating);
-
         return (
           <>
             <Rating name="read-only" value={localProjectsData?.data[row.index].Rating + 1} readOnly />
@@ -166,6 +164,7 @@ const localProjects = () => {
           setPromotionOpen(false);
         };
 
+
         const handleClickOpen = () => {
           setOpen(true);
         };
@@ -180,6 +179,7 @@ const localProjects = () => {
           formData.append('project_id', row.original.id);
           formData.append('is_verified', verify);
           updateVerifyStatus(formData);
+          console.log(row.original);
         };
 
         const handleUpdateStatus = (status) => {
@@ -308,6 +308,7 @@ const localProjects = () => {
                 <PopUp opened={promotionOpen} setOpen={setPromotionOpen} title="Add Promotion" size={'md'}>
                   <AddPromotions />
                 </PopUp>
+
 
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete

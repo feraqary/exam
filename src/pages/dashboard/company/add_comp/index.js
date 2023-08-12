@@ -15,7 +15,6 @@ import Image from 'next/image';
 import valid from 'card-validator';
 import {
   objectValidator,
-  arrayValidator,
   stringValidator,
   numberValidator,
   fileValidator,

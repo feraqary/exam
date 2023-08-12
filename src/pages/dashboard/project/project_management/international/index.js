@@ -36,17 +36,7 @@ const international_Projects = () => {
     pageIndex: 0,
     pageSize: 5
   });
-  const style = {
-    position: 'relative',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 700,
-    bgcolor: 'background.paper',
-    border: '10px solid #000',
-    boxShadow: 24,
-    p: 4
-  };
+
   const { data: international_ProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
 
@@ -90,7 +80,7 @@ const international_Projects = () => {
       }
     },
     {
-      accessorKey: 'project_name',
+      accessorKey: 'label',
       header: 'Project Name'
     },
     {
@@ -173,9 +163,7 @@ const international_Projects = () => {
         const handleClickOpen = () => {
           setOpen(true);
         };
-        const handleClose = () => {
-          setOpen(false);
-        };
+
 
         const handleBlock = () => {
           const formData = new FormData();
@@ -309,6 +297,7 @@ const international_Projects = () => {
                   </Button>
                 </Link>
 
+
                 <Button
                   onClick={() => {
                     setPromotionOpen(true);
@@ -322,6 +311,7 @@ const international_Projects = () => {
                 <PopUp title="Add Promotion" opened={promotionOpen} setOpen={setPromotionOpen} size={'md'} full width>
                   <AddPromotions onClose={setPromotionOpen} />
                 </PopUp>
+
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
                 </Button>
