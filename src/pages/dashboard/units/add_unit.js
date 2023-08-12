@@ -20,8 +20,6 @@ import iban from 'iban';
 
 // assets
 import InputText from 'components/InputArea/TextInput';
-import FileUpload from 'components/InputArea/FileUpload';
-import Selector from 'components/InputArea/Selector';
 import Container from 'components/Elements/Container';
 import AutoCompleteSelector, { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
@@ -33,7 +31,6 @@ import CustomDateTime from 'components/InputArea/CustomDateTime';
 import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
 import { Formik } from 'formik';
-import PhoneInput from 'components/InputArea/PhoneInput';
 import { useCreateCompanyMutation, useGetSubCompanyTypesByCompanyTypeQuery } from 'store/services/company/companyApi';
 import { useGetAllMainServicesBySubCompanyTypeQuery, useGetAllServicesBYMainServiceTypeQuery } from 'store/services/services/serviceApi';
 import {
@@ -45,7 +42,6 @@ import {
   useGetSubCommunitiesByCommunityQuery
 } from 'store/services/country/countryApi';
 import { ToastSuccess } from 'utils/toast';
-import { property } from 'lodash';
 
 // ==============================|| FIELDS ||============================== //
 const unit_options = [
@@ -517,10 +513,10 @@ function ColumnsLayouts() {
                       id="company"
                       name="companyName"
                       placeholder="Select Company Name"
-                      options={unit_type}
+                      options={company_names}
                       setFieldValue={props.setFieldValue}
                       func={(newValue) => {}}
-                      required={true}
+                      required={true} 
                     />
                          <AutoCompleteSelector
                       helperInfo
