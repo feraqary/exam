@@ -104,6 +104,25 @@ const ListingProperties = () => {
                   Financial Providers
                 </Button>
               </Link>
+
+              {/* Plans  */}
+
+              <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      console.log(row.original.phase_type);
+                    }}
+                  >
+                    Plans
+                  </Button>
+                </Link>
+
               <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/manage_units`, query: { project_id } }}>
                 <Button variant="contained" color="primary">
                   Manage Unit Types
@@ -126,6 +145,44 @@ const ListingProperties = () => {
     }
   ];
 
+  const data = [
+    {
+      id:5,
+      project_id: 1,
+      phase_id:4,
+      ref_no:225,
+      property_title:"Aqary",
+      community:"unknown",
+      developer_company:"45",
+      no_of_floors:5,
+      no_of_units:3,
+      plot_area:"225sq",
+      buildup_area:"true",
+      services_charges:"true",
+      start_date:"true",
+      completion_date:"true",
+      hand_over_date:"5446"
+    },
+    {
+      id:8,
+      project_id: 1,
+      phase_id:4,
+      ref_no:225,
+      property_title:"Aqary",
+      community:"unknown",
+      developer_company:"45",
+      no_of_floors:5,
+      no_of_units:3,
+      plot_area:"225sq",
+      buildup_area:"true",
+      services_charges:"true",
+      start_date:"true",
+      completion_date:"true",
+      hand_over_date:"5446"
+    },
+  
+  ]
+
   if (isLoading) return;
   return (
     <Page title="Manage listing Propeties">
@@ -135,7 +192,7 @@ const ListingProperties = () => {
           <Grid item xs={12}>
             <Table
               columnHeaders={ColumnHeaders}
-              data={projectDocData?.data || []}
+              data={projectDocData?.data || data}
               loading={isLoading}
               pagination={pagination}
               setPagination={setPagination}

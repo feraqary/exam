@@ -25,9 +25,9 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
-import AddPromotions from '../../add_promotions';
-import Modal from '@mui/material/Modal';
-
+import AddPromotions from '../promotions/add_promotions';
+import PopUp from 'components/InputArea/PopUp';
+import ViewInformation from '../information/view_information';
 // ==============================|| Manage International Projects ||============================== //
 
 const localProjects = () => {
@@ -165,6 +165,15 @@ const localProjects = () => {
         const [open, setOpen] = useState(false);
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
         const [verify, setVerify] = useState(false);
+        const [promotionOpen, setPromotionOpen] = useState(false);
+        const [viewOpen, setViewOpen] = useState(false);
+
+        const handlePromotionOpen = () => {
+          setPromotionOpen(true);
+        };
+        const handlePromotionClose = () => {
+          setPromotionOpen(false);
+        };
 
         const handleClickOpen = () => {
           setOpen(true);
@@ -207,9 +216,13 @@ const localProjects = () => {
                   gap: '1rem'
                 }}
               >
-                <Button variant="contained" color="primary">
-                  View
+                <Button variant="contained" color="primary" onClick={() => setViewOpen(true)}>
+                  View Information
                 </Button>
+
+                <PopUp opened={viewOpen} setOpen={setViewOpen} size={'lg'}>
+                  <ViewInformation project_id={row.original.id} />
+                </PopUp>
 
                 <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
                   {row.original.is_verified ? 'Unverify' : 'Verify'}
@@ -228,7 +241,7 @@ const localProjects = () => {
 
                 <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
                   <Button variant="contained" color="primary">
-                    Listing Properties
+                    {row.original.phase_type === 'Single' ? 'Listing Property' : 'Listing Properties'}
                   </Button>
                 </Link>
 
@@ -258,23 +271,6 @@ const localProjects = () => {
                   </>
                 )}
 
-                {/* {row.original.phase_type === 'Single' && ( */}
-                <Link
-                  href={{
-                    pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      console.log(row.original.phase_type);
-                    }}
-                  >
-                    Plans
-                  </Button>
-                </Link>
-                {/* )} */}
                 <Link
                   href={{
                     pathname: `/dashboard/project/project_management/rating/${row.original.id}`,
@@ -299,9 +295,12 @@ const localProjects = () => {
                     Documents
                   </Button>
                 </Link>
-                <Button variant="contained" color="primary">
+                <Button onClick={handlePromotionOpen} variant="contained" color="primary">
                   Add to Promotions
                 </Button>
+                <PopUp opened={promotionOpen} setOpen={setPromotionOpen} title="Add Promotion" size={'md'}>
+                  <AddPromotions />
+                </PopUp>
 
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
@@ -314,6 +313,35 @@ const localProjects = () => {
     }
   ];
 
+  const data = [
+    {
+      id: 1,
+      rank_id: 100,
+      label: 'New One',
+      country: 'UAE',
+      parent_developer_company: 'Aqary',
+      rating: 10,
+      quality_score: 50,
+      no_of_phases: 2,
+      phasestest: 5,
+      phase_type: 'equal',
+      endis: true
+    },
+    {
+      id: 2,
+      rank_id: 90,
+      label: 'Fine Home',
+      country: 'UAE',
+      parent_developer_company: 'Fine home',
+      rating: 10,
+      quality_score: 80,
+      no_of_phases: 2,
+      phasestest: 5,
+      phase_type: 'equal',
+      endis: false
+    }
+  ];
+
   if (isLoading) return;
   return (
     <Page title="Manage Project">
@@ -323,7 +351,7 @@ const localProjects = () => {
           <Grid item xs={12}>
             <Table
               columnHeaders={ColumnHeaders}
-              data={localProjectsData?.data || []}
+              data={localProjectsData?.data || data}
               loading={isLoading}
               pagination={pagination}
               setPagination={setPagination}

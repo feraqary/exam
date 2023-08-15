@@ -199,7 +199,6 @@ const JWTLogin = ({ loginProp, closePopUp, page, ...others }) => {
                 color="secondary"
                 disabled={isSubmitting}
                 onClick={() => {
-                  console.log(page);
                   setSubmit(true);
                 }}
                 fullWidth

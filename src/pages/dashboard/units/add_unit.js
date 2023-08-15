@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Button } from '@mui/material';
 import * as Yup from 'yup';
 // project imports
 import Layout from 'layout';
@@ -15,12 +15,11 @@ import Image from 'next/image';
 import valid from 'card-validator';
 import { objectValidator, arrayValidator, stringValidator, numberValidator, fileValidator, dateValidator } from 'utils/formik-validations';
 import iban from 'iban';
+
 // redux actions import
 
 // assets
 import InputText from 'components/InputArea/TextInput';
-import FileUpload from 'components/InputArea/FileUpload';
-import Selector from 'components/InputArea/Selector';
 import Container from 'components/Elements/Container';
 import AutoCompleteSelector, { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import SubmitButton from 'components/Elements/SubmitButton';
@@ -32,7 +31,6 @@ import CustomDateTime from 'components/InputArea/CustomDateTime';
 import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
 import { Formik } from 'formik';
-import PhoneInput from 'components/InputArea/PhoneInput';
 import { useCreateCompanyMutation, useGetSubCompanyTypesByCompanyTypeQuery } from 'store/services/company/companyApi';
 import { useGetAllMainServicesBySubCompanyTypeQuery, useGetAllServicesBYMainServiceTypeQuery } from 'store/services/services/serviceApi';
 import {
@@ -44,7 +42,6 @@ import {
   useGetSubCommunitiesByCommunityQuery
 } from 'store/services/country/countryApi';
 import { ToastSuccess } from 'utils/toast';
-import { property } from 'lodash';
 
 // ==============================|| FIELDS ||============================== //
 const unit_options = [
@@ -65,7 +62,11 @@ const company_names = [
   { label: 'ALDAR', id: 1 },
   { label: 'EMAAR', id: 2 }
 ];
-
+const furnished = [
+  { id: 0, label: 'All Furnished'},
+  { id: 1, label: 'Non-Furnished'},
+  { id: 2, label: ' Partially Furnished'}
+]
 const unit_type = [
   { id: 0, label: ' Hotel Apartment' },
   {
@@ -89,6 +90,48 @@ const unit_type = [
   { id: 16, label: 'Labour Camp'},
   { id: 17, label: 'Farm'}
 ];
+const bedrooms = [
+  { id: 0, label: 'Studio' },
+  { id: 1, label: '1 Bedroom'},
+  { id: 1, label: '2 Bedroom'},
+  { id: 1, label: '3 Bedroom'},
+  { id: 1, label: '4 Bedroom'},
+  { id: 1, label: '5 Bedroom'},
+  { id: 1, label: '6 Bedroom'},
+  { id: 1, label: '7 Bedroom'},
+]
+const agent_names = [
+  { id: 0 , label: 'Ali'},
+  { id: 1 , label: 'Ferid'},
+  { id: 2 , label: ' Fatima'}
+]
+const view= [
+  { id: 0, label: 'Sea'},
+  { id: 1, label: 'Street'},
+  { id: 2, label: 'City View'}
+] 
+
+const rent_type = [
+  { id: 0, label: 'Yearly'},
+  { id: 1, label: 'Quarter'},
+  { id: 2, label: 'Monthly'}
+]
+const ownership_status = [
+  { id: 0, label: 'Freehold'},
+  { id: 1, label: 'Leasehold'},
+  { id: 2, label: 'Local Citizen'},
+  { id: 3, label: ' GCC Citizen'},
+  { id: 4, label: 'Others'}
+]
+
+const completion_status = [
+  { id: 0, label: 'Completed'},
+  { id: 1, label: 'Off Plan'},
+  { id: 2, label: 'Ready'},
+  { id: 3, label: 'Under Construction'},
+  { id: 4, label: 'Upcoming'}
+
+]
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 // ==============================|| Add Unit form ||============================== //
 const validationSchema = Yup.object({
@@ -470,7 +513,19 @@ function ColumnsLayouts() {
                       id="company"
                       name="companyName"
                       placeholder="Select Company Name"
-                      options={unit_type}
+                      options={company_names}
+                      setFieldValue={props.setFieldValue}
+                      func={(newValue) => {}}
+                      required={true} 
+                    />
+                         <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 10 }}
+                      label="Agent Name"
+                      id="agent"
+                      name="agentName"
+                      placeholder="Select Agent Name"
+                      options={agent_names}
                       setFieldValue={props.setFieldValue}
                       func={(newValue) => {}}
                       required={true}
@@ -657,7 +712,6 @@ function ColumnsLayouts() {
                     <Map locationAddress={address} height={'27vh'} xs={12} lg={12} mapUrl={props.values.mapUrl} />
                   </Grid>
                 </Container>
-
                 <Container title="Unit Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} alignItems="center">
                     <InputText
@@ -671,10 +725,75 @@ function ColumnsLayouts() {
                       id="companyWebsite"
                       required={true}
                     />
-
+                       <InputText
+                      helperInfo
+                      label="Price"
+                      placeholder="Price"
+                      helperText="Please Enter the Price"
+                      type="number"
+                      style={{ xs: 12, lg: 6 }}
+                      name="price"
+                      id="price"
+                      required={true}
+                    />
+                         <InputText
+                      helperInfo
+                      label="No. of Payments"
+                      placeholder="Number of Payments"
+                      helperText="Please enter No. of Payments"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="no_payments"
+                      id="payments"
+                      required={true}
+                    />
+                     <InputText
+                      helperInfo
+                      label="Service Charges"
+                      placeholder="Enter Service Charges"
+                      helperText="Please enter Service Charges"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="service_charges"
+                      id="service_charges"
+                      required={true}
+                    />
+                     
                     <InputText
                       helperInfo
-                      label="Bathroom"
+                      label="Plot Area"
+                      placeholder="Enter the Plot Area"
+                      helperText="Please enter Plot Area"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="plot_area"
+                      id="Plot Area"
+                      required={true}
+                    />
+                     <InputText
+                      helperInfo
+                      label="Built-Up Area"
+                      placeholder="Enter the Built-Up Area"
+                      helperText="Please enter Built-Up Area"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="companyWebsite"
+                      id="companyWebsite"
+                      required={true}
+                    />
+                     <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Furnished Status"
+                      id="furnished"
+                      name="furnished"
+                      options={furnished}
+                      placeholder="Select Furnished Status"
+                      helperText= "Select Furnished Status"
+                      />
+                    <InputText
+                      helperInfo
+                      label="No.of Bathrooms"
                       placeholder="Enter Number of Bathrooms"
                       helperText="Please enter the No.of Bathroom"
                       type="text"
@@ -683,332 +802,132 @@ function ColumnsLayouts() {
                       id="companyEmailAddress"
                       required={true}
                     />
-
-                    <PhoneInput
+                     <AutoCompleteSelector
                       helperInfo
                       style={{ xs: 12, lg: 6 }}
-                      label="Primary View"
-                      placeholder="Enter the company Contact Number"
-                      helperText="Please enter the company Contact Number"
-                      name="companyContactNumber"
-                      id="companyContactNumber"
+                      label="No. of Bedrooms"
+                      helperText=" Enter Number of Bedrooms"
+                      id="propertyTypes"
+                      name="propertyTypes"
+                      options={bedrooms}
+                      placeholder="Select Number of Bedrooms"
                     />
-
-                    <InputText
+                   
+                      <AutoCompleteSelector
                       helperInfo
-                      label="Company Description"
-                      placeholder="Enter the company description"
-                      helperText="Please enter the company description"
+                      style={{ xs: 12, lg: 6 }}
+                      label="View"
+                      id="primary_view"
+                      helperText="Enter Primary View"
+                      name="propertyTypes"
+                      options={view}
+                      placeholder="Select Main Property View"
+                    />
+                             <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Secondary View"
+                      id="secondary_view"
+                      name="secondaryView"
+                      options={view}
+                      placeholder="Select Secondary View"
+                      helperText="Enter Secondary View"
+                    />
+                      <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Ownership"
+                      id="ownership"
+                      name="ownership_status"
+                      options={ownership_status}
+                      placeholder="Select Ownership Status"
+                      helperText="Select ownership"
+                    />
+                        <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Completion Status"
+                      id="completion_status"
+                      name="completion_status"
+                      options={completion_status}
+                      placeholder="Select Completion Status"
+                      helperText= "Select Completion Status"
+                      />
+                      <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Rent Type"
+                      id="rent_type"
+                      name="rent_type"
+                      options={rent_type}
+                      placeholder="Select Rent Type"
+                      helperText= "Select Rent Type"
+                      />
+                       <InputText
+                      helperInfo
+                      label="No. of Parkings"
+                      placeholder="Enter Number of Parkings"
+                      helperText="Please enter the Number of Parkings"
                       type="text"
                       style={{ xs: 12, lg: 6 }}
-                      name="companyDescription"
-                      id="companyDescription"
+                      name="parkings"
+                      id="parkings"
                       required={true}
-                    />
-
-                    <FileUpload
-                      helperInfo
-                      label="Company logo"
-                      placeholder="Enter the company logo"
-                      helperText="Please enter the company logo"
-                      style={{ xs: 12, lg: 6 }}
-                      image={{ alt: 'Company Logo Preview', width: '250px', height: '250px' }}
-                      ref={companyLogoRef}
-                      id="companyLogo"
-                      name="companyLogo"
-                      setFieldValue={props.setFieldValue}
-                      required={true}
-                    />
-                    <FileUpload
-                      helperInfo
-                      label="Company Cover Image"
-                      placeholder="Enter the company cover image"
-                      helperText="Please enter the company cover image"
-                      style={{ xs: 12, lg: 6 }}
-                      image={{ alt: 'Cover Image Preview', width: '250px', height: '250px' }}
-                      ref={companyCoverRef}
-                      required={true}
-                      name="companyCoverImage"
-                      id="companyCoverImage"
-                      setFieldValue={props.setFieldValue}
                     />
                   </Grid>
                 </Container>
-                <Container style={{ xs: 12 }} title="Social Media">
-                  <Grid container spacing={2} alignItems="center">
-                    <InputText
+                <Container style={{ xs: 12 }} title="Description">
+                <Grid container spacing={2} alignItems="center">
+                <InputText
                       helperInfo
-                      label="Facebook"
-                      type="url"
-                      placeholder="Enter Company Facebook Profile"
-                      helperText="Please enter company facebook profile"
-                      style={{ xs: 12, lg: 6 }}
-                      name="facebook"
-                      id="facebook"
+                      label="Unit Title"
+                      placeholder="Enter Unit Title"
+                      helperText="Please Unit Title"
+                      type="text"
+                      style={{ xs: 12, lg: 12}}
+                      name="unit_title"
+                      id="unit_name"
+                      required={true}
                     />
-                    <InputText
+                              <InputText
                       helperInfo
-                      label="Instagram"
-                      type="url"
-                      placeholder="Enter Company Instagram Profile"
-                      helperText="Please enter company instagram profile"
+                      label="Description"
+                      placeholder="Description"
+                      helperText="Description"
+                      type="text"
+                      multiline
+                      rows={9}
                       style={{ xs: 12, lg: 6 }}
-                      name="instagram"
-                      id="instagram"
+                      name="description"
+                      id="description"
+                      required={true}
                     />
-                    <InputText
+                           <InputText
                       helperInfo
-                      label="LinkedIn"
-                      type="url"
-                      placeholder="Enter Company LinkedIn Profile"
-                      helperText="Please enter company linkedIn profile"
+                      label="Notes"
+                      placeholder="Enter Short Notes"
+                      helperText="Notes"
+                      type="text"
+                      rows={9}
+                      multiline
                       style={{ xs: 12, lg: 6 }}
-                      name="linkedin"
-                      id="linkedin"
+                      name="notes"
+                      id="notes"
+                      required={true}
                     />
-                    <InputText
-                      helperInfo
-                      label="Twitter"
-                      type="url"
-                      placeholder="Enter Company Twitter Profile"
-                      helperText="Please enter company twitter profile"
-                      style={{ xs: 12, lg: 6 }}
-                      name="twitter"
-                      id="twitter"
-                    />
-                    <InputText
-                      label="youtube"
-                      type="url"
-                      placeholder="Enter Company youtube Profile"
-                      helperText="Please enter company youtube profile"
-                      style={{ xs: 12, lg: 6 }}
-                      name="youtube"
-                      id="youtube"
-                    />
+                 
                   </Grid>
                 </Container>
-                <Container title="Company Admin Contact Details" style={{ xs: 12 }}>
-                  <Grid container spacing={2} alignItems="center">
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="First Name"
-                      placeholder="Admin First Name"
-                      helperText="Please enter admin first name"
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Last Name"
-                      placeholder="Admin Last Name"
-                      helperText="Please enter admin last name"
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Email Address"
-                      placeholder="Admin Email Address"
-                      helperText="Please enter admin email address"
-                      type="text"
-                      id="emailAddress"
-                      name="emailAddress"
-                      required={true}
-                    />
-                    <PhoneInput
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Admin Phone Number"
-                      placeholder="Enter the Admin Phone Number"
-                      helperText="Please enter admin phone number"
-                      name="phoneNumber"
-                      id="phoneNumber"
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Number of Employees"
-                      placeholder="Number of Employees"
-                      helperText="Please enter Number of Employees"
-                      type="text"
-                      id="numberOfEmployees"
-                      name="numberOfEmployees"
-                      required={true}
-                    />
-                    <Selector
-                      helperInfo
-                      id="subscriptionDuration"
-                      name="subscriptionDuration"
-                      helperText="Please choose your purchased subscription duration"
-                      style={{ xs: 12, lg: 4 }}
-                      label="Subscription Duration"
-                      options={[
-                        { value: 1, option: '1 Month' },
-                        { value: 3, option: '3 Months' },
-                        { value: 6, option: '6 Months' },
-                        { value: 9, option: '9 Months' },
-                        { value: 12, option: '12 Months' }
-                      ]}
-                      required={true}
-                      reset={['subscriptionStartDate', 'subscriptionEndDate']}
-                    />
-                    <CustomDateTime
-                      helperInfo
-                      style={{ xs: 12, lg: 6 }}
-                      label="Subscription Start Date"
-                      helperText="Please enter subscription start date"
-                      id="subscriptionStartDate"
-                      name="subscriptionStartDate"
-                      required={true}
-                      func={{ value: props.values.subscriptionDuration, name: 'subscriptionEndDate' }}
-                      disabled={!props.values.subscriptionDuration}
-                    />
-                    <CustomDateTime
-                      helperInfo
-                      style={{ xs: 12, lg: 6 }}
-                      label="Subscription End Date"
-                      helperText="Please enter subscription end date"
-                      id="subscriptionEndDate"
-                      name="subscriptionEndDate"
-                      required={true}
-                      disabled={true}
-                    />
-                    <FileUpload
-                      helperInfo
-                      setFieldValue={props.setFieldValue}
-                      id="adminProfilePicture"
-                      name="adminProfilePicture"
-                      required={true}
-                      style={{ xs: 12, lg: 6 }}
-                      label="Upload Profile Picture"
-                      placeholder="Upload Profile Picture"
-                      helperText="Please enter upload profile picture"
-                      image={{ alt: 'Admin Profile Preview', width: '250px', height: '250px' }}
-                      ref={profileRef}
-                    />
-                    <Grid item lg="4"></Grid>
-                  </Grid>
-                </Container>
-                <Container title="Bank Account Details" style={{ xs: 12 }}>
-                  <Grid container spacing={2} alignItems="center">
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Account Number"
-                      placeholder="Account Number"
-                      helperText="Please enter account number"
-                      type="text"
-                      id="cardNumber"
-                      name="cardNumber"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Account Name"
-                      placeholder="Account Name"
-                      helperText="Please enter account name"
-                      type="text"
-                      id="cardName"
-                      name="cardName"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="IBAN Number"
-                      placeholder="IBAN Number"
-                      helperText="Please enter IBAN number"
-                      type="text"
-                      id="ibanNumber"
-                      name="ibanNumber"
-                      required={true}
-                    />
-                    <AutoCompleteSelector
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Countries"
-                      id="accountCountry"
-                      name="accountCountry"
-                      options={countriesError || countriesIsLoading ? [] : countriesData?.data || []}
-                      getOptionLabel={(country) => country.Country || ''}
-                      renderOption={(props, option) => (
-                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                          <Image
-                            src={`http://20.203.31.58/upload/${option.Flag}`}
-                            width={30}
-                            height={30}
-                            style={{ objectFit: 'contain' }}
-                          />
-
-                          {option.Country}
-                        </Box>
-                      )}
-                      placeholder="Select a Country"
-                      helperText="Please select a country"
-                      required={true}
-                    />
-                    <AutoCompleteSelector
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Currencies"
-                      id="currency"
-                      name="currency"
-                      options={currenciesError || currenciesIsLoading ? [] : currenciesData?.data || []}
-                      getOptionLabel={(currency) => currency.Currency || ''}
-                      renderOption={(props, option) => (
-                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                          {option.Currency.toUpperCase()} : {option.Code}
-                        </Box>
-                      )}
-                      placeholder="Select a Currency"
-                      helperText="Please select a currency"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Bank Name"
-                      placeholder="Bank Name"
-                      helperText="Please enter bank name"
-                      type="text"
-                      id="bankName"
-                      name="bankName"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Bank Branch"
-                      placeholder="Bank Branch"
-                      helperText="Please enter bank branch"
-                      type="text"
-                      id="bankBranch"
-                      name="bankBranch"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Swift Code"
-                      placeholder="Swift Code"
-                      helperText="Please enter swift code"
-                      type="text"
-                      id="swiftCode"
-                      name="swiftCode"
-                      required={true}
-                    />
-                  </Grid>
-                  <SubmitButton />
-                </Container>
+                <SubmitButton />
+                  <Button
+                    onClick={() => {
+                      console.log('values=======> ', props.values);
+                    }}
+                  >
+                    test
+                  </Button>
               </>
+              
             )}
           </Formik>
         </Grid>
