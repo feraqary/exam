@@ -25,7 +25,7 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
-import AddPromotions from '../promotion/add_promotions';
+import AddPromotions from '../promotions/add_promotions';
 import PopUp from 'components/InputArea/PopUp';
 import Modal from '@mui/material/Modal';
 import ViewInformation from '../information/view_information';
@@ -226,7 +226,7 @@ const international_Projects = () => {
 
                 <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
                   <Button variant="contained" color="primary">
-                    Listing Properties
+                  {row.original.phase_type === "Single" ? "Listing Property" : "Listing Properties"}
                   </Button>
                 </Link>
 

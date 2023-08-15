@@ -25,7 +25,7 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
-import AddPromotions from '../promotion/add_promotions';
+import AddPromotions from '../promotions/add_promotions';
 import PopUp from 'components/InputArea/PopUp';
 import ViewInformation from '../information/view_information';
 // ==============================|| Manage International Projects ||============================== //
@@ -231,7 +231,7 @@ const localProjects = () => {
 
                 <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
                   <Button variant="contained" color="primary">
-                    Listing Properties
+                    {row.original.phase_type === "Single" ? "Listing Property" : "Listing Properties"}
                   </Button>
                 </Link>
 
@@ -261,23 +261,6 @@ const localProjects = () => {
                   </>
                 )}
 
-                {/* {row.original.phase_type === 'Single' && ( */}
-                <Link
-                  href={{
-                    pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      console.log(row.original.phase_type);
-                    }}
-                  >
-                    Plans
-                  </Button>
-                </Link>
-                {/* )} */}
                 <Link
                   href={{
                     pathname: `/dashboard/project/project_management/rating/${row.original.id}`,
@@ -321,6 +304,36 @@ const localProjects = () => {
     }
   ];
 
+
+  const data = [
+    {
+      id:1,
+      rank_id: 100,
+      label:"New One",
+      country:"UAE",
+      parent_developer_company:"Aqary",
+      rating:10,
+      quality_score:50,
+      no_of_phases:2,
+      phasestest:5,
+      phase_type:"equal",
+      endis:true
+    },
+    {
+      id:2,
+      rank_id: 90,
+      label:"Fine Home",
+      country:"UAE",
+      parent_developer_company:"Fine home",
+      rating:10,
+      quality_score:80,
+      no_of_phases:2,
+      phasestest:5,
+      phase_type:"equal",
+      endis:false
+    }
+  ]
+
   if (isLoading) return;
   return (
     <Page title="Manage Project">
@@ -330,7 +343,7 @@ const localProjects = () => {
           <Grid item xs={12}>
             <Table
               columnHeaders={ColumnHeaders}
-              data={localProjectsData?.data || []}
+              data={localProjectsData?.data || data}
               loading={isLoading}
               pagination={pagination}
               setPagination={setPagination}

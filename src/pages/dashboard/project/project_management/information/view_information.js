@@ -59,35 +59,26 @@ function ViewInformation({ project_id }) {
               <>
                 <Item primary="Property Title:" secondary={projectData?.data?.property_title} />
                 <Item primary="Arabic Property Title:" secondary={projectData?.data?.property_title_arabic} />
-
                 <Item primary="Property Description:" secondary={projectData?.data?.description} />
                 <Item primary="Arabic Property Description:" secondary={projectData?.data?.description_arabic} />
-
                 <Item primary="Completion Status:" secondary={completionStatus[projectData?.data?.completion_status]} />
-                <Item primary="Property Status:" secondary={projectData?.data?.property_type.map((type) => `${type.label}, `)} />
-                <Item primary="View:" secondary={projectData?.data?.view.map((v) => `${v.name}, `)} />
-                <Item primary="Facilities:" secondary={projectData?.data?.facilities.map((f) => `${f.label}, `)} />
-                <Item primary="Amenities:" secondary={projectData?.data?.amenities.map((a) => `${a.label}, `)} />
-
+                <Item primary="Property Status:" secondary={projectData?.data?.property_type?.map((type) => `${type.label}, `)} />
+                <Item primary="View:" secondary={projectData?.data?.view?.map((v) => `${v.name}, `)} />
+                <Item primary="Facilities:" secondary={projectData?.data?.facilities?.map((f) => `${f.label}, `)} />
+                <Item primary="Amenities:" secondary={projectData?.data?.amenities?.map((a) => `${a.label}, `)} />
                 <Item primary="Plot Area:" secondary={projectData?.data?.plot_area || 0} />
-
                 <Item primary="Elevators:" secondary={projectData?.data?.elevator || 0} />
-                <Item primary="Lifestyle:" secondary={''} />
-                <Item primary="Built Up Area:" secondary={'' || 0} />
-                <Item primary="Ownership:" secondary={''} />
-
+                <Item primary="Lifestyle:" secondary={lifestylelist[projectData?.data?.life_style]} />
+                <Item primary="Built Up Area:" secondary={projectData?.data?.built_up_area || 0} />
+                <Item primary="Ownership:" secondary={projectData?.data?.ownership || ''} />
                 <Item primary="Furnished:" secondary={furnished[projectData?.data?.furnished]} />
                 <Item primary="Area Range -max-:" secondary={projectData?.data?.max_area || 0} />
                 <Item primary="Area Range -min-:" secondary={projectData?.data?.min_area || 0} />
-
                 <Item primary="Parking:" secondary={projectData?.data?.parking || 0} />
-
                 <Item primary="Start Date:" secondary={projectData?.data?.start_date} />
                 <Item primary="Completion Date:" secondary={projectData?.data?.completion_date} />
                 <Item primary="Handover Date:" secondary={projectData?.data?.handover_date} />
-
                 <Item primary="No. Of Floors:" secondary={projectData?.data?.no_of_floor || 0} />
-
                 <Item primary="No. Of Units:" secondary={'' || 0} />
                 <Item primary="Available Units:" secondary={'' || 0} />
                 <Item primary="No. Of Pools:" secondary={projectData?.data?.no_of_pool || 0} />
