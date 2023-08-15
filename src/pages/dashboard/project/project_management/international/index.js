@@ -226,7 +226,7 @@ const international_Projects = () => {
 
                 <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
                   <Button variant="contained" color="primary">
-                    Listing Properties
+                  {row.original.phase_type === "Single" ? "Listing Property" : "Listing Properties"}
                   </Button>
                 </Link>
 
