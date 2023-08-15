@@ -340,7 +340,8 @@ export const projectApi = api.injectEndpoints({
           method: 'PUT',
           body: submit
         };
-      }
+      },
+      invalidatesTags: ['LocalProjects', 'InternationalProjects', 'SharedProjectsProjects']
     })
   })
 });

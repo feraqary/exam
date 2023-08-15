@@ -28,7 +28,6 @@ import Container from 'components/Elements/Container';
 import AddPromotions from '../../add_promotions';
 import Modal from '@mui/material/Modal';
 
-
 // ==============================|| Manage International Projects ||============================== //
 
 const localProjects = () => {
@@ -36,7 +35,6 @@ const localProjects = () => {
     pageIndex: 0,
     pageSize: 5
   });
-  
 
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
@@ -54,7 +52,6 @@ const localProjects = () => {
       ToastError('Error');
     }
   }, [result.isError]);
-  
 
   const ColumnHeaders = [
     {
@@ -129,23 +126,34 @@ const localProjects = () => {
       header: 'Phase Type'
     },
     {
-      accessorKey: 'endis',
+      accessorKey: 'is_enabled',
       header: 'Enable / Disable',
       Cell: ({ renderedCellValue, row }) => {
         const [updateIsEnabled, IsEnabledresult] = useUpdateProjectsIsEnabledMutation();
-        const [enabled, setEnabled] = useState(null);
 
-        useEffect(() => {
-          console.log('project_id', row.original.id, enabled);
+        const handleChange = () => {
           const formData = new FormData();
           formData.append('project_id', row.original.id);
-          formData.append('is_enabled', enabled);
+          formData.append('is_enabled', !row.original.is_enabled);
           updateIsEnabled(formData);
-        }, [enabled]);
+        };
+
+        useEffect(() => {
+          if (IsEnabledresult.isSuccess) {
+            ToastSuccess('Project successfully updated');
+          }
+        }, [IsEnabledresult.isSuccess]);
+
+        useEffect(() => {
+          if (IsEnabledresult.isError) {
+            const { data } = IsEnabledresult.error;
+            ToastError(data);
+          }
+        }, [IsEnabledresult.isError]);
 
         return (
           <>
-            <Switch checked={enabled} onChange={() => setEnabled((prev) => !prev)} />
+            <Switch checked={row.original.is_enabled} onChange={handleChange} />
           </>
         );
       }
@@ -157,7 +165,7 @@ const localProjects = () => {
         const [open, setOpen] = useState(false);
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
         const [verify, setVerify] = useState(false);
-   
+
         const handleClickOpen = () => {
           setOpen(true);
         };
@@ -292,10 +300,9 @@ const localProjects = () => {
                   </Button>
                 </Link>
                 <Button variant="contained" color="primary">
-                Add to Promotions
-              </Button>
-              
-            
+                  Add to Promotions
+                </Button>
+
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
                 </Button>
