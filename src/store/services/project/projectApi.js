@@ -340,6 +340,16 @@ export const projectApi = api.injectEndpoints({
           body: submit
         };
       }
+    }),
+
+    // Get All Project Promotions
+    getAllProjectPromotions: builder.query({
+      query({ pageIndex, pageSize }) {
+        return {
+          url: `dashboard/getAllProjectPromotions?page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
+        };
+      }
     })
   })
 });
@@ -371,5 +381,6 @@ export const {
   useGetBrokerCompaniesByCitiesQuery,
   useCreateProjectMutation,
   useGetViewQuery,
-  useGetRatingsQuery
+  useGetRatingsQuery,
+  useGetAllProjectPromotionsQuery
 } = projectApi;

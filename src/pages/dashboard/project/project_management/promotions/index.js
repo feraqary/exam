@@ -8,38 +8,56 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import Container from 'components/Elements/Container';
+import { useGetAllProjectPromotionsQuery } from 'store/services/project/projectApi';
+import PopUp from 'components/InputArea/PopUp';
+import ViewInformation from './view_information';
+
 
 // ==============================|| Manage Project Promotions ||============================== //
 
+
 const ColumnHeaders = [
   {
-    accessorKey: 'proId',
-    header: 'Project ID '
+    accessorKey: 'ref_no',
+    header: 'Reference No '
   },
 
   {
-    accessorKey: 'projectName',
+    accessorKey: 'label',
     header: 'Project Name'
   },
   {
-    accessorKey: 'expDay',
+    accessorKey: 'expiry_date',
     header: 'Expiry Date'
   },
-  {
-    accessorKey: 'promoType',
-    header: 'Promotion Type'
-  },
+  // {
+  //   accessorKey: 'promotion_description',
+  //   header: 'Promotion Type'
+  // },
   {
     accessorKey: 'action',
     header: 'Action',
-    Cell: ({ renderedCellValue, row }) => (
-      <Box
+    Cell: ({ renderedCellValue, row }) => {
+      const [promotionDetailsOpen, setPromotionDetailsOpen] = useState(false);
+      const handlePromotionDetails = () => {
+        setPromotionDetailsOpen(true);
+      };
+      return(
+
+        <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
           gap: '1rem'
         }}
       >
+          <Button variant="contained" color="primary" onClick={handlePromotionDetails}>
+            Details
+          </Button>
+          <PopUp opened={promotionDetailsOpen} setOpen={setPromotionDetailsOpen} size={'lg'}>
+                  <ViewInformation promotionDetail={row.original} />
+          </PopUp>
+
         <Button variant="contained" color="primary">
           Edit
         </Button>
@@ -47,7 +65,8 @@ const ColumnHeaders = [
           Remove
         </Button>
       </Box>
-    )
+        )
+  }
   }
 ];
 
@@ -86,13 +105,17 @@ function ManagePromotions() {
     pageIndex: 0,
     pageSize: 5
   });
+
+  const { data: allProjectPromotions, isError, error, isLoading, isFetching } = useGetAllProjectPromotionsQuery(pagination);
+console.log("promotions", allProjectPromotions)
+
   return (
     <Page title="Manage Project">
       <Container title="Manage Promotions" style={{ xs: 12 }}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <Table
-              data={data}
+              data={allProjectPromotions?.data || []}
               columnHeaders={ColumnHeaders}
               pagination={pagination}
               setPagination={setPagination}

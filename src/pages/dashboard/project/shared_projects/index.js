@@ -21,7 +21,7 @@ import Link from 'next/link';
 import Container from 'components/Elements/Container';
 import PopUp from 'components/InputArea/PopUp';
 import ViewInformation from '../project_management/information/view_information';
-import AddPromotions from '../project_management/promotion/add_promotions';
+import AddPromotions from '../project_management/promotions/add_promotions';
 // ==============================|| Manage international_ Projects ||============================== //
 
 const SharedProjects = () => {

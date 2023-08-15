@@ -25,7 +25,7 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
-import AddPromotions from '../promotion/add_promotions';
+import AddPromotions from '../promotions/add_promotions';
 import PopUp from 'components/InputArea/PopUp';
 import ViewInformation from '../information/view_information';
 // ==============================|| Manage International Projects ||============================== //
