@@ -19,7 +19,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
-
+import PopUp from 'components/InputArea/PopUp';
+import ViewInformation from '../project_management/information/view_information';
+import AddPromotions from '../project_management/promotion/add_promotions';
 // ==============================|| Manage international_ Projects ||============================== //
 
 const SharedProjects = () => {
@@ -125,6 +127,14 @@ const SharedProjects = () => {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ renderedCellValue, row }) => {
+
+        const [viewOpen, setViewOpen] = useState(false);
+        const [promotionOpen, setPromotionOpen] = useState(false);
+
+        const handlePromotionOpen = () => {
+          setPromotionOpen(true);
+        };
+
         const handleUpdateStatus = (status) => {
           const formData = new FormData();
           formData.append('id', row.original.id);
@@ -134,42 +144,115 @@ const SharedProjects = () => {
 
         return (
           <>
-            <Box
+          <Box
               sx={{
                 display: 'flex',
-                alignItems: 'center',
-                gap: '1rem'
+                // alignItems: 'center',
+                gap: '1rem',
+                flexDirection: 'column'
               }}
             >
-              <Button variant="contained" color="primary">
-                Verify
-              </Button>
-              <Button variant="contained" color="primary">
-                Edit
-              </Button>
-              <Link href={{ pathname: `/dashboard/project/project_management/documents/${row.original.id}` }}>
-                <Button color="primary" variant="contained">
-                  Manage Documents
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem'
+                }}
+              >
+                <Button variant="contained" color="primary" onClick={() => setViewOpen(true)}>
+                  View Information
                 </Button>
-              </Link>
-              <Button variant="contained" color="primary">
-                View Live
-              </Button>
-              <Button variant="contained" color="primary">
-                Listing Properties
-              </Button>
-              <Button variant="contained" color="primary">
-                Add Promotion
-              </Button>
-              <Button variant="contained" color="warning" onClick={() => handleUpdateStatus(5)}>
-                Block
-              </Button>
-              <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
-                Delete
-              </Button>
-              <Button variant="contained" color="primary">
-                Rating
-              </Button>
+
+                <PopUp opened={viewOpen} setOpen={setViewOpen} size={'lg'}>
+                  <ViewInformation project_id={row.original.id} />
+                </PopUp>
+
+                <Button variant="contained" color="primary">
+                  {row.original.is_verified ? 'Unverify' : 'Verify'}
+                </Button>
+
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/edit/${row.original.id}`,
+                    query: {
+                      project_id: row.original.id
+                    }
+                  }}
+                >
+                  <Button variant="contained">Edit </Button>
+                </Link>
+
+                <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
+                  <Button variant="contained" color="primary">
+                    {row.original.phase_type === "Single" ? "Listing Property" : "Listing Properties"}
+                  </Button>
+                </Link>
+
+                <Button color="error" variant="outlined" onClick={() => handleUpdateStatus(5)}>
+                  Block
+                </Button>
+              </Box>
+              {/* //================================= */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem'
+                }}
+              >
+                {row.original.phase_type == 'Multiple' && (
+                  <>
+                    <Link
+                      href={{
+                        pathname: `/dashboard/project/project_management/add_property/${row.original.id}`
+                      }}
+                    >
+                      <Button variant="contained" color="primary">
+                        Add Property
+                      </Button>
+                    </Link>
+                  </>
+                )}
+
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/rating/${row.original.id}`,
+                    query: {
+                      id: row.original.id
+                    }
+                  }}
+                >
+                  <Button color="primary" variant="contained">
+                    Rating
+                  </Button>
+                </Link>
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
+                    query: {
+                      id: row.original.id
+                    }
+                  }}
+                >
+                <Link href={{ pathname: `/dashboard/project/project_management/documents/${row.original.id}` }}>
+
+                  <Button color="primary" variant="contained">
+                    Documents
+                  </Button>
+                </Link>
+                </Link>
+                <Button variant="contained" color="primary" onClick={handlePromotionOpen}>
+                  Add to Promotions
+                </Button>
+                <PopUp opened={promotionOpen} setOpen={setPromotionOpen} title="Add Promotion" size={'md'}>
+                  <AddPromotions />
+                </PopUp>
+
+
+                <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
+                  Delete
+                </Button>
+              </Box>
             </Box>
           </>
         );

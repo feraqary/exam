@@ -62,8 +62,8 @@ function ViewInformation({ project_id }) {
                 <Item primary="Property Description:" secondary={projectData?.data?.description} />
                 <Item primary="Arabic Property Description:" secondary={projectData?.data?.description_arabic} />
                 <Item primary="Completion Status:" secondary={completionStatus[projectData?.data?.completion_status]} />
-                <Item primary="Property Status:" secondary={projectData?.data?.property_type.map((type) => `${type.label}, `)} />
-                <Item primary="View:" secondary={projectData?.data?.view.map((v) => `${v.name}, `)} />
+                <Item primary="Property Status:" secondary={projectData?.data?.property_type?.map((type) => `${type.label}, `)} />
+                <Item primary="View:" secondary={projectData?.data?.view?.map((v) => `${v.name}, `)} />
                 <Item primary="Facilities:" secondary={projectData?.data?.facilities?.map((f) => `${f.label}, `)} />
                 <Item primary="Amenities:" secondary={projectData?.data?.amenities?.map((a) => `${a.label}, `)} />
                 <Item primary="Plot Area:" secondary={projectData?.data?.plot_area || 0} />
