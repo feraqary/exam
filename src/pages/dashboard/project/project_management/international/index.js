@@ -164,8 +164,6 @@ const international_Projects = () => {
         const handleClickOpen = () => {
           setOpen(true);
         };
-
-
         const handleBlock = () => {
           const formData = new FormData();
           formData.append('id', row.original.id);
@@ -297,8 +295,6 @@ const international_Projects = () => {
                     Manage Documents
                   </Button>
                 </Link>
-
-
                 <Button
                   onClick={() => {
                     setPromotionOpen(true);
@@ -312,7 +308,6 @@ const international_Projects = () => {
                 <PopUp title="Add Promotion" opened={promotionOpen} setOpen={setPromotionOpen} size={'md'} full width>
                   <AddPromotions onClose={setPromotionOpen} />
                 </PopUp>
-
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
                 </Button>

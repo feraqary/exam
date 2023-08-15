@@ -3,88 +3,52 @@ import { Grid, Button, Box } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-import Container from 'components/Elements/Container';
+import Container from 'components/Elements/Container'; 
+import { useCreatePromotionsMutation, useGetPromotionsQuery } from 'store/services/project/projectApi';
+import { ToastSuccess } from 'utils/toast';
 
 // ==============================|| Manage Project Promotions ||============================== //
 
-const ColumnHeaders = [
-  {
-    accessorKey: 'proId',
-    header: 'Project ID '
-  },
+const manageProjectPromotions = () => {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0, 
+    pageSize: 10,
+  });
+  const { data: projectPromotionsData, isError , error, isLoading, isFetching} = useGetPromotionsQuery(pagination);
 
-  {
-    accessorKey: 'projectName',
-    header: 'Project Name'
-  },
-  {
-    accessorKey: 'expDay',
-    header: 'Expiry Date'
-  },
-  {
-    accessorKey: 'promoType',
-    header: 'Promotion Type'
-  },
-  {
-    accessorKey: 'action',
-    header: 'Action',
-    Cell: ({ renderedCellValue, row }) => (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem'
-        }}
-      >
-        <Button variant="contained" color="primary">
-          Edit
-        </Button>
-        <Button variant="contained" color="error">
-          Remove
-        </Button>
-      </Box>
-    )
-  }
-];
+  
 
-const data = [
+const promotionData = [
   {
-    projectName: 'Khidmah',
-    promoType: 'Developer Company',
-    expDay: 'US',
-    proId: 'PA2831023',
-    action: ' edit, multiple'
+  accessorKey: 'id',
+  header: 'Project ID' 
   },
   {
-    projectName: 'Forum',
-    promoType: 'Broker Company',
-    expDay: 'UAE',
-    proId: 'PA283102',
-    action: ' edit, multiple'
-  },
-  {
-    projectName: 'Dubai Holding',
-    promoType: 'Marketing Company',
-    expDay: 'UAE',
-    proId: 'PA283102',
-    action: ' edit, multiple'
-  },
-  {
-    projectName: 'BlueStone',
-    promoType: 'Developer Company',
-    expDay: 'USA',
-    proId: 'PA283102',
-    action: ' edit, multiple'
-  }
-];
-function ManagePromotions() {
+    accessorKey: 'ref_no',
+    header: 'Reference Number'
+    },
+    {
+      accessorKey: 'label',
+      header: 'Project Name'
+    },
+    {
+      accessorKey: 'expiry_date',
+      header: 'Expiry Date'
+    },
+    {
+      accessorKey: 'promotion_description',
+      header: 'Description'
+
+    }
+]
+function manageProjectPromotions() {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 5
+    pageSize: 10
   });
   return (
     <Page title="Manage Project">
@@ -93,7 +57,7 @@ function ManagePromotions() {
           <Grid item xs={12}>
             <Table
               data={data}
-              columnHeaders={ColumnHeaders}
+              columnHeaders={promotionData}
               pagination={pagination}
               setPagination={setPagination}
               isFetching={false}
@@ -106,9 +70,10 @@ function ManagePromotions() {
     </Page>
   );
 }
+}
 
-ManagePromotions.getLayout = function getLayout(page) {
+manageProjectPromotions.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default ManagePromotions;
+export default manageProjectPromotions;

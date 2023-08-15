@@ -199,7 +199,27 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+// Get Promotions API
+getPromotions: builder.query({ 
+  query({ pageIndex, pageSize,id}) {
+    return { 
+      url: `dashboard/getAllProjectPromotions?page_no=${pageIndex}&page_size=${pageSize}`,
+      method: 'GET'
+    };
+  }
+}),
+//Create Promotions 
+createPromotions : builder.mutation ({
+  query(data) {
+    return {
+      url: `dashboard/createProjectPromotion`,
+      method: 'POST',
+      body: data
+    };
+  }
 
+}),
+     //Create Projects API
     CreateProject: builder.mutation({
       query({ data, isMulti }) {
         return {
@@ -371,5 +391,7 @@ export const {
   useGetBrokerCompaniesByCitiesQuery,
   useCreateProjectMutation,
   useGetViewQuery,
-  useGetRatingsQuery
+  useGetRatingsQuery,
+  useCreatePromotionsMutation,
+  useGetPromotionsQuery
 } = projectApi;
