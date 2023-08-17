@@ -38,33 +38,6 @@ const localProjects = () => {
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
 
-  const data = [
-    {
-      name: {
-        projectName: 'Khidmah',
-        companyLogo: '/assets/images/company_logo/logo1.png'
-      },
-      developerCompany: 'Developer Company',
-      featured: false,
-      place: 'US',
-      community: 'US',
-      refno: 'PA2831023',
-      reference: 'PA2831023',
-      propertytype: 'Jamie',
-      endis: 'new@gmail.com',
-      price: '+0192831-310',
-      propertyname: 'Lannisters',
-      type: '2-12-2023',
-      insert: '2-12-2023',
-      movedDate: '2-12-2023',
-      lifestyle: ' uploaded',
-      action: ' edit, multiple',
-      quality: 25,
-      floors: 2430,
-      slno: 4
-    }
-  ];
-
   useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Project status successfully updated');
@@ -355,35 +328,6 @@ const localProjects = () => {
           </>
         );
       }
-    }
-  ];
-
-  const data = [
-    {
-      id: 1,
-      rank_id: 100,
-      label: 'New One',
-      country: 'UAE',
-      parent_developer_company: 'Aqary',
-      rating: 10,
-      quality_score: 50,
-      no_of_phases: 2,
-      phasestest: 5,
-      phase_type: 'equal',
-      endis: true
-    },
-    {
-      id: 2,
-      rank_id: 90,
-      label: 'Fine Home',
-      country: 'UAE',
-      parent_developer_company: 'Fine home',
-      rating: 10,
-      quality_score: 80,
-      no_of_phases: 2,
-      phasestest: 5,
-      phase_type: 'equal',
-      endis: false
     }
   ];
 
