@@ -28,7 +28,7 @@ import Container from 'components/Elements/Container';
 import AddPromotions from '../promotion/add_promotions';
 import PopUp from 'components/InputArea/PopUp';
 import Modal from '@mui/material/Modal';
-
+import ViewInformation from '../information/view_information';
 // ==============================|| Manage international_ Projects ||============================== //
 
 const international_Projects = () => {
@@ -164,7 +164,6 @@ const international_Projects = () => {
           setOpen(true);
         };
 
-
         const handleBlock = () => {
           const formData = new FormData();
           formData.append('id', row.original.id);
@@ -296,7 +295,6 @@ const international_Projects = () => {
                     Manage Documents
                   </Button>
                 </Link>
-
 
                 <Button
                   onClick={() => {

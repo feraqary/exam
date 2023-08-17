@@ -18,7 +18,10 @@ export const projectApi = api.injectEndpoints({
       query() {
         return {
           url: `propertyTypes/getPropertyTypes`,
-          method: 'GET'
+          method: 'GET',
+          headers: {
+            Authorization: null
+          }
         };
       }
     }),
@@ -209,6 +212,15 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+    CreateProjectProperty: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/createProjectProperty`,
+          method: 'POST',
+          body: data
+        };
+      }
+    }),
 
     //CREATE DOCS CATEGORY
     CreateCategory: builder.mutation({
@@ -345,6 +357,7 @@ export const projectApi = api.injectEndpoints({
 });
 
 export const {
+  useCreateProjectPropertyMutation,
   useGetDocsCategoriesQuery,
   useCreateCategoryMutation,
   useCreateSubCategoryMutation,

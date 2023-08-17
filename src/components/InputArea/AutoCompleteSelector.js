@@ -24,7 +24,6 @@ export const AutoCompleteSelectorAPI = ({
   params,
   fetchData,
   labels,
-
   style,
   label,
   id,
@@ -139,6 +138,7 @@ const AutoCompleteSelector = ({
   helperInfo,
   error,
   name,
+  disabled,
   ...rest
 }) => {
   const [field, meta] = useField(name);
@@ -147,7 +147,13 @@ const AutoCompleteSelector = ({
   return (
     <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
-        {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
+        {required ? (
+          <InputLabel required disabled={disabled}>
+            {label}
+          </InputLabel>
+        ) : (
+          <InputLabel disabled={disabled}>{label}</InputLabel>
+        )}
 
         {helperInfo ? (
           <Tooltip title={label}>
@@ -168,6 +174,7 @@ const AutoCompleteSelector = ({
         value={values[`${name}`]}
         sx={{ width: '100%' }}
         loading={loading}
+        disabled={disabled}
         renderInput={(params) => <TextField {...params} label={placeholder} error={touched[`${name}`] && !!meta.error} />}
         onChange={(e, value, reason) => {
           if (reason === 'clear') {
@@ -226,14 +233,12 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
         options={options}
         multiple
         getOptionDisabled={(option) => {
-          console.log(option);
           const selectedValues = values[name] || [];
           return selectedValues.some((selectedValue) => selectedValue?.id === option?.id);
         }}
         loading={true}
         limitTags={2}
         onChange={(e, value, reason) => {
-          console.log(value);
           if (reason === 'clear') {
             setFieldValue(name, []);
           } else {

@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, Grid } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Grid, Switch, Skeleton } from '@mui/material';
 import { LoadScript } from '@react-google-maps/api';
 import Map from 'components/map/google-map';
 // material-ui
@@ -37,6 +37,7 @@ import {
 import { ToastError, ToastSuccess } from 'utils/toast';
 import Categorization from './helper/Categorization';
 import MultiPhaseInputs from './helper/multi_inputs';
+
 function AddProject() {
   //is shared
   const [shared, setShared] = useState(false);
@@ -73,6 +74,7 @@ function AddProject() {
   const { data: Types, isLoading, isError } = useGetPropertyTypeQuery();
   const { data: Allfacilities, isLoading: loadingFacility } = useGetAllfacilitiesQuery();
   const { data: AllAmenities, isLoading: loadingAmenities } = useGetAllAmenitiesQuery();
+  const { data: AllViews, isLoading: loadingViww } = useGetViewQuery();
   const { data: SharedStates, isLoading: loadingStateOrCity } = useGetStatesOrCitiesQuery(countryLocationID, {
     skip: countryLocationID === null || countryLocationID === undefined
   });
@@ -368,7 +370,7 @@ function AddProject() {
                           id="projectTitle"
                           required={true}
                         />
-
+                        {/* 
                         <FormControlLabel
                           sx={4}
                           lg={4}
@@ -380,9 +382,25 @@ function AddProject() {
                           label={'Is Shared'}
                           labelPlacement="start"
                           style={{ margin: '24px 0px 0px 8px', height: '48px' }}
-                          name="isshared"
-                          id="isshared"
-                        />
+                        /> */}
+
+                        <Grid item xs={4} lg={4}>
+                          <FormControlLabel
+                            value={shared}
+                            control={
+                              <Switch
+                                checked={shared}
+                                onChange={() => {
+                                  setShared(!shared);
+                                }}
+                              />
+                            }
+                            label={'Is Shared'}
+                            labelPlacement="start"
+                            name="isshared"
+                            id="isshared"
+                          />
+                        </Grid>
 
                         <Grid item lg={12}></Grid>
                         {shared && (
@@ -445,7 +463,7 @@ function AddProject() {
                           id="masterDeveloperSelector"
                           name="masterDeveloperSelector"
                           func={(newValue) => {
-                            setDevCompany(newValue.id || null);
+                            setDevCompany(newValue?.id || null);
                           }}
                         />
 
@@ -642,6 +660,19 @@ function AddProject() {
                       <Grid item xs={12}>
                         <MainCard title="Property Details">
                           <Grid container spacing={2} alignItems="center">
+                            <MultipleAutoCompleteSelector
+                              style={{ xs: 12, lg: 4 }}
+                              label="Property Type"
+                              placeholder="Select Property Type"
+                              options={isError ? [] : Types?.data || []}
+                              getOptionLabel={(property) => property?.title || property?.label || ''}
+                              helperText="Please select property type"
+                              required
+                              func={(e, value) => {
+                                setPropertyType(e);
+                                props.setFieldValue('propertyType', e);
+                              }}
+                            />
                             <AutoCompleteSelector
                               label="Completion Status"
                               required
@@ -657,25 +688,12 @@ function AddProject() {
                               helperText="Please select property status"
                             />
 
-                            <MultipleAutoCompleteSelector
-                              style={{ xs: 12, lg: 4 }}
-                              label="Property Type"
-                              placeholder="Select Property Type"
-                              options={isError ? [] : Types?.data || []}
-                              getOptionLabel={(property) => property?.title || property?.label || ''}
-                              helperText="Please select property type"
-                              required
-                              func={(e, value) => {
-                                setPropertyType(e);
-                                props.setFieldValue('propertyType', e);
-                              }}
-                            />
                             {SinglePhaseInputs}
                             <MultipleAutoCompleteSelector
                               style={{ xs: 12, lg: 4 }}
                               label="Views"
                               placeholder="Select The Views"
-                              options={viewsError ? [] : views?.data || []}
+                              options={viewsError ? [] : AllViews?.data || []}
                               getOptionLabel={(view) => view?.title || view?.label || ''}
                               helperText="Please Select The Views"
                               required
