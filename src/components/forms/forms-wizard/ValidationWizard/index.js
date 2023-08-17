@@ -9,7 +9,6 @@ import PaymentForm from './PaymentForm';
 import Review from './Review';
 import MainCard from 'components/ui-component/cards/MainCard';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
-import DynamicPaymentPlan from '../../../dashboard/Project/DynamicPaymentPlan';
 
 // step options
 const steps = ['Shipping address', 'Payment details', 'Review your order'];

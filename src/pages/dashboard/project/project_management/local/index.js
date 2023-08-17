@@ -7,7 +7,6 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import Rating from '@mui/material/Rating';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
@@ -25,7 +24,7 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
-import AddPromotions from '../promotion/add_promotions';
+import AddPromotions from '../promotions/add_promotions';
 import PopUp from 'components/InputArea/PopUp';
 import ViewInformation from '../information/view_information';
 // ==============================|| Manage International Projects ||============================== //
@@ -75,7 +74,6 @@ const localProjects = () => {
   useEffect(() => {
     if (result.isError) {
       const { data } = result.error;
-      console.log(data);
       ToastError('Error');
     }
   }, [result.isError]);
@@ -149,23 +147,34 @@ const localProjects = () => {
       header: 'Phase Type'
     },
     {
-      accessorKey: 'endis',
+      accessorKey: 'is_enabled',
       header: 'Enable / Disable',
       Cell: ({ renderedCellValue, row }) => {
         const [updateIsEnabled, IsEnabledresult] = useUpdateProjectsIsEnabledMutation();
-        const [enabled, setEnabled] = useState(null);
 
-        useEffect(() => {
-          console.log('project_id', row.original.id, enabled);
+        const handleChange = () => {
           const formData = new FormData();
           formData.append('project_id', row.original.id);
-          formData.append('is_enabled', enabled);
+          formData.append('is_enabled', !row.original.is_enabled);
           updateIsEnabled(formData);
-        }, [enabled]);
+        };
+
+        useEffect(() => {
+          if (IsEnabledresult.isSuccess) {
+            ToastSuccess('Project successfully updated');
+          }
+        }, [IsEnabledresult.isSuccess]);
+
+        useEffect(() => {
+          if (IsEnabledresult.isError) {
+            const { data } = IsEnabledresult.error;
+            ToastError(data);
+          }
+        }, [IsEnabledresult.isError]);
 
         return (
           <>
-            <Switch checked={enabled} onChange={() => setEnabled((prev) => !prev)} />
+            <Switch checked={row.original.is_enabled} onChange={handleChange} />
           </>
         );
       }
@@ -176,7 +185,6 @@ const localProjects = () => {
       Cell: ({ renderedCellValue, row }) => {
         const [open, setOpen] = useState(false);
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
-        const [verify, setVerify] = useState(false);
         const [promotionOpen, setPromotionOpen] = useState(false);
         const [viewOpen, setViewOpen] = useState(false);
 
@@ -196,12 +204,10 @@ const localProjects = () => {
         };
 
         const handleVerifyStatus = () => {
-          setVerify((prev) => !prev);
           const formData = new FormData();
           formData.append('project_id', row.original.id);
-          formData.append('is_verified', verify);
+          formData.append('is_verified', !row.original.is_verified);
           updateVerifyStatus(formData);
-          console.log(row.original);
         };
 
         const handleUpdateStatus = (status) => {
@@ -259,6 +265,7 @@ const localProjects = () => {
                     </Link>
                   </>
                 )}
+
 
                 <Button color="error" variant="outlined" onClick={() => handleUpdateStatus(5)}>
                   Block
@@ -348,6 +355,35 @@ const localProjects = () => {
           </>
         );
       }
+    }
+  ];
+
+  const data = [
+    {
+      id: 1,
+      rank_id: 100,
+      label: 'New One',
+      country: 'UAE',
+      parent_developer_company: 'Aqary',
+      rating: 10,
+      quality_score: 50,
+      no_of_phases: 2,
+      phasestest: 5,
+      phase_type: 'equal',
+      endis: true
+    },
+    {
+      id: 2,
+      rank_id: 90,
+      label: 'Fine Home',
+      country: 'UAE',
+      parent_developer_company: 'Fine home',
+      rating: 10,
+      quality_score: 80,
+      no_of_phases: 2,
+      phasestest: 5,
+      phase_type: 'equal',
+      endis: false
     }
   ];
 

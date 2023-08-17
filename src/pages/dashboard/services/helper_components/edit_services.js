@@ -12,9 +12,7 @@ import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import InputText from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
-import { createServices } from 'store/slices/services/action/services';
 import { updateMainService } from 'store/slices/company-section/action/company';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -22,23 +20,22 @@ import * as Yup from 'yup';
 const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 
 // ==============================|| Add Company Type form ||============================== //
-function Edit_service({ comp_id,  id, description,  service_name,  }) {
+function Edit_service({ comp_id, id, description, service_name }) {
   const [compType, setCompType] = useState(null);
   const [desc, setDesc] = useState(null);
   const [serviceName, setServiceName] = useState(null);
 
   const dispatch = useDispatch();
   // useEffect(() => {
-    // setCompType(roles[comp_type]);
-    // setDesc(description);
-    // setServiceName(service_name);
+  // setCompType(roles[comp_type]);
+  // setDesc(description);
+  // setServiceName(service_name);
   //   setSerialNo(serial_no);
   //   seticonUrl(icon_url);
   //   setimgUrl(img_url);
   //   seticonPre(iconPre);
   //   setimgPre(imgPre);
   // }, []);
-
 
   const handleCompanyTypeChange = (newValue) => {
     setCompType(newValue);
@@ -81,7 +78,7 @@ function Edit_service({ comp_id,  id, description,  service_name,  }) {
             (value) => value && value.size / (1024 * 1024) <= FILE_SIZE
           )
           .test('FILE_FORMAT', 'Uploaded file has unsupported format.', (value) => value && SUPPORTED_FORMATS.includes(value.type)),
-          imgUrl: Yup.mixed()
+        imgUrl: Yup.mixed()
           .required('Please provide an image')
           .test(
             'FILE_SIZE',

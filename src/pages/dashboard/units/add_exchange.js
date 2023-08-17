@@ -15,7 +15,6 @@ import Image from 'next/image';
 import valid from 'card-validator';
 import { objectValidator, arrayValidator, stringValidator, numberValidator, fileValidator, dateValidator } from 'utils/formik-validations';
 import iban from 'iban';
-// redux actions import
 
 // assets
 import InputText from 'components/InputArea/TextInput';
@@ -44,7 +43,10 @@ import {
   useGetSubCommunitiesByCommunityQuery
 } from 'store/services/country/countryApi';
 import { ToastSuccess } from 'utils/toast';
+
 import { property } from 'lodash';
+import { Wysiwyg} from '@mui/icons-material';
+
 
 // ==============================|| FIELDS ||============================== //
 const countries = [
@@ -72,8 +74,6 @@ const propertyTypes = [
   { id: 15, label: 'Labour Camp'},
   { id: 16, label: 'Farm'}
 ];
- 
-
 const bedrooms = [
   { id: 0, label: 'Studio' },
   { id: 1, label: '1 Bedroom'},
@@ -84,7 +84,6 @@ const bedrooms = [
   { id: 1, label: '6 Bedroom'},
   { id: 1, label: '7 Bedroom'},
 ]
-
 const completion_status = [
   { id: 0, label: 'Ready'},
   { id: 1, label: 'Completed'},
@@ -92,15 +91,12 @@ const completion_status = [
   { id: 3, label: 'Upcoming'},
   { id:4, label: 'Under Construction'}
 ]
-
 const view= [
   { id: 0, label: 'Sea'},
   { id: 1, label: 'Street'},
   { id: 2, label: 'City View'}
 ]
-
 const ownership = [
-
   { id: 0, label: 'Freehold'},
   { id: 1, label: 'Leasehold'},
   { id: 2, label: 'Local Citizen'},
@@ -108,15 +104,12 @@ const ownership = [
     id: 3, label: 'GCC Citizenship'
   },
   { label: 4, label: ' Others'}
-
-
 ]
 const furnished = [
   { id: 0, label: 'All Furnished'},
   { id: 1, label: 'Non-Furnished'},
   { id: 2, label: ' Partially Furnished'}
 ]
-
 const vat = [
   { id: 0, label: 'Commercial Property'},
   {id: 1, label: 'New Residential Property'},
@@ -127,8 +120,6 @@ const vat = [
   { id: 6, label: 'Subsequent Supply of Charitable Building'},
   { id: 7, label: 'Property Located within a Designated Zone'}
 ]
-
-
 const unit_usage = [
   { id: 0, label: 'Residential'},
   { id: 1, label: 'Industrial'},
@@ -144,6 +135,7 @@ const unit_usage = [
   { id: 11, label: 'Business Center'},
   { id: 12, label: 'Offices'}
 ]
+
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 // ==============================|| Add Unit form ||============================== //
 const validationSchema = Yup.object({
@@ -486,7 +478,7 @@ function ExchangeForm() {
                     <AutoCompleteSelector
                       helperInfo
                       style={{ xs: 12, lg: 6 }}
-                      label="Countries"
+                      label="Select Desired Countries for Exchange"
                       id="country"
                       name="country"
                       options={countriesError || countriesIsLoading ? [] : countriesData?.data || []}
@@ -539,7 +531,7 @@ function ExchangeForm() {
                     <AutoCompleteSelector
                       helperInfo
                       style={{ xs: 12, lg: 6 }}
-                      label="Cites"
+                      label="Cities"
                       id="city"
                       name="city"
                       options={citiesData?.data || []}
@@ -587,7 +579,7 @@ function ExchangeForm() {
                     <InputText
                       helperInfo
                       label="Office Address"
-                      placeholder="Enter the office address"
+                      placeholder="Enter the Office address"
                       helperText="Please enter the office address"
                       type="text"
                       style={{ xs: 12, lg: 6 }}
@@ -609,7 +601,7 @@ function ExchangeForm() {
 
                     <InputLayout
                       label="Place"
-                      helperText="Please enter place address"
+                      helperText="Please Enter place address"
                       style={{ xs: 12, lg: 6 }}
                       required={true}
                       metaError={props.errors.place}
@@ -631,26 +623,69 @@ function ExchangeForm() {
                   </Grid>
                 </Container>
                 </Container>
-
-               
-
                 <Container title="Unit Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} alignItems="center">
+                  <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Property Types"
+                      id="propertyTypes"
+                      name="propertyTypes"
+                      options={propertyTypes}
+                      placeholder="Select Property Type"
+                    />
+                         <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Completion Status"
+                      id="completionStatus"
+                      name="completionStatus"
+                      options={completion_status}
+                      placeholder="Select Completion Status"
+                    />
+                        <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Ownership"
+                      id="ownership"
+                      name="ownership"
+                      options={ownership}
+                      placeholder="Select Ownership Status"
+                      />
+                       <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Furnished Status"
+                      id="furnished"
+                      name="furnished"
+                      options={furnished}
+                      placeholder="Select Furnished Status"
+                      />
                     <InputText
                       helperInfo
-                      label="Unit No. "
-                      placeholder="Enter the Number of Units"
-                      helperText="Please enter the Number of Units"
+                      label="Plot Area"
+                      placeholder="Enter the Plot Area"
+                      helperText="Please enter Plot Area"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="plot_area"
+                      id="Plot Area"
+                      required={true}
+                    />
+                     <InputText
+                      helperInfo
+                      label="Built-Up Area"
+                      placeholder="Enter the Built-Up Area"
+                      helperText="Please enter Built-Up Area"
                       type="text"
                       style={{ xs: 12, lg: 6 }}
                       name="companyWebsite"
                       id="companyWebsite"
                       required={true}
                     />
-
                     <InputText
                       helperInfo
-                      label="Bathroom"
+                      label="No.of Bathrooms"
                       placeholder="Enter Number of Bathrooms"
                       helperText="Please enter the No.of Bathroom"
                       type="text"
@@ -659,331 +694,98 @@ function ExchangeForm() {
                       id="companyEmailAddress"
                       required={true}
                     />
+                     <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="No. of Bedrooms"
+                      helperText=" Enter Number of Bedrooms"
+                      id="propertyTypes"
+                      name="propertyTypes"
+                      options={bedrooms}
+                      placeholder="Select Number of Bedrooms"
+                    />
+                    <InputText
+                      helperInfo
+                      label="VAT Value"
+                      placeholder="vat Value"
+                      helperText="Please enter the VAT Value"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="vat_value"
+                      id="vat_value"
+                      required={true}
+                    />
+                      <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="VAT"
+                      id="propertyTypes"
+                      helperText="Enter VAT Type"
+                      name="propertyTypes"
+                      options={vat}
+                      placeholder="Select Property Type"
+                    />
 
-                    <PhoneInput
+                 <InputText
                       helperInfo
-                      style={{ xs: 12, lg: 6 }}
-                      label="Primary View"
-                      placeholder="Enter the company Contact Number"
-                      helperText="Please enter the company Contact Number"
-                      name="companyContactNumber"
-                      id="companyContactNumber"
-                    />
-
-                    <InputText
-                      helperInfo
-                      label="Company Description"
-                      placeholder="Enter the company description"
-                      helperText="Please enter the company description"
+                      label="Service Charge"
+                      placeholder="Service Charge"
+                      helperText="Please Enter the VAT Value"
                       type="text"
                       style={{ xs: 12, lg: 6 }}
-                      name="companyDescription"
-                      id="companyDescription"
+                      name="vat_value"
+                      id="vat_value"
                       required={true}
                     />
-
-                    <FileUpload
+                      <AutoCompleteSelector
                       helperInfo
-                      label="Company logo"
-                      placeholder="Enter the company logo"
-                      helperText="Please enter the company logo"
                       style={{ xs: 12, lg: 6 }}
-                      image={{ alt: 'Company Logo Preview', width: '250px', height: '250px' }}
-                      ref={companyLogoRef}
-                      id="companyLogo"
-                      name="companyLogo"
-                      setFieldValue={props.setFieldValue}
-                      required={true}
-                    />
-                    <FileUpload
-                      helperInfo
-                      label="Company Cover Image"
-                      placeholder="Enter the company cover image"
-                      helperText="Please enter the company cover image"
-                      style={{ xs: 12, lg: 6 }}
-                      image={{ alt: 'Cover Image Preview', width: '250px', height: '250px' }}
-                      ref={companyCoverRef}
-                      required={true}
-                      name="companyCoverImage"
-                      id="companyCoverImage"
-                      setFieldValue={props.setFieldValue}
-                    />
-                  </Grid>
-                </Container>
-                <Container style={{ xs: 12 }} title="Social Media">
-                  <Grid container spacing={2} alignItems="center">
-                    <InputText
-                      helperInfo
-                      label="Facebook"
-                      type="url"
-                      placeholder="Enter Company Facebook Profile"
-                      helperText="Please enter company facebook profile"
-                      style={{ xs: 12, lg: 6 }}
-                      name="facebook"
-                      id="facebook"
-                    />
-                    <InputText
-                      helperInfo
-                      label="Instagram"
-                      type="url"
-                      placeholder="Enter Company Instagram Profile"
-                      helperText="Please enter company instagram profile"
-                      style={{ xs: 12, lg: 6 }}
-                      name="instagram"
-                      id="instagram"
-                    />
-                    <InputText
-                      helperInfo
-                      label="LinkedIn"
-                      type="url"
-                      placeholder="Enter Company LinkedIn Profile"
-                      helperText="Please enter company linkedIn profile"
-                      style={{ xs: 12, lg: 6 }}
-                      name="linkedin"
-                      id="linkedin"
-                    />
-                    <InputText
-                      helperInfo
-                      label="Twitter"
-                      type="url"
-                      placeholder="Enter Company Twitter Profile"
-                      helperText="Please enter company twitter profile"
-                      style={{ xs: 12, lg: 6 }}
-                      name="twitter"
-                      id="twitter"
-                    />
-                    <InputText
-                      label="youtube"
-                      type="url"
-                      placeholder="Enter Company youtube Profile"
-                      helperText="Please enter company youtube profile"
-                      style={{ xs: 12, lg: 6 }}
-                      name="youtube"
-                      id="youtube"
-                    />
-                  </Grid>
-                </Container>
-                <Container title="Company Admin Contact Details" style={{ xs: 12 }}>
-                  <Grid container spacing={2} alignItems="center">
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="First Name"
-                      placeholder="Admin First Name"
-                      helperText="Please enter admin first name"
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Last Name"
-                      placeholder="Admin Last Name"
-                      helperText="Please enter admin last name"
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Email Address"
-                      placeholder="Admin Email Address"
-                      helperText="Please enter admin email address"
-                      type="text"
-                      id="emailAddress"
-                      name="emailAddress"
-                      required={true}
-                    />
-                    <PhoneInput
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Admin Phone Number"
-                      placeholder="Enter the Admin Phone Number"
-                      helperText="Please enter admin phone number"
-                      name="phoneNumber"
-                      id="phoneNumber"
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Number of Employees"
-                      placeholder="Number of Employees"
-                      helperText="Please enter Number of Employees"
-                      type="text"
-                      id="numberOfEmployees"
-                      name="numberOfEmployees"
-                      required={true}
-                    />
-                    <Selector
-                      helperInfo
-                      id="subscriptionDuration"
-                      name="subscriptionDuration"
-                      helperText="Please choose your purchased subscription duration"
-                      style={{ xs: 12, lg: 4 }}
-                      label="Subscription Duration"
-                      options={[
-                        { value: 1, option: '1 Month' },
-                        { value: 3, option: '3 Months' },
-                        { value: 6, option: '6 Months' },
-                        { value: 9, option: '9 Months' },
-                        { value: 12, option: '12 Months' }
-                      ]}
-                      required={true}
-                      reset={['subscriptionStartDate', 'subscriptionEndDate']}
+                      label="Unit Usage"
+                      id="propertyTypes"
+                      name="propertyTypes"
+                      options={unit_usage}
+                      placeholder="Select Property Type"
+                      helperText="Enter Unit Usage"
+                     
                     />
                     <CustomDateTime
                       helperInfo
-                      style={{ xs: 12, lg: 6 }}
-                      label="Subscription Start Date"
-                      helperText="Please enter subscription start date"
-                      id="subscriptionStartDate"
-                      name="subscriptionStartDate"
+                      style={{ xs: 12, lg: 6}}
+                     
+                      label="Paid Until"
+                      helperText="Please enter Values"
+                      id="paidUntilDate"
+                      name="paidUntilDate"
                       required={true}
                       func={{ value: props.values.subscriptionDuration, name: 'subscriptionEndDate' }}
                       disabled={!props.values.subscriptionDuration}
                     />
-                    <CustomDateTime
-                      helperInfo
-                      style={{ xs: 12, lg: 6 }}
-                      label="Subscription End Date"
-                      helperText="Please enter subscription end date"
-                      id="subscriptionEndDate"
-                      name="subscriptionEndDate"
-                      required={true}
-                      disabled={true}
-                    />
-                    <FileUpload
-                      helperInfo
-                      setFieldValue={props.setFieldValue}
-                      id="adminProfilePicture"
-                      name="adminProfilePicture"
-                      required={true}
-                      style={{ xs: 12, lg: 6 }}
-                      label="Upload Profile Picture"
-                      placeholder="Upload Profile Picture"
-                      helperText="Please enter upload profile picture"
-                      image={{ alt: 'Admin Profile Preview', width: '250px', height: '250px' }}
-                      ref={profileRef}
-                    />
-                    <Grid item lg="4"></Grid>
+               
                   </Grid>
                 </Container>
-                <Container title="Bank Account Details" style={{ xs: 12 }}>
+                <Container style={{ xs: 12 }} title="Private Amenities">
                   <Grid container spacing={2} alignItems="center">
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Account Number"
-                      placeholder="Account Number"
-                      helperText="Please enter account number"
-                      type="text"
-                      id="cardNumber"
-                      name="cardNumber"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Account Name"
-                      placeholder="Account Name"
-                      helperText="Please enter account name"
-                      type="text"
-                      id="cardName"
-                      name="cardName"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="IBAN Number"
-                      placeholder="IBAN Number"
-                      helperText="Please enter IBAN number"
-                      type="text"
-                      id="ibanNumber"
-                      name="ibanNumber"
-                      required={true}
-                    />
-                    <AutoCompleteSelector
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Countries"
-                      id="accountCountry"
-                      name="accountCountry"
-                      options={countriesError || countriesIsLoading ? [] : countriesData?.data || []}
-                      getOptionLabel={(country) => country.Country || ''}
-                      renderOption={(props, option) => (
-                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                          <Image
-                            src={`http://20.203.31.58/upload/${option.Flag}`}
-                            width={30}
-                            height={30}
-                            style={{ objectFit: 'contain' }}
-                          />
-
-                          {option.Country}
-                        </Box>
-                      )}
-                      placeholder="Select a Country"
-                      helperText="Please select a country"
-                      required={true}
-                    />
-                    <AutoCompleteSelector
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Currencies"
-                      id="currency"
-                      name="currency"
-                      options={currenciesError || currenciesIsLoading ? [] : currenciesData?.data || []}
-                      getOptionLabel={(currency) => currency.Currency || ''}
-                      renderOption={(props, option) => (
-                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                          {option.Currency.toUpperCase()} : {option.Code}
-                        </Box>
-                      )}
-                      placeholder="Select a Currency"
-                      helperText="Please select a currency"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Bank Name"
-                      placeholder="Bank Name"
-                      helperText="Please enter bank name"
-                      type="text"
-                      id="bankName"
-                      name="bankName"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Bank Branch"
-                      placeholder="Bank Branch"
-                      helperText="Please enter bank branch"
-                      type="text"
-                      id="bankBranch"
-                      name="bankBranch"
-                      required={true}
-                    />
-                    <InputText
-                      helperInfo
-                      style={{ xs: 12, lg: 4 }}
-                      label="Swift Code"
-                      placeholder="Swift Code"
-                      helperText="Please enter swift code"
-                      type="text"
-                      id="swiftCode"
-                      name="swiftCode"
-                      required={true}
-                    />
+                    
+                  
                   </Grid>
-                  <SubmitButton />
+                 
                 </Container>
+                <Container style={{ xs: 12 }} title="Commercial Amenities">
+                  <Grid container spacing={2} alignItems="center">
+                    
+                  
+                  </Grid>
+                 
+                </Container>
+                <Container style={{ xs: 12 }} title="Description">
+                  <Grid container spacing={2} alignItems="center">
+                
+                    
+                  
+                  </Grid>
+                </Container>
+              
+            
               </>
             )}
           </Formik>

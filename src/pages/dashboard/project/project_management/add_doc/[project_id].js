@@ -111,7 +111,8 @@ function AddDocuments() {
                     required={true}
                   />
 
-                  <MultipleFileUpload
+                  <FileUpload
+                    multiple
                     id="fileUrl"
                     name="fileUrl"
                     required={true}

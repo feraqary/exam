@@ -3,19 +3,40 @@ import { Box, Stepper, Step, StepButton, Button, Typography, Grid } from '@mui/m
 import { gridSpacing } from 'store/constant';
 import { useMemo } from 'react';
 import { useState } from 'react';
-import { NormalInputText } from 'components/InputArea/TextInput';
-import DynamicPaymentPlan from '../DynamicPaymentPlan';
+import DynamicPaymentPlan from './DynamicPaymentPlan';
+import D1 from '../Plans/D1';
+import D2 from '../Plans/D2';
+import D3 from '../Plans/D3';
+import D4 from '../Plans/D4';
+import D5 from '../Plans/D5';
 
-export const ProjectStepper = (num) => {
+const getStepContent = (step) => {
+  switch (step) {
+    case 0:
+      return <D1 step={step} />;
+    case 1:
+      return <D2 step={step} />;
+    case 2:
+      return <D3 step={step} />;
+    case 3:
+      return <D4 step={step} />;
+    case 4:
+      return <D5 step={step} />;
+    default:
+      throw new Error('Unknown step');
+  }
+};
+
+export const ProjectStepper = ({ option }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
 
   const steps = useMemo(() => {
-    const arr = Array.from({ length: num.num });
+    const arr = Array.from({ length: option && option > 0 ? option : 1 });
     const res = arr.map((arr, index) => `Option ${index + 1}`);
     res.push('Reviews');
     return res;
-  }, [num]);
+  }, [option]);
 
   const [installments, setInstallments] = useState(0);
 
@@ -98,15 +119,7 @@ export const ProjectStepper = (num) => {
         ) : (
           <React.Fragment>
             <Grid container spacing={gridSpacing} mt={5}>
-              <NormalInputText
-                label="Intallment plans"
-                placeholder="enter number of intallment plans"
-                style={{ xs: 12 }}
-                type="number"
-                value={installments}
-                func={changeInstallments}
-              />
-              {installmentPlans}
+              {getStepContent(activeStep)}
             </Grid>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Button color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
