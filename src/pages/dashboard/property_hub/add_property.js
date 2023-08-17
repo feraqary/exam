@@ -262,7 +262,7 @@ function AddProperty() {
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
-      <Page title="Add Project">
+      <Page title="Add Property">
         <>
           <Grid container spacing={gridSpacing}>
             <Formik
@@ -345,6 +345,7 @@ function AddProperty() {
                 availableUnits: numberValidator('please enter the number of available units'),
                 serviceCharge: numberValidator('please enter the service charge')
               })}
+              
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 const ProjectData = {
                   project_name: values.projectTitle,
@@ -457,11 +458,18 @@ function AddProperty() {
                   <Grid item xs={12}>
                     <MainCard title="Location details">
                       <Grid container spacing={2} alignItems="center">
+                        {props.values.phaseType === 'single' && (
+                          <>
+                            <Grid item xs={12} lg={12}>
+                              <Map normallng={long} normallat={lat} height={'40vh'} xs={12} lg={12} />
+                            </Grid>
+                          </>
+                        )}
                         <AutoCompleteSelector
                           label="Country"
                           placeholder="Select Country"
                           options={Countries?.data}
-                          getOptionLabel={(country) => country.Country || ''}
+                          getOptionLabel={(country) => country?.country || country?.Country || ''}
                           required
                           style={{ xs: 12, lg: 6 }}
                           helperText="Please select country"
@@ -472,17 +480,6 @@ function AddProperty() {
                           }}
                         />
 
-                        <InputText
-                          style={{ xs: 12, lg: 6 }}
-                          label="Map URL"
-                          placeholder="Address"
-                          helperText="Please enter the location address"
-                          type="text"
-                          id="mapUrl"
-                          name="mapUrl"
-                          required
-                        />
-
                         <AutoCompleteSelector
                           style={{ xs: 12, lg: 6 }}
                           disabled={!countryID}
@@ -491,7 +488,7 @@ function AddProperty() {
                           type="text"
                           helperText="Please enter the location's state"
                           options={StateByCountry?.data || []}
-                          getOptionLabel={(state) => state.State || ''}
+                          getOptionLabel={(state) => state?.state || state?.State || ''}
                           id="locationState"
                           name="locationState"
                           required
@@ -500,30 +497,29 @@ function AddProperty() {
                           }}
                         />
 
-                        <Grid item xs={12} lg={6}>
+                        {/* <Grid item xs={12} lg={6}>
                           <InputLabel>Place</InputLabel>
                           <MapAutocomplete placeHolder onChangeAddress={setAddress} value="uae" setlong={setlong} setlat={setlat} />
                           <FormHelperText>Please enter place address</FormHelperText>
-                        </Grid>
+                        </Grid> */}
 
-                        <Grid item xs={12} lg={6}>
-                          <AutoCompleteSelector
-                            label="City"
-                            placeholder="Select City"
-                            disabled={!stateID}
-                            options={CityByState?.data || []}
-                            getOptionLabel={(city) => city?.City || ''}
-                            style={{ xs: 12, lg: 12 }}
-                            id="locationCitySelector"
-                            helperText="Please select city"
-                            name="locationCitySelector"
-                            required
-                            func={(e) => {
-                              setCityID(e.ID);
-                            }}
-                          />
-
-                          {/* <AutoCompleteSelector
+                        {/* <Grid item xs={12} lg={6}> */}
+                        <AutoCompleteSelector
+                          label="City"
+                          placeholder="Select City"
+                          disabled={!stateID}
+                          options={CityByState?.data || []}
+                          getOptionLabel={(city) => city?.city || city?.City || ''}
+                          style={{ xs: 12, lg: 6 }}
+                          id="locationCitySelector"
+                          helperText="Please select city"
+                          name="locationCitySelector"
+                          required
+                          func={(e) => {
+                            setCityID(e.ID || '');
+                          }}
+                        />
+                        {/* <AutoCompleteSelector
                             label="District"
                             placeholder="District"
                             type="text"
@@ -533,44 +529,40 @@ function AddProperty() {
                             options={['option 1', 'option 2', 'option 3']}
                             style={{ xs: 12, lg: 12 }}
                           /> */}
+                        <AutoCompleteSelector
+                          label="Community"
+                          placeholder="Community"
+                          type="text"
+                          disabled={!cityID}
+                          id="locationCommunity"
+                          name="locationCommunity"
+                          helperText="Please enter the location's community"
+                          options={Community?.data || []}
+                          getOptionLabel={(com) => com?.community || com?.Community || ''}
+                          style={{ xs: 12, lg: 6 }}
+                          func={(e) => {
+                            setCommunityID(e.ID || '');
+                          }}
+                        />
 
-                          <AutoCompleteSelector
-                            label="Community"
-                            placeholder="Community"
-                            type="text"
-                            disabled={!cityID}
-                            id="locationCommunity"
-                            name="locationCommunity"
-                            helperText="Please enter the location's community"
-                            options={Community?.data || []}
-                            getOptionLabel={(com) => com?.Community || ''}
-                            style={{ xs: 12, lg: 12 }}
-                            func={(e) => {
-                              setCommunityID(e.ID);
-                            }}
-                          />
-
-                          <AutoCompleteSelector
-                            label="Sub Community"
-                            placeholder="Sub Community"
-                            disabled={!subCommunityID}
-                            type="text"
-                            id="locationSubCommunity"
-                            name="locationSubCommunity"
-                            helperText="Please enter the location's sub community"
-                            options={subCommunity?.data || []}
-                            getOptionLabel={(sub) => sub?.SubCommunity || ''}
-                            style={{ xs: 12, lg: 12 }}
-                            func={(e) => {
-                              setSubCommunityID(e.ID);
-                            }}
-                          />
-                        </Grid>
-
-                        <Grid item xs={12} lg={6}>
-                          <Map normallng={long} normallat={lat} locationAddress={address} height={'22vh'} xs={12} lg={12} />
-                        </Grid>
+                        <AutoCompleteSelector
+                          label="Sub Community"
+                          placeholder="Sub Community"
+                          disabled={!communityID}
+                          type="text"
+                          id="locationSubCommunity"
+                          name="locationSubCommunity"
+                          helperText="Please enter the location's sub community"
+                          options={subCommunity?.data || []}
+                          getOptionLabel={(sub) => sub?.sub_community || sub?.SubCommunity || ''}
+                          style={{ xs: 12, lg: 6 }}
+                          func={(e) => {
+                            setSubCommunityID(e.ID || '');
+                          }}
+                        />
                       </Grid>
+
+                      {/* </Grid> */}
                     </MainCard>
                   </Grid>
 

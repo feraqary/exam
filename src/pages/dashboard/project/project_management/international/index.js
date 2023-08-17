@@ -165,7 +165,6 @@ const international_Projects = () => {
           setOpen(true);
         };
 
-
         const handleBlock = () => {
           const formData = new FormData();
           formData.append('id', row.original.id);
@@ -297,7 +296,6 @@ const international_Projects = () => {
                     Manage Documents
                   </Button>
                 </Link>
-
 
                 <Button
                   onClick={() => {

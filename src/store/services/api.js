@@ -1,12 +1,14 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
 const token =
-  'v2.local.PVqrcbwzR7lVBz2U0xQKvB9H-Y2K69j_uZpLFaLX5_eqmvdRaSYZywNd9T_DM6hBskBzh7NpngYsY9RkQmbWoG3CogouSSqN2MniLVkx3m_S2NYtO4icF3DdPm1ECjdjy2FKEntUFgp7Fc_OuK8hAxemiw6pxFxDqV2hTUnjmFcCPqo7nfYctdSGAfvH2PQre4s9Q2xaUliovezhVxmoH_iq8rVi02aoT6Y_o9nm2EcB-WcZzNfM7mJgH2IboStSIsGMuAQdC4J16NqObg.bnVsbA';
+  'v2.local.hvjKIPvqjDQfCHoRnz4IjaMO3aMEHTQRHoRElKI5nMhDvsMhDjxQEjMh1aalGq53sHxBwufK7C6ufMmrqpvlUwFRtAcpQiReoOQvKUxOePRB6SJyMYgc6sMNxdalpn6eVyY4hv7ImlrE24hjw_SimXDaCERSsnorDv6mx2M3w1GtT3pa8ENaOOq70tkCMNz4APjWrwPEwobMsOfgxXA7OoKnMqSqRpMSyjf6kVN01Smo9-rD8Znc07RsF0-Kl9zsIBxSuP-YKa6BSba5CQ.bnVsbA';
+
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://20.203.31.58/api/',
-  credentials: 'omit',
+  credentials: 'same-origin',
+
   prepareHeaders: (headers, { getState }) => {
     // By default, if we have a token in the store, let's use that for authenticated requests
 

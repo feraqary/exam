@@ -38,6 +38,33 @@ const localProjects = () => {
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
 
+  const data = [
+    {
+      name: {
+        projectName: 'Khidmah',
+        companyLogo: '/assets/images/company_logo/logo1.png'
+      },
+      developerCompany: 'Developer Company',
+      featured: false,
+      place: 'US',
+      community: 'US',
+      refno: 'PA2831023',
+      reference: 'PA2831023',
+      propertytype: 'Jamie',
+      endis: 'new@gmail.com',
+      price: '+0192831-310',
+      propertyname: 'Lannisters',
+      type: '2-12-2023',
+      insert: '2-12-2023',
+      movedDate: '2-12-2023',
+      lifestyle: ' uploaded',
+      action: ' edit, multiple',
+      quality: 25,
+      floors: 2430,
+      slno: 4
+    }
+  ];
+
   useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Project status successfully updated');
@@ -114,10 +141,6 @@ const localProjects = () => {
     {
       accessorKey: 'no_of_phases',
       header: 'Number of Phases'
-    },
-    {
-      accessorKey: 'phasestest',
-      header: 'Phases'
     },
     {
       accessorKey: 'phase_type',
@@ -233,12 +256,16 @@ const localProjects = () => {
                 >
                   <Button variant="contained">Edit </Button>
                 </Link>
+                {row.original.phase_type === 'Multiple' && (
+                  <>
+                    <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
+                      <Button variant="contained" color="primary">
+                        Listing Properties
+                      </Button>
+                    </Link>
+                  </>
+                )}
 
-                <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
-                  <Button variant="contained" color="primary">
-                    {row.original.phase_type === 'Single' ? 'Listing Property' : 'Listing Properties'}
-                  </Button>
-                </Link>
 
                 <Button color="error" variant="outlined" onClick={() => handleUpdateStatus(5)}>
                   Block
@@ -252,7 +279,7 @@ const localProjects = () => {
                   gap: '1rem'
                 }}
               >
-                {row.original.phase_type == 'Multiple' && (
+                {/* {row.original.phase_type !== 'Multiple' && (
                   <>
                     <Link
                       href={{
@@ -261,6 +288,26 @@ const localProjects = () => {
                     >
                       <Button variant="contained" color="primary">
                         Add Property
+                      </Button>
+                    </Link>
+                  </>
+                )} */}
+
+                {row.original.phase_type !== 'Multiple' && (
+                  <>
+                    <Link
+                      href={{
+                        pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                      }}
+                    >
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          console.log(row.original.phase_type);
+                        }}
+                      >
+                        Add Plans
                       </Button>
                     </Link>
                   </>
@@ -278,18 +325,21 @@ const localProjects = () => {
                     Rating
                   </Button>
                 </Link>
-                <Link
-                  href={{
-                    pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
-                    query: {
-                      id: row.original.id
-                    }
-                  }}
-                >
-                  <Button color="primary" variant="contained">
-                    Documents
-                  </Button>
-                </Link>
+
+                {row.original.phase_type !== 'Multiple' && (
+                  <Link
+                    href={{
+                      pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
+                      query: {
+                        id: row.original.id
+                      }
+                    }}
+                  >
+                    <Button color="primary" variant="contained">
+                      Documents
+                    </Button>
+                  </Link>
+                )}
                 <Button onClick={handlePromotionOpen} variant="contained" color="primary">
                   Add to Promotions
                 </Button>
