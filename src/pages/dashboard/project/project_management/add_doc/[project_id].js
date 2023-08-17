@@ -87,7 +87,6 @@ function AddDocuments() {
                     label="Choose document category"
                     placeholder="Choose document category"
                     options={error ? [] : categories?.data || []}
-                    getOptionLabel={(category) => category.category || ''}
                     id="category"
                     name="category"
                     setFieldValue={props.setFieldValue}
@@ -102,7 +101,6 @@ function AddDocuments() {
                     label="Choose document category"
                     placeholder="Choose document category"
                     options={error ? [] : subCategories?.data || []}
-                    getOptionLabel={(subCategory) => subCategory.sub_category || ''}
                     disabled={!props.values.category}
                     id="subCategory"
                     name="subCategory"

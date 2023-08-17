@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
 const token =
-  'v2.local.k8F2wvdu15ngyY-rcEU5lGxMpvTu8WtT0umsGZuEwwyF75knF0NMa79IOZ2U3K2plIBetsCHOz5Yc_Ss5XbFueRfDSTj2sSWelMI6bK9uSFczDiUo7cbJ0W2OxyhjbroQ2QbrRoL04TVKPhn7GS_-0yskdR8hZyLsnyJ23ba6JQcbuQZ9KN1ePKBvhkNXHyc_77_iFzrWMTClvmXRDkJO4cQbc9aF4Gmi56-c6-yXfXrAOUZVDctzilpKlkremEqJMDFpdX311ELcFvLrw.bnVsbA';
+  'v2.local.hvjKIPvqjDQfCHoRnz4IjaMO3aMEHTQRHoRElKI5nMhDvsMhDjxQEjMh1aalGq53sHxBwufK7C6ufMmrqpvlUwFRtAcpQiReoOQvKUxOePRB6SJyMYgc6sMNxdalpn6eVyY4hv7ImlrE24hjw_SimXDaCERSsnorDv6mx2M3w1GtT3pa8ENaOOq70tkCMNz4APjWrwPEwobMsOfgxXA7OoKnMqSqRpMSyjf6kVN01Smo9-rD8Znc07RsF0-Kl9zsIBxSuP-YKa6BSba5CQ.bnVsbA';
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
