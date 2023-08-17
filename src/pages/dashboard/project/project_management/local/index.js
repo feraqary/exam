@@ -7,7 +7,6 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import Rating from '@mui/material/Rating';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
@@ -48,7 +47,6 @@ const localProjects = () => {
   useEffect(() => {
     if (result.isError) {
       const { data } = result.error;
-      console.log(data);
       ToastError('Error');
     }
   }, [result.isError]);
@@ -164,7 +162,6 @@ const localProjects = () => {
       Cell: ({ renderedCellValue, row }) => {
         const [open, setOpen] = useState(false);
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
-        const [verify, setVerify] = useState(false);
         const [promotionOpen, setPromotionOpen] = useState(false);
         const [viewOpen, setViewOpen] = useState(false);
 
@@ -184,12 +181,10 @@ const localProjects = () => {
         };
 
         const handleVerifyStatus = () => {
-          setVerify((prev) => !prev);
           const formData = new FormData();
           formData.append('project_id', row.original.id);
-          formData.append('is_verified', verify);
+          formData.append('is_verified', !row.original.is_verified);
           updateVerifyStatus(formData);
-          console.log(row.original);
         };
 
         const handleUpdateStatus = (status) => {
@@ -351,7 +346,7 @@ const localProjects = () => {
           <Grid item xs={12}>
             <Table
               columnHeaders={ColumnHeaders}
-              data={localProjectsData?.data || data}
+              data={localProjectsData?.data || []}
               loading={isLoading}
               pagination={pagination}
               setPagination={setPagination}
