@@ -7,7 +7,6 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import Rating from '@mui/material/Rating';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
@@ -39,6 +38,7 @@ const localProjects = () => {
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
 
+
   useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Project status successfully updated');
@@ -48,7 +48,6 @@ const localProjects = () => {
   useEffect(() => {
     if (result.isError) {
       const { data } = result.error;
-      console.log(data);
       ToastError('Error');
     }
   }, [result.isError]);
@@ -118,31 +117,38 @@ const localProjects = () => {
       header: 'Number of Phases'
     },
     {
-      accessorKey: 'phasestest',
-      header: 'Phases'
-    },
-    {
       accessorKey: 'phase_type',
       header: 'Phase Type'
     },
     {
-      accessorKey: 'endis',
+      accessorKey: 'is_enabled',
       header: 'Enable / Disable',
       Cell: ({ renderedCellValue, row }) => {
         const [updateIsEnabled, IsEnabledresult] = useUpdateProjectsIsEnabledMutation();
-        const [enabled, setEnabled] = useState(null);
 
-        useEffect(() => {
-          console.log('project_id', row.original.id, enabled);
+        const handleChange = () => {
           const formData = new FormData();
           formData.append('project_id', row.original.id);
-          formData.append('is_enabled', enabled);
+          formData.append('is_enabled', !row.original.is_enabled);
           updateIsEnabled(formData);
-        }, [enabled]);
+        };
+
+        useEffect(() => {
+          if (IsEnabledresult.isSuccess) {
+            ToastSuccess('Project successfully updated');
+          }
+        }, [IsEnabledresult.isSuccess]);
+
+        useEffect(() => {
+          if (IsEnabledresult.isError) {
+            const { data } = IsEnabledresult.error;
+            ToastError(data);
+          }
+        }, [IsEnabledresult.isError]);
 
         return (
           <>
-            <Switch checked={enabled} onChange={() => setEnabled((prev) => !prev)} />
+            <Switch checked={row.original.is_enabled} onChange={handleChange} />
           </>
         );
       }
@@ -183,7 +189,6 @@ const localProjects = () => {
         const handlePromotionClose = () => {
           setPromotionOpen(false);
         };
-
 
         const handleClickOpen = () => {
           setOpen(true);
@@ -239,12 +244,16 @@ const localProjects = () => {
                 >
                   <Button variant="contained">Edit </Button>
                 </Link>
+                {row.original.phase_type === 'Multiple' && (
+                  <>
+                    <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
+                      <Button variant="contained" color="primary">
+                        Listing Properties
+                      </Button>
+                    </Link>
+                  </>
+                )}
 
-                <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
-                  <Button variant="contained" color="primary">
-                    {row.original.phase_type === "Single" ? "Listing Property" : "Listing Properties"}
-                  </Button>
-                </Link>
 
                 <Button color="error" variant="outlined" onClick={() => handleUpdateStatus(5)}>
                   Block
@@ -258,7 +267,7 @@ const localProjects = () => {
                   gap: '1rem'
                 }}
               >
-                {row.original.phase_type == 'Multiple' && (
+                {/* {row.original.phase_type !== 'Multiple' && (
                   <>
                     <Link
                       href={{
@@ -267,6 +276,26 @@ const localProjects = () => {
                     >
                       <Button variant="contained" color="primary">
                         Add Property
+                      </Button>
+                    </Link>
+                  </>
+                )} */}
+
+                {row.original.phase_type !== 'Multiple' && (
+                  <>
+                    <Link
+                      href={{
+                        pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                      }}
+                    >
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          console.log(row.original.phase_type);
+                        }}
+                      >
+                        Add Plans
                       </Button>
                     </Link>
                   </>
@@ -284,25 +313,27 @@ const localProjects = () => {
                     Rating
                   </Button>
                 </Link>
-                <Link
-                  href={{
-                    pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
-                    query: {
-                      id: row.original.id
-                    }
-                  }}
-                >
-                  <Button color="primary" variant="contained">
-                    Documents
-                  </Button>
-                </Link>
+
+                {row.original.phase_type !== 'Multiple' && (
+                  <Link
+                    href={{
+                      pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
+                      query: {
+                        id: row.original.id
+                      }
+                    }}
+                  >
+                    <Button color="primary" variant="contained">
+                      Documents
+                    </Button>
+                  </Link>
+                )}
                 <Button onClick={handlePromotionOpen} variant="contained" color="primary">
                   Add to Promotions
                 </Button>
                 <PopUp opened={promotionOpen} setOpen={setPromotionOpen} title="Add Promotion" size={'md'}>
                   <AddPromotions />
                 </PopUp>
-
 
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
@@ -315,35 +346,6 @@ const localProjects = () => {
     }   
   ];
 
-
-  const data = [
-    {
-      id:1,
-      rank_id: 100,
-      label:"New One",
-      country:"UAE",
-      parent_developer_company:"Aqary",
-      rating:10,
-      quality_score:50,
-      no_of_phases:2,
-      phasestest:5,
-      phase_type:"equal",
-      endis:true
-    },
-    {
-      id:2,
-      rank_id: 90,
-      label:"Fine Home",
-      country:"UAE",
-      parent_developer_company:"Fine home",
-      rating:10,
-      quality_score:80,
-      no_of_phases:2,
-      phasestest:5,
-      phase_type:"equal",
-      endis:false
-    }
-  ]
 
   if (isLoading) return;
   return (

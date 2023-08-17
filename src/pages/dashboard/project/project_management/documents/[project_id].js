@@ -44,7 +44,7 @@ const Documents = () => {
       Cell: ({ row }) => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <span>{row.original.document_category.name}</span>
+            <span>{row.original.document_category.label}</span>
           </Box>
         );
       }
@@ -55,7 +55,7 @@ const Documents = () => {
       Cell: ({ row }) => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <span>{row.original.document_subcategory.name}</span>
+            <span>{row.original.document_subcategory.label}</span>
           </Box>
         );
       }
@@ -76,7 +76,10 @@ const Documents = () => {
               <Button variant="contained" color="primary">
                 View
               </Button>
-              <Button variant="contained" color="primary">
+              <Button variant="outlined" color="primary">
+                Edit
+              </Button>
+              <Button variant="contained" color="error">
                 Remove
               </Button>
             </Box>
@@ -92,7 +95,7 @@ const Documents = () => {
       <ToastContainer />
       <Container title="Manage Documents" style={{ xs: 12 }}>
         <Grid container spacing={gridSpacing}>
-          <Grid item xs={12}>
+         <Grid item xs={12}>
             <Table
               columnHeaders={ColumnHeaders}
               data={projectDocData?.data || []}
@@ -105,7 +108,7 @@ const Documents = () => {
                 return (
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
                     <Link href={{ pathname: `/dashboard/project/project_management/add_doc/${project_id}` }}>
-                      <Button color="primary">Add Document</Button>
+                      <Button variant="outlined">Add Document</Button>
                     </Link>
                   </div>
                 );

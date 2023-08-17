@@ -27,7 +27,7 @@ const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 const validationSchema = Yup.object({
   category: objectValidator(),
   subCategory: objectValidator(),
-  iconImage: fileValidator(SUPPORTED_FORMATS)
+  // iconImage: fileValidator(SUPPORTED_FORMATS)
 });
 
 function AddDocuments() {
@@ -48,8 +48,20 @@ function AddDocuments() {
   });
 
   const [createProjectDoc, result] = useCreateProjectDocMutation();
-
   const { project_id } = router.query;
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      ToastSuccess('Documents Uploaded successfully');
+    }
+  }, [result.isSuccess]);
+
+  useEffect(() => {
+    if (result.isError) {
+      const { data } = result.error;
+      ToastError('Error');
+    }
+  }, [result.isError]);
 
   return (
     <Page title="Add Project Documents">
@@ -64,13 +76,17 @@ function AddDocuments() {
                 fileUrl: ''
               }}
               validationSchema={validationSchema}
-              onSubmit={(values, { setSubmitting, resetForm }) => {
-                console.log(values);
+              onSubmit={(values, { setSubmitting, resetForm }) => {   
+          
+                const fileLength = values.fileUrl.length;
+                console.log(fileLength)
                 const formData = new FormData();
                 formData.append('project_id', project_id);
                 formData.append('category_id', values.category.id);
                 formData.append('sub_category_id', values.subCategory.id);
-                formData.append('file_url[]', values.fileUrl);
+                for (let i = 0; i < fileLength; i++){
+                formData.append('file_url[]', values.fileUrl[i]);
+                }
                 createProjectDoc(formData);
                 setSubmitting(false);
                 resetForm();
@@ -87,6 +103,7 @@ function AddDocuments() {
                     label="Choose document category"
                     placeholder="Choose document category"
                     options={error ? [] : categories?.data || []}
+                    getOptionLabel={(category) => category.label || ''}
                     id="category"
                     name="category"
                     setFieldValue={props.setFieldValue}
@@ -98,9 +115,10 @@ function AddDocuments() {
                   />
                   <AutoCompleteSelector
                     style={{ xs: 12, lg: 8 }}
-                    label="Choose document category"
-                    placeholder="Choose document category"
+                    label="Choose document sub-category"
+                    placeholder="Choose document sub-category"
                     options={error ? [] : subCategories?.data || []}
+                    getOptionLabel={(subCategory) => subCategory.label || ''}
                     disabled={!props.values.category}
                     id="subCategory"
                     name="subCategory"
@@ -109,7 +127,8 @@ function AddDocuments() {
                     required={true}
                   />
 
-                  <MultipleFileUpload
+                  <FileUpload
+                    multiple
                     id="fileUrl"
                     name="fileUrl"
                     required={true}

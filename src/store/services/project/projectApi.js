@@ -6,7 +6,7 @@ export const projectApi = api.injectEndpoints({
     createProjectDoc: builder.mutation({
       query(formData) {
         return {
-          url: `api/dashboard/createProjectDoc`,
+          url: `dashboard/createProjectDoc`,
           method: 'POST',
           body: formData
         };
@@ -18,7 +18,10 @@ export const projectApi = api.injectEndpoints({
       query() {
         return {
           url: `propertyTypes/getPropertyTypes`,
-          method: 'GET'
+          method: 'GET',
+          headers: {
+            Authorization: null
+          }
         };
       }
     }),
@@ -209,6 +212,15 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+    CreateProjectProperty: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/createProjectProperty`,
+          method: 'POST',
+          body: data
+        };
+      }
+    }),
 
     //CREATE DOCS CATEGORY
     CreateCategory: builder.mutation({
@@ -339,7 +351,8 @@ export const projectApi = api.injectEndpoints({
           method: 'PUT',
           body: submit
         };
-      }
+      },
+      invalidatesTags: ['LocalProjects', 'InternationalProjects', 'SharedProjectsProjects']
     }),
 
     // Get All Project Promotions
@@ -355,6 +368,7 @@ export const projectApi = api.injectEndpoints({
 });
 
 export const {
+  useCreateProjectPropertyMutation,
   useGetDocsCategoriesQuery,
   useCreateCategoryMutation,
   useCreateSubCategoryMutation,

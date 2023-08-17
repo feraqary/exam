@@ -91,7 +91,7 @@ const localProjects = () => {
                 return (
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
                     {/* <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/manage_units/${project_id}` }}> */}
-                    <Button color="primary">Add Unit</Button>
+                    <Button variant="outlined">Add Unit</Button>
                     {/* </Link> */}
                   </div>
                 );

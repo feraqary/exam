@@ -60,6 +60,7 @@ export default function Category() {
                 <MainCard title="Add Document Category">
                   <Grid container spacing={2} alignItems="center">
                     <InputText
+                      disabled={success}
                       label="Category Name"
                       helperText="provide the name of the category"
                       style={{ xs: 12, lg: 6 }}
@@ -85,7 +86,7 @@ export default function Category() {
               </Grid>
             )}
           </Formik>
-          {success && <Sub setSuccess={setSuccess} />}
+          {success && <Sub setSuccess={setSuccess} success={success} />}
         </Grid>
       </Page>
     </>
@@ -94,6 +95,7 @@ export default function Category() {
 
 function Sub({ setSuccess }) {
   const [createSubCategory, CreateSubCategoryResult] = useCreateSubCategoryMutation();
+
   const { data: categories, isLoading, isError } = useGetDocsCategoriesQuery();
   useEffect(() => {
     setSuccess(!CreateSubCategoryResult.isSuccess);
