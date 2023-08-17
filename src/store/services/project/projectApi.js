@@ -12,7 +12,6 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
-
     //GET LOCAL Projects API
     getPropertyType: builder.query({
       query() {
@@ -23,7 +22,6 @@ export const projectApi = api.injectEndpoints({
       }
     }),
     //update Project
-
     getLocalProjects: builder.query({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
@@ -34,7 +32,6 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['LocalProjects']
     }),
-
     //GET International Projects API
     getInternationalProjects: builder.query({
       query(pagination) {
@@ -46,7 +43,6 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['InternationalProjects']
     }),
-
     //update Project
     getProjectUpdate: builder.mutation({
       query(formData) {
@@ -117,7 +113,6 @@ export const projectApi = api.injectEndpoints({
       }
     }),
     //GET ALL FACILITIES API
-
     getAllfacilities: builder.query({
       query(_) {
         return {
@@ -203,7 +198,7 @@ export const projectApi = api.injectEndpoints({
 getPromotions: builder.query({ 
   query({ pageIndex, pageSize,id}) {
     return { 
-      url: `dashboard/getAllProjectPromotions?page_no=${pageIndex}&page_size=${pageSize}`,
+      url: `dashboard/getAllProjectPromotions?page_no=${pageIndex + 1}&page_size=${pageSize}`,
       method: 'GET'
     };
   }
@@ -217,6 +212,8 @@ createPromotions : builder.mutation ({
       body: data
     };
   }
+
+ 
 
 }),
      //Create Projects API

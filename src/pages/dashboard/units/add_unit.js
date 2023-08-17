@@ -42,15 +42,19 @@ import {
   useGetSubCommunitiesByCommunityQuery
 } from 'store/services/country/countryApi';
 import { ToastSuccess } from 'utils/toast';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+
 
 // ==============================|| FIELDS ||============================== //
 const unit_options = [
   { label: 'Sale', id: 1 },
   { label: 'Rent', id: 2 },
-  { label: 'Commercial Rent', id: 3 },
-  { label: 'Commercial Sale', id: 4 },
-  { label: 'Exchange', id: 5 },
-  { label: 'Commercial Exchange', id: 5 }
+ 
+  { label: 'Exchange', id: 3 },
+
 ];
 const property_name = [
   { label: 'Al-Ain Tower', id: 1 },
@@ -63,75 +67,74 @@ const company_names = [
   { label: 'EMAAR', id: 2 }
 ];
 const furnished = [
-  { id: 0, label: 'All Furnished'},
-  { id: 1, label: 'Non-Furnished'},
-  { id: 2, label: ' Partially Furnished'}
-]
+  { id: 0, label: 'All Furnished' },
+  { id: 1, label: 'Non-Furnished' },
+  { id: 2, label: ' Partially Furnished' }
+];
 const unit_type = [
   { id: 0, label: ' Hotel Apartment' },
   {
     id: 1,
     label: 'Villa'
   },
-  { id: 2, label: 'Commercial Villa'},
-  { id: 3, label: 'Townhouse'},
-  { id: 4, label: ' Apartment'},
-  { id: 5, label: ' Penthouse'},
-  { id: 6, label: ' Residential Land'},
-  {  id: 7, label: ' Commercial Land'},
-  { id: 8, label: 'Mixed Used Land'},
-  { id: 9, label: ' Industrial Land'},
-  { id: 10, label: ' Office'},
-  { id: 11, label: ' Residential Floor'},
-  { id: 12, label: 'Commercial Floor'},
-  { id: 13, label: 'Showroom'},
-  { id: 14, label: 'Retail'},
-  { id: 15, label: 'Shop'},
-  { id: 16, label: 'Labour Camp'},
-  { id: 17, label: 'Farm'}
+  { id: 2, label: 'Commercial Villa' },
+  { id: 3, label: 'Townhouse' },
+  { id: 4, label: ' Apartment' },
+  { id: 5, label: ' Penthouse' },
+  { id: 6, label: ' Residential Land' },
+  { id: 7, label: ' Commercial Land' },
+  { id: 8, label: 'Mixed Used Land' },
+  { id: 9, label: ' Industrial Land' },
+  { id: 10, label: ' Office' },
+  { id: 11, label: ' Residential Floor' },
+  { id: 12, label: 'Commercial Floor' },
+  { id: 13, label: 'Showroom' },
+  { id: 14, label: 'Retail' },
+  { id: 15, label: 'Shop' },
+  { id: 16, label: 'Labour Camp' },
+  { id: 17, label: 'Farm' }
 ];
 const bedrooms = [
   { id: 0, label: 'Studio' },
-  { id: 1, label: '1 Bedroom'},
-  { id: 1, label: '2 Bedroom'},
-  { id: 1, label: '3 Bedroom'},
-  { id: 1, label: '4 Bedroom'},
-  { id: 1, label: '5 Bedroom'},
-  { id: 1, label: '6 Bedroom'},
-  { id: 1, label: '7 Bedroom'},
-]
+  { id: 1, label: '1 Bedroom' },
+  { id: 1, label: '2 Bedroom' },
+  { id: 1, label: '3 Bedroom' },
+  { id: 1, label: '4 Bedroom' },
+  { id: 1, label: '5 Bedroom' },
+  { id: 1, label: '6 Bedroom' },
+  { id: 1, label: '7 Bedroom' }
+];
 const agent_names = [
-  { id: 0 , label: 'Ali'},
-  { id: 1 , label: 'Ferid'},
-  { id: 2 , label: ' Fatima'}
-]
-const view= [
-  { id: 0, label: 'Sea'},
-  { id: 1, label: 'Street'},
-  { id: 2, label: 'City View'}
-] 
+  { id: 0, label: 'Ali' },
+  { id: 1, label: 'Ferid' },
+  { id: 2, label: ' Fatima' }
+];
+const view = [
+  { id: 0, label: 'Sea' },
+  { id: 1, label: 'Street' },
+  { id: 2, label: 'City View' }
+];
 
 const rent_type = [
-  { id: 0, label: 'Yearly'},
-  { id: 1, label: 'Quarter'},
-  { id: 2, label: 'Monthly'}
-]
+  { id: 0, label: 'Yearly' },
+  { id: 1, label: 'Quarter' },
+  { id: 2, label: 'Monthly' }
+];
 const ownership_status = [
-  { id: 0, label: 'Freehold'},
-  { id: 1, label: 'Leasehold'},
-  { id: 2, label: 'Local Citizen'},
-  { id: 3, label: ' GCC Citizen'},
-  { id: 4, label: 'Others'}
-]
+  { id: 0, label: 'Freehold' },
+  { id: 1, label: 'Leasehold' },
+  { id: 2, label: 'Local Citizen' },
+  { id: 3, label: ' GCC Citizen' },
+  { id: 4, label: 'Others' }
+];
 
 const completion_status = [
-  { id: 0, label: 'Completed'},
-  { id: 1, label: 'Off Plan'},
-  { id: 2, label: 'Ready'},
-  { id: 3, label: 'Under Construction'},
-  { id: 4, label: 'Upcoming'}
-
-]
+  { id: 0, label: 'Completed' },
+  { id: 1, label: 'Off Plan' },
+  { id: 2, label: 'Ready' },
+  { id: 3, label: 'Under Construction' },
+  { id: 4, label: 'Upcoming' }
+];
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 // ==============================|| Add Unit form ||============================== //
 const validationSchema = Yup.object({
@@ -482,7 +485,6 @@ function ColumnsLayouts() {
                       func={(newValue) => {}}
                       required={true}
                     />
-
                     <AutoCompleteSelector
                       helperInfo
                       style={{ xs: 12, lg: 10 }}
@@ -506,19 +508,8 @@ function ColumnsLayouts() {
                       func={(newValue) => {}}
                       required={true}
                     />
+             
                     <AutoCompleteSelector
-                      helperInfo
-                      style={{ xs: 12, lg: 10 }}
-                      label="Select Company"
-                      id="company"
-                      name="companyName"
-                      placeholder="Select Company Name"
-                      options={company_names}
-                      setFieldValue={props.setFieldValue}
-                      func={(newValue) => {}}
-                      required={true} 
-                    />
-                         <AutoCompleteSelector
                       helperInfo
                       style={{ xs: 12, lg: 10 }}
                       label="Agent Name"
@@ -532,34 +523,15 @@ function ColumnsLayouts() {
                     />
                     <InputText
                       helperInfo
-                      label="References No"
-                      placeholder="Enter References No"
+                      label="Reference No"
+                      placeholder="Enter Reference No"
                       style={{ xs: 12, lg: 6 }}
                       type="text"
                       id="refNo"
                       name="refNo"
                       required={true}
                     />
-                    <InputText
-                      helperInfo
-                      label="ORN Number"
-                      placeholder="Enter ORN No"
-                      style={{ xs: 12, lg: 6 }}
-                      type="text"
-                      id="refNo"
-                      name="refNo"
-                      required={true}
-                    />
-                    <CustomDateTime
-                      helperInfo
-                      style={{ xs: 12, lg: 6 }}
-                      label="RERA No. Expiry Date"
-                      helperText="Please enter RERA No. Expiry Date"
-                      id="reraExpiryDate"
-                      name="reraExpiryDate"
-                      required={true}
-                      setFieldValue={props.setFieldValue}
-                    />
+              
                   </Grid>
                 </Container>
 
@@ -714,74 +686,7 @@ function ColumnsLayouts() {
                 </Container>
                 <Container title="Unit Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} alignItems="center">
-                    <InputText
-                      helperInfo
-                      label="Unit No. "
-                      placeholder="Enter the Number of Units"
-                      helperText="Please enter the Number of Units"
-                      type="text"
-                      style={{ xs: 12, lg: 6 }}
-                      name="companyWebsite"
-                      id="companyWebsite"
-                      required={true}
-                    />
-                       <InputText
-                      helperInfo
-                      label="Price"
-                      placeholder="Price"
-                      helperText="Please Enter the Price"
-                      type="number"
-                      style={{ xs: 12, lg: 6 }}
-                      name="price"
-                      id="price"
-                      required={true}
-                    />
-                         <InputText
-                      helperInfo
-                      label="No. of Payments"
-                      placeholder="Number of Payments"
-                      helperText="Please enter No. of Payments"
-                      type="text"
-                      style={{ xs: 12, lg: 6 }}
-                      name="no_payments"
-                      id="payments"
-                      required={true}
-                    />
-                     <InputText
-                      helperInfo
-                      label="Service Charges"
-                      placeholder="Enter Service Charges"
-                      helperText="Please enter Service Charges"
-                      type="text"
-                      style={{ xs: 12, lg: 6 }}
-                      name="service_charges"
-                      id="service_charges"
-                      required={true}
-                    />
-                     
-                    <InputText
-                      helperInfo
-                      label="Plot Area"
-                      placeholder="Enter the Plot Area"
-                      helperText="Please enter Plot Area"
-                      type="text"
-                      style={{ xs: 12, lg: 6 }}
-                      name="plot_area"
-                      id="Plot Area"
-                      required={true}
-                    />
-                     <InputText
-                      helperInfo
-                      label="Built-Up Area"
-                      placeholder="Enter the Built-Up Area"
-                      helperText="Please enter Built-Up Area"
-                      type="text"
-                      style={{ xs: 12, lg: 6 }}
-                      name="companyWebsite"
-                      id="companyWebsite"
-                      required={true}
-                    />
-                     <AutoCompleteSelector
+                  <AutoCompleteSelector
                       helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="Furnished Status"
@@ -789,8 +694,8 @@ function ColumnsLayouts() {
                       name="furnished"
                       options={furnished}
                       placeholder="Select Furnished Status"
-                      helperText= "Select Furnished Status"
-                      />
+                      helperText="Select Furnished Status"
+                    />
                     <InputText
                       helperInfo
                       label="No.of Bathrooms"
@@ -802,7 +707,7 @@ function ColumnsLayouts() {
                       id="companyEmailAddress"
                       required={true}
                     />
-                     <AutoCompleteSelector
+                    <AutoCompleteSelector
                       helperInfo
                       style={{ xs: 12, lg: 6 }}
                       label="No. of Bedrooms"
@@ -812,57 +717,6 @@ function ColumnsLayouts() {
                       options={bedrooms}
                       placeholder="Select Number of Bedrooms"
                     />
-                   
-                      <AutoCompleteSelector
-                      helperInfo
-                      style={{ xs: 12, lg: 6 }}
-                      label="View"
-                      id="primary_view"
-                      helperText="Enter Primary View"
-                      name="propertyTypes"
-                      options={view}
-                      placeholder="Select Main Property View"
-                    />
-                             <AutoCompleteSelector
-                      helperInfo
-                      style={{ xs: 12, lg: 6 }}
-                      label="Secondary View"
-                      id="secondary_view"
-                      name="secondaryView"
-                      options={view}
-                      placeholder="Select Secondary View"
-                      helperText="Enter Secondary View"
-                    />
-                      <AutoCompleteSelector
-                      helperInfo
-                      style={{ xs: 12, lg: 6 }}
-                      label="Ownership"
-                      id="ownership"
-                      name="ownership_status"
-                      options={ownership_status}
-                      placeholder="Select Ownership Status"
-                      helperText="Select ownership"
-                    />
-                        <AutoCompleteSelector
-                      helperInfo
-                      style={{ xs: 12, lg: 6 }}
-                      label="Completion Status"
-                      id="completion_status"
-                      name="completion_status"
-                      options={completion_status}
-                      placeholder="Select Completion Status"
-                      helperText= "Select Completion Status"
-                      />
-                      <AutoCompleteSelector
-                      helperInfo
-                      style={{ xs: 12, lg: 6 }}
-                      label="Rent Type"
-                      id="rent_type"
-                      name="rent_type"
-                      options={rent_type}
-                      placeholder="Select Rent Type"
-                      helperText= "Select Rent Type"
-                      />
                        <InputText
                       helperInfo
                       label="No. of Parkings"
@@ -874,22 +728,133 @@ function ColumnsLayouts() {
                       id="parkings"
                       required={true}
                     />
+                    <InputText
+                      helperInfo
+                      label="Unit No. "
+                      placeholder="Enter the Number of Units"
+                      helperText="Please enter the Number of Units"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="companyWebsite"
+                      id="companyWebsite"
+                      required={true}
+                    />
+           
+                    <InputText
+                      helperInfo
+                      label="Service Charges"
+                      placeholder="Enter Service Charges"
+                      helperText="Please enter Service Charges"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="service_charges"
+                      id="service_charges"
+                      required={true}
+                    />
+
+                    <InputText
+                      helperInfo
+                      label="Plot Area"
+                      placeholder="Enter the Plot Area"
+                      helperText="Please enter Plot Area"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="plot_area"
+                      id="Plot Area"
+                      required={true}
+                    />
+                    <InputText
+                      helperInfo
+                      label="Built-Up Area"
+                      placeholder="Enter the Built-Up Area"
+                      helperText="Please enter Built-Up Area"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="companyWebsite"
+                      id="companyWebsite"
+                      required={true}
+                    />
+                 
+
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="View"
+                      id="primary_view"
+                      helperText="Enter Primary View"
+                      name="propertyTypes"
+                      options={view}
+                      placeholder="Select Main Property View"
+                    />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Ownership"
+                      id="ownership"
+                      name="ownership_status"
+                      options={ownership_status}
+                      placeholder="Select Ownership Status"
+                      helperText="Select ownership"
+                    />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Completion Status"
+                      id="completion_status"
+                      name="completion_status"
+                      options={completion_status}
+                      placeholder="Select Completion Status"
+                      helperText="Select Completion Status"
+                    />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="Rent Type"
+                      id="rent_type"
+                      name="rent_type"
+                      options={rent_type}
+                      placeholder="Select Rent Type"
+                      helperText="Select Rent Type"
+                    />
+                             <InputText
+                      helperInfo
+                      label="Price"
+                      placeholder="Price"
+                      helperText="Please Enter the Price"
+                      type="number"
+                      style={{ xs: 12, lg: 6 }}
+                      name="price"
+                      id="price"
+                      required={true}
+                    />
+                    <InputText
+                      helperInfo
+                      label="No. of Payments"
+                      placeholder="Number of Payments"
+                      helperText="Please enter No. of Payments"
+                      type="text"
+                      style={{ xs: 12, lg: 6 }}
+                      name="no_payments"
+                      id="payments"
+                      required={true}
+                    />
+                 
                   </Grid>
                 </Container>
                 <Container style={{ xs: 12 }} title="Description">
-                <Grid container spacing={2} alignItems="center">
-                <InputText
+                  <Grid container spacing={2} alignItems="center">
+                   <InputText
                       helperInfo
                       label="Unit Title"
                       placeholder="Enter Unit Title"
                       helperText="Please Unit Title"
                       type="text"
-                      style={{ xs: 12, lg: 12}}
+                      style={{ xs: 12, lg: 12 }}
                       name="unit_title"
                       id="unit_name"
                       required={true}
                     />
-                              <InputText
+                    <InputText
                       helperInfo
                       label="Description"
                       placeholder="Description"
@@ -897,12 +862,12 @@ function ColumnsLayouts() {
                       type="text"
                       multiline
                       rows={9}
-                      style={{ xs: 12, lg: 6 }}
+                      style={{ xs: 12, lg: 12 }}
                       name="description"
                       id="description"
                       required={true}
                     />
-                           <InputText
+                    <InputText
                       helperInfo
                       label="Notes"
                       placeholder="Enter Short Notes"
@@ -910,24 +875,22 @@ function ColumnsLayouts() {
                       type="text"
                       rows={9}
                       multiline
-                      style={{ xs: 12, lg: 6 }}
+                      style={{ xs: 12, lg: 12 }}
                       name="notes"
                       id="notes"
                       required={true}
                     />
-                 
                   </Grid>
                 </Container>
                 <SubmitButton />
-                  <Button
-                    onClick={() => {
-                      console.log('values=======> ', props.values);
-                    }}
-                  >
-                    test
-                  </Button>
+                <Button
+                  onClick={() => {
+                    console.log('values=======> ', props.values);
+                  }}
+                >
+                  test
+                </Button>
               </>
-              
             )}
           </Formik>
         </Grid>

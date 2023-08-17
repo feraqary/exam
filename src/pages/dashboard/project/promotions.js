@@ -3,66 +3,82 @@ import { Grid, Button, Box } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-import Container from 'components/Elements/Container'; 
-import { useCreatePromotionsMutation, useGetPromotionsQuery } from 'store/services/project/projectApi';
-import { ToastSuccess } from 'utils/toast';
+import Container from 'components/Elements/Container';
+import { useGetPromotionsQuery, useCreatePromotionsMutation } from 'store/services/project/projectApi';
 
 // ==============================|| Manage Project Promotions ||============================== //
 
-const manageProjectPromotions = () => {
-  const [pagination, setPagination] = useState({
-    pageIndex: 0, 
-    pageSize: 10,
-  });
-  const { data: projectPromotionsData, isError , error, isLoading, isFetching} = useGetPromotionsQuery(pagination);
 
-  
-
-const promotionData = [
-  {
-  accessorKey: 'id',
-  header: 'Project ID' 
-  },
-  {
-    accessorKey: 'ref_no',
-    header: 'Reference Number'
-    },
-    {
-      accessorKey: 'label',
-      header: 'Project Name'
-    },
-    {
-      accessorKey: 'expiry_date',
-      header: 'Expiry Date'
-    },
-    {
-      accessorKey: 'promotion_description',
-      header: 'Description'
-
-    }
-]
-function manageProjectPromotions() {
+const ProjectPromotions = () => { 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10
   });
-  return (
-    <Page title="Manage Project">
+  const { data: promotionData , isError, error, isLoading, isFetching } = useGetPromotionsQuery(pagination);
+
+const ProjectPromotionsData = [
+  {
+    accessorKey: 'id',
+    header: 'Project ID '
+  },
+  {
+    accessorKey: 'label',
+    header: 'Project Name'
+  },
+  {
+    accessorKey: 'expiry_date',
+    header: 'Expiry Date'
+  },
+  {
+    accessorKey: 'promotion_description',
+    header: ' Promotion Description'
+  },
+  {
+    accessorKey: 'promotion_type[]',
+    accessorFn: (originalRow) => `${originalRow.promotion_type[0].label} ,  ${originalRow.promotion_type[1].label}` , 
+   
+    header: 'Promotion Type'
+  },
+  {
+    accessorKey: 'action',
+    header: 'Action',
+    Cell: ({ renderedCellValue, row }) => (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem'
+        }}
+      >
+        <Button variant="contained" color="primary">
+          Edit
+        </Button>
+        <Button variant="contained" color="error">
+          Remove
+        </Button>
+      </Box>
+    )
+  }
+];
+
+if (isLoading) return;
+return (
+    <Page title="Manage Promotions">
       <Container title="Manage Promotions" style={{ xs: 12 }}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <Table
-              data={data}
-              columnHeaders={promotionData}
+              data={promotionData?.data || []}
+              columnHeaders={ProjectPromotionsData}
               pagination={pagination}
               setPagination={setPagination}
-              isFetching={false}
-              loading={false}
-              rowCount={data.length}
+              isFetching={isFetching}
+              loading={isLoading}
+              rowCount={promotionData?.Total}
             />
           </Grid>
         </Grid>
@@ -70,10 +86,9 @@ function manageProjectPromotions() {
     </Page>
   );
 }
-}
 
-manageProjectPromotions.getLayout = function getLayout(page) {
+ProjectPromotions.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default manageProjectPromotions;
+export default ProjectPromotions;
