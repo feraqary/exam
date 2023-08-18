@@ -828,7 +828,7 @@ function AddProject() {
                               name="facts[13].value"
                               helperText="Please select the number of units"
                             />
-                            <InputText
+                            {/* <InputText
                               label="Available Units"
                               required
                               type="number"
@@ -837,7 +837,7 @@ function AddProject() {
                               id="facts[17].value"
                               name="facts[17].value"
                               helperText="Please select the number of available units"
-                            />
+                            /> */}
                             {/*   :'', noofparkingspaces:'', */}
                             <InputText
                               label="No. Of Pools"

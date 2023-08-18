@@ -212,7 +212,12 @@ const Map = ({
     const polyline = flattenCoordinates(boundaries);
 
     return (
-      <Grid item xs={xs} lg={lg} sx={disabled && { opacity: '0.6', pointerEvents: 'none', userSelect: 'none', transition: 'opacity 0.8s' }}>
+      <Grid
+        item
+        xs={xs}
+        lg={lg}
+        sx={disabled && { opacity: '0.6', pointerEvents: 'none', userSelect: 'none', transition: 'opacity 0.8s cubic' }}
+      >
         <GoogleMap
           mapContainerStyle={{ position: 'relative', height: height, width: '100%' }}
           center={{ lat: phase_lat && forPhase ? phase_lat : lat, lng: phase_long && forPhase ? phase_long : long }}
