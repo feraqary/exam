@@ -377,6 +377,28 @@ export const projectApi = api.injectEndpoints({
         };
       },
       invalidatesTags: ["Documents"]
+    }),
+
+    // Get ALl Promotion Types
+    getAllPromoType: builder.query({
+      query() {
+        return {
+          url: `dashboard/getAllPromoTypes`,
+          method: 'GET',
+        };
+      },
+      providesTags:["Promotions"]
+    }),
+    // Get ALl Promotion Types
+    createPromotionType: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/createPromotionType`,
+          method: 'POST',
+          body:formData
+        };
+      },
+      invalidatesTags: ["Promotions"]
     })
   })
 });
@@ -411,5 +433,7 @@ export const {
   useGetViewQuery,
   useGetRatingsQuery,
   useGetAllProjectPromotionsQuery,
-  useDeleteProjectDocMutation
+  useDeleteProjectDocMutation,
+  useGetAllPromoTypeQuery,
+  useCreatePromotionTypeMutation
 } = projectApi;
