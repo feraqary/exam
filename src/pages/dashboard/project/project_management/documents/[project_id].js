@@ -16,6 +16,8 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
+import ViewInformation from 'components/InputArea/information/view_information';
+import ViewDocuments from 'pages/dashboard/project/project_management/documents/view_documents';
 
 // ==============================|| Manage International Projects ||============================== //
 
@@ -64,6 +66,7 @@ const Documents = () => {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ row }) => {
+        const [viewOpen, setViewOpen] = useState(false);
         return (
           <>
             <Box
@@ -73,14 +76,14 @@ const Documents = () => {
                 gap: '1rem'
               }}
             >
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" onClick={() => setViewOpen(true)}>
                 View
               </Button>
-              <Button variant="outlined" color="primary">
-                Edit
-              </Button>
+              <ViewInformation opened={viewOpen} setOpen={setViewOpen} pageTitle="Documents" size={'lg'} title="Project Documents">
+                <ViewDocuments document={row.original} />
+              </ViewInformation>
               <Button variant="contained" color="error">
-                Remove
+                Delete
               </Button>
             </Box>
           </>
@@ -95,7 +98,7 @@ const Documents = () => {
       <ToastContainer />
       <Container title="Manage Documents" style={{ xs: 12 }}>
         <Grid container spacing={gridSpacing}>
-         <Grid item xs={12}>
+          <Grid item xs={12}>
             <Table
               columnHeaders={ColumnHeaders}
               data={projectDocData?.data || []}

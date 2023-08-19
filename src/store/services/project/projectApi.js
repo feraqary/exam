@@ -10,7 +10,8 @@ export const projectApi = api.injectEndpoints({
           method: 'POST',
           body: formData
         };
-      }
+      },
+      invalidatesTags:["Documents"]
     }),
 
     //GET LOCAL Projects API
@@ -191,7 +192,7 @@ export const projectApi = api.injectEndpoints({
           url: `dashboard/getAllDocsByProject?project_id=${1}&page_no=${pageIndex}&page_size=${pageSize}`,
           method: 'GET'
         };
-      }
+      },
     }),
     // GET DOCUMENT CATEGORIES API
     getDocsCategories: builder.query({
@@ -272,7 +273,8 @@ export const projectApi = api.injectEndpoints({
           url: `dashboard/getAllDocsByProject?project_id=${project_id}&page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
-      }
+      },
+      providesTags:["Documents"]
     }),
 
     //GET PROPERTY TYP
@@ -363,6 +365,18 @@ export const projectApi = api.injectEndpoints({
           method: 'GET'
         };
       }
+    }),
+
+    // DELETE PROJECT DOCUMENT
+    deleteProjectDoc: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/deleteProjectDoc`,
+          method: 'DELETE',
+          body:formData
+        };
+      },
+      invalidatesTags: ["Documents"]
     })
   })
 });
@@ -396,5 +410,6 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery,
-  useGetAllProjectPromotionsQuery
+  useGetAllProjectPromotionsQuery,
+  useDeleteProjectDocMutation
 } = projectApi;
