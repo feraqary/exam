@@ -389,7 +389,8 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags:["Promotions"]
     }),
-    // Get ALl Promotion Types
+
+    // Add Promotion Type
     createPromotionType: builder.mutation({
       query(formData) {
         return {
@@ -399,7 +400,18 @@ export const projectApi = api.injectEndpoints({
         };
       },
       invalidatesTags: ["Promotions"]
-    })
+    }),
+
+    // Delete Promotion Type
+    deleteProjectPromotionTypes: builder.mutation({
+      query(promotionID) {
+        return {
+          url: `dashboard/deleteProjectPromotionTypes/${promotionID}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ["Promotions"]
+    }),
   })
 });
 
@@ -435,5 +447,6 @@ export const {
   useGetAllProjectPromotionsQuery,
   useDeleteProjectDocMutation,
   useGetAllPromoTypeQuery,
-  useCreatePromotionTypeMutation
+  useCreatePromotionTypeMutation,
+  useDeleteProjectPromotionTypesMutation
 } = projectApi;

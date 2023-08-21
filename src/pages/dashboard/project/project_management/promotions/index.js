@@ -3,18 +3,24 @@ import { Grid, Button, Box } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import Container from 'components/Elements/Container';
-import { useGetAllProjectPromotionsQuery, useGetAllPromoTypeQuery } from 'store/services/project/projectApi';
+import { useDeleteProjectPromotionTypesMutation, useGetAllPromoTypeQuery } from 'store/services/project/projectApi';
 import PopUp from 'components/InputArea/PopUp';
 import ViewInformation from './view_information';
 import Link from 'next/link';
 import AddPromotionType from './add_promotionType';
+import { ToastContainer } from 'react-toastify';
+import { ToastSuccess, ToastError } from  "utils/toast";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 // ==============================|| Manage Project Promotions ||============================== //
+
+
 
 const ColumnHeaders = [
   {
@@ -30,6 +36,28 @@ const ColumnHeaders = [
     accessorKey: 'action',
     header: 'Action',
     Cell: ({ renderedCellValue, row }) => {
+      const [deletePromotionType, result] = useDeleteProjectPromotionTypesMutation();
+
+
+      useEffect(() => {
+        if (result.isSuccess) {
+          console.log('Toast', result.isSuccess)
+          ToastSuccess('Project status successfully updated');
+        }
+      }, [result.isSuccess]);
+      
+      useEffect(() => {
+        if (result.isError) {
+          const { data } = result.error;
+          ToastError('Error');
+        }
+      }, [result.isError]);
+
+
+      const handleDeletePromotionType = (id)=>{
+        deletePromotionType(id);
+      }
+        
       return (
         <Box
           sx={{
@@ -48,7 +76,7 @@ const ColumnHeaders = [
         <Button variant="contained" color="primary">
           Edit
         </Button> */}
-          <Button variant="contained" color="error">
+          <Button variant="contained" color="error" onClick={()=>handleDeletePromotionType(row.original.id)}>
             Remove
           </Button>
         </Box>
@@ -97,6 +125,7 @@ function ManagePromotions() {
 
   return (
     <Page title="Manage Project">
+    <ToastContainer/>
       <Container title="Manage Promotions" style={{ xs: 12 }}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
