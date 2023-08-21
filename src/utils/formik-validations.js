@@ -91,6 +91,22 @@ export const numberValidator = (msg, required, min = null, max = null) => {
   return NUMBER_VALIDATION;
 };
 
+function isNumeric(str) {
+  if (typeof str != 'string') return false; // we only process strings!
+  return (
+    !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+    !isNaN(parseFloat(str))
+  ); // ...and ensure strings of whitespace fail
+}
+
+export const positiveNumberValidator = () => {
+  return Yup.string().test(
+    'POSITVE_NUMBER_VALIDATION',
+    'please enter a valid number greater than 0',
+    (value) => isNumeric(value) && Number(value) >= 0
+  );
+};
+
 /**
  * Validates a file value, ensuring it is not empty and meets size and format constraints.
  * @param {string} [msg='Please provide an image input'] - The validation error message.

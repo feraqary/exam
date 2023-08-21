@@ -25,6 +25,7 @@ import { useField } from 'formik';
  */
 
 const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, setFieldValue, id, required, helperInfo, ...rest }, ref) => {
+  console.log(rest);
   const [field, meta] = useField(rest);
 
   return (
@@ -58,9 +59,13 @@ const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, s
               </InputAdornment>
             )
           }}
+          inputProps={{
+            multiple: rest.multiple ? true : false
+          }}
           error={meta.error && meta.touched}
         />
       </InputLayout>
+
       {image && (
         <Grid item xs={3} lg={style.lg} alignContent="right">
           {field.value ? (

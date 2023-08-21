@@ -1,11 +1,14 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
 const token =
-  'v2.local.9aiyimwMECPIjm8YNkjK_qT6K11mSM-n9yDkYK5iNojdpyFJHpE9Xnzx1PsB25WtGfQn7-c88LewIfW26ydE7dxX6ae4CqSmLOCPxWAjvEvAfmLa5OkgNPHvJ01oB_gZCd13KucWJlps_ri_MDjtR3RVyXG_V3MMtfdaXTez_nrXsz17tLj32uHR-m1ERhcFbU_Jgs1jGseKyDmoVveHP-tfIVkYSFncV3ZrxYNleqFkECtCOUF1fSKTxaIqn1eP-o1joYE-Sj8Kfgm1fw.bnVsbA';
+  'v2.local.sH2RcwTB1iouvhnmNzh9FRik-0Z4fDtMUL5QCyaXVUgH25HUj-w2QC7-816J_MMJrWGDo1wVtau4CJuRRrMe0WbbpvU1V5UIOeTXipN00ePvDmteEwzQcLJQkig48BXcTNCKR2Zf23JVpU2e7VdJGVk6E3TwiQI4Vy8IvJiXkiLe19w_DCsvMteoY_-HrEdJaU0jP7ZOuFcWVTcHawQ7aKxJ9Ac8_xb19afvPbeFJ0ZJzpPbF6zy1E_w6gxphElzQz2FRIJoEYlB3Sc.bnVsbA';
+
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://20.203.31.58/api/',
+  credentials: 'same-origin',
+
   prepareHeaders: (headers, { getState }) => {
     // By default, if we have a token in the store, let's use that for authenticated requests
 
@@ -41,7 +44,18 @@ export const api = createApi({
    * Tag types must be defined in the original API definition
    * for any tags that would be provided by injected endpoints
    */
-  tagTypes: ['LocalCompanies', 'InternationalCompanies', 'CompaniesByStatus', 'CompaniesByRank', 'subCompanies', 'ProjectStatus', 'InternationalProjects', 'LocalProjects'],
+  tagTypes: [
+    'LocalCompanies',
+    'InternationalCompanies',
+    'CompaniesByStatus',
+    'CompaniesByRank',
+    'subCompanies',
+    'ProjectStatus',
+    'LocalProjects',
+    'InternationalProjects',
+    'SharedProjects',
+    'ProjectDocuments'
+  ],
   /**
    * This api has endpoints injected in adjacent files,
    * which is why no endpoints are shown below.

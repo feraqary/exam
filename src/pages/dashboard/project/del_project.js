@@ -15,6 +15,7 @@ import { useGetProjectsByStatusQuery, useUpdateProjectStatusMutation } from 'sto
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { ToastSuccess, ToastError } from 'utils/toast';
+import Container from 'components/Elements/Container';
 
 // ==============================|| Manage International Project ||======     c ccc c======================== //
 
@@ -41,8 +42,7 @@ const ColumnHeaders = [
     header: 'Action',
     Cell: ({ renderedCellValue, row }) => {
       const [restoreProject, result] = useUpdateProjectStatusMutation();
-    
-      
+
       useEffect(() => {
         if (result.isSuccess) {
           ToastSuccess('Project has been Restored Successfully');
@@ -62,8 +62,9 @@ const ColumnHeaders = [
             color="primary"
             onClick={() => {
               const formData = new FormData();
-              formData.append("status_id", 4);
-              formData.append("id", row.original.id);
+              formData.append('id', row.original.id);
+              formData.append('status_id', 4);
+
               restoreProject(formData);
             }}
           >
@@ -81,24 +82,26 @@ function DeletedProjects() {
     pageSize: 15
   });
 
-  const { data: projects, isError, error, isLoading, isFetching } = useGetProjectsByStatusQuery({ pagination, status: 6 });
+  const { data: deletedProjects, isError, error, isLoading, isFetching } = useGetProjectsByStatusQuery({ pagination, status: 6 });
 
   return (
-    <Page title="Manage Project">
+    <Page title="Manage Deleted Projects">
       <ToastContainer />
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <Table
-            columnHeaders={ColumnHeaders}
-            data={error ? [] : projects?.data || []}
-            loading={isLoading}
-            pagination={pagination}
-            setPagination={setPagination}
-            isFetching={isFetching}
-            rowCount={projects?.Total}
-          />
+      <Container title="Manage Deleted Projects" style={{ xs: 12 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <Table
+              columnHeaders={ColumnHeaders}
+              data={error ? [] : deletedProjects?.data || []}
+              loading={isLoading}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={isFetching}
+              rowCount={deletedProjects?.Total}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 }
@@ -108,6 +111,3 @@ DeletedProjects.getLayout = function getLayout(page) {
 };
 
 export default DeletedProjects;
-
-
-
