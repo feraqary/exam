@@ -13,7 +13,6 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags:["Documents"]
     }),
-
     //GET LOCAL Projects API
     getPropertyType: builder.query({
       query() {
@@ -27,7 +26,6 @@ export const projectApi = api.injectEndpoints({
       }
     }),
     //update Project
-
     getLocalProjects: builder.query({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
@@ -38,7 +36,6 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['LocalProjects']
     }),
-
     //GET International Projects API
     getInternationalProjects: builder.query({
       query(pagination) {
@@ -50,7 +47,6 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['InternationalProjects']
     }),
-
     //update Project
     getProjectUpdate: builder.mutation({
       query(formData) {
@@ -121,7 +117,6 @@ export const projectApi = api.injectEndpoints({
       }
     }),
     //GET ALL FACILITIES API
-
     getAllfacilities: builder.query({
       query(_) {
         return {
@@ -203,7 +198,29 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+// Get Promotions API
+getPromotions: builder.query({ 
+  query({ pageIndex, pageSize,id}) {
+    return { 
+      url: `dashboard/getAllProjectPromotions?page_no=${pageIndex + 1}&page_size=${pageSize}`,
+      method: 'GET'
+    };
+  }
+}),
+//Create Promotions 
+createPromotions : builder.mutation ({
+  query(data) {
+    return {
+      url: `dashboard/createProjectPromotion`,
+      method: 'POST',
+      body: data
+    };
+  }
 
+ 
+
+}),
+     //Create Projects API
     CreateProject: builder.mutation({
       query({ data, isMulti }) {
         return {
@@ -444,9 +461,11 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery,
-  useGetAllProjectPromotionsQuery,
   useDeleteProjectDocMutation,
   useGetAllPromoTypeQuery,
   useCreatePromotionTypeMutation,
-  useDeleteProjectPromotionTypesMutation
+  useDeleteProjectPromotionTypesMutation,
+  useCreatePromotionsMutation,
+  useGetPromotionsQuery,
+  useGetAllProjectPromotionsQuery,
 } = projectApi;

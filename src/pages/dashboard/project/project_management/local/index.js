@@ -38,7 +38,6 @@ const localProjects = () => {
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
 
-
   useEffect(() => {
     if (result.isSuccess) {
       ToastSuccess('Project status successfully updated');
@@ -180,6 +179,8 @@ const localProjects = () => {
       header: 'Action',
       Cell: ({ renderedCellValue, row }) => {
         const [open, setOpen] = useState(false);
+        const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
+
         const [promotionOpen, setPromotionOpen] = useState(false);
         const [viewOpen, setViewOpen] = useState(false);
 
@@ -196,6 +197,13 @@ const localProjects = () => {
 
         const handleClose = () => {
           setOpen(false);
+        };
+
+        const handleVerifyStatus = () => {
+          const formData = new FormData();
+          formData.append('project_id', row.original.id);
+          formData.append('is_verified', !row.original.is_verified);
+          updateVerifyStatus(formData);
         };
 
         const handleUpdateStatus = (status) => {
@@ -345,7 +353,6 @@ const localProjects = () => {
       }
     }   
   ];
-
 
   if (isLoading) return;
   return (

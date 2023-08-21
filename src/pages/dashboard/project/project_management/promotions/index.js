@@ -17,9 +17,14 @@ import { ToastContainer } from 'react-toastify';
 import { ToastSuccess, ToastError } from  "utils/toast";
 import 'react-toastify/dist/ReactToastify.css';
 
-
 // ==============================|| Manage Project Promotions ||============================== //
 
+// const ManagePromotions = () => { 
+//   const [pagination, setPagination] = useState({
+//     pageIndex: 0,
+//     pageSize: 10
+//   });
+//   const { data: promotionData , isError, error, isLoading, isFetching } = useGetPromotionsQuery(pagination)
 
 
 const ColumnHeaders = [
@@ -27,11 +32,15 @@ const ColumnHeaders = [
     accessorKey: 'id',
     header: 'ID '
   },
-
   {
     accessorKey: 'label',
     header: 'Name'
   },
+
+  // {
+  //   accessorKey: 'promotion_description',
+  //   header: 'Promotion Type'
+  // }
   {
     accessorKey: 'action',
     header: 'Action',
@@ -84,8 +93,10 @@ const ColumnHeaders = [
     }
   }
 ];
+// return (
+//     <Page title="Manage Promotions">
 
-const data = [
+{/* const data = [
   {
     projectName: 'Khidmah',
     promoType: 'Developer Company',
@@ -114,7 +125,8 @@ const data = [
     proId: 'PA283102',
     action: ' edit, multiple'
   }
-];
+]; */}
+
 function ManagePromotions() {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -160,6 +172,7 @@ function ManagePromotions() {
     </Page>
   );
 }
+
 
 ManagePromotions.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;

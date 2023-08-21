@@ -1,6 +1,7 @@
 // add_promotions.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import { Grid, TextField, FormHelperText, Button } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -8,7 +9,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Page from 'components/ui-component/Page';
 import { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import { Formik, Field } from 'formik';
+
+import { useCreatePromotionsMutation } from 'store/services/project/projectApi';
+import { ToastError, ToastSuccess } from 'utils/toast';
 import Layout from 'layout';
+
 const promotionOptions = [
   { id: 0, label: 'Open to All Nationalities' },
   { id: 1, label: 'Flexible Payment Plan' },
@@ -18,6 +23,7 @@ const promotionOptions = [
   { id: 5, label: 'Low Down Payment' }
 ];
 
+
 const inputFieldStyle = { width: '100%' };
 
 function AddPromotions({ projectId, onClose }) {
@@ -25,12 +31,34 @@ function AddPromotions({ projectId, onClose }) {
   const [selectedPromotions, setSelectedPromotions] = useState([]);
 
   const handleDateChange = (date) => {
+
+    console.log('Selected date type:', typeof date);
     setSelectedDate(date);
   };
 
   const handlePromotionsChange = (event) => {
     setSelectedPromotions(event.target.value);
   };
+
+const [createPromotions, createPromotionsResult] = useCreatePromotionsMutation();
+const { data: Types, isLoading, isError } =  useCreatePromotionsMutation();
+
+useEffect(() => {
+  if(createPromotionsResult.isSuccess){
+    ToastSuccess( 'Promotion has been created successfully!');
+
+  }
+},  [createPromotionsResult.isSuccess]
+);
+useEffect(() => {
+  if(createPromotionsResult.isError) {
+    const { data } = createPromotionsResult.error;
+    ToastError(data.error);
+  }
+},
+[ createPromotionsResult.isError ]
+);
+if (isLoading) return
   const useCreatePromotionsMutation = (formData) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -70,10 +98,14 @@ function AddPromotions({ projectId, onClose }) {
       });
   };
 
+
   return (
     <Page title="Add Promotions">
       <Formik
         initialValues={{
+
+          projects_id : '',
+
           promotion_types: [],
           description: '',
           expiry_date: null
@@ -117,7 +149,11 @@ function AddPromotions({ projectId, onClose }) {
                     value={selectedDate}
                     onChange={handleDateChange}
                     renderInput={(params) => <TextField {...params} sx={inputFieldStyle} />}
+
+                  
                   />
+
+
                 </LocalizationProvider>
                 <FormHelperText>Pick Expiry Date</FormHelperText>
               </Grid>
