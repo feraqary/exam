@@ -1,5 +1,4 @@
 // add_promotions.js
-
 import React, { useState, useEffect } from 'react';
 import React, { useState } from 'react';
 
@@ -10,7 +9,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Page from 'components/ui-component/Page';
 import { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import { Formik, Field } from 'formik';
-
 const promotionOptions = [
   { id: 0, label: 'Open to All Nationalities' },
   { id: 1, label: 'Flexible Payment Plan' },
@@ -19,13 +17,10 @@ const promotionOptions = [
   { id: 4, label: 'Discount' },
   { id: 5, label: 'Low Down Payment' }
 ];
-
 const inputFieldStyle = { width: '100%' };
-
 function AddPromotions({ projectId, onClose }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedPromotions, setSelectedPromotions] = useState([]);
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -86,7 +81,6 @@ function AddPromotions({ projectId, onClose }) {
         formikBag.setSubmitting(false);
       });
   };
-
   return (
     <Page title="Add Promotions">
       <Formik

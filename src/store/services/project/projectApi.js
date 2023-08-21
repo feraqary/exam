@@ -466,7 +466,7 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery,
-  useGetAllProjectPromotionsQuery,
-  useGetAllPromoTypeWithoutPaginationQuery,
-  useCreateProjectPromotionMutation
+  useCreatePromotionsMutation,
+  useGetPromotionsQuery,
+  useGetAllProjectPromotionsQuery
 } = projectApi;

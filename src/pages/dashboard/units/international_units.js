@@ -479,7 +479,6 @@ const internationalUnits = () => {
                    Add to Exchange
                   </Button>
                 </Link>
-          
                 <Button
                   onClick={() => {
                 setAuctionsOpen(true);

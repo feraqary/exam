@@ -61,6 +61,16 @@ const ColumnHeaders = [
             gap: '1rem'
           }}
         >
+          {/* <Button variant="contained" color="primary" onClick={handlePromotionDetails}>
+            Details
+          </Button>
+          <PopUp opened={promotionDetailsOpen} setOpen={setPromotionDetailsOpen} size={'lg'}>
+                  <ViewInformation promotionDetail={row.original} />
+          </PopUp>
+
+        <Button variant="contained" color="primary">
+          Edit
+        </Button> */}
           <Button variant="contained" color="error" onClick={() => handleDeletePromotionType(row.original.id)}>
             Remove
           </Button>
