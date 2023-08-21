@@ -413,21 +413,7 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
   useCreatePromotionsMutation,
   useGetPromotionsQuery,
   useGetAllProjectPromotionsQuery,
-  useGetAllProjectPromotionsQuery
-<<<<<<< HEAD
->>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
-=======
-  useGetAllProjectPromotionsQuery
->>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
-=======
->>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
 } = projectApi;

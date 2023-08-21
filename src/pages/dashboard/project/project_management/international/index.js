@@ -169,16 +169,6 @@ const international_Projects = () => {
         const handleClickOpen = () => {
           setOpen(true);
         };
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-<<<<<<< HEAD
->>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
-=======
->>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
-=======
->>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
         const handleBlock = () => {
           const formData = new FormData();
           formData.append('id', row.original.id);
@@ -243,7 +233,7 @@ const international_Projects = () => {
                   </Button>
                 </Link>
 
-                <Button variant="contained" color="error">
+                <Button variant="outlined" color="error">
                   Block
                 </Button>
               </Box>
@@ -310,16 +300,6 @@ const international_Projects = () => {
                     Manage Documents
                   </Button>
                 </Link>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-<<<<<<< HEAD
->>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
-=======
->>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
-=======
->>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
                 <Button
                   onClick={() => {
                     setPromotionOpen(true);

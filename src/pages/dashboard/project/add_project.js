@@ -493,7 +493,7 @@ function AddProject() {
                           getOptionLabel={(type) => type?.label || ''}
                           style={{ xs: 12, lg: 4 }}
                         />
-                        <Grid item lg={8}></Grid>
+                        <Grid item lg={8}></Grid>   
 
                         {props.values.phaseType === 'multiple' && (
                           <>
@@ -565,7 +565,7 @@ function AddProject() {
                           name="locationCountrySelect"
                           id="locationCountrySelect"
                           func={(newValue) => {
-                            setCountryID(newValue.ID);
+                            setCountryID(newValue?.ID);
                           }}
                         />
 

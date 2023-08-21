@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, Box, Button } from '@mui/material';
+import { Grid, Box, Button, FormHelperText, TextField } from '@mui/material';
 import * as Yup from 'yup';
 // project imports
 import Layout from 'layout';
@@ -15,7 +15,6 @@ import Image from 'next/image';
 import valid from 'card-validator';
 import { objectValidator, arrayValidator, stringValidator, numberValidator, fileValidator, dateValidator } from 'utils/formik-validations';
 import iban from 'iban';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import InputText from 'components/InputArea/TextInput';
@@ -26,10 +25,9 @@ import { useEffect } from 'react';
 import { setCountry } from 'store/slices/country-section/slice/country';
 import { setState } from 'store/slices/country-section/slice/country';
 import InputLayout from 'components/InputArea/InputLayout';
-import CustomDateTime from 'components/InputArea/CustomDateTime';
 import { ToastContainer } from 'react-toastify';
 import { useRef } from 'react';
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 import { useCreateCompanyMutation, useGetSubCompanyTypesByCompanyTypeQuery } from 'store/services/company/companyApi';
 import { useGetAllMainServicesBySubCompanyTypeQuery, useGetAllServicesBYMainServiceTypeQuery } from 'store/services/services/serviceApi';
 import {
@@ -45,6 +43,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import CustomDateTime from 'components/InputArea/CustomDateTime';
 
 // ==============================|| FIELDS ||============================== //
 
@@ -119,6 +118,11 @@ const ownership_status = [
 const completion_status = [
   { id: 0, label: 'Off Plan' },
   { id: 1, label: 'Ready' }
+];
+
+const company_names = [
+  { id: 0, label: 'ALDAAR' },
+  { id: 1, label: 'EMAAR' }
 ];
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 // ==============================|| Add Unit form ||============================== //
@@ -197,6 +201,12 @@ function ColumnsLayouts() {
   const [cityId, setCityId] = useState(null);
   const [communityId, setCommunityId] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    console.log('Selected date type:', typeof date);
+    setSelectedDate(date);
+  };
 
   const {
     companyInformation,
@@ -503,6 +513,18 @@ function ColumnsLayouts() {
                       func={(newValue) => {}}
                       required={true}
                     />
+                    <AutoCompleteSelector
+                      helperInfo
+                      style={{ xs: 12, lg: 10 }}
+                      label="Company Name"
+                      id="company"
+                      name="companyName"
+                      placeholder="Select Company Name"
+                      options={company_names}
+                      setFieldValue={props.setFieldValue}
+                      func={(newValue) => {}}
+                      required={true}
+                    />
 
                     <AutoCompleteSelector
                       helperInfo
@@ -516,6 +538,16 @@ function ColumnsLayouts() {
                       func={(newValue) => {}}
                       required={true}
                     />
+                    <CustomDateTime
+                      helperInfo
+                      style={{ xs: 12, lg: 6 }}
+                      label="RERA Expiry Date"
+                      helperText="Please Enter RERA Expiry Date"
+                      id="rera_Date"
+                      name="reraDate"
+                      required={true}
+                      func={{ value: props.values.subscriptionDuration, name: 'subscriptionEndDate' }}
+                    />
                     <InputText
                       helperInfo
                       label="Reference No"
@@ -528,7 +560,6 @@ function ColumnsLayouts() {
                     />
                   </Grid>
                 </Container>
-
                 <Container title="Location Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} alignItems="center">
                     <AutoCompleteSelector
