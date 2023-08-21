@@ -14,7 +14,6 @@ import Logo from 'components/ui-component/Logo';
 import AuthFooter from 'components/ui-component/cards/AuthFooter';
 import useAuth from 'hooks/useAuth';
 import { useSession, signIn, signOut } from 'next-auth/react';
-
 // ================================|| AUTH3 - LOGIN ||================================ //
 
 const Login = () => {
@@ -25,19 +24,36 @@ const Login = () => {
   return (
     <Page title="Login">
       <AuthWrapper1>
-        <Grid container direction="column" justifyContent="flex-end">
-          <Grid item xs={12}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="flex-end"
+          sx={{
+            width: 300,
+            color: 'success.main',
+            '& .MuiGrid-container': {
+              borderRadius: '1px'
+            }
+          }}
+        >
+          <Grid item xs={12} style={{ background: 'red' }}>
             <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
               <Grid item sx={{ m: { xs: 1, sm: 2 }, mb: 0 }}>
                 <AuthCardWrapper>
-                  <Grid container spacing={2} alignItems="center" justifyContent="center">
+                  <Grid container spacing={2} alignItems="center" justifyContent="center" style={{ backgroundColor: '1px solid black' }}>
                     <Grid item sx={{ mb: 3 }}>
                       <Link href="#" aria-label="theme-logo">
                         <Logo />
                       </Link>
                     </Grid>
                     <Grid item xs={12}>
-                      <Grid container direction={matchDownSM ? 'column-reverse' : 'row'} alignItems="center" justifyContent="center">
+                      <Grid
+                        container
+                        direction={matchDownSM ? 'column-reverse' : 'row'}
+                        sx={{ border: '1px solid black' }}
+                        alignItems="center"
+                        justifyContent="center"
+                      >
                         <Grid item>
                           <Stack alignItems="center" justifyContent="center" spacing={1}>
                             <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>

@@ -59,6 +59,9 @@ const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, s
               </InputAdornment>
             )
           }}
+          inputProps={{
+            multiple: rest.multiple ? true : false
+          }}
           error={meta.error && meta.touched}
         />
       </InputLayout>
@@ -80,48 +83,5 @@ const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, s
     </>
   );
 });
-
-export const MultipleFileUpload = forwardRef(
-  ({ label, placeholder, helperText, image, style, setFieldValue, id, required, helperInfo, ...rest }, ref) => {
-    const [field, meta] = useField(rest);
-    return (
-      <>
-        <InputLayout
-          label={label}
-          helperText={helperText}
-          style={style}
-          metaError={meta.error}
-          metaTouched={meta.touched}
-          required={required}
-          helperInfo={helperInfo}
-        >
-          <TextField
-            {...field}
-            multiple
-            required={required}
-            type="file"
-            id={id}
-            name={field.name}
-            fullWidth
-            placeholder={placeholder}
-            value={field.value?.logoImage}
-            inputRef={ref}
-            onChange={(e) => {
-              setFieldValue(field.name, e.target.files[0]);
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <UploadFile />
-                </InputAdornment>
-              )
-            }}
-            error={meta.error && meta.touched}
-          />
-        </InputLayout>
-      </>
-    );
-  }
-);
 
 export default FileUpload;

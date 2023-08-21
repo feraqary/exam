@@ -23,25 +23,28 @@ export default function Categorization({ list, setFieldValue, name, data }) {
 
   return (
     <>
-      {list?.map((element) => (
-        <Grid item>
-          <Typography variant="h4">{element}</Typography>
-          {data[element]?.map((item, i) => {
-            return (
-              <Grid container>
-                <FormControlLabel
-                  key={i}
-                  value={item?.id || 0}
-                  control={<Checkbox onChange={handleChange} color="primary" />}
-                  label={item?.name || item?.title || item?.label}
-                  labelPlacement="end"
-                />
-              </Grid>
-            );
-          })}
-        </Grid>
-      ))}
+      {list ? (
+        list?.map((element) => (
+          <Grid item>
+            <Typography variant="h4">{element}</Typography>
+            {data[element]?.map((item, i) => {
+              return (
+                <Grid container>
+                  <FormControlLabel
+                    key={i}
+                    value={item?.id || 0}
+                    control={<Checkbox onChange={handleChange} color="primary" />}
+                    label={item?.name || item?.title || item?.label}
+                    labelPlacement="end"
+                  />
+                </Grid>
+              );
+            })}
+          </Grid>
+        ))
+      ) : (
+        <></>
+      )}
     </>
   );
 }
-

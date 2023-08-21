@@ -17,7 +17,10 @@ export const projectApi = api.injectEndpoints({
       query() {
         return {
           url: `propertyTypes/getPropertyTypes`,
-          method: 'GET'
+          method: 'GET',
+          headers: {
+            Authorization: null
+          }
         };
       }
     }),
@@ -226,6 +229,15 @@ createPromotions : builder.mutation ({
         };
       }
     }),
+    CreateProjectProperty: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/createProjectProperty`,
+          method: 'POST',
+          body: data
+        };
+      }
+    }),
 
     //CREATE DOCS CATEGORY
     CreateCategory: builder.mutation({
@@ -356,12 +368,24 @@ createPromotions : builder.mutation ({
           method: 'PUT',
           body: submit
         };
+      },
+      invalidatesTags: ['LocalProjects', 'InternationalProjects', 'SharedProjectsProjects']
+    }),
+
+    // Get All Project Promotions
+    getAllProjectPromotions: builder.query({
+      query({ pageIndex, pageSize }) {
+        return {
+          url: `dashboard/getAllProjectPromotions?page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
+        };
       }
     })
   })
 });
 
 export const {
+  useCreateProjectPropertyMutation,
   useGetDocsCategoriesQuery,
   useCreateCategoryMutation,
   useCreateSubCategoryMutation,
@@ -389,6 +413,10 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery,
+<<<<<<< HEAD
   useCreatePromotionsMutation,
   useGetPromotionsQuery
+=======
+  useGetAllProjectPromotionsQuery
+>>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
 } = projectApi;

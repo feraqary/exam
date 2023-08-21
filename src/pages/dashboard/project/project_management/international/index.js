@@ -25,7 +25,7 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
-import AddPromotions from '../promotion/add_promotions';
+import AddPromotions from '../promotions/add_promotions';
 import PopUp from 'components/InputArea/PopUp';
 import ViewInformation from '../information/view_information';
 
@@ -169,6 +169,10 @@ const international_Projects = () => {
         const handleClickOpen = () => {
           setOpen(true);
         };
+<<<<<<< HEAD
+=======
+
+>>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
         const handleBlock = () => {
           const formData = new FormData();
           formData.append('id', row.original.id);
@@ -229,7 +233,7 @@ const international_Projects = () => {
 
                 <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
                   <Button variant="contained" color="primary">
-                    Listing Properties
+                  {row.original.phase_type === "Single" ? "Listing Property" : "Listing Properties"}
                   </Button>
                 </Link>
 
@@ -300,6 +304,10 @@ const international_Projects = () => {
                     Manage Documents
                   </Button>
                 </Link>
+<<<<<<< HEAD
+=======
+
+>>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
                 <Button
                   onClick={() => {
                     setPromotionOpen(true);

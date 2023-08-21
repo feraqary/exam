@@ -105,7 +105,7 @@ const Documents = () => {
                 return (
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
                     <Link href={{ pathname: `/dashboard/project/project_management/add_doc/${project_id}` }}>
-                      <Button color="primary">Add Document</Button>
+                      <Button variant="outlined">Add Document</Button>
                     </Link>
                   </div>
                 );

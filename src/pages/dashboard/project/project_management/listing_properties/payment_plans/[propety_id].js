@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { NormalInputText } from 'components/InputArea/TextInput';
 import { ProjectStepper } from 'components/dashboard/Project/Stepper';
+import { NormalAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 
 // ==============================|| Add Company Type form ||============================== //
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
@@ -41,32 +42,32 @@ function AddPaymentPlans() {
   const router = useRouter();
   const iconRef = useRef(null);
   const [categoryId, setCategoryId] = useState(null);
-  const [paymentPlans, setPaymentPlans] = useState([{ percentage: null, date: null, milestone: null }]);
-  const addPaymentPlans = () => {
-    setPaymentPlans((pre) => [...pre, { percentage: null, date: null, milestone: null }]);
-  };
-
-  const [num, setNum] = useState(1);
-
-  const changeNum = (val) => {
-    setNum(val);
-  };
+  const [optionId, setOptionId] = useState(null);
 
   return (
     <Page title="Add Payment Plans">
       <Grid container spacing={gridSpacing}>
         <ToastContainer />
         <Container style={{ xs: 12 }} title="Add Payment Plans">
-          <Grid container xs={12} lg={12} justifyContent="center" spacing={gridSpacing}>
-            <NormalInputText
+          <Grid container xs={12} lg={12} spacing={gridSpacing}>
+            <NormalAutoCompleteSelector
               label="Payment plans"
               placeholder="enter number of payment plans"
-              style={{ xs: 12 }}
-              type="number"
-              value={num}
-              func={changeNum}
+              style={{ xs: 12, lg: 4 }}
+              options={[
+                { label: '1 Plan', value: 1 },
+                { label: '2 Plans', value: 2 },
+                { label: '3 Plans', value: 3 },
+                { label: '4 Plans', value: 4 },
+                { label: '5 Plans', value: 5 }
+              ]}
+              func={(val) => {
+                setCategoryId(val);
+                setOptionId(val.value);
+              }}
+              value={categoryId}
             />
-            <ProjectStepper num={num} />
+            <ProjectStepper option={optionId} />
           </Grid>
         </Container>
         <NormalSubmitButton />
@@ -80,7 +81,3 @@ AddPaymentPlans.getLayout = function getLayout(page) {
 };
 
 export default AddPaymentPlans;
-
-/* <Grid lg={3} mt={10}>
-  <AddMoreBtn addPaymentPlan={addPaymentPlans} />
-</Grid> */
