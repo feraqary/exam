@@ -17,7 +17,9 @@ const AuthCardWrapper = ({ children, ...other }) => (
       //   flexGrow: 1,
       //   flexBasis: '50%'
       // },
-      padding: '10px'
+      padding: '10px',
+      height: 'fit-content',
+      alignSelf: 'center'
     }}
     content={false}
     {...other}

@@ -8,20 +8,12 @@ import { Formik } from 'formik';
 import CustomDateTime from 'components/InputArea/CustomDateTime';
 import InputText from 'components/InputArea/TextInput';
 import SubmitButton from 'components/Elements/SubmitButton';
-import { useCreateProjectPromotionMutation } from 'store/services/project/projectApi';
+import { useCreateProjectPromotionMutation, useGetAllPromoTypeWithoutPaginationQuery } from 'store/services/project/projectApi';
 import { useEffect } from 'react';
 import { ToastError, ToastSuccess } from 'utils/toast';
 import { dateValidator, multipleSelectorValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 import * as Yup from 'yup';
-
-const promotionOptions = [
-  { id: 1, label: 'Open to All Nationalities' },
-  { id: 2, label: 'Flexible Payment Plan' },
-  { id: 3, label: 'No Commission' },
-  { id: 4, label: '0 ADM Waiver' },
-  { id: 5, label: 'Discount' },
-  { id: 6, label: 'Low Down Payment' }
-];
+import useToastHook from 'hooks/useToast';
 
 const validationSchema = Yup.object({
   promotion_types: multipleSelectorValidator(),
@@ -31,6 +23,7 @@ const validationSchema = Yup.object({
 
 function AddPromotions({ projectId, onClose }) {
   const [createPromotion, result] = useCreateProjectPromotionMutation();
+  const { data: promotionTypes, isLoading, isFetching, isError } = useGetAllPromoTypeWithoutPaginationQuery();
 
   const submitForm = (values) => {
     const formData = new FormData();
@@ -42,6 +35,7 @@ function AddPromotions({ projectId, onClose }) {
     });
     createPromotion(formData);
   };
+  // const res = useToastHook(result, 'promotion has been created successfully');
 
   useEffect(() => {
     if (result.isSuccess) {
@@ -58,6 +52,8 @@ function AddPromotions({ projectId, onClose }) {
 
   return (
     <Page title="Add Promotions">
+      {/* <useToastHook result={result} success="promotion has been created successfully" /> */}
+
       <Formik
         validateOnChange={false}
         initialValues={{
@@ -82,7 +78,8 @@ function AddPromotions({ projectId, onClose }) {
                 id="promotion_types"
                 name="promotion_types"
                 placeholder="Select Promotion Types"
-                options={promotionOptions}
+                loading={isLoading}
+                options={isError ? [] : promotionTypes?.data || []}
               />
               <InputText
                 label="Description"

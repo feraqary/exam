@@ -94,6 +94,22 @@ const ListingProperties = () => {
                   Document
                 </Button>
               </Link>
+
+              <Link
+                href={{
+                  pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    console.log(row.original.phase_type);
+                  }}
+                >
+                  Add Plans
+                </Button>
+              </Link>
               <Link
                 href={{
                   pathname: `/dashboard/project/project_management/listing_properties/financial_providers`,
@@ -160,6 +176,22 @@ const ListingProperties = () => {
               setPagination={setPagination}
               isFetching={isFetching}
               rowCount={projectDocData?.Total}
+              renderTopToolbarCustomActions={({ table }) => {
+                return (
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <Link
+                      href={{
+                        pathname: `/dashboard/project/project_management/listing_properties/add_property/${project_id}`
+                      }}
+                    >
+                      <Button variant="outlined" color="primary">
+                        Add Property
+                      </Button>
+                    </Link>
+                  </div>
+                );
+              }}
+
             />
           </Grid>
         </Grid>

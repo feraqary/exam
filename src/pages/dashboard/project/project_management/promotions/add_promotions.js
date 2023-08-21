@@ -1,6 +1,8 @@
 // add_promotions.js
 
+import React, { useState, useEffect } from 'react';
 import React, { useState } from 'react';
+
 import { Grid, TextField, FormHelperText, Button } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -31,6 +33,21 @@ function AddPromotions({ projectId, onClose }) {
   const handlePromotionsChange = (event) => {
     setSelectedPromotions(event.target.value);
   };
+
+  const [createPromotions, createPromotionsResult] = useCreatePromotionsMutation();
+  const { data: Types, isLoading, isError } = useCreatePromotionsMutation();
+
+  useEffect(() => {
+    if (createPromotionsResult.isSuccess) {
+      ToastSuccess('Promotion has been created successfully!');
+    }
+  }, [createPromotionsResult.isSuccess]);
+  useEffect(() => {
+    if (createPromotionsResult.isError) {
+      const { data } = createPromotionsResult.error;
+      ToastError(data.error);
+    }
+  }, [createPromotionsResult.isError]);
   const useCreatePromotionsMutation = (formData) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -74,6 +91,8 @@ function AddPromotions({ projectId, onClose }) {
     <Page title="Add Promotions">
       <Formik
         initialValues={{
+          projects_id: '',
+
           promotion_types: [],
           description: '',
           expiry_date: null
