@@ -233,7 +233,7 @@ const international_Projects = () => {
                   </Button>
                 </Link>
 
-                <Button variant="contained" color="error">
+                <Button variant="outlined" color="error">
                   Block
                 </Button>
               </Box>

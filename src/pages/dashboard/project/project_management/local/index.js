@@ -153,11 +153,35 @@ const localProjects = () => {
       }
     },
     {
+      accessorKey: 'is_verified',
+      header: 'Verify Status',      
+      Cell: ({ renderedCellValue, row }) => {
+        const [verify, setVerify] = useState(false);
+        const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
+        const handleVerifyStatus = () => {
+          setVerify((prev) => !prev);
+          const formData = new FormData();
+          formData.append('project_id', row.original.id);
+          formData.append('is_verified', !row.original.is_verified);
+          updateVerifyStatus(formData);
+        };
+        return (
+          <>
+          {!renderedCellValue ? <Button color="error" variant="outlined" onClick={handleVerifyStatus}> Unverified  </Button> : <Button color="success" sx={{ color: 'white' }} variant="contained" onClick={handleVerifyStatus}> Verified  </Button>}
+          </>
+          )
+  
+        
+      }
+    },
+    {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ renderedCellValue, row }) => {
         const [open, setOpen] = useState(false);
+
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
+
         const [promotionOpen, setPromotionOpen] = useState(false);
         const [viewOpen, setViewOpen] = useState(false);
 
@@ -175,6 +199,7 @@ const localProjects = () => {
         const handleClose = () => {
           setOpen(false);
         };
+
 
         const handleVerifyStatus = () => {
           const formData = new FormData();
@@ -215,9 +240,9 @@ const localProjects = () => {
                   <ViewInformation project_id={row.original.id} />
                 </PopUp>
 
-                <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
+                {/* <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
                   {row.original.is_verified ? 'Unverify' : 'Verify'}
-                </Button>
+                </Button> */}
 
                 <Link
                   href={{
@@ -328,7 +353,7 @@ const localProjects = () => {
           </>
         );
       }
-    }
+    }   
   ];
 
   if (isLoading) return;
@@ -346,6 +371,7 @@ const localProjects = () => {
               setPagination={setPagination}
               isFetching={isFetching}
               rowCount={localProjectsData?.Total}
+              
             />
           </Grid>
         </Grid>
