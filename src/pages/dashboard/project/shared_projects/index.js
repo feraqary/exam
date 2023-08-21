@@ -144,16 +144,8 @@ const SharedProjects = () => {
 
         return (
 
-          <> 
-            <Box
-
           <>
           <Box
-
-
-          <>
-          <Box
-
               sx={{
                 display: 'flex',
                 // alignItems: 'center',

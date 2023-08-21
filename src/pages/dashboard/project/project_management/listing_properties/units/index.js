@@ -90,9 +90,12 @@ const localProjects = () => {
               renderTopToolbarCustomActions={({ table }) => {
                 return (
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    {/* <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/manage_units/${project_id}` }}> */}
-                    <Button variant="outlined">Add Unit</Button>
-                    {/* </Link> */}
+                       <Link href={{ pathname: `/dashboard/project/project_management/add_unit/project_unit
+               ` }}>
+                  <Button variant="contained" color="primary">
+                   Add Unit
+                  </Button>
+                </Link>
                   </div>
                 );
               }}
