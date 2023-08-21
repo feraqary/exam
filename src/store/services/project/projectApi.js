@@ -414,8 +414,12 @@ export const {
   useGetViewQuery,
   useGetRatingsQuery,
 <<<<<<< HEAD
+<<<<<<< HEAD
   useCreatePromotionsMutation,
   useGetPromotionsQuery
+=======
+  useGetAllProjectPromotionsQuery
+>>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
 =======
   useGetAllProjectPromotionsQuery
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
