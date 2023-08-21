@@ -133,7 +133,7 @@ const SharedProjects = () => {
         };
 
         return (
-          <>
+          <> 
             <Box
               sx={{
                 display: 'flex',

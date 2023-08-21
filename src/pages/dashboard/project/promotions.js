@@ -3,12 +3,12 @@ import { Grid, Button, Box } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import Container from 'components/Elements/Container';
-import { useGetPromotionsQuery, useCreatePromotionsMutation } from 'store/services/project/projectApi';
+import { useGetPromotionsQuery } from 'store/services/project/projectApi';
 
 // ==============================|| Manage Project Promotions ||============================== //
 
@@ -38,9 +38,7 @@ const ProjectPromotionsData = [
     header: ' Promotion Description'
   },
   {
-    accessorKey: 'promotion_type[]',
-    accessorFn: (originalRow) => `${originalRow.promotion_type[0].label} ,  ${originalRow.promotion_type[1].label}` , 
-   
+    accessorKey: 'promotion_type[]' , 
     header: 'Promotion Type'
   },
   {
