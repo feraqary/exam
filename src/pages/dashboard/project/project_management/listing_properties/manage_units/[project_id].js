@@ -11,7 +11,7 @@ import React, { useEffect, useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 // assets
-import FileUpload, { MultipleFileUpload } from 'components/InputArea/FileUpload';
+import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
 import { ToastContainer } from 'react-toastify';
@@ -180,7 +180,8 @@ function AddDocuments() {
                   />
                   <Grid lg={6}></Grid>
 
-                  <MultipleFileUpload
+                  <FileUpload
+                    multiple
                     id="fileUrl"
                     name="fileUrl"
                     required={true}

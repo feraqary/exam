@@ -90,7 +90,15 @@ const Login = ({ page, closePopUp }) => {
     <Page title="Login">
       <AuthWrapper1>
         <Grid container alignItems="flex-start" justifyContent={'center'} sx={{ minHeight: '100vh', overflow: 'hidden' }}>
-          <Grid item container justifyContent="space-evenly" xs={11} md={12} lg={12} sx={{ my: 3, padding: '50px 1em', zIndex: '100' }}>
+          <Grid
+            item
+            container
+            justifyContent="space-between"
+            xs={11}
+            md={12}
+            lg={12}
+            sx={{ my: 3, padding: '50px 13em', zIndex: '100', height: '100vh' }}
+          >
             <Image src={logoWhite} style={{ margin: '24px' }} />
             <AuthCardWrapper>
               <Grid container spacing={2} justifyContent="center">

@@ -27,7 +27,6 @@ import Link from 'next/link';
 import Container from 'components/Elements/Container';
 import AddPromotions from '../promotions/add_promotions';
 import PopUp from 'components/InputArea/PopUp';
-import Modal from '@mui/material/Modal';
 import ViewInformation from '../information/view_information';
 
 // ==============================|| Manage international_ Projects ||============================== //
@@ -37,6 +36,12 @@ const international_Projects = () => {
     pageIndex: 0,
     pageSize: 5
   });
+  const [isAddPromotionsOpen, setIsAddPromotionsOpen] = useState(false);
+  const [projects_id, setProjectId] = useState(null);
+  const handleOpenAddPromotions = (projects_id) => {
+    setProjectId(projects_id);
+    setIsAddPromotionsOpen(true);
+  };
 
   const { data: international_ProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
@@ -164,8 +169,6 @@ const international_Projects = () => {
         const handleClickOpen = () => {
           setOpen(true);
         };
-
-
         const handleBlock = () => {
           const formData = new FormData();
           formData.append('id', row.original.id);
@@ -297,12 +300,11 @@ const international_Projects = () => {
                     Manage Documents
                   </Button>
                 </Link>
-
-
                 <Button
                   onClick={() => {
                     setPromotionOpen(true);
-                    console.log('opened');
+                    console.log('Add to Promotions opened');
+                    handleOpenAddPromotions(projects_id)
                   }}
                   variant="contained"
                   color="primary"
@@ -310,9 +312,8 @@ const international_Projects = () => {
                   Add to Promotions
                 </Button>
                 <PopUp title="Add Promotion" opened={promotionOpen} setOpen={setPromotionOpen} size={'md'} full width>
-                  <AddPromotions onClose={setPromotionOpen} />
+                  <AddPromotions projects_id= {projects_id} onClose={() => setIsAddPromotionsOpen(false)} />
                 </PopUp>
-
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
                 </Button>
