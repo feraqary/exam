@@ -7,10 +7,6 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import Rating from '@mui/material/Rating';
-<<<<<<< HEAD
-
-=======
->>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';

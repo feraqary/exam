@@ -413,10 +413,9 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery,
-<<<<<<< HEAD
+
   useCreatePromotionsMutation,
-  useGetPromotionsQuery
-=======
+  useGetPromotionsQuery,
+  useGetAllProjectPromotionsQuery,
   useGetAllProjectPromotionsQuery
->>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
 } = projectApi;

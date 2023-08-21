@@ -169,10 +169,6 @@ const international_Projects = () => {
         const handleClickOpen = () => {
           setOpen(true);
         };
-<<<<<<< HEAD
-=======
-
->>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
         const handleBlock = () => {
           const formData = new FormData();
           formData.append('id', row.original.id);
@@ -304,10 +300,6 @@ const international_Projects = () => {
                     Manage Documents
                   </Button>
                 </Link>
-<<<<<<< HEAD
-=======
-
->>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
                 <Button
                   onClick={() => {
                     setPromotionOpen(true);

@@ -143,13 +143,17 @@ const SharedProjects = () => {
         };
 
         return (
-<<<<<<< HEAD
+
           <> 
             <Box
-=======
+
           <>
           <Box
->>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+
+
+          <>
+          <Box
+
               sx={{
                 display: 'flex',
                 // alignItems: 'center',
