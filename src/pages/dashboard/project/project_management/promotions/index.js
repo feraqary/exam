@@ -121,7 +121,7 @@ function ManagePromotions() {
     pageSize: 5
   });
   const [addPromotionModal, setAddPromotionModal] = useState(false);
-  const { data: allPromoTypes, isError, error, isLoading, isFetching } = useGetAllPromoTypeQuery();
+  const { data: allPromoTypes, isError, error, isLoading, isFetching } = useGetAllPromoTypeQuery(pagination);
 
   return (
     <Page title="Manage Project">
@@ -136,7 +136,7 @@ function ManagePromotions() {
               setPagination={setPagination}
               isFetching={isFetching}
               loading={isLoading}
-              rowCount={allPromoTypes?.data.length}
+              rowCount={allPromoTypes?.Total}
               renderTopToolbarCustomActions={({ table }) => {
                 return (
                   <div style={{ display: 'flex', gap: '0.5rem' }}>

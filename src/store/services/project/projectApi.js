@@ -381,9 +381,9 @@ export const projectApi = api.injectEndpoints({
 
     // Get ALl Promotion Types
     getAllPromoType: builder.query({
-      query() {
+      query({ pageIndex, pageSize }) {
         return {
-          url: `dashboard/getAllPromoTypes`,
+          url: `dashboard/getAllPromoTypesWithPagination?page_no=${pageIndex+1}&page_size=${pageSize}`,
           method: 'GET',
         };
       },
@@ -404,9 +404,9 @@ export const projectApi = api.injectEndpoints({
 
     // Delete Promotion Type
     deleteProjectPromotionTypes: builder.mutation({
-      query(promotionID) {
+      query(promotionId) {
         return {
-          url: `dashboard/deleteProjectPromotionTypes/${promotionID}`,
+          url: `dashboard/deleteProjectPromotionTypes/${promotionId}`,
           method: 'DELETE',
         };
       },
