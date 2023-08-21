@@ -170,12 +170,15 @@ const international_Projects = () => {
           setOpen(true);
         };
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 <<<<<<< HEAD
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
 =======
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
         const handleBlock = () => {
           const formData = new FormData();
           formData.append('id', row.original.id);
@@ -308,12 +311,15 @@ const international_Projects = () => {
                   </Button>
                 </Link>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 <<<<<<< HEAD
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
 =======
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
                 <Button
                   onClick={() => {
                     setPromotionOpen(true);

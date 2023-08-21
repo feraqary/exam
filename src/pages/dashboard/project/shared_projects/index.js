@@ -145,16 +145,28 @@ const SharedProjects = () => {
         return (
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
           <> 
             <Box
-=======
+
           <>
           <Box
+<<<<<<< HEAD
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
 =======
           <>
           <Box
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+
+
+          <>
+          <Box
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
               sx={{
                 display: 'flex',
                 // alignItems: 'center',

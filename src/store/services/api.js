@@ -3,15 +3,19 @@ import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 const token =
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
   'v2.local.sH2RcwTB1iouvhnmNzh9FRik-0Z4fDtMUL5QCyaXVUgH25HUj-w2QC7-816J_MMJrWGDo1wVtau4CJuRRrMe0WbbpvU1V5UIOeTXipN00ePvDmteEwzQcLJQkig48BXcTNCKR2Zf23JVpU2e7VdJGVk6E3TwiQI4Vy8IvJiXkiLe19w_DCsvMteoY_-HrEdJaU0jP7ZOuFcWVTcHawQ7aKxJ9Ac8_xb19afvPbeFJ0ZJzpPbF6zy1E_w6gxphElzQz2FRIJoEYlB3Sc.bnVsbA';
-=======
-  'v2.local.hvjKIPvqjDQfCHoRnz4IjaMO3aMEHTQRHoRElKI5nMhDvsMhDjxQEjMh1aalGq53sHxBwufK7C6ufMmrqpvlUwFRtAcpQiReoOQvKUxOePRB6SJyMYgc6sMNxdalpn6eVyY4hv7ImlrE24hjw_SimXDaCERSsnorDv6mx2M3w1GtT3pa8ENaOOq70tkCMNz4APjWrwPEwobMsOfgxXA7OoKnMqSqRpMSyjf6kVN01Smo9-rD8Znc07RsF0-Kl9zsIBxSuP-YKa6BSba5CQ.bnVsbA';
 
+<<<<<<< HEAD
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
 =======
   'v2.local.hvjKIPvqjDQfCHoRnz4IjaMO3aMEHTQRHoRElKI5nMhDvsMhDjxQEjMh1aalGq53sHxBwufK7C6ufMmrqpvlUwFRtAcpQiReoOQvKUxOePRB6SJyMYgc6sMNxdalpn6eVyY4hv7ImlrE24hjw_SimXDaCERSsnorDv6mx2M3w1GtT3pa8ENaOOq70tkCMNz4APjWrwPEwobMsOfgxXA7OoKnMqSqRpMSyjf6kVN01Smo9-rD8Znc07RsF0-Kl9zsIBxSuP-YKa6BSba5CQ.bnVsbA';
 
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({

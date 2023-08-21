@@ -4,24 +4,39 @@ import { Grid, Button, Box } from '@mui/material';
 // project imports
 import Layout from 'layout';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useState, useEffect } from 'react';
 =======
 import { useState } from 'react';
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+
+import { useState, useEffect } from 'react';
+=======
+import { useState } from 'react';
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import Container from 'components/Elements/Container';
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD:src/pages/dashboard/project/promotions.js
 import { useGetPromotionsQuery } from 'store/services/project/projectApi';
 =======
 =======
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+
+import { useGetPromotionsQuery } from 'store/services/project/projectApi';
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
 import { useGetAllProjectPromotionsQuery } from 'store/services/project/projectApi';
 import PopUp from 'components/InputArea/PopUp';
 import ViewInformation from './view_information';
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014:src/pages/dashboard/project/project_management/promotions/index.js
 =======
@@ -32,6 +47,10 @@ import ViewInformation from './view_information';
 
 <<<<<<< HEAD
 <<<<<<< HEAD:src/pages/dashboard/project/promotions.js
+=======
+// ==============================|| Manage Project Promotions ||============================== //
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
 const ProjectPromotions = () => { 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -43,13 +62,18 @@ const ProjectPromotionsData = [
   {
     accessorKey: 'id',
     header: 'Project ID '
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
 const ColumnHeaders = [
   {
     accessorKey: 'ref_no',
     header: 'Reference No '
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014:src/pages/dashboard/project/project_management/promotions/index.js
   },
@@ -57,6 +81,11 @@ const ColumnHeaders = [
   },
 
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+  },
+
+  },
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
   {
     accessorKey: 'label',
     header: 'Project Name'
@@ -66,7 +95,11 @@ const ColumnHeaders = [
     header: 'Expiry Date'
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:src/pages/dashboard/project/promotions.js
+=======
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
   {
     accessorKey: 'promotion_description',
     header: ' Promotion Description'
@@ -75,6 +108,7 @@ const ColumnHeaders = [
     accessorKey: 'promotion_type[]' , 
     header: 'Promotion Type'
   },
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
@@ -86,6 +120,13 @@ const ColumnHeaders = [
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014:src/pages/dashboard/project/project_management/promotions/index.js
 =======
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+
+  // {
+  //   accessorKey: 'promotion_description',
+  //   header: 'Promotion Type'
+  // }
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
   {
     accessorKey: 'action',
     header: 'Action',
@@ -121,6 +162,7 @@ const ColumnHeaders = [
   }
   }
 ];
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 <<<<<<< HEAD:src/pages/dashboard/project/promotions.js
@@ -130,6 +172,12 @@ return (
 =======
 =======
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+if (isLoading) return;
+return (
+    <Page title="Manage Promotions">
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
 const data = [
   {
     projectName: 'Khidmah',
@@ -172,13 +220,19 @@ console.log("promotions", allProjectPromotions)
   return (
     <Page title="Manage Project">
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014:src/pages/dashboard/project/project_management/promotions/index.js
 =======
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
       <Container title="Manage Promotions" style={{ xs: 12 }}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <Table
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD:src/pages/dashboard/project/promotions.js
               data={promotionData?.data || []}
@@ -187,12 +241,22 @@ console.log("promotions", allProjectPromotions)
               data={allProjectPromotions?.data || []}
               columnHeaders={ColumnHeaders}
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014:src/pages/dashboard/project/project_management/promotions/index.js
+=======
+
+              data={promotionData?.data || []}
+              columnHeaders={ProjectPromotionsData}
+              data={allProjectPromotions?.data || []}
+              columnHeaders={ColumnHeaders}
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
               pagination={pagination}
               setPagination={setPagination}
               isFetching={isFetching}
               loading={isLoading}
               rowCount={promotionData?.Total}
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
               data={allProjectPromotions?.data || []}
               columnHeaders={ColumnHeaders}
               pagination={pagination}
@@ -200,7 +264,11 @@ console.log("promotions", allProjectPromotions)
               isFetching={false}
               loading={false}
               rowCount={data.length}
+<<<<<<< HEAD
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
             />
           </Grid>
         </Grid>
@@ -210,15 +278,27 @@ console.log("promotions", allProjectPromotions)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
 ProjectPromotions.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
 export default ProjectPromotions;
+<<<<<<< HEAD
 =======
+=======
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
 ManagePromotions.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
 export default ManagePromotions;
+<<<<<<< HEAD
 >>>>>>> e387534bb5061078e1d8fd21234a1debbfa69014
+=======
+
+>>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
