@@ -1,29 +1,16 @@
 // material-ui
 import {
   Grid,
-  Select,
-  MenuItem,
   TextField,
-  RadioGroup,
-  Radio,
-  Autocomplete,
-  FormControlLabel,
-  CardActions,
-  Button,
   FormHelperText
 } from '@mui/material';
 import VerticalTabs from './leads_components/VerticalTabs';
 import React from 'react';
-
-// project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import MainCard from 'components/ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import { useState } from 'react';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import Container from 'components/Elements/Container';
 import Selector from 'components/InputArea/Selector';
@@ -58,7 +45,6 @@ function add_leads() {
               setValue={setValue}
               placeholder="Contact Email"
             />
-
             <Selector label="Contact Type" id="contact-type-selector" style={{ xs: 12, lg: 6 }} options={['Seller', 'Buyer']} />
             <Selector
               label="Unit Type"
@@ -101,7 +87,6 @@ function add_leads() {
             />
           </Grid>
         </Container>
-
         <Container title="Location" style={{ xs: 12 }}>
           <Grid container spacing={2} alignItems="center">
             <AutoCompleteSelector
@@ -177,7 +162,6 @@ function add_leads() {
               placeholder="Properties"
               helperText="Please select a property"
             />
-
             <InputText
               label="Unit Ref. No"
               type="text"
@@ -236,7 +220,6 @@ function add_leads() {
             />
             <Selector label="Hot Property" id="hot-property-selector" style={{ xs: 12, lg: 6 }} options={['Yes', 'No']} />
             <Selector label="Exclusive" id="exclusive-selector" style={{ xs: 12, lg: 6 }} options={['Yes', 'No']} />
-
             <InputText
               type="text"
               label="Notes/Extra Requirements"
@@ -248,7 +231,6 @@ function add_leads() {
               style={{ xs: 12, lg: 6 }}
             />
             <Selector label="Language" id="language-selector" style={{ xs: 12, lg: 6 }} options={['Arabic', 'English']} />
-
             <InputText
               label="Int. Referral Commission %"
               type="text"
@@ -256,7 +238,6 @@ function add_leads() {
               helperText="Please enter the int. referral commission %"
               placeholder="Int. Referral Commission %"
             />
-
             <AutoCompleteSelector
               label="Referred By"
               id="referred-by-selector"
@@ -277,7 +258,6 @@ function add_leads() {
               placeholder="Referred To"
               helperText="Please select an option"
             />
-
             <AutoCompleteSelector
               label="Rotation Label"
               id="rotation-label-selector"

@@ -3,18 +3,35 @@ import { Grid, Button, Box } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
+
+import { useState, useEffect } from 'react';
+=======
 import { useState } from 'react';
+
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import Container from 'components/Elements/Container';
+
+import { useGetPromotionsQuery } from 'store/services/project/projectApi';
+
 import { useGetAllProjectPromotionsQuery } from 'store/services/project/projectApi';
 import PopUp from 'components/InputArea/PopUp';
 import ViewInformation from './view_information';
 
-
 // ==============================|| Manage Project Promotions ||============================== //
 
+const ProjectPromotions = () => { 
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10
+  });
+  const { data: promotionData , isError, error, isLoading, isFetching } = useGetPromotionsQuery(pagination);
+
+const ProjectPromotionsData = [
+  {
+    accessorKey: 'id',
+    header: 'Project ID '
 
 const ColumnHeaders = [
   {
@@ -22,6 +39,7 @@ const ColumnHeaders = [
     header: 'Reference No '
   },
 
+  },
   {
     accessorKey: 'label',
     header: 'Project Name'
@@ -30,10 +48,20 @@ const ColumnHeaders = [
     accessorKey: 'expiry_date',
     header: 'Expiry Date'
   },
+
+  {
+    accessorKey: 'promotion_description',
+    header: ' Promotion Description'
+  },
+  {
+    accessorKey: 'promotion_type[]' , 
+    header: 'Promotion Type'
+  },
+
   // {
   //   accessorKey: 'promotion_description',
   //   header: 'Promotion Type'
-  // },
+  // }
   {
     accessorKey: 'action',
     header: 'Action',
@@ -69,6 +97,9 @@ const ColumnHeaders = [
   }
   }
 ];
+if (isLoading) return;
+return (
+    <Page title="Manage Promotions">
 
 const data = [
   {
@@ -111,10 +142,22 @@ console.log("promotions", allProjectPromotions)
 
   return (
     <Page title="Manage Project">
+
+
       <Container title="Manage Promotions" style={{ xs: 12 }}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <Table
+
+              data={promotionData?.data || []}
+              columnHeaders={ProjectPromotionsData}
+              data={allProjectPromotions?.data || []}
+              columnHeaders={ColumnHeaders}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={isFetching}
+              loading={isLoading}
+              rowCount={promotionData?.Total}
               data={allProjectPromotions?.data || []}
               columnHeaders={ColumnHeaders}
               pagination={pagination}
@@ -122,6 +165,7 @@ console.log("promotions", allProjectPromotions)
               isFetching={false}
               loading={false}
               rowCount={data.length}
+
             />
           </Grid>
         </Grid>
@@ -130,8 +174,16 @@ console.log("promotions", allProjectPromotions)
   );
 }
 
+
+ProjectPromotions.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
+
+export default ProjectPromotions;
+
 ManagePromotions.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
 export default ManagePromotions;
+
