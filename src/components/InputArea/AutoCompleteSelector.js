@@ -298,7 +298,11 @@ export const NormalAutoCompleteSelector = ({
         }}
         onChange={(event, newValue) => func(newValue)}
       />
-      <FormHelperText>{helperText}</FormHelperText>
+      {helperText && meta.error && touched[`${name}`] ? (
+        <FormHelperText error={true}>{meta.error[`${name}`]}</FormHelperText>
+      ) : (
+        <FormHelperText>{helperText}</FormHelperText>
+      )}
     </Grid>
   );
 };

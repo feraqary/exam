@@ -221,6 +221,18 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['DocumentsCategory']
     }),
+
+    //CREATE PROJECT PROMOTION
+    createProjectPromotion: builder.mutation({
+      query(formData) {
+        return {
+          url: 'dashboard/createProjectPromotion',
+          method: 'POST',
+          body: formData
+        };
+      }
+    }),
+
     //CREATE DOCS SUB CATEGORY
     CreateSubCategory: builder.mutation({
       query(data) {
@@ -383,5 +395,6 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery,
-  useGetAllProjectPromotionsQuery
+  useGetAllProjectPromotionsQuery,
+  useCreateProjectPromotionMutation
 } = projectApi;

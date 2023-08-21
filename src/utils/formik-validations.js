@@ -107,6 +107,10 @@ export const positiveNumberValidator = () => {
   );
 };
 
+export const multipleSelectorValidator = () => {
+  return Yup.array().test('MULTIPLE_SELECTOR_VALIDATION', 'Please select a valid item from the options', (value) => value.length > 0);
+};
+
 /**
  * Validates a file value, ensuring it is not empty and meets size and format constraints.
  * @param {string} [msg='Please provide an image input'] - The validation error message.
