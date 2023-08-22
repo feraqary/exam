@@ -26,7 +26,15 @@ import {
   useUpdateProjectsIsEnabledMutation,
   useUpdateProjectsVerifyStatusMutation
 } from 'store/services/project/projectApi';
-import { ToastError, ToastSuccess } from 'utils/toast';
+
+import React, { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastSuccess, ToastError } from 'utils/toast';
+import TableSelectorOption from 'components/InputArea/TableSelectorOption';
+import Link from 'next/link';
+import Container from 'components/Elements/Container';
+// import AddPromotions from '../promotions/add_promotions';
 import AddPromotions from '../promotions/add_promotions';
 // ==============================|| Manage International Projects ||============================== //
 
@@ -230,11 +238,43 @@ const localProjects = () => {
       }
     },
     {
+      accessorKey: 'is_verified',
+      header: 'Verify Status',
+      Cell: ({ renderedCellValue, row }) => {
+        const [verify, setVerify] = useState(false);
+        const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
+        const handleVerifyStatus = () => {
+          setVerify((prev) => !prev);
+          const formData = new FormData();
+          formData.append('project_id', row.original.id);
+          formData.append('is_verified', !row.original.is_verified);
+          updateVerifyStatus(formData);
+        };
+        return (
+          <>
+            {!renderedCellValue ? (
+              <Button color="error" variant="outlined" onClick={handleVerifyStatus}>
+                {' '}
+                Unverified{' '}
+              </Button>
+            ) : (
+              <Button color="success" sx={{ color: 'white' }} variant="contained" onClick={handleVerifyStatus}>
+                {' '}
+                Verified{' '}
+              </Button>
+            )}
+          </>
+        );
+      }
+    },
+    {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ renderedCellValue, row }) => {
         const [open, setOpen] = useState(false);
+
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
+
         const [promotionOpen, setPromotionOpen] = useState(false);
         const [viewOpen, setViewOpen] = useState(false);
         const handlePromotionOpen = () => {
@@ -297,9 +337,9 @@ const localProjects = () => {
                   <ProjectInformation id={row.original.id} />
                 </ViewInformation>
 
-                <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
+                {/* <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
                   {row.original.is_verified ? 'Unverify' : 'Verify'}
-                </Button>
+                </Button> */}
 
                 <Link
                   href={{
@@ -311,7 +351,6 @@ const localProjects = () => {
                 >
                   <Button variant="contained">Edit </Button>
                 </Link>
-                {/* {row.original.phase_type === 'Multiple' && ( */}
                 <>
                   <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
                     <Button variant="contained" color="primary">
@@ -319,7 +358,6 @@ const localProjects = () => {
                     </Button>
                   </Link>
                 </>
-                {/* )} */}
 
                 <Button color="error" variant="outlined" onClick={() => handleUpdateStatus(5)}>
                   Block
@@ -398,7 +436,7 @@ const localProjects = () => {
                   Add to Promotions
                 </Button>
                 <PopUp opened={promotionOpen} setOpen={setPromotionOpen} title="Add Promotion" size={'md'}>
-                  <AddPromotions />
+                  <AddPromotions projectId={row.original.id} />
                 </PopUp>
 
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>

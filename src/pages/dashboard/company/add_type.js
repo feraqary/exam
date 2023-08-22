@@ -22,7 +22,6 @@ import FileUpload from 'components/InputArea/FileUpload';
 import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 import { useCreateSubCompanyTypeMutation } from 'store/services/company/companyApi';
 import { ToastSuccess } from 'utils/toast';
-
 const roles = [
   { label: 'Broker Company', id: 1 },
   { label: 'Developer Company', id: 2 },

@@ -49,30 +49,30 @@ const SharedProjects = () => {
   const ColumnHeaders = [
     {
       accessorKey: 'id',
-      header: 'Reference Number ',
+      header: 'Project ID ',
       title: (
-        <Tooltip title={'Ref.No'}>
-          <span>Reference Number</span>
+        <Tooltip title={'Project ID'}>
+          <span>Project ID</span>
         </Tooltip>
       )
     },
     {
       accessorKey: 'rank_id',
       header: 'Company Rank',
-      Cell: ({ renderedCellValue, row }) => {
+      Cell: ({ row }) => {
         const formData = new FormData();
         const func = useUpdateProjectRankMutation();
         formData.append('project_id', row.original.id);
 
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <TableSelectorOption value={row.original.rank_id} func={func} formData={formData} />
+            <TableSelectorOption value={row.original.rank_id} formData={formData} func={func} />
           </Box>
         );
       }
     },
     {
-      accessorKey: 'project_name',
+      accessorKey: 'label',
       header: 'Project Name'
     },
     {
@@ -82,57 +82,132 @@ const SharedProjects = () => {
     {
       accessorKey: 'parent_developer_company',
       header: 'Developer Company',
-      render: (rowData) => {
-        return <Tooltip title="Developer Company Name">Developer Company</Tooltip>;
+      Cell: ({ renderedCellValue }) => {
+        return <Tooltip title="Developer Company Name"> Developer Company</Tooltip>;
       }
     },
     {
       accessorKey: 'rating',
       header: 'Rating',
       Cell: ({ renderedCellValue, row }) => {
-        return <Rating name="read-only" value={sharedProjectsData?.data[row.index].Rating} readOnly />;
+        return (
+          <>
+            <Rating name="read-only" value={localProjectsData?.data[row.index].Rating + 1} readOnly />
+          </>
+        );
       }
     },
 
-    { accessorKey: 'quality_score', header: 'Quality Score' },
+    {
+      accessorKey: 'quality_score',
+      header: 'Quality Score',
+      Cell: ({ renderedCellValue, row }) => {
+        return <CircularProgressWithLabel value={row.original.quality_score} />;
+      }
+    },
 
     {
       accessorKey: 'no_of_phases',
       header: 'Number of Phases'
     },
     {
-      accessorKey: 'phasessss',
-      header: 'Phases',
-      cell: ({ renderedCellValue, row }) => {
-        return row.original.phases.map((phase) => {
-          console.log(phase);
-          return <Chip>{phase.name}</Chip>;
-        });
-      }
-    },
-    {
       accessorKey: 'phase_type',
       header: 'Phase Type'
     },
-
     {
-      accessorKey: 'endis',
+      accessorKey: 'is_enabled',
       header: 'Enable / Disable',
       Cell: ({ renderedCellValue, row }) => {
-        return <FormControlLabel control={<Switch defaultChecked />} />;
+        const [updateIsEnabled, IsEnabledresult] = useUpdateProjectsIsEnabledMutation();
+
+        const handleChange = () => {
+          const formData = new FormData();
+          formData.append('project_id', row.original.id);
+          formData.append('is_enabled', !row.original.is_enabled);
+          updateIsEnabled(formData);
+        };
+
+        useEffect(() => {
+          if (IsEnabledresult.isSuccess) {
+            ToastSuccess('Project successfully updated');
+          }
+        }, [IsEnabledresult.isSuccess]);
+
+        useEffect(() => {
+          if (IsEnabledresult.isError) {
+            const { data } = IsEnabledresult.error;
+            ToastError(data);
+          }
+        }, [IsEnabledresult.isError]);
+
+        return (
+          <>
+            <Switch checked={row.original.is_enabled} onChange={handleChange} />
+          </>
+        );
       }
     },
-
+    {
+      accessorKey: 'is_verified',
+      header: 'Verify Status',
+      Cell: ({ renderedCellValue, row }) => {
+        const [verify, setVerify] = useState(false);
+        const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
+        const handleVerifyStatus = () => {
+          setVerify((prev) => !prev);
+          const formData = new FormData();
+          formData.append('project_id', row.original.id);
+          formData.append('is_verified', !row.original.is_verified);
+          updateVerifyStatus(formData);
+        };
+        return (
+          <>
+            {!renderedCellValue ? (
+              <Button color="error" variant="outlined" onClick={handleVerifyStatus}>
+                {' '}
+                Unverified{' '}
+              </Button>
+            ) : (
+              <Button color="success" sx={{ color: 'white' }} variant="contained" onClick={handleVerifyStatus}>
+                {' '}
+                Verified{' '}
+              </Button>
+            )}
+          </>
+        );
+      }
+    },
     {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ renderedCellValue, row }) => {
+        const [open, setOpen] = useState(false);
 
-        const [viewOpen, setViewOpen] = useState(false);
+        const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
+
         const [promotionOpen, setPromotionOpen] = useState(false);
+        const [viewOpen, setViewOpen] = useState(false);
 
         const handlePromotionOpen = () => {
           setPromotionOpen(true);
+        };
+        const handlePromotionClose = () => {
+          setPromotionOpen(false);
+        };
+
+        const handleClickOpen = () => {
+          setOpen(true);
+        };
+
+        const handleClose = () => {
+          setOpen(false);
+        };
+
+        const handleVerifyStatus = () => {
+          const formData = new FormData();
+          formData.append('project_id', row.original.id);
+          formData.append('is_verified', !row.original.is_verified);
+          updateVerifyStatus(formData);
         };
 
         const handleUpdateStatus = (status) => {
@@ -144,7 +219,7 @@ const SharedProjects = () => {
 
         return (
           <>
-          <Box
+            <Box
               sx={{
                 display: 'flex',
                 // alignItems: 'center',
@@ -167,9 +242,9 @@ const SharedProjects = () => {
                   <ViewInformation project_id={row.original.id} />
                 </PopUp>
 
-                <Button variant="contained" color="primary">
+                {/* <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
                   {row.original.is_verified ? 'Unverify' : 'Verify'}
-                </Button>
+                </Button> */}
 
                 <Link
                   href={{
@@ -181,12 +256,15 @@ const SharedProjects = () => {
                 >
                   <Button variant="contained">Edit </Button>
                 </Link>
-
-                <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
-                  <Button variant="contained" color="primary">
-                    {row.original.phase_type === "Single" ? "Listing Property" : "Listing Properties"}
-                  </Button>
-                </Link>
+                {row.original.phase_type === 'Multiple' && (
+                  <>
+                    <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
+                      <Button variant="contained" color="primary">
+                        Listing Properties
+                      </Button>
+                    </Link>
+                  </>
+                )}
 
                 <Button color="error" variant="outlined" onClick={() => handleUpdateStatus(5)}>
                   Block
@@ -200,7 +278,7 @@ const SharedProjects = () => {
                   gap: '1rem'
                 }}
               >
-                {row.original.phase_type == 'Multiple' && (
+                {/* {row.original.phase_type !== 'Multiple' && (
                   <>
                     <Link
                       href={{
@@ -209,6 +287,26 @@ const SharedProjects = () => {
                     >
                       <Button variant="contained" color="primary">
                         Add Property
+                      </Button>
+                    </Link>
+                  </>
+                )} */}
+
+                {row.original.phase_type !== 'Multiple' && (
+                  <>
+                    <Link
+                      href={{
+                        pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                      }}
+                    >
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          console.log(row.original.phase_type);
+                        }}
+                      >
+                        Add Plans
                       </Button>
                     </Link>
                   </>
@@ -226,28 +324,27 @@ const SharedProjects = () => {
                     Rating
                   </Button>
                 </Link>
-                <Link
-                  href={{
-                    pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
-                    query: {
-                      id: row.original.id
-                    }
-                  }}
-                >
-                <Link href={{ pathname: `/dashboard/project/project_management/documents/${row.original.id}` }}>
 
-                  <Button color="primary" variant="contained">
-                    Documents
-                  </Button>
-                </Link>
-                </Link>
-                <Button variant="contained" color="primary" onClick={handlePromotionOpen}>
+                {row.original.phase_type !== 'Multiple' && (
+                  <Link
+                    href={{
+                      pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
+                      query: {
+                        id: row.original.id
+                      }
+                    }}
+                  >
+                    <Button color="primary" variant="contained">
+                      Documents
+                    </Button>
+                  </Link>
+                )}
+                <Button onClick={handlePromotionOpen} variant="contained" color="primary">
                   Add to Promotions
                 </Button>
                 <PopUp opened={promotionOpen} setOpen={setPromotionOpen} title="Add Promotion" size={'md'}>
-                  <AddPromotions />
+                  <AddPromotions projectId={row.original.id} />
                 </PopUp>
-
 
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete

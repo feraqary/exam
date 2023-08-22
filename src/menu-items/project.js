@@ -96,7 +96,7 @@ const project = {
       title: 'Manage Promotions',
       type: 'item',
       icon: icons.IconLayoutKanban,
-      url: '/dashboard/project/promotions'
+      url: '/dashboard/project/project_management/promotions'
     },
     {
       id: 'manage-requests',

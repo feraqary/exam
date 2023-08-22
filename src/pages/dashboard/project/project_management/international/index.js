@@ -32,6 +32,7 @@ import PopUp from 'components/InputArea/PopUp';
 import Modal from '@mui/material/Modal';
 import ViewInformation, { Item } from 'components/InputArea/information/view_information';
 
+
 // ==============================|| Manage international_ Projects ||============================== //
 const ProjectInformation = ({ id }) => {
   const { data, isError, isLoading } = useGetProjectByIdQuery(id);
@@ -111,6 +112,12 @@ const international_Projects = () => {
     pageIndex: 0,
     pageSize: 5
   });
+  const [isAddPromotionsOpen, setIsAddPromotionsOpen] = useState(false);
+  const [projects_id, setProjectId] = useState(null);
+  const handleOpenAddPromotions = (projects_id) => {
+    setProjectId(projects_id);
+    setIsAddPromotionsOpen(true);
+  };
 
   const { data: international_ProjectsData, isError, error, isLoading, isFetching } = useGetInternationalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
@@ -249,8 +256,11 @@ const international_Projects = () => {
           setOpen(true);
         };
 
-        const handleClose = () => {
-          setOpen(false);
+        const handleBlock = () => {
+          const formData = new FormData();
+          formData.append('id', row.original.id);
+          formData.append('status_id', status);
+          updateStatus(formData);
         };
 
         const handleVerifyStatus = () => {
@@ -358,13 +368,32 @@ const international_Projects = () => {
                   </Button>
                 </Link>
 
-                <Button onClick={handlePromotionOpen} variant="contained" color="primary">
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
+                    query: {
+                      id: row.original.id
+                    }
+                  }}
+                >
+                  <Button color="primary" variant="contained">
+                    Manage Documents
+                  </Button>
+                </Link>
+                <Button
+                  onClick={() => {
+                    setPromotionOpen(true);
+                    console.log('Add to Promotions opened');
+                    handleOpenAddPromotions(projects_id)
+                  }}
+                  variant="contained"
+                  color="primary"
+                >
                   Add to Promotions
                 </Button>
-                <PopUp opened={promotionOpen} setOpen={setPromotionOpen} title="Add Promotion" size={'md'}>
-                  <AddPromotions />
+                <PopUp title="Add Promotion" opened={promotionOpen} setOpen={setPromotionOpen} size={'md'} full width>
+                  <AddPromotions projects_id= {projects_id} onClose={() => setIsAddPromotionsOpen(false)} />
                 </PopUp>
-
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete
                 </Button>
