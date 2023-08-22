@@ -7,9 +7,8 @@ import Container from 'components/Elements/Container';
 // material-ui
 import { Grid } from '@mui/material';
 import Table from 'components/Table/Table';
-import InputText from 'components/InputArea/TextInput';
 import { NormalAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
-
+import SatisfactionChartCard from 'components/widget/widget/Chart/SatisfactionChartCard';
 const Insights = () => {
   return (
     <Container title="Location Insights" style={{ xs: 12 }}>
@@ -77,6 +76,43 @@ const Insights = () => {
           labelObject="Country"
           style={{ xs: 12, lg: 6 }}
         />
+      </Grid>
+
+      {/* Pie Charts */}
+
+      <Grid container spacing={2}>
+        <Grid item lg={6} xs={12}>
+          <SatisfactionChartCard
+            chartTitle="Units Selling"
+            chartData={{
+              options: {
+                annotaions: 'gdasd',
+                chart: {
+                  type: 'pie',
+                  height: '250px'
+                },
+                labels: ['Leads', 'Visits', 'Units']
+              },
+              series: [30, 50, 10]
+            }}
+          />
+        </Grid>
+        <Grid item lg={6} xs={12}>
+          <SatisfactionChartCard
+            chartTitle="Daily Visits"
+            chartData={{
+              options: {
+                annotaions: 'gdasd',
+                chart: {
+                  type: 'pie',
+                  height: '250px'
+                },
+                labels: ['Leads', 'Visits', 'Units']
+              },
+              series: [30, 50, 10]
+            }}
+          />
+        </Grid>
       </Grid>
     </Container>
   );
@@ -206,7 +242,7 @@ const Statistics = () => {
     {
       accessorKey: 'x',
       header: 'Years'
-    },
+    }
   ];
   return (
     <Container title="Building Statistics" style={{ xs: 12 }} sx={{ mt: 2 }}>
