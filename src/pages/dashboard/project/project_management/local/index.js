@@ -1,33 +1,110 @@
 // material-ui
-import { Grid, Box, Button, DialogActions, IconButton, Dialog, DialogContent, CircularProgress, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 
 // project imports
-import Layout from 'layout';
-import Page from 'components/ui-component/Page';
-import { gridSpacing } from 'store/constant';
-import Table from 'components/Table/Table';
 import Rating from '@mui/material/Rating';
 import Switch from '@mui/material/Switch';
-import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import {
-  useGetLocalProjectsQuery,
-  useUpdateProjectStatusMutation,
-  useUpdateProjectsVerifyStatusMutation,
-  useUpdateProjectsIsEnabledMutation,
-  useUpdateProjectRankMutation
-} from 'store/services/project/projectApi';
-import React, { useState } from 'react';
+import Container from 'components/Elements/Container';
+import PopUp from 'components/InputArea/PopUp';
+import TableSelectorOption from 'components/InputArea/TableSelectorOption';
+import ViewInformation, { Item } from 'components/InputArea/information/view_information';
+import Table from 'components/Table/Table';
+import Page from 'components/ui-component/Page';
+import MainCard from 'components/ui-component/cards/MainCard';
+import Layout from 'layout';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastSuccess, ToastError } from 'utils/toast';
-import TableSelectorOption from 'components/InputArea/TableSelectorOption';
-import Link from 'next/link';
-import Container from 'components/Elements/Container';
+import { gridSpacing } from 'store/constant';
+import {
+  useGetLocalProjectsQuery,
+  useGetProjectByIdQuery,
+  useUpdateProjectRankMutation,
+  useUpdateProjectStatusMutation,
+  useUpdateProjectsIsEnabledMutation,
+  useUpdateProjectsVerifyStatusMutation
+} from 'store/services/project/projectApi';
+import { ToastError, ToastSuccess } from 'utils/toast';
 import AddPromotions from '../promotions/add_promotions';
-import PopUp from 'components/InputArea/PopUp';
-import ViewInformation from '../information/view_information';
 // ==============================|| Manage International Projects ||============================== //
+
+const ProjectInformation = ({ id }) => {
+  const { data, isError, isLoading } = useGetProjectByIdQuery(id);
+
+  const completionStatus = ['Upcoming', 'Under Construction', 'Completed', 'Off Plan', 'Ready'];
+  const lifestylelist = ['Affordable', 'Standard', 'Luxury', 'Ultra Luxury'];
+  const furnished = ['Non Furnished', 'Semi Furnished', 'Fully Furnished'];
+  return (
+    <>
+      <Grid item xs={12}>
+        <MainCard title="Project Details">
+          <Grid container spacing={2} alignItems="center">
+            <Item primary="Project Name:" secondary={data?.data?.label} />
+            <Grid item xs={12} lg={12}></Grid>
+            <Item primary="Is The Project Shared?:" secondary={data?.data?.is_shared ? 'Yes' : 'No'} />
+            {data?.data?.is_shared && <Item primary="Broker Companies:" secondary={''} />}
+            <Item primary="Developer Company:" secondary={data?.data?.parent_developer_company?.label} />
+            <Item primary="Sub Developer Company:" secondary={''} />
+            {data?.data?.phases.length !== 0 && <Item primary="Phases:" secondary={data?.data?.phases.map((phases) => phases.label)} />}
+          </Grid>
+        </MainCard>
+      </Grid>
+
+      <Grid item xs={12}>
+        <MainCard title="Location Details">
+          <Grid container spacing={2} alignItems="center">
+            <Item primary="Country:" secondary={data?.data?.country?.country} />
+            <Item primary="State:" secondary={data?.data?.state?.state} />
+            <Item primary="City:" secondary={data?.data?.city?.city} />
+            <Item primary="Community:" secondary={data?.data?.community?.community} />
+            <Item primary="Sub Community:" secondary={data?.data?.sub_community?.sub_community} />
+          </Grid>
+        </MainCard>
+      </Grid>
+
+      <Grid item xs={12}>
+        {data?.data?.phases?.length === 0 && (
+          <MainCard title="Property Details">
+            <Grid container spacing={2}>
+              <>
+                <Item primary="Property Title:" secondary={data?.data?.property_title} />
+                <Item primary="Arabic Property Title:" secondary={data?.data?.property_title_arabic} />
+                <Item primary="Property Description:" secondary={data?.data?.description} />
+                <Item primary="Arabic Property Description:" secondary={data?.data?.description_arabic} />
+                <Item primary="Completion Status:" secondary={completionStatus[data?.data?.completion_status]} />
+                <Item primary="Property Status:" secondary={data?.data?.property_type?.map((type) => `${type.label}, `)} />
+                <Item primary="View:" secondary={data?.data?.view?.map((v) => `${v.label}, `)} />
+                <Item primary="Facilities:" secondary={data?.data?.facilities?.map((f) => `${f.label}, `)} />
+                <Item primary="Amenities:" secondary={data?.data?.amenities?.map((a) => `${a.label}, `)} />
+                <Item primary="Plot Area:" secondary={data?.data?.plot_area || 0} />
+                <Item primary="Elevators:" secondary={data?.data?.elevator || 0} />
+                <Item primary="Lifestyle:" secondary={lifestylelist[data?.data?.life_style]} />
+                <Item primary="Built Up Area:" secondary={data?.data?.built_up_area || 0} />
+                <Item primary="Ownership:" secondary={data?.data?.ownership || ''} />
+                <Item primary="Furnished:" secondary={furnished[data?.data?.furnished]} />
+                <Item primary="Area Range -max-:" secondary={data?.data?.max_area || 0} />
+                <Item primary="Area Range -min-:" secondary={data?.data?.min_area || 0} />
+                <Item primary="Parking:" secondary={data?.data?.parking || 0} />
+                <Item primary="Start Date:" secondary={data?.data?.start_date} />
+                <Item primary="Completion Date:" secondary={data?.data?.completion_date} />
+                <Item primary="Handover Date:" secondary={data?.data?.handover_date} />
+                <Item primary="No. Of Floors:" secondary={data?.data?.no_of_floor || 0} />
+                <Item primary="No. Of Units:" secondary={'' || 0} />
+                <Item primary="Available Units:" secondary={'' || 0} />
+                <Item primary="No. Of Pools:" secondary={data?.data?.no_of_pool || 0} />
+                <Item primary="No. Of Retail Center:" secondary={data?.data?.no_of_retail || 0} />
+                <Item primary="Service Charge:" secondary={data?.data?.service_charge || 0} />
+                <Item primary="Starting Price:" secondary={data?.data?.starting_price || 0} />
+              </>
+            </Grid>
+          </MainCard>
+        )}
+      </Grid>
+    </>
+  );
+};
 
 const localProjects = () => {
   const [pagination, setPagination] = useState({
@@ -37,33 +114,6 @@ const localProjects = () => {
 
   const { data: localProjectsData, isError, error, isLoading, isFetching } = useGetLocalProjectsQuery(pagination);
   const [updateStatus, result] = useUpdateProjectStatusMutation();
-
-  const data = [
-    {
-      name: {
-        projectName: 'Khidmah',
-        companyLogo: '/assets/images/company_logo/logo1.png'
-      },
-      developerCompany: 'Developer Company',
-      featured: false,
-      place: 'US',
-      community: 'US',
-      refno: 'PA2831023',
-      reference: 'PA2831023',
-      propertytype: 'Jamie',
-      endis: 'new@gmail.com',
-      price: '+0192831-310',
-      propertyname: 'Lannisters',
-      type: '2-12-2023',
-      insert: '2-12-2023',
-      movedDate: '2-12-2023',
-      lifestyle: ' uploaded',
-      action: ' edit, multiple',
-      quality: 25,
-      floors: 2430,
-      slno: 4
-    }
-  ];
 
   useEffect(() => {
     if (result.isSuccess) {
@@ -187,7 +237,6 @@ const localProjects = () => {
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
         const [promotionOpen, setPromotionOpen] = useState(false);
         const [viewOpen, setViewOpen] = useState(false);
-
         const handlePromotionOpen = () => {
           setPromotionOpen(true);
         };
@@ -234,13 +283,19 @@ const localProjects = () => {
                   gap: '1rem'
                 }}
               >
-                <Button variant="contained" color="primary" onClick={() => setViewOpen(true)}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    setViewOpen(true);
+                  }}
+                >
                   View Information
                 </Button>
 
-                <PopUp opened={viewOpen} setOpen={setViewOpen} size={'lg'}>
-                  <ViewInformation project_id={row.original.id} />
-                </PopUp>
+                <ViewInformation opened={viewOpen} setOpen={setViewOpen} size={'lg'}>
+                  <ProjectInformation id={row.original.id} />
+                </ViewInformation>
 
                 <Button variant="contained" color="primary" onClick={handleVerifyStatus}>
                   {row.original.is_verified ? 'Unverify' : 'Verify'}
@@ -256,16 +311,15 @@ const localProjects = () => {
                 >
                   <Button variant="contained">Edit </Button>
                 </Link>
-                {row.original.phase_type === 'Multiple' && (
-                  <>
-                    <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
-                      <Button variant="contained" color="primary">
-                        Listing Properties
-                      </Button>
-                    </Link>
-                  </>
-                )}
-
+                {/* {row.original.phase_type === 'Multiple' && ( */}
+                <>
+                  <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
+                    <Button variant="contained" color="primary">
+                      Listing Properties
+                    </Button>
+                  </Link>
+                </>
+                {/* )} */}
 
                 <Button color="error" variant="outlined" onClick={() => handleUpdateStatus(5)}>
                   Block
@@ -307,7 +361,7 @@ const localProjects = () => {
                           console.log(row.original.phase_type);
                         }}
                       >
-                        Add Plans
+                        Manage Plans
                       </Button>
                     </Link>
                   </>
@@ -355,35 +409,6 @@ const localProjects = () => {
           </>
         );
       }
-    }
-  ];
-
-  const data = [
-    {
-      id: 1,
-      rank_id: 100,
-      label: 'New One',
-      country: 'UAE',
-      parent_developer_company: 'Aqary',
-      rating: 10,
-      quality_score: 50,
-      no_of_phases: 2,
-      phasestest: 5,
-      phase_type: 'equal',
-      endis: true
-    },
-    {
-      id: 2,
-      rank_id: 90,
-      label: 'Fine Home',
-      country: 'UAE',
-      parent_developer_company: 'Fine home',
-      rating: 10,
-      quality_score: 80,
-      no_of_phases: 2,
-      phasestest: 5,
-      phase_type: 'equal',
-      endis: false
     }
   ];
 

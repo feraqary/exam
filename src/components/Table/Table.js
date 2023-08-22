@@ -1,4 +1,3 @@
-import React, { useMemo } from 'react';
 import { MaterialReactTable } from 'material-react-table';
 
 const Table = ({ columnHeaders, data, loading, pagination, setPagination, isFetching, rowCount, ...rest }) => {

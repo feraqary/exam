@@ -3,7 +3,6 @@ import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 const token =
   'v2.local.hvjKIPvqjDQfCHoRnz4IjaMO3aMEHTQRHoRElKI5nMhDvsMhDjxQEjMh1aalGq53sHxBwufK7C6ufMmrqpvlUwFRtAcpQiReoOQvKUxOePRB6SJyMYgc6sMNxdalpn6eVyY4hv7ImlrE24hjw_SimXDaCERSsnorDv6mx2M3w1GtT3pa8ENaOOq70tkCMNz4APjWrwPEwobMsOfgxXA7OoKnMqSqRpMSyjf6kVN01Smo9-rD8Znc07RsF0-Kl9zsIBxSuP-YKa6BSba5CQ.bnVsbA';
 
-
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://20.203.31.58/api/',

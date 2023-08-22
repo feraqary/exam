@@ -41,19 +41,17 @@ import {
   useGetSubCommunitiesByCommunityQuery
 } from 'store/services/country/countryApi';
 import {
-  useCreateProjectMutation,
   useGetAllfacilitiesQuery,
-  useGetBrokerCompaniesByCitiesQuery,
   useGetPropertyTypeQuery,
   useGetProjectQuery,
   useGetAllAmenitiesQuery,
-  useCreateProjectPropertyMutation,
-  useGetViewQuery
+  useGetViewQuery,
+  useUpdateProjectPropertyMutation,
+  useGetProjectsPropertyByIdQuery
 } from 'store/services/project/projectApi';
 import { ToastContainer } from 'react-toastify';
 import { ToastError, ToastSuccess } from 'utils/toast';
 import 'react-toastify/dist/ReactToastify.css';
-
 import { arrayValidator, numberValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 import * as Yup from 'yup';
 import Categorization from 'pages/dashboard/project/helper/Categorization';
@@ -63,12 +61,17 @@ import { ShareLocation } from '@mui/icons-material';
 function AddProperty() {
   const router = useRouter();
   const { project_id } = router.query;
+
   const { data: projectData } = useGetProjectQuery(project_id, {
     skip: project_id === null || project_id === undefined
   });
+  const { data: propertyData } = useGetProjectsPropertyByIdQuery(project_id, {
+    skip: project_id === null || project_id === undefined
+  });
 
-  const Autofill = projectData?.data;
-  // console.log('data: ', projectData);
+  const Autofill = propertyData?.data;
+
+  console.log('propertyData: ', Autofill);
   //is shared
   const [shared, setShared] = useState(false);
   const [countryLocationID, setCountryLocationID] = useState(null);
@@ -76,7 +79,6 @@ function AddProperty() {
 
   //property type
   const [propertyType, setPropertyType] = useState([]);
-  const [viewSelected, setViews] = useState([]);
 
   const [long, setlong] = useState(null);
   const [lat, setlat] = useState(null);
@@ -106,7 +108,7 @@ function AddProperty() {
   const { data: Types, isLoading, isError } = useGetPropertyTypeQuery();
   const { data: Allfacilities, isLoading: loadingFacility, isSuccess: FacilitiesSuccess } = useGetAllfacilitiesQuery();
   const { data: AllAmenities, isLoading: loadingAmenities, isSuccess: AmenitiesSuccess } = useGetAllAmenitiesQuery();
-  const { data: AllViews, isLoading: loadingViww } = useGetViewQuery();
+  const { data: AllViews, isLoading: loadingView } = useGetViewQuery();
 
   // let amenities;
   // let facilities;
@@ -123,7 +125,7 @@ function AddProperty() {
       setAmenities(Object.keys(AllAmenities?.data || {}));
       setFacilities(Object.keys(Allfacilities?.data || {}));
     }
-  }, []);
+  }, [FacilitiesSuccess, AmenitiesSuccess]);
   const { data: SharedStates } = useGetStatesOrCitiesQuery(countryLocationID, {
     skip: countryLocationID === null || countryLocationID === undefined
   });
@@ -148,24 +150,19 @@ function AddProperty() {
     skip: devCompany === null || devCompany === undefined
   });
 
-  // const { data: brokerComp, error: brokerCompError } = useGetBrokerCompaniesByCitiesQuery(isState_Id, {
-  //   skip: isState_Id === null || isState_Id === undefined
-  // });
-
-  const [createProjectProperty, CreateProjectPropertyResult] = useCreateProjectPropertyMutation();
+  const [updateProjectProperty, updateProjectPropertyResult] = useUpdateProjectPropertyMutation();
   useEffect(() => {
-    if (CreateProjectPropertyResult.isSuccess) {
+    if (updateProjectPropertyResult.isSuccess) {
       ToastSuccess('Project has been created successfully');
     }
-  }, [CreateProjectPropertyResult.isSuccess]);
+  }, [updateProjectPropertyResult.isSuccess]);
 
   useEffect(() => {
-    if (CreateProjectPropertyResult.isError) {
-      const { data } = CreateProjectPropertyResult.error;
+    if (updateProjectPropertyResult.isError) {
+      const { data } = updateProjectPropertyResult.error;
       ToastError(data.error);
     }
-  }, [CreateProjectPropertyResult.isError]);
-
+  }, [updateProjectPropertyResult.isError]);
   const SinglePhaseComponents = (key) => {
     switch (key) {
       case 'furnished':
@@ -230,7 +227,7 @@ function AddProperty() {
   // Generate SinglePhaseComponents for each fact in the Filtered array
   const SinglePhaseInputs = Filtered?.map((fact) => SinglePhaseComponents(fact));
 
-  // const [views, setViews] = useState(null);
+  const [views, setViews] = useState(null);
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
@@ -239,21 +236,19 @@ function AddProperty() {
           <Grid container spacing={gridSpacing}>
             <Formik
               initialValues={{
-                projectTitle: '',
-                brokerCompanies: null,
                 detailsCountrySelect: '',
                 detailsStateSelector: '',
-                masterDeveloperSelector: '',
+                masterDeveloperSelector: Autofill?.developer_company || '',
                 subDeveloperCompanySelector: '',
                 amenities: [],
                 isshared: shared,
-                locationCountrySelect: '',
                 locationAddress: '',
-                locationCitySelector: '',
+                locationCountrySelect: Autofill?.country || '',
+                locationCitySelector: Autofill?.city || '',
+                locationState: Autofill?.state || '',
+                locationCommunity: Autofill?.community || '',
+                locationSubCommunity: Autofill?.sub_community || '',
                 locationDistrict: '',
-                locationState: '',
-                locationCommunity: '',
-                locationSubCommunity: '',
                 propertyStatus: '',
                 place: '',
                 lat: 27,
@@ -261,9 +256,8 @@ function AddProperty() {
 
                 propertyPhase: null,
                 propertyType: propertyType,
-                plotAreaMin: null,
-                plotAreaMax: null,
-
+                plotAreaMin: Autofill?.min_area,
+                plotAreaMax: Autofill?.max_area,
                 //facts:
                 number_of_floors: null,
                 Plot_Area: null,
@@ -289,10 +283,10 @@ function AddProperty() {
                 Starting_Price: null,
                 Life_Style: null,
 
-                propertyTitle: null,
-                arabicPropertyTitle: null,
-                propertyDescription: null,
-                arabicPropertyDescription: null
+                propertyTitle: Autofill?.property_title || ' ',
+                arabicPropertyTitle: ' ',
+                propertyDescription: ' ',
+                arabicPropertyDescription: ' '
               }}
               // validationSchema={Yup.object({
               //   projectTitle: stringValidator('Please provide a title'),
@@ -327,8 +321,7 @@ function AddProperty() {
 
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 const ProjectData = {
-                  project_id: Number(project_id),
-                  phases_id: Number(values?.propertyPhase.id),
+                  id: Number(project_id),
                   min_area: values?.plotAreaMin?.toString(),
                   max_area: values?.plotAreaMax?.toString(),
                   facts: {
@@ -381,8 +374,8 @@ function AddProperty() {
                 const submit = {
                   data: data
                 };
-                // console.log(ProjectData);
-                createProjectProperty(ProjectData);
+                console.log(ProjectData);
+                updateProjectProperty(ProjectData);
                 setSubmitting(false);
               }}
             >
@@ -392,17 +385,6 @@ function AddProperty() {
                   <Grid item xs={12}>
                     <MainCard title="Project details">
                       <Grid container spacing={2} alignItems="center">
-                        <AutoCompleteSelector
-                          label="Property Phase"
-                          placeholder="choose a phase"
-                          options={Autofill?.phases || []}
-                          // getOptionLabel={(phase) => phase?.phase_name || ''}
-                          style={{ xs: 12, lg: 4 }}
-                          helperText="Please choose a phase"
-                          id="propertyPhase"
-                          name="propertyPhase"
-                        />
-
                         <AutoCompleteSelector
                           label="Developer Company"
                           placeholder="Select Developer Company"
@@ -469,6 +451,7 @@ function AddProperty() {
                         <Grid item xs={12} lg={12}>
                           <Map disabled={shareLocation} normallng={long} normallat={lat} height={'40vh'} xs={12} lg={12} />
                         </Grid>
+
                         <AutoCompleteSelector
                           label="Country"
                           placeholder="Select Country"
@@ -487,7 +470,7 @@ function AddProperty() {
 
                         <AutoCompleteSelector
                           style={{ xs: 12, lg: 6 }}
-                          disabled={!countryID || shareLocation}
+                          disabled={shareLocation}
                           label="State"
                           placeholder="State"
                           type="text"
@@ -503,16 +486,16 @@ function AddProperty() {
                         />
 
                         {/* <Grid item xs={12} lg={6}>
-                          <InputLabel>Place</InputLabel>
-                          <MapAutocomplete placeHolder onChangeAddress={setAddress} value="uae" setlong={setlong} setlat={setlat} />
-                          <FormHelperText>Please enter place address</FormHelperText>
-                        </Grid> */}
+                            <InputLabel>Place</InputLabel>
+                            <MapAutocomplete placeHolder onChangeAddress={setAddress} value="uae" setlong={setlong} setlat={setlat} />
+                            <FormHelperText>Please enter place address</FormHelperText>
+                          </Grid> */}
 
                         {/* <Grid item xs={12} lg={6}> */}
                         <AutoCompleteSelector
                           label="City"
                           placeholder="Select City"
-                          disabled={!stateID || shareLocation}
+                          disabled={shareLocation}
                           options={CityByState?.data || []}
                           getOptionLabel={(city) => city?.city || city?.City || ''}
                           style={{ xs: 12, lg: 6 }}
@@ -525,20 +508,20 @@ function AddProperty() {
                           }}
                         />
                         {/* <AutoCompleteSelector
-                            label="District"
-                            placeholder="District"
-                            type="text"
-                            id="locationDistrict"
-                            name="locationDistrict"
-                            helperText="Please enter the location's district"
-                            options={['option 1', 'option 2', 'option 3']}
-                            style={{ xs: 12, lg: 12 }}
-                          /> */}
+                              label="District"
+                              placeholder="District"
+                              type="text"
+                              id="locationDistrict"
+                              name="locationDistrict"
+                              helperText="Please enter the location's district"
+                              options={['option 1', 'option 2', 'option 3']}
+                              style={{ xs: 12, lg: 12 }}
+                            /> */}
                         <AutoCompleteSelector
                           label="Community"
                           placeholder="Community"
                           type="text"
-                          disabled={!cityID || shareLocation}
+                          disabled={shareLocation}
                           id="locationCommunity"
                           name="locationCommunity"
                           helperText="Please enter the location's community"
@@ -553,7 +536,7 @@ function AddProperty() {
                         <AutoCompleteSelector
                           label="Sub Community"
                           placeholder="Sub Community"
-                          disabled={!communityID || shareLocation}
+                          disabled={shareLocation}
                           type="text"
                           id="locationSubCommunity"
                           name="locationSubCommunity"
@@ -613,6 +596,7 @@ function AddProperty() {
                           required
                           func={(e, value) => {
                             props.setFieldValue('view', e);
+                            // setViews(value);
                           }}
                         />
                         <AutoCompleteSelector
@@ -717,6 +701,7 @@ function AddProperty() {
                           required={true}
                           setFieldValue={props.setFieldValue}
                           onChange={(e) => {
+                            console.log('e: ', e);
                             props.setFieldValue('Completion_Date', e);
                           }}
                         />
@@ -868,6 +853,7 @@ function AddProperty() {
                   <Button
                     onClick={() => {
                       console.log('values=======> ', props.values);
+                      console.log('=======> ', checkedItems);
                     }}
                   >
                     test
