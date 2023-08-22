@@ -16,6 +16,8 @@ import Layout from 'layout';
 import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastError, ToastSuccess } from 'utils/toast';
+
 import { gridSpacing } from 'store/constant';
 import { useGetDeveloperCompanyQuery, useGetSubCompanyAccordingToParentQuery } from 'store/services/company/companyApi';
 import {
@@ -34,7 +36,6 @@ import {
   useGetPropertyTypeQuery,
   useGetViewQuery
 } from 'store/services/project/projectApi';
-import { ToastError, ToastSuccess } from 'utils/toast';
 import Categorization from './helper/Categorization';
 import MultiPhaseInputs from './helper/multi_inputs';
 import { useRef } from 'react';
@@ -131,7 +132,6 @@ function AddProject() {
   });
   const { data: views, error: viewsError, isLoading: loadingView } = useGetViewQuery();
   const [createProject, CreateProjectResult] = useCreateProjectMutation();
-  const [testing, setTesting] = useState(null);
   useEffect(() => {
     if (CreateProjectResult.isSuccess) {
       ToastSuccess('Project has been created successfully');
