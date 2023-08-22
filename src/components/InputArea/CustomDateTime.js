@@ -83,4 +83,41 @@ const CustomDateTime = memo(({ style, label, helperText, value, setValue, requir
   );
 });
 
+export const NormalCustomDateTime = memo(({ style, label, helperText, value, setValue, required, helperInfo, func, ...rest }) => {
+  return (
+<InputLayout
+      label={label}
+      style={{ xs: style.x, lg: style.lg }}
+      helperText={helperText}
+      required={required}
+      helperInfo={helperInfo}
+    >
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <MobileDatePicker
+          {...rest}
+          label={label}
+          onChange={(value) => {
+          }}
+          inputFormat="yyyy/MM/dd"
+          mask="__/__/__"
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              fullWidth
+              value={value}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <DateRangeIcon />
+                  </InputAdornment>
+                )
+              }}
+            />
+          )}
+        />
+      </LocalizationProvider>
+    </InputLayout>
+  )
+})
+
 export default CustomDateTime;

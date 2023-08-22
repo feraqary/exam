@@ -3,81 +3,108 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import React, { useState, useMemo } from 'react';
 import Container from 'components/Elements/Container';
-
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 // material-ui
 import { Grid } from '@mui/material';
 import Table from 'components/Table/Table';
-import { NormalAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
+import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SatisfactionChartCard from 'components/widget/widget/Chart/SatisfactionChartCard';
+import { objectValidator } from 'utils/formik-validations';
+
+const validationSchema = Yup.object({
+  country: objectValidator('Mandatory selection', true),
+  state: objectValidator('Mandatory selection', true),
+  community: objectValidator('Mandatory selection', true),
+  subCommunity: objectValidator('Mandatory selection', true),
+  type: objectValidator('Mandatory selection', true),
+  category: objectValidator('Mandatory selection', true),
+  beds: objectValidator('Mandatory selection', true)
+});
+
 const Insights = () => {
   return (
     <Container title="Location Insights" style={{ xs: 12 }}>
-      <Grid container spacing={gridSpacing}>
-        <NormalAutoCompleteSelector
-          label="Country"
-          placeholder="Select Country"
-          options={['PK', 'UAE']}
-          name="countrySelect"
-          id="CountrySelect"
-          labelObject="Country"
-          style={{ xs: 12, lg: 6 }}
-        />
-        <NormalAutoCompleteSelector
-          label="City/State"
-          placeholder="Select City/State"
-          options={['Ajman', 'Dubai']}
-          name="selectCity"
-          id="CountrySelect"
-          labelObject="City"
-          style={{ xs: 12, lg: 6 }}
-        />
-        <NormalAutoCompleteSelector
-          label="Community"
-          placeholder="Select Community"
-          options={['Standard', 'Luxury']}
-          name="countrySelect"
-          id="CountrySelect"
-          labelObject="Country"
-          style={{ xs: 12, lg: 6 }}
-        />
-        <NormalAutoCompleteSelector
-          label="Sub Community"
-          placeholder="Select Sub Community"
-          options={['Affor', 'Dudfdbai']}
-          name="countrySelect"
-          id="CountrySelect"
-          labelObject="Country"
-          style={{ xs: 12, lg: 6 }}
-        />
-        <NormalAutoCompleteSelector
-          label="Type"
-          placeholder="Select Type"
-          options={['rich', 'poor']}
-          name="countrySelect"
-          id="CountrySelect"
-          labelObject="Country"
-          style={{ xs: 12, lg: 6 }}
-        />
-        <NormalAutoCompleteSelector
-          label="Category"
-          placeholder="Select Category"
-          options={['Local', 'International']}
-          name="countrySelect"
-          id="CountrySelect"
-          labelObject="Country"
-          style={{ xs: 12, lg: 6 }}
-        />
-        <NormalAutoCompleteSelector
-          label="Beds"
-          placeholder="Select Beds"
-          options={['2BH', '3BH']}
-          name="countrySelect"
-          id="CountrySelect"
-          labelObject="Country"
-          style={{ xs: 12, lg: 6 }}
-        />
-      </Grid>
-
+      <Formik
+        initialValues={{
+          country: '',
+          state: '',
+          community: '',
+          subCommunity: '',
+          type: '',
+          category: '',
+          beds: ''
+        }}
+        validationSchema={validationSchema}
+      >
+        {(props) => (
+          <Grid container spacing={gridSpacing}>
+            <AutoCompleteSelector
+              label="Country"
+              placeholder="Select Country"
+              options={['PK', 'UAE']}
+              name="country"
+              id="country"
+              labelObject="Country"
+              style={{ xs: 12, lg: 6 }}
+            />
+            <AutoCompleteSelector
+              label="City/State"
+              placeholder="Select City/State"
+              options={['Ajman', 'Dubai']}
+              name="state"
+              id="state"
+              labelObject="City"
+              style={{ xs: 12, lg: 6 }}
+            />
+            <AutoCompleteSelector
+              label="Community"
+              placeholder="Select Community"
+              options={['Standard', 'Luxury']}
+              name="community"
+              id="community"
+              labelObject="Country"
+              style={{ xs: 12, lg: 6 }}
+            />
+            <AutoCompleteSelector
+              label="Sub Community"
+              placeholder="Select Sub Community"
+              options={['Affor', 'Dudfdbai']}
+              name="subCommunity"
+              id="subCommunity"
+              labelObject="Country"
+              style={{ xs: 12, lg: 6 }}
+            />
+            <AutoCompleteSelector
+              label="Type"
+              placeholder="Select Type"
+              options={['rich', 'poor']}
+              name="type"
+              id="type"
+              labelObject="Country"
+              style={{ xs: 12, lg: 6 }}
+            />
+            <AutoCompleteSelector
+              label="Category"
+              placeholder="Select Category"
+              options={['Local', 'International']}
+              name="category"
+              id="category"
+              labelObject="Country"
+              style={{ xs: 12, lg: 6 }}
+            />
+            <AutoCompleteSelector
+              label="Beds"
+              placeholder="Select Beds"
+              options={['2BH', '3BH']}
+              name="beds"
+              id="beds"
+              labelObject="Country"
+              style={{ xs: 12, lg: 6 }}
+            />
+          </Grid>
+        )}
+      </Formik>
       {/* Pie Charts */}
 
       <Grid container spacing={2}>
