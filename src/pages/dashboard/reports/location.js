@@ -180,21 +180,33 @@ const Statistics = () => {
       header: 'Serial No'
     },
     {
-      accessorKey: 'type',
-      header: 'Unit Type'
+      accessorKey: 'name',
+      header: 'Property Name'
     },
     {
-      accessorKey: 'averagePrice',
-      header: 'Average Price'
+      accessorKey: 'd',
+      header: 'No of Floors'
     },
     {
-      accessorKey: 'Maximum',
-      header: 'Maximum'
+      accessorKey: 'd',
+      header: 'No of Units'
     },
     {
-      accessorKey: 'price',
-      header: 'Price'
-    }
+      accessorKey: 'dd',
+      header: 'Built up area'
+    },
+    {
+      accessorKey: 'dd',
+      header: 'Plot Area'
+    },
+    {
+      accessorKey: 'sdd',
+      header: 'Cross Build'
+    },
+    {
+      accessorKey: 'x',
+      header: 'Years'
+    },
   ];
   return (
     <Container title="Building Statistics" style={{ xs: 12 }} sx={{ mt: 2 }}>
