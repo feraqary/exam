@@ -350,8 +350,33 @@ export const projectApi = api.injectEndpoints({
           url: `dashboard/getAllProjectPromotions?page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
-      }
-    })
+      },
+      providesTags: ["ProjectPromotion"]
+    }),
+    //Delete Project Promotion
+    deleteSingleProjectPromotion:builder.mutation({
+     
+      query:(id)=>({
+        url:`dashboard/deleteProjectPromotion/${id}`,
+        method:'DELETE',
+       
+      }),
+      invalidatesTags: ["ProjectPromotion"]
+     
+    }),
+    //Edit Promotioin
+   editPromotionList:builder.mutation({
+    query:(data)=>{
+      const  {id,...body} =data
+  return{
+    url:`dashboard/updateProjectPromotion`,
+    method:'PUT',
+    body,
+  }
+    },
+    providesTags: ["ProjectPromotion"]
+   }) 
+   
   })
 });
 
@@ -383,5 +408,7 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery,
-  useGetAllProjectPromotionsQuery
+  useGetAllProjectPromotionsQuery,
+ useDeleteSingleProjectPromotionMutation,
+ useEditPromotionListMutation,
 } = projectApi;

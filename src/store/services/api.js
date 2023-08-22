@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
 const token =
-  'v2.local.k8F2wvdu15ngyY-rcEU5lGxMpvTu8WtT0umsGZuEwwyF75knF0NMa79IOZ2U3K2plIBetsCHOz5Yc_Ss5XbFueRfDSTj2sSWelMI6bK9uSFczDiUo7cbJ0W2OxyhjbroQ2QbrRoL04TVKPhn7GS_-0yskdR8hZyLsnyJ23ba6JQcbuQZ9KN1ePKBvhkNXHyc_77_iFzrWMTClvmXRDkJO4cQbc9aF4Gmi56-c6-yXfXrAOUZVDctzilpKlkremEqJMDFpdX311ELcFvLrw.bnVsbA';
+  'v2.local.-rNzkGeKxyw686pdFQLXmZsLHOPZnRhaQGIcNkKWqmZfumbofXR7zNrjyRs-SuJAqvGWmYQ_6t2YeirpBeDQ6oFml3ZUleBRfGaWrjv90El-rfL4_6l3z0I5rSAT1WIoVYMplkrBdjf-xQthUVqoO9L_Jzr5wIv9Rif4TxGI8KzI8_BfURE0JVSUBT6zgqM_2hr7UCY-XdGDKF36hFbjSr1BtIVlBqHjoapBKZjBx1DI7eqqq5XxSNjTt_HpepIz-XiSE7JIIMoZC6dLgg.bnVsbA';
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
@@ -52,7 +52,8 @@ export const api = createApi({
     'LocalProjects',
     'InternationalProjects',
     'SharedProjects',
-    'ProjectDocuments'
+    'ProjectDocuments',
+    "ProjectPromotion"
   ],
   /**
    * This api has endpoints injected in adjacent files,
