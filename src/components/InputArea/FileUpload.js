@@ -50,7 +50,7 @@ const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, s
           value={field.value?.logoImage}
           inputRef={ref}
           onChange={(e) => {
-            setFieldValue(field.name, e.target.files[0]);
+            setFieldValue(field.name, rest.multiple ? e.target.files : e.target.files[0]);
           }}
           InputProps={{
             endAdornment: (
