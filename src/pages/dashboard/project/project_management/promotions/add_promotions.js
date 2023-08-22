@@ -1,6 +1,6 @@
 // add_promotions.js
 import React, { useState, useEffect } from 'react';
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 
 import { Grid, TextField, FormHelperText, Button } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
