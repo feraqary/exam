@@ -27,13 +27,15 @@ const reports = {
       id: 'location',
       title: <FormattedMessage id="Location" />,
       type: 'item',
-      icon: icons.IconKey
+      icon: icons.IconKey,
+      url: '/dashboard/reports/location',
     },
     {
       id: 'competitive',
       title: <FormattedMessage id="Competitive" />,
       type: 'item',
-      icon: icons.IconBug
+      icon: icons.IconBug,
+      url: '/dashboard/reports/competitive',
     },
     {
       id: 'agents',
@@ -48,7 +50,7 @@ const reports = {
       title: <FormattedMessage id="Transactions" />,
       type: 'item',
       icon: icons.IconPhoneCall,
-      url: '/dashboard/pages/landing',
+      url: '/dashboard/reports/transactions',
       target: true
     },
     {
@@ -56,7 +58,7 @@ const reports = {
       title: <FormattedMessage id="Market" />,
       type: 'item',
       icon: icons.IconPhoneCall,
-      url: '/dashboard/pages/landing',
+      url: '/dashboard/reports/market',
       target: true
     }
   ]
