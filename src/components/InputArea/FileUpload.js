@@ -25,7 +25,6 @@ import { useField } from 'formik';
  */
 
 const FileUpload = forwardRef(({ label, placeholder, helperText, image, style, setFieldValue, id, required, helperInfo, ...rest }, ref) => {
-  console.log(rest);
   const [field, meta] = useField(rest);
 
   return (

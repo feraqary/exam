@@ -5,7 +5,8 @@ import { Grid } from '@mui/material';
 import SubmitButton from 'components/Elements/SubmitButton';
 import InputText from 'components/InputArea/TextInput';
 import { useCreatePromotionTypeMutation } from 'store/services/project/projectApi';
-import * as Yup from 'yup';
+import * as Yup from "yup"
+
 import { stringValidator } from 'utils/formik-validations';
 
 const AddPromotionType = ({ pageTitle, title, setOpen, opened, size }) => {
@@ -24,7 +25,7 @@ const AddPromotionType = ({ pageTitle, title, setOpen, opened, size }) => {
             title: ''
           }}
           validationSchema={Yup.object({
-            title: stringValidator('Please provide a valid promotion type', true)
+            title: stringValidator("Please provide a valid promotion type", true)
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             handleFormSubmit(values);

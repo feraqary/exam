@@ -6,11 +6,12 @@ export const projectApi = api.injectEndpoints({
     createProjectDoc: builder.mutation({
       query(formData) {
         return {
-          url: `api/dashboard/createProjectDoc`,
+          url: `dashboard/createProjectDoc`,
           method: 'POST',
           body: formData
         };
-      }
+      },
+      invalidatesTags:["Documents"]
     }),
     //GET LOCAL Projects API
     getPropertyType: builder.query({
@@ -215,7 +216,7 @@ export const projectApi = api.injectEndpoints({
           url: `dashboard/getAllDocsByProject?project_id=${1}&page_no=${pageIndex}&page_size=${pageSize}`,
           method: 'GET'
         };
-      }
+      },
     }),
     // GET DOCUMENT CATEGORIES API
     getDocsCategories: builder.query({
@@ -356,7 +357,8 @@ export const projectApi = api.injectEndpoints({
           url: `dashboard/getAllDocsByProject?project_id=${project_id}&page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
-      }
+      },
+      providesTags:["Documents"]
     }),
 
     //GET PROPERTY TYP
@@ -449,16 +451,30 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+
+    // DELETE PROJECT DOCUMENT
+    deleteProjectDoc: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/deleteProjectDoc`,
+          method: 'DELETE',
+          body:formData
+        };
+      },
+      invalidatesTags: ["Documents"]
+    }),
+    
     // Get ALl Promotion Types
     getAllPromoType: builder.query({
       query({ pageIndex, pageSize }) {
         return {
-          url: `dashboard/getAllPromoTypes?page_no=${pageIndex + 1}&page_size=${pageSize}`,
-          method: 'GET'
+          url: `dashboard/getAllPromoTypesWithPagination?page_no=${pageIndex+1}&page_size=${pageSize}`,
+          method: 'GET',
         };
       },
       providesTags: ['Promotions']
     }),
+    
     getAllPromoTypeWithoutPagination: builder.query({
       query() {
         return {
@@ -527,6 +543,13 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery,
+  useDeleteProjectDocMutation,
+  useGetAllPromoTypeQuery,
+  useCreatePromotionTypeMutation,
+  useDeleteProjectPromotionTypesMutation,
+  useCreatePromotionsMutation,
+  useGetPromotionsQuery,
+  useGetAllProjectPromotionsQuery,
   useGetAllProjectPromotionsQuery,
   useGetPlansByPropertyIdQuery,
   useUpdatePlansByPropertyIdMutation,

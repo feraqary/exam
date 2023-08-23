@@ -16,6 +16,8 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
+import ViewInformation from 'components/InputArea/information/view_information';
+import ViewDocuments from 'pages/dashboard/project/project_management/documents/view_documents';
 
 // ==============================|| Manage International Projects ||============================== //
 
@@ -44,7 +46,7 @@ const Documents = () => {
       Cell: ({ row }) => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <span>{row.original.document_category.name}</span>
+            <span>{row.original.document_category.label}</span>
           </Box>
         );
       }
@@ -55,7 +57,7 @@ const Documents = () => {
       Cell: ({ row }) => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <span>{row.original.document_subcategory.name}</span>
+            <span>{row.original.document_subcategory.label}</span>
           </Box>
         );
       }
@@ -64,6 +66,7 @@ const Documents = () => {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ row }) => {
+        const [viewOpen, setViewOpen] = useState(false);
         return (
           <>
             <Box
@@ -73,11 +76,14 @@ const Documents = () => {
                 gap: '1rem'
               }}
             >
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" onClick={() => setViewOpen(true)}>
                 View
               </Button>
-              <Button variant="contained" color="primary">
-                Remove
+              <ViewInformation opened={viewOpen} setOpen={setViewOpen} pageTitle="Documents" size={'lg'} title="Project Documents">
+                <ViewDocuments document={row.original} />
+              </ViewInformation>
+              <Button variant="contained" color="error">
+                Delete
               </Button>
             </Box>
           </>
