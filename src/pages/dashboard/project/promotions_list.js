@@ -27,6 +27,10 @@ import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
 // import AddPromotions from '../promotions/add_promotions';
+// import AddPromotions from '../promotions/add_promotions_test';
+// import AddPromotions from './project_management/promotions/add_promotions';  
+import AddPromotions from './project_management/promotions/add_promotions_test';
+// import ViewInformation from '../information/view_information';
 import PopUp from 'components/InputArea/PopUp';
 import { use } from 'i18next';
 // import ViewInformation from '../information/view_information';
@@ -38,25 +42,26 @@ const ProjectPromotions = () => {
     pageSize: 5
   });
 
-  const { data: promotionList, isError, isFetching, error, isLoading,isSuccess } = useGetAllProjectPromotionsQuery(pagination);
-  console.log(promotionList, 'promotion List');
+  // const { data: promotionList, isError, isFetching, error, isLoading,isSuccess } = useGetAllProjectPromotionsQuery(pagination);
+  // console.log(promotionList, 'promotion Listfdfdf');
 
-  //   const { data: promotionList, isError, error, isLoading, isFetching } = useGetAllProjectPromotionsQuery(pagination);
-  //  console.log(promotionList,'data..');
+    const { data: promotionList, isError, error, isLoading, isFetching } = useGetAllProjectPromotionsQuery(pagination);
+   console.log(promotionList,'data..');
   const [updateStatus, result] = useUpdateProjectStatusMutation();
-  const [editPromotionList,response] =useEditPromotionListMutation()
-  
+  const [deleteSingleProjectPromotion,deleteResponse] = useDeleteSingleProjectPromotionMutation();
+ 
+ 
 
   useEffect(() => {
-    if (result.isSuccess) {
+    if (result?.isSuccess) {
       ToastSuccess('Project status successfully updated');
     }
-  }, [result.isSuccess]);
+  }, [result?.isSuccess]);
 
   useEffect(() => {
     if (result.isError) {
       const { data } = result.error;
-      console.log(data);
+     
       ToastError('Error');
     }
   }, [result.isError]);
@@ -82,7 +87,7 @@ const ProjectPromotions = () => {
     },
 
     {
-      accessorKey: 'promotion_type',
+      accessorKey: 'promotion_typel',
       header: 'Promotion Type'
     },
     {
@@ -95,13 +100,7 @@ const ProjectPromotions = () => {
       header: 'Action',
       Cell: ({ renderedCellValue, row }) => {
         const [open, setOpen] = useState(false);
-        const [deleteSingleProjectPromotion,response] = useDeleteSingleProjectPromotionMutation();
-        console.log(response,'response')
-        useEffect(()=>{
-          if(response.isSuccess){
-            ToastSuccess('Project list deleted successfully ');
-          }
-        },[response.isSuccess])
+       
         
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
         const [verify, setVerify] = useState(false);
@@ -143,7 +142,7 @@ const ProjectPromotions = () => {
          console.log(row.original.id,'status');
           
          await deleteSingleProjectPromotion(row.original.id);
-
+        
         
         };
       const handleUpdate =(status)=>{
@@ -180,20 +179,14 @@ const ProjectPromotions = () => {
               >
                 {row.original.phase_type == 'Multiple' && <></>}
 
-                <Link
-                  href={{
-                    pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
-                    query: {
-                      id: row.original.id
-                    }
-                  }}
-                >
-                  <Button 
-                  onClick={handleUpdate}
-                  color="primary" variant="contained">
-                    Edit Promotioin
-                  </Button>
-                </Link>
+               
+                 <Button onClick={handlePromotionOpen} variant="contained" color="primary">
+               Edit Promotions
+                </Button>
+                <PopUp opened={promotionOpen} setOpen={setPromotionOpen} title="Add Promotion" size={'md'}>
+                  <AddPromotions projectId={row.original.id} />
+                </PopUp>
+               
               
                 <Button onClick={ handleDeletePromotion} variant="contained" color="error">
                   Remove
@@ -215,7 +208,7 @@ const ProjectPromotions = () => {
           <Grid item xs={12}>
             <Table
               columnHeaders={ColumnHeaders}
-              data={promotionList?.data || data}
+              data={promotionList?.data || []}
               loading={false}
               pagination={pagination}
               setPagination={setPagination}

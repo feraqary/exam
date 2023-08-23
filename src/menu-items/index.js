@@ -23,7 +23,7 @@ import units from './units';
 import banners from './banners_ads';
 import contact from './contact';
 import app from './app';
-
+import categories from './categories_settings';
 // import units from './units';
 // ==============================|| MENU ITEMS ||============================== //
 
@@ -50,6 +50,7 @@ const menuItems = {
     reports,
     reviews,
     services,
+    // categories,
     settings,
     subscribers,
     units,

@@ -1,10 +1,13 @@
 // material-ui
 import { Grid, Button, CardActions } from '@mui/material';
 import { useFormikContext } from 'formik';
-
+import { useState } from 'react';
 const SubmitButton = () => {
   const { submitForm, isSubmitting, resetForm } = useFormikContext();
 
+
+ 
+  
   return (
     <Grid container justifyContent="flex-end">
       <CardActions>
@@ -15,7 +18,7 @@ const SubmitButton = () => {
             </Button>
           </Grid>
           <Grid item>
-            <Button variant="outlined" onClick={resetForm}>
+            <Button  variant="outlined" >
               Clear
             </Button>
           </Grid>
@@ -31,7 +34,7 @@ export const NormalSubmitButton = () => {
       <CardActions>
         <Grid container alignItems="center" justifyContent="flex-end" spacing={2}>
           <Grid item>
-            <Button variant="contained" color="secondary" type="submit">
+            <Button  variant="contained" color="secondary" type="submit">
               Submit
             </Button>
           </Grid>

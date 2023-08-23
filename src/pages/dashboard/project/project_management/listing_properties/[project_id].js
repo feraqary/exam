@@ -94,6 +94,22 @@ const ListingProperties = () => {
                   Document
                 </Button>
               </Link>
+
+              <Link
+                href={{
+                  pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    console.log(row.original.phase_type);
+                  }}
+                >
+                  Add Plans
+                </Button>
+              </Link>
               <Link
                 href={{
                   pathname: `/dashboard/project/project_management/listing_properties/financial_providers`,
@@ -108,20 +124,20 @@ const ListingProperties = () => {
               {/* Plans  */}
 
               <Link
-                  href={{
-                    pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                href={{
+                  pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    console.log(row.original.phase_type);
                   }}
                 >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      console.log(row.original.phase_type);
-                    }}
-                  >
-                    Plans
-                  </Button>
-                </Link>
+                  Plans
+                </Button>
+              </Link>
 
               <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/manage_units`, query: { project_id } }}>
                 <Button variant="contained" color="primary">
@@ -145,44 +161,6 @@ const ListingProperties = () => {
     }
   ];
 
-  const data = [
-    {
-      id:5,
-      project_id: 1,
-      phase_id:4,
-      ref_no:225,
-      property_title:"Aqary",
-      community:"unknown",
-      developer_company:"45",
-      no_of_floors:5,
-      no_of_units:3,
-      plot_area:"225sq",
-      buildup_area:"true",
-      services_charges:"true",
-      start_date:"true",
-      completion_date:"true",
-      hand_over_date:"5446"
-    },
-    {
-      id:8,
-      project_id: 1,
-      phase_id:4,
-      ref_no:225,
-      property_title:"Aqary",
-      community:"unknown",
-      developer_company:"45",
-      no_of_floors:5,
-      no_of_units:3,
-      plot_area:"225sq",
-      buildup_area:"true",
-      services_charges:"true",
-      start_date:"true",
-      completion_date:"true",
-      hand_over_date:"5446"
-    },
-  
-  ]
-
   if (isLoading) return;
   return (
     <Page title="Manage listing Propeties">
@@ -192,21 +170,28 @@ const ListingProperties = () => {
           <Grid item xs={12}>
             <Table
               columnHeaders={ColumnHeaders}
-              data={projectDocData?.data || data}
+              data={projectDocData?.data || []}
               loading={isLoading}
               pagination={pagination}
               setPagination={setPagination}
               isFetching={isFetching}
               rowCount={projectDocData?.Total}
-              // renderTopToolbarCustomActions={({ table }) => {
-              //   return (
-              //     <div style={{ display: 'flex', gap: '0.5rem' }}>
-              //       <Link href={{ pathname: `/dashboard/project/add_doc/${project_id}` }}>
-              //         <Button color="primary">Add Document</Button>
-              //       </Link>
-              //     </div>
-              //   );
-              // }}
+              renderTopToolbarCustomActions={({ table }) => {
+                return (
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <Link
+                      href={{
+                        pathname: `/dashboard/project/project_management/listing_properties/add_property/${project_id}`
+                      }}
+                    >
+                      <Button variant="outlined" color="primary">
+                        Add Property
+                      </Button>
+                    </Link>
+                  </div>
+                );
+              }}
+
             />
           </Grid>
         </Grid>

@@ -12,18 +12,19 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
-
     //GET LOCAL Projects API
     getPropertyType: builder.query({
       query() {
         return {
           url: `propertyTypes/getPropertyTypes`,
-          method: 'GET'
+          method: 'GET',
+          headers: {
+            Authorization: null
+          }
         };
       }
     }),
     //update Project
-
     getLocalProjects: builder.query({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
@@ -34,7 +35,6 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['LocalProjects']
     }),
-
     //GET International Projects API
     getInternationalProjects: builder.query({
       query(pagination) {
@@ -46,7 +46,6 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['InternationalProjects']
     }),
-
     //update Project
     getProjectUpdate: builder.mutation({
       query(formData) {
@@ -117,7 +116,6 @@ export const projectApi = api.injectEndpoints({
       }
     }),
     //GET ALL FACILITIES API
-
     getAllfacilities: builder.query({
       query(_) {
         return {
@@ -199,11 +197,39 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
-
+    // Get Promotions API
+    getPromotions: builder.query({
+      query({ pageIndex, pageSize, id }) {
+        return {
+          url: `dashboard/getAllProjectPromotions?page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
+        };
+      }
+    }),
+    //Create Promotions
+    createPromotions: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/createProjectPromotion`,
+          method: 'POST',
+          body: data
+        };
+      }
+    }),
+    //Create Projects API
     CreateProject: builder.mutation({
       query({ data, isMulti }) {
         return {
           url: `dashboard/createProject/${isMulti ? '0' : '1'}`,
+          method: 'POST',
+          body: data
+        };
+      }
+    }),
+    CreateProjectProperty: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/createProjectProperty`,
           method: 'POST',
           body: data
         };
@@ -221,6 +247,19 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['DocumentsCategory']
     }),
+
+    //CREATE PROJECT PROMOTION
+    createProjectPromotion: builder.mutation({
+      query(formData) {
+        console.log(formData,'data create');
+        return {
+          url: 'dashboard/createProjectPromotion',
+          method: 'POST',
+          body: formData
+        };
+      }
+    }),
+
     //CREATE DOCS SUB CATEGORY
     CreateSubCategory: builder.mutation({
       query(data) {
@@ -367,20 +406,67 @@ export const projectApi = api.injectEndpoints({
     //Edit Promotioin
    editPromotionList:builder.mutation({
     query:(data)=>{
-      const  {id,...body} =data
+     
+     
+    console.log(data,'from edit');
   return{
     url:`dashboard/updateProjectPromotion`,
     method:'PUT',
-    body,
+    body:data.formData
   }
     },
+    invalidatesTags: ['InternationalProjects', 'LocalProjects', 'ProjectStatus', 'SharedProjects'],
     providesTags: ["ProjectPromotion"]
-   }) 
+   }) ,
    
+    // Get ALl Promotion Types
+    getAllPromoType: builder.query({
+      query({ pageIndex, pageSize }) {
+        return {
+          url: `dashboard/getAllPromoTypes?page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
+        };
+      },
+      providesTags: ['Promotions']
+    }),
+    getAllPromoTypeWithoutPagination: builder.query({
+      query() {
+        return {
+          url: `dashboard/getAllPromoTypes`,
+          method: 'GET'
+        };
+      }
+    }),
+
+    // Add Promotion Type
+    createPromotionType: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/createPromotionType`,
+          method: 'POST',
+          body: formData
+        };
+      },
+      invalidatesTags: ['Promotions']
+    }),
+
+    // Delete Promotion Type
+    deleteProjectPromotionTypes: builder.mutation({
+      query(promotionId) {
+        return {
+          url: `dashboard/deleteProjectPromotionTypes/${promotionId}`,
+          method: 'DELETE'
+        };
+      },
+      invalidatesTags: ['Promotions']
+    })
+    
+
   })
 });
 
 export const {
+  useCreateProjectPropertyMutation,
   useGetDocsCategoriesQuery,
   useCreateCategoryMutation,
   useCreateSubCategoryMutation,
@@ -388,6 +474,9 @@ export const {
   useUpdateProjectsIsEnabledMutation,
   useGetLocalProjectsQuery,
   useGetProjectQuery,
+  useGetAllPromoTypeQuery,
+  useCreatePromotionTypeMutation,
+  useDeleteProjectPromotionTypesMutation,
   useGetInternationalProjectsQuery,
   useUpdateProjectsVerifyStatusMutation,
   useGetDocByProjectIdQuery,
@@ -411,4 +500,9 @@ export const {
   useGetAllProjectPromotionsQuery,
  useDeleteSingleProjectPromotionMutation,
  useEditPromotionListMutation,
+  useCreatePromotionsMutation,
+  useGetPromotionsQuery,
+  useCreateProjectPromotionMutation,
+  useGetAllPromoTypeWithoutPaginationQuery
+  
 } = projectApi;

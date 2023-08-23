@@ -1,76 +1,67 @@
 // material-ui
 import { Grid } from '@mui/material';
-
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 // project imports
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
-import 'react-toastify/dist/ReactToastify.css';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
+import 'react-toastify/dist/ReactToastify.css';
 
 // assets
 import InputText from 'components/InputArea/TextInput';
+import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
-import { createCompanyType } from 'store/slices/company-section/action/company';
 import { ToastContainer } from 'react-toastify';
-import FileUpload from 'components/InputArea/FileUpload';
 import { fileValidator, objectValidator, stringValidator } from 'utils/formik-validations';
-import { useCreateSubCompanyTypeMutation } from 'store/services/company/companyApi';
-import { ToastSuccess } from 'utils/toast';
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+import { useCreateMainServiceMutation, useGetSubCompanyTypesWithoutPaginationQuery } from 'store/services/services/serviceApi';
+import { ToastError, ToastSuccess } from 'utils/toast';
 
-
->>>>>>> main
-
-=======
->>>>>>> 2df650bfce5c8291dace6a91d5d404bfd53422c8
-const roles = [
-  { label: 'Broker Company', id: 1 },
-  { label: 'Developer Company', id: 2 },
-  { label: 'Service Company', id: 3 }
-];
-
+// ==============================|| Add Company Type form ||============================== //
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
 const validationSchema = Yup.object({
-  companyType: objectValidator(),
-  subCompanyTypeName: stringValidator('Please provide a valid sub company type'),
+  subCompanyType: objectValidator(),
+  mainServiceName: stringValidator('Please provide a valid sub company type'),
   description: stringValidator('Please provide a description'),
   logoImage: fileValidator(SUPPORTED_FORMATS),
   iconImage: fileValidator(SUPPORTED_FORMATS)
 });
 
-function CompanyType() {
+function MainService() {
   const logoRef = useRef(null);
   const iconRef = useRef(null);
 
-  const [createCompanySubType, result] = useCreateSubCompanyTypeMutation();
+  const { data: subCompanyTypes, isLoading, isError, isFetching, error } = useGetSubCompanyTypesWithoutPaginationQuery();
+
+  const [createMainService, result] = useCreateMainServiceMutation();
 
   useEffect(() => {
     if (result.isSuccess) {
-      ToastSuccess('Company Sub Type has been successfully created');
+      ToastSuccess('Main service has been created successfully');
     }
   }, [result.isSuccess]);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (result.isError) {
+      console.log(error);
+      ToastError(error);
+    }
+  }, [result.isError]);
 
   return (
-    <Page title="Add Company Types">
-      <ToastContainer />
+    <Page title="Add Services">
       <Grid container spacing={gridSpacing}>
-        <Container title="Add Company Type" style={{ xs: 12 }}>
+        <ToastContainer />
+        <Container style={{ xs: 12 }}>
           <Grid container xs={12} lg={12} justifyContent="center" gap={3}>
             <Formik
               initialValues={{
-                companyType: '',
-                subCompanyTypeName: '',
+                subCompanyType: '',
+                mainServiceName: '',
                 description: '',
                 logoImage: '',
                 iconImage: ''
@@ -78,12 +69,12 @@ function CompanyType() {
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 const formData = new FormData();
-                formData.append('main_company_type_id', values.companyType.id);
-                formData.append('title', values.subCompanyTypeName);
+                formData.append('company_types_id', values.subCompanyType.id);
+                formData.append('title', values.mainServiceName);
+                formData.append('description', values.description);
                 formData.append('image_url', values.logoImage);
                 formData.append('icon_url', values.iconImage);
-                formData.append('description', values.description);
-                createCompanySubType(formData);
+                createMainService(formData);
                 setSubmitting(false);
                 resetForm();
               }}
@@ -96,22 +87,24 @@ function CompanyType() {
                 <Grid container lg={12} xs={12} justifyContent="center" gap={3}>
                   <AutoCompleteSelector
                     style={{ xs: 12, lg: 8 }}
-                    label="Choose Company Type"
-                    placeholder="Choose Company Type"
-                    options={roles}
-                    id="companyType"
-                    name="companyType"
+                    label="Choose Sub Company Type"
+                    placeholder="Choose Sub Company Type"
+                    options={error ? [] : subCompanyTypes?.data || []}
+                    getOptionLabel={(subCompanyType) => subCompanyType.title || ''}
+                    id="subCompanyType"
+                    name="subCompanyType"
                     setFieldValue={props.setFieldValue}
+                    loading={isLoading}
                   />
 
                   <InputText
-                    label="Add Sub Company Type Name"
-                    placeholder="Add Sub Company Type Name"
-                    helperText="Please enter company sub type name"
+                    label="Add Main Service Name"
+                    placeholder="Add Main Service Name"
+                    helperText="Please enter main service name"
                     style={{ xs: 12, lg: 8 }}
                     type="text"
-                    name="subCompanyTypeName"
-                    id="subCompanyTypeName"
+                    name="mainServiceName"
+                    id="mainServiceName"
                     required={true}
                   />
                   <InputText
@@ -126,6 +119,7 @@ function CompanyType() {
                     helperText="Please enter the description for the sub compnay type"
                     required={true}
                   />
+
                   <FileUpload
                     id="logoImage"
                     name="logoImage"
@@ -161,8 +155,8 @@ function CompanyType() {
   );
 }
 
-CompanyType.getLayout = function getLayout(page) {
+MainService.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default CompanyType;
+export default MainService;

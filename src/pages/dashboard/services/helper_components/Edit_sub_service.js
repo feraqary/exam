@@ -15,9 +15,7 @@ import FileUpload from 'components/InputArea/FileUpload';
 import SubmitButton from 'components/Elements/SubmitButton';
 import Container from 'components/Elements/Container';
 import { createService, getAllMainServices, updateSubService } from 'store/slices/company-section/action/company';
-import { setMainService } from 'store/slices/company-section/slice/company';
 import { ToastContainer } from 'react-toastify';
-import { updateService, deleteService, createServices } from 'store/slices/services/action/services';
 const roles = ['Broker Company', 'Developer Company', 'Service Company'];
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -26,23 +24,15 @@ import * as Yup from 'yup';
 function Edit_Sub_Service({ desc, id, title, close }) {
   const dispatch = useDispatch();
 
-  const { mainServices, loading, error, mainService ,services_id} = useSelector((state) => state.companies);
+  const { mainServices, loading, error, mainService, services_id } = useSelector((state) => state.companies);
 
   const [service, setService] = useState(null);
   const [serviceName, setServiceName] = useState(null);
   const [des, setDesc] = useState(null);
 
   useEffect(() => {
-  dispatch(getAllMainServices());
+    dispatch(getAllMainServices());
   }, []);
-
-  const handleMainServiceChange = (newValue) => {
-    dispatch(setMainService(newValue));
-    console.log('titlesss: ', newValue.title);
-    setService(newValue.title);
-  };
-
-
 
   const submitSubForm = (values) => {
     const formData = new FormData();
@@ -52,7 +42,7 @@ function Edit_Sub_Service({ desc, id, title, close }) {
     formData.append('image_url', values.imgUrl);
     formData.append('main_services_id', 1);
 
-    console.log(services_id)
+    console.log(services_id);
     dispatch(updateSubService({ id, formData }));
     close(false);
   };

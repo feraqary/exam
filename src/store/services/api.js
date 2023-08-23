@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
 const token =
-  'v2.local.-rNzkGeKxyw686pdFQLXmZsLHOPZnRhaQGIcNkKWqmZfumbofXR7zNrjyRs-SuJAqvGWmYQ_6t2YeirpBeDQ6oFml3ZUleBRfGaWrjv90El-rfL4_6l3z0I5rSAT1WIoVYMplkrBdjf-xQthUVqoO9L_Jzr5wIv9Rif4TxGI8KzI8_BfURE0JVSUBT6zgqM_2hr7UCY-XdGDKF36hFbjSr1BtIVlBqHjoapBKZjBx1DI7eqqq5XxSNjTt_HpepIz-XiSE7JIIMoZC6dLgg.bnVsbA';
+  'v2.local.CxXZTpbKEhPbmz_lvjed10kdseGZhDLBqLBm1FSoB_94HiP0Fy-WCsJ5tz1Vcms-MF1koLUwD6xJ_c3LrDV1694UFmAzNDYqjn5S3V-C5IvU5niG_mK8PpJHy0vetDoGMCZfSP9858S16MvUrr5Slead9U0EqqNP14_IIqUfSc51Foxn7SUv3FAy-Nh74TC9vrxepeK2i6MI4S78h6Ix4lLktmODD0IsM36f1EhO9UD5ApZpMOQl_NjB16HQw9Omk0p1PZsyWsoKNJuv7A.bnVsbA';
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://20.203.31.58/api/',
-  credentials: 'omit',
+  credentials: 'same-origin',
+
   prepareHeaders: (headers, { getState }) => {
     // By default, if we have a token in the store, let's use that for authenticated requests
 
@@ -52,8 +53,7 @@ export const api = createApi({
     'LocalProjects',
     'InternationalProjects',
     'SharedProjects',
-    'ProjectDocuments',
-    "ProjectPromotion"
+    'ProjectDocuments'
   ],
   /**
    * This api has endpoints injected in adjacent files,

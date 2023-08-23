@@ -1,6 +1,7 @@
 // add_promotions.js
-
+import React, { useState, useEffect } from 'react';
 import React, { useState } from 'react';
+
 import { Grid, TextField, FormHelperText, Button } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -8,7 +9,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Page from 'components/ui-component/Page';
 import { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
 import { Formik, Field } from 'formik';
-import Layout from 'layout';
 const promotionOptions = [
   { id: 0, label: 'Open to All Nationalities' },
   { id: 1, label: 'Flexible Payment Plan' },
@@ -17,13 +17,10 @@ const promotionOptions = [
   { id: 4, label: 'Discount' },
   { id: 5, label: 'Low Down Payment' }
 ];
-
 const inputFieldStyle = { width: '100%' };
-
 function AddPromotions({ projectId, onClose }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedPromotions, setSelectedPromotions] = useState([]);
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -31,6 +28,21 @@ function AddPromotions({ projectId, onClose }) {
   const handlePromotionsChange = (event) => {
     setSelectedPromotions(event.target.value);
   };
+
+  const [createPromotions, createPromotionsResult] = useCreatePromotionsMutation();
+  const { data: Types, isLoading, isError } = useCreatePromotionsMutation();
+
+  useEffect(() => {
+    if (createPromotionsResult.isSuccess) {
+      ToastSuccess('Promotion has been created successfully!');
+    }
+  }, [createPromotionsResult.isSuccess]);
+  useEffect(() => {
+    if (createPromotionsResult.isError) {
+      const { data } = createPromotionsResult.error;
+      ToastError(data.error);
+    }
+  }, [createPromotionsResult.isError]);
   const useCreatePromotionsMutation = (formData) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -69,19 +81,21 @@ function AddPromotions({ projectId, onClose }) {
         formikBag.setSubmitting(false);
       });
   };
-
   return (
     <Page title="Add Promotions">
       <Formik
         initialValues={{
+          projects_id: '',
+
           promotion_types: [],
           description: '',
           expiry_date: null
         }}
         onSubmit={handleFormSubmit}
       >
-        {({ handleSubmit, isSubmitting }) => (
+        {({ handleSubmit, isSubmitting, values }) => (
           <form onSubmit={handleSubmit}>
+            {console.log(values)}
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Field
@@ -90,6 +104,7 @@ function AddPromotions({ projectId, onClose }) {
                   options={promotionOptions}
                   label="Promotion Types"
                   name="promotion_types"
+                  id="promotion_types"
                   onChange={handlePromotionsChange}
                   value={selectedPromotions}
                 />
