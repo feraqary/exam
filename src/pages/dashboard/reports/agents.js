@@ -6,16 +6,19 @@ import React, { useState, useMemo } from 'react';
 
 // material-ui
 import { Grid } from '@mui/material';
-import MaterialReactTable from 'material-react-table';
+import Table from 'components/Table/Table';
+import Container from 'components/Elements/Container';
 
 export default function Agents() {
   return (
     <Page title="Agents">
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <AgentsTable />
+      <Container title="Agents List" style={{ xs: 12 }} sx={{ mt: 2 }}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <AgentsTable />
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Page>
   );
 }
@@ -65,6 +68,10 @@ const data = [
 ];
 
 const AgentsTable = () => {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
   const columns = useMemo(
     () => [
       {
@@ -100,5 +107,15 @@ const AgentsTable = () => {
     []
   );
 
-  return <MaterialReactTable columns={columns} data={data} />;
+  return (
+    <Table
+      columnHeaders={columns}
+      data={data}
+      //   loading={isLoading}
+      pagination={pagination}
+      //   setPagination={setPagination}
+      //   isFetching={isFetching}
+      //   rowCount={localProjectsData?.Total}
+    />
+  );
 };

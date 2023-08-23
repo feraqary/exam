@@ -4,6 +4,7 @@ import { Grid, ListItemText } from '@mui/material';
 import Page from 'components/ui-component/Page';
 import PopUp from '../PopUp';
 
+
 function ViewInformation({ title, setOpen, opened, children, size, fullScreen, actions, ...rest }) {
   return (
     <PopUp opened={opened} setOpen={setOpen} size={size}>
