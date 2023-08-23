@@ -79,7 +79,7 @@ const ListingProperties = () => {
                 Edit
               </Button>
 
-              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/gallery/${project_id}` }}>
+              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/gallery/${row.original.id}` }}>
                 <Button variant="contained" color="primary">
                   Gallery
                 </Button>

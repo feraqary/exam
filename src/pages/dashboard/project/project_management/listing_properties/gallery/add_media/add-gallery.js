@@ -1,18 +1,21 @@
 // add_promotions.js
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Grid, Button } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import Page from 'components/ui-component/Page';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import FileUpload from 'components/InputArea/FileUpload';
 import { Formik } from 'formik';
 import SubmitButton from 'components/Elements/SubmitButton';
-import Router, { useRouter } from 'next/router';
-function AddGallery() {
+import { useRouter } from 'next/router';
+import { useCreateProjectPropertyMediaMutation } from 'store/services/project/projectApi';
+
+function AddGallery({ closeModal }) {
   const router = useRouter();
-  console.log(router.query);
+  const property_id = router.query.property_id;
+  const [createGalleryMedia, result] = useCreateProjectPropertyMediaMutation();
 
   return (
     <Page title="Add Gallery">
@@ -20,11 +23,20 @@ function AddGallery() {
         <Formik
           initialValues={{
             galleryType: '',
-            planDocument: '',
-            mediaType: ''
+            mediaType: null,
+            mediaFiles: ''
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            console.log(values);
+            const formData = new FormData();
+            formData.append('id', property_id);
+            formData.append('main_media_section', values.galleryType);
+            formData.append('file_no', values.mediaType?.value);
+            for (const file of values.mediaFiles) {
+              formData.append('files', file);
+            }
+            createGalleryMedia(formData);
+            resetForm();
+            closeModal(false);
           }}
         >
           {(props) => (
@@ -32,7 +44,7 @@ function AddGallery() {
               <AutoCompleteSelector
                 label="Gallery Type"
                 placeholder="Select Gallery Type"
-                options={['Master Plan', 'Main Image', 'Exterior', 'Interior', 'Video', 'Virtual Tour', 'Cover Image']}
+                options={['Main Image', 'Exterior', 'Interior', 'Video', 'Virtual Tour', 'Cover Image']}
                 style={{ xs: 12, lg: 12 }}
                 helperText="Please Select Gallery Type"
                 id="galleryType"
@@ -55,14 +67,14 @@ function AddGallery() {
                 required={true}
               />
               <FileUpload
-                id="planDocument"
-                name="planDocument"
+                id="mediaFiles"
+                name="mediaFiles"
                 required={true}
                 label="Images"
                 style={{ xs: 12, lg: 12 }}
-                placeholder="Upload Plan"
+                placeholder="Upload Media"
                 setFieldValue={props.setFieldValue}
-                helperText="Please upload the plan document"
+                helperText="Please upload the Media as Above Type"
                 multiple={true}
                 // ref={documents}
               />

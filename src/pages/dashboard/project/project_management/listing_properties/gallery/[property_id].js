@@ -87,7 +87,7 @@ const ListingProperties = () => {
           </Grid>
         </Grid>
         <PopUp opened={addGalleryModel} setOpen={setAddGalleryModel} size={'lg'} title="Add Gallery">
-        <AddGallery />
+        <AddGallery closeModal={setAddGalleryModel}/>
           </PopUp>
 
       </Container>

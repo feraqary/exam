@@ -30,7 +30,7 @@ export const projectApi = api.injectEndpoints({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getAllLocalProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=pakistan`,
+          url: `dashboard/getAllLocalProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
           method: 'GET'
         };
       },
@@ -41,7 +41,7 @@ export const projectApi = api.injectEndpoints({
       query(pagination) {
         const { pageIndex, pageSize } = pagination;
         return {
-          url: `dashboard/getAllIntProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=pakistan`,
+          url: `dashboard/getAllIntProjects?page_no=${pageIndex + 1}&page_size=${pageSize}&country=united arab emirates`,
           method: 'GET'
         };
       },
@@ -429,6 +429,17 @@ createPromotions : builder.mutation ({
       },
       invalidatesTags: ["Promotions"]
     }),
+
+    // Add Gallery(Media) in Listing Properties
+    createProjectPropertyMedia: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/createProjectPropertyMedia`,
+          method: 'POST',
+          body:formData
+        };
+      }
+    }),
   })
 });
 
@@ -468,4 +479,5 @@ export const {
   useCreatePromotionsMutation,
   useGetPromotionsQuery,
   useGetAllProjectPromotionsQuery,
+  useCreateProjectPropertyMediaMutation
 } = projectApi;
