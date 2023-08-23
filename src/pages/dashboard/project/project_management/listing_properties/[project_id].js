@@ -98,6 +98,45 @@ const ListingProperties = () => {
                 View Information
               </Button>
 
+              <ViewInformation opened={viewOpen} setOpen={setViewOpen} size={'lg'}>
+                <Grid item xs={12}>
+                  <MainCard title="Property Details">
+                    <Grid container spacing={2}>
+                      <>
+                        <Item primary="Property Title:" secondary={row.original?.property_title} />
+                        <Item primary="Arabic Property Title:" secondary={row.original?.property_title_arabic} />
+                        <Item primary="Property Description:" secondary={row.original?.description} />
+                        <Item primary="Arabic Property Description:" secondary={row.original?.description_arabic} />
+                        <Item primary="Completion Status:" secondary={completionStatus[row.original?.completion_status]} />
+                        <Item primary="Property Status:" secondary={row.original?.property_type?.map((type) => `${type.label}, `)} />
+                        {/* <Item primary="View:" secondary={row.original?.view?.map((v) => `${v.name}, `)} /> */}
+                        <Item primary="Facilities:" secondary={row.original?.facilities?.map((f) => `${f.label}, `)} />
+                        <Item primary="Amenities:" secondary={row.original?.amenities?.map((a) => `${a.label}, `)} />
+                        <Item primary="Plot Area:" secondary={row.original?.plot_area || 0} />
+                        <Item primary="Elevators:" secondary={row.original?.elevator || 0} />
+                        {/* <Item primary="Lifestyle:" secondary={lifestylelist[row.original?.life_style]} /> */}
+                        {/* <Item primary="Ownership:" secondary={row.original?.ownership || ''} /> */}
+                        {/* <Item primary="Furnished:" secondary={furnished[row.original?.furnished]} /> */}
+                        {/* <Item primary="Starting Price:" secondary={row.original?.starting_price || 0} /> */}
+                        <Item primary="Built Up Area:" secondary={row.original?.built_up_area || 0} />
+                        <Item primary="Area Range -max-:" secondary={row.original?.max_area || 0} />
+                        <Item primary="Area Range -min-:" secondary={row.original?.min_area || 0} />
+                        <Item primary="Parking:" secondary={row.original?.parking || 0} />
+                        <Item primary="Start Date:" secondary={row.original?.start_date} />
+                        <Item primary="Completion Date:" secondary={row.original?.completion_date} />
+                        <Item primary="Handover Date:" secondary={row.original?.handover_date} />
+                        <Item primary="No. Of Floors:" secondary={row.original?.no_of_floor || 0} />
+                        <Item primary="No. Of Units:" secondary={'' || 0} />
+                        <Item primary="Available Units:" secondary={'' || 0} />
+                        <Item primary="No. Of Pools:" secondary={row.original?.no_of_pool || 0} />
+                        <Item primary="No. Of Retail Center:" secondary={row.original?.no_of_retail || 0} />
+                        <Item primary="Service Charge:" secondary={row.original?.service_charge || 0} />
+                      </>
+                    </Grid>
+                  </MainCard>
+                </Grid>
+              </ViewInformation>
+
               <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/gallery/${project_id}` }}>
                 <Button variant="contained" color="primary">
                   Gallery
