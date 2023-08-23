@@ -161,7 +161,8 @@ export const projectApi = api.injectEndpoints({
           method: 'POST',
           body: data
         };
-      }
+      },
+      invalidatesTags: ['PropertyPlan']
     }),
 
     getBrokerCompaniesByCities: builder.query({
@@ -326,7 +327,8 @@ export const projectApi = api.injectEndpoints({
           url: `dashboard/getAllPropertyPlans?property_id=${property_id}&key=1`,
           method: 'GET'
         };
-      }
+      },
+      providesTags: ['PropertyPlan']
     }),
     //GET PLANS BY PROPERTY ID
     updatePlansByPropertyId: builder.mutation({
@@ -336,7 +338,8 @@ export const projectApi = api.injectEndpoints({
           method: 'PUT',
           body: data
         };
-      }
+      },
+      invalidatesTags: ['PropertyPlan']
     }),
 
     //GET ALL DOCUMENT CATEGORIES
@@ -556,7 +559,6 @@ export const {
   useCreatePropertyPlanMutation,
   useCreatePromotionsMutation,
   useGetPromotionsQuery,
-  useGetAllProjectPromotionsQuery,
   useCreateProjectPromotionMutation,
   useGetAllPromoTypeWithoutPaginationQuery
 } = projectApi;

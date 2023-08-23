@@ -35,7 +35,7 @@ export default function Plans() {
   const { id } = router.query;
   const documents = useRef(null);
   const [openAdd, setOpenAdd] = useState(false);
-  const [openEdit, setOpenEdit] = useState(false);
+
   const { data: PlansData, isError, isLoading, isSuccess, isFetching } = useGetPlansByPropertyIdQuery(id);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -72,7 +72,7 @@ export default function Plans() {
   }, [createPlan.isError]);
 
   //create and edit form
-  const PlansForm = ({ type, plan_id }) => {
+  const PlansForm = ({ type, plan_id, setOpen }) => {
     return (
       <>
         <Formik
@@ -83,7 +83,7 @@ export default function Plans() {
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             const formData = new FormData();
-
+            const property_id = id;
             if (type === 'Add') {
               formData.append('properties_id', id);
               formData.append('title', values.title.label);
@@ -101,7 +101,7 @@ export default function Plans() {
                 formData.append('image_url[]', img);
               }
               updatePlan(formData);
-              setOpenEdit(false);
+              setOpen(false);
             }
           }}
         >
@@ -178,6 +178,7 @@ export default function Plans() {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ row }) => {
+        const [openEdit, setOpenEdit] = useState(false);
         return (
           <>
             <Box
@@ -188,7 +189,7 @@ export default function Plans() {
               }}
             >
               <PopUp title="Edit Plans" setOpen={setOpenEdit} opened={openEdit} size={'lg'}>
-                <PlansForm type="Edit" plan_id={row.original?.id} />
+                <PlansForm setOpen={setOpenEdit} type="Edit" plan_id={row.original?.id} />
               </PopUp>
 
               <Button
@@ -225,7 +226,7 @@ export default function Plans() {
             pagination={pagination}
             setPagination={setPagination}
             isFetching={isFetching}
-            rowCount={1}
+            rowCount={PlansData?.total}
             renderTopToolbarCustomActions={({ table }) => {
               return (
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
