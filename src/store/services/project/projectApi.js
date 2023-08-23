@@ -11,7 +11,7 @@ export const projectApi = api.injectEndpoints({
           body: formData
         };
       },
-      invalidatesTags:["Documents"]
+      invalidatesTags: ['Documents']
     }),
     //GET LOCAL Projects API
     getPropertyType: builder.query({
@@ -217,7 +217,7 @@ export const projectApi = api.injectEndpoints({
           url: `dashboard/getAllDocsByProject?project_id=${1}&page_no=${pageIndex}&page_size=${pageSize}`,
           method: 'GET'
         };
-      },
+      }
     }),
     // GET DOCUMENT CATEGORIES API
     getDocsCategories: builder.query({
@@ -361,7 +361,7 @@ export const projectApi = api.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags:["Documents"]
+      providesTags: ['Documents']
     }),
 
     //GET PROPERTY TYP
@@ -461,23 +461,23 @@ export const projectApi = api.injectEndpoints({
         return {
           url: `dashboard/deleteProjectDoc`,
           method: 'DELETE',
-          body:formData
+          body: formData
         };
       },
-      invalidatesTags: ["Documents"]
+      invalidatesTags: ['Documents']
     }),
-    
+
     // Get ALl Promotion Types
     getAllPromoType: builder.query({
       query({ pageIndex, pageSize }) {
         return {
-          url: `dashboard/getAllPromoTypesWithPagination?page_no=${pageIndex+1}&page_size=${pageSize}`,
-          method: 'GET',
+          url: `dashboard/getAllPromoTypesWithPagination?page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
         };
       },
       providesTags: ['Promotions']
     }),
-    
+
     getAllPromoTypeWithoutPagination: builder.query({
       query() {
         return {
@@ -523,9 +523,6 @@ export const {
   useUpdateProjectsIsEnabledMutation,
   useGetLocalProjectsQuery,
   useGetProjectQuery,
-  useGetAllPromoTypeQuery,
-  useCreatePromotionTypeMutation,
-  useDeleteProjectPromotionTypesMutation,
   useGetInternationalProjectsQuery,
   useUpdateProjectsVerifyStatusMutation,
   useGetDocByProjectIdQuery,
@@ -550,9 +547,6 @@ export const {
   useGetAllPromoTypeQuery,
   useCreatePromotionTypeMutation,
   useDeleteProjectPromotionTypesMutation,
-  useCreatePromotionsMutation,
-  useGetPromotionsQuery,
-  useGetAllProjectPromotionsQuery,
   useGetAllProjectPromotionsQuery,
   useGetPlansByPropertyIdQuery,
   useUpdatePlansByPropertyIdMutation,
