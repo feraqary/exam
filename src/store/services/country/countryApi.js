@@ -2,7 +2,6 @@ import { api } from '../api';
 
 export const countryApi = api.injectEndpoints({
   endpoints: (builder) => ({
-
     // GET ALL COUNTRIES API
     getCountries: builder.query({
       query(_) {

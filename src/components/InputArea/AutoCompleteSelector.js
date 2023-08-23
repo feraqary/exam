@@ -3,8 +3,9 @@ import InfoIcon from '@mui/icons-material/Info';
 import { Autocomplete, FormHelperText, Grid, IconButton, TextField, Tooltip } from '@mui/material';
 import InputLabel from 'components/ui-component/extended/Form/InputLabel';
 import { useField, useFormikContext } from 'formik';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import { useDispatch } from 'react-redux';
+
 /**
  * A component that provides an autocomplete selector with validation support for Formik forms.
  * @param {Object} props - The component props.
@@ -20,108 +21,145 @@ import { useDispatch } from 'react-redux';
  * @returns {JSX.Element} The rendered AutoCompleteSelector component.
  */
 
-export const AutoCompleteSelectorAPI = ({
-  params,
-  fetchData,
-  labels,
-  style,
-  label,
-  id,
-  value,
-  // options,
-  placeholder,
-  required,
-  setValue,
-  helperText,
-  // loading,
-  func,
-  helperInfo,
-  // error,
-  name,
-  ...rest
-}) => {
-  const [field, meta] = useField(rest);
-  const { touched, values, setFieldValue } = useFormikContext();
-  const dispatch = useDispatch();
+export const AutoCompleteSelectorAPI = forwardRef(
+  (
+    {
+      params,
+      fetchData,
+      labels,
+      style,
+      label,
+      id,
+      value,
+      placeholder,
+      required,
+      setValue,
+      setTesting,
+      helperText,
+      func,
+      helperInfo,
+      name,
+      fetchById,
+      ObjectLabel,
+      chain,
+      head,
+      child,
+      ...rest
+    },
+    ref
+  ) => {
+    const [field, meta] = useField(rest);
+    const { touched, values, setFieldValue } = useFormikContext();
+    const dispatch = useDispatch();
+    const [options, setOptions] = useState([]);
+    const [loading, setLoading] = useState();
+    const [error, setError] = useState();
+    const [fetching, setFetching] = useState();
+    const [success, setSuccess] = useState();
+    const [isOpened, setOpened] = useState(null);
+    const [fetch, setFetch] = useState(true);
+    const [refetch, setReFetch] = useState(false);
 
-  const [options, setOptions] = useState([]);
-  const [loading, setloading] = useState();
-  const [error, setIsError] = useState();
-  const [isOpened, setOpened] = useState(null);
+    const HandleData = ({ setOptions, setError, setFetching, setLoading, setSuccess, chain }) => {
+      const { data, isLoading, isFetching, isError, isSuccess } = fetchData();
 
-  // useEffect(() => {
-  //   const fetchDataAndSetOptions = async () => {
-  //     try {
-  //       const data = await dispatch(fetchData());
-  //       setOptions(data?.data);
-  //     } catch (error) {
-  //       console.log('Error while fetching data:', error);
-  //     }
-  //   };
+      useEffect(() => {
+        setError(isError);
+        setFetching(isFetching);
+        setLoading(isLoading);
+        setSuccess(isSuccess);
+      }, [isLoading, isFetching, isError, isSuccess]);
 
-  //   fetchDataAndSetOptions();
-  // }, [isOpened]);
+      useEffect(() => {
+        if (isSuccess) {
+          setOptions(data?.data || []);
+          setFetch(false);
+        }
+      }, [isSuccess]);
 
-  const handleData = async () => {
-    setloading(true);
-    // Use the useGetCountriesQuery hook here to fetch data
-    // Make sure useGetCountriesQuery returns the response you expect
-    const { data, loading, error } = await fetchData();
-    console.log('auto complete inside: ', data);
+      return null;
+    };
 
-    console.log(data);
-    setloading(false);
-  };
+    return (
+      <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
+        {isOpened && fetch && (
+          <HandleData
+            setFetch={setFetch}
+            setOptions={setOptions}
+            setLoading={setLoading}
+            setError={setError}
+            setFetching={setFetching}
+            setSuccess={setSuccess}
+          />
+        )}
+        {/* {refetch && (
+          <HandleData
+            setFetch={setFetch}
+            setOptions={setOptions}
+            setLoading={setLoading}
+            setError={setError}
+            setFetching={setFetching}
+            setSuccess={setSuccess}
+            chain={chain}
+          />
+        )} */}
+        <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
+          {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
 
-  // ;
-  return (
-    <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
-      <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
-        {required ? <InputLabel required>{label}</InputLabel> : <InputLabel>{label}</InputLabel>}
+          {helperInfo ? (
+            <Tooltip title={label}>
+              <IconButton>
+                <InfoIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <></>
+          )}
+        </Grid>
 
-        {helperInfo ? (
-          <Tooltip title={label}>
-            <IconButton>
-              <InfoIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
+        <Autocomplete
+          {...rest}
+          {...field}
+          getOptionLabel={(obj) => obj?.[ObjectLabel] || ''}
+          id={id}
+          options={options}
+          onOpen={() => {
+            setOpened(true);
+            // if (chain) {
+            //   setReFetch(true);
+            // }
+          }}
+          onClose={() => {
+            setOpened(false);
+          }}
+          name={name}
+          value={values[`${name}`]}
+          sx={{ width: '100%' }}
+          loading={loading}
+          renderInput={(params) => <TextField {...params} label={placeholder} error={touched[`${name}`] && !!meta.error[`${name}`]} />}
+          onChange={(e, value, reason) => {
+            if (reason === 'clear') {
+              setFieldValue(name, '');
+            } else {
+              setFieldValue(name, value);
+            }
+            if (chain) {
+              head ? chain('head', value) : child ? chain('child', value) : null;
+            }
+            if (func) {
+              func(value);
+            }
+          }}
+        />
+        {helperText && meta.error && touched[`${name}`] ? (
+          <FormHelperText error={true}>{meta.error[`${name}`]}</FormHelperText>
         ) : (
-          <></>
+          <FormHelperText>{helperText}</FormHelperText>
         )}
       </Grid>
-      <Autocomplete
-        {...rest}
-        {...field}
-        getOptionLabel={(country) => country.Country || country.country || ''}
-        id={id}
-        options={options}
-        onOpen={handleData}
-        // options={options}
-        name={name}
-        value={values[`${name}`]}
-        sx={{ width: '100%' }}
-        loading={loading}
-        renderInput={(params) => <TextField {...params} label={placeholder} error={touched[`${name}`] && !!meta.error[`${name}`]} />}
-        onChange={(e, value, reason) => {
-          console.log('changed');
-          if (reason === 'clear') {
-            setFieldValue(name, '');
-          } else {
-            setFieldValue(name, value);
-          }
-          if (func) {
-            func(value);
-          }
-        }}
-      />
-      {helperText && meta.error && touched[`${name}`] ? (
-        <FormHelperText error={true}>{meta.error[`${name}`]}</FormHelperText>
-      ) : (
-        <FormHelperText>{helperText}</FormHelperText>
-      )}
-    </Grid>
-  );
-};
+    );
+  }
+);
 
 const AutoCompleteSelector = ({
   style,
@@ -213,13 +251,15 @@ const AutoCompleteSelector = ({
 
 //
 
-export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, placeholder, func, helperText, ...rest }) => {
+export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, placeholder, func, helperText, disabled, ...rest }) => {
   const [field, meta] = useField(rest);
   const { touched, values, setFieldValue } = useFormikContext();
   return (
     <Grid item xs={style.xs} lg={style.lg} mb={style.mb}>
       <Grid container flexDirection="row" justifyContent="space-between" alignItems="flex-start">
-        <InputLabel required>{label}</InputLabel>
+        <InputLabel disabled={disabled} required>
+          {label}
+        </InputLabel>
         <Tooltip title={label}>
           <IconButton>
             <InfoIcon fontSize="small" />
@@ -229,6 +269,7 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
       <Autocomplete
         {...rest}
         {...field}
+        disabled={disabled}
         id={id}
         options={options}
         multiple
@@ -236,7 +277,6 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
           const selectedValues = values[name] || [];
           return selectedValues.some((selectedValue) => selectedValue?.id === option?.id);
         }}
-        loading={true}
         limitTags={2}
         onChange={(e, value, reason) => {
           if (reason === 'clear') {
@@ -303,7 +343,11 @@ export const NormalAutoCompleteSelector = ({
         }}
         onChange={(event, newValue) => func(newValue)}
       />
-      <FormHelperText>{helperText}</FormHelperText>
+      {helperText && meta.error && touched[`${name}`] ? (
+        <FormHelperText error={true}>{meta.error[`${name}`]}</FormHelperText>
+      ) : (
+        <FormHelperText>{helperText}</FormHelperText>
+      )}
     </Grid>
   );
 };

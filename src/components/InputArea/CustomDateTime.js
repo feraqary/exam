@@ -52,7 +52,6 @@ const CustomDateTime = memo(({ style, label, helperText, value, setValue, requir
             if (func) {
               console.log(func.value, func.name);
               let dt = new Date(value);
-
               dt.setMonth(dt.getMonth() + Number(func.value));
               console.log(dt);
 

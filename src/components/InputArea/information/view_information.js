@@ -4,10 +4,11 @@ import { Grid, ListItemText } from '@mui/material';
 import Page from 'components/ui-component/Page';
 import PopUp from '../PopUp';
 
-function ViewInformation({ pageTitle,title, setOpen, opened, children, size, fullScreen, actions, ...rest }) {
+
+function ViewInformation({ title, setOpen, opened, children, size, fullScreen, actions, ...rest }) {
   return (
-    <PopUp opened={opened} title={title} setOpen={setOpen} size={size}>
-      <Page title={pageTitle}>{children}</Page>
+    <PopUp opened={opened} setOpen={setOpen} size={size}>
+      <Page title="Information">{children}</Page>
     </PopUp>
   );
 }
