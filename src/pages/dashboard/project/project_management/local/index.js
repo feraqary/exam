@@ -252,7 +252,6 @@ const localProjects = () => {
                 >
                   <Button variant="contained">Edit </Button>
                 </Link>
-                {row.original.phase_type === 'Multiple' && (
                   <>
                     <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
                       <Button variant="contained" color="primary">
@@ -260,7 +259,6 @@ const localProjects = () => {
                       </Button>
                     </Link>
                   </>
-                )}
 
 
                 <Button color="error" variant="outlined" onClick={() => handleUpdateStatus(5)}>

@@ -16,6 +16,8 @@ import { ToastSuccess, ToastError } from 'utils/toast';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
+import PopUp from 'components/InputArea/PopUp';
+import AddGallery from './add_media/add-gallery';
 
 // ==============================|| Manage International Projects ||============================== //
 
@@ -26,6 +28,9 @@ const ListingProperties = () => {
     pageIndex: 0,
     pageSize: 5
   });
+
+  const [addGalleryModel,setAddGalleryModel ] = useState(false)
+
   const { data: projectDocData, isError, error, isLoading, isFetching } = useGetPropertyByProjectIdQuery({ pagination, property_id });
   console.log(projectDocData);
   const ColumnHeaders = [
@@ -72,17 +77,19 @@ const ListingProperties = () => {
               renderTopToolbarCustomActions={({ table }) => {
                 return (
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/gallery/add_media/${property_id}` }}>
-                      <Button color="primary" variant="outlined">
+                      <Button color="primary" variant="outlined" onClick={()=>setAddGalleryModel(true)}>
                         Add Gallery
                       </Button>
-                    </Link>
                   </div>
                 );
               }}
             />
           </Grid>
         </Grid>
+        <PopUp opened={addGalleryModel} setOpen={setAddGalleryModel} size={'lg'} title="Add Gallery">
+        <AddGallery />
+          </PopUp>
+
       </Container>
     </Page>
   );
