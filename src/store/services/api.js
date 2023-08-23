@@ -18,7 +18,7 @@ const baseQuery = fetchBaseQuery({
   }
 });
 
-const baseQueryWithRetry = retry(baseQuery, { maxRetries: 1 });
+const baseQueryWithRetry = retry(baseQuery, { maxRetries: 2 });
 
 /**
  * Create a base API to inject endpoints into elsewhere.
@@ -54,7 +54,8 @@ export const api = createApi({
     'InternationalProjects',
     'SharedProjects',
     'Documents',
-    "Promotions"
+    'Promotions',
+    'PropertyPlan'
   ],
   /**
    * This api has endpoints injected in adjacent files,

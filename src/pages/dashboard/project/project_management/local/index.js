@@ -25,9 +25,8 @@ import {
   useUpdateProjectsIsEnabledMutation,
   useUpdateProjectsVerifyStatusMutation
 } from 'store/services/project/projectApi';
+import React, { useState, useEffect } from 'react';
 
-import React, { useEffect, useState } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
 import AddPromotions from '../promotions/add_promotions';
 // ==============================|| Manage International Projects ||============================== //
