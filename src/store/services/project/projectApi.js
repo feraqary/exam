@@ -373,7 +373,7 @@ export const projectApi = api.injectEndpoints({
     getPropertyByProjectId: builder.query({
       query({ project_id, pagination }) {
         const { pageIndex, pageSize } = pagination;
-        
+
         return {
           url: `dashboard/getAllProjectPropertiesByProject?project_id=${project_id}&page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
@@ -530,10 +530,9 @@ export const {
   useGetAllProjectPromotionsQuery,
   useGetPlansByPropertyIdQuery,
   useUpdatePlansByPropertyIdMutation,
-  useCreatePropertyPlanMutation
+  useCreatePropertyPlanMutation,
   useCreatePromotionsMutation,
   useGetPromotionsQuery,
-  useGetAllProjectPromotionsQuery,
   useCreateProjectPromotionMutation,
   useGetAllPromoTypeWithoutPaginationQuery
 } = projectApi;
