@@ -7,112 +7,29 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import Table from 'components/Table/Table';
+import { useState } from 'react';
 
 // ==============================|| Reviews datatable ||============================== //
 
-const data = [
-  {
-    sino: '1234556',
-    company: 'some company',
+const data = Array.from({ length: 12 }, (_, index) => {
+  return {
+    sino: ++index,
+    company: 'some company' + index,
     exhibition: 'Standard',
-    startedDate: '2020-01-01',
     place: 'Abu Dhabi',
+    startDate: '2020-01-01',
     endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  }
-];
+  };
+});
 
 const ColumnHeaders = [
   {
     accessorKey: 'sino',
     header: 'SI.NO'
+  },
+  {
+    accessorKey: 'company',
+    header: 'Company'
   },
   {
     accessorKey: 'exhibition',
@@ -123,12 +40,8 @@ const ColumnHeaders = [
     header: 'Place'
   },
   {
-    accessorKey: 'company',
-    header: 'Company'
-  },
-  {
-    accessorKey: 'startedDate',
-    header: 'Starting Date'
+    accessorKey: 'startDate',
+    header: 'Start Date'
   },
   {
     accessorKey: 'endDate',
@@ -184,11 +97,23 @@ const ColumnHeaders = [
 ];
 
 function LocalExhibition() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
   return (
     <Page title="Local Exhibitions">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={data} columnHeaders={ColumnHeaders} />
+          <Table
+            data={data}
+            columnHeaders={ColumnHeaders}
+            loading={false}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={false}
+            rowCount={data.length}
+          />
         </Grid>
       </Grid>
     </Page>
