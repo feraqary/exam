@@ -10,109 +10,25 @@ import Table from 'components/Table/Table';
 
 // ==============================|| Reviews datatable ||============================== //
 
-const data = [
-  {
-    sino: '1234556',
-    company: 'some company',
+const data = Array.from({ length: 12 }, (_, index) => {
+  return {
+    sino: ++index,
+    company: 'some company' + index,
     exhibition: 'Standard',
-    startedDate: '2020-01-01',
     place: 'Abu Dhabi',
+    startDate: '2020-01-01',
     endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  },
-  {
-    sino: '1234556',
-    company: 'some company',
-    exhibition: 'Standard',
-    startedDate: '2020-01-01',
-    place: 'Abu Dhabi',
-    endDate: '2020-01-01'
-  }
-];
+  };
+});
 
 const ColumnHeaders = [
   {
     accessorKey: 'sino',
     header: 'SI.NO'
+  },
+  {
+    accessorKey: 'company',
+    header: 'Company'
   },
   {
     accessorKey: 'exhibition',
@@ -123,12 +39,8 @@ const ColumnHeaders = [
     header: 'Place'
   },
   {
-    accessorKey: 'company',
-    header: 'Company'
-  },
-  {
-    accessorKey: 'startedDate',
-    header: 'Starting Date'
+    accessorKey: 'startDate',
+    header: 'Start Date'
   },
   {
     accessorKey: 'endDate',
