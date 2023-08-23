@@ -786,7 +786,8 @@ function AddProject() {
                                 { id: 2, label: 'GCC Citizen' },
                                 { id: 3, label: 'Leasehold' },
                                 { id: 4, label: 'Local Citizen' },
-                                { id: 5, label: 'Other' }
+                                { id: 5, label: 'USUFRUCT' },
+                                { id: 6, label: 'Other' }
                               ]}
                               style={{ xs: 12, lg: 4 }}
                               id="Ownership"
