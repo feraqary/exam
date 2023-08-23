@@ -8,6 +8,7 @@ import { gridSpacing } from 'store/constant';
 
 import Table from 'components/Table/Table';
 import Image from 'next/image';
+import { useState } from 'react';
 
 //============================================================|| Manage Clients PAGE ||============================================================//
 
@@ -47,134 +48,35 @@ const ColumnHeaders = [
   }
 ];
 
-const data = [
-  {
+const data = Array.from({ length: 12 }, (_, index) => {
+  return {
     name: {
       profile: '/assets/images/company_logo/logo4.png'
     },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  },
-  {
-    name: {
-      profile: '/assets/images/company_logo/logo4.png'
-    },
-    companyname: 'Developer Company',
-    sino: 5
-  }
-];
+    companyname: 'Developer Company ' + index,
+    sino: ++index
+  };
+});
 
 function ManageClients() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+
   return (
     <Page title="List of Clients">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={data} columnHeaders={ColumnHeaders} />
+          <Table
+            data={data}
+            columnHeaders={ColumnHeaders}
+            loading={false}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={false}
+            rowCount={data.length}
+          />
         </Grid>
       </Grid>
     </Page>
