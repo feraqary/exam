@@ -313,24 +313,6 @@ const ListingProperties = () => {
                 </Button>
               </Link>
 
-              {/* Plans  */}
-
-              <Link
-                href={{
-                  pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
-                }}
-              >
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    console.log(row.original.phase_type);
-                  }}
-                >
-                  Plans
-                </Button>
-              </Link>
-
               <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/manage_units`, query: { project_id } }}>
                 <Button variant="contained" color="primary">
                   Manage Unit Types
