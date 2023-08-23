@@ -277,7 +277,6 @@ export const MultipleAutoCompleteSelector = ({ style, label, id, name, options, 
           const selectedValues = values[name] || [];
           return selectedValues.some((selectedValue) => selectedValue?.id === option?.id);
         }}
-        loading={true}
         limitTags={2}
         onChange={(e, value, reason) => {
           if (reason === 'clear') {
@@ -344,7 +343,11 @@ export const NormalAutoCompleteSelector = ({
         }}
         onChange={(event, newValue) => func(newValue)}
       />
-      <FormHelperText>{helperText}</FormHelperText>
+      {helperText && meta.error && touched[`${name}`] ? (
+        <FormHelperText error={true}>{meta.error[`${name}`]}</FormHelperText>
+      ) : (
+        <FormHelperText>{helperText}</FormHelperText>
+      )}
     </Grid>
   );
 };

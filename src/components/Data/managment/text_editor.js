@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material';
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
-// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {

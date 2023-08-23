@@ -15,7 +15,7 @@ function ViewInformation({ promotionDetail }) {
             <Item primary="Project Name :" secondary={promotionDetail?.label} />
             <Item primary="Expiry Date :" secondary={promotionDetail?.expiry_date} />
             <Grid item xs={12} lg={12}>
-              <Item primary={`Promotion Types: ${promotionDetail.promotion_type.length}`} />
+              <Item primary={`Promotion Types: ${promotionDetail.promotion_type ? promotionDetail.promotion_type.length : ""}`} />
               {promotionDetail.promotion_type?.map((type) => {
                 return <Item secondary={type.label} key={type.id} />;
               })}
