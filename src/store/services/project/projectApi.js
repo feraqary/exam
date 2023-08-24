@@ -13,6 +13,18 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['Documents']
     }),
+
+    //CREATE PROJECT PROPERTY DOCUMENT API
+    createProjectPropertyDoc: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/createProjectPropertyDoc`,
+          method: 'POST',
+          body: formData
+        };
+      },
+      invalidatesTags: ['Documents']
+    }),
     //GET LOCAL Projects API
     getPropertyType: builder.query({
       query() {
@@ -363,6 +375,17 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['Documents']
     }),
+    //GET DOCS BY PROJECT ID API
+    getDocByProjectPropertyId: builder.query({
+      query({ pagination, project_id }) {
+        const { pageIndex, pageSize } = pagination;
+        return {
+          url: `dashboard/getAllDocsByProjectProperty?project_property_id=${project_id}&page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
+        };
+      },
+      providesTags: ['Documents']
+    }),
 
     //GET PROPERTY TYP
     getPropertyType: builder.query({
@@ -466,6 +489,16 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['Documents']
     }),
+    // DELETE PROJECT DOCUMENT
+    deleteProjectPropertyDoc: builder.mutation({
+      query({ id, name }) {
+        return {
+          url: `dashboard/deleteProjectPropertyDoc?id=${id}&file_name=${name}`,
+          method: 'DELETE'
+        };
+      },
+      invalidatesTags: ['Documents']
+    }),
 
     // Get ALl Promotion Types
     getAllPromoType: builder.query({
@@ -513,6 +546,8 @@ export const projectApi = api.injectEndpoints({
 });
 
 export const {
+  useDeleteProjectPropertyDocMutation,
+  useGetDocByProjectPropertyIdQuery,
   useGetProjectsPropertyByIdQuery,
   useUpdateProjectPropertyMutation,
   useCreateProjectPropertyMutation,
@@ -554,5 +589,6 @@ export const {
   useCreatePromotionsMutation,
   useGetPromotionsQuery,
   useCreateProjectPromotionMutation,
-  useGetAllPromoTypeWithoutPaginationQuery
+  useGetAllPromoTypeWithoutPaginationQuery,
+  useCreateProjectPropertyDocMutation
 } = projectApi;
