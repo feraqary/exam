@@ -54,7 +54,8 @@ export const api = createApi({
     'InternationalProjects',
     'SharedProjects',
     'Documents',
-    'Promotions',
+    "Promotions",
+    "Gallery"
     'PropertyPlan'
   ],
   /**

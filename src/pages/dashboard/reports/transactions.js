@@ -6,7 +6,7 @@ import Container from 'components/Elements/Container';
 import CustomDateTime from 'components/InputArea/CustomDateTime';
 
 // material-ui
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import Table from 'components/Table/Table';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import SatisfactionChartCard from 'components/widget/widget/Chart/SatisfactionChartCard';
@@ -24,31 +24,86 @@ const validationSchema = Yup.object({
   category: objectValidator('Mandatory selection', true),
   beds: objectValidator('Mandatory selection', true),
   price: objectValidator('Mandatory selection', true),
-  transactionType: objectValidator('Mandatory selection', true),
+  transactionType: objectValidator('Mandatory selection', true)
 });
 export default function Transactions() {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
+
+  const chartDummy = {
+    series: [
+      {
+        name: 'Money',
+        data: [10, 41, 25, 51, 45, 35, 85, 78, 95, 78]
+      },
+      {
+        name: 'Sales',
+        data: [50, 21, 15, 81, 75, 85, 35, 28, 55, 18]
+      }
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: 'line',
+        zoom: {
+          enabled: true
+        }
+      },
+      dataLables: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      title: {
+        text: 'Transaction Valume',
+        align: 'left'
+      },
+      grid: {
+        rows: {
+          colors: ['#fefefe', 'transparent']
+        }
+      },
+
+      xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct']
+      }
+    }
+  };
+
   const ColumnHeaders = [
     {
-      accessorKey: 'location',
+      accessorKey: 'serialNo',
+      header: '#'
+    },
+    {
+      accessorKey: 'Name',
       header: 'Location'
     },
     {
-      accessorKey: 'EC',
-      header: 'Exposure Comparison'
+      accessorKey: 'visits',
+      header: 'Type'
     },
     {
-      accessorKey: 'UC',
-      header: 'Unite Comaprison'
+      accessorKey: 'leads',
+      header: 'Sale Price'
     },
     {
-      accessorKey: 'lQ',
-      header: 'Listing Quality'
-    }
+      accessorKey: 'leads',
+      header: 'Category'
+    },
+    {
+      accessorKey: 'leads',
+      header: 'Bed'
+    },
+    {
+      accessorKey: 'leads',
+      header: 'Area SQFT'
+    },
   ];
+
   return (
     <Page title="Transactions">
       <Container title="Transactions" style={{ xs: 12 }}>
@@ -154,27 +209,51 @@ export default function Transactions() {
                   style={{ xs: 12, lg: 4, md: 6 }}
                 />
               </Grid>
+              {/* Line Charts */}
+
               <Grid container spacing={2}>
-                <Grid item lg={12} xs={12}>
-                  <SatisfactionChartCard
-                    chartTitle="Transaction Volume"
-                    chartData={{
-                      options: {
-                        annotaions: 'gdasd',
-                        chart: {
-                          type: 'line',
-                          height: '250px'
-                        },
-                        labels: ['Leads', 'Visits', 'Units', 'fdf']
-                      },
-                      series: [30, 50, 10, 25]
-                    }}
-                  />
+                <Grid item lg={6} xs={12}>
+                  <SatisfactionChartCard chartData={chartDummy} />
+                </Grid>
+                <Grid item lg={6} xs={12}>
+                  <SatisfactionChartCard chartData={chartDummy} />
                 </Grid>
               </Grid>
             </>
           )}
         </Formik>
+        <Grid container spacing={2} sx={{ border: 1, mt: 0 }}>
+          <Grid item lg={4} md={6} xs={12} sx={{ p: 2 }}>
+            <Typography variant="subtitle1" textAlign="center">
+              Transaction Price/sqft(Avg) AED 1,502
+            </Typography>
+          </Grid>
+          <Grid item lg={4} md={6} xs={12} sx={{ p: 2 }}>
+            <Typography variant="subtitle1" textAlign="center">
+              Transaction Price/sqft(Avg) AED 1,502
+            </Typography>
+          </Grid>
+          <Grid item lg={4} md={6} xs={12} sx={{ p: 2 }}>
+            <Typography variant="subtitle1" textAlign="center">
+              Transaction Price/sqft(Avg) AED 1,502
+            </Typography>
+          </Grid>
+        </Grid>
+
+
+        <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={[]}
+            //   loading={isLoading}
+            pagination={pagination}
+            //   setPagination={setPagination}
+            //   isFetching={isFetching}
+            //   rowCount={localProjectsData?.Total}
+          />
+        </Grid>
+      </Grid>
       </Container>
     </Page>
   );

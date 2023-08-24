@@ -36,9 +36,9 @@ const ViewDocuments = ({ document }) => {
                           alt="image file"
                           sx={{ width: 200, height: 150 }}
                           image={`http://20.203.31.58/upload/${file}`}
-                          onClick={() => {
+                          onClick={(e) => {
                             setViewFile(true);
-                            setFile(file);
+                            setFile(e.target.src);
                           }}
                         />
                       </Button>

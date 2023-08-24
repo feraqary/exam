@@ -1,27 +1,25 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 
 // third-party
 import dynamic from 'next/dynamic';
 
 // project imports
 import useConfig from 'hooks/useConfig';
-import MainCard from 'components/ui-component/cards/MainCard';
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 // =========================|| SATISFACTION CHART CARD ||========================= //
 
-const SatisfactionChartCard = ({ chartData }) => {
+const TrendChart = ({ chartData }) => {
   const { rtlLayout } = useConfig();
 
   return (
-    <MainCard>
+    <>
       <Grid container direction="column" spacing={1}>
         <Grid item>
-          {/* <Typography variant="subtitle1">{chartTitle}</Typography> */}
         </Grid>
         <Grid item sx={{ '& .apexcharts-legend-text': { marginLeft: rtlLayout ? '8px' : 'initial' } }}>
           <ReactApexChart
@@ -32,12 +30,12 @@ const SatisfactionChartCard = ({ chartData }) => {
           />
         </Grid>
       </Grid>
-    </MainCard>
+    </>
   );
 };
 
-SatisfactionChartCard.propTypes = {
+TrendChart.propTypes = {
   chartData: PropTypes.object
 };
 
-export default SatisfactionChartCard;
+export default TrendChart;

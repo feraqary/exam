@@ -540,8 +540,31 @@ export const projectApi = api.injectEndpoints({
           method: 'DELETE'
         };
       },
-      invalidatesTags: ['Promotions']
-    })
+      invalidatesTags: ["Promotions"]
+    }),
+
+    // Add Gallery(Media) in Listing Properties
+    createProjectPropertyMedia: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/createProjectPropertyMedia`,
+          method: 'POST',
+          body:formData
+        };
+      },
+      invalidatesTags:["Gallery"]
+    }),
+
+    // Get Media from Properties By ID
+    getProjectPropertyMediaByPropertyID: builder.query({
+      query(property_id) {
+        return {
+          url: `dashboard/getProjectPropertyMediaByPropertyID/${property_id}`,
+          method: 'get'
+        };
+      },
+      providesTags:["Gallery"]
+    }),
   })
 });
 
@@ -579,6 +602,8 @@ export const {
   useGetViewQuery,
   useGetRatingsQuery,
   useDeleteProjectDocMutation,
+  useCreateProjectPropertyMediaMutation,
+  useGetProjectPropertyMediaByPropertyIDQuery,
   useGetAllPromoTypeQuery,
   useCreatePromotionTypeMutation,
   useDeleteProjectPromotionTypesMutation,
