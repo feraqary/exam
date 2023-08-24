@@ -12,30 +12,30 @@ import { useCreatePropertyPlanMutation } from 'store/services/project/projectApi
 export default function Plans() {
   const router = useRouter();
   const { id } = router.query;
-  const documents = useRef(null);
 
-  const [createPlan, createPlanResult] = useCreatePropertyPlanMutation();
   return (
     <>
       <Page title="Add Project">
         <Formik
           initialValues={{
-            planType: '',
-            planDocument: ''
+            title: null,
+            key: null,
+            image_url: []
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             const formData = new FormData();
 
-            formData.append('properties_id', values.id);
+            formData.append('properties_id', id);
             formData.append('title', values.title);
             formData.append('key', 1);
-            formData.append('image_url[]', values.planDocument);
-
-            createSubCategory(formData);
+            values.image_url?.map((img) => {
+              formData.append('image_url[]', img);
+            });
 
             // if(){
             //   setSuccess(!CreateSubCategoryResult);
             // }
+            console.log(values);
             createPlan(formData);
           }}
         >
@@ -53,13 +53,13 @@ export default function Plans() {
                     ]}
                     style={{ xs: 12, lg: 12 }}
                     helperText="Please Select Plan Title"
-                    id="planTitle"
-                    name="planTitle"
+                    id="title"
+                    name="title"
                   />
                   <FileUpload
                     multiple
-                    id="planDocument"
-                    name="planDocument"
+                    id="image_url"
+                    name="image_url"
                     required={true}
                     label="Upload Plan"
                     style={{ xs: 12, lg: 12 }}
@@ -69,7 +69,14 @@ export default function Plans() {
                     ref={documents}
                   />
                   <Grid item lg={12} textAlign={'center'}>
-                    <Button variant="contained">Submit</Button>
+                    <Button
+                      onClick={() => {
+                        props.submitForm();
+                      }}
+                      variant="contained"
+                    >
+                      Submit
+                    </Button>
                   </Grid>
                 </Grid>
               </Grid>

@@ -4,6 +4,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 // project imports
 import Tooltip from '@mui/material/Tooltip';
 import Container from 'components/Elements/Container';
+import PopUp from 'components/InputArea/PopUp';
 import ViewInformation, { Item } from 'components/InputArea/information/view_information';
 import Table from 'components/Table/Table';
 import Page from 'components/ui-component/Page';
@@ -29,6 +30,7 @@ const ListingProperties = () => {
   const { data: projectData, isError: ProjectError, isLoading: projectLoading } = useGetProjectByIdQuery(project_id);
 
   const [viewOpen, setViewOpen] = useState(false);
+  const [AddDocOpen, setAddDocOpen] = useState(false);
 
   const completionStatus = ['Upcoming', 'Under Construction', 'Completed', 'Off Plan', 'Ready'];
   const lifestylelist = ['Affordable', 'Standard', 'Luxury', 'Ultra Luxury'];
@@ -72,129 +74,7 @@ const ListingProperties = () => {
     },
     {
       accessorKey: 'ref_no',
-      header: 'Reference No',
-      Cell: ({ row }) => {
-        return row.original.ref_no ? (
-          row.original.ref_no
-        ) : (
-          <Typography variant="caption" gutterBottom>
-            -none-
-          </Typography>
-        );
-      }
-    },
-    {
-      accessorKey: 'property_title',
-      header: 'Property Title',
-      Cell: ({ row }) => {
-        return row.original.property_title ? (
-          row.original.property_title
-        ) : (
-          <Typography variant="caption" gutterBottom>
-            -none-
-          </Typography>
-        );
-      }
-    },
-    {
-      accessorKey: 'community.community',
-      header: 'Community',
-      Cell: ({ row }) => {
-        return row.original.community ? (
-          row.original.community.community
-        ) : (
-          <Typography variant="caption" gutterBottom>
-            -none-
-          </Typography>
-        );
-      }
-    },
-    {
-      accessorKey: 'developer_company.label',
-      header: 'Developer Company',
-      Cell: ({ row }) => {
-        return row.original.developer_company ? (
-          row.original.developer_company.label
-        ) : (
-          <Typography variant="caption" gutterBottom>
-            -none-
-          </Typography>
-        );
-      }
-    },
-    {
-      accessorKey: 'no_of_floor',
-      header: 'Number of Floors',
-      Cell: ({ row }) => {
-        return row.original.no_of_floor ? row.original.no_of_floor : 0;
-      }
-    },
-    {
-      accessorKey: 'no_of_pool',
-      header: 'Number of Pools',
-      Cell: ({ row }) => {
-        return row.original.no_of_pool ? row.original.no_of_pool : 0;
-      }
-    },
-    {
-      accessorKey: 'plot_area',
-      header: 'Plot Area',
-      Cell: ({ row }) => {
-        return row.original.plot_area ? row.original.plot_area : 0;
-      }
-    },
-    {
-      accessorKey: 'buildup_area',
-      header: 'Build Up Area',
-      Cell: ({ row }) => {
-        return row.original.buildup_area ? row.original.buildup_area : 0;
-      }
-    },
-    // {
-    //   accessorKey: 'starting_price',
-    //   header: 'Starting Price',
-    //   Cell: ({ row }) => {
-    //     // return row.original.starting_price ? row.original.starting_price : 0;
-    //   }
-    // },
-    {
-      accessorKey: 'start_date',
-      header: 'Start Date',
-      Cell: ({ row }) => {
-        return row.original.start_date ? (
-          row.original.start_date
-        ) : (
-          <Typography variant="caption" gutterBottom>
-            -none-
-          </Typography>
-        );
-      }
-    },
-    {
-      accessorKey: 'completion_date',
-      header: 'Completion Date',
-      Cell: ({ row }) => {
-        return row.original.completion_date ? (
-          row.original.completion_date
-        ) : (
-          <Typography variant="caption" gutterBottom>
-            -none-
-          </Typography>
-        );
-      }
-    },
-    {
-      accessorKey: 'handover_date',
-      header: 'Hand Over Date',
-      Cell: ({ row }) => {
-        return row.original.handover_date ? (
-          row.original.handover_date
-        ) : (
-          <Typography variant="caption" gutterBottom>
-            -none-
-          </Typography>
-        );
-      }
+      header: 'Reference No'
     },
     {
       accessorKey: 'action',
@@ -219,7 +99,6 @@ const ListingProperties = () => {
               >
                 View Information
               </Button>
-              {console.log(row.original)}
 
               <ViewInformation opened={viewOpen} setOpen={setViewOpen} size={'lg'}>
                 <Grid item xs={12}>
@@ -232,7 +111,7 @@ const ListingProperties = () => {
                         <Item primary="Arabic Property Description:" secondary={row.original?.description_arabic} />
                         <Item primary="Completion Status:" secondary={completionStatus[row.original?.completion_status]} />
                         <Item primary="Property Status:" secondary={row.original?.property_type?.map((type) => `${type.label}, `)} />
-                        <Item primary="View:" secondary={row.original?.view?.map((v) => `${v.name}, `)} />
+                        {/* <Item primary="View:" secondary={row.original?.view?.map((v) => `${v.name}, `)} /> */}
                         <Item primary="Facilities:" secondary={row.original?.facilities?.map((f) => `${f.label}, `)} />
                         <Item primary="Amenities:" secondary={row.original?.amenities?.map((a) => `${a.label}, `)} />
                         <Item primary="Plot Area:" secondary={row.original?.plot_area || 0} />
@@ -259,17 +138,6 @@ const ListingProperties = () => {
                   </MainCard>
                 </Grid>
               </ViewInformation>
-              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/edit_property/${row.original.id}` }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    console.log(row.original);
-                  }}
-                >
-                  Edit
-                </Button>
-              </Link>
 
               <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/gallery/${row.original.id}` }}>
                 <Button variant="contained" color="primary">
@@ -279,11 +147,12 @@ const ListingProperties = () => {
 
               <Link
                 href={{
-                  pathname: `/dashboard/project/project_management/documents/${row.original.id}`
+                  pathname: `/dashboard/project/project_management/listing_properties/documents/${row.original.id}`,
+                  query: { type: 'property' }
                 }}
               >
                 <Button variant="contained" color="primary">
-                  Document
+                  Property Documents
                 </Button>
               </Link>
 
@@ -310,24 +179,6 @@ const ListingProperties = () => {
               >
                 <Button variant="contained" color="primary">
                   Financial Providers
-                </Button>
-              </Link>
-
-              {/* Plans  */}
-
-              <Link
-                href={{
-                  pathname: `/dashboard/project/project_management/listing_properties/plans/${row.original.id}`
-                }}
-              >
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    console.log(row.original.phase_type);
-                  }}
-                >
-                  Plans
                 </Button>
               </Link>
 
