@@ -438,7 +438,19 @@ createPromotions : builder.mutation ({
           method: 'POST',
           body:formData
         };
-      }
+      },
+      invalidatesTags:["Gallery"]
+    }),
+
+    // Get Media from Properties By ID
+    getProjectPropertyMediaByPropertyID: builder.query({
+      query(property_id) {
+        return {
+          url: `dashboard/getProjectPropertyMediaByPropertyID/${property_id}`,
+          method: 'get'
+        };
+      },
+      providesTags:["Gallery"]
     }),
   })
 });
@@ -479,5 +491,6 @@ export const {
   useCreatePromotionsMutation,
   useGetPromotionsQuery,
   useGetAllProjectPromotionsQuery,
-  useCreateProjectPropertyMediaMutation
+  useCreateProjectPropertyMediaMutation,
+  useGetProjectPropertyMediaByPropertyIDQuery
 } = projectApi;
