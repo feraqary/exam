@@ -58,8 +58,6 @@ const PopperStyled = styled(Popper)(({ theme }) => ({
 // ==============================|| SIDEBAR MENU LIST GROUP ||============================== //
 
 const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
-  
-
   const theme = useTheme();
 
   const { pathname } = useRouter();
@@ -182,9 +180,8 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
             // disablePadding={!drawerOpen}
             sx={{
               display: 'flex',
-              flexDirection: 'column',
+              flexDirection: 'column'
               // justifyContent:'space-between'
-          
             }}
             subheader={
               currentItem.title && drawerOpen ? (
@@ -208,7 +205,7 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
                   )}
                 </Button>
               ) : (
-                <Tooltip title={currentItem.title} placement='right'>
+                <Tooltip title={currentItem.title} placement="right">
                   <Button
                     variant="text"
                     size="lg"

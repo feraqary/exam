@@ -416,20 +416,20 @@ const localProjects = () => {
                   </Button>
                 </Link>
 
-                {row.original.phase_type !== 'Multiple' && (
-                  <Link
-                    href={{
-                      pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
-                      query: {
-                        id: row.original.id
-                      }
-                    }}
-                  >
-                    <Button color="primary" variant="contained">
-                      Documents
-                    </Button>
-                  </Link>
-                )}
+                {/* {row.original.phase_type !== 'Multiple' && ( */}
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
+                    query: {
+                      type: 'project'
+                    }
+                  }}
+                >
+                  <Button color="primary" variant="contained">
+                    Project Documents
+                  </Button>
+                </Link>
+                {/* // )} */}
                 <Button onClick={handlePromotionOpen} variant="contained" color="primary">
                   Add to Promotions
                 </Button>
