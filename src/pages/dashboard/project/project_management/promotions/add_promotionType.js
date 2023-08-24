@@ -6,6 +6,7 @@ import SubmitButton from 'components/Elements/SubmitButton';
 import InputText from 'components/InputArea/TextInput';
 import { useCreatePromotionTypeMutation } from 'store/services/project/projectApi';
 import * as Yup from "yup"
+
 import { stringValidator } from 'utils/formik-validations';
 
 const AddPromotionType = ({ pageTitle, title, setOpen, opened, size }) => {

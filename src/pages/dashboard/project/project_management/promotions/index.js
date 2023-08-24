@@ -19,7 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // ==============================|| Manage Project Promotions ||============================== //
 
-// const ManagePromotions = () => { 
+// const ManagePromotions = () => {
 //   const [pagination, setPagination] = useState({
 //     pageIndex: 0,
 //     pageSize: 10
@@ -54,7 +54,7 @@ const ColumnHeaders = [
           ToastSuccess('Project status successfully updated');
         }
       }, [result.isSuccess]);
-      
+     
       useEffect(() => {
         if (result.isError) {
           const { data } = result.error;
@@ -66,7 +66,7 @@ const ColumnHeaders = [
       const handleDeletePromotionType = (id)=>{
         deletePromotionType(id);
       }
-        
+       
       return (
         <Box
           sx={{

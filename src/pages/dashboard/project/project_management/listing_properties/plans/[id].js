@@ -12,58 +12,117 @@ import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 import FileUpload from 'components/InputArea/FileUpload';
 import React, { useRef } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastSuccess, ToastError } from 'utils/toast';
+import Container from 'components/Elements/Container';
+import { gridSpacing } from 'store/constant';
+import Table from 'components/Table/Table';
+import { useEffect, useState } from 'react';
+import Tooltip from '@mui/material/Tooltip';
+import Link from 'next/link';
+import { useGetPlansByPropertyIdQuery } from 'store/services/project/projectApi';
+import Image from 'next/image';
 
 export default function Plans() {
   const router = useRouter();
   const { id } = router.query;
   const documents = useRef(null);
+  const { data: PlansData, isError, isLoading, isSuccess, isFetching } = useGetPlansByPropertyIdQuery(id);
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+  const ColumnHeaders = [
+    {
+      accessorKey: 'title',
+      header: 'Title'
+    },
+    {
+      accessorKey: 'ref_no',
+      header: 'Plan',
+      Cell: ({ row }) => {
+        console.log(row.original.image_urls);
+        {
+          return (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem'
+              }}
+            >
+              {row.original.image_urls.map((url, i) => {
+                return <Image src={`http://20.203.31.58/upload/${url}`} key={i} alt="plan" width={60} height={30} />;
+              })}
+            </Box>
+          );
+        }
+      }
+    },
+    {
+      accessorKey: 'action',
+      header: 'Action',
+      Cell: ({ row }) => {
+        return (
+          <>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem'
+              }}
+            >
+              <Link
+                href={{
+                  pathname: `/dashboard/project/project_management/listing_properties/plans/edit/${id}`
+                }}
+              >
+                <Button variant="contained" color="primary">
+                  Edit
+                </Button>
+              </Link>
+              <Button variant="contained" color="error">
+                Delete
+              </Button>
+            </Box>
+          </>
+        );
+      }
+    }
+  ];
   return (
-    <>
-      <Page title="Add Project">
-        <Formik
-          initialValues={{
-            planType: '',
-            planDocument: ''
-          }}
-        >
-          {(props) => (
-            <MainCard title="Add Plans">
-              <Grid container spacing={2} alignItems="center" justifyContent={'center'}>
-                <Grid sx={12} lg={6} xs={{ border: '1px red solid' }}>
-                  <AutoCompleteSelector
-                    label="Type"
-                    placeholder="Select Plan Type"
-                    options={[
-                      { label: 'Master Plan', value: 1 },
-                      { label: 'Floor Plan', value: 2 },
-                      { label: 'Tower Structure', value: 3 }
-                    ]}
-                    style={{ xs: 12, lg: 12 }}
-                    helperText="Please Select Plan Type"
-                    id="planType"
-                    name="planType"
-                  />
-                  <FileUpload
-                    id="planDocument"
-                    name="planDocument"
-                    required={true}
-                    label="Upload Plan"
-                    style={{ xs: 12, lg: 12 }}
-                    placeholder="Upload Plan"
-                    setFieldValue={props.setFieldValue}
-                    helperText="Please upload the plan document"
-                    ref={documents}
-                  />
-                  <Grid item lg={12} textAlign={'center'}>
-                    <Button variant="contained">Submit</Button>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </MainCard>
-          )}
-        </Formik>
-      </Page>
-    </>
+    <Container title="Manage listing Propeties" style={{ xs: 12 }}>
+      <ToastContainer />
+      <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Table
+            columnHeaders={ColumnHeaders}
+            data={PlansData?.data || []}
+            loading={isLoading}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={isFetching}
+            rowCount={1}
+            renderTopToolbarCustomActions={({ table }) => {
+              return (
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <Link
+                    href={{
+                      pathname: `/dashboard/project/project_management/listing_properties/plans/add/${id}`
+                    }}
+                  >
+                    <Button variant="outlined" color="primary">
+                      Add Plan
+                    </Button>
+                  </Link>
+                </div>
+              );
+            }}
+          />
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 
