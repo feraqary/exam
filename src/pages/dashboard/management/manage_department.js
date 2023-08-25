@@ -1,6 +1,6 @@
 // material-ui
 import { Grid, Button, Box } from '@mui/material';
-
+import { useState } from 'react';
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -63,11 +63,24 @@ const ColumnHeaders = [
   }
 ];
 function ManageDep() {
+
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+ 
   return (
     <Page title="Manage Departments">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table               
+              data={data}
+              columnHeaders={ColumnHeaders}
+              loading={false}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={false}
+              rowCount={data.length}  />
         </Grid>
       </Grid>
     </Page>
