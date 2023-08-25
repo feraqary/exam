@@ -518,7 +518,7 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags:["Gallery"]
     }),
-
+    
     // Get Media from Properties By ID
     getProjectPropertyMediaByPropertyID: builder.query({
       query(property_id) {
@@ -528,6 +528,18 @@ export const projectApi = api.injectEndpoints({
         };
       },
       providesTags:["Gallery"]
+    }),
+
+    // Delete single file from propery Gallery
+    deleteProjectPropertyMediaSingleFile: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/deleteProjectPropertyMediaSingleFile/`,
+          method: 'DELETE',
+          body:formData
+        };
+      },
+      invalidatesTags:["Gallery"]
     }),
   })
 });
@@ -576,5 +588,6 @@ export const {
   useGetPromotionsQuery,
   useGetAllProjectPromotionsQuery,
   useCreateProjectPromotionMutation,
-  useGetAllPromoTypeWithoutPaginationQuery
+  useGetAllPromoTypeWithoutPaginationQuery,
+  useDeleteProjectPropertyMediaSingleFileMutation
 } = projectApi;
