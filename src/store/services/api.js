@@ -55,8 +55,8 @@ export const api = createApi({
     'SharedProjects',
     'Documents',
     "Promotions",
-    "Gallery"
-    'PropertyPlan'
+    "Gallery",
+    'PropertyPlan',
   ],
   /**
    * This api has endpoints injected in adjacent files,
