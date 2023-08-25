@@ -22,21 +22,21 @@ import { createUserRole, getAllDepartments, getAllRoles } from 'store/slices/use
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 const validationSchema = Yup.object({
-  firstName: stringValidator('Please enter a title', true),
-  lastName: stringValidator('Please enter a sub title', true),
-  email: stringValidator('Please enter a type', true),
-  phoneNumber: stringValidator('Please enter a target', true),
+  firstName: stringValidator('Please enter a first name', true),
+  lastName: stringValidator('Please enter a last name', true),
+  email: stringValidator('Please enter a email', true),
+  phoneNumber: stringValidator('Please enter a phone number', true),
   password: stringValidator(SUPPORTED_FORMATS),
-  userRole: objectValidator('Please select a banner image', true),
-  department: objectValidator('Please select an ending date', true)
+  userRole: objectValidator('Please select a user role', true),
+  department: objectValidator('Please select a department', true)
 });
 // ==============================|| Add Company form ||============================== //
 function AddUser() {
   const theme = useTheme();
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [userRole, setUserRole] = useState([]);
   const [department, setDepartment] = useState([]);
@@ -62,10 +62,10 @@ function AddUser() {
 
   const submitForm = () => {
     const formData = new FormData();
-    formData.append('first_name', firstname);
-    formData.append('last_name', lastname);
+    formData.append('first_name', firstName);
+    formData.append('last_name', lastName);
     formData.append('email', email);
-    formData.append('phone_number', phone);
+    formData.append('phone_number', phoneNumber);
     formData.append('password', password);
     formData.append('roles_id', userRole);
     formData.append('department', department);
@@ -82,10 +82,10 @@ function AddUser() {
               <Formik
                 validateOnChange
                 initialValues={{
-                  firstname: '',
-                  lastname: '',
+                  firstName: '',
+                  lastName: '',
                   email: '',
-                  phone: '',
+                  phoneNumber: '',
                   password: '',
                   userRole: '',
                   department: ''
@@ -107,10 +107,10 @@ function AddUser() {
                     <InputText
                       label="First Name"
                       placeholder="Enter First Name"
-                      helperText="Please enter your first name"
+                      helperText="Please enter a first name"
                       style={{ xs: 12, lg: 6 }}
                       type="text"
-                      value={firstname}
+                      value={firstName}
                       setValue={setFirstName}
                       id="firstName"
                       name="firstName"
@@ -119,10 +119,10 @@ function AddUser() {
                     <InputText
                       label="Last Name"
                       placeholder="Enter Last Name"
-                      helperText="Please enter your last name"
+                      helperText="Please enter a last name"
                       style={{ xs: 12, lg: 6 }}
                       type="text"
-                      value={lastname}
+                      value={lastName}
                       setValue={setLastName}
                       id="lastName"
                       name="lastName"
@@ -133,7 +133,7 @@ function AddUser() {
                       placeholder="Enter Email"
                       style={{ xs: 12, lg: 6 }}
                       type="email"
-                      helperText="Please enter your email"
+                      helperText="Please enter a email"
                       value={email}
                       setValue={setEmail}
                       id="email"
@@ -145,9 +145,9 @@ function AddUser() {
                       placeholder="Enter Phone Number"
                       style={{ xs: 12, lg: 6 }}
                       type="number"
-                      helperText="Please enter your phone number"
-                      value={phone}
-                      setValue={setPhone}
+                      helperText="Please enter a phone number"
+                      value={phoneNumber}
+                      setValue={setPhoneNumber}
                       id="phoneNumber"
                       name="phoneNumber"
                       required
@@ -156,7 +156,7 @@ function AddUser() {
                       label="Password"
                       placeholder="Enter Password"
                       type="password"
-                      helperText="Please enter your password"
+                      helperText="Please enter a password"
                       style={{ xs: 12, lg: 6 }}
                       value={password}
                       setValue={setPassword}
