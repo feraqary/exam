@@ -75,7 +75,8 @@ export default function Plans() {
   const PlansForm = ({ type, plan_id, setOpen }) => {
     return (
       <>
-        <Formik
+        <Formik 
+        
           initialValues={{
             title: null,
             key: null,

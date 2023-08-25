@@ -27,6 +27,7 @@ import {
 } from 'store/services/project/projectApi';
 import React, { useState, useEffect } from 'react';
 
+
 import { ToastSuccess, ToastError } from 'utils/toast';
 import AddPromotions from '../promotions/add_promotions';
 // ==============================|| Manage International Projects ||============================== //
@@ -410,20 +411,20 @@ const localProjects = () => {
                   </Button>
                 </Link>
 
-                {row.original.phase_type !== 'Multiple' && (
-                  <Link
-                    href={{
-                      pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
-                      query: {
-                        id: row.original.id
-                      }
-                    }}
-                  >
-                    <Button color="primary" variant="contained">
-                      Documents
-                    </Button>
-                  </Link>
-                )}
+                {/* {row.original.phase_type !== 'Multiple' && ( */}
+                <Link
+                  href={{
+                    pathname: `/dashboard/project/project_management/documents/${row.original.id}`,
+                    query: {
+                      type: 'project'
+                    }
+                  }}
+                >
+                  <Button color="primary" variant="contained">
+                    Project Documents
+                  </Button>
+                </Link>
+                {/* // )} */}
                 <Button onClick={handlePromotionOpen} variant="contained" color="primary">
                   Add to Promotions
                 </Button>

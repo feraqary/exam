@@ -17,7 +17,12 @@ import Container from 'components/Elements/Container';
 import { ToastContainer } from 'react-toastify';
 import { fileValidator, objectValidator } from 'utils/formik-validations';
 import { ToastError, ToastSuccess } from 'utils/toast';
-import { useCreateProjectDocMutation, useGetAllDocCategoriesQuery, useGetSubCategoryByIdQuery } from 'store/services/project/projectApi';
+import {
+  useCreateProjectDocMutation,
+  useGetAllDocCategoriesQuery,
+  useGetSubCategoryByIdQuery,
+  useCreateProjectPropertyDocMutation
+} from 'store/services/project/projectApi';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -26,15 +31,14 @@ const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
 const validationSchema = Yup.object({
   category: objectValidator(),
-  subCategory: objectValidator(),
+  subCategory: objectValidator()
   // iconImage: fileValidator(SUPPORTED_FORMATS)
 });
 
-function AddDocuments() {
-  const router = useRouter();
+function AddDocuments({ project_id, close, type }) {
   const iconRef = useRef(null);
   const [categoryId, setCategoryId] = useState(null);
-
+  console.log('type: ', type);
   const { data: categories, isLoading, isError, isFetching, error } = useGetAllDocCategoriesQuery();
 
   const {
@@ -48,7 +52,7 @@ function AddDocuments() {
   });
 
   const [createProjectDoc, result] = useCreateProjectDocMutation();
-  const { project_id } = router.query;
+  const [createProjectPropertyDoc, propResult] = useCreateProjectPropertyDocMutation();
 
   useEffect(() => {
     if (result.isSuccess) {
@@ -59,12 +63,25 @@ function AddDocuments() {
   useEffect(() => {
     if (result.isError) {
       const { data } = result.error;
-      ToastError('Error');
+      ToastError('Error: ', data?.message);
     }
   }, [result.isError]);
 
+  useEffect(() => {
+    if (propResult.isSuccess) {
+      ToastSuccess('Documents Uploaded successfully');
+    }
+  }, [propResult.isSuccess]);
+
+  useEffect(() => {
+    if (propResult.isError) {
+      const { data } = propResult.error;
+      ToastError('Error: ', data?.message);
+    }
+  }, [propResult.isError]);
+
   return (
-    <Page title="Add Project Documents">
+    <>
       <Grid container spacing={gridSpacing}>
         <ToastContainer />
         <Container style={{ xs: 12 }} title="Add Project Documents">
@@ -76,18 +93,28 @@ function AddDocuments() {
                 fileUrl: ''
               }}
               validationSchema={validationSchema}
-              onSubmit={(values, { setSubmitting, resetForm }) => {   
-          
+              onSubmit={(values, { setSubmitting, resetForm }) => {
                 const fileLength = values.fileUrl.length;
-                console.log(fileLength)
+                console.log(fileLength);
                 const formData = new FormData();
-                formData.append('project_id', project_id);
-                formData.append('category_id', values.category.id);
-                formData.append('sub_category_id', values.subCategory.id);
-                for (let i = 0; i < fileLength; i++){
-                formData.append('file_url[]', values.fileUrl[i]);
+                if (type == 'project') {
+                  formData.append('project_id', project_id);
+                  formData.append('category_id', values.category.id);
+                  formData.append('sub_category_id', values.subCategory.id);
+                  for (let i = 0; i < fileLength; i++) {
+                    formData.append('file_url[]', values.fileUrl[i]);
+                  }
+                  createProjectDoc(formData);
+                } else if (type == 'property') {
+                  formData.append('project_property_id', project_id);
+                  formData.append('category_id', values.category.id);
+                  formData.append('sub_category_id', values.subCategory.id);
+                  for (let i = 0; i < fileLength; i++) {
+                    formData.append('file_url[]', values.fileUrl[i]);
+                  }
+                  createProjectPropertyDoc(formData);
                 }
-                createProjectDoc(formData);
+                close(false);
                 setSubmitting(false);
                 resetForm();
                 // router.back();
@@ -146,7 +173,7 @@ function AddDocuments() {
           </Grid>
         </Container>
       </Grid>
-    </Page>
+    </>
   );
 }
 

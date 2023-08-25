@@ -7,7 +7,7 @@ const ViewPicture = ({ viewFile, setViewFile, image }) => {
       <PopUp opened={viewFile} setOpen={setViewFile} size={'lg'}>
         <Grid container xs={12} lg={12} sx={{ height: '80vh', width: '100vh' }} justifyContent="center" alignContent="center">
           <Image
-            src={`http://20.203.31.58/upload/${image}`}
+            src={image}
             width={100}
             height={100}
             unoptimized
