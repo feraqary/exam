@@ -28,7 +28,6 @@ import {
 import React, { useState, useEffect } from 'react';
 
 
-import React from 'react';
 import { ToastSuccess, ToastError } from 'utils/toast';
 import AddPromotions from '../promotions/add_promotions';
 // ==============================|| Manage International Projects ||============================== //
