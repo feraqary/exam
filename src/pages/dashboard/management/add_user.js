@@ -26,7 +26,7 @@ const validationSchema = Yup.object({
   lastName: stringValidator('Please enter a last name', true),
   email: stringValidator('Please enter a email', true),
   phoneNumber: stringValidator('Please enter a phone number', true),
-  password: stringValidator(SUPPORTED_FORMATS),
+  password: stringValidator('Please enter a password', true),
   userRole: objectValidator('Please select a user role', true),
   department: objectValidator('Please select a department', true)
 });
