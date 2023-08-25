@@ -250,14 +250,14 @@ export const projectApi = api.injectEndpoints({
 
     //CREATE PROJECT PROMOTION
     createProjectPromotion: builder.mutation({
-      query(formData) {
-        console.log(formData,'data create');
+      query(data) {
         return {
           url: 'dashboard/createProjectPromotion',
           method: 'POST',
-          body: formData
+          body: data.formData
         };
-      }
+      },
+      invalidatesTags: ['ProjectPromotion']
     }),
 
     //CREATE DOCS SUB CATEGORY
@@ -390,35 +390,28 @@ export const projectApi = api.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags: ["ProjectPromotion"]
+      providesTags: ['ProjectPromotion']
     }),
     //Delete Project Promotion
-    deleteSingleProjectPromotion:builder.mutation({
-     
-      query:(id)=>({
-        url:`dashboard/deleteProjectPromotion/${id}`,
-        method:'DELETE',
-       
+    deleteSingleProjectPromotion: builder.mutation({
+      query: (id) => ({
+        url: `dashboard/deleteProjectPromotion/${id}`,
+        method: 'DELETE'
       }),
-      invalidatesTags: ["ProjectPromotion"]
-     
+      invalidatesTags: ['ProjectPromotion']
     }),
     //Edit Promotioin
-   editPromotionList:builder.mutation({
-    query:(data)=>{
-     
-     
-    console.log(data,'from edit');
-  return{
-    url:`dashboard/updateProjectPromotion`,
-    method:'PUT',
-    body:data.formData
-  }
-    },
-    invalidatesTags: ['InternationalProjects', 'LocalProjects', 'ProjectStatus', 'SharedProjects'],
-    providesTags: ["ProjectPromotion"]
-   }) ,
-   
+    editPromotionList: builder.mutation({
+      query: (data) => {
+        return {
+          url: `dashboard/updateProjectPromotion`,
+          method: 'PUT',
+          body: data.formData
+        };
+      },
+      invalidatesTags: ['ProjectPromotion']
+    }),
+
     // Get ALl Promotion Types
     getAllPromoType: builder.query({
       query({ pageIndex, pageSize }) {
@@ -460,8 +453,6 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['Promotions']
     })
-    
-
   })
 });
 
@@ -498,11 +489,10 @@ export const {
   useGetViewQuery,
   useGetRatingsQuery,
   useGetAllProjectPromotionsQuery,
- useDeleteSingleProjectPromotionMutation,
- useEditPromotionListMutation,
+  useDeleteSingleProjectPromotionMutation,
+  useEditPromotionListMutation,
   useCreatePromotionsMutation,
   useGetPromotionsQuery,
   useCreateProjectPromotionMutation,
   useGetAllPromoTypeWithoutPaginationQuery
-  
 } = projectApi;
