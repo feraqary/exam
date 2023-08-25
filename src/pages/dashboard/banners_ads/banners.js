@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-
+import { useState } from 'react';
 import Table from 'components/Table/Table';
 
 // ==============================|| Banners datatable ||============================== //
@@ -191,11 +191,25 @@ const ColumnHeaders = [
 ];
 
 function Banners() {
+
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+
   return (
     <Page title="Banners">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={data} columnHeaders={ColumnHeaders} />
+          <Table  
+            data={data}
+            columnHeaders={ColumnHeaders}
+            loading={false}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={false}
+            rowCount={data.length} 
+          />
         </Grid>
       </Grid>
     </Page>
