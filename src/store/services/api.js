@@ -6,7 +6,7 @@ const token =
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://20.203.31.58/api/',
-  credentials: 'same-origin',
+  // credentials: 'same-origin',
 
   prepareHeaders: (headers, { getState }) => {
     // By default, if we have a token in the store, let's use that for authenticated requests
@@ -55,9 +55,9 @@ export const api = createApi({
     'SharedProjects',
     'ProjectDocuments',
     'Documents',
-    "Promotions",
-    "Gallery",
-    'PropertyPlan',
+    'Promotions',
+    'Gallery',
+    'PropertyPlan'
   ],
   /**
    * This api has endpoints injected in adjacent files,
