@@ -1,5 +1,6 @@
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { Grid, TextField, Skeleton } from '@mui/material';
+import { Grid, TextField, Skeleton, IconButton, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import { DrawingManager, GoogleMap, Marker, Polygon, Polyline, StandaloneSearchBox, useLoadScript } from '@react-google-maps/api';
 import axios from 'axios';
@@ -20,7 +21,12 @@ const Map = ({
   phaseID,
   close,
   setPolyValue,
-  disabled
+  disabled,
+  country,
+  city,
+  state,
+  Community,
+  subCommunity
 }) => {
   const apiKey = 'AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y';
   const { setFieldValue } = useFormikContext();
@@ -32,24 +38,21 @@ const Map = ({
   const activePolygonIndex = useRef([]);
   const [polygons, setPolygons] = useState([]);
   const [boundaries, setBounds] = useState([]);
+  const [autoSearch, setAutoSearch] = useState('');
+  const [highlightPolygon, setHighlightPolygon] = useState(null);
 
-  const GetPath = (address) => {};
+  useEffect(() => {
+    setAutoSearch(
+      [country, city, state, Community, subCommunity].filter((item) => item != undefined || item != null || item != ' ').join(' ')
+    );
 
-  function countNestedArrays(arr) {
-    let count = 0;
+    console.log(autoSearch);
+  }, [country, city, state, Community, subCommunity]);
 
-    function checkNested(arr) {
-      for (let i = 0; i < arr.length; i++) {
-        if (Array.isArray(arr[i])) {
-          count++;
-          checkNested(arr[i]);
-        }
-      }
-    }
+  useEffect(() => {
+    getloc(autoSearch);
+  }, [autoSearch]);
 
-    checkNested(arr);
-    return count;
-  }
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   useEffect(() => {
     const url = 'https://nominatim.openstreetmap.org/search.php?q=$Musaffah&polygon_geojson=1&format=json';
@@ -63,7 +66,6 @@ const Map = ({
       })
       .then((data) => {
         setBounds(data[0].geojson.coordinates);
-        const count = countNestedArrays(data[0].geojson.coordinates);
       })
       .catch((error) => {
         console.error(error);
@@ -93,13 +95,53 @@ const Map = ({
     axios
       .get(url, {
         params: {
-          address: add,
+          address: add ? add : 'abudhabi',
           key: apiKey
         }
       })
       .then((response) => {
-        setLat(response.data?.results[0]?.geometry?.location?.lat);
-        setLong(response.data?.results[0]?.geometry?.location?.lng);
+        const location = response.data?.results[0]?.geometry?.location;
+        const boundsData = response.data?.results[0]?.geometry?.bounds;
+        setLat(location?.lat);
+        setLong(location?.lng);
+        if (boundsData) {
+          const southWest = new google.maps.LatLng(boundsData.southwest.lat, boundsData.southwest.lng);
+          const northEast = new google.maps.LatLng(boundsData.northeast.lat, boundsData.northeast.lng);
+
+          const bounds = new google.maps.LatLngBounds(southWest, northEast);
+
+          setLat(response.data?.results[0]?.geometry?.location?.lat);
+          setLong(response.data?.results[0]?.geometry?.location?.lng);
+
+          // // Remove previous highlight polygon, if any
+          // if (highlightPolygon) {
+          //   highlightPolygon.setMap(null);
+          // }
+
+          // // Create and set the new highlight polygon
+          // const polygon = new google.maps.Polygon({
+          //   paths: [
+          //     { lat: boundsData.southwest.lat, lng: boundsData.southwest.lng },
+          //     { lat: boundsData.northeast.lat, lng: boundsData.southwest.lng },
+          //     { lat: boundsData.northeast.lat, lng: boundsData.northeast.lng },
+          //     { lat: boundsData.southwest.lat, lng: boundsData.northeast.lng }
+          //   ],
+          //   strokeColor: '#1c75fc',
+          //   strokeOpacity: 0.8,
+          //   strokeWeight: 2,
+          //   fillColor: '#1c75fc',
+          //   fillOpacity: 0.2,
+          //   map: mapRef.current // Attach the polygon to the map
+          // });
+
+          // setHighlightPolygon(polygon);
+
+          // Fit the map to the bounds
+          mapRef.current.fitBounds(bounds, { maxZoom: 10 });
+          console.log('response: ', response);
+        } else {
+          console.log('No bounds data available in the response.');
+        }
       })
       .catch((error) => {
         console.log('error', error);
@@ -109,10 +151,11 @@ const Map = ({
   const onLoadMap = (map) => {
     mapRef.current = map;
     map.setOptions({ draggableCursor: 'pointer' });
+    mapRef.current.panTo({ lat: 24.4984312, lng: 54.4036975 });
     window.google.maps.event.addListener(map, 'dragstart', () => {
       map.setOptions({ draggableCursor: 'grabbing' });
     });
-
+    highlightPolygon?.setMap(null);
     window.google.maps.event.addListener(map, 'dragend', () => {
       map.setOptions({ draggableCursor: 'pointer' });
     });
@@ -142,19 +185,6 @@ const Map = ({
   const onDeleteDrawing = () => {
     setPolygons([]);
     activePolygonIndex.current = null;
-  };
-
-  const getPaths = (polygon) => {
-    var polygonBounds = polygon.getPath();
-    var bounds = [];
-    for (var i = 0; i < polygonBounds?.length; i++) {
-      var point = {
-        lat: polygonBounds.getAt(i).lat(),
-        lng: polygonBounds.getAt(i).lng()
-      };
-      bounds.push(point);
-    }
-    return bounds;
   };
 
   useEffect(() => {
@@ -194,11 +224,11 @@ const Map = ({
   } else {
     const handlePlaceChanged = (location) => {
       const { place } = inputRef.current.getPlaces();
-      setSearchedLocation(location);
+      // setSearchedLocation(location);
       setHighlightedLocation({ lat: selectedLat, lng: selectedLng });
       if (place) {
         setFieldValue('place', place.address_components);
-        map.panTo({ lat: lat, lng: long });
+        mapRef.current.panTo({ lat: lat, lng: long });
         console.log(place.address_components);
       } else {
         return;
@@ -209,22 +239,33 @@ const Map = ({
       return arr.reduce((acc, val) => acc.concat(Array.isArray(val) && typeof acc[0] !== 'number' ? flattenCoordinates(val) : acc), []);
     }
 
-    const polyline = flattenCoordinates(boundaries);
+    // const handleBounds = (map) => {};
 
     return (
-      <Grid item xs={xs} lg={lg} sx={disabled && { opacity: '0.6', pointerEvents: 'none', userSelect: 'none', transition: 'opacity 0.8s' }}>
+      <Grid
+        item
+        xs={xs}
+        lg={lg}
+        sx={disabled && { opacity: '0.6', pointerEvents: 'none', userSelect: 'none', transition: 'opacity 0.8s cubic' }}
+      >
         <GoogleMap
           mapContainerStyle={{ position: 'relative', height: height, width: '100%' }}
           center={{ lat: phase_lat && forPhase ? phase_lat : lat, lng: phase_long && forPhase ? phase_long : long }}
+          setBounds={{ lat: lat, lng: long }}
           zoom={12}
           onClick={(e) => {
             setLat(e.latLng.lat());
             setLong(e.latLng.lng());
           }}
           onLoad={onLoadMap}
+          // onBoundsChanged={() => {
+          //   if (highlightPolygon) {
+          //     highlightPolygon.setMap(null);
+          //   }
+          // }}
         >
           <Marker position={{ lat: lat, lng: long }} />
-
+          {highlightPolygon && highlightPolygon.setMap(mapRef.current)}
           <StandaloneSearchBox onLoad={(ref) => (inputRef.current = ref)} onPlacesChanged={handlePlaceChanged}>
             <TextField
               placeholder="Enter Location"
@@ -233,7 +274,23 @@ const Map = ({
               size="small"
               sx={{ position: 'absolute', top: '11px', left: '190px', color: 'white', width: '30%' }}
               onChange={(e) => {
-                getloc(e.target.value);
+                // getloc(e.target.value || fields);
+
+                setAutoSearch(e.target.value);
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => {
+                        getloc(autoSearch);
+                        console.log(autoSearch);
+                      }}
+                    >
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
               }}
             />
           </StandaloneSearchBox>

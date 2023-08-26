@@ -62,7 +62,7 @@ export default function Category() {
                 <MainCard title="Add Document Category">
                   <Grid container spacing={2} alignItems="center">
                     <InputText
-                      disabled={success}
+                      // disabled={success}
                       label="Category Name"
                       helperText="provide the name of the category"
                       style={{ xs: 12, lg: 6 }}

@@ -53,6 +53,7 @@ import {
 import { ToastContainer } from 'react-toastify';
 import { ToastError, ToastSuccess } from 'utils/toast';
 import 'react-toastify/dist/ReactToastify.css';
+
 import { arrayValidator, numberValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 import * as Yup from 'yup';
 import Categorization from 'pages/dashboard/project/helper/Categorization';
@@ -62,14 +63,12 @@ import { ShareLocation } from '@mui/icons-material';
 function AddProperty() {
   const router = useRouter();
   const { project_id } = router.query;
-
-  console.log('id: ', project_id);
   const { data: projectData } = useGetProjectQuery(project_id, {
     skip: project_id === null || project_id === undefined
   });
 
   const Autofill = projectData?.data;
-  console.log('data: ', projectData);
+  // console.log('data: ', projectData);
   //is shared
   const [shared, setShared] = useState(false);
   const [countryLocationID, setCountryLocationID] = useState(null);
@@ -77,6 +76,7 @@ function AddProperty() {
 
   //property type
   const [propertyType, setPropertyType] = useState([]);
+  const [viewSelected, setViews] = useState([]);
 
   const [long, setlong] = useState(null);
   const [lat, setlat] = useState(null);
@@ -165,26 +165,31 @@ function AddProperty() {
       ToastError(data.error);
     }
   }, [CreateProjectPropertyResult.isError]);
+
   const SinglePhaseComponents = (key) => {
     switch (key) {
-      case 'Furnished':
+      case 'furnished':
         return (
           <>
             {/* AutoCompleteSelector component */}
             <AutoCompleteSelector
               label="Furnished"
               required
-              options={['Furnished', 'Semi-Furnished', 'Not Furnished']}
+              options={[
+                { id: 1, label: 'Furnished' },
+                { id: 2, label: 'Semi-Furnished' },
+                { id: 3, label: 'Not Furnished' }
+              ]}
               placeholder="furnished"
               style={{ xs: 12, lg: 4 }}
-              id="facts[6].value"
-              name="facts[6].value"
+              id="Furnished"
+              name="Furnished"
               helperText="Please select property status"
             />
           </>
         );
 
-      case 'No of Floor':
+      case 'no of floor':
         return (
           <>
             {/* InputText component */}
@@ -194,24 +199,23 @@ function AddProperty() {
               type="number"
               placeholder="Number of bedrooms"
               style={{ xs: 12, lg: 4 }}
-              id="facts[12].value"
-              name="facts[12].value"
+              id="No_of_Floor"
+              name="No_of_Floor"
               helperText="Please select property status"
             />
           </>
         );
-      case 'Elevator ':
+      case 'elevator ':
         return (
           <>
             {/* InputText component */}
             <InputText
               label="Elevators"
               required
-              type="number"
               placeholder="enter the number of elevators"
               style={{ xs: 12, lg: 4 }}
-              id="facts[23].value"
-              name="facts[23].value"
+              id="Elevator"
+              name="Elevator"
               helperText="Please enter the number of elevators"
             />
           </>
@@ -226,7 +230,7 @@ function AddProperty() {
   // Generate SinglePhaseComponents for each fact in the Filtered array
   const SinglePhaseInputs = Filtered?.map((fact) => SinglePhaseComponents(fact));
 
-  const [views, setViews] = useState(null);
+  // const [views, setViews] = useState(null);
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAfJQs_y-6KIAwrAIKYWkniQChj5QBvY1Y" libraries={['places', 'drawing']}>
@@ -259,11 +263,32 @@ function AddProperty() {
                 propertyType: propertyType,
                 plotAreaMin: null,
                 plotAreaMax: null,
-                facts: Array(30)
-                  ?.fill(null)
-                  ?.map((_, i) => {
-                    return { id: i - 1, value: null };
-                  }),
+
+                //facts:
+                number_of_floors: null,
+                Plot_Area: null,
+                Built_up_Area: null,
+                view: null,
+                Furnished: null,
+                Ownership: null,
+                Completion_status: null,
+                start_Date: null,
+                Completion_Date: null,
+                Handover_Date: null,
+                No_of_Floor: null,
+                No_of_units: null,
+                Service_charge: null,
+                Parking: null,
+                Price: null,
+                Rent_type: null,
+                No_of_paymnets: null,
+                payment_plan: null,
+                No_of_retail: null,
+                No_of_pool: null,
+                Elevator: null,
+                Starting_Price: null,
+                Life_Style: null,
+
                 propertyTitle: null,
                 arabicPropertyTitle: null,
                 propertyDescription: null,
@@ -306,11 +331,28 @@ function AddProperty() {
                   phases_id: Number(values?.propertyPhase.id),
                   min_area: values?.plotAreaMin?.toString(),
                   max_area: values?.plotAreaMax?.toString(),
-                  facts: values?.facts
-                    ?.filter((element) => element.value && element.id !== 0)
-                    ?.map((fact) => {
-                      return { id: fact.id, value: fact.value };
-                    }),
+                  facts: {
+                    Plot_Area: values.Plot_Area,
+                    Built_up_Area: values.Built_up_Area,
+                    Furnished: values.Furnished?.id || null,
+                    Ownership: values.Ownership?.id || null,
+                    Completion_status: values.Completion_status?.id,
+                    start_Date: values.start_Date,
+                    Completion_Date: values.Completion_Date,
+                    Handover_Date: values.Handover_Date,
+                    no_of_floor: values.No_of_Floor,
+                    No_of_units: values.No_of_units,
+                    Service_charge: values.Service_charge,
+                    Parking: values.Parking,
+                    Rent_type: values.Rent_type,
+                    No_of_paymnets: values.No_of_paymnets,
+                    payment_plan: values.payment_plan,
+                    No_of_retail: values.No_of_retail,
+                    No_of_pool: values.No_of_pool,
+                    Elevator: values.Elevator,
+                    Starting_Price: values.Starting_Price,
+                    Life_Style: values.Life_Style?.id
+                  },
                   is_shared: shared,
                   lat: lat?.toString() || '25',
                   lng: long?.toString() || '100',
@@ -339,13 +381,14 @@ function AddProperty() {
                 const submit = {
                   data: data
                 };
-                console.log(ProjectData);
+                // console.log(ProjectData);
                 createProjectProperty(ProjectData);
                 setSubmitting(false);
               }}
             >
               {(props) => (
                 <>
+                  <ToastContainer />
                   <Grid item xs={12}>
                     <MainCard title="Project details">
                       <Grid container spacing={2} alignItems="center">
@@ -358,9 +401,6 @@ function AddProperty() {
                           helperText="Please choose a phase"
                           id="propertyPhase"
                           name="propertyPhase"
-                          func={(newValue) => {
-                            console.log('phaaaaase!!!: ', newValue);
-                          }}
                         />
 
                         <AutoCompleteSelector
@@ -538,7 +578,7 @@ function AddProperty() {
                           style={{ xs: 12, lg: 4 }}
                           label="Property Type"
                           placeholder="Select Property Type"
-                          options={Types?.data || []}
+                          options={isError ? [] : Types?.data || []}
                           getOptionLabel={(property) => property?.title || property?.label || ''}
                           helperText="Please select property type"
                           required
@@ -547,7 +587,6 @@ function AddProperty() {
                             props.setFieldValue('propertyType', e);
                           }}
                         />
-                        {SinglePhaseInputs}
                         <AutoCompleteSelector
                           label="Completion Status"
                           required
@@ -558,22 +597,22 @@ function AddProperty() {
                           ]}
                           getOptionLabel={(property) => property?.title || property?.name || ''}
                           style={{ xs: 12, lg: 4 }}
-                          id="facts[8].value"
-                          name="facts[8].value"
+                          id="Completion_status"
+                          name="Completion_status"
                           helperText="Please select property status"
                         />
+
+                        {SinglePhaseInputs}
                         <MultipleAutoCompleteSelector
                           style={{ xs: 12, lg: 4 }}
                           label="Views"
                           placeholder="Select The Views"
                           options={AllViews?.data || []}
-                          // getOptionLabel={(view) => view?.title || view?.label || 'no views'}
+                          getOptionLabel={(view) => view?.title || view?.label || ''}
                           helperText="Please Select The Views"
                           required
-                          id="facts[5].value"
-                          name="facts[5].value"
                           func={(e, value) => {
-                            setViews(e);
+                            props.setFieldValue('view', e);
                           }}
                         />
                         <AutoCompleteSelector
@@ -581,23 +620,22 @@ function AddProperty() {
                           required
                           placeholder="Select Lifestyle"
                           options={[
-                            { id: 1, name: 'Affordable' },
-                            { id: 2, name: 'Standard' },
-                            { id: 3, name: 'Luxury' },
-                            { id: 4, name: 'Ultra Luxury' }
+                            { id: 1, label: 'Affordable' },
+                            { id: 2, label: 'Standard' },
+                            { id: 3, label: 'Luxury' },
+                            { id: 4, label: 'Ultra Luxury' }
                           ]}
-                          getOptionLabel={(style) => style?.name || ''}
                           style={{ xs: 12, lg: 4 }}
-                          id="facts[25].value"
-                          name="facts[25].value"
+                          id="Life_Style"
+                          name="Life_Style"
                           helperText="Please select the lifestyle"
                         />
                         <InputText
                           label="Plot Area"
                           placeholder="insert area range"
                           style={{ xs: 12, lg: 4 }}
-                          id="facts[3].value"
-                          name="facts[3].value"
+                          id="Plot_Area"
+                          name="Plot_Area"
                           helperText="insert area range"
                           type="number"
                         />
@@ -606,8 +644,8 @@ function AddProperty() {
                           label="Built Up Area"
                           placeholder="insert area range"
                           style={{ xs: 12, lg: 4 }}
-                          id="facts[4].value"
-                          name="facts[4].value"
+                          id="Built_up_Area"
+                          name="Built_up_Area"
                           helperText="insert area range"
                           type="number"
                         />
@@ -638,8 +676,8 @@ function AddProperty() {
                           required
                           placeholder="Parking"
                           style={{ xs: 12, lg: 4 }}
-                          id="facts[16].value"
-                          name="facts[16].value"
+                          id="Parking"
+                          name="Parking"
                           helperText="parking"
                           type="number"
                         />
@@ -648,16 +686,16 @@ function AddProperty() {
                           required
                           placeholder="ownership"
                           options={[
-                            { id: 1, name: 'Freeholdd' },
-                            { id: 2, name: 'GCC Citizen' },
-                            { id: 3, name: 'Leasehold' },
-                            { id: 4, name: 'Local Citizen' },
-                            { id: 5, name: 'Other' }
+                            { id: 1, label: 'Freeholdd' },
+                            { id: 2, label: 'GCC Citizen' },
+                            { id: 3, label: 'Leasehold' },
+                            { id: 4, label: 'Local Citizen' },
+                            { id: 5, label: 'USUFRUCT' },
+                            { id: 6, label: 'Other' }
                           ]}
-                          getOptionLabel={(style) => style?.name || ''}
                           style={{ xs: 12, lg: 4 }}
-                          id="facts[7].value"
-                          name="facts[7].value"
+                          id="Ownership"
+                          name="Ownership"
                           helperText="Ownership"
                         />
                         <CustomDateTime
@@ -665,8 +703,8 @@ function AddProperty() {
                           style={{ xs: 12, lg: 4 }}
                           label="Start Date"
                           helperText="Please enter the project start date"
-                          id="facts[9].value"
-                          name="facts[9].value"
+                          id="start_Date"
+                          name="start_Date"
                           required={true}
                           setFieldValue={props.setFieldValue}
                         />
@@ -675,40 +713,35 @@ function AddProperty() {
                           style={{ xs: 12, lg: 4 }}
                           label="Completion Date"
                           helperText="Please enter the project completion date"
-                          id="facts[10].value"
-                          name="facts[10].value"
+                          id="Completion_Date"
+                          name="Completion_Date"
                           required={true}
                           setFieldValue={props.setFieldValue}
+                          onChange={(e) => {
+                            props.setFieldValue('Completion_Date', e);
+                          }}
                         />
+
                         <CustomDateTime
                           helperInfo
                           style={{ xs: 12, lg: 4 }}
                           label="Handover Date"
                           helperText="Please enter the project handover date"
-                          id="facts[11].value"
-                          name="facts[11].value"
+                          id="Handover_Date"
+                          name="Handover_Date"
                           required={true}
                           setFieldValue={props.setFieldValue}
                         />
+
                         <InputText
-                          label="No. Of Units"
+                          label="Total No. Of Units"
                           required
                           type="number"
                           placeholder="Number of bedrooms"
                           style={{ xs: 12, lg: 4 }}
-                          id="facts[13].value"
-                          name="facts[13].value"
+                          id="No_of_units"
+                          name="No_of_units"
                           helperText="Please select the number of units"
-                        />
-                        <InputText
-                          label="Available Units"
-                          required
-                          type="number"
-                          placeholder="please enter the number of available units"
-                          style={{ xs: 12, lg: 4 }}
-                          id="facts[17].value"
-                          name="facts[17].value"
-                          helperText="Please select the number of available units"
                         />
                         <InputText
                           label="No. Of Pools"
@@ -716,8 +749,8 @@ function AddProperty() {
                           type="number"
                           placeholder="please enter the number of pools"
                           style={{ xs: 12, lg: 4 }}
-                          id="facts[22].value"
-                          name="facts[22].value"
+                          id="No_of_pool"
+                          name="No_of_pool"
                           helperText="Please select the number of pools"
                         />
                         <InputText
@@ -726,8 +759,8 @@ function AddProperty() {
                           type="number"
                           placeholder="please enter the number of retail centers"
                           style={{ xs: 12, lg: 4 }}
-                          id="facts[21].value"
-                          name="facts[21].value"
+                          id="No_of_retail"
+                          name="No_of_retail"
                           helperText="Please select the number of retail centers"
                         />
                         <InputText
@@ -736,8 +769,8 @@ function AddProperty() {
                           type="number"
                           placeholder="service charge amount"
                           style={{ xs: 12, lg: 4 }}
-                          id="facts[15].value"
-                          name="facts[15].value"
+                          id="Service_charge"
+                          name="Service_charge"
                           helperText="Please enter the service charge amount"
                         />
                         <InputText
@@ -746,8 +779,8 @@ function AddProperty() {
                           type="number"
                           placeholder="starting price"
                           style={{ xs: 12, lg: 4 }}
-                          id="facts[24].value"
-                          name="facts[24].value"
+                          id="Starting_Price"
+                          name="Starting_Price"
                           helperText="Please enter the starting price"
                         />
                         <Grid lg={12} xs={12}></Grid>
@@ -836,7 +869,6 @@ function AddProperty() {
                   <Button
                     onClick={() => {
                       console.log('values=======> ', props.values);
-                      console.log('=======> ', checkedItems);
                     }}
                   >
                     test
