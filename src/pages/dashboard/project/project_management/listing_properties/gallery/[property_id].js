@@ -8,7 +8,10 @@ import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { useGetProjectPropertyMediaByPropertyIDQuery, useGetPropertyByProjectIdQuery } from 'store/services/project/projectApi';
+import {
+  useGetProjectPropertyMediaByPropertyIDQuery,
+  useDeleteProjectPropertyMediaSingleFileMutation
+} from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,7 +29,6 @@ import ViewPicture from 'components/InputArea/information/view_picture';
 const ListingProperties = () => {
   const router = useRouter();
   const { property_id } = router.query;
-  console.log(property_id);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
@@ -37,7 +39,6 @@ const ListingProperties = () => {
   const [addGalleryModel, setAddGalleryModel] = useState(false);
 
   const { data: propertGalleryData, isError, error, isLoading, isFetching } = useGetProjectPropertyMediaByPropertyIDQuery(property_id);
-  console.log(propertGalleryData);
   const ColumnHeaders = [
     {
       accessorKey: 'main_media_section',
@@ -47,18 +48,47 @@ const ListingProperties = () => {
       accessorKey: 'imasdge',
       header: 'Image',
       Cell: ({ row }) => {
+        const [deleteSingleFile, result] = useDeleteProjectPropertyMediaSingleFileMutation();
+
+        const handleDeleteSingleFile = (id, fileName, fileNo) => {
+          console.log(id, ":", fileNo, ":", fileName);
+          const formData = new FormData();
+          formData.append("id", id)
+          formData.append("file_no", fileNo)
+          formData.append("file_url", fileName)
+          deleteSingleFile(formData)
+        };
+
         let galleryFiles = [];
         if (row.original.image_url) {
-          galleryFiles = galleryFiles.concat(row.original.image_url);
+          galleryFiles = galleryFiles.concat(row.original.image_url.map((img) => ({ fileno: 1, url: img })));
         }
         if (row.original.image360_url) {
-          galleryFiles = galleryFiles.concat(row.original.image360_url);
+          galleryFiles = galleryFiles.concat(row.original.image360_url.map((img) => ({ fileno: 2, url: img })));
+        }
+        if (row.original.video_url) {
+          galleryFiles = galleryFiles.concat(row.original.video_url.map((img) => ({ fileno: 3, url: img })));
         }
         if (row.original.panaroma_url) {
-          galleryFiles = galleryFiles.concat(row.original.panaroma_url);
+          galleryFiles = galleryFiles.concat(row.original.panaroma_url.map((img) => ({ fileno: 4, url: img })));
         }
-        // = row.original.image_url?.concat(row.original.image360_url ? row.original.image360_url : [])
-        console.log(galleryFiles);
+
+
+
+        useEffect(() => {
+          if (result.isSuccess) {
+            ToastSuccess('Image Deleted successfully');
+          }
+        }, [result.isSuccess]);
+      
+        useEffect(() => {
+          if (result.isError) {
+            const { data } = result.error;
+            ToastError('Error');
+          }
+        }, [result.isError]);
+
+        console.log("files",galleryFiles);
         return (
           <>
             <Box
@@ -72,7 +102,12 @@ const ListingProperties = () => {
                 <Box position="relative">
                   <DeleteIcon
                     style={{ position: 'absolute', bottom: '10px', right: '10px', color: 'red', zIndex: 10 }}
-                    onClick={() => console.log('deleting')}
+                    onClick={() => 
+                    
+                    handleDeleteSingleFile(row.original.id, galleryFile.url, galleryFile.fileno)
+                    // const formData = new FormData();
+
+                    }
                   />
                   <Button
                     sx={{ p: 0 }}
@@ -82,7 +117,7 @@ const ListingProperties = () => {
                     }}
                   >
                     <Image
-                      src={`http://20.203.31.58/upload/${galleryFile}`}
+                      src={`http://20.203.31.58/upload/${galleryFile.url}`}
                       width={100}
                       height={100}
                       unoptimized

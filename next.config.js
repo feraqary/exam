@@ -16,9 +16,7 @@ const nextConfig = withTM({
   reactStrictMode: false,
   assetPrefix: '/dashboard/',
   rewrites() {
-    return [
-      { source: '/dashboard/_next/:path*', destination: '/_next/:path*' }
-    ]
+    return [{ source: '/dashboard/_next/:path*', destination: '/_next/:path*' }];
   },
   images: {
     domains: ['flagcdn.com'],
@@ -27,7 +25,7 @@ const nextConfig = withTM({
         protocol: 'http',
         hostname: '20.203.31.58',
         port: '',
-        pathname: 'dashboard/upload/**'
+        pathname: '/upload/**'
       }
     ]
   },
@@ -35,7 +33,6 @@ const nextConfig = withTM({
   eslint: {
     ignoreDuringBuilds: true
   },
-
 
   env: {
     REACT_APP_VERSION: process.env.REACT_APP_VERSION,
@@ -58,4 +55,3 @@ const nextConfig = withTM({
 });
 
 module.exports = nextConfig;
-

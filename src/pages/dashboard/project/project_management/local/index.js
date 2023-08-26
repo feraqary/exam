@@ -29,9 +29,6 @@ import React, { useState, useEffect } from 'react';
 
 
 import { ToastSuccess, ToastError } from 'utils/toast';
-import Container from 'components/Elements/Container';
-import PopUp from 'components/InputArea/PopUp';
-import ViewInformation from '../information/view_information';
 import AddPromotions from '../promotions/add_promotions';
 
 // ==============================|| Manage International Projects ||============================== //
