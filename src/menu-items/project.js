@@ -93,6 +93,13 @@ const project = {
       url: '/dashboard/project/del_project'
     },
     {
+      id: 'promotionsList',
+      title: 'Promotions List',
+      type: 'item',
+      icon: icons.IconLayoutKanban,
+      url: '/dashboard/project/promotions_list'
+    },
+    {
       id: 'promotions',
       title: <FormattedMessage id={items + '.promotions'} />,
       type: 'item',

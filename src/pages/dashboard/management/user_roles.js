@@ -1,6 +1,6 @@
 // material-ui
 import { Grid } from '@mui/material';
-
+import { useState } from 'react';
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -44,6 +44,12 @@ const ColumnHeaders = [
 ];
 function UserRoles() {
 
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+ 
+
   const dispatch = useDispatch();
   const { loading, error, users } = useSelector((state) => state.usermanagement);
   useEffect(() => {
@@ -54,7 +60,14 @@ function UserRoles() {
     <Page title="User Roles">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={users} />
+          <Table               
+              data={data}
+              columnHeaders={ColumnHeaders}
+              loading={false}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={false}
+              rowCount={data.length}  />
         </Grid>
       </Grid>
     </Page>

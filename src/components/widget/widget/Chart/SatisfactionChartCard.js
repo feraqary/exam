@@ -14,14 +14,14 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 // =========================|| SATISFACTION CHART CARD ||========================= //
 
-const SatisfactionChartCard = ({ chartData, chartTitle }) => {
+const SatisfactionChartCard = ({ chartData }) => {
   const { rtlLayout } = useConfig();
 
   return (
     <MainCard>
       <Grid container direction="column" spacing={1}>
         <Grid item>
-          <Typography variant="subtitle1">{chartTitle}</Typography>
+          {/* <Typography variant="subtitle1">{chartTitle}</Typography> */}
         </Grid>
         <Grid item sx={{ '& .apexcharts-legend-text': { marginLeft: rtlLayout ? '8px' : 'initial' } }}>
           <ReactApexChart

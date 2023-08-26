@@ -18,17 +18,20 @@ import Link from 'next/link';
 import Container from 'components/Elements/Container';
 import ViewInformation from 'components/InputArea/information/view_information';
 import ViewDocuments from 'pages/dashboard/project/project_management/documents/view_documents';
-
+import PopUp from 'components/InputArea/PopUp';
+import AddDocuments from '../add_doc/AddDoc';
 // ==============================|| Manage International Projects ||============================== //
 
 const Documents = () => {
   const router = useRouter();
-  const { project_id } = router.query;
+  const { project_id, type } = router.query;
+
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5
   });
   const { data: projectDocData, isError, error, isLoading, isFetching } = useGetDocByProjectIdQuery({ pagination, project_id });
+  const [addDocOpen, setAddDocOpen] = useState(false);
 
   const ColumnHeaders = [
     {
@@ -93,6 +96,7 @@ const Documents = () => {
   ];
 
   if (isLoading) return;
+
   return (
     <Page title="Manage Documents">
       <ToastContainer />
@@ -109,11 +113,19 @@ const Documents = () => {
               rowCount={projectDocData?.Total}
               renderTopToolbarCustomActions={({ table }) => {
                 return (
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <Link href={{ pathname: `/dashboard/project/project_management/add_doc/${project_id}` }}>
-                      <Button variant="outlined">Add Document</Button>
-                    </Link>
-                  </div>
+                  <>
+                    <PopUp setOpen={setAddDocOpen} opened={addDocOpen} size={'lg'}>
+                      <AddDocuments project_id={project_id} close={setAddDocOpen} type={type} />
+                    </PopUp>
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        setAddDocOpen(true);
+                      }}
+                    >
+                      Add Document
+                    </Button>
+                  </>
                 );
               }}
             />

@@ -1,6 +1,6 @@
 // material-ui
 import { Grid, Box, Button } from '@mui/material';
-
+import { useState } from 'react';
 // project imports
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -58,11 +58,24 @@ const ColumnHeaders = [
   }
 ];
 function DeletedUsers() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+
   return (
     <Page title="View Deleted Users">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table
+            data={data}
+            columnHeaders={ColumnHeaders}
+            loading={false}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={false}
+            rowCount={data.length}
+          />
         </Grid>
       </Grid>
     </Page>

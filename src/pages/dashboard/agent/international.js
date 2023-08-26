@@ -2,6 +2,7 @@
 import { Grid, Box, Button } from '@mui/material';
 
 // project imports
+import { useState } from 'react';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
@@ -146,11 +147,15 @@ const data = [
 ];
 
 function InternationalAgents() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
   return (
     <Page title="International Agent">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={data} columnHeaders={ColumnHeaders} />
+          <Table pagination={pagination} setPagination={setPagination} data={data} columnHeaders={ColumnHeaders} />
         </Grid>
       </Grid>
     </Page>

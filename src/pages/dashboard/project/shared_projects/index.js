@@ -11,7 +11,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { useUpdateProjectStatusMutation, useUpdateProjectRankMutation, useGetSharedProjectsQuery } from 'store/services/project/projectApi';
+import {
+  useUpdateProjectStatusMutation,
+  useUpdateProjectRankMutation,
+  useGetSharedProjectsQuery,
+  useUpdateProjectsIsEnabledMutation,
+  useUpdateProjectsVerifyStatusMutation
+} from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import TableSelectorOption from 'components/InputArea/TableSelectorOption';
@@ -92,7 +98,7 @@ const SharedProjects = () => {
       Cell: ({ renderedCellValue, row }) => {
         return (
           <>
-            <Rating name="read-only" value={localProjectsData?.data[row.index].Rating + 1} readOnly />
+            <Rating name="read-only" value={sharedProjectsData?.data[row.index].Rating + 1} readOnly />
           </>
         );
       }
@@ -102,7 +108,7 @@ const SharedProjects = () => {
       accessorKey: 'quality_score',
       header: 'Quality Score',
       Cell: ({ renderedCellValue, row }) => {
-        return <CircularProgressWithLabel value={row.original.quality_score} />;
+        return row.original.quality_score;
       }
     },
 
@@ -379,6 +385,30 @@ const SharedProjects = () => {
     </Page>
   );
 };
+
+function CircularProgress(props) {
+  return (
+    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+      <CircularProgress variant="determinate" {...props} />
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <Typography variant="caption" component="div" color="text.secondary">
+          {`${Math.round(props.value)}%`}
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
 
 SharedProjects.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;

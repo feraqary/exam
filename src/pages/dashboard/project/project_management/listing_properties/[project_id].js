@@ -4,6 +4,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 // project imports
 import Tooltip from '@mui/material/Tooltip';
 import Container from 'components/Elements/Container';
+import PopUp from 'components/InputArea/PopUp';
 import ViewInformation, { Item } from 'components/InputArea/information/view_information';
 import Table from 'components/Table/Table';
 import Page from 'components/ui-component/Page';
@@ -28,7 +29,7 @@ const ListingProperties = () => {
   const { data: projectPropertiesData, isError, error, isLoading, isFetching } = useGetPropertyByProjectIdQuery({ pagination, project_id });
   const { data: projectData, isError: ProjectError, isLoading: projectLoading } = useGetProjectByIdQuery(project_id);
 
-  const [viewOpen, setViewOpen] = useState(false);
+  const [AddDocOpen, setAddDocOpen] = useState(false);
 
   const completionStatus = ['Upcoming', 'Under Construction', 'Completed', 'Off Plan', 'Ready'];
   const lifestylelist = ['Affordable', 'Standard', 'Luxury', 'Ultra Luxury'];
@@ -78,6 +79,7 @@ const ListingProperties = () => {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ row }) => {
+        const [viewOpen, setViewOpen] = useState(false);
         return (
           <>
             <Box
@@ -137,7 +139,7 @@ const ListingProperties = () => {
                 </Grid>
               </ViewInformation>
 
-              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/gallery/${project_id}` }}>
+              <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/gallery/${row.original.id}` }}>
                 <Button variant="contained" color="primary">
                   Gallery
                 </Button>
@@ -145,11 +147,12 @@ const ListingProperties = () => {
 
               <Link
                 href={{
-                  pathname: `/dashboard/project/project_management/documents/${row.original.id}`
+                  pathname: `/dashboard/project/project_management/listing_properties/documents/${row.original.id}`,
+                  query: { type: 'property' }
                 }}
               >
                 <Button variant="contained" color="primary">
-                  Document
+                  Property Documents
                 </Button>
               </Link>
 

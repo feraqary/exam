@@ -7,6 +7,7 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 
 import Table from 'components/Table/Table';
+import { useState } from 'react';
 
 // ==============================|| Reviews datatable ||============================== //
 
@@ -114,11 +115,15 @@ const data = [
 ];
 
 function BuildingReviews() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
   return (
     <Page title="Reviews">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table pagination={pagination} setPagination={setPagination} columnHeaders={ColumnHeaders} data={data} />
         </Grid>
       </Grid>
     </Page>
