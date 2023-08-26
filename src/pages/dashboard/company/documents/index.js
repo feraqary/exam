@@ -4,7 +4,7 @@
  */
 
 import * as React from 'react';
-
+import { useState } from 'react';
 import { Grid, Box, Button } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
@@ -110,12 +110,26 @@ const ColumnHeaders = [
 
 
 function Documents() {
+
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+
     return (
         <Page title="Documents">
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} >
               <MainCard title="Document list">
-                    <Table columnHeaders={ColumnHeaders} data={data} />
+                    <Table  
+                      data={data}
+                      columnHeaders={ColumnHeaders}
+                      loading={false}
+                      pagination={pagination}
+                      setPagination={setPagination}
+                      isFetching={false}
+                      rowCount={data.length} 
+                    />
               </MainCard>
             </Grid>
           </Grid>
