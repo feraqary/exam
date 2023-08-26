@@ -29,7 +29,6 @@ const ListingProperties = () => {
   const { data: projectPropertiesData, isError, error, isLoading, isFetching } = useGetPropertyByProjectIdQuery({ pagination, project_id });
   const { data: projectData, isError: ProjectError, isLoading: projectLoading } = useGetProjectByIdQuery(project_id);
 
-  const [viewOpen, setViewOpen] = useState(false);
   const [AddDocOpen, setAddDocOpen] = useState(false);
 
   const completionStatus = ['Upcoming', 'Under Construction', 'Completed', 'Off Plan', 'Ready'];
@@ -80,6 +79,7 @@ const ListingProperties = () => {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ row }) => {
+        const [viewOpen, setViewOpen] = useState(false);
         return (
           <>
             <Box
