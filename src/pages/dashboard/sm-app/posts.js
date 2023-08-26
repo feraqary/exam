@@ -108,7 +108,13 @@ function Posts() {
             <Grid container spacing={2} alignItems="center">
               <Formik
                 validateOnChange
-                initialValues={initialFormState}
+                initialValues={{
+                  action: '',
+                  serviceType: '',
+                  description: '',
+                  uploadVideo: '',
+                  uploadPhoto:'',
+                }}
                 validationSchema={validationSchema}
                 onSubmit={async (values, { setSubmitting, resetForm, validateForm }) => {
                   await validateForm(values);
