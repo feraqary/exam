@@ -132,6 +132,7 @@ function AddProject() {
   });
   const { data: views, error: viewsError, isLoading: loadingView } = useGetViewQuery();
   const [createProject, CreateProjectResult] = useCreateProjectMutation();
+
   useEffect(() => {
     if (CreateProjectResult.isSuccess) {
       ToastSuccess('Project has been created successfully');
@@ -508,7 +509,7 @@ function AddProject() {
                           getOptionLabel={(type) => type?.label || ''}
                           style={{ xs: 12, lg: 4 }}
                         />
-                        <Grid item lg={8}></Grid>   
+                        <Grid item lg={8}></Grid>
 
                         {props.values.phaseType === 'multiple' && (
                           <>
@@ -558,7 +559,7 @@ function AddProject() {
                       </Grid>
                     </MainCard>
                   </Grid>
-
+                           {/* Google map */}
                   <Grid item xs={12}>
                     <MainCard title="Location details">
                       <Grid container spacing={2} alignItems="center">
@@ -592,7 +593,6 @@ function AddProject() {
                           id="locationCountrySelect"
                           func={(e) => {
                             setCountryID(e?.ID);
-
                           }}
                         />
 
@@ -787,7 +787,8 @@ function AddProject() {
                                 { id: 2, label: 'GCC Citizen' },
                                 { id: 3, label: 'Leasehold' },
                                 { id: 4, label: 'Local Citizen' },
-                                { id: 5, label: 'Other' }
+                                { id: 5, label: 'USUFRUCT' },
+                                { id: 6, label: 'Other' }
                               ]}
                               style={{ xs: 12, lg: 4 }}
                               id="Ownership"

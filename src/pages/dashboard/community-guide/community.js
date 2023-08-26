@@ -7,7 +7,7 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import { AqaryButton } from 'components/Elements/AqaryButton';
 import Table from 'components/Table/Table';
-
+import { useState } from 'react';
 // ==============================|| Reviews datatable ||============================== //
 
 const ColumnHeaders = [
@@ -75,11 +75,24 @@ const data = [
 ];
 
 function ManageCommunityGuide() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+
   return (
     <Page title="Community Guide">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table
+            data={data}
+            columnHeaders={ColumnHeaders}
+            loading={false}
+            pagination={pagination}
+            setPagination={setPagination}
+            isFetching={false}
+            rowCount={data.length}
+          />
         </Grid>
       </Grid>
     </Page>

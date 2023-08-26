@@ -128,8 +128,11 @@ const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 // ==============================|| Add Unit form ||============================== //
 const validationSchema = Yup.object({
   unitType: objectValidator('Mandatory Selection', true),
+  category: objectValidator('Mandatory Selection', true),
   subCompanyType: objectValidator('Mandatory Selection', true),
   mainService: objectValidator('Mandatory Selection', true),
+  agent: objectValidator('Mandatory Selection', true),
+  refNo: stringValidator('Please provide a valid reference number', true),
   service: arrayValidator('Please select a service', true, 1),
   companyName: stringValidator('Please provide a company name', true),
   reraNo: stringValidator('Please provide a valid reara number', true),
@@ -146,6 +149,14 @@ const validationSchema = Yup.object({
   mapUrl: stringValidator('Please provide a valid map url').url(),
   lat: numberValidator('Latitude is missing', true),
   long: numberValidator('Longitude is missing', true),
+  place: stringValidator('Please enter location', true),
+  plot_area: stringValidator('Please enter plot area', true),
+  parkings: numberValidator('Please enter number of parkings', true),
+  price: numberValidator('Please enter price', true),
+  payments: numberValidator('Please enter no of payments', true),
+  unit_title: stringValidator('Please enter plot area', true),
+  description: stringValidator('Please enter description', true),
+  notes: stringValidator('Please enter notes', true),
   companyWebsite: stringValidator('Please provid a valid company website', true).url(),
   companyEmailAddress: stringValidator('Please provide a valid company email address', true).email(),
   companyContactNumber: stringValidator('Please provide a valid company contact number', true),
@@ -393,6 +404,8 @@ function ColumnsLayouts() {
               companyType: '',
               subCompanyType: '',
               mainService: '',
+              agent: '',
+              refNo: '',
               service: [],
               companyName: '',
               reraNo: '',
@@ -425,6 +438,8 @@ function ColumnsLayouts() {
               lastName: '',
               emailAddress: '',
               phoneNumber: '',
+              unit_title: '',
+              description: '',
               numberOfEmployees: '',
               subscriptionDuration: '',
               subscriptionStartDate: '',
@@ -513,7 +528,7 @@ function ColumnsLayouts() {
                       style={{ xs: 12, lg: 10 }}
                       label="Agent Name"
                       id="agent"
-                      name="agentName"
+                      name="agent"
                       placeholder="Select Agent Name"
                       options={agent_names}
                       setFieldValue={props.setFieldValue}
@@ -531,6 +546,7 @@ function ColumnsLayouts() {
                       required={true}
                     />
                   </Grid>
+              
                 </Container>
 
                 <Container title="Location Details" style={{ xs: 12 }}>
@@ -663,6 +679,8 @@ function ColumnsLayouts() {
                       helperText="Please enter place address"
                       style={{ xs: 12, lg: 6 }}
                       required={true}
+                      id="place"
+                      name="place"
                       metaError={props.errors.place}
                       metaTouched={props.touched.place}
                     >
@@ -672,8 +690,6 @@ function ColumnsLayouts() {
                         country={setCountry}
                         state={setState}
                         value="uae"
-                        id="place"
-                        name="place"
                         metaError={props.errors.place}
                         metaTouched={props.touched.place}
                       />
@@ -735,7 +751,7 @@ function ColumnsLayouts() {
                       type="text"
                       style={{ xs: 12, lg: 6 }}
                       name="plot_area"
-                      id="Plot Area"
+                      id="plot_area"
                       required={true}
                     />
                     <InputText
@@ -842,7 +858,7 @@ function ColumnsLayouts() {
                       helperText="Please enter No. of Payments"
                       type="text"
                       style={{ xs: 12, lg: 6 }}
-                      name="no_payments"
+                      name="payments"
                       id="payments"
                       required={true}
                     />
@@ -866,7 +882,7 @@ function ColumnsLayouts() {
                           type="text"
                           style={{ xs: 12, lg: 12 }}
                           name="unit_title"
-                          id="unit_name"
+                          id="unit_title"
                           required={true}
                         />
                         <InputText
@@ -906,7 +922,7 @@ function ColumnsLayouts() {
                           type="text"
                           style={{ xs: 12, lg: 12 }}
                           name="unit_title"
-                          id="unit_name"
+                          id="unit_title"
                           required={true}
                         />
                         <InputText

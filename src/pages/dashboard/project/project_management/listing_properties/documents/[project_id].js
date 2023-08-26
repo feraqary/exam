@@ -8,7 +8,7 @@ import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
 import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { useGetDocByProjectIdQuery } from 'store/services/project/projectApi';
+import { useGetDocByProjectPropertyIdQuery } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,9 +17,9 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
 import ViewInformation from 'components/InputArea/information/view_information';
-import ViewDocuments from 'pages/dashboard/project/project_management/documents/view_documents';
+import ViewDocuments from './view_documents';
 import PopUp from 'components/InputArea/PopUp';
-import AddDocuments from '../add_doc/AddDoc';
+import AddDocuments from '../../add_doc/AddDoc';
 // ==============================|| Manage International Projects ||============================== //
 
 const Documents = () => {
@@ -30,7 +30,8 @@ const Documents = () => {
     pageIndex: 0,
     pageSize: 5
   });
-  const { data: projectDocData, isError, error, isLoading, isFetching } = useGetDocByProjectIdQuery({ pagination, project_id });
+
+  const { data: projectDocData, isError, error, isLoading, isFetching } = useGetDocByProjectPropertyIdQuery({ pagination, project_id });
   const [addDocOpen, setAddDocOpen] = useState(false);
 
   const ColumnHeaders = [
@@ -39,7 +40,7 @@ const Documents = () => {
       header: 'Document ID ',
       title: (
         <Tooltip title={'Project ID'}>
-          <span>Project ID</span>
+          <span>{type == 'project ' ? 'Project ID' : 'Property ID'}</span>
         </Tooltip>
       )
     },
@@ -83,11 +84,8 @@ const Documents = () => {
                 View
               </Button>
               <ViewInformation opened={viewOpen} setOpen={setViewOpen} pageTitle="Documents" size={'lg'} title="Project Documents">
-                <ViewDocuments document={row.original} />
+                <ViewDocuments document={row.original} type="property" />
               </ViewInformation>
-              <Button variant="contained" color="error">
-                Delete
-              </Button>
             </Box>
           </>
         );

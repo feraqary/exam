@@ -106,11 +106,9 @@ const localProjects = () => {
               rowCount={0}
               renderTopToolbarCustomActions={({ table }) => {
                 return (
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/manage_units/${project_id}` }}>
-                      <Button color="primary">Add Unit Type</Button>
-                    </Link>
-                  </div>
+                  <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/manage_units/${project_id}` }}>
+                    <Button variant="outlined">Add Unit Type</Button>
+                  </Link>
                 );
               }}
             />

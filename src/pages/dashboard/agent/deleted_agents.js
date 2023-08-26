@@ -5,7 +5,7 @@ import { Grid, Box, Button } from '@mui/material';
 import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
-
+import { useState } from 'react';
 import Table from 'components/Table/Table';
 
 // ==============================|| Reviews datatable ||============================== //
@@ -103,11 +103,15 @@ const data = [
 ];
 
 function DeletedAgents() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
   return (
     <Page title="Deleted Agents">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table columnHeaders={ColumnHeaders} data={data} />
+          <Table pagination={pagination} setPagination={setPagination} columnHeaders={ColumnHeaders} data={data} />
         </Grid>
       </Grid>
     </Page>

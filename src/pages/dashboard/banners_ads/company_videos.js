@@ -8,6 +8,7 @@ import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 
 import Table from 'components/Table/Table';
+import { useState } from 'react';
 
 // ==============================|| Banners datatable ||============================== //
 const data = [
@@ -1164,51 +1165,64 @@ const data = [
       slno: 4
     }
   ];
+
+  const ColumnHeaders = [
+    {
+        accessorKey: 'sino',
+        header: 'SL.NO'
+      },
+      {
+        accessorKey: 'company',
+        header: 'Company Name'
+      },
+      {
+        accessorKey: 'link',
+        header: 'Link'
+      },
+      {
+        accessorKey: 'action',
+        header: 'Action',
+        Cell: ({ renderedCellValue, row }) => (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem'
+            }}
+          >
+            <Button variant="contained" color="primary">
+              Edit
+            </Button>
+            <Button color="primary" variant="contained">
+              Delete
+            </Button>
+            <Button variant="contained" color="primary">
+              Published
+            </Button>
+          </Box>
+        )
+      }
+  ];
 function CompanyVideosTable() {
 
-    const ColumnHeaders = [
-        {
-            accessorKey: 'sino',
-            header: 'SL.NO'
-          },
-          {
-            accessorKey: 'company',
-            header: 'Company Name'
-          },
-          {
-            accessorKey: 'link',
-            header: 'Link'
-          },
-          {
-            accessorKey: 'action',
-            header: 'Action',
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem'
-                }}
-              >
-                <Button variant="contained" color="primary">
-                  Edit
-                </Button>
-                <Button color="primary" variant="contained">
-                  Delete
-                </Button>
-                <Button variant="contained" color="primary">
-                  Published
-                </Button>
-              </Box>
-            )
-          }
-      ];
-
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
+ 
     return (
       <Page title="Banners">
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
-            <Table data={data} columnHeaders={ColumnHeaders} />
+            <Table             
+              data={data}
+              columnHeaders={ColumnHeaders}
+              loading={false}
+              pagination={pagination}
+              setPagination={setPagination}
+              isFetching={false}
+              rowCount={data.length} 
+            />
           </Grid>
         </Grid>
       </Page>
