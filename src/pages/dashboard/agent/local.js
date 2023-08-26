@@ -1,4 +1,5 @@
 // material-ui
+import { useState } from 'react';
 import { Grid, Box, Button } from '@mui/material';
 
 // project imports
@@ -146,11 +147,15 @@ const data = [
 ];
 
 function LocalAgents() {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5
+  });
   return (
     <Page title="Local Agent">
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <Table data={data} columnHeaders={ColumnHeaders} />
+          <Table pagination={pagination} setPagination={setPagination} data={data} columnHeaders={ColumnHeaders} />
         </Grid>
       </Grid>
     </Page>

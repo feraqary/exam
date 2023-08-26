@@ -29,7 +29,11 @@ import React, { useState, useEffect } from 'react';
 
 
 import { ToastSuccess, ToastError } from 'utils/toast';
+import Container from 'components/Elements/Container';
+import PopUp from 'components/InputArea/PopUp';
+import ViewInformation from '../information/view_information';
 import AddPromotions from '../promotions/add_promotions';
+
 // ==============================|| Manage International Projects ||============================== //
 
 const ProjectInformation = ({ id }) => {
@@ -265,6 +269,7 @@ const localProjects = () => {
       accessorKey: 'action',
       header: 'Action',
       Cell: ({ renderedCellValue, row }) => {
+      
         const [open, setOpen] = useState(false);
         const [updateVerifyStatus, Verifyresult] = useUpdateProjectsVerifyStatusMutation();
 
@@ -429,7 +434,7 @@ const localProjects = () => {
                   Add to Promotions
                 </Button>
                 <PopUp opened={promotionOpen} setOpen={setPromotionOpen} title="Add Promotion" size={'md'}>
-                  <AddPromotions projectId={row.original.id} />
+                  <AddPromotions title="AddPromotion" projectId={row.original.id} />
                 </PopUp>
 
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>

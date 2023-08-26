@@ -396,6 +396,7 @@ function AddCompany() {
           >
             {(props) => (
               <>
+                {console.log(props, 'props inside index')}
                 <Container title="Add Company Details" style={{ xs: 12 }}>
                   <Grid container spacing={2} justifyContent="center" style={{ xs: 12 }}>
                     <AutoCompleteSelector

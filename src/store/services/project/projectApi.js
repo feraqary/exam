@@ -303,13 +303,14 @@ export const projectApi = api.injectEndpoints({
 
     //CREATE PROJECT PROMOTION
     createProjectPromotion: builder.mutation({
-      query(formData) {
+      query(data) {
         return {
           url: 'dashboard/createProjectPromotion',
           method: 'POST',
-          body: formData
+          body: data.formData
         };
-      }
+      },
+      invalidatesTags: ['ProjectPromotion']
     }),
 
     //CREATE DOCS SUB CATEGORY
@@ -475,7 +476,29 @@ export const projectApi = api.injectEndpoints({
           url: `dashboard/getAllProjectPromotions?page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
-      }
+      },
+      providesTags: ['ProjectPromotion']
+    }),
+
+    //Delete Project Promotion
+    deleteSingleProjectPromotion: builder.mutation({
+      query: (id) => ({
+        url: `dashboard/deleteProjectPromotion/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['ProjectPromotion']
+    }),
+  
+    //Edit Promotioin
+    editPromotionList: builder.mutation({
+      query: (data) => {
+        return {
+          url: `dashboard/updateProjectPromotion`,
+          method: 'PUT',
+          body: data.formData
+        };
+      },
+      invalidatesTags: ['ProjectPromotion']
     }),
 
     // DELETE PROJECT DOCUMENT
@@ -489,6 +512,7 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['Documents']
     }),
+    
     // DELETE PROJECT DOCUMENT
     deleteProjectPropertyDoc: builder.mutation({
       query({ id, name }) {
@@ -601,6 +625,8 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery,
+  useDeleteSingleProjectPromotionMutation,
+  useEditPromotionListMutation,
   useDeleteProjectDocMutation,
   useCreateProjectPropertyMediaMutation,
   useGetProjectPropertyMediaByPropertyIDQuery,
