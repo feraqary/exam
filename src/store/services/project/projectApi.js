@@ -13,6 +13,18 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['Documents']
     }),
+
+    //CREATE PROJECT PROPERTY DOCUMENT API
+    createProjectPropertyDoc: builder.mutation({
+      query(formData) {
+        return {
+          url: `dashboard/createProjectPropertyDoc`,
+          method: 'POST',
+          body: formData
+        };
+      },
+      invalidatesTags: ['Documents']
+    }),
     //GET LOCAL Projects API
     getPropertyType: builder.query({
       query() {
@@ -134,6 +146,17 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+    // CREATE PROPERTY PLAN
+    createPropertyPlan: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/createPropertiesPlan`,
+          method: 'POST',
+          body: data
+        };
+      },
+      invalidatesTags: ['PropertyPlan']
+    }),
 
     getBrokerCompaniesByCities: builder.query({
       query({ id, isState }) {
@@ -248,6 +271,19 @@ export const projectApi = api.injectEndpoints({
       },
       invalidatesTags: ['DocumentsCategory']
     }),
+
+    //CREATE PROJECT PROMOTION
+    createProjectPromotion: builder.mutation({
+      query(data) {
+        return {
+          url: 'dashboard/createProjectPromotion',
+          method: 'POST',
+          body: data.formData
+        };
+      },
+      invalidatesTags: ['ProjectPromotion']
+    }),
+
     //CREATE DOCS SUB CATEGORY
     CreateSubCategory: builder.mutation({
       query(data) {
@@ -268,6 +304,27 @@ export const projectApi = api.injectEndpoints({
         };
       }
     }),
+    //GET PLANS BY PROPERTY ID
+    getPlansByPropertyId: builder.query({
+      query(property_id) {
+        return {
+          url: `dashboard/getAllPropertyPlans?property_id=${property_id}&key=1`,
+          method: 'GET'
+        };
+      },
+      providesTags: ['PropertyPlan']
+    }),
+    //GET PLANS BY PROPERTY ID
+    updatePlansByPropertyId: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/updatePropertyPlan`,
+          method: 'PUT',
+          body: data
+        };
+      },
+      invalidatesTags: ['PropertyPlan']
+    }),
 
     //GET ALL DOCUMENT CATEGORIES
     getAllDocCategories: builder.query({
@@ -285,6 +342,17 @@ export const projectApi = api.injectEndpoints({
         const { pageIndex, pageSize } = pagination;
         return {
           url: `dashboard/getAllDocsByProject?project_id=${project_id}&page_no=${pageIndex + 1}&page_size=${pageSize}`,
+          method: 'GET'
+        };
+      },
+      providesTags: ['Documents']
+    }),
+    //GET DOCS BY PROJECT ID API
+    getDocByProjectPropertyId: builder.query({
+      query({ pagination, project_id }) {
+        const { pageIndex, pageSize } = pagination;
+        return {
+          url: `dashboard/getAllDocsByProjectProperty?project_property_id=${project_id}&page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
       },
@@ -378,7 +446,29 @@ export const projectApi = api.injectEndpoints({
           url: `dashboard/getAllProjectPromotions?page_no=${pageIndex + 1}&page_size=${pageSize}`,
           method: 'GET'
         };
-      }
+      },
+      providesTags: ['ProjectPromotion']
+    }),
+
+    //Delete Project Promotion
+    deleteSingleProjectPromotion: builder.mutation({
+      query: (id) => ({
+        url: `dashboard/deleteProjectPromotion/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['ProjectPromotion']
+    }),
+
+    //Edit Promotioin
+    editPromotionList: builder.mutation({
+      query: (data) => {
+        return {
+          url: `dashboard/updateProjectPromotion`,
+          method: 'PUT',
+          body: data.formData
+        };
+      },
+      invalidatesTags: ['ProjectPromotion']
     }),
 
     // DELETE PROJECT DOCUMENT
@@ -393,6 +483,17 @@ export const projectApi = api.injectEndpoints({
       invalidatesTags: ['Documents']
     }),
 
+    // DELETE PROJECT DOCUMENT
+    deleteProjectPropertyDoc: builder.mutation({
+      query({ id, name }) {
+        return {
+          url: `dashboard/deleteProjectPropertyDoc?id=${id}&file_name=${name}`,
+          method: 'DELETE'
+        };
+      },
+      invalidatesTags: ['Documents']
+    }),
+
     // Get ALl Promotion Types
     getAllPromoType: builder.query({
       query({ pageIndex, pageSize }) {
@@ -402,6 +503,15 @@ export const projectApi = api.injectEndpoints({
         };
       },
       providesTags: ['Promotions']
+    }),
+
+    getAllPromoTypeWithoutPagination: builder.query({
+      query() {
+        return {
+          url: `dashboard/getAllPromoTypes`,
+          method: 'GET'
+        };
+      }
     }),
 
     // Add Promotion Type
@@ -482,6 +592,15 @@ export const projectApi = api.injectEndpoints({
       },
       providesTags: ['PropertyPlan']
     }),
+    // GET PROPERTY BY ID
+    getProjectsPropertyById: builder.query({
+      query(id) {
+        return {
+          url: `dashboard/getProjectProperty/${id}`,
+          method: 'GET'
+        };
+      }
+    }),
     //GET PLANS BY PROPERTY ID
     updatePlansByPropertyId: builder.mutation({
       query(data) {
@@ -492,11 +611,25 @@ export const projectApi = api.injectEndpoints({
         };
       },
       invalidatesTags: ['PropertyPlan']
+    }),
+    // update project property
+    UpdateProjectProperty: builder.mutation({
+      query(data) {
+        return {
+          url: `dashboard/updateProjectProperty`,
+          method: 'PUT',
+          body: data
+        };
+      }
     })
   })
 });
 
 export const {
+  useDeleteProjectPropertyDocMutation,
+  useGetDocByProjectPropertyIdQuery,
+  useGetProjectsPropertyByIdQuery,
+  useUpdateProjectPropertyMutation,
   useCreateProjectPropertyMutation,
   useGetDocsCategoriesQuery,
   useCreateCategoryMutation,
@@ -525,7 +658,12 @@ export const {
   useCreateProjectMutation,
   useGetViewQuery,
   useGetRatingsQuery,
+  useDeleteSingleProjectPromotionMutation,
+  useEditPromotionListMutation,
   useDeleteProjectDocMutation,
+  useGetAllPromoTypeQuery,
+  useCreatePromotionTypeMutation,
+  useDeleteProjectPromotionTypesMutation,
   useGetPlansByPropertyIdQuery,
   useUpdatePlansByPropertyIdMutation,
   useCreatePropertyPlanMutation,
@@ -534,5 +672,8 @@ export const {
   useGetAllProjectPromotionsQuery,
   useDeleteProjectPropertyMediaSingleFileMutation,
   useCreateProjectPropertyMediaMutation,
-  useGetProjectPropertyMediaByPropertyIDQuery
+  useGetProjectPropertyMediaByPropertyIDQuery,
+  useCreateProjectPromotionMutation,
+  useGetAllPromoTypeWithoutPaginationQuery,
+  useCreateProjectPropertyDocMutation
 } = projectApi;
