@@ -136,6 +136,8 @@ const international_Projects = () => {
     }
   }, [result.isError]);
 
+
+
   const ColumnHeaders = [
     {
       accessorKey: 'id',
@@ -328,11 +330,18 @@ const international_Projects = () => {
                   </Link>
                 </>
                 {/* )} */}
+                <Link href={{ pathname: `/dashboard/project/project_management/listing_properties/${row.original.id}` }}>
+                  <Button variant="contained" color="primary">
+                    {row.original.phase_type === "Single" ? "Listing Property" : "Listing Properties"}
+                  </Button>
+                </Link>
 
-                <Button color="error" variant="outlined" onClick={() => handleUpdateStatus(5)}>
+                <Button variant="outlined" color="error">
+
                   Block
                 </Button>
               </Box>
+              
               {/* //================================= */}
               <Box
                 sx={{
@@ -392,7 +401,7 @@ const international_Projects = () => {
                   Add to Promotions
                 </Button>
                 <PopUp title="Add Promotion" opened={promotionOpen} setOpen={setPromotionOpen} size={'md'} full width>
-                  <AddPromotions projects_id= {projects_id} onClose={() => setIsAddPromotionsOpen(false)} />
+                  <AddPromotions projects_id={projects_id} onClose={() => setIsAddPromotionsOpen(false)} />
                 </PopUp>
                 <Button variant="contained" color="error" onClick={() => handleUpdateStatus(6)}>
                   Delete

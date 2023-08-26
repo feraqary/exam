@@ -132,6 +132,7 @@ function AddProject() {
   });
   const { data: views, error: viewsError, isLoading: loadingView } = useGetViewQuery();
   const [createProject, CreateProjectResult] = useCreateProjectMutation();
+
   useEffect(() => {
     if (CreateProjectResult.isSuccess) {
       ToastSuccess('Project has been created successfully');
@@ -558,7 +559,7 @@ function AddProject() {
                       </Grid>
                     </MainCard>
                   </Grid>
-
+                           {/* Google map */}
                   <Grid item xs={12}>
                     <MainCard title="Location details">
                       <Grid container spacing={2} alignItems="center">
