@@ -19,7 +19,7 @@ const ViewDocuments = ({ document, type }) => {
   });
 
   const [deleteDoc, result] = useDeleteProjectPropertyDocMutation();
-
+console.log()
   //update toast
   useEffect(() => {
     if (result.isSuccess) {
