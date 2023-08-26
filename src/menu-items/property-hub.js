@@ -28,52 +28,52 @@ const icons = {
 };
 
 // ==============================|| UI FORMS MENU ITEMS ||============================== //
+const items = 'dashboard.menuItems.propertyHub';
 
 const propertyhub = {
   id: 'ui-forms',
-  title: <FormattedMessage id="Property Hub" />,
+  title: <FormattedMessage id={items + '.propertyHub'} />,
   icon: <BuildingSkyscraper size={23} strokeWidth={1.5} style={{ marginRight: '10px' }} color={'black'} />,
   type: 'group',
   children: [
     {
-      id: 'add-property',
-      title: <FormattedMessage id="Add Property" />,
+      id: items + '.add-property',
+      title: <FormattedMessage id={items + '.addProperty'} />,
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/dashboard/property_hub/add_property'
     },
-
     {
-      id: 'local-properties',
-      title: <FormattedMessage id="Local Properties" />,
+      id: items + '.local-properties',
+      title: <FormattedMessage id={items + '.localProperties'} />,
       type: 'item',
       icon: icons.IconPin,
       url: '/dashboard/property_hub/local_properties'
     },
     {
-      id: 'international-properties',
-      title: <FormattedMessage id="International Properties" />,
+      id: items + '.international-properties',
+      title: <FormattedMessage id={items + '.internationalProperties'} />,
       type: 'item',
       icon: icons.IconMapPin,
       url: '/dashboard/property_hub/international_properties'
     },
     {
-      id: 'shared-properties',
-      title: <FormattedMessage id="Shared Properties" />,
+      id: items + '.shared-properties',
+      title: <FormattedMessage id={items + '.sharedProperties'} />,
       type: 'item',
       icon: icons.IconHomeShare,
       url: '/dashboard/property_hub/shared_properties'
     },
     {
-      id: 'deleted-properties',
-      title: <FormattedMessage id="Deleted Properties" />,
+      id: items + '.deleted-properties',
+      title: <FormattedMessage id={items + '.deletedProperties'} />,
       type: 'item',
       icon: icons.IconForms,
       url: '/dashboard/property_hub/deleted_properties'
     },
     {
-      id: 'property-hub-activities',
-      title: <FormattedMessage id="Activities" />,
+      id: items + '.property-hub-activities',
+      title: <FormattedMessage id={items + '.activities'} />,
       type: 'item',
       icon: icons.IconForms,
       url: '/dashboard/property_hub/activities'

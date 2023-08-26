@@ -16,42 +16,43 @@ const icons = {
 
 // ==============================|| UI FORMS MENU ITEMS ||============================== //
 
+const items = 'dashboard.menuItems.leads';
+
 const leads = {
   id: 'leads',
-  title: <FormattedMessage id="leads" />,
+  title: <FormattedMessage id={items + '.leads'} />,
   icon: <GitBranch size={22} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
       id: 'add-leads',
-      title: <FormattedMessage id="Add Leads" />,
+      title: <FormattedMessage id={items + '.addLeads'} />,
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/dashboard/leads/add_leads'
     },
     {
       id: 'manage-leads',
-      title: <FormattedMessage id="Manage Leads" />,
+      title: <FormattedMessage id={items + '.manageLeads'} />,
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/dashboard/leads/manage_leads'
     },
-
     {
       id: 'video-requests',
-      title: <FormattedMessage id="Video Requests" />,
+      title: <FormattedMessage id={items + '.videoRequests'} />,
       type: 'item',
       url: '/dashboard/leads/request_video'
     },
     {
       id: 'general-requests',
-      title: <FormattedMessage id="General Requests" />,
+      title: <FormattedMessage id={items + '.generalRequests'} />,
       type: 'item',
       url: '/dashboard/leads/general_request'
     },
     {
       id: 'view-schedules',
-      title: <FormattedMessage id="View Schedules" />,
+      title: <FormattedMessage id={items + '.viewSchedules'} />,
       type: 'item',
       icon: icons.IconForms,
       url: '/dashboard/leads/schedule_viewing'

@@ -15,66 +15,67 @@ const icons = {
 };
 
 // ==============================|| UI FORMS MENU ITEMS ||============================== //
+const items = 'dashboard.menuItems.units';
 
 const units = {
   id: 'units',
-  title: <FormattedMessage id="units" />,
+  title: <FormattedMessage id={items + '.units'} />,
   icon: <BuildingCommunity size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
-      id: 'add-unit',
-      title: <FormattedMessage id="Add Unit" />,
+      id: 'add-unit' + items,
+      title: <FormattedMessage id={items + '.addUnit'} />,
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/dashboard/units/add_unit'
     },
     {
-      id: 'sale-units',
-      title: <FormattedMessage id="Sale Units" />,
+      id: 'sale-units' + items,
+      title: <FormattedMessage id={items + '.saleUnits'} />,
       type: 'item',
       url: '/dashboard/units/sale_units'
     },
     {
-      id: 'rent-units',
-      title: <FormattedMessage id="Rent Units" />,
+      id: 'rent-units' + items,
+      title: <FormattedMessage id={items + '.rentUnits'} />,
       type: 'item',
       url: '/dashboard/units/rent_units'
     },
     {
-      id: 'shared-units',
-      title: <FormattedMessage id="Shared Units" />,
+      id: 'shared-units' + items,
+      title: <FormattedMessage id={items + '.sharedUnits'} />,
       type: 'item',
       url: '/dashboard/units/shared_units'
     },
     {
-      id: 'international-units',
-      title: <FormattedMessage id="International Units" />,
+      id: 'international-units' + items,
+      title: <FormattedMessage id={items + '.internationalUnits'} />,
       type: 'item',
       url: '/dashboard/units/international_units'
     },
     {
-      id: 'rejected-units',
-      title: <FormattedMessage id="Rejected Units" />,
+      id: 'rejected-units' + items,
+      title: <FormattedMessage id={items + '.rejectedUnits'} />,
       type: 'item',
       url: '/dashboard/units/rejected_units'
     },
     {
-      id: 'deleted-units',
-      title: <FormattedMessage id="Deleted Units" />,
+      id: 'deleted-units' + items,
+      title: <FormattedMessage id={items + '.deletedUnits'} />,
       type: 'item',
       url: '/dashboard/units/deleted_units'
     },
     {
-      id: 'unit-activities',
-      title: <FormattedMessage id="Activities" />,
+      id: 'unit-activities' + items,
+      title: <FormattedMessage id={items + '.activities'} />,
       type: 'item',
       icon: icons.IconBorderAll,
       url: '/dashboard/units/activities'
     },
     {
-      id: 'problem-reports',
-      title: <FormattedMessage id="Problem Reports" />,
+      id: 'problem-reports' + items,
+      title: <FormattedMessage id={items + '.problemReports'} />,
       type: 'item',
       icon: icons.IconBorderAll,
       url: '/dashboard/units/problem_reports'

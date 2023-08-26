@@ -28,23 +28,24 @@ const icons = {
 };
 
 // ==============================|| UI FORMS MENU ITEMS ||============================== //
+const items = 'dashboard.menuItems.bannerAds';
 
 const banners = {
   id: 'banners_ads',
-  title: <FormattedMessage id="Banners / Ads" />,
+  title: <FormattedMessage id={items + '.bannerAds'} />,
   icon: <Ad2 size={25} strokeWidth={1.5} style={{ marginRight: '10px' }} color={'black'} />,
   type: 'group',
   children: [
     {
       id: 'add-banners',
-      title: <FormattedMessage id="Add Banner" />,
+      title: <FormattedMessage id={items + '.addBanner'} />,
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/dashboard/banners_ads/add_banner'
     },
     {
       id: 'banners',
-      title: <FormattedMessage id="Manage Banners" />,
+      title: <FormattedMessage id={items + '.manageBanners'} />,
       icon: icons.IconCreditCard,
       type: 'item',
       url: '/dashboard/banners_ads/banners',
@@ -52,7 +53,7 @@ const banners = {
     },
     {
       id: 'company-videos',
-      title: <FormattedMessage id="Manage Company Videos" />,
+      title: <FormattedMessage id={items + '.manageCompanyVideos'} />,
       type: 'item',
       url: '/dashboard/banners_ads/company_videos',
       icon: icons.IconVideo,
@@ -60,7 +61,7 @@ const banners = {
     },
     {
       id: 'project-videos',
-      title: <FormattedMessage id="Manage Project Videos" />,
+      title: <FormattedMessage id={items + '.manageProjectVideos'} />,
       type: 'item',
       url: '/dashboard/banners_ads/project_videos',
       icon: icons.IconVideo,
@@ -68,7 +69,7 @@ const banners = {
     },
     {
       id: 'tower-videos',
-      title: <FormattedMessage id="Manage Tower Videos" />,
+      title: <FormattedMessage id={items + '.manageTowerVideos'} />,
       type: 'item',
       url: '/dashboard/banners_ads/tower_videos',
       icon: icons.IconVideo,
@@ -76,7 +77,7 @@ const banners = {
     },
     {
       id: 'deleted-banners',
-      title: <FormattedMessage id="Manage Deleted Banners" />,
+      title: <FormattedMessage id={items + '.manageDeletedBanners'} />,
       type: 'item',
       url: '/dashboard/banners_ads/deleted_banners',
       icon: icons.IconTrash,
@@ -84,7 +85,7 @@ const banners = {
     },
     {
       id: 'banner-activities',
-      title: <FormattedMessage id="Activities" />,
+      title: <FormattedMessage id={items + '.activities'} />,
       type: 'item',
       icon: icons.IconBorderAll,
       url: '/dashboard/banners_ads/activities'

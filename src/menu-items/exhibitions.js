@@ -15,47 +15,48 @@ const icons = {
 };
 
 // ==============================|| UI FORMS MENU ITEMS ||============================== //
+const items = 'dashboard.menuItems.exhibitions';
 
 const exhibitions = {
   id: 'exhibitions',
-  title: <FormattedMessage id="Exhibitions" />,
+  title: <FormattedMessage id={items + '.exhibitions'} />,
   icon: <Ticket size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
       id: 'add-exhibitions',
-      title: <FormattedMessage id="Add Exhibitions" />,
+      title: <FormattedMessage id={items + '.addExhibitions'} />,
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/dashboard/exhibition/add'
     },
     {
       id: 'manage-local-exhibitions',
-      title: <FormattedMessage id="Manage Local Exhibitions" />,
+      title: <FormattedMessage id={items + '.manageLocalExhibitions'} />,
       type: 'item',
       url: '/dashboard/exhibition/local'
     },
     {
       id: 'manage-international-exhibitions',
-      title: <FormattedMessage id="Manage International Exhibitions" />,
+      title: <FormattedMessage id={items + '.manageInternationalExhibitions'} />,
       type: 'item',
       url: '/dashboard/exhibition/international'
     },
     {
       id: 'manage-clients',
-      title: <FormattedMessage id="Manage Clients" />,
+      title: <FormattedMessage id={items + '.manageClients'} />,
       type: 'item',
       url: '/dashboard/exhibition/clients'
     },
     {
       id: 'manage-exhibition-services',
-      title: <FormattedMessage id="Manage Exhibition Services" />,
+      title: <FormattedMessage id={items + '.manageExhibitionServices'} />,
       type: 'item',
       url: '/dashboard/exhibition/services'
     },
     {
       id: 'exhibitions-activities',
-      title: <FormattedMessage id="Activities" />,
+      title: <FormattedMessage id={items + '.activities'} />,
       type: 'item',
       icon: icons.IconBorderAll,
       url: '/dashboard/exhibition/activities'

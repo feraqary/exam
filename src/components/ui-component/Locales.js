@@ -4,20 +4,21 @@ import { useState, useEffect } from 'react';
 // third-party
 import { IntlProvider } from 'react-intl';
 import useConfig from 'hooks/useConfig';
+import flattenMessages from 'utils/flatten-message';
 
 // load locales files
 const loadLocaleData = (locale) => {
   switch (locale) {
-    case 'fren':
-      return import('utils/locales/french.json');
     case 'fr':
-      return import('utils/locales/fr.json');
+      return import('utils/locales/fr.js');
+    case 'ar':
+      return import('utils/locales/ar.js');
     case 'ro':
       return import('utils/locales/ro.json');
     case 'zh':
       return import('utils/locales/zh.json');
     default:
-      return import('utils/locales/en.json');
+      return import('utils/locales/en.js');
   }
 };
 
@@ -26,7 +27,6 @@ const loadLocaleData = (locale) => {
 const Locales = ({ children }) => {
   const { locale } = useConfig();
   const [messages, setMessages] = useState();
-
   useEffect(() => {
     loadLocaleData(locale).then((d) => {
       setMessages(d.default);
@@ -36,7 +36,7 @@ const Locales = ({ children }) => {
   return (
     <>
       {messages && (
-        <IntlProvider locale={locale} defaultLocale="en" messages={messages}>
+        <IntlProvider locale={locale} defaultLocale="en" messages={flattenMessages(messages)}>
           {children}
         </IntlProvider>
       )}

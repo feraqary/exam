@@ -26,7 +26,7 @@ import useConfig from 'hooks/useConfig';
 // ==============================|| LOCALIZATION ||============================== //
 
 const LocalizationSection = () => {
-  const { borderRadius, locale, onChangeLocale } = useConfig();
+  const { borderRadius, locale, onChangeLocale, onChangeRTL, rtlLayout } = useConfig();
 
   const theme = useTheme();
   const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
@@ -34,7 +34,6 @@ const LocalizationSection = () => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const [language, setLanguage] = useState(locale);
-
   const handleListItemClick = (event, lng) => {
     setLanguage(lng);
     onChangeLocale(lng);
@@ -62,6 +61,12 @@ const LocalizationSection = () => {
 
   useEffect(() => {
     setLanguage(locale);
+  }, [locale]);
+
+  useEffect(() => {
+    if (locale === 'ar') {
+      onChangeRTL(true);
+    } else onChangeRTL(false);
   }, [locale]);
 
   return (
@@ -96,12 +101,12 @@ const LocalizationSection = () => {
           onClick={handleToggle}
           color="inherit"
         >
-          {language !== 'en' && (
-            <Typography variant="h5" sx={{ textTransform: 'uppercase' }} color="inherit">
-              {language}
-            </Typography>
-          )}
-          {language === 'en' && <TranslateTwoToneIcon sx={{ fontSize: '1.3rem' }} />}
+          {/* {language !== 'en' && ( */}
+          <Typography variant="h5" sx={{ textTransform: 'uppercase' }} color="inherit">
+            {language}
+          </Typography>
+          {/* )} */}
+          {/* {language === 'en' && <TranslateTwoToneIcon sx={{ fontSize: '1.3rem' }} />} */}
         </Avatar>
       </Box>
 
@@ -151,7 +156,7 @@ const LocalizationSection = () => {
                         }
                       />
                     </ListItemButton>
-                    <ListItemButton selected={language === 'fr'} onClick={(event) => handleListItemClick(event, 'en')}>
+                    <ListItemButton selected={language === 'fr'} onClick={(event) => handleListItemClick(event, 'fr')}>
                       <ListItemText
                         primary={
                           <Grid container>
@@ -163,8 +168,8 @@ const LocalizationSection = () => {
                         }
                       />
                     </ListItemButton>
-                   
-                    <ListItemButton selected={language === 'arabic'} onClick={(event) => handleListItemClick(event, 'fr')}>
+
+                    <ListItemButton selected={language === 'ar'} onClick={(event) => handleListItemClick(event, 'ar')}>
                       <ListItemText
                         primary={
                           <Grid container>

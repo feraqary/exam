@@ -47,15 +47,17 @@ const icons = {
 
 // ==============================|| Company MENU ITEMS ||============================== //
 
+const items = 'dashboard.menuItems.companies';
+
 const companies = {
   id: 'companies',
-  title: <FormattedMessage id="companies" />,
+  title: <FormattedMessage id={items + '.companies'} />,
   icon: <Building size={23} strokeWidth={1.5} color={'black'} style={{ marginRight: '10px' }} />,
   type: 'group',
   children: [
     {
       id: 'add-company',
-      title: <FormattedMessage id="add-company" />,
+      title: <FormattedMessage id={items + '.addCompany'} />,
       type: 'item',
       url: '/dashboard/company/add_comp',
       icon: icons.IconUserCheck,
@@ -63,7 +65,7 @@ const companies = {
     },
     {
       id: 'add_company_types',
-      title: <FormattedMessage id="add-sub-comp" />,
+      title: <FormattedMessage id={items + '.addSubCompany'} />,
       type: 'item',
       icon: icons.IconLayoutGridAdd,
       url: '/dashboard/company/add_type',
@@ -71,16 +73,15 @@ const companies = {
     },
     {
       id: 'company-types',
-      title: <FormattedMessage id="mng-sub-comp" />,
+      title: <FormattedMessage id={items + '.manageSubCompany'} />,
       type: 'item',
       icon: icons.IconLayoutGrid,
       url: '/dashboard/company/manage_type',
       breadcrumbs: true
     },
-
     {
       id: 'local',
-      title: <FormattedMessage id="local-companies" />,
+      title: <FormattedMessage id={items + '.localCompanies'} />,
       type: 'item',
       icon: icons.IconPin,
       url: '/dashboard/company/local_company_management',
@@ -88,7 +89,7 @@ const companies = {
     },
     {
       id: 'international',
-      title: <FormattedMessage id="int-companies" />,
+      title: <FormattedMessage id={items + '.internationalCompanies'} />,
       type: 'item',
       icon: icons.IconMapPin,
       url: '/dashboard/company/int_comp_mng',
@@ -96,7 +97,7 @@ const companies = {
     },
     {
       id: 'featured-companies',
-      title: <FormattedMessage id="featured-companies" />,
+      title: <FormattedMessage id={items + '.featuredCompanies'} />,
       type: 'item',
       icon: icons.IconFileStar,
       url: '/dashboard/company/featured',
@@ -104,16 +105,15 @@ const companies = {
     },
     {
       id: 'blocked-companies',
-      title: <FormattedMessage id= "blocked-companies"/>,
+      title: <FormattedMessage id={items + '.blockedCompanies'} />,
       type: 'item',
       icon: icons.IconFileX,
       url: '/dashboard/company/blocked',
       breadcrumbs: true
     },
-
     {
       id: 'add-subscription',
-      title: <FormattedMessage id="add-subscriptions" />,
+      title: <FormattedMessage id={items + '.addSubscriptions'} />,
       type: 'item',
       icon: icons.IconTextPlus,
       url: '/dashboard/company/add_subs',
@@ -121,7 +121,7 @@ const companies = {
     },
     {
       id: 'active',
-      title: <FormattedMessage id="view-active" />,
+      title: <FormattedMessage id={items + '.viewActive'} />,
       type: 'item',
       icon: icons.IconChecklist,
       url: '/dashboard/company/active_subs',
@@ -129,28 +129,28 @@ const companies = {
     },
     {
       id: 'pending',
-      title: <FormattedMessage id="view-pending" />,
+      title: <FormattedMessage id={items + '.viewPending'} />,
       type: 'item',
       icon: icons.IconClock,
       url: '/dashboard/company/pending_subs'
     },
     {
       id: 'payments',
-      title: <FormattedMessage id="payments" />,
+      title: <FormattedMessage id={items + '.payments'} />,
       type: 'item',
       icon: icons.IconLayoutKanban,
       url: '/dashboard/company/payments'
     },
     {
       id: 'priviliges',
-      title: <FormattedMessage id="company-priviliges" />,
+      title: <FormattedMessage id={items + '.companyPrivileges'} />,
       type: 'item',
       icon: icons.IconNfc,
       url: '/dashboard/company/priviliges'
     },
     {
       id: 'company-activities',
-      title: <FormattedMessage id="activities" />,
+      title: <FormattedMessage id={items + '.activities'} />,
       type: 'item',
       icon: icons.IconBasket,
       url: '/dashboard/company/activity'

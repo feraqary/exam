@@ -16,22 +16,24 @@ const icons = {
 
 // ==============================|| UI FORMS MENU ITEMS ||============================== //
 
+const items = 'dashboard.menuItems.contact';
+
 const contact = {
   id: 'contact',
-  title: <FormattedMessage id="contact" />,
+  title: <FormattedMessage id={items + '.contact'} />,
   icon: <Friends size={22} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
       id: 'add-contact',
-      title: <FormattedMessage id="Add Contact" />,
+      title: <FormattedMessage id={items + '.addContact'} />,
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/dashboard/contact/add_contact'
     },
     {
       id: 'manage-contact',
-      title: <FormattedMessage id="Manage Contacts" />,
+      title: <FormattedMessage id={items + '.manageContacts'} />,
       type: 'item',
       icon: icons.IconPictureInPicture,
       url: '/dashboard/contact/manage_contacts'

@@ -6,23 +6,12 @@ import Layout from 'layout';
 import Page from 'components/ui-component/Page';
 import { gridSpacing } from 'store/constant';
 import Table from 'components/Table/Table';
-import Rating from '@mui/material/Rating';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import { useEffect } from 'react';
-import Tooltip from '@mui/material/Tooltip';
-import {
-  useGetLocalProjectsQuery,
-  useUpdateProjectStatusMutation,
-  useUpdateProjectsVerifyStatusMutation,
-  useUpdateProjectsIsEnabledMutation,
-  useUpdateProjectRankMutation
-} from 'store/services/project/projectApi';
+import { useGetLocalProjectsQuery, useUpdateProjectStatusMutation } from 'store/services/project/projectApi';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastSuccess, ToastError } from 'utils/toast';
-import TableSelectorOption from 'components/InputArea/TableSelectorOption';
 import Link from 'next/link';
 import Container from 'components/Elements/Container';
 import { useRouter } from 'next/router';

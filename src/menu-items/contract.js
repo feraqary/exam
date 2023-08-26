@@ -16,23 +16,24 @@ const icons = {
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
+const items = 'dashboard.menuItems.contracts';
 
 const contract = {
   id: 'contract',
-  title: <FormattedMessage id="Contract" />,
+  title: <FormattedMessage id={items + '.contracts'} />,
   icon: <WritingSign size={23} strokeWidth={1.5} style={{ marginRight: '10px' }} color={'black'} />,
   type: 'group',
   children: [
     {
       id: 'Add Contract',
-      title: <FormattedMessage id="Add Contract" />,
+      title: <FormattedMessage id={items + '.addContract'} />,
       type: 'item',
       icon: icons.IconKey,
       url: '/dashboard/contract/add'
     },
     {
       id: 'manage-contract',
-      title: <FormattedMessage id="Manage Contract" />,
+      title: <FormattedMessage id={items + '.manageContracts'} />,
       type: 'item',
       icon: icons.IconKey,
       url: '/dashboard/contract/manage'

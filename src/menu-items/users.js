@@ -15,28 +15,29 @@ const icons = {
 };
 
 // ==============================|| UI FORMS MENU ITEMS ||============================== //
+const items = 'dashboard.menuItems.users';
 
 const users = {
   id: 'users',
-  title: <FormattedMessage id="Users" />,
+  title: <FormattedMessage id={items + '.users'} />,
   icon: <Users size={23} strokeWidth={1.5} style={{ marginRight: '10px' }} color={'black'} />,
   type: 'group',
   children: [
     {
-      id: 'normal-users',
-      title: <FormattedMessage id="Normal Users" />,
+      id: 'normal-users' + items,
+      title: <FormattedMessage id={items + '.normalUsers'} />,
       type: 'item',
       icon: icons.IconPictureInPicture
     },
     {
-      id: 'registered-users',
-      title: <FormattedMessage id="Registered Users" />,
+      id: 'registered-users' + items,
+      title: <FormattedMessage id={items + '.registeredUsers'} />,
       type: 'item',
       icon: icons.IconForms
     },
     {
-      id: 'pending-users',
-      title: <FormattedMessage id="Pending Users" />,
+      id: 'pending-users' + items,
+      title: <FormattedMessage id={items + '.pendingUsers'} />,
       type: 'item',
       icon: icons.IconBorderAll
     }

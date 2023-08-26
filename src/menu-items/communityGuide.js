@@ -30,37 +30,38 @@ const icons = {
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
+const items = 'dashboard.menuItems.communityGuide';
+
 const communityGuide = {
   id: 'community-guide',
-  title: <FormattedMessage id="community guide" />,
+  title: <FormattedMessage id={items + '.communityGuide'} />,
   icon: <MessageChatbot size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
       id: 'manage-community',
-      title: <FormattedMessage id="Community" />,
+      title: <FormattedMessage id={items + '.community'} />,
       type: 'item',
       icon: icons.IconHeartHandshake,
       url: '/dashboard/community-guide/community'
     },
     {
       id: 'manage-tower-image',
-      title: <FormattedMessage id="Tower Image" />,
+      title: <FormattedMessage id={items + '.towerImage'} />,
       type: 'item',
       icon: icons.IconPhoto,
       url: '/dashboard/community-guide/tower'
     },
-
     {
       id: 'change-community-publish-status',
-      title: <FormattedMessage id="Change Community Publish Status" />,
+      title: <FormattedMessage id={items + '.changeCommunityPublishStatus'} />,
       type: 'item',
       icon: icons.IconBug,
       url: '/dashboard/community-guide/list_community_status'
     },
     {
       id: 'change-tower-status',
-      title: <FormattedMessage id="Change Tower Status" />,
+      title: <FormattedMessage id={items + '.changeTowerStatus'} />,
       type: 'item',
       icon: icons.IconBellRinging,
       url: '/dashboard/community-guide/list_tower_status',
@@ -68,7 +69,7 @@ const communityGuide = {
     },
     {
       id: 'community-activities',
-      title: <FormattedMessage id="Activities" />,
+      title: <FormattedMessage id={items + '.activities'} />,
       type: 'item',
       icon: icons.IconPhoneCall,
       url: '/dashboard/community-guide/activities',

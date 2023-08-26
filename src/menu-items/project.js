@@ -35,79 +35,80 @@ const icons = {
 
 // ==============================|| Project MENU ITEMS ||============================== //
 
+const items = 'dashboard.menuItems.projects';
+
 const project = {
-  id: 'Project',
-  title: <FormattedMessage id="Project" />,
+  id: 'projects',
+  title: <FormattedMessage id={items + '.projects'} />,
   icon: <BuildingEstate size={23} strokeWidth={1.5} color={'black'} style={{ marginRight: '10px' }} />,
   type: 'group',
   children: [
     {
       id: 'add-project',
-      title: <FormattedMessage id="Add Project" />,
+      title: <FormattedMessage id={items + '.addProject'} />,
       type: 'item',
       icon: icons.IconUserCheck,
       url: '/dashboard/project/add_project'
     },
     {
       id: 'local',
-      title: <FormattedMessage id="Local Projects" />,
+      title: <FormattedMessage id={items + '.localProjects'} />,
       type: 'item',
       icon: icons.IconPin,
-
       url: '/dashboard/project/project_management/local'
     },
     {
       id: 'international',
-      title: <FormattedMessage id="International Projects" />,
+      title: <FormattedMessage id={items + '.internationalProjects'} />,
       type: 'item',
       icon: icons.IconMapPin,
       url: '/dashboard/project/project_management/international'
     },
     {
       id: 'create-category',
-      title: <FormattedMessage id="Create Category" />,
+      title: <FormattedMessage id={items + '.createCategory'} />,
       type: 'item',
       icon: icons.IconMapPin,
       url: '/dashboard/project/create_category'
     },
     {
       id: 'shared-projects',
-      title: <FormattedMessage id="Shared Projects" />,
+      title: <FormattedMessage id={items + '.sharedProjects'} />,
       type: 'item',
       icon: icons.IconHomeShare,
       url: '/dashboard/project/shared_projects'
     },
     {
       id: 'blocked-projects',
-      title: <FormattedMessage id="Blocked Projects" />,
+      title: <FormattedMessage id={items + '.blockedProjects'} />,
       type: 'item',
       icon: icons.IconTrashX,
       url: '/dashboard/project/blocked_projects'
     },
     {
       id: 'deleted-projects',
-      title: <FormattedMessage id="Deleted Projects" />,
+      title: <FormattedMessage id={items + '.deletedProjects'} />,
       type: 'item',
       icon: icons.IconTrashX,
       url: '/dashboard/project/del_project'
     },
     {
       id: 'promotions',
-      title: 'Manage Promotions',
+      title: <FormattedMessage id={items + '.promotions'} />,
       type: 'item',
       icon: icons.IconLayoutKanban,
       url: '/dashboard/project/project_management/promotions'
     },
     {
       id: 'manage-requests',
-      title: <FormattedMessage id="Manage Requests" />,
+      title: <FormattedMessage id={items + '.manageRequests'} />,
       type: 'item',
       icon: icons.IconMail,
       url: '/dashboard/project/manage_requests'
     },
     {
       id: 'project-activities',
-      title: <FormattedMessage id="Activities" />,
+      title: <FormattedMessage id={items + '.activities'} />,
       type: 'item',
       icon: icons.IconBasket,
       url: '/dashboard/project/activities'

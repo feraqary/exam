@@ -17,15 +17,17 @@ const icons = {
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
+const items = 'dashboard.menuItems.subscribers';
+
 const subscribers = {
   id: 'subscribers',
-  title: <FormattedMessage id="Subscribes" />,
+  title: <FormattedMessage id={items + '.subscribers'} />,
   icon: <AddressBook size={23} style={{ marginRight: '10px' }} strokeWidth={1.5} color={'black'} />,
   type: 'group',
   children: [
     {
-      id: 'subscribers-list',
-      title: <FormattedMessage id="Subscribers List" />,
+      id: 'subscribers-list' + items,
+      title: <FormattedMessage id={items + '.subscribersList'} />,
       type: 'item',
       icon: icons.IconKey,
       url: '/dashboard/subscribers/list'
