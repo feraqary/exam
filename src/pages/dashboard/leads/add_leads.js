@@ -17,7 +17,16 @@ import Selector from 'components/InputArea/Selector';
 import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
 import InputText from 'components/InputArea/TextInput';
 import SubmitButton from 'components/Elements/SubmitButton';
-// ==============================|| Add Contact||============================== //
+import * as Yup from 'yup';
+import { Formik } from 'formik';
+// ==============================|| Add Leads||============================== //
+
+
+const SUPPORTED_FORMATS =  ['image/jpg', 'image/jpeg', 'image/png'];
+
+const validationSchema  = Yup.object({
+
+})
 function add_leads() {
   const [valueBasic, setValueBasic] = useState('No');
   const [value, setValue] = useState('');
@@ -37,7 +46,8 @@ function add_leads() {
 
             <AutoCompleteSelector
               label="Contact Email"
-              id="contact-email-selector"
+              id="contact_email"
+              name = "contact_email"
               style={{ xs: 12, lg: 6 }}
               options={emails}
               helperText="Please select a contact email"
@@ -48,7 +58,8 @@ function add_leads() {
             <Selector label="Contact Type" id="contact-type-selector" style={{ xs: 12, lg: 6 }} options={['Seller', 'Buyer']} />
             <Selector
               label="Unit Type"
-              id="unit-type-selector"
+              id="unit_type"
+              name= "unit_type"
               style={{ xs: 12, lg: 6 }}
               options={['Apartment', 'Villa', 'Commercial Villa', 'Plot']}
             />
@@ -64,6 +75,8 @@ function add_leads() {
             <InputText
               label="Actual Price"
               type="text"
+              id= "actual_price"
+              name= "actual_price"
               style={{ xs: 12, lg: 6 }}
               helperText="Please enter the actual price"
               placeholder="actual price"
@@ -80,6 +93,8 @@ function add_leads() {
             </Grid>
             <InputText
               label="Numbe of Bedrooms"
+              id= "bedrooms"
+              name=" becdrooms"
               type="text"
               style={{ xs: 12, lg: 6 }}
               helperText="Please enter the number of bedrooms"
@@ -91,7 +106,8 @@ function add_leads() {
           <Grid container spacing={2} alignItems="center">
             <AutoCompleteSelector
               label="Countries"
-              id="country-selector"
+              id="countries"
+              name= " countries"
               style={{ xs: 12, lg: 6 }}
               options={['United Arab Emirates', 'America', 'Egypt', 'Sudan', 'Phillipines']}
               value={value}
@@ -101,7 +117,9 @@ function add_leads() {
             />
             <AutoCompleteSelector
               label="States"
-              id="state-selector"
+              id= " states"
+              name= " states"
+             
               style={{ xs: 12, lg: 6 }}
               options={['United Arab Emirates', 'America', 'Egypt', 'Sudan', 'Phillipines']}
               value={value}
@@ -112,7 +130,8 @@ function add_leads() {
 
             <AutoCompleteSelector
               label="Cities"
-              id="city-selector"
+              id="citiesr"
+              name= "cities"
               style={{ xs: 12, lg: 6 }}
               options={['United Arab Emirates', 'America', 'Egypt', 'Sudan', 'Phillipines']}
               value={value}
@@ -122,7 +141,8 @@ function add_leads() {
             />
             <AutoCompleteSelector
               label="Districts"
-              id="district-selector"
+              id="district"
+              name= "district" 
               style={{ xs: 12, lg: 6 }}
               options={['United Arab Emirates', 'America', 'Egypt', 'Sudan', 'Phillipines']}
               value={value}
@@ -132,7 +152,8 @@ function add_leads() {
             />
             <AutoCompleteSelector
               label="Communities"
-              id="community-selector"
+              id="communities"
+              name= " communities"
               style={{ xs: 12, lg: 6 }}
               options={['United Arab Emirates', 'America', 'Egypt', 'Sudan', 'Phillipines']}
               value={value}
@@ -143,7 +164,8 @@ function add_leads() {
 
             <AutoCompleteSelector
               label="Sub Communities"
-              id="sub-community-selector"
+              id="sub_communities"
+              name= " sub_communities"
               style={{ xs: 12, lg: 6 }}
               options={['United Arab Emirates', 'America', 'Egypt', 'Sudan', 'Phillipines']}
               value={value}
@@ -154,7 +176,8 @@ function add_leads() {
 
             <AutoCompleteSelector
               label="Properties"
-              id="property-selector"
+              id="property"
+              name= "property"
               style={{ xs: 12, lg: 6 }}
               options={['United Arab Emirates', 'America', 'Egypt', 'Sudan', 'Phillipines']}
               value={value}
@@ -165,6 +188,8 @@ function add_leads() {
             <InputText
               label="Unit Ref. No"
               type="text"
+              id= "unit_ref"
+              name= "unit_ref"
               style={{ xs: 12, lg: 6 }}
               helperText="Please enter the unit ref. no"
               placeholder="Unit Ref. No"
@@ -176,7 +201,9 @@ function add_leads() {
           <Grid container spacing={2} alignItems="flex-start">
             <Selector
               label="Contact Mode"
-              id="contact-mode-selector"
+              id="contact_mode"
+              name="contact_mode"
+              
               style={{ xs: 12, lg: 6 }}
               options={['Email', 'Email-To-Lead', 'Phone', 'Whatsapp', 'Website']}
             />

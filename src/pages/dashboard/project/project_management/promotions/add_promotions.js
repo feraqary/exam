@@ -1,6 +1,4 @@
-// add_promotions.js
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import Page from 'components/ui-component/Page';
 import { MultipleAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
@@ -8,21 +6,21 @@ import { Formik } from 'formik';
 import CustomDateTime from 'components/InputArea/CustomDateTime';
 import InputText from 'components/InputArea/TextInput';
 import SubmitButton from 'components/Elements/SubmitButton';
+
 import {
   useCreateProjectPromotionMutation,
   useEditPromotionListMutation,
   useGetAllPromoTypeWithoutPaginationQuery
 } from 'store/services/project/projectApi';
-import { useEffect } from 'react';
 import { ToastError, ToastSuccess } from 'utils/toast';
 import { dateValidator, multipleSelectorValidator, objectValidator, stringValidator } from 'utils/formik-validations';
 import * as Yup from 'yup';
+
 const validationSchema = Yup.object({
   promotion_types: multipleSelectorValidator(),
   description: stringValidator('Please provide a valid description', true),
   expiry_date: dateValidator('Please select a subscription date', true)
 });
-
 
 function AddPromotions({ projectId, title,setPromotionOpen }) {
   const { data: promotionTypes, isLoading, isFetching, isError } = useGetAllPromoTypeWithoutPaginationQuery();

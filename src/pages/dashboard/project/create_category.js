@@ -21,6 +21,7 @@ import { ToastContainer } from 'react-toastify';
 
 export default function Category() {
   const [createCategory, CreateCategoryResult] = useCreateCategoryMutation();
+
   const [success, setSuccess] = useState(CreateCategoryResult.isSuccess);
   useEffect(() => {
     if (CreateCategoryResult.isSuccess) {
@@ -38,6 +39,7 @@ export default function Category() {
   useEffect(() => {
     setSuccess(CreateCategoryResult.isSuccess);
   }, [CreateCategoryResult.isSuccess]);
+  
   return (
     <>
       <Page title="Add Document Category">
@@ -60,7 +62,7 @@ export default function Category() {
                 <MainCard title="Add Document Category">
                   <Grid container spacing={2} alignItems="center">
                     <InputText
-                      disabled={success}
+                      // disabled={success}
                       label="Category Name"
                       helperText="provide the name of the category"
                       style={{ xs: 12, lg: 6 }}

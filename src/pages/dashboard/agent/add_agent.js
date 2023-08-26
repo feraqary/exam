@@ -1,6 +1,9 @@
 // material-ui
 import { Grid, Alert } from '@mui/material';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 // project imports
+
 import Layout from 'layout';
 import { useTheme } from '@mui/material/styles';
 import Page from 'components/ui-component/Page';
@@ -15,11 +18,11 @@ const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 import CompanyServices from 'components/Data/company_types_data/fetch_company_types';
 import Container from 'components/Elements/Container';
 import SubmitButton from 'components/Elements/SubmitButton';
-import InputText from 'components/InputArea/TextInput';
+import InputText, { NormalInputText } from 'components/InputArea/TextInput';
 import FileUpload from 'components/InputArea/FileUpload';
-import AutoCompleteSelector from 'components/InputArea/AutoCompleteSelector';
-import Selector from 'components/InputArea/Selector';
-
+import AutoCompleteSelector, { NormalAutoCompleteSelector } from 'components/InputArea/AutoCompleteSelector';
+import Selector, { NormalSelector } from 'components/InputArea/Selector';
+import { stringValidator, numberValidator } from 'utils/formik-validations';
 // ==============================|| FIELDS ||============================== //
 const fetchCompanyServices = CompanyServices;
 const mainCompanies = ['Broker Company', 'Developer Company', 'Service Company'];

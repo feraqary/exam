@@ -25,8 +25,8 @@ const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
 const validationSchema = Yup.object({
   subCompanyType: objectValidator(),
-  mainServiceName: stringValidator('Please provide a valid sub company type'),
-  description: stringValidator('Please provide a description'),
+  mainServiceName: stringValidator('Please provide a valid sub company type', true),
+  description: stringValidator('Please provide a description', true),
   logoImage: fileValidator(SUPPORTED_FORMATS),
   iconImage: fileValidator(SUPPORTED_FORMATS)
 });
