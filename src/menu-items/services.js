@@ -25,16 +25,28 @@ const services = {
   type: 'group',
   children: [
     {
+      id: 'add_company_type' + items,
+      title: <FormattedMessage id={items + '.addCompanyType'} />,
+      type: 'item',
+      url: '/dashboard/services/add_company_type'
+    },
+    {
+      id: 'manage_company_type' + items,
+      title: <FormattedMessage id={items + '.manageCompanyType'} />,
+      type: 'item',
+      url: '/dashboard/services/manage_company_type'
+    },
+    {
       id: 'add_main_services' + items,
       title: <FormattedMessage id={items + '.addMainServices'} />,
       type: 'item',
       url: '/dashboard/services/add_main_services'
     },
     {
-      id: 'manage-services' + items,
+      id: 'manage_main_services' + items,
       title: <FormattedMessage id={items + '.manageMainServices'} />,
       type: 'item',
-      url: '/dashboard/services/manage_services'
+      url: '/dashboard/services/manage_main_services'
     },
     {
       id: 'add_services' + items,
@@ -44,17 +56,10 @@ const services = {
       url: '/dashboard/services/add_services'
     },
     {
-      id: 'manage-sub-services' + items,
+      id: 'manage_sub_services' + items,
       title: <FormattedMessage id={items + '.manageSubServices'} />,
       type: 'item',
-      url: '/dashboard/services/sub_services'
-    },
-    {
-      id: 'services-activities' + items,
-      title: <FormattedMessage id={items + '.serviceActivities'} />,
-      type: 'item',
-      icon: icons.IconBorderAll,
-      url: '/dashboard/services/service_activities'
+      url: '/dashboard/services/manage_sub_services'
     }
   ]
 };

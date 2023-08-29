@@ -171,6 +171,8 @@ export default {
         buildingReviews: 'Building Reviews'
       },
       services: {
+        addCompanyType: 'Add Company Type',
+        manageCompanyType: 'Manage Company Type',
         services: 'Services',
         addMainServices: 'Add Main Services',
         manageMainServices: 'Manage Main Services',

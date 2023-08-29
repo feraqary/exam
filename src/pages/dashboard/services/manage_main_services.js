@@ -1,14 +1,14 @@
 // material-ui
-import React from 'react';
 import Layout from 'layout';
+import React from 'react';
 // ==============================|| Add Company Type form ||============================== //
 
-function MainService() {
+function ManageMainServices() {
   return <></>;
 }
 
-MainService.getLayout = function getLayout(page) {
+ManageMainServices.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
-export default MainService;
+export default ManageMainServices;

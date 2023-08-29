@@ -14,10 +14,9 @@ const withTM = require('next-transpile-modules')([
 
 const nextConfig = withTM({
   reactStrictMode: false,
-  assetPrefix: '/dashboard/',
-  rewrites() {
-    return [{ source: '/dashboard/_next/:path*', destination: '/_next/:path*' }];
-  },
+  // rewrites() {
+  //   return [{ source: '/dashboard/_next/:path*', destination: '/_next/:path*' }];
+  // },
   images: {
     domains: ['flagcdn.com'],
     remotePatterns: [

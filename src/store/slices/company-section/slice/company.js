@@ -37,8 +37,6 @@ import {
   getCompanyByType
 } from '../action/company';
 
-import { ToastError, ToastLoading, ToastSuccess } from 'utils/toast';
-
 import { deleteService } from 'store/slices/company-section/action/company';
 
 const initialState = {
@@ -87,12 +85,10 @@ const slice = createSlice({
       .addCase(createCompanyType.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        ToastSuccess('Added Successfully');
       })
       .addCase(createCompanyType.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
-        ToastError(state.error);
       })
 
       .addCase(getCompanyType.pending, (state, action) => {
@@ -116,8 +112,8 @@ const slice = createSlice({
         state.loading = true;
         state.error = null;
         state.getAllDraftSubscriptions = state.getAllDraftSubscriptions;
-      }) 
-     .addCase( getAllDraftSubscriptions.fulfilled, (state, action) => {
+      })
+      .addCase(getAllDraftSubscriptions.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.getAllDraftSubscriptions = action.payload.data;
@@ -127,16 +123,12 @@ const slice = createSlice({
         state.getAllDraftSubscriptions = state.getAllDraftSubscriptions;
         state.error = action.payload;
       })
-      
 
       // update company types=================================================================================================
-      .addCase(updateCompanyType.fulfilled, (state, action) => {
-        ToastSuccess('Updated Successfully');
-      })
+      .addCase(updateCompanyType.fulfilled, (state, action) => {})
       .addCase(updateCompanyType.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        ToastError(state.error);
       })
       // get all company types=================================================================================================
       .addCase(getAllCompanyTypes.pending, (state) => {
@@ -167,16 +159,12 @@ const slice = createSlice({
         state.loading = false;
         state.mainServices = [...state.mainServices, action.payload.data];
         state.error = null;
-
-        ToastSuccess('Added Successfully');
       })
 
       .addCase(createMainService.rejected, (state, action) => {
         state.loading = false;
         state.mainServices = state.mainServices;
         state.error = action.payload.error;
-
-        ToastError(state.error);
       })
       // get all main services=================================================================================================
       .addCase(getAllMainServices.pending, (state) => {
@@ -221,15 +209,11 @@ const slice = createSlice({
         state.loading = false;
         state.error = null;
         state.companies = [...state.companies, action.payload.data];
-
-        ToastSuccess('Company Added Successfully');
       })
       .addCase(createCompany.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
         state.companies = state.companies;
-
-        ToastError(state.error);
       })
 
       .addCase(createService.pending, (state) => {
@@ -242,16 +226,12 @@ const slice = createSlice({
         state.loading = false;
         state.error = null;
         state.services = [...state.services, action.payload.data];
-
-        ToastSuccess('Added Successfully');
       })
 
       .addCase(createService.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
         state.services = state.services;
-
-        ToastError(state.error);
       })
 
       .addCase(getLocalCompanies.pending, (state) => {
@@ -456,13 +436,10 @@ const slice = createSlice({
         state.featuredCompanies = state.featuredCompanies;
         state.error = action.payload;
       })
-      .addCase(updateCompanyRank.fulfilled, () => {
-        ToastSuccess('Updated Successfully');
-      })
+      .addCase(updateCompanyRank.fulfilled, () => {})
       .addCase(updateCompanyRank.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        ToastError(state.error);
       })
 
       .addCase(deleteMainService.pending, (state) => {
@@ -518,12 +495,10 @@ const slice = createSlice({
       .addCase(updateSubscription.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
-        ToastSuccess('Subscription Updated Succesfully');
       })
       .addCase(updateSubscription.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        ToastError(action.payload);
       })
       .addCase(getActiveSubscription.pending, (state) => {
         state.loading = true;
